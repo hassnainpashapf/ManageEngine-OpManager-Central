@@ -732,7 +732,7 @@
                         <td style="padding: 7px 8px; font-weight: 600; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
                         <td style="padding: 7px 8px; font-weight: 700; color: #0f172a;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
                         <td style="padding: 7px 8px; color: #64748b;">0</td>
-                        <td style="padding: 7px 8px; font-family: monospace; color: #334155;">${(pr.devicesCount || pr.devices || 4) * 3}</td>
+                        <td style="padding: 7px 8px; font-family: monospace; color: #334155;">${(typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)) * 3}</td>
                         <td style="padding: 7px 8px;">
                           <span style="font-size: 10px; font-weight: 700; color: #166534; background: #dcfce7; padding: 1px 6px; border-radius: 2px;">SYNC OK</span>
                         </td>
@@ -740,40 +740,6 @@
                     `).join('')}
                   </tbody>
                 </table>
-              </div>
-            </div>
-
-            <!-- WIDGET 11: Interface Link Status HeatMap (Modeled on netflow_addon_dashboard.png) -->
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                  <span style="font-size: 13px; font-weight: 700; color: #1e293b;">HeatMap - Interface Link Status (48 Ports)</span>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Probes | Real-Time SNMP ifOperStatus &amp; NetFlow Stream</div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 6px; color: #94a3b8;">
-                  <button class="opm-widget-btn-refresh" title="Refresh" style="background:none;border:none;cursor:pointer;color:#64748b;padding:2px;">↻</button>
-                  <button class="opm-widget-btn-max" data-title="Interface Link Status HeatMap" title="Maximize" style="background:none;border:none;cursor:pointer;color:#64748b;padding:2px;">⋮</button>
-                </div>
-              </div>
-              <div style="padding: 12px 16px;">
-                ${widgetHeatmapBody}
-              </div>
-            </div>
-
-            <!-- WIDGET 12: Cisco SD-WAN Overlay & NetFlow Export Summary -->
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                  <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Cisco SD-WAN Fabric &amp; NetFlow Exporter Summary</span>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Probes | vManage API &amp; NetFlow v9/IPFIX Collectors</div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 6px; color: #94a3b8;">
-                  <button class="opm-widget-btn-refresh" title="Refresh" style="background:none;border:none;cursor:pointer;color:#64748b;padding:2px;">↻</button>
-                  <button class="opm-widget-btn-max" data-title="SD-WAN & NetFlow Summary" title="Maximize" style="background:none;border:none;cursor:pointer;color:#64748b;padding:2px;">⋮</button>
-                </div>
-              </div>
-              <div style="padding: 12px 16px;">
-                ${widgetSdwanBody}
               </div>
             </div>
 
@@ -1177,18 +1143,18 @@
                       <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
                         <div>
                           <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-                            <span style="color: #4ade80;">IN Rate: ${inf.inTraffic} Mbps (${inf.inPercent || 48}%)</span>
+                            <span style="color: #4ade80;">IN Rate: ${inf.inTraffic} Mbps (${inf.inPercent || 0}%)</span>
                           </div>
                           <div style="height: 6px; background: #334155; border-radius: 3px; overflow: hidden;">
-                            <div style="width: ${inf.inPercent || 48}%; height: 100%; background: #22c55e;"></div>
+                            <div style="width: ${inf.inPercent || 0}%; height: 100%; background: #22c55e;"></div>
                           </div>
                         </div>
                         <div>
                           <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-                            <span style="color: #38bdf8;">OUT Rate: ${inf.outTraffic} Mbps (${inf.outPercent || 42}%)</span>
+                            <span style="color: #38bdf8;">OUT Rate: ${inf.outTraffic} Mbps (${inf.outPercent || 0}%)</span>
                           </div>
                           <div style="height: 6px; background: #334155; border-radius: 3px; overflow: hidden;">
-                            <div style="width: ${inf.outPercent || 42}%; height: 100%; background: #0284c7;"></div>
+                            <div style="width: ${inf.outPercent || 0}%; height: 100%; background: #0284c7;"></div>
                           </div>
                         </div>
                       </div>
