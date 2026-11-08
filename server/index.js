@@ -319,6 +319,6 @@ server.listen(PORT, () => {
   console.log(` Authentic Ember ITOM Root: http://localhost:${PORT}/`);
   console.log(` Direct ITOM Client: http://localhost:${PORT}/apiclient/fluidicv3/itom/index.html#/`);
   console.log(` Full NOC Overview: http://localhost:${PORT}/noc`);
-  console.log(` Central Probe Architecture: Active (4 Distributed Probes)`);
+  console.log(` Central Probe Architecture: Active (${(db.data && db.data.probes ? db.data.probes.length : 1)} Enterprise Probes)`);
   console.log(`================================================================`);
 });
