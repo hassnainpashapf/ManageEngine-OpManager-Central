@@ -74,6 +74,10 @@ const staticOptions = {
     if (filePath.endsWith('.jsp') || filePath.endsWith('.html')) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    } else if (filePath.includes('opmanager-suite.js')) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
     } else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
       res.setHeader('Cache-Control', 'public, max-age=3600');
     } else if (filePath.match(/\.(png|jpe?g|gif|svg|ico|woff2?|ttf|wav|mp3|msi|exe)$/i)) {
@@ -82,11 +86,33 @@ const staticOptions = {
   }
 };
 
+// Helper to serve clean ITOM shell with dynamic cache busting on the suite bundle
+function renderItomShell(res) {
+  const itomPath = path.join(__dirname, '../client/itom.html');
+  if (fs.existsSync(itomPath)) {
+    let html = fs.readFileSync(itomPath, 'utf8');
+    const buster = Date.now();
+    html = html.replace(/opmanager-suite\.js(\?v=[^"']*)?/g, `opmanager-suite.js?v=${buster}`);
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    return res.send(html);
+  }
+  return res.sendFile(itomPath);
+}
+
 // The bundled Ember shell is incomplete in this local clone and throws hundreds
 // of errors before the working Central suite mounts. Serve the supported suite
 // shell directly so every rendered screen starts cleanly.
-app.get('/apiclient/fluidicv3/itom/index.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/itom.html'));
+app.get([
+  '/apiclient/fluidicv3/itom/index.html',
+  '/apiclient/fluidicv3/itom/',
+  '/apiclient/fluidicv3/itom',
+  '/itom.html',
+  '/'
+], (req, res) => {
+  renderItomShell(res);
 });
 
 // Serve product home static directory directly if present (all stylesheets, images, scripts, apiclient)
@@ -278,8 +304,7 @@ app.get('*', (req, res) => {
   if (req.path.match(/\.(png|jpe?g|gif|svg|ico|css|js|woff2?|ttf|eot|map|wav|mp3|zip|tar\.gz|msi|exe)$/i)) {
     return res.status(404).send('Resource Not Found');
   }
-  const fallbackHtml = path.join(__dirname, '../client/itom.html');
-  res.sendFile(fallbackHtml);
+  renderItomShell(res);
 });
 
 const PORT = process.env.PORT || 8060;
