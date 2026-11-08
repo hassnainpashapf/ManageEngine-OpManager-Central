@@ -459,12 +459,28 @@
     } catch (e) {}
   }
 
+  function updateStatusCounters() {
+    const badge = document.querySelector('.opm-bell-badge');
+    if (badge) {
+      const cnt = (state.alarms && state.alarms.length) || 0;
+      badge.innerText = cnt;
+      badge.style.display = cnt > 0 ? 'inline-block' : 'none';
+    }
+    const assetsEl = document.getElementById('opm-footer-monitored-assets');
+    if (assetsEl) {
+      const devCount = (state.devices && state.devices.length) || 0;
+      const ifaceCount = (state.devices || []).reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : 0), 0);
+      assetsEl.innerHTML = `Monitored Assets: <strong>${devCount} Devices • ${ifaceCount} Interfaces</strong>`;
+    }
+  }
+
   function loadBackendData() {
     fetch('/api/devices')
       .then(r => r.json())
       .then(res => {
         if (res && Array.isArray(res.devices)) {
           state.devices = res.devices;
+          updateStatusCounters();
           handleRoute();
         }
       }).catch(() => {});
@@ -474,6 +490,7 @@
       .then(res => {
         if (res && Array.isArray(res.rows || res.alarms)) {
           state.alarms = res.rows || res.alarms;
+          updateStatusCounters();
           handleRoute();
         }
       }).catch(() => {});
@@ -483,6 +500,7 @@
       .then(res => {
         if (res && Array.isArray(res.probes)) {
           state.probes = res.probes;
+          updateStatusCounters();
         }
       }).catch(() => {});
   }

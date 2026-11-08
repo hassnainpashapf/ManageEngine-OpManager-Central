@@ -306,7 +306,7 @@
           <!-- Bell Notifications Button -->
           <button id="opm-header-bell-btn" data-fsoqa="user-notifications" title="Active Alarms Drawer" style="background: transparent; border: none; color: #cbd5e1; font-size: 16px; cursor: pointer; position: relative; padding: 4px 6px;">
             🔔
-            <span class="opm-bell-badge" style="position: absolute; top: -2px; right: -2px; background: #dc2626; color: #ffffff; border-radius: 9px; font-size: 10px; font-weight: 700; padding: 1px 5px; min-width: 14px; text-align: center; line-height: 13px;">${state.alarms.length || 7}</span>
+            <span class="opm-bell-badge" style="position: absolute; top: -2px; right: -2px; background: #dc2626; color: #ffffff; border-radius: 9px; font-size: 10px; font-weight: 700; padding: 1px 5px; min-width: 14px; text-align: center; line-height: 13px; display: ${(state.alarms && state.alarms.length > 0) ? 'inline-block' : 'none'};">${(state.alarms && state.alarms.length) || 0}</span>
           </button>
 
           <!-- Admin Avatar & Profile -->
@@ -384,12 +384,15 @@
         };
       }
     }
+    if (!header.parentNode && document.body) {
+      document.body.insertBefore(header, document.body.firstChild);
+    }
     return header;
   }
 
   function ensureOverlayContainer() {
     ensureGlobalStyles();
-    ensureMainHeader();
+    const header = ensureMainHeader();
     ensureSubnavBreadcrumbsBar();
     syncHeaderTabs(state.currentTab);
     let container = document.getElementById('opm-custom-suite-container');
@@ -412,11 +415,11 @@
             ManageEngine OpManager Central v12.9.203 (Build 129203 • 64-Bit)
           </span>
           <span style="color: #475569;">|</span>
-          <span>Central Server: <strong style="color: #49bd80;">Primary Active (10.0.0.10:8060)</strong></span>
+          <span>Central Server: <strong style="color: #49bd80;">Primary Active (${window.location.host || '192.168.30.65:8060'})</strong></span>
           <span style="color: #475569;">|</span>
-          <span>Remote Probes: <strong style="color: #38bdf8;">4 / 4 Online</strong></span>
+          <span>Remote Probes: <strong style="color: #38bdf8;">${state.probes.length} / ${state.probes.length || 1} Online</strong></span>
           <span style="color: #475569;">|</span>
-          <span>Monitored Assets: <strong>16 Devices • 48 Interfaces</strong></span>
+          <span id="opm-footer-monitored-assets">Monitored Assets: <strong>${state.devices.length} Devices • ${state.devices.reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : 0), 0)} Interfaces</strong></span>
         </div>
         <div style="display: flex; align-items: center; gap: 14px;">
           <span id="opm-footer-zia-btn" style="cursor: pointer; color: #a78bfa; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;" title="Launch Ask Zia AI Assistant">
