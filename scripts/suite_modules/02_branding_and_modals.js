@@ -358,25 +358,10 @@
       logoLink.style.alignItems = 'center';
       logoLink.style.textDecoration = 'none';
       logoLink.innerHTML = `
-        <span id="opm-app-launcher-trigger" title="ManageEngine ITOM Suite App Switcher" style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 4px; margin-right: 8px; cursor: pointer; transition: background 0.15s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
-          <svg width="16" height="16" viewBox="0 0 18 18" fill="#212121" style="opacity: 0.85; flex-shrink: 0;">
-            <rect x="1" y="1" width="4" height="4" rx="0.5"/><rect x="7" y="1" width="4" height="4" rx="0.5"/><rect x="13" y="1" width="4" height="4" rx="0.5"/>
-            <rect x="1" y="7" width="4" height="4" rx="0.5"/><rect x="7" y="7" width="4" height="4" rx="0.5"/><rect x="13" y="7" width="4" height="4" rx="0.5"/>
-            <rect x="1" y="13" width="4" height="4" rx="0.5"/><rect x="7" y="13" width="4" height="4" rx="0.5"/><rect x="13" y="13" width="4" height="4" rx="0.5"/>
-          </svg>
-        </span>
-        <img src="/apiclient/fluidicv2/img/opmNewLogo.png" alt="ManageEngine OpManager" style="height: 26px; width: auto; vertical-align: middle; margin-right: 6px; display: inline-block;">
-        <span style="font-size: 16px; font-weight: 400; color: #212121; letter-spacing: -0.2px; vertical-align: middle; font-family: Lato, sans-serif;">Central</span>
+        <img src="/apiclient/fluidicv2/img/opmNewLogo.png" alt="ManageEngine OpManager" style="height: 24px; width: auto; vertical-align: middle; margin-right: 6px; display: inline-block;">
+        <span style="font-size: 16px; font-weight: 600; color: #ffffff; letter-spacing: -0.2px; vertical-align: middle; font-family: Lato, sans-serif;">Central</span>
         <span style="background: #49bd80; color: #ffffff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 2px; letter-spacing: 0.8px; margin-left: 7px; vertical-align: middle;">ENTERPRISE</span>
       `;
-      const launcherBtn = logoLink.querySelector('#opm-app-launcher-trigger');
-      if (launcherBtn) {
-        launcherBtn.onclick = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          showItomAppLauncherDropdown(launcherBtn);
-        };
-      }
     }
 
     const centralBadge = document.querySelector('#main-header .logo-section .relative');
@@ -405,7 +390,7 @@
 
     if (hdr) {
       // Bell notification button & badge
-      const bellBtn = hdr.querySelector('button[data-fsoqa="user-notifications"]');
+      const bellBtn = hdr.querySelector('button[data-fsoqa="user-notifications"]') || hdr.querySelector('#opm-header-bell-btn');
       if (bellBtn && !bellBtn.hasAttribute('data-hooked')) {
         bellBtn.setAttribute('data-hooked', 'true');
         bellBtn.style.position = 'relative';
@@ -417,7 +402,9 @@
           badge.style.cssText = 'position: absolute; top: -3px; right: -3px; background: #dc2626; color: #ffffff; border-radius: 9px; font-size: 10px; font-weight: 700; padding: 1px 5px; min-width: 14px; text-align: center; line-height: 14px; pointer-events: none; box-shadow: 0 1px 2px rgba(0,0,0,0.2);';
           bellBtn.appendChild(badge);
         }
-        badge.innerText = String(state.alarms.length || 7);
+        const alarmCount = (state.alarms && state.alarms.length) || 0;
+        badge.innerText = String(alarmCount);
+        badge.style.display = alarmCount > 0 ? 'inline-block' : 'none';
         bellBtn.onclick = (e) => {
           e.stopPropagation();
           showNotificationsDropdown(bellBtn);

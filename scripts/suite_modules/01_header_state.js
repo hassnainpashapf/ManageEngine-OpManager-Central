@@ -248,12 +248,12 @@
       });
 
       const activeProbe = state.probes.find(p => p.id == state.selectedProbe);
-      const probeName = activeProbe ? activeProbe.name : 'All Probes (4)';
+      const probeName = activeProbe ? activeProbe.name : 'All Probes';
 
       header.innerHTML = `
         <!-- Left: Logo & App Launcher -->
         <div class="logo-section" style="display: flex; align-items: center; gap: 8px;">
-          <button id="opm-app-launcher-btn" title="ManageEngine ITOM App Launcher" style="background: transparent; border: none; padding: 6px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
+          <button id="opm-app-launcher-btn" title="ManageEngine ITOM Suite App Switcher" style="background: transparent; border: none; padding: 6px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="#ffffff" style="opacity: 0.9;">
               <rect x="1" y="1" width="4" height="4" rx="0.5"/><rect x="7" y="1" width="4" height="4" rx="0.5"/><rect x="13" y="1" width="4" height="4" rx="0.5"/>
               <rect x="1" y="7" width="4" height="4" rx="0.5"/><rect x="7" y="7" width="4" height="4" rx="0.5"/><rect x="13" y="7" width="4" height="4" rx="0.5"/>

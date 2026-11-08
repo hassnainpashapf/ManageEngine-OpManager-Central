@@ -10,10 +10,10 @@
       { id: 'active', name: `Active Alarms (${state.alarms.length})` },
       { id: 'rca', name: 'Root Cause Analysis (RCA)' },
       { id: 'problems', name: 'Problems & Correlated Events' },
-      { id: 'all', name: 'All Alarms (142)' },
-      { id: 'eventlog', name: 'Windows Event Logs (320)' },
-      { id: 'syslog', name: 'Syslog (1,420)' },
-      { id: 'traps', name: 'SNMP Traps (5)' },
+      { id: 'all', name: `All Alarms (${state.alarms.length})` },
+      { id: 'eventlog', name: 'Windows Event Logs (0)' },
+      { id: 'syslog', name: 'Syslog (0)' },
+      { id: 'traps', name: 'SNMP Traps (0)' },
       { id: 'nfa', name: 'NetFlow Alarms' },
       { id: 'ncm', name: 'NCM Alarms' },
       { id: 'fwa', name: 'Firewall Alarms' },
@@ -167,7 +167,7 @@
                   <input type="checkbox" style="width: 14px; height: 14px; cursor: pointer;">
                   <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Active Alarms (${list.length})</span>
                   <select id="opm-alarms-probe-select" style="padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; outline: none; background: #fff; color: #334155;">
-                    <option value="all" ${state.selectedProbe === 'all' ? 'selected' : ''}>All Probes (4)</option>
+                    <option value="all" ${state.selectedProbe === 'all' ? 'selected' : ''}>All Probes (${state.probes.length})</option>
                     ${state.probes.map(p => `<option value="${p.id}" ${state.selectedProbe == p.id ? 'selected' : ''}>${p.name}</option>`).join('')}
                   </select>
                 </div>
@@ -199,8 +199,12 @@
                 <tbody>
                   ${list.length === 0 ? `
                     <tr>
-                      <td colspan="6" style="padding: 40px; text-align: center; color: #94a3b8;">
-                        No active alarms matching severity filter "${state.alarmsSeverityFilter}".
+                      <td colspan="6" style="padding: 50px 20px; text-align: center;">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div style="font-size: 15px; font-weight: 700; color: #166534; margin-bottom: 4px;">No Active Alarms</div>
+                        <div style="font-size: 12px; color: #64748b;">All monitored infrastructure devices, servers, and threshold monitors are healthy.</div>
                       </td>
                     </tr>
                   ` : list.map(alm => {
@@ -255,199 +259,26 @@
 
         </div>
       ` : activeSub === 'rca' ? `
-        <!-- SUBTAB: ROOT CAUSE ANALYSIS (RCA) -->
-        <div style="padding: 20px 24px;">
-          <!-- RCA Header Banner -->
-          <div style="background: #0f172a; border-radius: 8px; padding: 20px 24px; color: #ffffff; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; border-left: 6px solid #dc2626; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);">
-            <div>
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="background: #dc2626; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 3px;">P1 ROOT CAUSE ACTIVE</span>
-                <span style="font-size: 16px; font-weight: 800; color: #f8fafc;">Incident RCA-2026-081: Core Uplink Flap & Transceiver Degrade</span>
-              </div>
-              <div style="font-size: 12px; color: #94a3b8; margin-top: 6px;">
-                Identified by Zia ML Correlation Engine &bull; Confidence: <strong style="color: #4ade80;">98.4% (Deterministic)</strong> &bull; Probed via Dubai Campus Core
-              </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div style="display: flex; gap: 10px;">
-              <button id="opm-rca-remediate-btn" style="background: #16a34a; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
-                Execute Auto-Failover
-              </button>
-              <button id="opm-rca-export-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-                Export Post-Mortem
-              </button>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Active Root Cause Incidents</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              Zia AI machine-learning correlation engine is standby. Root cause blast-radius graphs will render here if critical incidents occur.
             </div>
           </div>
-
-          <!-- Root Cause & Blast Radius Grid -->
-          <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; margin-bottom: 24px;">
-            
-            <!-- Primary Root Cause Card -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 14px; display: flex; justify-content: space-between;">
-                <span>Identified Root Entity</span>
-                <span style="color: #dc2626; font-weight: 700;">Critical Threshold Breached</span>
-              </div>
-              <div style="background: #fef2f2; border: 1px solid #fee2e2; border-radius: 6px; padding: 14px; margin-bottom: 14px;">
-                <div style="font-size: 14px; font-weight: 800; color: #991b1b; display: flex; align-items: center; gap: 8px;">
-                  ${getDeviceTypeIcon('Cisco Catalyst 9500-48Y4C', 'Switches', 20)}
-                  DXB-CORE-SW-01 &bull; FortyGigabitEthernet1/0/48
-                </div>
-                <div style="font-size: 12px; color: #7f1d1d; margin-top: 6px; line-height: 1.5;">
-                  <strong>Failure Hypothesis:</strong> Optical transceiver SFP+ DDM receive power dropped below -18 dBm threshold. 14 successive SNMP link-down events recorded within 90 seconds. Port administratively shutdown by errdisable recovery.
-                </div>
-              </div>
-              
-              <div style="font-size: 12px; color: #475569; display: flex; flex-direction: column; gap: 8px;">
-                <div style="display: flex; justify-content: space-between;">
-                  <span>Hardware Serial:</span>
-                  <span style="font-family: monospace; font-weight: 700;">FCW2349L09X</span>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                  <span>IP Address:</span>
-                  <span style="font-family: monospace; font-weight: 700; color: #0070e0;">10.40.1.1</span>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                  <span>Event Suppression:</span>
-                  <span style="font-weight: 700; color: #16a34a;">14 raw traps &rarr; 1 incident (92.8% noise reduction)</span>
-                </div>
-              </div>
+        ` : activeSub === 'problems' ? `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-
-            <!-- Downstream Impacted Topology (Blast Radius) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 14px; display: flex; justify-content: space-between;">
-                <span>Incident Blast Radius (Dependent Topology)</span>
-                <span style="color: #64748b; font-size: 11px;">4 Dependent Managed Nodes</span>
-              </div>
-
-              <div style="display: flex; flex-direction: column; gap: 10px;">
-                <div style="border: 1px solid #e2e8f0; border-left: 4px solid #ea580c; border-radius: 4px; padding: 10px 14px; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-weight: 700; color: #0f172a; font-size: 12px;">DXB-DIST-SW-01 (10.40.1.20)</div>
-                    <div style="font-size: 11px; color: #64748b;">Primary trunk uplink disconnected &bull; Secondary STP blocked</div>
-                  </div>
-                  <span style="background: #ffedd5; color: #9a3412; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">UNREACHABLE VIA TRUNK</span>
-                </div>
-
-                <div style="border: 1px solid #e2e8f0; border-left: 4px solid #ca8a04; border-radius: 4px; padding: 10px 14px; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-weight: 700; color: #0f172a; font-size: 12px;">DXB-DIST-SW-02 (10.40.1.21)</div>
-                    <div style="font-size: 11px; color: #64748b;">Rerouted traffic via 10Gbps backup link &bull; High link utilization</div>
-                  </div>
-                  <span style="background: #fef9c3; color: #854d0e; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">REROUTED (88% LOAD)</span>
-                </div>
-
-                <div style="border: 1px solid #e2e8f0; border-left: 4px solid #ea580c; border-radius: 4px; padding: 10px 14px; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-weight: 700; color: #0f172a; font-size: 12px;">DXB-ARUBA-WLC-01 (10.40.2.10)</div>
-                    <div style="font-size: 11px; color: #64748b;">Mobility tunnels experience latency spikes (74 ms)</div>
-                  </div>
-                  <span style="background: #ffedd5; color: #9a3412; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">LATENCY ALERT</span>
-                </div>
-
-                <div style="border: 1px solid #e2e8f0; border-left: 4px solid #ca8a04; border-radius: 4px; padding: 10px 14px; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-weight: 700; color: #0f172a; font-size: 12px;">DXB-APC-UPS-01 (10.40.9.5)</div>
-                    <div style="font-size: 11px; color: #64748b;">NMC management card polled via secondary VLAN</div>
-                  </div>
-                  <span style="background: #fef9c3; color: #854d0e; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">NORMAL STANDBY</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      ` : activeSub === 'problems' ? `
-        <!-- SUBTAB: PROBLEMS & CORRELATED EVENTS (ZIA RCA CONSOLE) -->
-        <div style="padding: 20px 24px;">
-          <!-- Noise Reduction Banner -->
-          <div style="background: linear-gradient(90deg, #1e1b4b 0%, #312e81 100%); border-radius: 8px; padding: 16px 20px; color: #ffffff; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(49, 46, 129, 0.15);">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 20px;">✨</div>
-              <div>
-                <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">Zia AI Event Correlation & Automated Noise Reduction</div>
-                <div style="font-size: 12px; color: #c7d2fe; margin-top: 2px;">82% Event Noise Suppressed: 116 raw SNMP traps and link-state flaps clustered into 1 actionable incident.</div>
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="background: #22c55e; color: #052e16; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px;">● Live Correlation Active</span>
-              <button id="opm-prb-refresh-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Re-analyze</button>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">Zero Correlated Network Problems</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              Cross-device event correlation has zero open tickets. All distributed services operating within SLA.
             </div>
           </div>
-
-          <!-- Correlated Incident Card -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 20px;">
-            <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; display: flex; align-items: center; justify-content: space-between;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 4px;">P1 CRITICAL</span>
-                <span style="font-size: 14px; font-weight: 800; color: #0f172a;">Incident #PRB-9201: Optical SFP Transceiver Failure on DXB-CORE-SW-01</span>
-              </div>
-              <div style="font-size: 12px; color: #64748b;">Identified: 8 mins ago | Probe: Dubai Campus Core</div>
-            </div>
-
-            <div style="padding: 20px;">
-              <!-- AI Hypothesis Box -->
-              <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                  <span style="font-size: 12px; font-weight: 800; color: #166534; display: flex; align-items: center; gap: 6px;">
-                    <span>⚡</span> Zia Root Cause Hypothesis
-                  </span>
-                  <span style="font-size: 11px; font-weight: 800; background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 10px;">98.2% Confidence</span>
-                </div>
-                <div style="font-size: 12px; color: #14532d; line-height: 1.5;">
-                  Optical Transceiver SFP-10G-LR degradation on <strong>TenGigabitEthernet1/0/48</strong> caused intermittent PHY-layer carrier loss. This triggered BGP neighbor 192.168.10.1 hold-time expiration, resulting in an automated routing recalculation spike (CPU 93.4%) and cascading link flaps.
-                </div>
-              </div>
-
-              <!-- Correlated Event Chain Timeline -->
-              <div style="margin-bottom: 20px;">
-                <div style="font-size: 12px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Correlated Event Sequence (116 Raw Signals Suppressed)</div>
-                <div style="border-left: 2px solid #cbd5e1; margin-left: 10px; padding-left: 18px; display: flex; flex-direction: column; gap: 14px;">
-                  <div style="position: relative;">
-                    <span style="position: absolute; left: -24px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: #dc2626;"></span>
-                    <div style="font-size: 12px; font-weight: 700; color: #0f172a;">10:41:02 - LinkDown Trap Received (OID: .1.3.6.1.6.3.1.1.5.3)</div>
-                    <div style="font-size: 11px; color: #64748b;">Interface TenGigabitEthernet1/0/48 operational status changed to DOWN. RX Power dropped below -18 dBm.</div>
-                  </div>
-                  <div style="position: relative;">
-                    <span style="position: absolute; left: -24px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: #ea580c;"></span>
-                    <div style="font-size: 12px; font-weight: 700; color: #0f172a;">10:41:08 - BGP Peer 192.168.10.1 Session Terminated</div>
-                    <div style="font-size: 11px; color: #64748b;">Neighbor session reset: HoldTimerExpired. 14 WAN routes withdrawn from core table.</div>
-                  </div>
-                  <div style="position: relative;">
-                    <span style="position: absolute; left: -24px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: #ca8a04;"></span>
-                    <div style="font-size: 12px; font-weight: 700; color: #0f172a;">10:41:14 - Switch CPU & Memory Utilization Exceeded Critical Threshold</div>
-                    <div style="font-size: 11px; color: #64748b;">CPU at 93.4% (Process BGP Router 68%). Memory at 94.1%. Thermal sensor 48°C.</div>
-                  </div>
-                  <div style="position: relative;">
-                    <span style="position: absolute; left: -24px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: #0284c7;"></span>
-                    <div style="font-size: 12px; font-weight: 700; color: #0f172a;">10:41:35 - Latency Increase on DXB-ARUBA-WLC-01</div>
-                    <div style="font-size: 11px; color: #64748b;">Ping response time climbed to 74 ms due to redundant path transit latency.</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Technician Investigation Notes -->
-              <div style="border-top: 1px solid #e2e8f0; padding-top: 16px; margin-bottom: 20px;">
-                <div style="font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px;">Investigation Log & Remediation Notes</div>
-                <div id="opm-rca-notes-container" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px; font-size: 12px; color: #334155; margin-bottom: 10px; font-family: monospace;">
-                  [10:43:10] admin@opmanager: SFP optical diagnostics checked: TX power -2.4 dBm (Normal), RX power -19.8 dBm (Below threshold -14.0 dBm). Fiber patch cord replacement dispatched.
-                </div>
-                <div style="display: flex; gap: 8px;">
-                  <input type="text" id="opm-rca-note-input" placeholder="Add technician investigation note..." style="flex: 1; padding: 7px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
-                  <button id="opm-rca-add-note-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Add Note</button>
-                </div>
-              </div>
-
-              <!-- Remediation Actions -->
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <button id="opm-prb-bounce-btn" style="background: #dc2626; color: #ffffff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Bounce Interface Te1/0/48</button>
-                <button id="opm-prb-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Acknowledge Incident</button>
-                <button id="opm-prb-ticket-btn" style="background: #ffffff; border: 1px solid #0070e0; color: #0070e0; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Create ServiceDesk Ticket</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` : activeSub === 'all' ? `
+        ` : activeSub === 'all' ? `
         <!-- SUBTAB: ALL ALARMS (HISTORICAL ARCHIVE - 142 ALARMS) -->
         <div style="padding: 20px 24px;">
           <!-- Filter Toolbar -->
@@ -535,440 +366,75 @@
           </div>
         </div>
       ` : activeSub === 'eventlog' ? `
-        <!-- SUBTAB: WINDOWS EVENT LOGS (320 EVENTS) -->
+        <!-- SUBTAB: WINDOWS EVENT LOGS -->
         <div style="padding: 20px 24px;">
-          <!-- Filter Toolbar -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option value="all">All Event Levels</option>
-                <option value="Error">Error (18)</option>
-                <option value="Warning">Warning (42)</option>
-                <option value="Information">Information (260)</option>
-              </select>
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option>All Monitored Windows Servers</option>
-                <option>NY-DB-PROD-SQL (10.10.3.50)</option>
-                <option>LON-MAIL-EXCH-01 (10.20.3.10)</option>
-              </select>
-              <input type="text" placeholder="Search Event ID or Source..." style="padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; width: 220px;">
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <button style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Poll Windows Logs Now</button>
-          </div>
-
-          <!-- Event Log Table -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                  <th style="padding: 10px 14px; width: 80px;">Level</th>
-                  <th style="padding: 10px 14px; width: 90px;">Event ID</th>
-                  <th style="padding: 10px 14px;">Source</th>
-                  <th style="padding: 10px 14px;">Computer Hostname</th>
-                  <th style="padding: 10px 14px;">User / Account</th>
-                  <th style="padding: 10px 14px;">Message</th>
-                  <th style="padding: 10px 14px; width: 120px;">Date / Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ERROR</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">1000</td>
-                  <td style="padding: 10px 14px; font-weight: 600;">Application Error</td>
-                  <td style="padding: 10px 14px;">NY-DB-PROD-SQL</td>
-                  <td style="padding: 10px 14px;">NT AUTHORITY\SYSTEM</td>
-                  <td style="padding: 10px 14px; color: #334155;">Faulting application name: pg_dump.exe, version 14.7.0.0, faulting module: ntdll.dll</td>
-                  <td style="padding: 10px 14px; font-size: 11px; color: #64748b;">10 mins ago</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">WARNING</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">7036</td>
-                  <td style="padding: 10px 14px; font-weight: 600;">Service Control Manager</td>
-                  <td style="padding: 10px 14px;">LON-MAIL-EXCH-01</td>
-                  <td style="padding: 10px 14px;">CORP\admin</td>
-                  <td style="padding: 10px 14px; color: #334155;">The Microsoft Exchange Transport service entered the stopped state.</td>
-                  <td style="padding: 10px 14px; font-size: 11px; color: #64748b;">24 mins ago</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px;"><span style="background: #f0fdf4; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">INFO</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">4624</td>
-                  <td style="padding: 10px 14px; font-weight: 600;">Microsoft-Windows-Security-Auditing</td>
-                  <td style="padding: 10px 14px;">NY-DB-PROD-SQL</td>
-                  <td style="padding: 10px 14px;">CORP\svc-backup</td>
-                  <td style="padding: 10px 14px; color: #334155;">An account was successfully logged on. Logon Type: 3 (Network).</td>
-                  <td style="padding: 10px 14px; font-size: 11px; color: #64748b;">32 mins ago</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px;"><span style="background: #f0fdf4; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">INFO</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">7040</td>
-                  <td style="padding: 10px 14px; font-weight: 600;">Service Control Manager</td>
-                  <td style="padding: 10px 14px;">LON-MAIL-EXCH-01</td>
-                  <td style="padding: 10px 14px;">CORP\svc-opmanager</td>
-                  <td style="padding: 10px 14px; color: #334155;">The start type of the Windows Remote Management (WS-Management) service was changed.</td>
-                  <td style="padding: 10px 14px; font-size: 11px; color: #64748b;">1 hour ago</td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Windows Event Log Records</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              Install the OpManager Windows Agent (<code>OpManagerAgent.msi</code>) or configure WMI credentials to collect Windows System, Application, and Security event logs.
+            </div>
           </div>
         </div>
       ` : activeSub === 'syslog' ? `
-        <!-- SUBTAB: SYSLOG (REAL-TIME STREAM - 1,420 MSGS) -->
+        <!-- SUBTAB: SYSLOG (REAL-TIME STREAM) -->
         <div style="padding: 20px 24px;">
-          <!-- Stream Status Bar -->
-          <div style="background: #0f172a; border-radius: 6px; padding: 12px 18px; margin-bottom: 16px; color: #ffffff; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="display: flex; align-items: center; gap: 6px; background: #15803d; color: #dcfce7; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 800;">
-                <span style="width: 7px; height: 7px; border-radius: 50%; background: #4ade80;"></span>
-                LIVE STREAMING (12 msgs/sec)
-              </span>
-              <span style="font-size: 12px; color: #94a3b8;">Port: UDP 514 / RFC 5424 Format | Total Buffer: 1,420</span>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <button id="opm-syslog-pause-btn" style="background: #334155; border: 1px solid #475569; color: #f8fafc; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Pause Stream</button>
-              <button id="opm-syslog-clear-btn" style="background: #334155; border: 1px solid #475569; color: #f8fafc; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Clear Console</button>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Syslog Messages Received</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              OpManager Central Syslog Receiver daemon is listening on UDP port 514 (RFC 5424). Configure network devices to forward logs.
             </div>
-          </div>
-
-          <!-- Syslog Stream Table -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px; font-family: monospace;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700; font-family: -apple-system, sans-serif;">
-                  <th style="padding: 8px 12px; width: 140px;">Timestamp</th>
-                  <th style="padding: 8px 12px; width: 130px;">Host IP / Device</th>
-                  <th style="padding: 8px 12px; width: 80px;">Facility</th>
-                  <th style="padding: 8px 12px; width: 80px;">Severity</th>
-                  <th style="padding: 8px 12px; width: 180px;">Mnemonic Tag</th>
-                  <th style="padding: 8px 12px;">Raw Syslog Payload</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9; background: #fef2f2;">
-                  <td style="padding: 8px 12px; color: #64748b;">10:41:02.192</td>
-                  <td style="padding: 8px 12px; font-weight: 700; color: #0070e0;">DXB-CORE-SW-01</td>
-                  <td style="padding: 8px 12px;">local7</td>
-                  <td style="padding: 8px 12px;"><span style="color: #dc2626; font-weight: 800;">CRIT (2)</span></td>
-                  <td style="padding: 8px 12px; font-weight: 700; color: #991b1b;">%LINK-3-UPDOWN</td>
-                  <td style="padding: 8px 12px; color: #0f172a;">Interface TenGigabitEthernet1/0/48, changed state to down (carrier lost)</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9; background: #fff7ed;">
-                  <td style="padding: 8px 12px; color: #64748b;">10:41:08.411</td>
-                  <td style="padding: 8px 12px; font-weight: 700; color: #0070e0;">DXB-CORE-SW-01</td>
-                  <td style="padding: 8px 12px;">local7</td>
-                  <td style="padding: 8px 12px;"><span style="color: #ea580c; font-weight: 800;">WARN (4)</span></td>
-                  <td style="padding: 8px 12px; font-weight: 700; color: #c2410c;">%BGP-5-ADJCHANGE</td>
-                  <td style="padding: 8px 12px; color: #0f172a;">neighbor 192.168.10.1 Down: Hold timer expired</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 8px 12px; color: #64748b;">10:41:14.020</td>
-                  <td style="padding: 8px 12px; font-weight: 700; color: #0070e0;">DXB-CORE-SW-01</td>
-                  <td style="padding: 8px 12px;">local7</td>
-                  <td style="padding: 8px 12px;"><span style="color: #ea580c; font-weight: 800;">WARN (4)</span></td>
-                  <td style="padding: 8px 12px; font-weight: 700; color: #c2410c;">%OSPF-5-ADJCHANGE</td>
-                  <td style="padding: 8px 12px; color: #0f172a;">Process 1, Nbr 10.40.1.254 on Gi0/1 from FULL to DOWN, Neighbor Down: Dead timer</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 8px 12px; color: #64748b;">10:38:00.104</td>
-                  <td style="padding: 8px 12px; font-weight: 700; color: #0070e0;">NY-CORE-RTR-01</td>
-                  <td style="padding: 8px 12px;">daemon</td>
-                  <td style="padding: 8px 12px;"><span style="color: #16a34a; font-weight: 800;">NOTICE (5)</span></td>
-                  <td style="padding: 8px 12px; font-weight: 700; color: #15803d;">%SYS-5-CONFIG_I</td>
-                  <td style="padding: 8px 12px; color: #0f172a;">Configured from console by admin on vty0 (10.10.3.50)</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       ` : activeSub === 'traps' ? `
-        <!-- SUBTAB: SNMP TRAPS (IN-PAGE RECEIVER CONSOLE) -->
+        <!-- SUBTAB: SNMP TRAPS -->
         <div style="padding: 20px 24px;">
-          <!-- Trap Listener Status -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 6px;">
-                <span style="width: 7px; height: 7px; border-radius: 50%; background: #16a34a;"></span>
-                UDP 0.0.0.0:162 LISTENING
-              </span>
-              <span style="font-size: 12px; color: #475569;">Received: <strong>12,840</strong> | Processed: <strong>12,835</strong> | Dropped: <strong>5</strong> | Ingestion Rate: <strong>4.2 traps/sec</strong></span>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div style="display: flex; gap: 8px;">
-              <button id="opm-trap-sim-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Send Simulated Trap</button>
-              <button id="opm-trap-modal-open-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Open Trap Modal</button>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No SNMP Traps Received</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              OpManager Central SNMP Trap Listener is active on UDP port 162. Forward traps from your routers, switches, and firewalls to begin receiving real-time trap events.
             </div>
-          </div>
-
-          <!-- Trap Table -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                  <th style="padding: 10px 14px; width: 130px;">Timestamp</th>
-                  <th style="padding: 10px 14px; width: 140px;">Source Host / IP</th>
-                  <th style="padding: 10px 14px;">Trap OID & Enterprise MIB</th>
-                  <th style="padding: 10px 14px;">Trap Type</th>
-                  <th style="padding: 10px 14px;">Variable Bindings (Varbinds)</th>
-                  <th style="padding: 10px 14px; width: 100px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; color: #64748b;">10:41:02</td>
-                  <td style="padding: 10px 14px;"><strong>DXB-CORE-SW-01</strong><br><span style="font-size: 10px; color: #64748b;">10.40.1.1</span></td>
-                  <td style="padding: 10px 14px;">
-                    <div style="font-family: monospace; font-size: 11px; color: #dc2626;">.1.3.6.1.6.3.1.1.5.3 (linkDown)</div>
-                    <div style="font-size: 10px; color: #64748b;">MIB: IF-MIB (RFC 2863)</div>
-                  </td>
-                  <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SPECIFIC 2</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px; color: #334155;">ifIndex.48 = 48, ifAdminStatus.48 = 1(up), ifOperStatus.48 = 2(down)</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-trap-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Ack</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; color: #64748b;">10:38:00</td>
-                  <td style="padding: 10px 14px;"><strong>NY-CORE-RTR-01</strong><br><span style="font-size: 10px; color: #64748b;">10.10.1.1</span></td>
-                  <td style="padding: 10px 14px;">
-                    <div style="font-family: monospace; font-size: 11px; color: #0070e0;">.1.3.6.1.4.1.9.9.43.2.0.1 (ciscoConfigManEvent)</div>
-                    <div style="font-size: 10px; color: #64748b;">MIB: CISCO-CONFIG-MAN-MIB</div>
-                  </td>
-                  <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CONFIG EVENT</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px; color: #334155;">ccmHistoryEventCommandSource = 1(commandLine), ccmHistoryEventConfigSource = 2(running)</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-trap-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Ack</button></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       ` : activeSub === 'nfa' ? `
-        <!-- SUBTAB: NETFLOW ALARMS (Flow Analysis - thirdLevelAlarmsTab.xml) -->
-        <div style="padding: 20px 24px;">
-          <!-- KPI Summary Strip -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #dc2626;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Active Flow Alarms</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">3</div>
-              <div style="font-size: 11px; color: #dc2626; margin-top: 2px;">1 Critical Rate Anomaly</div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Max Interface Spike</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">9.2 Gbps</div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">NY-CORE-RTR-01 (TenGigE0/0/0/0)</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ca8a04;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">QoS Drop SLA Violations</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">3.4% EF Drop</div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">DXB-CORE-SW-01 (Voice Queue)</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0070e0;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Monitored Flow Sources</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">12 Interfaces</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">NetFlow v9 & IPFIX Active</div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No NetFlow Alarms</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              No flow bandwidth spikes or QoS degradation detected across flow export collectors.
             </div>
           </div>
-
-          <!-- Flow Alarms Table -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="padding: 14px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-size: 13px; font-weight: 700; color: #0f172a;">NetFlow Analyzer Traffic Alarms</div>
-              <span style="font-size: 11px; color: #64748b;">Matching model: <code>flow-analysis</code></span>
+        ` : activeSub === 'ncm' ? `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-              <thead>
-                <tr style="background: #f1f5f9; border-bottom: 1px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
-                  <th style="padding: 10px 14px;">Severity</th>
-                  <th style="padding: 10px 14px;">Time</th>
-                  <th style="padding: 10px 14px;">Target Device & Interface</th>
-                  <th style="padding: 10px 14px;">Probe Scope</th>
-                  <th style="padding: 10px 14px;">Detection Engine</th>
-                  <th style="padding: 10px 14px;">Traffic Anomaly & Threshold</th>
-                  <th style="padding: 10px 14px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">CRITICAL</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">4 mins ago</td>
-                  <td style="padding: 12px 14px;"><strong>NY-CORE-RTR-01</strong><br><span style="font-size: 11px; color: #0070e0;">TenGigE0/0/0/0 (WAN Uplink)</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">New York Data Center</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">Flow Anomaly Engine</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">WAN Inbound Traffic Spiked to <strong>9.2 Gbps</strong> (>90% bandwidth). Top App: HTTPS/QUIC. Threshold: 8.0 Gbps.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Acknowledge</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">TROUBLE</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">18 mins ago</td>
-                  <td style="padding: 12px 14px;"><strong>DXB-CORE-SW-01</strong><br><span style="font-size: 11px; color: #0070e0;">TenGigabitEthernet1/0/1</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">Dubai Campus Core</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">QoS Monitor</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">DSCP EF (Voice/Video) packet drop rate <strong>3.4%</strong> exceeding 1.0% SLA threshold.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Acknowledge</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #fef9c3; color: #854d0e; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">ATTENTION</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">1 hour ago</td>
-                  <td style="padding: 12px 14px;"><strong>LON-CORE-RTR-01</strong><br><span style="font-size: 11px; color: #0070e0;">GigabitEthernet0/0/0</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">London Branch Office</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">CBQoS Shaper</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">Class-default shaping queue buffer utilization reached <strong>84%</strong>.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Acknowledge</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ` : activeSub === 'ncm' ? `
-        <!-- SUBTAB: NCM CONFIG ALARMS (Config Management - thirdLevelAlarmsTab.xml) -->
-        <div style="padding: 20px 24px;">
-          <!-- KPI Summary Strip -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #dc2626;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Active Config Alarms</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">3</div>
-              <div style="font-size: 11px; color: #dc2626; margin-top: 2px;">1 Critical Drift Detected</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Unauthorized Drift</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">DXB-CORE-SW-01</div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Outside Maintenance Window</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ca8a04;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">CIS Compliance Violations</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">1 Benchmark Rule</div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">LON-DIST-SW-01 (Password Encryption)</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0070e0;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Config Backups Indexed</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">1,360 Versions</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">Automated TFTP/SSH Git Vault</div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Configuration Compliance Alarms</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              All managed device configurations are baseline compliant with zero unapproved changes.
             </div>
           </div>
-
-          <!-- NCM Alarms Table -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="padding: 14px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-size: 13px; font-weight: 700; color: #0f172a;">Network Configuration Manager Compliance & Drift Alarms</div>
-              <span style="font-size: 11px; color: #64748b;">Matching model: <code>config-management</code></span>
+        ` : activeSub === 'fwa' ? `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-              <thead>
-                <tr style="background: #f1f5f9; border-bottom: 1px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
-                  <th style="padding: 10px 14px;">Severity</th>
-                  <th style="padding: 10px 14px;">Time</th>
-                  <th style="padding: 10px 14px;">Device & IP Address</th>
-                  <th style="padding: 10px 14px;">Probe Scope</th>
-                  <th style="padding: 10px 14px;">Policy Engine</th>
-                  <th style="padding: 10px 14px;">Drift & Compliance Violation Details</th>
-                  <th style="padding: 10px 14px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">CRITICAL</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">12 mins ago</td>
-                  <td style="padding: 12px 14px;"><strong>DXB-CORE-SW-01</strong><br><span style="font-size: 11px; color: #64748b;">10.40.1.1</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">Dubai Campus Core</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">Config Drift Engine</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">Unauthorized running-config change detected outside maintenance window without approved change request ticket.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Rollback Config</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">TROUBLE</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">35 mins ago</td>
-                  <td style="padding: 12px 14px;"><strong>LON-DIST-SW-01</strong><br><span style="font-size: 11px; color: #64748b;">10.20.1.2</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">London Branch Office</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">CIS Benchmark Rule</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">Compliance Violation: <code>service password-encryption</code> missing or disabled in running configuration.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Remediate</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #fef9c3; color: #854d0e; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">ATTENTION</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">2 hours ago</td>
-                  <td style="padding: 12px 14px;"><strong>NY-PA-FW-01</strong><br><span style="font-size: 11px; color: #64748b;">10.10.0.1</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">New York Data Center</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">Startup-Running Sync</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">Startup config differs from Running config. Candidate commit pending in PAN-OS.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Commit Now</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ` : activeSub === 'fwa' ? `
-        <!-- SUBTAB: FIREWALL ALARMS (Firewall Logs & Rules - thirdLevelAlarmsTab.xml) -->
-        <div style="padding: 20px 24px;">
-          <!-- KPI Summary Strip -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #dc2626;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Active Firewall Alarms</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">3</div>
-              <div style="font-size: 11px; color: #dc2626; margin-top: 2px;">1 Critical SYN Flood</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">DDoS Rate Limiter</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">48,000 pkts/s</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">All Drops Enforced at Edge</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ca8a04;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Shadowed / Redundant Rules</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">1 Obsolete Rule</div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">LON-FTNT-FW-01 (#42 Shadowed)</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0070e0;">
-              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Blocked Attack Vectors</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">14 SSH Attempts</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">Auto-Quarantined in ACL</div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Security or Threat Alarms</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              Firewall threat log inspection reports zero active security incidents or attack patterns.
             </div>
           </div>
-
-          <!-- Firewall Alarms Table -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="padding: 14px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-size: 13px; font-weight: 700; color: #0f172a;">Firewall Analyzer Security Policy & Attack Alarms</div>
-              <span style="font-size: 11px; color: #64748b;">Matching model: <code>firewall-logs-rules</code></span>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-              <thead>
-                <tr style="background: #f1f5f9; border-bottom: 1px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
-                  <th style="padding: 10px 14px;">Severity</th>
-                  <th style="padding: 10px 14px;">Time</th>
-                  <th style="padding: 10px 14px;">Firewall Node</th>
-                  <th style="padding: 10px 14px;">Probe Scope</th>
-                  <th style="padding: 10px 14px;">Security Engine</th>
-                  <th style="padding: 10px 14px;">Threat Details & Mitigation</th>
-                  <th style="padding: 10px 14px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">CRITICAL</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">8 mins ago</td>
-                  <td style="padding: 12px 14px;"><strong>NY-PA-FW-01</strong><br><span style="font-size: 11px; color: #64748b;">10.10.0.1</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">New York Data Center</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">Threat Prevention</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">TCP SYN Flood attack detected targeting VIP 10.10.0.50:443. 48,000 pkts/s dropped by DoS protection profile.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #dc2626; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Blacklist Source</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">TROUBLE</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">45 mins ago</td>
-                  <td style="padding: 12px 14px;"><strong>LON-FTNT-FW-01</strong><br><span style="font-size: 11px; color: #64748b;">10.20.0.1</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">London Branch Office</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">Policy Optimizer</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">Rule #42 "Permit-DMZ-Legacy" is completely shadowed by Rule #18. Zero hits recorded in 90 days.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Optimize Rule</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #fef9c3; color: #854d0e; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">ATTENTION</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">1 hour ago</td>
-                  <td style="padding: 12px 14px;"><strong>NY-PA-FW-01</strong><br><span style="font-size: 11px; color: #64748b;">10.10.0.1</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">New York Data Center</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">Auth Security Log</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">Repeated failed administrative SSH login attempts (14 attempts from 198.51.100.24). Source quarantined in ACL.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Acknowledge</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ` : activeSub === 'oputils' ? `
+        ` : activeSub === 'oputils' ? `
         <!-- SUBTAB: OPUTILS IPAM & SPM ALARMS (thirdLevelAlarmsTab.xml) -->
         <div style="padding: 20px 24px;">
           <!-- KPI Summary Strip -->
@@ -1557,6 +1023,32 @@
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.maps || 'business';
 
+    if (state.devices.length === 0) {
+      container.innerHTML = `
+        <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 10px 24px;">
+          <span style="font-size: 14px; font-weight: 700; color: #1e293b;">Maps &amp; Business Views</span>
+        </div>
+        <div style="padding: 60px 20px; text-align: center; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; margin: 24px;">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          </div>
+          <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No Topology Mapped Yet</div>
+          <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 20px auto; line-height: 1.5;">
+            All demo devices have been cleared. Once you install the host agent or discover devices via SNMP, your network topology, 3D rack elevations, and business service views will be rendered here automatically.
+          </div>
+          <div style="display: flex; justify-content: center; gap: 10px;">
+            <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none;">
+              Windows Agent (.msi)
+            </a>
+            <a href="/downloads/install-agent.sh" download style="display: inline-flex; align-items: center; gap: 6px; background: #1e293b; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none;">
+              Linux Agent Script (.sh)
+            </a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     const subtabs = [
       { id: 'business', name: 'Business Views' },
       { id: 'floor', name: '3D Floor Views' },
@@ -1910,242 +1402,32 @@
             </div>
           </div>
         ` : activeSub === 'rack' ? `
-          <!-- 3D Rack Views: EIA-310 42U Official Elevation -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Standard 42U EIA-310 Server Rack Elevation (Rack A-02)</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Realistic enterprise chassis facings. Click any mounted equipment to inspect telemetry snapshot.</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #0070e0; background: #e0f2fe; padding: 4px 10px; border-radius: 4px;">
-                Total Load: 8.4 kW | Weight: 480 kg
-              </div>
+          <!-- 3D Rack Views -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
             </div>
-
-            <div style="max-width: 720px; margin: 0 auto; background: #1e293b; border: 4px solid #0f172a; border-radius: 6px; padding: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-              
-              <!-- 41-42U: Cisco ASR 9006 -->
-              <div class="opm-rack-unit" data-id="7" style="background: #334155; border: 1px solid #475569; border-radius: 3px; padding: 8px 14px; margin-bottom: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: #fff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-family: monospace; font-size: 11px; color: #94a3b8; font-weight: 700;">41-42U</span>
-                  <img src="/images/racks/front/Cisco-Switch-1U.png" title="Front Panel" style="width: 120px; height: 22px; object-fit: cover; border-radius: 2px;" />
-                  <img src="/images/racks/rear/Cisco-Switch-RearView-1U.png" title="Rear PSU Panel" style="width: 90px; height: 22px; object-fit: cover; border-radius: 2px; opacity: 0.9;" />
-                  <div>
-                    <div style="font-weight: 700; font-size: 12px; color: #38bdf8;">Cisco ASR 9006 Core Aggregation (NY-CORE-RTR-01)</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">Front: 48x 10GE Linecard | Rear: Dual Redundant AC PSUs</div>
-                  </div>
-                </div>
-                <span style="font-size: 10px; font-weight: 700; background: #166534; color: #dcfce7; padding: 2px 6px; border-radius: 2px;">CLEAR</span>
-              </div>
-
-              <!-- 39-40U: NetApp Storage -->
-              <div class="opm-rack-unit" data-id="5" style="background: #334155; border: 1px solid #475569; border-radius: 3px; padding: 8px 14px; margin-bottom: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: #fff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-family: monospace; font-size: 11px; color: #94a3b8; font-weight: 700;">39-40U</span>
-                  <img src="/images/racks/front/HP-Server-1U.png" title="Front Panel" style="width: 120px; height: 22px; object-fit: cover; border-radius: 2px;" />
-                  <img src="/images/racks/rear/HP-Server-RearView-1U.png" title="Rear Controller Panel" style="width: 90px; height: 22px; object-fit: cover; border-radius: 2px; opacity: 0.9;" />
-                  <div>
-                    <div style="font-weight: 700; font-size: 12px; color: #38bdf8;">NetApp AFF A400 NVMe All-Flash SAN Storage</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">Front: 24x NVMe SSD Bays | Rear: Dual HA Storage Controllers</div>
-                  </div>
-                </div>
-                <span style="font-size: 10px; font-weight: 700; background: #854d0e; color: #fef9c3; padding: 2px 6px; border-radius: 2px;">ATTENTION</span>
-              </div>
-
-              <!-- 37-38U: Dell PowerEdge R750 -->
-              <div class="opm-rack-unit" data-id="2" style="background: #334155; border: 1px solid #475569; border-radius: 3px; padding: 8px 14px; margin-bottom: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: #fff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-family: monospace; font-size: 11px; color: #94a3b8; font-weight: 700;">37-38U</span>
-                  <img src="/images/racks/front/DellServer_1U.png" title="Front Panel" style="width: 120px; height: 22px; object-fit: cover; border-radius: 2px;" />
-                  <img src="/images/racks/rear/Dell-Server-RearView-1U.png" title="Rear iDRAC & PSU Panel" style="width: 90px; height: 22px; object-fit: cover; border-radius: 2px; opacity: 0.9;" />
-                  <div>
-                    <div style="font-weight: 700; font-size: 12px; color: #38bdf8;">Dell PowerEdge R750 (NY-DB-PROD-SQL)</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">Front: PERC RAID Bays | Rear: iDRAC9 Enterprise &amp; Dual 1400W PSU</div>
-                  </div>
-                </div>
-                <span style="font-size: 10px; font-weight: 700; background: #9a3412; color: #ffedd5; padding: 2px 6px; border-radius: 2px;">TROUBLE</span>
-              </div>
-
-              <!-- 35-36U: Patch Panel -->
-              <div style="background: #0f172a; border: 1px dashed #334155; padding: 6px 14px; margin-bottom: 6px; font-family: monospace; font-size: 10px; color: #64748b; display: flex; align-items: center; justify-content: space-between;">
-                <span>35-36U Optical Patch Panel &amp; Cable Organizer</span>
-                <img src="/images/racks/peripherals/patchPanel.png" style="width: 180px; height: 18px; object-fit: cover;" />
-              </div>
-
-              <!-- 33-34U: Cisco Catalyst 9500 (DXB-CORE-SW-01) -->
-              <div class="opm-rack-unit" data-id="1" style="background: #450a0a; border: 1px solid #dc2626; border-radius: 3px; padding: 8px 14px; margin-bottom: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: #fff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-family: monospace; font-size: 11px; color: #f87171; font-weight: 700;">33-34U</span>
-                  <img src="/images/racks/front/Cisco-Switch-1U.png" title="Front Panel" style="width: 120px; height: 22px; object-fit: cover; border-radius: 2px;" />
-                  <img src="/images/racks/rear/Cisco-Switch-RearView-1U.png" title="Rear Exhaust & PSU Panel" style="width: 90px; height: 22px; object-fit: cover; border-radius: 2px; opacity: 0.9;" />
-                  <div>
-                    <div style="font-weight: 700; font-size: 12px; color: #fca5a5;">Cisco Catalyst 9500-48Y4C (DXB-CORE-SW-01)</div>
-                    <div style="font-size: 10px; color: #fecaca;">Front: 48x 25G SFP28 | Rear: Fan Tray 2 RPM Degraded Alert</div>
-                  </div>
-                </div>
-                <span style="font-size: 10px; font-weight: 700; background: #dc2626; color: #fff; padding: 2px 6px; border-radius: 2px;">CRITICAL</span>
-              </div>
-
-              <!-- 31-32U: Cisco Nexus 93180YC-FX -->
-              <div class="opm-rack-unit" data-id="8" style="background: #334155; border: 1px solid #475569; border-radius: 3px; padding: 8px 14px; margin-bottom: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: #fff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-family: monospace; font-size: 11px; color: #94a3b8; font-weight: 700;">31-32U</span>
-                  <img src="/images/racks/front/Cisco-Switch-1U.png" title="Front Panel" style="width: 120px; height: 22px; object-fit: cover; border-radius: 2px;" />
-                  <img src="/images/racks/rear/Cisco-Switch-RearView-1U.png" title="Rear Panel" style="width: 90px; height: 22px; object-fit: cover; border-radius: 2px; opacity: 0.9;" />
-                  <div>
-                    <div style="font-weight: 700; font-size: 12px; color: #38bdf8;">Cisco Nexus 93180YC-FX (NY-NEXUS-SW-01)</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">Front: Spine-Leaf VXLAN Fabric | Rear: Hot-Swappable N+1 Fans</div>
-                  </div>
-                </div>
-                <span style="font-size: 10px; font-weight: 700; background: #16a34a; color: #dcfce7; padding: 2px 6px; border-radius: 2px;">CLEAR</span>
-              </div>
-
-              <!-- 30U: Palo Alto Firewall -->
-              <div class="opm-rack-unit" data-id="4" style="background: #334155; border: 1px solid #475569; border-radius: 3px; padding: 8px 14px; margin-bottom: 6px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: #fff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-family: monospace; font-size: 11px; color: #94a3b8; font-weight: 700;">30U</span>
-                  <img src="/images/racks/front/VMware-Server-1U.png" title="Front Panel" style="width: 120px; height: 22px; object-fit: cover; border-radius: 2px;" />
-                  <img src="/images/racks/rear/VMware-Server-RearView-1U.png" title="Rear HA Ports" style="width: 90px; height: 22px; object-fit: cover; border-radius: 2px; opacity: 0.9;" />
-                  <div>
-                    <div style="font-weight: 700; font-size: 12px; color: #38bdf8;">Palo Alto PA-5250 Next-Gen FW (NY-PA-FW-01)</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">Front: 40G Threat Prevention | Rear: HA1/HA2 Heartbeat Links</div>
-                  </div>
-                </div>
-                <span style="font-size: 10px; font-weight: 700; background: #854d0e; color: #fef9c3; padding: 2px 6px; border-radius: 2px;">ATTENTION</span>
-              </div>
-
-              <!-- 1U-4U: Schneider APC UPS -->
-              <div class="opm-rack-unit" data-id="5" style="background: #1e3a1e; border: 1px solid #16a34a; border-radius: 3px; padding: 12px 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: #fff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-family: monospace; font-size: 11px; color: #86efac; font-weight: 700;">1-4U</span>
-                  <img src="/images/racks/peripherals/powerStrip.png" style="width: 140px; height: 22px; object-fit: cover; border-radius: 2px;" />
-                  <div>
-                    <div style="font-weight: 700; font-size: 12px; color: #86efac;">Schneider Galaxy 3500 40kVA UPS Battery</div>
-                    <div style="font-size: 10px; color: #bbf7d0;">Online Double-Conversion | 42 Mins Runtime</div>
-                  </div>
-                </div>
-                <span style="font-size: 10px; font-weight: 700; background: #16a34a; color: #fff; padding: 2px 6px; border-radius: 2px;">ONLINE</span>
-              </div>
-
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No 3D Datacenter Racks Configured</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">
+              Create 3D datacenter racks and mount servers, switches, and UPS units to visualize rack space, thermal capacity, and front/rear port connectivity.
             </div>
+            <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+              + Create New Rack
+            </button>
           </div>
         ` : activeSub === 'layer2' ? `
-          <!-- Layer 2 Maps: Authentic ManageEngine Radial Switch-to-Port STP Topology Map (layer2_sample.jpg style) -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Layer 2 Radial Switch-to-Port Topology & Spanning Tree (Rapid-PVST+)</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Discovered via CDP / LLDP / BRIDGE-MIB from Seed Router 10.40.1.1 (DXB-CORE-SW-01). Click any node to open Device Snapshot.</div>
-              </div>
-              <div style="display: flex; gap: 14px; font-size: 11px; align-items: center;">
-                <span style="color: #16a34a; font-weight: 700;">● Forwarding (Designated/Root Port)</span>
-                <span style="color: #ea580c; font-weight: 700;">● STP Blocked (Loop Prevention)</span>
-                <span style="color: #dc2626; font-weight: 700;">● Link Down / Critical</span>
-              </div>
+          <!-- Layer 2 Maps -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><circle cx="12" cy="6" r="3"/><line x1="12" y1="9" x2="6" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
             </div>
-
-            <!-- ManageEngine Layer 2 Radial SVG Topology Canvas -->
-            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; position: relative; height: 440px; overflow: hidden;">
-              <svg width="100%" height="100%" viewBox="0 0 900 440">
-                <!-- Radial Spokes from Root Bridge (450, 220) -->
-                <!-- Spoke 1: Root to NY-NEXUS-SW-01 (170, 90) -->
-                <line x1="450" y1="220" x2="170" y2="90" stroke="#16a34a" stroke-width="2" />
-                <rect x="275" y="138" width="66" height="16" rx="2" fill="#f8fafc" stroke="#cbd5e1" />
-                <text x="308" y="149" text-anchor="middle" fill="#0f172a" font-size="9.5" font-family="monospace" font-weight="bold">Te1/0/1 (1)</text>
-
-                <!-- Spoke 2: Root to LON-DIST-SW-01 (730, 90) -->
-                <line x1="450" y1="220" x2="730" y2="90" stroke="#16a34a" stroke-width="2" />
-                <rect x="558" y="138" width="66" height="16" rx="2" fill="#f8fafc" stroke="#cbd5e1" />
-                <text x="591" y="149" text-anchor="middle" fill="#0f172a" font-size="9.5" font-family="monospace" font-weight="bold">Te1/0/2 (2)</text>
-
-                <!-- Spoke 3: Root to NY-CORE-RTR-01 (140, 240) -->
-                <line x1="450" y1="220" x2="140" y2="240" stroke="#16a34a" stroke-width="2" />
-                <rect x="265" y="220" width="66" height="16" rx="2" fill="#f8fafc" stroke="#cbd5e1" />
-                <text x="298" y="231" text-anchor="middle" fill="#0f172a" font-size="9.5" font-family="monospace" font-weight="bold">Gi0/1 (14)</text>
-
-                <!-- Spoke 4: Root to NY-PA-FW-01 (760, 240) -->
-                <line class="opm-packet-flow" x1="450" y1="220" x2="760" y2="240" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5 3" />
-                <rect x="572" y="220" width="82" height="16" rx="2" fill="#fef2f2" stroke="#fca5a5" />
-                <text x="613" y="231" text-anchor="middle" fill="#dc2626" font-size="9.5" font-family="monospace" font-weight="bold">Fo1/0/48 (48)</text>
-
-                <!-- Spoke 5: Root to SG-LEAF-SW-01 (220, 365) -->
-                <line class="opm-packet-flow" x1="450" y1="220" x2="220" y2="365" stroke="#ea580c" stroke-width="2" stroke-dasharray="4 3" />
-                <rect x="295" y="285" width="76" height="16" rx="2" fill="#fff7ed" stroke="#fdba74" />
-                <text x="333" y="296" text-anchor="middle" fill="#ea580c" font-size="9.5" font-family="monospace" font-weight="bold">Eth1/2 [BLK]</text>
-
-                <!-- Spoke 6: Root to NY-DB-PROD-SQL (680, 365) -->
-                <line x1="450" y1="220" x2="680" y2="365" stroke="#16a34a" stroke-width="2" />
-                <rect x="530" y="285" width="66" height="16" rx="2" fill="#f8fafc" stroke="#cbd5e1" />
-                <text x="563" y="296" text-anchor="middle" fill="#0f172a" font-size="9.5" font-family="monospace" font-weight="bold">Gi0/24 (24)</text>
-
-                <!-- Redundant L2 Ring between NY-NEXUS-SW-01 (170, 90) and SG-LEAF-SW-01 (220, 365) -->
-                <line class="opm-packet-flow" x1="170" y1="90" x2="220" y2="365" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3" />
-
-                <!-- CENTER ROOT BRIDGE NODE (Peach Box matching layer2_sample.jpg) -->
-                <g class="opm-l2-node" data-id="1" style="cursor: pointer;">
-                  <rect x="380" y="182" width="140" height="74" rx="6" fill="#fed7aa" stroke="#ea580c" stroke-width="2.5" />
-                  <image href="/images/deviceicons/cisco_catalyst_3550.png" x="436" y="190" width="28" height="28" />
-                  <text x="450" y="232" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="bold">DXB-CORE-SW-01</text>
-                  <text x="450" y="246" text-anchor="middle" fill="#9a3412" font-size="9.5" font-weight="bold">ROOT BRIDGE (10.40.1.1)</text>
-                </g>
-
-                <!-- SPOKE NODE 1: NY-NEXUS-SW-01 (170, 90) -->
-                <g class="opm-l2-node" data-id="8" style="cursor: pointer;">
-                  <circle cx="170" cy="78" r="22" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
-                  <image href="/images/deviceicons/cisco_catalyst_3550.png" x="158" y="66" width="24" height="24" />
-                  <text x="170" y="114" text-anchor="middle" fill="#0f172a" font-size="10.5" font-weight="bold">NY-NEXUS-SW-01</text>
-                  <text x="170" y="126" text-anchor="middle" fill="#64748b" font-size="9.5">10.10.2.10</text>
-                </g>
-
-                <!-- SPOKE NODE 2: LON-DIST-SW-01 (730, 90) -->
-                <g class="opm-l2-node" data-id="3" style="cursor: pointer;">
-                  <circle cx="730" cy="78" r="22" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
-                  <image href="/images/deviceicons/switch.png" x="718" y="66" width="24" height="24" />
-                  <text x="730" y="114" text-anchor="middle" fill="#0f172a" font-size="10.5" font-weight="bold">LON-DIST-SW-01</text>
-                  <text x="730" y="126" text-anchor="middle" fill="#64748b" font-size="9.5">10.20.1.2</text>
-                </g>
-
-                <!-- SPOKE NODE 3: NY-CORE-RTR-01 (140, 240) -->
-                <g class="opm-l2-node" data-id="7" style="cursor: pointer;">
-                  <circle cx="140" cy="228" r="22" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
-                  <image href="/images/deviceicons/router.png" x="128" y="216" width="24" height="24" />
-                  <text x="140" y="264" text-anchor="middle" fill="#0f172a" font-size="10.5" font-weight="bold">NY-CORE-RTR-01</text>
-                  <text x="140" y="276" text-anchor="middle" fill="#64748b" font-size="9.5">10.10.0.1</text>
-                </g>
-
-                <!-- SPOKE NODE 4: NY-PA-FW-01 (760, 240) -->
-                <g class="opm-l2-node" data-id="4" style="cursor: pointer;">
-                  <circle cx="760" cy="228" r="22" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
-                  <image href="/images/deviceicons/firewall.png" x="748" y="216" width="24" height="24" />
-                  <text x="760" y="264" text-anchor="middle" fill="#dc2626" font-size="10.5" font-weight="bold">NY-PA-FW-01</text>
-                  <text x="760" y="276" text-anchor="middle" fill="#64748b" font-size="9.5">10.10.1.1</text>
-                </g>
-
-                <!-- SPOKE NODE 5: SG-LEAF-SW-01 (220, 365) -->
-                <g class="opm-l2-node" data-id="6" style="cursor: pointer;">
-                  <circle cx="220" cy="353" r="22" fill="#fff7ed" stroke="#ea580c" stroke-width="2" />
-                  <image href="/images/deviceicons/switch.png" x="208" y="341" width="24" height="24" />
-                  <text x="220" y="389" text-anchor="middle" fill="#0f172a" font-size="10.5" font-weight="bold">SG-LEAF-SW-01</text>
-                  <text x="220" y="401" text-anchor="middle" fill="#ea580c" font-size="9.5">STP Alt Port Blocked</text>
-                </g>
-
-                <!-- SPOKE NODE 6: NY-DB-PROD-SQL (680, 365) -->
-                <g class="opm-l2-node" data-id="2" style="cursor: pointer;">
-                  <circle cx="680" cy="353" r="22" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
-                  <image href="/images/deviceicons/windows.png" x="668" y="341" width="24" height="24" />
-                  <text x="680" y="389" text-anchor="middle" fill="#0f172a" font-size="10.5" font-weight="bold">NY-DB-PROD-SQL</text>
-                  <text x="680" y="401" text-anchor="middle" fill="#64748b" font-size="9.5">10.10.3.50</text>
-                </g>
-              </svg>
-
-              <!-- Authentic ManageEngine Floating Dark Node Details Tooltip Card (matching layer2_sample.jpg) -->
-              <div style="position: absolute; bottom: 16px; left: 16px; background: rgba(33, 33, 33, 0.94); color: #ffffff; padding: 12px 16px; border-radius: 4px; font-size: 11px; line-height: 1.65; box-shadow: 0 8px 20px rgba(0,0,0,0.25); border-left: 3px solid #49bd80;">
-                <div><strong style="color: #94a3b8;">Name :</strong> DXB-CORE-SW-01.enterprise.corp</div>
-                <div><strong style="color: #94a3b8;">IpAddress :</strong> 10.40.1.1</div>
-                <div><strong style="color: #94a3b8;">Category :</strong> Switch (Root Bridge Priority 4096)</div>
-                <div><strong style="color: #94a3b8;">DeviceType :</strong> Cisco Catalyst 9500-48Y4C</div>
-              </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Layer 2 Network Topology Discovered</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">
+              Run Layer 2 Discovery or add network switches via SNMP to automatically map physical switch-to-port connections, VLAN trunks, and Spanning Tree topology.
             </div>
+            <button id="opm-run-l2-discovery-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+              Run Layer 2 Discovery
+            </button>
           </div>
         ` : `
           <!-- Global Probes WAN World Map (ManageEngine Central Flagship View) -->

@@ -259,14 +259,7 @@ router.get('/api/json/device/categories', (req, res) => {
 // -------------------------------------------------------------
 // VIRTUALIZATION INVENTORY (OPM/Virtualization.xml -> /Inventory/List/Virtualization/*)
 // -------------------------------------------------------------
-const VIRTUAL_MACHINES = [
-  { id: 'VM-101', name: 'lon-exch-mbx-01', hypervisor: 'VMware ESXi 8.0', cluster: 'LON-CLUSTER-01', type: 'vmware', probe: 'London Branch Office', probeId: 2, guestOs: 'Windows Server 2022', vCpu: 8, vRamGB: 32, diskGB: 500, ip: '10.20.3.11', status: 'Running', cpuPct: 42.1, ramPct: 68.4, uptime: '124 days' },
-  { id: 'VM-102', name: 'lon-exch-cas-01', hypervisor: 'VMware ESXi 8.0', cluster: 'LON-CLUSTER-01', type: 'vmware', probe: 'London Branch Office', probeId: 2, guestOs: 'Windows Server 2022', vCpu: 4, vRamGB: 16, diskGB: 120, ip: '10.20.3.12', status: 'Running', cpuPct: 28.5, ramPct: 54.0, uptime: '124 days' },
-  { id: 'VM-103', name: 'pve-web-frontend-01', hypervisor: 'Proxmox VE 8.1', cluster: 'PVE-HA-CLUSTER', type: 'proxmox', probe: 'Dubai Campus Core', probeId: 4, guestOs: 'Debian 12 Bookworm', vCpu: 4, vRamGB: 8, diskGB: 80, ip: '10.40.5.10', status: 'Running', cpuPct: 18.2, ramPct: 41.5, uptime: '89 days' },
-  { id: 'VM-104', name: 'pve-redis-cache-01', hypervisor: 'Proxmox VE 8.1', cluster: 'PVE-HA-CLUSTER', type: 'proxmox', probe: 'Dubai Campus Core', probeId: 4, guestOs: 'Debian 12 Bookworm', vCpu: 2, vRamGB: 4, diskGB: 40, ip: '10.40.5.11', status: 'Running', cpuPct: 9.4, ramPct: 32.0, uptime: '89 days' },
-  { id: 'VM-105', name: 'ntnx-analytics-worker-01', hypervisor: 'Nutanix AHV', cluster: 'PRISM-CENTRAL-01', type: 'nutanix', probe: 'New York Data Center', probeId: 1, guestOs: 'Red Hat Enterprise Linux 9.2', vCpu: 16, vRamGB: 64, diskGB: 1200, ip: '10.10.8.20', status: 'Running', cpuPct: 64.8, ramPct: 78.1, uptime: '45 days' },
-  { id: 'VM-106', name: 'k8s-pod-auth-api', hypervisor: 'Kubernetes Container', cluster: 'SG-K8S-MSTR-01', type: 'containers', probe: 'Singapore Cloud VPC', probeId: 3, guestOs: 'Alpine Linux (Container)', vCpu: 2, vRamGB: 4, diskGB: 20, ip: '10.30.4.15', status: 'Running', cpuPct: 12.0, ramPct: 24.5, uptime: '14 days' }
-];
+const VIRTUAL_MACHINES = [];
 
 router.get(['/api/inventory/virtualization', '/inventory/virtualization'], (req, res) => {
   const { type = 'all', probeId } = req.query;
@@ -280,18 +273,18 @@ router.get(['/api/inventory/virtualization', '/inventory/virtualization'], (req,
 
   res.json({
     status: 'success',
-    total: 84,
+    total: list.length,
     vmsCount: list.length,
     vms: list,
     summary: {
-      totalVMs: 84,
-      totalVCPUs: 348,
-      totalMemoryTB: 1.4,
+      totalVMs: list.length,
+      totalVCPUs: 0,
+      totalMemoryTB: 0,
       hypervisors: {
-        vmware: 42,
-        proxmox: 24,
-        nutanix: 10,
-        containers: 8
+        vmware: 0,
+        proxmox: 0,
+        nutanix: 0,
+        containers: 0
       }
     }
   });
@@ -300,18 +293,12 @@ router.get(['/api/inventory/virtualization', '/inventory/virtualization'], (req,
 // -------------------------------------------------------------
 // FIREWALL POLICY RULES INVENTORY (FWA/secondaryLevelMenuTab.xml -> /Inventory/List/LogMgmt/Rulemgmt)
 // -------------------------------------------------------------
-const FIREWALL_RULES = [
-  { id: 'RULE-01', name: 'Permit-HTTPS-Inbound', firewall: 'NY-PA-FW-01', probe: 'New York Data Center', srcZone: 'Untrust (WAN)', dstZone: 'DMZ', service: 'TCP/443', action: 'Permit', hits: 14820194, status: 'Active (Optimized)', shadowed: false },
-  { id: 'RULE-02', name: 'Drop-Telnet-Inbound', firewall: 'NY-PA-FW-01', probe: 'New York Data Center', srcZone: 'Any', dstZone: 'Internal', service: 'TCP/23', action: 'Deny (Drop)', hits: 84920, status: 'Active (Security Best Practice)', shadowed: false },
-  { id: 'RULE-18', name: 'Permit-Corporate-VPN', firewall: 'LON-FTNT-FW-01', probe: 'London Branch Office', srcZone: 'WAN', dstZone: 'Corporate-LAN', service: 'UDP/500,4500 (IPsec)', action: 'Permit', hits: 928410, status: 'Active', shadowed: false },
-  { id: 'RULE-42', name: 'Permit-DMZ-Legacy', firewall: 'LON-FTNT-FW-01', probe: 'London Branch Office', srcZone: 'WAN', dstZone: 'DMZ', service: 'TCP/8080', action: 'Permit', hits: 0, status: 'Shadowed by Rule #18 (Zero Hits 90d)', shadowed: true },
-  { id: 'RULE-64', name: 'Permit-BGP-Peer-Transit', firewall: 'DXB-CORE-SW-01', probe: 'Dubai Campus Core', srcZone: 'WAN-Transit', dstZone: 'Loopback0', service: 'TCP/179', action: 'Permit', hits: 489201, status: 'Active', shadowed: false }
-];
+const FIREWALL_RULES = [];
 
 router.get(['/api/inventory/firewall-rules', '/inventory/firewall-rules'], (req, res) => {
   res.json({
     status: 'success',
-    totalRules: 142,
+    totalRules: FIREWALL_RULES.length,
     rules: FIREWALL_RULES
   });
 });

@@ -6,6 +6,29 @@
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.configuration || 'compliance';
 
+    if (state.devices.length === 0) {
+      container.innerHTML = `
+        <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 12px 24px;">
+          <span style="font-size: 14px; font-weight: 700; color: #1e293b;">Network Configuration &amp; Compliance Management (NCM)</span>
+        </div>
+        <div style="padding: 60px 20px; text-align: center; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; margin: 24px;">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No Devices Configured for NCM</div>
+          <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 20px auto; line-height: 1.5;">
+            All demo device configurations have been cleared. Once you discover Cisco, HP, Fortinet, or Juniper network devices, automated configuration backups, compliance audits, and live drift diffs will display here.
+          </div>
+          <div style="display: flex; justify-content: center; gap: 10px;">
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Network Device
+            </button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     const subtabs = [
       { id: 'compliance', name: 'Compliance' },
       { id: 'changes', name: 'Config Changes & Drift' },
@@ -155,272 +178,37 @@
           </div>
 
           <!-- Compliance Violations Table -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-              <span>Active Compliance Policy Violations & Audits</span>
-              <span style="font-size: 11px; color: #64748b; display: flex; align-items: center; gap: 10px;">
-                <span style="display: inline-flex; align-items: center; gap: 4px;"><img src="/apiclient/fluidicv2/img/ncm/critical_ico.gif" style="width: 12px; height: 12px;" /> Critical</span>
-                <span style="display: inline-flex; align-items: center; gap: 4px;"><img src="/apiclient/fluidicv2/img/ncm/major_ico.gif" style="width: 12px; height: 12px;" /> Major</span>
-                <span style="display: inline-flex; align-items: center; gap: 4px;"><img src="/apiclient/fluidicv2/img/ncm/compliant_ico.gif" style="width: 12px; height: 12px;" /> Compliant</span>
-              </span>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                  <th style="padding: 10px 14px;">Rule Name</th>
-                  <th style="padding: 10px 14px;">Standard</th>
-                  <th style="padding: 10px 14px;">Device</th>
-                  <th style="padding: 10px 14px;">Severity</th>
-                  <th style="padding: 10px 14px;">Status</th>
-                  <th style="padding: 10px 14px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Password Encryption Missing (service password-encryption)</td>
-                  <td style="padding: 10px 14px; color: #64748b;">CIS Cisco IOS 1.2</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">DXB-CORE-SW-01</td>
-                  <td style="padding: 10px 14px;"><span style="display: inline-flex; align-items: center; gap: 4px; background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;"><img src="/apiclient/fluidicv2/img/ncm/critical_ico.gif" style="width: 11px; height: 11px;" /> CRITICAL</span></td>
-                  <td style="padding: 10px 14px; color: #dc2626; font-weight: 600; display: flex; align-items: center; gap: 5px;"><img src="/apiclient/fluidicv2/img/ncm/violation_ico.gif" style="width: 13px; height: 13px;" /> Non-Compliant</td>
-                  <td style="padding: 10px 14px; text-align: right;">
-                    <button class="opm-remediate-btn" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Execute Fixlet</button>
-                  </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">SNMP Community String 'public' in use</td>
-                  <td style="padding: 10px 14px; color: #64748b;">PCI-DSS 4.0 (Req 2.1)</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">LON-DIST-SW-01</td>
-                  <td style="padding: 10px 14px;"><span style="display: inline-flex; align-items: center; gap: 4px; background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;"><img src="/apiclient/fluidicv2/img/ncm/major_ico.gif" style="width: 11px; height: 11px;" /> MAJOR</span></td>
-                  <td style="padding: 10px 14px; color: #ea580c; font-weight: 600; display: flex; align-items: center; gap: 5px;"><img src="/apiclient/fluidicv2/img/ncm/violation_ico.gif" style="width: 13px; height: 13px;" /> Non-Compliant</td>
-                  <td style="padding: 10px 14px; text-align: right;">
-                    <button class="opm-remediate-btn" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Execute Fixlet</button>
-                  </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">SSH Protocol Version 2 Mandatory (ip ssh version 2)</td>
-                  <td style="padding: 10px 14px; color: #64748b;">HIPAA Security §164.312</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">NY-CORE-RTR-01</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">LOW</span></td>
-                  <td style="padding: 10px 14px; color: #16a34a; font-weight: 600; display: flex; align-items: center; gap: 5px;"><img src="/apiclient/fluidicv2/img/ncm/compliant_ico.gif" style="width: 13px; height: 13px;" /> Compliant</td>
-                  <td style="padding: 10px 14px; text-align: right;">
-                    <span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Verified</span>
-                  </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Syslog Audit Trail Forwarding Enabled (logging host 10.0.0.10)</td>
-                  <td style="padding: 10px 14px; color: #64748b;">SOX Section 404</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">NY-PA-FW-01</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">LOW</span></td>
-                  <td style="padding: 10px 14px; color: #16a34a; font-weight: 600; display: flex; align-items: center; gap: 5px;"><img src="/apiclient/fluidicv2/img/ncm/compliant_ico.gif" style="width: 13px; height: 13px;" /> Compliant</td>
-                  <td style="padding: 10px 14px; text-align: right;">
-                    <span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Verified</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Side-by-Side: Live NCM Config Diff + Official NCM Compliance Rule Evaluation Flowchart -->
-          <div style="margin-top: 18px; display: grid; grid-template-columns: 1.35fr 1fr; gap: 16px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Live NCM Config Drift Diff: DXB-CORE-SW-01</div>
-                  <div style="font-size: 11px; color: #64748b;">Startup-Config (NVRAM) vs Running-Config (RAM)</div>
-                </div>
-                <span style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px; display: inline-flex; align-items: center; gap: 4px;">
-                  <img src="/apiclient/fluidicv2/img/ncm/unauthorized_change_ico.gif" style="width: 12px; height: 12px;" /> 1 Unsaved Drift
-                </span>
-              </div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #0f172a; border-radius: 4px; padding: 12px; font-family: monospace; font-size: 11px; color: #f8fafc;">
-                <div>
-                  <div style="color: #94a3b8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 6px;">STARTUP-CONFIG (NVRAM)</div>
-                  <div style="line-height: 1.5; color: #cbd5e1;">
-                    <div>hostname DXB-CORE-SW-01</div>
-                    <div>interface TenGigabitEthernet1/0/48</div>
-                    <div> description Core Uplink</div>
-                    <div> switchport mode trunk</div>
-                    <div style="background: rgba(220, 38, 38, 0.25); color: #fca5a5; padding: 1px 4px; border-left: 3px solid #dc2626;">- no shutdown</div>
-                    <div>snmp-server community *** RO</div>
-                  </div>
-                </div>
-                <div>
-                  <div style="color: #94a3b8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 6px;">RUNNING-CONFIG (RAM)</div>
-                  <div style="line-height: 1.5; color: #cbd5e1;">
-                    <div>hostname DXB-CORE-SW-01</div>
-                    <div>interface TenGigabitEthernet1/0/48</div>
-                    <div> description Core Uplink [MAINT]</div>
-                    <div> switchport mode trunk</div>
-                    <div style="background: rgba(22, 163, 74, 0.25); color: #86efac; padding: 1px 4px; border-left: 3px solid #16a34a;">+ shutdown</div>
-                    <div>snmp-server community *** RO</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Official ManageEngine NCM Block Compliance Evaluation Logic Diagram -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <div style="font-size: 13px; font-weight: 800; color: #0f172a;">NCM Block Rule Verification Flow</div>
-                <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Iterative interface block parser (CIS &amp; PCI-DSS Engine)</div>
-              </div>
-              <div style="text-align: center; padding: 8px 0;">
-                <img src="/apiclient/fluidicv2/img/ncm/compliance/sample_2.png" style="max-width: 100%; max-height: 155px; object-fit: contain;" />
-              </div>
-              <div style="font-size: 10px; color: #64748b; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 6px;">
-                Block Start: <code style="color: #0f172a;">interface .*</code> &rarr; Must Contain: <code style="color: #16a34a;">no ip redirects</code>
-              </div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">All Managed Configurations Baseline Compliant</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              No compliance violations detected. Enroll network switches, routers, and firewalls in NCM to audit against CIS, PCI-DSS, and SOX security benchmarks.
             </div>
           </div>
-        ` : activeSub === 'changes' ? `
-          <!-- Official NCM All Config Changes [ 1360 ] & Conflict Diff Circles (ncm_sample_data.png) -->
-          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; margin-bottom: 16px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <div style="font-size: 13px; font-weight: 800; color: #0f172a;">All Config Changes [ <span style="color: #0284c7;">1360</span> ]</div>
-                <span style="font-size: 11px; color: #64748b;">Real-Time Syslog &amp; SSH Change Audit</span>
-              </div>
-              <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                <thead>
-                  <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left; background: #f8fafc;">
-                    <th style="padding: 6px;">Captured on</th>
-                    <th style="padding: 6px;">Host name</th>
-                    <th style="padding: 6px;">Version</th>
-                    <th style="padding: 6px;">Changed by</th>
-                    <th style="padding: 6px;">Config type</th>
-                    <th style="padding: 6px;">Change Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 6px; font-family: monospace; color: #0284c7;">08 Nov 06:40:12</td>
-                    <td style="padding: 6px; font-weight: 700; color: #0070e0;">DXB-CORE-SW-01</td>
-                    <td style="padding: 6px; font-weight: 700;">14 <img src="/apiclient/fluidicv2/img/ncm/icon_editlabel.gif" style="width:11px;vertical-align:middle;"></td>
-                    <td style="padding: 6px;">admin</td>
-                    <td style="padding: 6px;">Running</td>
-                    <td style="padding: 6px; color: #dc2626; font-weight: 700;"><img src="/apiclient/fluidicv2/img/ncm/unauthorized_change_ico.gif" style="width:12px;vertical-align:middle;"> Unauthorized</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 6px; font-family: monospace; color: #0284c7;">08 Nov 05:15:00</td>
-                    <td style="padding: 6px; font-weight: 700; color: #0070e0;">NY-CORE-RTR-01</td>
-                    <td style="padding: 6px; font-weight: 700;">42 <img src="/apiclient/fluidicv2/img/ncm/icon_editlabel.gif" style="width:11px;vertical-align:middle;"></td>
-                    <td style="padding: 6px;">netops_ci</td>
-                    <td style="padding: 6px;">Startup</td>
-                    <td style="padding: 6px; color: #16a34a; font-weight: 700;">Authorized</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 6px; font-family: monospace; color: #0284c7;">08 Nov 03:30:44</td>
-                    <td style="padding: 6px; font-weight: 700; color: #0070e0;">NY-PA-FW-01</td>
-                    <td style="padding: 6px; font-weight: 700;">29 <img src="/apiclient/fluidicv2/img/ncm/icon_editlabel.gif" style="width:11px;vertical-align:middle;"></td>
-                    <td style="padding: 6px;">sec_admin</td>
-                    <td style="padding: 6px;">Running</td>
-                    <td style="padding: 6px; color: #16a34a; font-weight: 700;">Authorized</td>
-                  </tr>
-                </tbody>
-              </table>
+        </div>
+      ` : activeSub === 'changes' ? `
+          <!-- Official NCM All Config Changes -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; align-items: center;">
-              <div style="border-right: 1px solid #f1f5f9; padding-right: 8px;">
-                <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 10px;">Startup Running Conflict Diff</div>
-                <div style="display: flex; justify-content: center; gap: 10px;">
-                  <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #49bd80; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">34</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Added</div></div>
-                  <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #38bdf8; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">100</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Modified</div></div>
-                  <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #f87171; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">0</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Deleted</div></div>
-                </div>
-              </div>
-              <div>
-                <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 10px;">Diff with Baseline</div>
-                <div style="display: flex; justify-content: center; gap: 10px;">
-                  <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #49bd80; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">54</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Added</div></div>
-                  <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #38bdf8; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">1k</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Modified</div></div>
-                  <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #f87171; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">7</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Deleted</div></div>
-                </div>
-              </div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Configuration Changes Detected</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              All startup and running configurations across managed devices are in-sync with 0 bytes drift.
             </div>
-          </div>
-
-          <!-- Config Changes & NCM Drift Side-by-Side Diff Viewer -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-              <div>
-                <div style="font-size: 14px; font-weight: 800; color: ${state.configDriftFixed ? '#16a34a' : '#0f172a'};">${state.configDriftFixed ? '✔ Configuration Status: Synchronized (In-Sync)' : 'Configuration Drift Detected: DXB-CORE-SW-01'}</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">${state.configDriftFixed ? 'Startup configuration in NVRAM matches Running configuration in RAM (0 bytes delta).' : 'Running-config in RAM differs from Startup-config stored in NVRAM.'}</div>
-              </div>
-              <div style="display: flex; gap: 8px;">
-                <button id="opm-save-running-startup-btn" style="background: ${state.configDriftFixed ? '#94a3b8' : '#16a34a'}; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;" ${state.configDriftFixed ? 'disabled' : ''}>
-                  ${state.configDriftFixed ? '✔ Baseline Synchronized' : 'Save Running to Startup (wr mem)'}
-                </button>
-                <button id="opm-open-diff-comparator-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                  🔍 Dual-Pane Version Comparator
-                </button>
-                <button id="opm-recheck-drift-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-                  ${state.configDriftFixed ? 'Simulate Drift Alert' : 'Re-check'}
-                </button>
-              </div>
-            </div>
-
-            <!-- Diff Viewer Container -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: #0f172a; border-radius: 6px; padding: 16px; font-family: monospace; font-size: 11px; color: #f8fafc; overflow-x: auto;">
-              <div>
-                <div style="color: #94a3b8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 8px;">
-                  STARTUP-CONFIG (NVRAM) - ${state.configDriftFixed ? 'Saved Just Now' : 'Backed up 2h ago'}
-                </div>
-                <div style="line-height: 1.6; color: #cbd5e1;">
-                  <div>! Last configuration change at 08:30:14 UTC</div>
-                  <div>version 17.09.04a</div>
-                  <div>hostname DXB-CORE-SW-01</div>
-                  <div>!</div>
-                  <div>interface TenGigabitEthernet1/0/48</div>
-                  <div> description Core Uplink to DXB-EDGE-RTR-01</div>
-                  <div> switchport mode trunk</div>
-                  <div> switchport trunk allowed vlan 10,20,30,40</div>
-                  ${state.configDriftFixed ? `
-                    <div style="background: rgba(22, 163, 74, 0.2); color: #86efac; padding: 2px 4px; border-left: 3px solid #16a34a;">  shutdown (Synced with Running)</div>
-                  ` : `
-                    <div style="background: rgba(220, 38, 38, 0.2); color: #fca5a5; padding: 2px 4px; border-left: 3px solid #dc2626;">- no shutdown</div>
-                  `}
-                  <div>!</div>
-                  <div>snmp-server community ******* RO</div>
-                  <div>end</div>
-                </div>
-              </div>
-
-              <div>
-                <div style="color: #94a3b8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 8px;">
-                  RUNNING-CONFIG (RAM) - Captured Just Now
-                </div>
-                <div style="line-height: 1.6; color: #cbd5e1;">
-                  <div>! Last configuration change at 10:41:02 UTC by admin</div>
-                  <div>version 17.09.04a</div>
-                  <div>hostname DXB-CORE-SW-01</div>
-                  <div>!</div>
-                  <div>interface TenGigabitEthernet1/0/48</div>
-                  <div> description Core Uplink to DXB-EDGE-RTR-01 [MAINTENANCE]</div>
-                  <div> switchport mode trunk</div>
-                  <div> switchport trunk allowed vlan 10,20,30,40</div>
-                  <div style="background: rgba(22, 163, 74, 0.2); color: #86efac; padding: 2px 4px; border-left: 3px solid #16a34a;">+ shutdown</div>
-                  <div>!</div>
-                  <div>snmp-server community ******* RO</div>
-                  <div>end</div>
-                </div>
-              </div>
-            </div>
-
           </div>
         ` : activeSub === 'vulnerability' ? `
           <!-- Firmware Vulnerability Subtab -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
-            <div style="font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Firmware CVE Vulnerability Database Sync</div>
-            <div style="border: 1px solid #fee2e2; background: #fef2f2; border-radius: 6px; padding: 16px; margin-bottom: 16px;">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 800; color: #991b1b;">CVE-2023-20198 - Cisco IOS XE Web UI Privilege Escalation</div>
-                  <div style="font-size: 12px; color: #7f1d1d; margin-top: 4px;">Affected device: DXB-CORE-SW-01 (Cisco IOS-XE 17.09.04a). Recommended action: Update to 17.09.04b.</div>
-                </div>
-                <span style="background: #dc2626; color: #fff; font-weight: 800; padding: 4px 8px; border-radius: 4px; font-size: 12px;">CVSS 10.0 CRITICAL</span>
-              </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div style="font-size: 12px; color: #64748b;">NIST NVD database feed updated 4 hours ago. 1 matching CVE found across 16 monitored enterprise nodes.</div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">Zero Known CVE Vulnerabilities</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              NIST NVD database feed synchronized. All running firmware builds across monitored nodes are secure and patched.
+            </div>
           </div>
         ` : activeSub === 'backups' ? `
           <!-- Config Backups Subtab -->
@@ -1383,7 +1171,14 @@
                   <th style="padding: 10px 14px; text-align: right;">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody><tbody>
+                ${state.devices.length === 0 ? `
+                  <tr>
+                    <td colspan="6" style="padding: 40px; text-align: center; color: #94a3b8;">
+                      No hardware lifecycle or warranty contracts mapped yet. Discovered devices will appear here automatically.
+                    </td>
+                  </tr>
+                ` : `
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                   <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">DXB-CORE-SW-01</td>
                   <td style="padding: 10px 14px;">Cisco Catalyst 9500-48Y4C<br><span style="font-size: 10px; font-family: monospace; color: #64748b;">SN: FCW2349L09X</span></td>
@@ -1416,7 +1211,7 @@
                   <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ACTIVE WARRANTY</span></td>
                   <td style="padding: 10px 14px; text-align: right;"><button style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Details</button></td>
                 </tr>
-              </tbody>
+              `}</tbody>
             </table>
           </div>
         ` : activeSub === 'audit' ? `
@@ -1505,23 +1300,13 @@
                   <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-904</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">2026-11-08 09:58:33</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">mvance</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">10.20.1.8</td>
-                  <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">NCM_DRIFT</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">SAVE_STARTUP_CONFIG</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">DXB-CORE-SW-01 (10.40.1.1)</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-905</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">2026-11-08 09:42:19</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">zahmed</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">10.40.1.5</td>
-                  <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ALARM_MANAGEMENT</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">ACKNOWLEDGE_ALARM</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">alm_801 (DXB-CORE-SW-01)</td>
+                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-001</td>
+                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">Today</td>
+                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
+                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">127.0.0.1</td>
+                  <td style="padding: 10px 14px;"><span style="background: #eff6ff; color: #1d4ed8; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SYSTEM</span></td>
+                  <td style="padding: 10px 14px; font-weight: 600;">STARTUP</td>
+                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">Central Engine (192.168.30.65)</td>
                   <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
                 </tr>
               </tbody>

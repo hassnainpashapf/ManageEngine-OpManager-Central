@@ -560,17 +560,18 @@ router.post('/api/tools/cli-query', (req, res) => {
 
 // ADDRESS RESOLVER & MAC TOOL
 router.post('/api/tools/mac-resolve', (req, res) => {
-  const { target = '10.40.1.1' } = req.body;
+  const { target = '127.0.0.1' } = req.body;
+  const dev = db.getDevices().find(d => d.ip === target || d.name === target);
   res.json({
     status: 'success',
     target,
-    ipAddress: target.includes('.') ? target : '10.40.1.1',
-    macAddress: 'FC:99:47:B1:02:44',
-    vendor: 'Cisco Systems, Inc.',
-    deviceType: 'Catalyst Switch Router',
-    switchName: 'DXB-CORE-SW-01',
-    port: 'TenGigabitEthernet1/0/1',
-    vlan: 10,
+    ipAddress: target,
+    macAddress: dev ? (dev.mac || '00:50:56:00:00:01') : 'Dynamic ARP Pending',
+    vendor: dev ? (dev.vendor || 'Discovered Host') : 'Standard Interface',
+    deviceType: dev ? dev.type : 'Monitored Node',
+    switchName: dev ? dev.name : 'Central Gateway',
+    port: dev ? ((dev.interfaces && dev.interfaces[0] && dev.interfaces[0].name) || 'eth0') : 'eth0',
+    vlan: 1,
     status: 'Active (Dynamic ARP)',
     lastSeen: 'Just now'
   });

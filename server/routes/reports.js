@@ -87,13 +87,7 @@ router.get('/api/reports/export/csv', (req, res) => {
 });
 
 let enterpriseAuditTrail = [
-  { id: 'AUD-901', timestamp: '2026-11-08 10:25:12', user: 'admin', ip: '10.0.0.15', module: 'SECURITY_AUTH', action: 'TEST_LDAP_BIND', entity: 'dc01.enterprise.corp:636', result: 'SUCCESS', details: 'Validated active directory connection with 148 user accounts indexed' },
-  { id: 'AUD-902', timestamp: '2026-11-08 10:20:44', user: 'admin', ip: '10.0.0.15', module: 'DISCOVERY_ENGINE', action: 'CREATE_DISCOVERY_RULE', entity: '10.60.0.0/24 (Branch Office)', result: 'SUCCESS', details: 'Scheduled daily sweep at 02:00 AM on Dubai Campus Core probe' },
-  { id: 'AUD-903', timestamp: '2026-11-08 10:14:02', user: 'admin', ip: '10.0.0.15', module: 'MAIL_SERVER', action: 'TEST_SMTP_RELAY', entity: 'smtp.enterprise.corp:587', result: 'SUCCESS', details: 'Dispatched test email to admin@enterprise.corp using STARTTLS' },
-  { id: 'AUD-904', timestamp: '2026-11-08 09:58:33', user: 'mvance', ip: '10.20.1.8', module: 'NCM_DRIFT', action: 'SAVE_STARTUP_CONFIG', entity: 'DXB-CORE-SW-01 (10.40.1.1)', result: 'SUCCESS', details: 'Synchronized running-config with startup baseline via wr mem' },
-  { id: 'AUD-905', timestamp: '2026-11-08 09:42:19', user: 'zahmed', ip: '10.40.1.5', module: 'ALARM_MANAGEMENT', action: 'ACKNOWLEDGE_ALARM', entity: 'alm_801 (DXB-CORE-SW-01)', result: 'SUCCESS', details: 'Technician note added: Optical SFP+ link flap under investigation' },
-  { id: 'AUD-906', timestamp: '2026-11-08 09:30:00', user: 'probe_sync', ip: '127.0.0.1', module: 'PROBE_ENGINE', action: 'SYNC_TELEMETRY_SNAPSHOT', entity: 'All Probes (NY, LON, SG, DXB)', result: 'SUCCESS', details: 'Full telemetry differential sync completed in 32ms' },
-  { id: 'AUD-907', timestamp: '2026-11-08 09:15:22', user: 'admin', ip: '10.0.0.15', module: 'FAILOVER_HA', action: 'TEST_HEARTBEAT_KEEPALIVE', entity: '10.0.0.11:8065', result: 'SUCCESS', details: 'Heartbeat ping latency verified at 0.4ms across cluster VIP 10.0.0.12' }
+  { id: 'AUD-001', timestamp: new Date().toISOString().replace('T', ' ').slice(0, 19), user: 'admin', ip: '127.0.0.1', module: 'SYSTEM', action: 'SERVER_STARTUP', entity: 'OpManager Central (192.168.30.65)', result: 'SUCCESS', details: 'Production OpManager Central engine initialized successfully' }
 ];
 
 router.get('/api/reports/audit', (req, res) => {

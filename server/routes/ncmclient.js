@@ -643,42 +643,42 @@ router.get(['/ncmcompliance/getFirmVulDeviceSeverityStatus', '/api/ncmcompliance
   res.json({
     status: 'success',
     data: [
-      { severity: 'Vulnerable Devices', count: 2 },
-      { severity: 'Patched Devices', count: 14 }
+      { severity: 'Vulnerable Devices', count: 0 },
+      { severity: 'Patched Devices', count: devices.length }
     ]
   });
 });
 
 // Startup vs Running Config Versions
 router.get(['/ncmconfig/getStartupRunningVersion', '/api/ncmconfig/getStartupRunningVersion'], (req, res) => {
+  const devices = db.getDevices();
+  const firstDev = devices[0];
   res.json({
     status: 'success',
-    device: 'DXB-CORE-SW-01',
-    runningVersion: 'v14.2 (Modified 2 hours ago by admin)',
-    startupVersion: 'v14.1 (Saved 3 days ago)',
-    driftStatus: 'Conflict Detected',
-    conflictingLines: 3
+    device: firstDev ? firstDev.name : 'No Devices',
+    runningVersion: 'v1.0 (Synchronized)',
+    startupVersion: 'v1.0 (Baseline)',
+    driftStatus: 'In-Sync',
+    conflictingLines: 0
   });
 });
 
 // Hardware EOL / EOS Summaries
 router.get(['/ncmeol/getEolSummary', '/api/ncmeol/getEolSummary'], (req, res) => {
+  const devices = db.getDevices();
   res.json({
     status: 'success',
-    activeHardware: 16,
-    endOfLifeCount: 1,
-    endOfSupportCount: 2,
-    underWarranty: 13
+    activeHardware: devices.length,
+    endOfLifeCount: 0,
+    endOfSupportCount: 0,
+    underWarranty: devices.length
   });
 });
 
 router.get(['/ncmeol/getUpcomingEolDevices', '/api/ncmeol/getUpcomingEolDevices'], (req, res) => {
   res.json({
     status: 'success',
-    devices: [
-      { name: 'LON-DIST-SW-01', vendor: 'HP Enterprise', model: 'ProCurve 5406R', eolDate: '2026-12-31', eosDate: '2027-12-31', status: 'Approaching EOL' },
-      { name: 'DXB-APC-UPS-01', vendor: 'Schneider / APC', model: 'Galaxy 3500 40kVA', eolDate: '2027-06-30', eosDate: '2028-06-30', status: 'Active Support' }
-    ]
+    devices: []
   });
 });
 
