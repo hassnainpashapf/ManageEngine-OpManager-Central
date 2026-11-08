@@ -20,7 +20,7 @@ REMOTE_HASH=$(git rev-parse origin/main)
 
 if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [OpManager Auto-Updater] New commit detected on GitHub: $REMOTE_HASH"
-    git pull origin main
+    git reset --hard origin/main
     npm install --production --silent
     if command -v systemctl > /dev/null 2>&1; then
         systemctl restart opmanager-central
