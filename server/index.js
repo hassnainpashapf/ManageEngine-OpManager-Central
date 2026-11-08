@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const http = require('http');
 const WebSocket = require('ws');
 const path = require('path');
@@ -42,6 +43,7 @@ server.on('upgrade', (request, socket, head) => {
   }
 });
 
+app.use(compression());
 app.use(cors());
 app.use(express.json());
 
@@ -73,7 +75,9 @@ const staticOptions = {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     } else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+    } else if (filePath.match(/\.(png|jpe?g|gif|svg|ico|woff2?|ttf|wav|mp3|msi|exe)$/i)) {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
     }
   }
 };
