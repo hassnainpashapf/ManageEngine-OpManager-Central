@@ -415,18 +415,18 @@
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">IP Address Conflict</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">10.10.3.50</div>
-              <div style="font-size: 11px; color: #dc2626; margin-top: 2px;">Duplicate MAC Detected</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Conflicts</div>
+              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">No Duplicates Detected</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ca8a04;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Switch Port Flap</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">Port 48 (DXB-CORE)</div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">8 Transitions in 3 mins</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Flaps</div>
+              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">All Ports Stable</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0070e0;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Rogue Detection</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">1 Quarantined MAC</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">802.1X Access Enforced</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Rogue Devices</div>
+              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">Perimeter Clean</div>
             </div>
           </div>
 
@@ -684,7 +684,7 @@
       remediateBtn.onclick = () => {
         remediateBtn.innerText = '✓ Remediation Executed (Failover Active)';
         remediateBtn.style.background = '#0070e0';
-        showToast('Zia automated failover initiated: DXB-DIST-SW-01 switched to secondary trunk.');
+        showToast('Automated failover initiated: Core interface switched to secondary trunk.');
       };
     }
     const rcaExportBtn = container.querySelector('#opm-rca-export-btn');
@@ -786,7 +786,7 @@
             </div>
             <div style="font-size: 12px; color: #1e1b4b; line-height: 1.4;">
               ${alm.severity === 'Critical' 
-                ? 'High correlation with scheduled backup flow running on Dubai Campus LAN. Recommend checking optical transceiver diagnostics on Gi0/1 or suppressing non-essential polling threads.'
+                ? `High correlation with network traffic on ${alm.probe || 'Enterprise Site LAN'}. Recommend checking optical transceiver diagnostics or suppressing non-essential polling threads.`
                 : 'Metric deviation detected during standard shift handoff. Threshold crossed baseline by 14%. No immediate service impact predicted.'}
             </div>
           </div>
@@ -868,7 +868,7 @@
                 </tr>
                 <tr>
                   <td style="padding: 4px 6px; font-weight: 700; color: #7c3aed;">HTTPS_TLS</td>
-                  <td style="padding: 4px 6px; font-family: monospace;">10.40.1.1 &rarr; 10.10.1.50</td>
+                  <td style="padding: 4px 6px; font-family: monospace;">192.168.1.10 &rarr; 192.168.1.50</td>
                   <td style="padding: 4px 6px;">EF</td>
                   <td style="padding: 4px 6px; text-align: right; font-weight: 700;">96.26 MB</td>
                 </tr>
@@ -1153,69 +1153,32 @@
                     </filter>
                   </defs>
 
-                  <!-- Geographic WAN Links from Central Hub (US Central 145, 175) to Regional Probes -->
-                  <!-- Central (145, 175) to New York Probe (225, 148) -->
-                  <line class="opm-packet-flow" x1="145" y1="175" x2="225" y2="148" stroke="#00c0ff" stroke-width="3" stroke-dasharray="5 3" />
-                  <rect x="148" y="122" width="72" height="15" rx="3" fill="#0f172a" opacity="0.9" />
-                  <text x="184" y="133" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="bold" font-family="monospace">12ms | 28%</text>
+                  <!-- Geographic Dynamic WAN Links & Nodes from Central Hub to Registered Probes -->
+                  ${state.probes.map((pr, idx) => {
+                    const x = 320 + (idx * 160);
+                    const y = 175 + (idx % 2 === 0 ? -35 : 35);
+                    const isOk = pr.status === 'Online' || pr.status === 'Synchronized';
+                    const strokeColor = isOk ? '#00f000' : '#dc2626';
+                    return `
+                      <line class="opm-packet-flow" x1="145" y1="175" x2="${x}" y2="${y}" stroke="${strokeColor}" stroke-width="2.8" stroke-dasharray="5 3" />
+                      <rect x="${Math.round((145 + x) / 2) - 35}" y="${Math.round((175 + y) / 2) - 8}" width="70" height="16" rx="3" fill="#0f172a" opacity="0.9" />
+                      <text x="${Math.round((145 + x) / 2)}" y="${Math.round((175 + y) / 2) + 4}" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="bold" font-family="monospace">${pr.latency || 2}ms | 0%</text>
 
-                  <!-- New York Probe (225, 148) to London Probe (422, 122) Trans-Atlantic Fiber -->
-                  <line class="opm-packet-flow" x1="225" y1="148" x2="422" y2="122" stroke="#00f000" stroke-width="3" stroke-dasharray="5 3" />
-                  <rect x="285" y="114" width="76" height="16" rx="3" fill="#0f172a" opacity="0.9" />
-                  <text x="323" y="125" text-anchor="middle" fill="#4ade80" font-size="9.5" font-weight="bold" font-family="monospace">28ms | 18%</text>
+                      <g class="opm-topo-node" data-probe="${pr.id}" style="cursor: pointer;" onclick="if(typeof showProbeDetailsModal==='function') showProbeDetailsModal(${pr.id})">
+                        <circle cx="${x}" cy="${y}" r="28" fill="#0f172a" stroke="${isOk ? '#16a34a' : '#dc2626'}" stroke-width="2.5" />
+                        <image href="/images/deviceicons/server.png" x="${x - 12}" y="${y - 20}" width="24" height="24" />
+                        <text x="${x}" y="${y + 12}" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="bold">${pr.name}</text>
+                        <text x="${x}" y="${y + 22}" text-anchor="middle" fill="#4ade80" font-size="7.5">${pr.ip} (${pr.devicesCount || 0})</text>
+                      </g>
+                    `;
+                  }).join('')}
 
-                  <!-- Central (145, 175) to Dubai Probe (558, 205) Direct SD-WAN Tunnel -->
-                  <line class="opm-packet-flow opm-bv-wan-link" data-link="dubai" style="cursor: pointer;" x1="145" y1="175" x2="558" y2="205" stroke="#ff0000" stroke-width="3.5" stroke-dasharray="6 2" filter="url(#glow)" />
-                  <rect class="opm-bv-wan-link" data-link="dubai" style="cursor: pointer;" x="315" y="182" width="84" height="17" rx="3" fill="#450a0a" stroke="#dc2626" stroke-width="1" />
-                  <text class="opm-bv-wan-link" data-link="dubai" style="cursor: pointer;" x="357" y="194" text-anchor="middle" fill="#fca5a5" font-size="9.5" font-weight="bold" font-family="monospace">18ms | 78% !</text>
-
-                  <!-- Central (145, 175) to Singapore Probe (692, 268) Trans-Pacific MPLS -->
-                  <line class="opm-packet-flow" x1="145" y1="175" x2="692" y2="268" stroke="#00c0ff" stroke-width="2.8" stroke-dasharray="5 3" />
-                  <rect x="380" y="232" width="76" height="16" rx="3" fill="#0f172a" opacity="0.9" />
-                  <text x="418" y="243" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-weight="bold" font-family="monospace">45ms | 42%</text>
-
-                  <!-- Redundant Euro-Asia Terrestrial Ring: London (422, 122) -> Dubai (558, 205) -> Singapore (692, 268) -->
-                  <line class="opm-packet-flow" x1="422" y1="122" x2="558" y2="205" stroke="#4673da" stroke-width="2.2" stroke-dasharray="4 3" />
-                  <line class="opm-packet-flow" x1="558" y1="205" x2="692" y2="268" stroke="#4673da" stroke-width="2.2" stroke-dasharray="4 3" />
-
-                  <!-- Center Master Node: OPMANAGER CENTRAL HQ (North America Central - 145, 175) -->
+                  <!-- Center Master Node: OPMANAGER CENTRAL MASTER -->
                   <g class="opm-topo-node" data-node="central" style="cursor: pointer;">
                     <circle cx="145" cy="175" r="35" fill="#0f172a" stroke="#49bd80" stroke-width="3.5" />
                     <image href="/images/deviceicons/server.png" x="133" y="148" width="24" height="24" />
                     <text x="145" y="182" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="bold">OPMANAGER</text>
-                    <text x="145" y="193" text-anchor="middle" fill="#49bd80" font-size="8" font-weight="bold">CENTRAL HQ</text>
-                  </g>
-
-                  <!-- Node 1: New York Probe (US East Coast - 225, 148) -->
-                  <g class="opm-topo-node" data-probe="1" style="cursor: pointer;">
-                    <circle cx="225" cy="148" r="30" fill="#0f172a" stroke="#16a34a" stroke-width="3" />
-                    <image href="/images/deviceicons/cisco_catalyst_3550.png" x="213" y="123" width="24" height="24" />
-                    <text x="225" y="156" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">NY Probe</text>
-                    <text x="225" y="167" text-anchor="middle" fill="#4ade80" font-size="8">10.10.0.1 (4)</text>
-                  </g>
-
-                  <!-- Node 2: London Probe (UK / Europe - 422, 122) -->
-                  <g class="opm-topo-node" data-probe="2" style="cursor: pointer;">
-                    <circle cx="422" cy="122" r="30" fill="#0f172a" stroke="#16a34a" stroke-width="3" />
-                    <image href="/images/deviceicons/windows.png" x="410" y="97" width="24" height="24" />
-                    <text x="422" y="130" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">LON Probe</text>
-                    <text x="422" y="141" text-anchor="middle" fill="#4ade80" font-size="8">10.20.0.1 (4)</text>
-                  </g>
-
-                  <!-- Node 4: Dubai Probe (UAE / Middle East - 558, 205 - Critical Alert) -->
-                  <g class="opm-topo-node" data-probe="4" style="cursor: pointer;">
-                    <circle cx="558" cy="205" r="33" fill="#450a0a" stroke="#dc2626" stroke-width="3.5" filter="url(#glow)" />
-                    <image href="/images/deviceicons/firewall.png" x="546" y="179" width="24" height="24" />
-                    <text x="558" y="213" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">DXB Probe</text>
-                    <text x="558" y="224" text-anchor="middle" fill="#fca5a5" font-size="8" font-weight="bold">10.40.0.1 (Crit)</text>
-                  </g>
-
-                  <!-- Node 3: Singapore Probe (APAC - 692, 268) -->
-                  <g class="opm-topo-node" data-probe="3" style="cursor: pointer;">
-                    <circle cx="692" cy="268" r="30" fill="#0f172a" stroke="#16a34a" stroke-width="3" />
-                    <image href="/images/deviceicons/router.png" x="680" y="243" width="24" height="24" />
-                    <text x="692" y="276" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">SG Probe</text>
-                    <text x="692" y="287" text-anchor="middle" fill="#4ade80" font-size="8">10.30.0.1 (4)</text>
+                    <text x="145" y="193" text-anchor="middle" fill="#49bd80" font-size="8" font-weight="bold">CENTRAL MASTER</text>
                   </g>
                 </svg>
               </div>
@@ -1302,78 +1265,38 @@
                 <!-- Australia -->
                 <path d="M 800,330 L 890,320 L 930,370 L 890,420 L 820,410 L 780,360 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
 
-                <!-- WAN Links with Animated Glowing Dashes -->
-                <!-- Link 1: New York (260, 150) -> London (480, 120) -->
-                <path class="opm-packet-flow" d="M 260,150 Q 370,90 480,120" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4" />
-                <rect x="340" y="96" width="60" height="16" rx="3" fill="#0f172a" stroke="#38bdf8" />
-                <text x="370" y="108" text-anchor="middle" font-size="9" font-family="monospace" fill="#38bdf8" font-weight="bold">28ms</text>
-
-                <!-- Link 2: London (480, 120) -> Dubai (640, 210) -->
-                <path class="opm-packet-flow" d="M 480,120 Q 560,150 640,210" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,4" />
-                <rect x="535" y="152" width="60" height="16" rx="3" fill="#0f172a" stroke="#f59e0b" />
-                <text x="565" y="164" text-anchor="middle" font-size="9" font-family="monospace" fill="#f59e0b" font-weight="bold">42ms</text>
-
-                <!-- Link 3: Dubai (640, 210) -> Singapore (800, 270) -->
-                <path class="opm-packet-flow" d="M 640,210 Q 720,230 800,270" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4" />
-                <rect x="695" y="226" width="60" height="16" rx="3" fill="#0f172a" stroke="#38bdf8" />
-                <text x="725" y="238" text-anchor="middle" font-size="9" font-family="monospace" fill="#38bdf8" font-weight="bold">54ms</text>
-
-                <!-- Link 4: Singapore (800, 270) -> New York (260, 150) (Transpacific Arc) -->
-                <path class="opm-packet-flow" d="M 800,270 C 950,300 980,100 260,150" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4" />
-
-                <!-- PROBE PINS -->
-                <!-- PROBE 1: New York Data Center (260, 150) -->
-                <g class="opm-world-pin" data-probe="1" style="cursor: pointer;">
-                  <circle cx="260" cy="150" r="14" fill="rgba(34,197,94,0.2)" stroke="#22c55e" stroke-width="1.5" />
-                  <circle cx="260" cy="150" r="6" fill="#22c55e" />
-                  <rect x="180" y="170" width="160" height="42" rx="4" fill="#1e293b" stroke="#334155" />
-                  <text x="260" y="186" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🇺🇸 New York Data Center</text>
-                  <text x="260" y="200" text-anchor="middle" font-size="9" fill="#4ade80">● 100% UP • 12ms RTT</text>
-                </g>
-
-                <!-- PROBE 2: London Branch Office (480, 120) -->
-                <g class="opm-world-pin" data-probe="2" style="cursor: pointer;">
-                  <circle cx="480" cy="120" r="14" fill="rgba(34,197,94,0.2)" stroke="#22c55e" stroke-width="1.5" />
-                  <circle cx="480" cy="120" r="6" fill="#22c55e" />
-                  <rect x="400" y="56" width="160" height="42" rx="4" fill="#1e293b" stroke="#334155" />
-                  <text x="480" y="72" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🇬🇧 London Branch Office</text>
-                  <text x="480" y="86" text-anchor="middle" font-size="9" fill="#4ade80">● 100% UP • 28ms RTT</text>
-                </g>
-
-                <!-- PROBE 4: Dubai Campus Core (640, 210) -->
-                <g class="opm-world-pin" data-probe="4" style="cursor: pointer;">
-                  <circle cx="640" cy="210" r="16" fill="rgba(239,68,68,0.25)" stroke="#ef4444" stroke-width="2" />
-                  <circle cx="640" cy="210" r="7" fill="#ef4444" />
-                  <rect x="560" y="235" width="160" height="42" rx="4" fill="#450a0a" stroke="#dc2626" />
-                  <text x="640" y="251" text-anchor="middle" font-size="10" font-weight="bold" fill="#fecaca">🇦🇪 Dubai Campus Core</text>
-                  <text x="640" y="265" text-anchor="middle" font-size="9" fill="#f87171">⚠ 1 Critical Alarm • 18ms</text>
-                </g>
-
-                <!-- PROBE 3: Singapore Cloud VPC (800, 270) -->
-                <g class="opm-world-pin" data-probe="3" style="cursor: pointer;">
-                  <circle cx="800" cy="270" r="14" fill="rgba(34,197,94,0.2)" stroke="#22c55e" stroke-width="1.5" />
-                  <circle cx="800" cy="270" r="6" fill="#22c55e" />
-                  <rect x="720" y="295" width="160" height="42" rx="4" fill="#1e293b" stroke="#334155" />
-                  <text x="800" y="311" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🇸🇬 Singapore Cloud VPC</text>
-                  <text x="800" y="325" text-anchor="middle" font-size="9" fill="#4ade80">● 100% UP • 45ms RTT</text>
-                </g>
+                <!-- Dynamic WAN Links & Probe Pins from state.probes -->
+                ${state.probes.map((pr, idx) => {
+                  const cx = 260 + (idx * 220);
+                  const cy = 150 + (idx % 2 === 0 ? 0 : 70);
+                  const isOk = pr.status === 'Online' || pr.status === 'Synchronized';
+                  return `
+                    <g class="opm-world-pin" data-probe="${pr.id}" style="cursor: pointer;" onclick="if(typeof showProbeDetailsModal==='function') showProbeDetailsModal(${pr.id})">
+                      <circle cx="${cx}" cy="${cy}" r="14" fill="${isOk ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.25)'}" stroke="${isOk ? '#22c55e' : '#ef4444'}" stroke-width="1.5" />
+                      <circle cx="${cx}" cy="${cy}" r="6" fill="${isOk ? '#22c55e' : '#ef4444'}" />
+                      <rect x="${cx - 80}" y="${cy + 20}" width="160" height="42" rx="4" fill="#1e293b" stroke="#334155" />
+                      <text x="${cx}" y="${cy + 36}" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🌐 ${pr.name}</text>
+                      <text x="${cx}" y="${cy + 50}" text-anchor="middle" font-size="9" fill="${isOk ? '#4ade80' : '#f87171'}">● ${pr.status || 'Online'} • ${pr.latency || 2}ms RTT</text>
+                    </g>
+                  `;
+                }).join('')}
               </svg>
             </div>
 
             <!-- Bottom Selected Probe Telemetry Matrix -->
             <div id="opm-worldmap-probe-details" style="margin-top: 16px; background: #1e293b; border-radius: 6px; padding: 14px 18px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
               <div style="display: flex; align-items: center; gap: 14px;">
-                <span style="font-size: 18px;">🇦🇪</span>
+                <span style="font-size: 18px;">🌐</span>
                 <div>
-                  <div style="font-weight: 800; color: #f87171;">Dubai Campus Core Probe (DIC Datacenter)</div>
-                  <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">IP: 10.40.0.1 &bull; 4 Managed Nodes &bull; Sync State: Synchronized &bull; Comm Port: 8060</div>
+                  <div style="font-weight: 800; color: #38bdf8;">${state.probes[0]?.name || 'Central Site Probe'} (${state.probes[0]?.location || 'Local Server Node'})</div>
+                  <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">IP: ${state.probes[0]?.ip || '127.0.0.1'} &bull; ${state.probes[0]?.devicesCount || 0} Managed Nodes &bull; Sync State: ${state.probes[0]?.syncStatus || 'Synchronized'} &bull; Comm Port: ${state.probes[0]?.commPort || 8060}</div>
                 </div>
               </div>
               <div style="display: flex; gap: 8px;">
-                <button id="opm-world-inspect-probe-btn" data-probe="4" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
+                <button id="opm-world-inspect-probe-btn" data-probe="${state.probes[0]?.id || 101}" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
                   View Probe CIs in Inventory &rarr;
                 </button>
-                <button id="opm-world-diag-probe-btn" data-probe="4" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                <button id="opm-world-diag-probe-btn" data-probe="${state.probes[0]?.id || 101}" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                   Probe Diagnostics
                 </button>
               </div>
@@ -1466,7 +1389,7 @@
     const worldSyncBtn = container.querySelector('#opm-worldmap-sync-all-btn');
     if (worldSyncBtn) {
       worldSyncBtn.onclick = () => {
-        showToast('Initiated global multi-probe synchronization across all 4 datacenters.');
+        showToast('Initiated global multi-probe synchronization across all enterprise probes.');
       };
     }
 

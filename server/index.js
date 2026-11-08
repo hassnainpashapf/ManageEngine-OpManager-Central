@@ -182,30 +182,35 @@ app.get('/logs/:file', (req, res) => {
   const time = now.toISOString().replace('T', ' ').slice(0, 19);
 
   let logs = [];
+  const db = require('./services/db');
+  const probes = (db.data && db.data.probes) || [];
+  const devices = (db.data && db.data.devices) || [];
+
   if (file.includes('probe')) {
-    logs = [
-      `[${time},012] [INFO] [ProbeSyncWorker-1]: Sync handshake received from Probe 1 (New York - 10.10.0.100). Latency: 12ms.`,
-      `[${time},145] [INFO] [ProbeSyncWorker-2]: Sync handshake received from Probe 2 (London - 10.20.0.100). Latency: 28ms.`,
-      `[${time},288] [INFO] [ProbeSyncWorker-3]: Sync handshake received from Probe 3 (Singapore - 10.30.0.100). Latency: 45ms.`,
-      `[${time},410] [INFO] [ProbeSyncWorker-4]: Sync handshake received from Probe 4 (Dubai - 10.40.0.100). Latency: 18ms.`,
-      `[${time},520] [INFO] [CCMCluster]: 4/4 Remote Probes verified healthy. Replication delta: 0 bytes.`
-    ];
+    logs = probes.map((p, i) => `[${time},${String(12 + i * 133).padStart(3, '0')}] [INFO] [ProbeSyncWorker-${i+1}]: Sync handshake received from ${p.name} (${p.ip}). Latency: ${p.latency || 2}ms.`);
+    if (logs.length === 0) {
+      logs.push(`[${time},012] [INFO] [ProbeSyncWorker]: Central master operational in standby.`);
+    } else {
+      logs.push(`[${time},520] [INFO] [CCMCluster]: ${probes.length}/${probes.length} Remote Probes verified healthy. Replication delta: 0 bytes.`);
+    }
   } else if (file.includes('poller')) {
-    logs = [
-      `[${time},045] [DEBUG] [SnmpPollerEngine]: Polling node 10.40.1.1 (DXB-CORE-SW-01) - SNMPv2c sysUpTime: 184d 14h.`,
-      `[${time},112] [DEBUG] [SnmpPollerEngine]: OID .1.3.6.1.4.1.9.9.109.1.1.1.1.3.1 (CPU 5s) returned: 93.4%. Threshold (85%) EXCEEDED.`,
-      `[${time},198] [WARN]  [AlarmManager]: Raised ALM-801 for DXB-CORE-SW-01 [Critical - CPU Utilization 93.4%].`,
-      `[${time},310] [DEBUG] [IcmpPingDaemon]: 16 nodes probed across Central. 0 packets dropped. Average RTT: 18.2ms.`,
-      `[${time},480] [INFO]  [PollerWorkerPool]: Polling cycle completed in 412ms.`
-    ];
+    if (devices.length === 0) {
+      logs = [
+        `[${time},045] [INFO]  [SnmpPollerEngine]: Standby poller idle. 0 device nodes enrolled.`,
+        `[${time},112] [INFO]  [SnmpPollerEngine]: Ready to discover network nodes via SNMP / WMI / SSH.`,
+        `[${time},310] [DEBUG] [IcmpPingDaemon]: 0 nodes probed. Network perimeter stable.`,
+        `[${time},480] [INFO]  [PollerWorkerPool]: Standby idle cycle completed in 1ms.`
+      ];
+    } else {
+      logs = devices.slice(0, 5).map((d, i) => `[${time},${String(45 + i * 67).padStart(3, '0')}] [DEBUG] [SnmpPollerEngine]: Polling node ${d.ip} (${d.name}) - Status: ${d.status || 'Clear'}.`);
+    }
   } else {
     logs = [
       `[${time},001] [INFO] [OpManagerCentralServer]: Version 12.9.203 GA (Build 129203) - Enterprise Mode Active.`,
       `[${time},080] [INFO] [ITOMEmberServer]: Client session active on /apiclient/fluidicv3/itom/.`,
-      `[${time},190] [INFO] [PNSHandler]: WebSocket notification broadcast stream active (4 active subscribers).`,
+      `[${time},190] [INFO] [PNSHandler]: WebSocket notification broadcast stream active.`,
       `[${time},260] [INFO] [PostgreSQLConnectionPool]: 12/50 pooled database connections active. Query latency: 0.8ms.`,
-      `[${time},340] [INFO] [ZiaAIInferenceEngine]: Real-time RCA correlation matrix refreshed. 116 alerts suppressed.`,
-      `[${time},450] [INFO] [AuditEngine]: User admin logged in from 10.0.0.100 via SSO.`
+      `[${time},340] [INFO] [SecurityEngine]: Central Master operational at 0 alerts.`
     ];
   }
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');

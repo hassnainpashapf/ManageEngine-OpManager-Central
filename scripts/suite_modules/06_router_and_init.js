@@ -407,7 +407,7 @@
             handleRoute();
           } else if (data.type === 'ALARM_TOAST' && data.alarm) {
             const alm = data.alarm;
-            const devName = alm.device || alm.deviceName || 'DXB-CORE-SW-01';
+            const devName = alm.device || alm.deviceName || 'Managed Node';
             alm.device = devName;
             if (alm.severity === 'Critical') {
               if (typeof playAlarmChime === 'function') playAlarmChime();

@@ -22,7 +22,7 @@ router.all(['/alarm/listAlarms', '/alarms/listAlarms', '/alarms/list', '/api/ala
     const sevNum = severityMap[sevStr.toLowerCase()] || 1;
     const devName = a.device || a.deviceName || 'Device';
     const devObj = devices.find(d => d.id === a.deviceId || d.name === devName);
-    const devIp = a.ip || a.ipAddress || (devObj ? devObj.ip : '10.40.1.1');
+    const devIp = a.ip || a.ipAddress || (devObj ? devObj.ip : '127.0.0.1');
     const prbName = a.probe || a.probeName || (devObj ? devObj.probeName : 'Central');
 
     return {
@@ -193,7 +193,7 @@ router.get(['/alarm/getRCAData', '/api/alarm/getRCAData'], (req, res) => {
     confidencePercent: '98.2%',
     hypothesis: 'Resource exhaustion and high CPU contention triggered cascading transit latency across BGP upstream peer.',
     rootCauseEntity: alarm?.entity || 'GigabitEthernet0/1',
-    device: alarm?.device || 'DXB-CORE-SW-01',
+    device: alarm?.device || (devices[0]?.name) || 'Managed Node',
     correlatedEvents: [
       { time: '15:40:12 UTC', message: 'Interface packet drop threshold crossed (> 2.5%)', severity: 'Attention' },
       { time: '15:40:45 UTC', message: 'BGP neighbor 192.0.2.1 state reset (flapping)', severity: 'Trouble' },

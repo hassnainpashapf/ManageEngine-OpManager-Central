@@ -218,10 +218,11 @@
             <div>
               <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Source Device CI</label>
               <select id="sim-trap-device" style="width: 100%; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option value="1">DXB-CORE-SW-01 (10.40.1.1)</option>
-                <option value="2">NY-CORE-RTR-01 (10.10.1.1)</option>
-                <option value="3">LON-DIST-SW-01 (10.20.1.2)</option>
-                <option value="4">SG-LEAF-SW-01 (10.30.1.1)</option>
+                ${(state.devices && state.devices.length > 0) ? state.devices.map(d => `
+                  <option value="${d.id}">${d.name} (${d.ip})</option>
+                `).join('') : `
+                  <option value="1">Central Server (${window.location.hostname || '192.168.30.65'})</option>
+                `}
               </select>
             </div>
             <div>
@@ -281,7 +282,7 @@
       } else if (val === 'tempAlarm') {
         varBox.innerHTML = 'ciscoEnvMonTemperatureStatusValue.1 = 48 (deg C)<br>ciscoEnvMonTemperatureThreshold.1 = 45 (deg C)';
       } else if (val === 'coldStart') {
-        varBox.innerHTML = 'sysUpTimeInstance = 0<br>sysName.0 = DXB-CORE-SW-01';
+        varBox.innerHTML = 'sysUpTimeInstance = 0<br>sysName.0 = ' + ((state.devices && state.devices[0]?.name) || 'Central-Server');
       }
     };
 
@@ -4007,13 +4008,7 @@
       document.body.appendChild(modal);
     }
 
-    const traps = [
-      { id: 'TRP-1092', time: '15:42:01 UTC', source: '10.40.1.1 (DXB-CORE-SW-01)', probe: 'Dubai DC Core', oid: '.1.3.6.1.6.3.1.1.5.3', name: 'linkDown', severity: 'Critical', bindings: 'ifIndex=2, ifDescr=GigabitEthernet0/1, ifOperStatus=2(down)' },
-      { id: 'TRP-1091', time: '15:40:15 UTC', source: '10.10.1.20 (NY-CORE-RTR-01)', probe: 'New York Central DC', oid: '.1.3.6.1.6.3.1.1.5.1', name: 'coldStart', severity: 'Attention', bindings: 'sysUpTime.0=0, sysName.0=NY-CORE-RTR-01' },
-      { id: 'TRP-1090', time: '15:35:48 UTC', source: '10.20.1.50 (LDN-DIST-SW-01)', probe: 'London Regional', oid: '.1.3.6.1.6.3.1.1.5.5', name: 'authenticationFailure', severity: 'Trouble', bindings: 'snmpTrapAddress.0=10.20.1.99, badCommunity=public' },
-      { id: 'TRP-1089', time: '15:28:10 UTC', source: '10.40.1.1 (DXB-CORE-SW-01)', probe: 'Dubai DC Core', oid: '.1.3.6.1.4.1.9.9.43.2.0.1', name: 'ciscoConfigManEvent', severity: 'Attention', bindings: 'ccmHistoryEventCommandSource=commandLine(1), ccmHistoryEventConfigSource=running(3)' },
-      { id: 'TRP-1088', time: '15:15:22 UTC', source: '10.30.1.10 (SG-CORE-RTR-01)', probe: 'Singapore APAC', oid: '.1.3.6.1.2.1.15.0.1', name: 'bgpEstablished', severity: 'Clear', bindings: 'bgpPeerLastError=0, bgpPeerState=6(established)' }
-    ];
+    const traps = [];
 
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 920px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
@@ -4025,8 +4020,8 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
             </div>
             <div>
-              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">SNMP Trap Viewer & Parser Console</div>
-              <div style="font-size: 11px; color: #64748b;">UDP Port 162 Listener • Central Master aggregating across 4 distributed Probes</div>
+              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">SNMP Trap Viewer &amp; Parser Console</div>
+              <div style="font-size: 11px; color: #64748b;">UDP Port 162 Listener • Central Master aggregating across ${state.probes.length} Enterprise Probes</div>
             </div>
           </div>
           <button id="opm-close-traps-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;">✕</button>
@@ -4037,11 +4032,8 @@
           <div style="display: flex; gap: 10px; align-items: center;">
             <span style="font-size: 12px; font-weight: 700; color: #475569;">Filter Traps:</span>
             <select id="opm-trap-probe-filter" style="font-size: 11px; padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff;">
-              <option value="all">All Probes (4)</option>
-              <option value="1">New York Central DC</option>
-              <option value="2">London Regional</option>
-              <option value="3">Singapore APAC</option>
-              <option value="4">Dubai DC Core</option>
+              <option value="all">All Probes (${state.probes.length})</option>
+              ${state.probes.map(p => `<option value="${p.id}">${p.name}</option>`).join('')}
             </select>
             <input type="text" placeholder="Search Trap OID or IP..." style="font-size: 11px; padding: 5px 10px; border: 1px solid #cbd5e1; border-radius: 4px; width: 180px;">
           </div>
@@ -4069,7 +4061,13 @@
               </tr>
             </thead>
             <tbody>
-              ${traps.map(t => {
+              ${traps.length === 0 ? `
+                <tr>
+                  <td colspan="6" style="padding: 40px; text-align: center; color: #94a3b8;">
+                    No SNMP Traps captured yet. UDP Port 162 listener is active across connected probes.
+                  </td>
+                </tr>
+              ` : traps.map(t => {
                 const badgeColor = t.severity === 'Critical' ? '#dc2626' : (t.severity === 'Trouble' ? '#ea580c' : (t.severity === 'Attention' ? '#ca8a04' : '#16a34a'));
                 return `
                   <tr style="border-bottom: 1px solid #f1f5f9;">
@@ -4093,7 +4091,7 @@
 
         <!-- Footer -->
         <div style="padding: 12px 24px; background: #fafbfc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>5 Traps Captured (Last 1 Hour) • Trap-to-Alarm Correlation Rule: <strong>ACTIVE</strong></span>
+          <span>${traps.length} Traps Captured (Last 1 Hour) • Trap-to-Alarm Correlation Rule: <strong>ACTIVE</strong></span>
           <button id="opm-trap-close-btn-bottom" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close</button>
         </div>
       </div>
@@ -5499,7 +5497,7 @@
               <span>🤖</span> Zia AI Natural Language Incident Summary:
             </div>
             <div style="font-size: 12px; color: #334155; line-height: 1.6;">
-              "Zia AI Analysis confirms the primary root cause is an unauthorized configuration commit on <strong>DXB-CORE-SW-01</strong> at 10:41:02 UTC that disabled the TenGigabitEthernet1/0/48 uplink interface. This directly severed the primary BGP peering session, causing secondary circuit congestion and 14 cascaded downtime alerts. Executing an immediate NCM baseline rollback will restore connectivity in under 15 seconds."
+              "Zia AI Analysis confirms the primary root cause on <strong>${alm.device || 'Monitored Device'}</strong>. Automated correlation identified anomalous state change affecting upstream connectivity. Executing an immediate baseline rollback will restore connectivity in under 15 seconds."
             </div>
           </div>
 
@@ -5544,7 +5542,7 @@
         setTimeout(() => {
           state.configDriftFixed = true;
           rollbackBtn.innerHTML = '✔ Baseline Restored Successfully';
-          showToast('NCM Rollback completed on DXB-CORE-SW-01: interface TenGigabitEthernet1/0/48 is now UP. Alarm cleared.');
+          showToast('NCM Rollback completed on ' + (alm.device || 'Monitored Device') + ': interface restored UP. Alarm cleared.');
           // Remove or downgrade alarm
           const found = state.alarms.find(a => a.id === alm.id);
           if (found) {
@@ -5593,8 +5591,8 @@
       document.body.appendChild(modal);
     }
 
-    const rtrName = router ? router.name : 'DXB-WAN-RTR-01';
-    const rtrIp = router ? router.ip : '10.0.0.1';
+    const rtrName = router ? router.name : ((state.devices && state.devices[0]?.name) || 'Edge-WAN-RTR');
+    const rtrIp = router ? router.ip : ((state.devices && state.devices[0]?.ip) || '192.168.1.1');
 
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
@@ -5769,7 +5767,7 @@
           <!-- CLI Console Simulation -->
           <div id="opm-bgp-terminal" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 120px; overflow-y: auto;">
             <div style="color: #64748b;">// ManageEngine OpManager Central BGP Diagnostic Terminal</div>
-            <div>[BGP] Router DXB-WAN-RTR-01 BGP process ID 100 initialized.</div>
+            <div>[BGP] Router ${rtrName} BGP process ID 100 initialized.</div>
             <div>[BGP] RFC 2918 Route Refresh capability negotiated on all 3 established peers.</div>
             <div id="opm-bgp-live-log" style="color: #34d399;">✔ System steady state: Autonomous System AS65001 fully converged.</div>
           </div>
@@ -5841,7 +5839,7 @@
       document.body.appendChild(modal);
     }
 
-    const devName = sdwanDevice ? sdwanDevice.name : 'DXB-SDWAN-EDGE-01';
+    const devName = sdwanDevice ? sdwanDevice.name : ((state.devices && state.devices[0]?.name) || 'SDWAN-EDGE-01');
 
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
@@ -6343,7 +6341,7 @@
                     <div style="font-size: 10px; color: #64748b;">High-entropy Base64 queries (48.2 MB exfiltrated)</div>
                   </td>
                   <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    10.0.1.44 <span style="font-size: 10px; color: #ea580c; font-weight: 600;">(DXB-APP-04)</span>
+                    10.0.1.44 <span style="font-size: 10px; color: #ea580c; font-weight: 600;">(Internal-Host-04)</span>
                   </td>
                   <td style="padding: 10px 12px; font-family: monospace; color: #334155;">ns1.tunnel-c2.top</td>
                   <td style="padding: 10px 12px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1071.004 C2</span></td>
@@ -6358,7 +6356,7 @@
                   <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
                     203.0.113.190 <span style="font-size: 10px; color: #dc2626; font-weight: 600;">(Mirai C2 Botnet)</span>
                   </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">10.0.1.15 (DXB-PROD-DB)</td>
+                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">10.0.1.15 (Local-DB-Node)</td>
                   <td style="padding: 10px 12px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1110 Brute Force</span></td>
                   <td style="padding: 10px 12px;"><span style="background: #ea580c; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 82</span></td>
                   <td id="ndr-status-3" style="padding: 10px 12px; text-align: right; color: #dc2626; font-weight: 700;">Block Recommended</td>
@@ -6369,7 +6367,7 @@
                     <div style="font-size: 10px; color: #64748b;">TCP port 445 direct packet to untrusted public IP</div>
                   </td>
                   <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    10.0.1.108 <span style="font-size: 10px; color: #64748b; font-weight: 600;">(DXB-STAGE-02)</span>
+                    10.0.1.108 <span style="font-size: 10px; color: #64748b; font-weight: 600;">(Test-Node-02)</span>
                   </td>
                   <td style="padding: 10px 12px; font-family: monospace; color: #334155;">198.18.44.12:445</td>
                   <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1021.002 SMB</span></td>
@@ -6412,7 +6410,7 @@
         pushAclBtn.disabled = true;
         pushAclBtn.innerHTML = 'Pushing ACL Rules...';
         if (dynamicMsg) {
-          dynamicMsg.innerHTML = `<span style="color: #fbbf24;">[FW-CLI] access-list 101 deny ip host 198.51.100.89 any -> applied to NY-FW-01 & DXB-EDGE-FW-01...</span><br><span style="color: #fbbf24;">[FW-CLI] access-list 101 deny ip host 203.0.113.190 any -> applied...</span>`;
+          dynamicMsg.innerHTML = `<span style="color: #fbbf24;">[FW-CLI] access-list 101 deny ip host 198.51.100.89 any -> applied to Perimeter Firewall...</span><br><span style="color: #fbbf24;">[FW-CLI] access-list 101 deny ip host 203.0.113.190 any -> applied...</span>`;
         }
         setTimeout(() => {
           document.getElementById('ndr-status-1').innerHTML = '✔ Blocked (ACL 101)';
@@ -6441,7 +6439,7 @@
             dynamicMsg.innerHTML += `<br><span style="color: #38bdf8;">[802.1X NAC] Switch port FastEthernet0/24 changed to Remediation Quarantine VLAN 999.</span>`;
           }
           quarantineBtn.innerHTML = '✔ Host Quarantined';
-          showToast('Host 10.0.1.44 (DXB-APP-04) quarantined via 802.1X NAC isolation VLAN 999.');
+          showToast('Host 10.0.1.44 (Internal-Host-04) quarantined via 802.1X NAC isolation VLAN 999.');
         }, 1000);
       };
     }

@@ -76,10 +76,10 @@ router.get('/api/reports/export/csv', (req, res) => {
   const devices = db.getDevices(probeId);
   let csv = 'Alarm ID,Severity,Device Name,IP Address,Probe Name,Category,Message,Occurred Time,Acknowledged\n';
   alarms.forEach(a => {
-    const devName = a.device || a.deviceName || 'DXB-CORE-SW-01';
+    const devName = a.device || a.deviceName || (devices[0]?.name) || 'Managed Node';
     const devObj = devices.find(d => d.id === a.deviceId || d.name === devName);
-    const devIp = a.ip || a.deviceIp || (devObj ? devObj.ip : '10.40.1.1');
-    const prbName = a.probe || a.probeName || (devObj ? devObj.probeName : 'Dubai Campus Probe');
+    const devIp = a.ip || a.deviceIp || (devObj ? devObj.ip : '127.0.0.1');
+    const prbName = a.probe || a.probeName || (devObj ? devObj.probeName : 'Central Site Probe');
     const almTime = a.time || a.lastOccurred || a.firstOccurred || 'Just now';
     csv += `"${a.id}","${a.severity}","${devName}","${devIp}","${prbName}","${a.category}","${(a.message || '').replace(/"/g, '""')}","${almTime}",${a.acknowledged ? 'YES' : 'NO'}\n`;
   });
@@ -204,10 +204,10 @@ router.get('/api/reports/print-preview', (req, res) => {
     </thead>
     <tbody>
       ${alarms.slice(0, 8).map(a => {
-        const devName = a.device || a.deviceName || 'DXB-CORE-SW-01';
+        const devName = a.device || a.deviceName || (devices[0]?.name) || 'Managed Node';
         const devObj = devices.find(d => d.id === a.deviceId || d.name === devName);
-        const devIp = a.ip || a.deviceIp || (devObj ? devObj.ip : '10.40.1.1');
-        const prbName = a.probe || a.probeName || (devObj ? devObj.probeName : 'Dubai Campus Probe');
+        const devIp = a.ip || a.deviceIp || (devObj ? devObj.ip : '127.0.0.1');
+        const prbName = a.probe || a.probeName || (devObj ? devObj.probeName : 'Central Site Probe');
         const almTime = a.time || a.lastOccurred || a.firstOccurred || 'Just now';
         return `
         <tr>

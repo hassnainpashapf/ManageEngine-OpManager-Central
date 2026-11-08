@@ -1085,45 +1085,51 @@
             ` : state.nocSlide === 1 ? `
               <!-- SLIDE 1: ACTIVE CORRELATED ALARMS & RCA TICKER -->
               <div>
-                <div style="background: #1e1b4b; border: 1px solid #6366f1; border-radius: 6px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 16px;">✨</span>
                     <div>
-                      <div style="font-weight: 800; font-size: 13px; color: #c7d2fe;">Zia AI Correlated Root Cause (Incident RCA-2026-081)</div>
-                      <div style="font-size: 11px; color: #a5b4fc;">Core Uplink Flap & Transceiver Degrade on DXB-CORE-SW-01 &bull; Confidence: 98.4%</div>
+                      <div style="font-weight: 800; font-size: 13px; color: #4ade80;">All Systems Operational &bull; 0 Correlated Incidents</div>
+                      <div style="font-size: 11px; color: #94a3b8;">Central Master telemetry engine active &bull; Baseline healthy</div>
                     </div>
                   </div>
-                  <button onclick="window.location.hash='#/alarms'" style="background: #4f46e5; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Open Alarms Studio &rarr;</button>
+                  <button onclick="window.location.hash='#/alarms'" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Open Alarms Studio &rarr;</button>
                 </div>
 
                 <div style="background: #1e293b; border-radius: 6px; padding: 16px; font-size: 12px; border: 1px solid #334155;">
                   <div style="font-weight: 700; color: #38bdf8; margin-bottom: 12px; font-size: 13px;">ACTIVE CENTRAL ALARMS TICKER</div>
-                  <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                    <thead>
-                      <tr style="border-bottom: 1px solid #334155; color: #94a3b8; text-align: left;">
-                        <th style="padding: 6px 8px;">Severity</th>
-                        <th style="padding: 6px 8px;">Device Node</th>
-                        <th style="padding: 6px 8px;">Entity / Monitor</th>
-                        <th style="padding: 6px 8px;">Message</th>
-                        <th style="padding: 6px 8px;">Probe</th>
-                        <th style="padding: 6px 8px;">Technician</th>
-                        <th style="padding: 6px 8px; text-align: right;">Time</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      ${state.alarms.map(a => `
-                        <tr style="border-bottom: 1px solid #283347;">
-                          <td style="padding: 8px 8px;">${getStatusBadge(a.severity)}</td>
-                          <td style="padding: 8px 8px; font-weight: 700; color: #38bdf8; cursor: pointer;" onclick="showDeviceSnapshotModal('${a.device}')">${a.device}</td>
-                          <td style="padding: 8px 8px; color: #cbd5e1;">${a.entity}</td>
-                          <td style="padding: 8px 8px; color: #f8fafc;">${a.message}</td>
-                          <td style="padding: 8px 8px; color: #94a3b8;">${a.probe}</td>
-                          <td style="padding: 8px 8px; color: #a5b4fc; font-weight: 600;">${a.technician}</td>
-                          <td style="padding: 8px 8px; text-align: right; color: #94a3b8; font-family: monospace;">${a.time}</td>
+                  ${state.alarms.length === 0 ? `
+                    <div style="padding: 30px; text-align: center; color: #94a3b8;">
+                      No active alarms detected across monitored infrastructure.
+                    </div>
+                  ` : `
+                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                      <thead>
+                        <tr style="border-bottom: 1px solid #334155; color: #94a3b8; text-align: left;">
+                          <th style="padding: 6px 8px;">Severity</th>
+                          <th style="padding: 6px 8px;">Device Node</th>
+                          <th style="padding: 6px 8px;">Entity / Monitor</th>
+                          <th style="padding: 6px 8px;">Message</th>
+                          <th style="padding: 6px 8px;">Probe</th>
+                          <th style="padding: 6px 8px;">Technician</th>
+                          <th style="padding: 6px 8px; text-align: right;">Time</th>
                         </tr>
-                      `).join('')}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        ${state.alarms.map(a => `
+                          <tr style="border-bottom: 1px solid #283347;">
+                            <td style="padding: 8px 8px;">${getStatusBadge(a.severity)}</td>
+                            <td style="padding: 8px 8px; font-weight: 700; color: #38bdf8; cursor: pointer;" onclick="showDeviceSnapshotModal('${a.device}')">${a.device}</td>
+                            <td style="padding: 8px 8px; color: #cbd5e1;">${a.entity}</td>
+                            <td style="padding: 8px 8px; color: #f8fafc;">${a.message}</td>
+                            <td style="padding: 8px 8px; color: #94a3b8;">${a.probe}</td>
+                            <td style="padding: 8px 8px; color: #a5b4fc; font-weight: 600;">${a.technician}</td>
+                            <td style="padding: 8px 8px; text-align: right; color: #94a3b8; font-family: monospace;">${a.time}</td>
+                          </tr>
+                        `).join('')}
+                      </tbody>
+                    </table>
+                  `}
                 </div>
               </div>
             ` : state.nocSlide === 2 ? `
@@ -1166,28 +1172,34 @@
               <!-- SLIDE 3: POWER & THERMAL SENSORS -->
               <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
                 <div style="font-weight: 800; font-size: 14px; color: #38bdf8; margin-bottom: 14px;">FACILITY POWER, UPS RUNTIME &amp; THERMAL METRICS</div>
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px;">
-                  <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                    <div style="font-size: 11px; color: #94a3b8;">SCHNEIDER GALAXY 3500 UPS</div>
-                    <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">42.8% LOAD</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">48 Mins Estimated Runtime</div>
+                ${state.devices.length === 0 ? `
+                  <div style="padding: 30px; text-align: center; color: #94a3b8;">
+                    No hardware sensor telemetry available. Connect SNMP-enabled UPS, PDUs, or chassis thermal sensors to monitor facility power.
                   </div>
-                  <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                    <div style="font-size: 11px; color: #94a3b8;">CHASSIS TEMPERATURE PEAK</div>
-                    <div style="font-size: 24px; font-weight: 800; color: #f87171; margin: 6px 0;">48 °C</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">DXB-CORE-SW-01 Chassis</div>
+                ` : `
+                  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px;">
+                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
+                      <div style="font-size: 11px; color: #94a3b8;">FACILITY UPS METRIC</div>
+                      <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">0.0% LOAD</div>
+                      <div style="font-size: 10px; color: #cbd5e1;">Normal Operation</div>
+                    </div>
+                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
+                      <div style="font-size: 11px; color: #94a3b8;">CHASSIS TEMPERATURE</div>
+                      <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">24 °C</div>
+                      <div style="font-size: 10px; color: #cbd5e1;">Thermal Baseline Optimal</div>
+                    </div>
+                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
+                      <div style="font-size: 11px; color: #94a3b8;">POWER CONSUMPTION</div>
+                      <div style="font-size: 24px; font-weight: 800; color: #38bdf8; margin: 6px 0;">0.00 kW</div>
+                      <div style="font-size: 10px; color: #cbd5e1;">Across ${state.devices.length} Assets</div>
+                    </div>
+                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
+                      <div style="font-size: 11px; color: #94a3b8;">PSU REDUNDANCY</div>
+                      <div style="font-size: 24px; font-weight: 800; color: #34d399; margin: 6px 0;">HEALTHY</div>
+                      <div style="font-size: 10px; color: #cbd5e1;">Zero Faults Reported</div>
+                    </div>
                   </div>
-                  <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                    <div style="font-size: 11px; color: #94a3b8;">TOTAL POWER CONSUMPTION</div>
-                    <div style="font-size: 24px; font-weight: 800; color: #38bdf8; margin: 6px 0;">8.42 kW</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">Across 16 Core Assets</div>
-                  </div>
-                  <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                    <div style="font-size: 11px; color: #94a3b8;">DUAL PSU REDUNDANCY</div>
-                    <div style="font-size: 24px; font-weight: 800; color: #34d399; margin: 6px 0;">32 / 32 ACTIVE</div>
-                    <div style="font-size: 10px; color: #cbd5e1;">Zero PSU Faults Reported</div>
-                  </div>
-                </div>
+                `}
               </div>
             `}
           </div>
@@ -1301,7 +1313,7 @@
     const ziaFixBtn = container.querySelector('#opm-dash-zia-action-btn');
     if (ziaFixBtn) {
       ziaFixBtn.onclick = () => {
-        showToast('Zia AI applied rate-limiting policy map to DXB-CORE-SW-01.');
+        showToast('Zia AI applied rate-limiting policy map.');
       };
     }
 

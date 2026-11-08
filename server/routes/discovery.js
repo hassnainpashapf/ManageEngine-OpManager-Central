@@ -10,12 +10,7 @@ router.get('/api/discovery/profiles', (req, res) => {
   });
 });
 
-let discoveryRules = [
-  { id: 1, name: 'Dubai Campus LAN (10.40.0.0/20)', subnet: '10.40.0.0/20', probe: 'Dubai Campus Core', probeId: 4, schedule: 'Daily at 02:00 AM', credential: 'SNMPv2c Community (dxb-ro)' },
-  { id: 2, name: 'New York Datacenter VPC (10.10.0.0/16)', subnet: '10.10.0.0/16', probe: 'New York Data Center', probeId: 1, schedule: 'Daily at 03:00 AM', credential: 'SNMPv3 USM (SHA-256 / AES-256)' },
-  { id: 3, name: 'London Branch Office (10.20.0.0/24)', subnet: '10.20.0.0/24', probe: 'London Branch Office', probeId: 2, schedule: 'Daily at 04:00 AM', credential: 'WMI / WinRM (corp\\svc_opm)' },
-  { id: 4, name: 'Singapore Cloud VPC (10.30.0.0/16)', subnet: '10.30.0.0/16', probe: 'Singapore Cloud VPC', probeId: 3, schedule: 'Daily at 05:00 AM', credential: 'Linux SSH Key Vault (id_rsa)' }
-];
+let discoveryRules = [];
 
 router.get('/api/discovery/rules', (req, res) => {
   res.json({ status: 'success', rules: discoveryRules });
@@ -25,10 +20,10 @@ router.post('/api/discovery/rules', (req, res) => {
   const { name, subnet, probe, probeId, schedule, credential } = req.body;
   const newRule = {
     id: discoveryRules.length + 1,
-    name: name || `Subnet Sweep (${subnet || '10.50.0.0/24'})`,
-    subnet: subnet || '10.50.0.0/24',
-    probe: probe || 'Dubai Campus Core',
-    probeId: probeId || 4,
+    name: name || `Subnet Sweep (${subnet || '192.168.1.0/24'})`,
+    subnet: subnet || '192.168.1.0/24',
+    probe: probe || 'Central Site Probe',
+    probeId: probeId || 101,
     schedule: schedule || 'Daily at 06:00 AM',
     credential: credential || 'SNMPv2c Community'
   };
