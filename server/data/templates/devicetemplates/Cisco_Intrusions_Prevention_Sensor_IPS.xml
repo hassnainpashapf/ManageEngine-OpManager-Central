@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Cisco Intrusions Prevention Sensor IPS" osType="[NA]" templateName="Cisco_Intrusions_Prevention_Sensor_IPS">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="copy current-config backup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="CiscoIPS" personalityName="CiscoIPS">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="PLATFORM" size="15" desc="Hardware Version" displayname="PLATFORM" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="RAMINFO" size="15" desc="BIOS Version" displayname="RAM" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>.*Generating current config:.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoHardwarePropParser.xml"/> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="ciscoids_generic_show_version" responseparserid="cisco_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="IPS 4240" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.648"/>
+        <NCMDeviceSysOID model="IPS 4250" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.649"/>
+        <NCMDeviceSysOID model="IPS 4250 SX" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.650"/>
+        <NCMDeviceSysOID model="IPS 4250 XL" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.651"/>
+        <NCMDeviceSysOID model="IPS 4255" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.652"/>
+        <NCMDeviceSysOID model="IPS SSM-20" ostype="IPS" series="" sysoid=".1.3.6.1.4.1.9.1.655"/>
+        <NCMDeviceSysOID model="IPS SSM-10" ostype="IPS" series="" sysoid=".1.3.6.1.4.1.9.1.662"/>
+        <NCMDeviceSysOID model="IDS 4220" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.741"/>
+        <NCMDeviceSysOID model="IDS 4230" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.742"/>
+        <NCMDeviceSysOID model="IpS 4260" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.743"/>
+        <NCMDeviceSysOID model="IDS 4215" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.807"/>
+        <NCMDeviceSysOID model="IDS 4235" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.808"/>
+        <NCMDeviceSysOID model="IDS 4250" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.809"/>
+        <NCMDeviceSysOID model="IDS 4250 SX" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.810"/>
+        <NCMDeviceSysOID model="IDS 4250 XL" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.811"/>
+        <NCMDeviceSysOID model="IDS 4240" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.812"/>
+        <NCMDeviceSysOID model="IPS 4255" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.813"/>
+        <NCMDeviceSysOID model="IPS 4260" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.814"/>
+        <NCMDeviceSysOID model="IDSM2" ostype="IPS" series="" sysoid=".1.3.6.1.4.1.9.1.815"/>
+        <NCMDeviceSysOID model="IPS 4270" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.830"/>
+        <NCMDeviceSysOID model="IPS 4270Virtual" ostype="IPS" series="IPS 4200" sysoid=".1.3.6.1.4.1.9.1.831"/>
+        <NCMDeviceSysOID model="IPS SSM40 Virtual" ostype="IPS" series="" sysoid=".1.3.6.1.4.1.9.1.943"/>
+        <NCMDeviceSysOID model="IPS SSM40" ostype="IPS" series="" sysoid=".1.3.6.1.4.1.9.1.944"/>
+        <NCMDeviceSysOID model="IPS SSC5 Virtual" ostype="IPS" series="" sysoid=".1.3.6.1.4.1.9.1.1010"/>
+        <NCMDeviceSysOID model="IPS SSC5" ostype="IPS" series="" sysoid=".1.3.6.1.4.1.9.1.1039"/>
+        <NCMDeviceSysOID model="IPS4510-INC-K9" ostype="NA" series="IPS 4500" sysoid=".1.3.6.1.4.1.9.1.1543"/>
+        <NCMDeviceSysOID model="ASA5512-IPS" ostype="NA" series="ASA5512-IPS" sysoid=".1.3.6.1.4.1.9.1.1545"/>
+        <NCMDeviceSysOID model="ASA5555-IPS" ostype="NA" series="ASA5555-IPS" sysoid=".1.3.6.1.4.1.9.1.1549"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

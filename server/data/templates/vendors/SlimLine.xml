@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+	<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:slim_line" templatename="Mistletoe_SlimLine" displayname="SlimLine Appliance" description="For all SlimLine devices">
+		<NCMVendorDevice vendorid="Mistletoe" />
+        <NCMDevicePersonality personalityid="SlimLine" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:slim_line_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:slim_line" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="slim_line_cli_running_config_backup" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="slim_line_cli_running_config_push" />
+		
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:slim_line_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:slim_line" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="slim_line_cli_running_config_backup" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="slim_line_cli_running_config_push" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For all Ubiquiti Air Os" displayName="Ubiquiti Unifi Switch" osType="Air OS" templateName="Ubiquiti_Unifi_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Ubiquiti" vendorName="Ubiquiti">
+		<Commands>
+			<Command commandstr="cat /etc/version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="cat /tmp/system.cfg" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="2" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Ubiquiti Unifi Switch" personalityName="UbiquitiUnifiSwitch">	
+		<Login enablecommand="" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Version" displayname="Version" name="VERSION" sequenceid="1" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="UbiquitiUnifiHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_ubiquiti_unifi">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="(.*)" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											<PARAM NAME="VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="cat /etc/version" messagesuffix="${LF}" parsercommandname="hardware_prop_ubiquiti_unifi" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" responseparserid="ubiquiti_unifi_hardware_prop_parser" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

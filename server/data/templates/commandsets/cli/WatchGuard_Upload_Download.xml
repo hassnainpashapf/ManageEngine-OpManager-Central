@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<!-- WatchGuard Firewall Commands -->
+
+<!-- Backup Running Config -->
+
+<CLICommandList>
+
+<CLIInteractionSpec  interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="watchguard_firewall_cli_fetch_config_ispec"/>
+</CLIInteractionSpec>
+
+
+<CLICommand command="export config to tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="watchguard_firewall_cli_backup_startup_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="import config from tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="watchguard_firewall_cli_upload_startup_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties command -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="watchguard_firewall_hardware_prop_parser">
+<InteractionSpec timeout="20000" protocol="CLI" interactionid="watchguard_firewall_show_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="sh sysinfo">
+	<CLIInputRecord parsercommandname="hardware_prop_watchguard_firewall" messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="watchguard_firewall_hw_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

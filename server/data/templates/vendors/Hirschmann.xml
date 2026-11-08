@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Hirschmann Gigabit Switch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hirschmann_switch" templatename="Hirschmann_Switch" displayname="Hirschmann Gigabit Switch" ostype="NA" description="For all Hirschmann Gigabit Switch RS20/RS30/RS40, MS20/MS30">
+        <NCMVendorDevice vendorid="Hirschmann"/>
+        <NCMDevicePersonality personalityid="HirschmannSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+			</NCMSupportedProtocol>       
+			
+		 <NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hirschmann_switch_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:hirschmann_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hirschmann_switch_cli_startup_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupStartupConfig" recordid="hirschmann_switch_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hirschmann_switch_running_cli_telnet_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupRunningConfig" recordid="hirschmann_switch_cli_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="hirschmann_switch_sync_config" />		
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+				<!-- SSH -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hirschmann_switch_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:hirschmann_switch"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hirschmann_switch_cli_startup_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupStartupConfig" recordid="hirschmann_switch_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hirschmann_switch_running_cli_telnet_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupRunningConfig" recordid="hirschmann_switch_cli_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="hirschmann_switch_sync_config" />		
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

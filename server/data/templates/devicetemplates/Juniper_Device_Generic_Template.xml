@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Juniper Device Generic Template" osType="[NA]" templateName="Juniper_Device_Generic_Template">
+	<RestTemplate name=""/>
+	<Vendor displayName="Juniper" vendorName="Juniper">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show chassis hardware"/>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notice" number="5" sequenceid="0"/>
+			<Level name="warning" number="6" sequenceid="1"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="show | display set | save scp://${UserInput:scp_username}@${UserInput:tftp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="password:" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="delete system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="show | display set | save ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="run start shell" messagesuffix="${LF}" prompt="%" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tftp ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="tftp>" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="put ${UserInput:file_name}" messagesuffix="${LF}" prompt="tftp>" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="%" sequenceid="50" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="60" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="delete system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="show configuration | display set | no-more" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="60000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="delete system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="JuniperDeviceGeneric" personalityName="JuniperDeviceGeneric">	
+		<Login enablecommand="configure" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="MODEL" size="25" desc="This is to identify the Rom version" displayname="MODEL" defaultvalue="Not Available" sequenceid="10"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>set\s*system\s*syslog\s*host\s*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="JuniperPropParser.xml"/> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="run show version" parsercommandname="hardware_prop_juniper_ex4200_switch" responseparserid="juniper_switch_hardware_prop_parser" messagesuffix="${LF}" prompt="#" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+					<Commands operation="enterAdvancedMode">
+						<Command commandstr="configure" parsercommandname="" responseparserid="juniper_switch_hardware_prop_parser" messagesuffix="${LF}" prompt="#" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+					<Commands operation="exitAdvancedMode">
+						<Command commandstr="quit" parsercommandname="" responseparserid="" messagesuffix="${LF}" prompt=">" timeout="60000" promptactionid=""/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="SA-2500" ostype="NA" series="" sysoid=".1.3.6.1.4.1.2021.250.255"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274M02J02M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.46"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274M06J06M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.47"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274M11J11M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.48"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274S58J58S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.50"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274S56J56S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.51"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274S36J36S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.52"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274S34J34S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.53"/>
+        <NCMDeviceSysOID model="ProductLineIBM427348EJ48E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.54"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274E08J08E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.55"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274E16J16E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.56"/>
+        <NCMDeviceSysOID model="ProductLineEXXRE" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.59"/>
+        <NCMDeviceSysOID model="ProductLineIBM0719J45E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.71"/>
+        <NCMDeviceSysOID model="ProductLineIBMJ08F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.72"/>
+        <NCMDeviceSysOID model="ProductLineIBMJ52F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.73"/>
+        <NCMDeviceSysOID model="ProductLineDellJFX3500" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.75"/>
+        <NCMDeviceSysOID model="ProductLineIBM4274S54J54S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.106"/>
+        <NCMDeviceSysOID model="IBM4274M02J02M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.46"/>
+        <NCMDeviceSysOID model="IBM4274M06J06M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.47"/>
+        <NCMDeviceSysOID model="IBM4274M11J11M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.48"/>
+        <NCMDeviceSysOID model="IBM4274S58J58S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.50"/>
+        <NCMDeviceSysOID model="IBM4274S56J56S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.51"/>
+        <NCMDeviceSysOID model="IBM4274S36J36S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.52"/>
+        <NCMDeviceSysOID model="IBM4274S34J34S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.53"/>
+        <NCMDeviceSysOID model="IBM427348EJ48E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.54"/>
+        <NCMDeviceSysOID model="IBM4274E08J08E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.55"/>
+        <NCMDeviceSysOID model="IBM4274E16J16E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.56"/>
+        <NCMDeviceSysOID model="EXXRE" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.59"/>
+        <NCMDeviceSysOID model="IBM0719J45E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.71"/>
+        <NCMDeviceSysOID model="IBMJ08F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.72"/>
+        <NCMDeviceSysOID model="IBMJ52F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.73"/>
+        <NCMDeviceSysOID model="DellJFX3500" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.75"/>
+        <NCMDeviceSysOID model="IBM4274S54J54S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.106"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274M02J02M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.46"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274M06J06M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.47"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274M11J11M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.48"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274S58J58S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.50"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274S56J56S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.51"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274S36J36S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.52"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274S34J34S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.53"/>
+        <NCMDeviceSysOID model="ProductModelIBM427348EJ48E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.54"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274E08J08E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.55"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274E16J16E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.56"/>
+        <NCMDeviceSysOID model="ProductModelIBM0719J45E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.71"/>
+        <NCMDeviceSysOID model="ProductModelIBMJ08F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.72"/>
+        <NCMDeviceSysOID model="ProductModelIBMJ52F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.73"/>
+        <NCMDeviceSysOID model="ProductModelIBM4274S54J54S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.106"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274M02J02M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.46"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274M06J06M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.47"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274M11J11M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.48"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274S58J58S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.50"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274S56J56S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.51"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274S36J36S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.52"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274S34J34S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.53"/>
+        <NCMDeviceSysOID model="ProductVariationIBM427348EJ48E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.54"/>
+        <NCMDeviceSysOID model="ProductIBM427348EJ48Eport24T" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.54.1"/>
+        <NCMDeviceSysOID model="ProductIBM427348EJ48Eport24P" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.54.2"/>
+        <NCMDeviceSysOID model="ProductIBM427348EJ48Eport48T" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.54.3"/>
+        <NCMDeviceSysOID model="ProductIBM427348EJ48Eport48P" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.54.4"/>
+        <NCMDeviceSysOID model="ProductIBM427348EJ48Eport24F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.54.5"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274E08J08E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.55"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274E16J16E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.56"/>
+        <NCMDeviceSysOID model="ProductVariationEXXRE" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.59"/>
+        <NCMDeviceSysOID model="ProductEXXRE" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.59.1"/>
+        <NCMDeviceSysOID model="ProductVariationIBM0719J45E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.71"/>
+        <NCMDeviceSysOID model="ProductIBM0719J45Eport40F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.71.1"/>
+        <NCMDeviceSysOID model="ProductIBM0719J45Eport20F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.71.2"/>
+        <NCMDeviceSysOID model="ProductVariationIBMJ08F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.72"/>
+        <NCMDeviceSysOID model="ProductIBM2413F08J08F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.72.1"/>
+        <NCMDeviceSysOID model="ProductVariationIBMJ52F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.73"/>
+        <NCMDeviceSysOID model="ProductIBM2409F52J52F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.73.1"/>
+        <NCMDeviceSysOID model="ProductIBM8729HC1J52F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.73.2"/>
+        <NCMDeviceSysOID model="ProductVariationDellJFX3500" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.75"/>
+        <NCMDeviceSysOID model="ProductVariationIBM4274S54J54S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.106"/>
+        <NCMDeviceSysOID model="ChassisIBM4274M02J02M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.46"/>
+        <NCMDeviceSysOID model="ChassisIBM4274M06J06M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.47"/>
+        <NCMDeviceSysOID model="ChassisIBM4274M11J11M" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.48"/>
+        <NCMDeviceSysOID model="ChassisIBM4274S58J58S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.50"/>
+        <NCMDeviceSysOID model="ChassisIBM4274S56J56S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.51"/>
+        <NCMDeviceSysOID model="ChassisIBM4274S36J36S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.52"/>
+        <NCMDeviceSysOID model="ChassisIBM4274S34J34S" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.53"/>
+        <NCMDeviceSysOID model="ChassisIBM427348EJ48E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.54"/>
+        <NCMDeviceSysOID model="IBM427348EJ48ERE0" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.54.1"/>
+        <NCMDeviceSysOID model="IBM427348EJ48ERE1" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.54.2"/>
+        <NCMDeviceSysOID model="ChassisIBM4274E08J08E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.55"/>
+        <NCMDeviceSysOID model="ChassisIBM4274E16J16E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.56"/>
+        <NCMDeviceSysOID model="ChassisEXXRE" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.59"/>
+        <NCMDeviceSysOID model="EXXRERE0" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.59.1"/>
+        <NCMDeviceSysOID model="EXXRERE1" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.59.2"/>
+        <NCMDeviceSysOID model="ChassisIBM0719J45E" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.71"/>
+        <NCMDeviceSysOID model="IBM0719J45ERE0" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.71.1"/>
+        <NCMDeviceSysOID model="IBM0719J45ERE1" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.71.2"/>
+        <NCMDeviceSysOID model="ChassisIBMJ08F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.72"/>
+        <NCMDeviceSysOID model="ChassisIBMJ52F" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.73"/>
+        <NCMDeviceSysOID model="ChassisDellJFX3500" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.75"/>
+        <NCMDeviceSysOID model="NS-IDP-8200" ostype="NA" series="IDP" sysoid=".1.3.6.1.4.1.2636.3.9.1.252.1"/>
+        <NCMDeviceSysOID model="NS-IDP-75" ostype="NA" series="IDP" sysoid=".1.3.6.1.4.1.2636.3.9.1.252.7"/>
+        <NCMDeviceSysOID model="juniSsx1400" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.4874.1.1.1.2.1.1.1"/>
+        <NCMDeviceSysOID model="juniSsx700" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.4874.1.1.1.2.1.1.2"/>
+        <NCMDeviceSysOID model="juniSsx1440" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.4874.1.1.1.2.1.1.3"/>
+        <NCMDeviceSysOID model="usMrxRoutingSwitch32000" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.4874.1.1.1.2.2"/>
+        <NCMDeviceSysOID model="usServiceMediationSwitch2100" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.4874.1.1.1.3.1"/>
+        <NCMDeviceSysOID model="usServiceReadySwitch3000" ostype="NA" series="NA" sysoid=".1.3.6.1.4.1.4874.1.1.1.4.1"/>
+        <NCMDeviceSysOID model="VF3000" ostype="NA" series="VF3000" sysoid=".1.3.6.1.4.1.7005"/>
+        <NCMDeviceSysOID model="MAG6611-SM160" ostype="NA" series="MAG" sysoid=".1.3.6.1.4.1.12532.254.3.1"/>
+        <NCMDeviceSysOID model="PSA7000" ostype="NA" series="PSA" sysoid=".1.3.6.1.4.1.12532.0.0.0"/>
+        <NCMDeviceSysOID model="SA-2000" ostype="NA" series="SA" sysoid=".1.3.6.1.4.1.12532.252.2.1"/>
+        <NCMDeviceSysOID model="SA-2500" ostype="NA" series="SA" sysoid=".1.3.6.1.4.1.12532.252.3.1"/>
+        <NCMDeviceSysOID model="SA-4500" ostype="NA" series="SA" sysoid=".1.3.6.1.4.1.12532.252.5.1"/>
+        <NCMDeviceSysOID model="SA-4500-FIPS" ostype="NA" series="SA" sysoid=".1.3.6.1.4.1.12532.252.5.2"/>
+        <NCMDeviceSysOID model="SA-6000" ostype="NA" series="SA" sysoid=".1.3.6.1.4.1.12532.252.6.1"/>
+        <NCMDeviceSysOID model="SA-6500" ostype="NA" series="SA" sysoid=".1.3.6.1.4.1.12532.252.7.1"/>
+        <NCMDeviceSysOID model="MAG-2600" ostype="NA" series="MAG" sysoid=".1.3.6.1.4.1.12532.254.1.1"/>
+        <NCMDeviceSysOID model="MAG-4610" ostype="NA" series="MAG" sysoid=".1.3.6.1.4.1.12532.254.2.1"/>
+        <NCMDeviceSysOID model="MAG-SM360" ostype="NA" series="MAG" sysoid=".1.3.6.1.4.1.12532.254.4.1"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

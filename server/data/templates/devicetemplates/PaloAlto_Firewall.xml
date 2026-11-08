@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="Palo alto firewall device template" displayName="PaloAlto Firewall" osType="PAN-OS" templateName="PaloAlto_Firewall_DT">
+	<RestTemplate name="PanOS"/>
+	<Vendor displayName="PaloAlto" vendorName="PaloAlto">
+		<Commands/>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="save config to ${UserInput:file_name}" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="scp export configuration from ${UserInput:file_name} to ${UserInput:scp_username}@${UserInput:tftp_server_address}:${UserInput:file_name}" messagesuffix="${LF}" prompt="Password:" sequenceid="40" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="50" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="scp import configuration from ${UserInput:scp_username}@${UserInput:tftp_server_address}:${UserInput:file_name}" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="load config from ${UserInput:file_name}" messagesuffix="${LF}" prompt="#" sequenceid="40" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="50" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="60" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="save config to ${UserInput:file_name}" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tftp export configuration from ${UserInput:file_name} to ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="40" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="tftp import configuration from ${UserInput:tftp_server_address} file ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="load config from ${UserInput:file_name}" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="40" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="50" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="set cli pager off" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show config running" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="30000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>        	
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="set shared log-settings syslog ncm-sys-profile server syslog-ncm transport UDP" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set shared log-settings syslog ncm-sys-profile server syslog-ncm port 514" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="3" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set shared log-settings syslog ncm-sys-profile server syslog-ncm format BSD" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="4" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set shared log-settings syslog ncm-sys-profile server syslog-ncm server ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="5" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set shared log-settings syslog ncm-sys-profile server syslog-ncm facility LOG_USER" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="6" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set shared log-settings system match-list ncm-log send-syslog ncm-sys-profile" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="7" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set shared log-settings system match-list ncm-log filter '(severity eq informational)'" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="8" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="delete shared log-settings system match-list ncm-log" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="delete shared log-settings syslog ncm-sys-profile" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="3" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="PanOS" personalityName="PanOS">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SW_VERSION" size="50" desc="Software Version" displayname="SW-Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="VPNCLIENT_VER" size="50" desc="VPN Client Version" displayname="VPN Client version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="APP_VERSION" size="50" desc="Application Version" displayname="App Version" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="AV_VERSION" size="50" desc="AV Version" displayname="AV Version" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="THREAT_VERSION" size="50" desc="Threat Version" displayname="Threat Version" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="LOGDB_VERSION" size="50" desc="LogDB Version" displayname="Log DB Verson" defaultvalue="Not Available" sequenceid="6"/>
+				<Column name="URL_FILTERING" size="50" desc="URL Filtering Version" displayname="URL Filtering Version" defaultvalue="Not Available" sequenceid="7"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>set shared log-settings syslog\s*\S*\s*server\s*\S*\s*server\s*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="PaloAltoFWHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_paloalto_firewall">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*sw-version: (\S+).*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											<PARAM NAME="SW_VERSION" TOKENNO="1"/>
+										</REGEX>
+									   <REGEX NAME="MACADDRESS" EXPRESSION=".*mac-address: (\S+).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*serial: (\S+).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="VPNCLIENT_VER" EXPRESSION=".*vpnclient-package-version: (\S+).*">
+											<PARAM NAME="VPNCLIENT_VER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="APP_VERSION" EXPRESSION=".*app-version: (\S+).*">
+											<PARAM NAME="APP_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="AV_VERSION" EXPRESSION=".*av-version: (\S+).*">
+											<PARAM NAME="AV_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="THREAT_VERSION" EXPRESSION=".*threat-version: (\S+).*">
+											<PARAM NAME="THREAT_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="LOGDB_VERSION" EXPRESSION=".*logdb-version: (\S+).*">
+											<PARAM NAME="LOGDB_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="URL_FILTERING" EXPRESSION=".*url-filtering-version: (\S+).*">
+											<PARAM NAME="URL_FILTERING" TOKENNO="1"/>
+										</REGEX>
+										
+										<REGEX NAME="SERIES" EXPRESSION=".*family\s*:\s*(\S*).*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*model\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system info" parsercommandname="hardware_prop_paloalto_firewall" responseparserid="palo_alto_fwa_dt_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid="NA"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="Panorama" series="" sysoid=".1.3.6.1.4.1.25461.2.3.7"/>
+		<NCMDeviceSysOID model="PA-4050" series="PA-4000" sysoid=".1.3.6.1.4.1.25461.2.3.1"/>
+		<NCMDeviceSysOID model="PA-4020" series="PA-4000" sysoid=".1.3.6.1.4.1.25461.2.3.2"/>
+		<NCMDeviceSysOID model="PA-2050" series="PA-2000" sysoid=".1.3.6.1.4.1.25461.2.3.3"/>
+		<NCMDeviceSysOID model="PA-2020" series="PA-2000" sysoid=".1.3.6.1.4.1.25461.2.3.4"/>
+		<NCMDeviceSysOID model="PA-4060" series="PA-4000" sysoid=".1.3.6.1.4.1.25461.2.3.5"/>
+		<NCMDeviceSysOID model="PA-500" series="" sysoid=".1.3.6.1.4.1.25461.2.3.6"/>
+		<NCMDeviceSysOID model="PA-5060" series="PA-5000" sysoid=".1.3.6.1.4.1.25461.2.3.8"/>
+		<NCMDeviceSysOID model="PA-5020" series="PA-5000" sysoid=".1.3.6.1.4.1.25461.2.3.11"/>
+		<NCMDeviceSysOID model="PA-3050" series="PA-3000" sysoid=".1.3.6.1.4.1.25461.2.3.17"/>
+		<NCMDeviceSysOID model="PA-3060" series="PA-3000" sysoid=".1.3.6.1.4.1.25461.2.3.19"/>
+		<NCMDeviceSysOID model="PA-5260" series="PA-5200" sysoid=".1.3.6.1.4.1.25461.2.3.22"/>
+		<NCMDeviceSysOID model="PA-5220" series="PA-5200" sysoid=".1.3.6.1.4.1.25461.2.3.24"/>
+		<NCMDeviceSysOID model="VM series" series="VM series" sysoid=".1.3.6.1.4.1.25461.2.3.29"/>
+		<NCMDeviceSysOID model="M-100" series="" sysoid=".1.3.6.1.4.1.25461.2.3.30"/>
+		<NCMDeviceSysOID model="PS-7050" series="" sysoid=".1.3.6.1.4.1.25461.2.3.31"/>
+		<NCMDeviceSysOID model="" series="" sysoid=".1.3.6.1.4.1.25461.2.3.33"/>
+		<NCMDeviceSysOID model="PA-7080" series="PA-7000" sysoid=".1.3.6.1.4.1.25461.2.3.34"/>
+		<NCMDeviceSysOID model="PA-220" series="" sysoid=".1.3.6.1.4.1.25461.2.3.38"/>
+		<NCMDeviceSysOID model="PA-5050" series="PA-5000" sysoid=".1.3.6.1.4.1.25461.2.3.9"/>
+		<NCMDeviceSysOID model="PA-200" series="PA-200" sysoid=".1.3.6.1.4.1.25461.2.3.12"/>
+		<NCMDeviceSysOID model="PA-3020" series="PA-3000" sysoid=".1.3.6.1.4.1.25461.2.3.18"/>
+		<NCMDeviceSysOID model="M-500" series="" sysoid=".1.3.6.1.4.1.25461.2.3.35"/>
+		<NCMDeviceSysOID model="M-850" series="" sysoid=".1.3.6.1.4.1.25461.2.3.37"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

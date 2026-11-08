@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id ,Exp $ -->
+
+<DeviceConfiguration>
+
+     <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:ruijie_switch" templatename="Ruijie_Switch" displayname="Ruijie Switch" ostype="RGOS" description="Ruijie Broadband Managed Switch(S2026F)">
+        <NCMVendorDevice vendorid="Ruijie" />
+        <NCMDevicePersonality personalityid="RuijieSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ruijie_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ruijie_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">                
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ruijie_switch_startup_backup_config"/>                             
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ruijie_switch_running_backup_config"/>
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ruijie_switch_cli_copy_running_to_startup"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+          <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ruijie_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ruijie_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">                          
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ruijie_switch_startup_backup_config"/>                         
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ruijie_switch_running_backup_config"/>
+			   <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ruijie_switch_cli_copy_running_to_startup"/>
+                                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+<!-- telnet\ssh backup  -->
+	
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ruijie_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ruijie_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">        
+        	<NCMDeviceCriteria commandmapid="SSH_Command">
+        
+        		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ruijie_switch_cli_startup_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="ruijie_switch_startup_backup_cli_rec"/>	        	        
+        		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ruijie_switch_cli_running_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="ruijie_switch_running_backup_cli_rec"/>	
+		        <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ruijie_switch_sync_config_write_mem" />				
+        	
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ruijie_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ruijie_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">        
+        	<NCMDeviceCriteria commandmapid="TELNET_Command">  
+        
+        		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ruijie_switch_cli_startup_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="ruijie_switch_startup_backup_cli_rec"/>		        	        
+        		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ruijie_switch_cli_running_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="ruijie_switch_running_backup_cli_rec"/>			 
+        	    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ruijie_switch_sync_config_write_mem"/>
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

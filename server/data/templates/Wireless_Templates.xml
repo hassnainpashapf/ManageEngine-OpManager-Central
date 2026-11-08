@@ -1,0 +1,1279 @@
+<?xml version="1.0" encoding="UTF-8"?><CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aerohive Networks AP230" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.26928.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aerohive Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Airspan Air4G-WL24-3405T" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.989.2.16.2"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Airspan"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Airtight Networks SA-250" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.16901.1.1.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Airtight Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Alcatel 7210-M" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6527.6.2.1.2.2.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Alcatel"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  200" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.10"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  2400-F" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.99"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  2424" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.11"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  3200-8" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.14"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  3400-32" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.16"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  3600" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.17"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  3600-64" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.18"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  6000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.9999"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  650-US" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.19"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  651" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.20"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  7005" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.39"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  7030" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.41"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  7205" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.42"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  7220" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.33"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  7240" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.34"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  800E" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.8"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  850" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.6"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba 2450" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.5"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba CP-HW-5K" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.6.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP Virtual Controller" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.71"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-103" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.69"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-104" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.53"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-105" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.34"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-114" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.60"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-115" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.61"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-134" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.47"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-174" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.63"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-204" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.67"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-205" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.68"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-214" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.73"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-215" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.74"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-224" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.58"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-225" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.59"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-275" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.64"/>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Aruba"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Brocade Ruckus ZD1000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.5.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Brocade"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Brocade Ruckus ZD1100" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.5.2"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Brocade"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Brocade Ruckus ZD1200" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.5.15"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Brocade"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Brocade Ruckus ZD3000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.5.3"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Brocade"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Brocade Ruckus ZD5000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.5.8"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Brocade"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR AP1041" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1270"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR AP1042" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1269"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR AP1261" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1248"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR AP1530" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1875"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-AP1601" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1656"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-AP2600" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1657"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-AP3601" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1662"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-CAP3602I-C-K9" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1661"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-SAP1602E-C-K9" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1660"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-SAP2602E" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1659"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-WLC2106-K9" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.828"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Catalyst 57xx Stack" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2067"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Flex 7510" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1295"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MR33" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.27"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Secure Access Control System" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1117"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WGB350" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.551.2.1.124"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WLC 4100" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14179"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WLC 5520" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2170"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WLC 8500" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1615"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DGS" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.137.1.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="D-Link"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Foundry Forti WLC" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.15983.1.1.7.10"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Foundry Networks, Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C WX7306" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.526"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C WX7310" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.527"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-ag" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.272"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-ag-v5" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.367"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-agp" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.273"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-agp-v5" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.368"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-dg" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.271"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-dg-v5" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.366"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-g" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.270"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-g-v5" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.365"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-gp" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.284"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa1208e-gp-v5" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.369"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2210-ag" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.291"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2210e-ge" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.448"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2210x-g" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.294"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2210x-ge" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.450"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2220-ag" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.292"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2220e-ag" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.293"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2220x-ag" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.295"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2220x-age" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.449"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2610-agn" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.478"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2610e-agn" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.363"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2610e-gnp" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.532"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2610x-gn" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.506"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2612-agn" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.479"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2620-agn" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.509"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wa2620e-agn" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.364"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wb2320x-age" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.451"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wb2321e-agp" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.285"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wb2360x-an" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.507"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wcm-wcma" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.205"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wcm-wx5002" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.204"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wcm-wx5002-128ap" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.228"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wh2520e-agp" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.286"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wh2530x-dag" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.508"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx3008lsw" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.522"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx3010lsw" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.459"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx3010wcm" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.458"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx3024lsw" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.352"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx3024wcm" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.351"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx5004" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.353"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx6100EWPX" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.264"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx6100LSB" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.266"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx6100LSQ" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.265"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx6100LSR" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.468"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C wx6100SW" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.267"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="H3C"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard HP MSM Colubris" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.5.4"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard MSM760" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.48"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei ac6005" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.240.4"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei ac6005-pwr" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.240.5"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei ac6605" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.240.6"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei ac6605-ac" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.240.3"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei ac6605-lsw" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.240.2"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei acu" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.240.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wa1208E" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.11"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp3010DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.19"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp5010DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.18"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp5010SN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.20"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp5030DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.21"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp5130DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.22"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp6010DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.12"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp6010SN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.13"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp6510DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.17"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp6510DN-US" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.14"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp6610DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.16"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp6610DN-US" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.15"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp7110DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.28"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp7110SN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.29"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp8030DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.23"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp8130DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.24"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAp9130DN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.25"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApCommon" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApWA1003" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.2"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApWA1003A" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.3"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApWA1005" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.4"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApWA1006" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.43"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApWA1006E" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.8"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApWA1008" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.5"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApWA1208" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.6"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanApWA1208H" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.7"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanAt815SN" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.27"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanBridgeWB2010" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.9"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei wlanBridgeWB2011" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.39.10"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+	
+	<CustomDevicePackage deviceType="Huawei S6730-H24X6C WLC" iconName="Switch.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.23.667">
+				<RULES customOid=".1.3.6.1.4.1.2011.6.139.12.1.2.1.0" operatorDispName="webclient.admin.ruleaction.operator.notequals" operatorID="8" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="0"/>
+			</SysOID>
+        </SysOIDs>
+        <Category name="WirelessLANController"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Meru WLC" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.15983.1.1.4"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Meru"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Mikrotik Wireless AP" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14988.1.1.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="MiKroTik"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Motorola AP-7522" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.388.50.1.1.41"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Motorola"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Motorola AP7181" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.2.1.2.2.1.2"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Motorola"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout 9905 RET" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.9905"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Packet Probe 3220" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.3220"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Packet Probe 5010" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.5010"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Packet Probe 5020" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.5020"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Token Ring Probe 6020" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.6020"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout WAN/Token Ring Probe 6070" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.6070"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel Networks Wireless Security Switch 2382" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.45.6.1.3.1.6"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Nortel Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Orinoco AP" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Orinoco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim ap-800" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.841.2.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim ap-8000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.841.2.2"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless AP-1000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless AP-2000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.6"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless AP-500" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.5"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless AP-700" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.13"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless AS-1000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.3"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless AS-2000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.4"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless BG-2000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.7"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless RG-1000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.2"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxim Wireless RG-1100" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.8"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Proxim Wireless"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Pulse Secure IC4000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12532.253.1.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Pulse Secure"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Pulse Secure IC4500" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12532.253.3"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Pulse Secure"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Pulse Secure IC6500" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12532.253.4.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Pulse Secure"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="RiverBed SteelHead Ex" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.17163.1.1.5"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Riverbed Technology, Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="RuiJie-RG-P-720" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10529.1.28"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="RuiJie"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="RuiJie-RG-P-780" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10529.1.27"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="RuiJie"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="RuiJie-RG-WG54P" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1567.1.1"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="RuiJie"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xedia Access Point Router 600" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.838.5.1.600.4.2"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Xedia"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xedia accessPoint1000" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.838.5.1.1000"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Xedia"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xedia accessPoint300" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.838.5.1.300"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Xedia"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xedia accessPoint450" iconName="Wireless.png" pingInterval="1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.838.5.1.450"/>
+        </SysOIDs>
+        <Category name="Wireless"/>
+        <Vendor name="Xedia"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

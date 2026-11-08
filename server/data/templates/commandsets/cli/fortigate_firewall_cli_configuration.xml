@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<cliconfiguration>
+
+<!-- for FortiGate Firewall -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="fortigate_firewall_cli_ispec"/>
+    </CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="240000" prompt="OK." commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="fortigate_firewall_cli_ok_ispec"/>
+    </CLIInteractionSpec>
+	
+	<CLIInteractionSpec interactionverb="1" requesttimeout="240000" prompt="global) #" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="fortigate_firewall_cli_global_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="execute backup config ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_cli_fetch_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="execute restore config ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_cli_push_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    <!--Fortinet Firewall_Virtual Domain-->
+    
+    <CLICommand command="config global">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="fortigate_firewall_v3_vdom_config_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="end">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="fortigate_firewall_v3_vdom_end_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="execute backup config tftp ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_cli_ver_3_0_fetch_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="execute restore config tftp ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_cli_ver_3_0_push_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+<!-- For FortiNet FortiGate FortiAnalyzer Version 400B -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="fortigate_fortianalyzer_cli_ispec"/>
+ </CLIInteractionSpec>
+
+    <CLICommand command="execute restore config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_fortianalyzer_upload_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+  <CLICommand command="execute backup config scp ${UserInput:scp_server_address}${UserInput:scp_username}${UserInput:scp_password} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_fortianalyzer_backup_scp_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+ <CLICommand command="execute restore config scp ${UserInput:scp_server_address}${UserInput:scp_username} ${UserInput:scp_password} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_fortianalyzer_upload_scp_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="fortigate_fortianalyzer_cli_ispec_1"/>
+ </CLIInteractionSpec>
+
+   <CLICommand command="execute backup config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_fortianalyzer_backup_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    
+	<!-- for FortiGate Firewall version 4 and 5 -->
+	
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="fortigate_firewall_v4_cli_ispec"/>
+ </CLIInteractionSpec>
+
+	
+	    <CLICommand command="execute backup config tftp ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_cli_ver_4_0_backup_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="execute restore config tftp ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_cli_ver_4_0_upload_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+		
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="fortigatefirewall_ver3_cli_ispec"/>
+ </CLIInteractionSpec>
+
+	
+    <CLICommand command="show">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_virtualdomain_show_running_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	 <CLICommand command="config system console">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_virtualdomain_sys_console_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+		
+	 <CLICommand command="set out standard">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_virtualdomain_paging_disable_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	 <CLICommand command="end">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_virtualdomain_end_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+		 <CLICommand command="config global">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_virtualdomain_config_global_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+    <CLICommand command="show">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_show_running_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	 <CLICommand command="config system console">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_sys_console_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+		
+	 <CLICommand command="set out standard">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_paging_disable_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	 <CLICommand command="end">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigatefirewall_ver3_end_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	
+ </cliconfiguration>

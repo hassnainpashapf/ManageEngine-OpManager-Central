@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For FortiNet FortiGate Firewall Version 2.8 and less -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v2" templatename="FortiGate_Firewall_V2" displayname="FortiGate Firewall - version 2.8" ostype="FortiOS" description="For all FortiGate firewalls with os version  2.8" IS_DEPRICATED="true">
+        <NCMVendorDevice vendorid="Fortinet"/>
+        <NCMDevicePersonality personalityid="FortiGateFirewall"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_firewall_v2_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v2" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefirewall_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_firewall_v2_ssh"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v2"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefirewall_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+    
+    <!-- For FortiNet FortiGate Firewall Version 3.0 and more -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v3" templatename="FortiGate_Firewall_V3" displayname="FortiGate Firewall - version 3.0" ostype="FortiOS" description="For all FortiGate firewalls and FortiMail with os version 3.0" IS_DEPRICATED="true">
+	    <NCMVendorDevice vendorid="Fortinet"/>
+	    <NCMDevicePersonality personalityid="FortiGateFirewall"/>
+	    
+	    <NCMSupportedProtocol protocolid="TELNET">
+		    <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+	    </NCMSupportedProtocol>
+	    
+	    <NCMSupportedProtocol protocolid="SSH">
+		    <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+	    </NCMSupportedProtocol>
+	    
+	    <NCMSupportedProtocol protocolid="TFTP"/>
+	    
+	    <NCMProtocolCombination
+				   deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_firewall_v3_telnet"
+				   devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v3"
+				   managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		    
+		    <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_cli_running_config_backup_ver3" />
+			    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefirewall_cli_running_config_upload_ver3" />
+			    
+			    <!-- Change Tracking thru Syslog -->
+			    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+			    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+			    
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+	    
+	    <NCMProtocolCombination
+				   deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_firewall_v3_ssh"
+				   devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v3"
+				   managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		    
+		    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_cli_running_config_backup_ver3" />
+			    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefirewall_cli_running_config_upload_ver3" />
+			    
+			    <!-- Change Tracking thru Syslog -->
+			    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+			    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+			    
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+		
+		
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigatefirewall_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v3" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		 <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_ver3_show_running_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupRunningConfig" recordid="fortigatefirewall_ver3_show_running_config_rec"/>
+			
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+			
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+               <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigatefirewall_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v3" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		 <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_ver3_show_running_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupRunningConfig" recordid="fortigatefirewall_ver3_show_running_config_rec"/>
+		 
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+			
+          </NCMDeviceCriteria>		  
+        </NCMProtocolCombination>
+		
+    </NCMDeviceTemplate>
+    
+
+
+   <!-- For FortiNet FortiGate Firewall Version 3.0 Virtual Domain Function-->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_vdom_v3" templatename="FortiGate_Firewall_VDOM_V3" displayname="FortiGate Firewall VDOM - version 3.0" ostype="FortiOS" description="For all FortiGate firewalls Virtual domain functions with os version 3.0" IS_DEPRICATED="true">
+        <NCMVendorDevice vendorid="Fortinet"/>
+        <NCMDevicePersonality personalityid="FortiGateFirewall"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+	<NCMProtocolCombination
+			       deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_firewall_v3_VDOM_telnet"
+			       devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_vdom_v3"
+			       managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_ver3_virtualdomain_backup" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefirewall_ver3_virtualdomain_restore" />
+			
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+	<NCMProtocolCombination
+			       deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_firewall_v3_VDOM_ssh"
+			       devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_vdom_v3"
+			       managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_ver3_virtualdomain_backup" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefirewall_ver3_virtualdomain_restore" />
+			
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+			
+		</NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+		
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigatefirewall_ver3_virtualdomain_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_vdom_v3" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		 <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_ver3_virtualdomain_show_running_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupRunningConfig" recordid="fortigatefirewall_ver3_virtualdomain_show_running_config_rec"/>
+			
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+			
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+               <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigatefirewall_ver3_virtualdomain_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_vdom_v3" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		 <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefirewall_ver3_virtualdomain_show_running_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupRunningConfig" recordid="fortigatefirewall_ver3_virtualdomain_show_running_config_rec"/>
+		 
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_disable_syslog_change_tracking" />
+			
+          </NCMDeviceCriteria>
+		  
+        </NCMProtocolCombination>
+        
+    </NCMDeviceTemplate>
+
+   <!-- For FortiNet FortiGate FortiAnalyzer Version 400B -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_fortianalyzer" templatename="Fortigate_Fortianalyzer" displayname="FortiGate FortiAnalyzer" ostype="FortiOS" description="For all FortiGate FortiAnalyzer devices" IS_DEPRICATED="true">
+        <NCMVendorDevice vendorid="Fortinet"/>
+        <NCMDevicePersonality personalityid="FortiGateFortiAnalyzer"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMSupportedProtocol protocolid="SCP"/>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_fortianalyzer_telnet_tftp"  devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_fortianalyzer" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">		    
+		          <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefortianalyzer_cli_running_config_backup" />
+			    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefortianalyzer_cli_running_config_upload" />  		    			    
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_fortianalyzer_ssh_tftp"     devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_fortianalyzer" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">	    
+                       <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefortianalyzer_cli_running_config_backup" />
+			    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefortianalyzer_cli_running_config_upload" />
+			    			    
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_fortianalyzer_ssh_scp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_fortianalyzer" managementprotocolid="SSH" transferprotocolid="SCP" displayname="SSH - SCP">
+
+            <NCMDeviceCriteria commandmapid="SSH_SCP_Command">		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigatefortianalyzer_scp_running_config_fetch" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigatefortianalyzer_scp_running_config_push" />
+             
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    
+</NCMDeviceTemplate>
+
+
+   <!-- For FortiNet FortiGate Firewall version 4.0 and 5.0 -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v4" templatename="FortiGate_Firewall_V4" displayname="FortiGate Firewall - version 4.0 and 5.0" ostype="FortiOS" description="For all FortiGate firewalls functions with os version 4.0 and 5.0" IS_DEPRICATED="true">
+        <NCMVendorDevice vendorid="Fortinet"/>
+        <NCMDevicePersonality personalityid="FortiGateFirewallVER4"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_firewall_v4_telnet_tftp"  devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v4" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">		    
+		          <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigate_firewall_v4_cli_running_config_backup" />
+			    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigate_firewall_v4_cli_running_config_upload" />  		
+
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_v4_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_v4_disable_syslog_change_tracking" />
+							
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fortigate_firewall_v4_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fortigate_firewall_v4" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">	    
+                       <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fortigate_firewall_v4_cli_running_config_backup" />
+	<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="fortigate_firewall_v4_cli_running_config_upload"/>	
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_v4_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fortigatefirewall_v4_disable_syslog_change_tracking" />
+			
+			    			    
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+    
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

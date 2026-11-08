@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="Ubuntu" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="Debian" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Debian" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Debian" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Debian" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Debian" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="Debian" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Debian" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Debian" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Debian" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Debian" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="Debian" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="Fedora" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Fedora" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Fedora" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Fedora" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Fedora" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="Fedora" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Fedora" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Fedora" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Fedora" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Fedora" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="Fedora" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="Red Hat Enterprise Linux" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="CentOS" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="CentOS" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="CentOS" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="CentOS" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="CentOS" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="CentOS" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="CentOS" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="CentOS" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="CentOS" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="CentOS" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="CentOS" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="openSUSE" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="openSUSE" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="openSUSE" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="openSUSE" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="openSUSE" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="openSUSE" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="openSUSE" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="openSUSE" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="openSUSE" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="openSUSE" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="openSUSE" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="Arch Linux" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="Linux Mint" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="Manjaro" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Manjaro" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Manjaro" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Manjaro" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Manjaro" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="Manjaro" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Manjaro" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Manjaro" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Manjaro" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Manjaro" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="Manjaro" graphName="PartitionWiseDiskDetails" />
+
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="Telnet-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="CLI-PartitionDetails" />
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="Lin-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="ProcessCount" />
+    <DevicePackageToGraph deviceType="Kali Linux" graphName="PartitionWiseDiskDetails" />
+
+
+</GRAPHDETAIL>

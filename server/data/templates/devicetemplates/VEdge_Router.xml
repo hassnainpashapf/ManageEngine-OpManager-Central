@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="VEdge Router" osType="ViptelaOs" templateName="VEdge_Router">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="screen-length 0" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Ip route">
+                	<Command commandstr="screen-length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show ip routes" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>            	
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="VEdge Router" personalityName="VEdgeRouter">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="CPU" size="100" desc="Router CPU" displayname="CPU" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="CPLD_REVISION" size="100" desc="Identifies the size of CPLD Revision" displayname="CPLD Revsion" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="PCB_REVISION" size="100" desc="Identifies the size of PCB Revision" displayname="PCB Revision" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="DRAM_SIZE" size="100" desc="Identifies the size of DRAM in MB" displayname="DRAM Size" defaultvalue="Not Available" sequenceid="4"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="VEdgeRouterHardwareParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_inventory_vedge_router">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Chassis\s*\S*\s*\S*\s*(\S*)\s*(\S*)\s*(\S*)\.\s*CPLD rev:\s*(\S*),\s*PCB\srev:\s(\S*)\..*" NAME="MODEL">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="3"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+											<PARAM NAME="CPLD_REVISION" TOKENNO="4"/>
+											<PARAM NAME="PCB_REVISION" TOKENNO="5"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*CPU\s*\S*\s*\S*\s*\S*\s*\S*\s*(.*)\s*.*" NAME="CPU">
+											<PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*DRAM\s*\S*\s*\S*\s*\S*\s*\S*\s*(.*)\s*.*" NAME="DRAM_SIZE">
+											<PARAM NAME="DRAM_SIZE" TOKENNO="1"/>
+										</REGEX>
+										
+										<REGEX EXPRESSION='.*hw-description\s*\"(.*Core.*)\"' NAME="CPU">
+											<PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*part-number\s*(.*)" NAME="SERIES">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*serial-number\s*(\S*).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION='.*hw-description.*CPLD rev:\s*(\S*), PCB rev:\s*(\S*)\"' NAME="CPLD_REVISION">
+											<PARAM NAME="CPLD_REVISION" TOKENNO="1"/>
+											<PARAM NAME="PCB_REVISION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*version\s*(\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION='.*hw-description\s*\"(.*DDR.*)\"' NAME="DRAM">
+											<PARAM NAME="DRAM_SIZE" TOKENNO="1"/>
+										</REGEX>
+										
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						
+						<COMMAND NAME="hardware_version_vedge_router">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="(.*)" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show hardware inventory" parsercommandname="hardware_inventory_vedge_router" responseparserid="Vedge_Router_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="20000" promptactionid=""/>
+						<Command commandstr="show version" parsercommandname="hardware_version_vedge_router" responseparserid="Vedge_Router_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="20000" promptactionid=""/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

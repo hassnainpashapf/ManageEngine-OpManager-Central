@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><GRAPHDETAIL>
+   <!-- PoE Switch Monitors starts power-ethernet-mib-->
+   <!-- Common MIB -->
+    <Graph YAXISTEXT="Watts" description="Maximum power of Switch" displayName="Maximum Power" graphName="neutralMaxSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.105.1.3.1.1.2.1" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps propName="GROUPNAME" propValue="MaxPowerStats"/>
+   </Graph>
+    <Graph YAXISTEXT="Watts" description="Used power in Switch" displayName="Consumed Power" graphName="neutralConsumedSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.105.1.3.1.1.4.1" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps propName="GROUPNAME" propValue="ConsumedPowerStats"/>
+   </Graph>
+   <Graph YAXISTEXT="Watts" description="Available power in Switch" displayName="Available Power" graphName="neutralAvailableSwitchPowerStats" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.105.1.3.1.1.2.1) - (.1.3.6.1.2.1.105.1.3.1.1.4.1)" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps propName="GROUPNAME" propValue="RemainingPowerStats"/>
+   </Graph>
+   <!-- Cisco MIB -->
+   <Graph YAXISTEXT="Watts" description="Maximum power of Switch" displayName="Maximum Power" graphName="ciscoMaxSwitchPowerStats" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.9.9.402.1.3.1.4.1/1000) + (.1.3.6.1.4.1.9.9.402.1.3.1.5.1/1000)" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Cisco">
+        <UserProps propName="GROUPNAME" propValue="MaxPowerStats"/>
+   </Graph>
+    <Graph YAXISTEXT="Watts" description="Used power in Switch" displayName="Consumed Power" graphName="ciscoConsumedSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.402.1.3.1.4.1/1000" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Cisco">
+        <UserProps propName="GROUPNAME" propValue="ConsumedPowerStats"/>
+   </Graph>
+   <Graph YAXISTEXT="Watts" description="Available power in Switch" displayName="Available Power" graphName="ciscoAvailableSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.402.1.3.1.5.1/1000" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Cisco">
+        <UserProps propName="GROUPNAME" propValue="RemainingPowerStats"/>
+   </Graph>
+   <!-- Juniper MIB -->
+   <Graph YAXISTEXT="Watts" description="Maximum power of Switch" displayName="Maximum Power" graphName="juniperMaxSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.58.1.2.1.7.0" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Juniper">
+        <UserProps propName="GROUPNAME" propValue="MaxPowerStats"/>
+   </Graph>
+    <Graph YAXISTEXT="Watts" description="Used power in Switch" displayName="Consumed Power" graphName="juniperConsumedSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.58.1.2.1.8.0" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Juniper">
+        <UserProps propName="GROUPNAME" propValue="ConsumedPowerStats"/>
+   </Graph>
+   <Graph YAXISTEXT="Watts" description="Available power in Switch" displayName="Available Power" graphName="juniperAvailableSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.58.1.2.1.9.0" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Juniper">
+        <UserProps propName="GROUPNAME" propValue="RemainingPowerStats"/>
+   </Graph>
+   <!-- Huawei MIB -->
+   <Graph YAXISTEXT="Watts" description="Maximum power of Switch" displayName="Maximum Power" graphName="huaweiMaxSwitchPowerStats" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.2011.5.25.195.2.1.5)/1000" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Huawei">
+        <UserProps propName="GROUPNAME" propValue="MaxPowerStats"/>
+   </Graph>
+    <Graph YAXISTEXT="Watts" description="Used power in Switch" displayName="Consumed Power" graphName="huaweiConsumedSwitchPowerStats" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.2011.5.25.195.2.1.3)/1000" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Huawei">
+        <UserProps propName="GROUPNAME" propValue="ConsumedPowerStats"/>
+   </Graph>
+   <Graph YAXISTEXT="Watts" description="Available power in Switch" displayName="Available Power" graphName="huaweiAvailableSwitchPowerStats" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.2011.5.25.195.2.1.2)/1000" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="Huawei">
+        <UserProps propName="GROUPNAME" propValue="RemainingPowerStats"/>
+   </Graph>
+   <!-- HP MIB -->
+   <Graph YAXISTEXT="Watts" description="Maximum power of Switch" displayName="Maximum Power" graphName="hpMaxSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.1.9.1.6.1.4" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="HP">
+        <UserProps propName="GROUPNAME" propValue="MaxPowerStats"/>
+   </Graph>
+    <Graph YAXISTEXT="Watts" description="Used power in Switch" displayName="Consumed Power" graphName="hpConsumedSwitchPowerStats" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.1.9.1.6.1.5" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="HP">
+        <UserProps propName="GROUPNAME" propValue="ConsumedPowerStats"/>
+   </Graph>
+   <Graph YAXISTEXT="Watts" description="Available power in Switch" displayName="Available Power" graphName="hpAvailableSwitchPowerStats" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.11.2.14.11.1.9.1.6.1.4) - (.1.3.6.1.4.1.11.2.14.11.1.9.1.6.1.5)" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false" vendorName="HP">
+        <UserProps propName="GROUPNAME" propValue="RemainingPowerStats"/>
+   </Graph>
+   <!-- PoE Switch Monitors ends -->
+</GRAPHDETAIL>

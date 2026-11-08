@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<data>
+
+    <!--    
+	<NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.537"  model="catalyst4510" series="Catalyst 4500" vendor="Cisco"/>
+	<NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.501"  model="cat4507R" series="Catalyst 4500" vendor="Cisco"/>
+	<NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.502"  model="cat4506" series="Catalyst 4500" vendor="Cisco"/>
+	<NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.503"  model="cat4503" series="Catalyst 4500" vendor="Cisco"/>
+	<NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.513"  model="3750_24TS" series="Catalyst 3750" vendor="Cisco"/>
+	<NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.516"  model="3750G_24TS" series="Catalyst 3750" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.536"  model="3750_24PS" series="Catalyst 3750" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.535"  model="3750_48PS" series="Catalyst 3750" vendor="Cisco"/>    
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.400"  model="cat6513" series="Catalyst 6500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.448"  model="CatOS 4006" series="Catalyst 4000" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.449"  model="6503" series="Catalyst 6500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.282"  model="CatOS 6506" series="Catalyst 6500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.283"  model="CatOS 6509" series="Catalyst 6500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.417"  model="PIX 501" series="PIX 500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.390"  model="PIX 515" series="PIX 500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.451"  model="PIX 515E" series="PIX 500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.450"  model="PIX 506E" series="PIX 500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.391"  model="PIX 520" series="PIX 500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.392"  model="PIX 525" series="PIX 500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.393"  model="PIX 535" series="PIX 500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.604"  model="3750G_48TS" series="Catalyst 3750" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.747"  model="3750G_24PS" series="Catalyst 3750" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.591"  model="3750G_16TD" series="Catalyst 3750" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.534"  model="6509_NEB_A" series="Catalyst 6500" vendor="Cisco"/>
+    <NCMDiscNotSupportedModels sysoid=".1.3.6.1.4.1.9.1.657"  model="6504E" series="Catalyst 6500" vendor="Cisco"/>
+    
+    -->   
+    
+</data>

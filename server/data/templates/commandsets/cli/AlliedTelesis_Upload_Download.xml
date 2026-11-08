@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- $Id$ -->
+
+<CLICommandList>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="alliedTelesis_switch_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="load method=tftp server=${UserInput:tftp_server_address} file=${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_cli_push_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="upload method=tftp server=${UserInput:tftp_server_address} file=${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_cli_backup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set con=${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_cli_set_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+        <!--Show hardware info-->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="alliedtelesis_switch_hardware_prop_parser" promptactionid="yesActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="alliedTelesis_switch_ispec1"/>
+</CLIInteractionSpec>
+
+        <!--Show system-->
+    <CLICommand command="show system">
+	     <CLIInputRecord parsercommandname="hardware_prop_alliedtelesis_switch" messagesuffix="&#10;" inputsourcetype="1">
+             <Record type="CLI" recordid="alliedtelesis_switch_cli_show_system_rec" protocol="CLI"/>
+             </CLIInputRecord>
+         </CLICommand>
+
+<!-- ################################# Commands Allied Telesis AT-8000S series Switches  ################################-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="alliedtelesis_at8000s_switch_ispec"/>
+    </CLIInteractionSpec>
+
+<!-- Backup Startup -->
+<CLICommand command="copy startup-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="alliedtelesis_at8000s_switch_cli_backup_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Backup Running -->
+<CLICommand command="copy running-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="alliedtelesis_at8000s_switch_cli_backup_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Push Startup -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="alliedtelesis_at8000s_switch_cli_push_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Push Running -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} running-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="alliedtelesis_at8000s_switch_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Config Sync Operation -->
+<CLICommand command="copy running-config startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="alliedtelesis_at8000s_switch_sync_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Config Show commands -->
+
+<CLICommand command="show startup-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="alliedtelesis_at8000s_show_startup_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show running-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="alliedtelesis_at8000s_show_running_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- For command "terminal datadump" - This is to avoid the -More- in the output -->
+
+<CLICommand command="terminal datadump">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="alliedtelesis_at8000s_terminal_length_0_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+
+<!-- ################################# Commands Allied Telesis CenterCOM GS900M V2 series Switches  ################################-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="AlliedTelesisGS900MActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="alliedtelesis_centercom_gs900m_switch_ispec"/>
+		 </CLIInteractionSpec>
+			
+ 
+<!-- Backup telnet commands -->
+
+<CLICommand command="set console page=off">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="alliedtelesis_centercom_gs900m_switch_cli_paging_disable_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show file=configuration.cfg">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="alliedtelesis_gs900m_show_startup_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="create config=configuration.cfg">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="alliedtelesis_centercom_gs900m_switch_cli_backup_config_rec1" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+   
+	
+	 <!--Show hardware info-->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="alliedtelesis_gs900m_hardware_prop_parser" promptactionid="yesActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="alliedtelesis_centercom_gs900m_switch_hw_ispec"/>
+</CLIInteractionSpec>
+
+        <!--Show system-->
+    <CLICommand command="show system">
+	     <CLIInputRecord parsercommandname="hardware_prop_alliedtelesis_gs900m" messagesuffix="&#10;" inputsourcetype="1">
+             <Record type="CLI" recordid="alliedtelesis_gs900m_switch_show_rec" protocol="CLI"/>
+             </CLIInputRecord>
+         </CLICommand>
+		 
+		 
+		 	 <!-- Allied telesis CenterCom Switch -->		 
+		 
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="alliedtelesis_centercom_switch_switch_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="upload method=tftp file=config.cfg destfile=${UserInput:file_name} server=${UserInput:tftp_server_address}">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_centercom_switch_cli_backup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="delete file=config.cfg">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_centercom_switch_cli_delete_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="set config=config.cfg">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_centercom_switch_cli_set_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+	
+    <CLICommand command="create config=config.cfg">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_centercom_switch_cli_create_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+
+    <CLICommand command="SET ASYN PAGE=OFF">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_centercom_switch_cli_paging_off_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+    <CLICommand command="cSET ASYN PAGE=ON">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alliedtelesis_centercom_switch_cli_paging_on_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+        <!--Show hardware info-->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="alliedtelesis_centercom_switch_hw_prop_parser" promptactionid="yesActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="alliedtelesis_centercom_switch_switch_hw_ispec"/>
+</CLIInteractionSpec>
+
+        <!--Show system-->
+    <CLICommand command="show system">
+	     <CLIInputRecord parsercommandname="hardware_prop_alliedtelesis_centercom_switch" messagesuffix="&#10;" inputsourcetype="1">
+             <Record type="CLI" recordid="alliedtelesis_centercom_switch_switch_cli_show_system_rec" protocol="CLI"/>
+             </CLIInputRecord>
+         </CLICommand>
+		 
+		  <!-- For  Allied Telesis x200,SBx908 and x600 series Switches -->
+		 
+<CLIInteractionSpec interactionverb="1" requesttimeout="50000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="AlliedTelesisGS900MActionId">
+        <InteractionSpec timeout="90000" protocol="CLI" interactionid="alliedtelesis_ethernet_switch_ispec"/>
+		 </CLIInteractionSpec>
+				 
+
+<CLICommand command="show startup-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="alliedtelesis_ethernet_switch_show_startup_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show running-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="alliedtelesis_ethernet_switch_show_running_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- For command "terminal datadump" - This is to avoid the -More- in the output -->
+
+<CLICommand command="terminal length 0">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="alliedtelesis_ethernet_switch_terminal_length_rec" protocol="CLI"/>
+ </CLIInputRecord>
+ 
+</CLICommand>
+
+
+<CLICommand command="startupconfig.cfg">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_upload_startup_config_filename" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="runningconfig.cfg">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_upload_running_config_filename" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- TFTP Backup command -->
+
+ <CLIInteractionSpec  interactionverb="1" requesttimeout="20000" prompt="]:" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="alliedtelesis_ethernet_switch_tftp_ispec"/>
+    </CLIInteractionSpec>
+
+<CLICommand command="copy startup-config tftp">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_backup_startup_config" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy running-config tftp">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_running_backup_config" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_backup_config_tftp_address" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- TFTP Upload command -->
+
+
+<CLICommand command="copy tftp startup-config">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_upload_startup_config" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="copy tftp running-config">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_upload_backup_config" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- Sync Config -->
+
+
+<CLICommand command="write memory">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_sync_config" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy running-config startup-config">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_sync_tftp_config" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_backup_config_filename" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}.cfg">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="alliedtelesis_ethernet_switch_backup_config_filename1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+	 <!--Show hardware info-->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="40000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="alliedtelesis_ethernet_switch_hardware_prop_parser" promptactionid="yesActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="alliedtelesis_ethernet_switch_hw_ispec"/>
+</CLIInteractionSpec>
+
+        <!--Show system-->
+    <CLICommand command="show system">
+	     <CLIInputRecord parsercommandname="hardware_prop_alliedtelesis_ethernet_switch" messagesuffix="&#10;" inputsourcetype="1">
+             <Record type="CLI" recordid="alliedtelesis_ethernet_switch_show_rec" protocol="CLI"/>
+             </CLIInputRecord>
+         </CLICommand>
+		 
+		 
+
+   </CLICommandList>
+
+
+   

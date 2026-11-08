@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="TOPS TG" displayName="TOPS TG" osType="Topsec Operating System" templateName="TOPS_TG">
+	<RestTemplate name=""/>
+	<Vendor displayName="TOPS" vendorName="TOPS">
+		<Commands>
+			<Command commandstr="system version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="system config show-running" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="30000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="TOPSTG" personalityName="TOPSTG">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="HW_VERSION" size="150" desc="Hardware version " displayname="Hardware version" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="BUILD_VERSION" size="150" desc="Internal build version" displayname="Internal build version" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="ARCHITECTURE" size="150" desc="Internal build ID" displayname="Internal build ID" defaultvalue="Not Available" sequenceid="30"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="TOPSTGHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+
+					<!-- To parse the output of show switch command and get the hardware properties for Arista Switch -->
+						<COMMAND NAME="hardware_prop_TOPS_TG">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+
+
+										<REGEX EXPRESSION="Topsec Operating System\\s*(\S+)" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX EXPRESSION=".*Hardware version:\s*(\S*).*" NAME="HW_VERSION">
+											<PARAM NAME="HW_VERSION" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX EXPRESSION=".*Internal build version:\s*(\S*).*" NAME="BUILD_VERSION">
+											<PARAM NAME="BUILD_VERSION" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX EXPRESSION=".*Architecture:\s*(\S*).*" NAME="ARCHITECTURE">
+											<PARAM NAME="ARCHITECTURE" TOKENNO="1"/>              
+										</REGEX>
+
+										<REGEX EXPRESSION=".*Serial number:\s*(\S*).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>              
+										</REGEX>
+										
+										<REGEX EXPRESSION=".*System MAC address:\s*(\S*).*" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>              
+										</REGEX>
+
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol>
+					<Commands>
+						<Command commandstr="system version" parsercommandname="hardware_prop_TOPS_TG" responseparserid="TOPS_TG_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid=""/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

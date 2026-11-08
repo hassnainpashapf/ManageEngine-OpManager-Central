@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Huawei USG Series" displayName="Huawei USG Series" osType="VRP" templateName="Huawei USG Series">
+	<RestTemplate name=""/>
+	<Vendor displayName="Huawei" vendorName="Huawei">
+		<Commands>
+			<Command commandstr="display version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="warnings" number="5" sequenceid="1"/>
+			<Level name="notifications" number="6" sequenceid="2"/>
+			<Level name="informational" number="7" sequenceid="3"/>
+			<Level name="debugging" number="8" sequenceid="4"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="screen-length 0 temporary " delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="display current-configuration" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="screen-length 0 temporary " delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="display saved-configuration" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Huawei USG Switch" personalityName="HuaweiUSGSwitch">	
+		<Login enablecommand="" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Stores the BOOT ROM version" displayname="Boot ROM Version" name="BOOTROMVERSION" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Stores the BootLoad version" displayname="BootLoad Version" name="BOOTLOADVERSION" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="Stores the CPLD version" displayname="CPLD Version" name="CPLDVERSION" sequenceid="3" size="100"/>
+				<Column defaultvalue="Not Available" desc="Stores the flash ram size " displayname="Flash Memory Size" name="FLASH" sequenceid="4" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>info-center loghost $SYSLOG_SERVER_IP$</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HuaweiUSGHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_huawei_usg">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+                                        <REGEX NAME="OSTYPE" EXPRESSION=".*(Huawei \S* OS).*">
+                                            <PARAM NAME="OSTYPE" TOKENNO="1"/>
+                                        </REGEX>
+                                        <REGEX NAME="SERIES" EXPRESSION=".*Version \S*\s*\((\S*)\s*(\S*)\)">
+                                            <PARAM NAME="SERIES" TOKENNO="1"/>
+                                            <PARAM NAME="OSVERSION" TOKENNO="2"/>
+                                        </REGEX>
+                                        <REGEX NAME="MODEL" EXPRESSION=".*HUAWEI (\S*) uptime.*">
+                                            <PARAM NAME="MODEL" TOKENNO="1"/>
+                                        </REGEX>
+                                        <REGEX NAME="OSVERSION2" EXPRESSION="(.*)\s*\(R\)\s*Software,\s*Version\s*(\S*)\s*\((\S*)\s*(\S*)\).*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+											<PARAM NAME="SERIES" TOKENNO="3"/>
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="4"/>
+										</REGEX>		
+										<REGEX NAME="BOOTROMVERSION" EXPRESSION=".*BootROM\s*Version\s*:\s*(\S*).*">
+											<PARAM NAME="BOOTROMVERSION" TOKENNO="1"/>	  
+										</REGEX>		
+										<REGEX NAME="BOOTLOADVERSION" EXPRESSION=".*BootLoad\s*Version\s*:\s*(\S*).*">
+											<PARAM NAME="BOOTLOADVERSION" TOKENNO="1"/>	  
+										</REGEX>			
+										<REGEX NAME="CPLDVERSION" EXPRESSION=".*CPLD\s*Version\s*:\s*(\S*).*">
+											<PARAM NAME="CPLDVERSION" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX NAME="FLASH1" EXPRESSION=".*Flash Memory Size\s*:\s*(.*)">
+											<PARAM NAME="FLASH" TOKENNO="1"/>
+										</REGEX>
+                                        <REGEX NAME="FLASH2" EXPRESSION=".*Flash\s*Size\s*:\s*(.*)">
+                                            <PARAM NAME="FLASH" TOKENNO="1"/>
+                                        </REGEX>
+                                    </SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>   
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" messagesuffix="${LF}" parsercommandname="hardware_prop_huawei_usg" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" timeout="120000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.2011.2.321.1.190"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Gigamon Gigavue Switch" osType="GigaVUE-OS" templateName="Gigamon_Gigavue_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Gigamon" vendorName="Gigamon">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notice" number="5" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal length 900" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="80000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="terminal length 900" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="80000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="80000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="config t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging syslog-ng ${UserInput:HostIpAddress} trap notice" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="80000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="config t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging syslog-ng ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="80000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Gigamon Gigavue Switch" personalityName="GigamonGigavueSwitch">	
+		<Login enablecommand="enable" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="UBOOTVERSION" size="25" desc="U-Boot Version" displayname="U-Boot Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="CPLDVERSION" size="25" desc="CPLD Version" displayname="CPLD Version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="SYSTEMUUID" size="100" desc="System UUID" displayname="System UUID" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="SYSTEMMEMORY" size="100" desc="System Memory" displayname="System Memory" defaultvalue="Not Available" sequenceid="4"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Using.*out.*</Regex>
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="GigamonGigavueHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_giamon_gigavue">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSTYPE" EXPRESSION="\s*Product\s*name\s*:\s*(\S*).*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION" EXPRESSION="\s*Product\s*release\s*:\s*(\S*).*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*Product model\s*:\s*(.*)">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="UBOOTVERSION" EXPRESSION=".*U-Boot version\s*:\s*(.*)">
+											<PARAM NAME="UBOOTVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="CPLDVERSION" EXPRESSION=".*CPLD version\s*:\s*(.*)">
+											<PARAM NAME="CPLDVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SYSTEMUUID" EXPRESSION=".*System UUID\s*:\s*(.*)">
+											<PARAM NAME="SYSTEMUUID" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SYSTEMMEMORY" EXPRESSION=".*System memory\s*:\s*(.*)">
+											<PARAM NAME="SYSTEMMEMORY" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_giamon_gigavue" responseparserid="gigamon_gigavue_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show chassis" parsercommandname="hardware_prop_giamon_gigavue" responseparserid="gigamon_gigavue_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

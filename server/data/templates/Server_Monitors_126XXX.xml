@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <Graph graphName="WMI-Disk-UtilizationInGB" displayName="Disk Utilization in GB" period="3600" YAXISTEXT="GB" description="Monitors the overall Disk Utilization in GB using WMI" failureThreshold="1" graphType="multiple" isNumeric="true" oid="WMI-Disk-UtilizationInGB" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft">
+        <UserProps propName="GROUPNAME" propValue="WMI"/>
+    </Graph>
+    <Graph YAXISTEXT="Days" description="Number of days the computer has been running after it was last started" displayName="System UpTime in Days" failureThreshold="1" graphName="WMISystemUpTimeInDays" graphType="node" isNumeric="true" oid="WMI System UpTime In Days" period="900" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Processor Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+	<Graph graphName="WMI-NTPTimeDrift" displayName="NTP Time Drift" period="900" YAXISTEXT="seconds" description="Monitors the time difference between the system clock and the NTP server. On agent-based devices, it first retrieves data using the w32tm utility; otherwise, it calculates the time difference directly using the NTP server" failureThreshold="1" graphType="multiple" isNumeric="true" oid="WMI-NTPTimeDrift" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft">
+        <UserProps propName="GROUPNAME" propValue="WMI"/>
+    </Graph>
+    <Graph graphName="WMI-NTPSyncStatus" displayName="NTP Sync Status" period="900" YAXISTEXT="status" description="Monitors the synchronization status between the monitored device and the NTP server. This monitor returns data only when w32tm is available on the device" failureThreshold="1" graphType="multiple" isNumeric="false" oid="WMI-NTPSyncStatus" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft">
+        <UserProps propName="GROUPNAME" propValue="WMI"/>
+    </Graph>
+</GRAPHDETAIL>

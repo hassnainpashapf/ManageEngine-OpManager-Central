@@ -1,0 +1,1805 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Cisco" iconName="Firewall.png" pingInterval="15">
+   <CustomDevicePackage deviceType="Cisco FPR4115 SM24">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2774"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Cisco FPR4125 SM32">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2775"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Cisco FPR4145 SM44">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2776"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+	   <CustomDevicePackage deviceType="Cisco FPR1120 TD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2663"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Cisco FPR9K-SM-48">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2773"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Cisco ASA 5508">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2120"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Cisco FPR 9300 K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2285"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco FPR 9000 SM44 ASA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2409"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco FirePOWER FPR-2120">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2405"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco FPR-2140TD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2407"/>
+        </SysOIDs>
+    </CustomDevicePackage>   
+	<CustomDevicePackage deviceType="Cisco Meraki MX100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.106"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX250">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.112"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.104"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX450">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.113"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.105"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX 60-60w-80 Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.102"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX64">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.107"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX65W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.111"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX65">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.110"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX67C">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.120"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX67W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.119"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX67">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.118"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX68CW">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.123"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX68W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.122"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX68">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.121"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX70">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.101"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX84">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.109"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX90">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.103"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki Z1">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.100"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki Z3C">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.124"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki Z3">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.116"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Firepower NGFW FPR-2110">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2404"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Vasa">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1902"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco FPR-4150-K9">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2316"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco SEC-PA-2400-K9">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2385"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Stealthwatch">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8712.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco FPR-2130TD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2406"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco FPR-4120K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2294"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco FPR-1140 TD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2662"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco FPR-1010 TD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2483"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MX95">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.127"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Firewall" Vendor="Schweitzer Engineering Laboratories" iconName="Firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="SEL-3620">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31823.1.3620"/>
+        </SysOIDs>
+  </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Firewall" Vendor="CheckPoint" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Check Point 7000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.96"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Check Point Smart-1 600-M">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.104"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Check Point 6200P">
+  	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.89"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="CheckPoint Smart-1 225">
+  	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.52"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="CheckPoint 6800">
+  	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.80"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="CheckPoint 5900">
+  	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.70"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Check Point 3600">
+  	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.86"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Check Point Virtual System">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.48" />
+		</SysOIDs>
+	</CustomDevicePackage>
+    <CustomDevicePackage deviceType="CheckPoint 5200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.66"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="CheckPoint SMART-1 5">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.51"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="CheckPoint UTM1EdgeX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6983.1.10.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Check Point 3100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.71"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="CheckPoint 4400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.36"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="CheckPoint 6200B">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.88"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Firewall" Vendor="F5 Networks" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="F5 TrafficShield 4100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.41"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Firewall" Vendor="Kagoor" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Kagoor Session Border Controller 300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7005"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Firewall" Vendor="Lucent" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Lucent Model 350 brick">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1751.1.56.1.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Firewall" Vendor="Trend Micro" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Trend Micro TippingPoint 2200T-IPS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.3.48"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Trend Micro TippingPoint 8200TX-IPS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.3.51"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Trend Micro TippingPoint 8400TX-IPS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.3.52"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Trend Micro TippingPoint T200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.3.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="D-Link" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="D-Link DFL 860">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.20.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DFL 2560">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.20.2.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DFL 1660">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.20.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DFL 210">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.20.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DFL 800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.20.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DFL 260">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.20.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="WatchGuard" iconName="firewall.png" pingInterval="15">
+     <CustomDevicePackage deviceType="WatchGuard M290">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.93"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T40">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.87"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard FB X SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard XTM SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T10">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.45"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M440">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.46"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T10 D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.47"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T10 W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.48"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.49"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.50"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="WatchGuard M200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.51"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.52"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T30">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.53"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T30-W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.54"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T50">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.55"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T50-W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.56"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M4600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.57"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M5600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.58"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T70">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.59"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard Firebox V">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.60"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard FireboxV-MC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.61"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard FireboxV-SM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.62"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard FireboxV-MED">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.63"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard FireboxV-LG">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.64"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard FireboxV-XLG">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.65"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M370">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.66"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M470">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.67"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M570">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.68"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard M670">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.69"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T15">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.70"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T15-W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.71"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T35">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.72"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T35-W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.73"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T55">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.74"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard T55-W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.75"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard Fireboxcloud">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.76"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard Fireboxcloud-MC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.77"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard Fireboxcloud-SM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.78"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard Fireboxcloud-MED">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.79"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard Fireboxcloud-LG">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.80"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="WatchGuard Fireboxcloud-XLG">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3097.1.5.81"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="YAMAHA" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="YAMAHA FWX120">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.42"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="DPtech" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="DPtech IPS2000-GS-E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.50006"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech ADX3000-Blade-e">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.12070"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech FW1000-MA-N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.10303"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech GUARD3000-BLADE-E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.10704"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech IPS2000-MA-N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.10108"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech PROBE3000-GE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.10801"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech Scanner1000-MS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.10600"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech UAG3000-MA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.10201"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech UTM2000-GM-N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.10504"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DPtech WAF3000-BLADE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31648.1.10904"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Firewall" Vendor="H3C" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="H3C Firewall-M9000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.757"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Hillstone" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Hillstone SG-6000-M6110">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.28557.1.49"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hillstone SG-6000-G2120">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.28557.1.31"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hillstone SG-6000-M7360">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.28557.1.68"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hillstone SG-6000-E1700">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.28557.1.73"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hillstone SG-6000-E5568">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.28557.2.2.1.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Huawei" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Huawei USG6000E Series">
+	<SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.57"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.56"/>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.55"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.54"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.53"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.52"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.51"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.50"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.49"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.47"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.46"/>
+	    <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.45"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG6650">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.6.133.34"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei Eudemon1000E-X7">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.6.133.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG2250">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.183.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG5530">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.6.133.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG6370">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.6.133.29"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG6620">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.6.133.55"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG2205-BSR">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.183.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG2210">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.183.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG5110">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.192.17"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei USG6530">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.6.133.54"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HuaWei USG2230">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.183.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="RuiJie" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="RuiJie WALL-1600M">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.24968.1.1.1.222"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Sangfor" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Sangfor AF">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.10.SangforAF"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sangfor AC1200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.35047.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="WSTON" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="WSTON SpOS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4881.1.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Corero" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Corero Ips5500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2944.1.1.22"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Fortinet" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Fortinet fgt80F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.845"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet faz400b">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.103.3.4002"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt500D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.5004"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet fgt81E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.843"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt7060E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.70001"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortigate 70F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.701"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Trend Micro" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="HP TippingPoint 2500N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.4.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TippingPoint Cctl">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TippingPoint S1020F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.9.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TippingPoint S1050F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.9.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TippingPoint S3010F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.9.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TippingPoint S3020F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.9.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TippingPoint S8005F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.9.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TippingPoint S8010F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.9.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TippingPoint S8020F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10734.1.9.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Juniper" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Juniper SRX 4600">
+        <SysOIDs>
+     	    <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.140"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper SRX 4200">
+	<SysOIDs>
+    	    <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.143"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper SRX 4100">
+	<SysOIDs>
+	   <SysOID oid=".1.3.6.1.4.1.2636.1.1.2.142"/>
+	   <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.142"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper IDP8200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.3.9.1.252.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper SRX320">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.134"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Firewall" Vendor="Palo Alto Networks" iconName="firewall.png" pingInterval="15">
+   <CustomDevicePackage deviceType="Palo Alto PA-820-ZTP">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.48"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-850-ZTP">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.49"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3250-ZTP">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.50"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3220-ZTP">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.51"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3260-ZTP">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.52"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-450">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.55"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-460">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.56"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-5450">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.57"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+  <CustomDevicePackage deviceType="Palo Alto PA-220R-ZTP">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.47"/>
+       </SysOIDs>
+   </CustomDevicePackage>       
+   <CustomDevicePackage deviceType="Palo Alto PA-220-ZTP">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.46"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto WF-600">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.45"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto WF-500-B">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.60"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3410">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.61"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3420">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.62"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3430">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.63"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3440">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.64"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-5410">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.65"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-5420">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.66"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-5430">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.67"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-5440">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.68"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-1410">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.69"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-1420">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.70"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-415">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.71"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+         <CustomDevicePackage deviceType="Palo Alto PA-445">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.72"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3260">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.25461.2.3.44"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-440">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.54"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Palo Alto PA-3250">
+	<SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.25461.2.3.21"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Palo Alto PA7000-SMC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.100.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA7000-LPC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.100.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA7000-20G-NPC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.100.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA7080-SMC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.100.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA3200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA820">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.36"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA850">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.37"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA220R">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.41"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA5280">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.42"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA-3220">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.43"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Palo Alto PA-410">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25461.2.3.53"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Radware" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Radware CID">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.89.1.1.62.18"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Sophos" iconName="Firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Sophos XGS Series">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.2604.5"/>
+	</SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Sophos XG Device">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.21067.2"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     </CustomDevicePackageSet>
+   <CustomDevicePackageSet Category="Firewall" Vendor="Fortinet" iconName="Firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Fortinet fgt1801F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.15002"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet FortiWeb OCI">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.12356.107.1.50013"/>
+       </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet fg61F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.645"/>
+         </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt3601E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.36011"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet FortiSandbox 1000D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.118.1.10004"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet FortiWeb 1000E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.107.1.10006"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt1101E">
+	    <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.12356.101.1.10007"/>
+	    </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiwebVM">
+	    <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.12356.107.1.50001"/>
+	    </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet faz200F">
+	    <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.12356.103.3.2006"/>
+	    </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt401E">
+	     <SysOIDs>
+		 <SysOID oid=".1.3.6.1.4.1.12356.101.1.4008"/>
+	     </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt400E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.4007"/>
+            </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet SandBox VM">
+	     <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.12356.118.1.20000"/>
+             </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt200F">
+	     <SysOIDs>
+		  <SysOID oid=".1.3.6.1.4.1.12356.101.1.2011"/>
+	     </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt40F">
+	     <SysOIDs>
+	         <SysOID oid=".1.3.6.1.4.1.12356.101.1.441"/>
+	     </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt61E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.640"/>
+        </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet fgt301E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.3008"/>
+        </SysOIDs>
+	</CustomDevicePackage>
+   <CustomDevicePackage deviceType="Fortinet fgt601E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.6006"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Fortinet fw60EI">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.644"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Fortinet fgt600E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.6005"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet fgt101E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.1043"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet fgt600D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.6004"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt50E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.505"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt60D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.624"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt501E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.5006"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt200E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.2009"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt300E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.3007"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt3200D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.32000"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet faz300F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.103.3.3006"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt2500E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.25000"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt500E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.5005"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt30E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.306"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt1100E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.10006"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt80E">
+         <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.12356.101.1.842"/>
+         </SysOIDs>
+     </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Fortinet fgt201E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.101.1.2010"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Kerio Technologies" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Kerio OS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10311.11.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="AudioCodes" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="AudioCode Mediant 4000 ESBC">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.70"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="AudioCode Mediant 2600 ESBC">
+	<SysOIDs>
+	     <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.78"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="AudioCode Mediant 1000 ESBC">
+	<SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.71"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="AudioCodes Mediant 800B ESBC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.72"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="AudioCodes Mediant 500 ESBC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.73"/>
+        </SysOIDs>
+   </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="SonicWALL, Inc." iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="SonicWall WAF Virtual Appliance">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8741.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Fujitsu" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Fujitsu IPCOM VE2 220 LS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.24043"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Symantec" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Symantec Blue Coat SSLV2800">
+	<SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.3417.1.5.3"/>
+	</SysOIDs>
+	</CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Firewall" Vendor="Ribbon" iconName="firewall.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Ribbon G9 Media Gateway">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.99.1.1.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Firewall" Vendor="Symantec" iconName="firewall.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Symantec ASG S200">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.3417.1.6.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Symantec ASG S400">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.3417.1.6.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Symantec CAS S200">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.3417.1.4.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Juniper" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Juniper IVE VASPE">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12532.255.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Juniper IVE PSA 300">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12532.256.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Hillstone" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Hillstone SG-6000-E3965">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.28557.1.126"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Hillstone SG-6000-E3960">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.28557.1.91"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Cisco" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cisco FPR-1150 TD">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2870"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco FPR9000 S40">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2772"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco SA540K9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.1129"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco FPR TD-V-K9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2319"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco FirePower TD">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2991"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ASA 5506W">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2117"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="AudioCodes" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="AudioCodes Mediant-VE-SBC">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.79"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="AudioCodes Mediant 1000 MSBG">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.67"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="AudioCodes Mediant 1000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.47"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="AudioCodes Mediant 600">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.65"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="AudioCodes MediaPack MP-114">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.5003.8.1.1.57"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Huawei" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Huawei USG6630E-AC">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.321.1.153"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei AntiDDoS8030">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.6.122.8.19.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Fortinet" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Fortinet fgtVM64AWS">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.45"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fcr3600E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.36010"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fg60EI">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.646"/>
+            </SysOIDs>
+        </CustomDevicePackage>    
+        <CustomDevicePackage deviceType="Fortinet fg60EC">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.647"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt90E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.940"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt201F">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.2012"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt1500DT">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.15001"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt92D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.636"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt70D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.700"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FWB-600D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.107.1.6004"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt3401E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.34011"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiWiFi 92D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.637"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet faz100C">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.102.1.1003"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiWiFi 50E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.506"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiWiFi 30D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.314"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt3100D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.31000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiDDoS">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.111"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fwb400D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.107.1.4004"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiWeb 3000E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.107.1.30007"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortWiFi 30E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.316"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt2201E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.18001"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt2200E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.18000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FGT-VM64-ALI">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.90019"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fwf61E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.649"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet 40F">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.443"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt30D POE">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.305"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiAnalyzer 1000F">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.103.3.10006"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt101F">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.1010"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt100EF">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.1042"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiWeb KVM">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.107.1.50006"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt91E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.941"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgtVM64HV">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.70"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FWB-1000D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.107.1.10004"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt51E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.515"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiGate 80F">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.846"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt3800D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.38001"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt30D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.304"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet Fortigate 3300">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.30002"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiWeb 100D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.107.1.1004"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet fgt140EP">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.1006"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FAC VM Base">
+            <SysOIDs>
+	        <SysOID oid=".1.3.6.1.4.1.12356.113.100.101"/>
+		<SysOID oid=".1.3.6.1.4.1.12356.113.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FWF51E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.516"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fortinet FortiGate 60F">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.440"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="CheckPoint" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Check Point 3200">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.65"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point 6500">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.79"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point 6900">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.92"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point 6600">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.91"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point 44000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.84"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point TE1000X">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.58"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point Smart-1 25">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.14"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point TE250X">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.57"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point 6400">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.99"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point 26000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.82"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point TE2000X">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.59"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point TE100X">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.60"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point Smart-5050">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.75"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point Smart-1 410">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.74"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point IP390">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.20"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point Smart-1 405">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.73"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point Smart-1 525">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.76"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Check Point UTM-1 270">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2620.1.6.123.1.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Fraunhofer FOKUS" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="pfSense Security Gateway">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12325.1.1.2.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Barracuda" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Barracuda Email Security Gateway">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.8072.3.2.10.BarracudaESG"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="ZyXEL" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="ZyXEL ZyWALL ZLD">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.890.1.6.22"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Firewall" Vendor="Sangfor" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Sangfor M5300">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.2.1.1.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Sangfor 5300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.2.1.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sangfor Firewall">
+        <SysOIDs>
+            <SysOID oid="1.3.6.1.4.1.35047"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    </CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Firewall" Vendor="Forcepoint" iconName="firewall.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Forcepoint LLC firewall">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.47565.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="FireEye" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="FireEye NX900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25597.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+	
+</CustomDevicePackage>

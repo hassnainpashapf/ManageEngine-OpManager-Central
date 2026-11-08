@@ -1,0 +1,818 @@
+
+-- File Name : OPMANAGER-MIB
+-- This is used for Trap Notification in OpManager
+
+
+ADVENTNET-OPMANAGER-MIB	DEFINITIONS ::= BEGIN
+	IMPORTS
+		DisplayString
+			FROM SNMPv2-TC
+		DisplayString
+			FROM RFC1213-MIB
+		org, MODULE-IDENTITY, OBJECT-TYPE, IpAddress, NOTIFICATION-TYPE
+			FROM SNMPv2-SMI;
+
+	org	OBJECT IDENTIFIER
+		::=  {  iso  3  }
+
+	dod	OBJECT IDENTIFIER
+		::=  {  org  6  }
+
+	internet	OBJECT IDENTIFIER
+		::=  {  dod  1  }
+
+	private	OBJECT IDENTIFIER
+		::=  {  internet  4  }
+
+	enterprises	OBJECT IDENTIFIER
+		::=  {  private  1  }
+
+	adventnet	OBJECT IDENTIFIER
+		::=  {  enterprises  2162  }
+
+	adventnetMibs	OBJECT IDENTIFIER
+		::=  {  adventnet  100  }
+
+	adventnetOpManagerMIB	OBJECT IDENTIFIER
+		::=  {  adventnetMibs  5  }
+
+	adventnetOpManagerMIBObjects	OBJECT IDENTIFIER
+		::=  {  adventnetOpManagerMIB  1  }
+		
+	opManagerNotifications	OBJECT IDENTIFIER
+		::=  {  adventnetOpManagerMIBObjects  1  }
+		
+	alertInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  1  }
+		
+	deviceInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  2  }
+		
+	intfInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  3  }
+	
+	customInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  4  }
+	
+	customIntfInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  5  }
+		
+	monitorInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  6  }
+		
+	nfaAlertInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  7  }
+		
+	fwaAlertInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  8  }
+
+	ncmAlertInfo	OBJECT IDENTIFIER
+		::=  {  opManagerNotifications  9  }
+	
+	message		OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"message of the alarm generated in OpManager"
+		::=  {  alertInfo  1  }
+
+	deviceName		OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"name of device in which alarm generated"
+		::=  {  alertInfo  2  }
+	
+	category		OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"category name of the device"
+		::=  {  alertInfo  3  }
+	
+	stringseverity		OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"severity of the alarm as a string value"
+		::=  {  alertInfo  4  }
+	
+	strModTime	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"time when the alarm was generated"
+		::=  {  alertInfo  5  }
+		
+	alarmid	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"alarm id in Alert Table"
+		::=  {  alertInfo  6  }
+	
+	eventType	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"eventType of generated alarm"
+		::=  {  alertInfo  7  }
+
+	entity	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"entity of generated alarm"
+		::=  {  alertInfo  8  }
+
+	lastPolledValue	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"lastPolledValue of generated alarm for threshold violated monitors"
+		::=  {  alertInfo  9  }
+	
+	type	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"device type"
+		::=  {  deviceInfo  1  }
+	
+	ipAddress	OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"ipAddress of the device"
+		::=  {  deviceInfo  2  }
+	
+	isSNMP	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"device supports snmp protocol or not"
+		::=  {  deviceInfo  3  }
+	
+	dependent	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"dependency on other devices"
+		::=  {  deviceInfo  4  }
+	
+	hardDiskSiz	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"hard Disk Size of the device"
+		::=  {  deviceInfo  5  }
+	
+	ramSize	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"RAM memory of the device"
+		::=  {  deviceInfo  6  }
+
+	probeName OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Probe name to which the device belongs"
+		::=  {  deviceInfo  7  }
+	
+	ifDescr	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"descriptor of the interface as reported by the SNMP agent"
+		::=  {  intfInfo  1  }
+	
+	displayName	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"displayName of the interface"
+		::=  {  intfInfo  2  }
+	
+	ifAlias	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"alias name of the interface"
+		::=  {  intfInfo  3  }
+	
+	ifName	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"name of the interface"
+		::=  {  intfInfo  4  }
+	
+	ifIpAddress	OBJECT-TYPE
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"ipAddress of the interface"
+		::=  {  intfInfo  5  }
+	
+	physMedia	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"physical media of the interface"
+		::=  {  intfInfo  6  }
+	
+	ifIndex	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"interface index reported by the SNMP agent"
+		::=  {  intfInfo  7  }
+	
+	ifCircuitID	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"interface circiutID"
+		::=  {  intfInfo  8  }
+	
+	ifSpeedIn	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"In speed of the interface as reported by the SNMP agent"
+		::=  {  intfInfo  9  }
+	
+	ifSpeedOut	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Out speed of the interface as reported by the SNMP agent"
+		::=  {  intfInfo  10  }
+		
+	customField	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"custom fields for devices in OpManager"
+		::=  {  customInfo  1  }
+	
+	customIntfField 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"custom fields for interfaces in OpManager"
+		::=  {  customIntfInfo  1  }
+		
+	monitorName 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Name of the Monitor in which the alarm generated"
+		::=  {  monitorInfo  1  }
+		
+	instance 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Instance of the Monitor in which the alarm generated"
+		::=  {  monitorInfo  2  }
+		
+	protocol 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Protocol of the Monitor in which the alarm generated"
+		::=  {  monitorInfo  3  }
+		
+	sourceType 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Source Type in NetFlow"
+		::=  {  nfaAlertInfo  1  }
+		
+	sourceName 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Source Name in NetFlow"
+		::=  {  nfaAlertInfo  2  }
+		
+	alertName 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Alert Profile Name in NetFlow"
+		::=  {  nfaAlertInfo  3  }
+		
+	alertType 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Alert Profile Type in NetFlow"
+		::=  {  nfaAlertInfo  4  }
+		
+	criteria 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Alert criteria in NetFlow"
+		::=  {  nfaAlertInfo  5  }
+		
+	sourceIP 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Alert criteria in NetFlow"
+		::=  {  nfaAlertInfo  6  }
+		
+	sourceDesc 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Alert criteria in NetFlow"
+		::=  {  nfaAlertInfo  7  }
+		
+	sourceINSpeed 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Alert criteria in NetFlow"
+		::=  {  nfaAlertInfo  8  }
+		
+	sourceOUTSpeed 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Alert criteria in NetFlow"
+		::=  {  nfaAlertInfo  9  }
+		
+	profileName 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Name of the Profile created in Firewall Module"
+		::=  {  fwaAlertInfo  1  }
+
+	criteria 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Profile criteria specified in Firewall Module"
+		::=  {  fwaAlertInfo  2  }
+
+	alertMsg 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Details of Alert in Firewall Module"
+		::=  {  fwaAlertInfo  3  }
+		
+	ncmApprovalRequestedOperation 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $approval_requested_operation"
+		::=  {  ncmAlertInfo  1  }
+		
+	ncmApprovalRequestedBy 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $approval_requested_by"
+		::=  {  ncmAlertInfo  2  }
+		
+	ncmApprovalApprovedBy 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $approval_approved_by"
+		::=  {  ncmAlertInfo  3  }
+		
+	ncmApprovalRejectedBy 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $approval_rejected_by"
+		::=  {  ncmAlertInfo  4  }
+		
+	ncmDeletionDeletedBy 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $approval_deleted_by"
+		::=  {  ncmAlertInfo  5  }
+		
+	ncmConfigVersion 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $config_version"
+		::=  {  ncmAlertInfo  6  }
+		
+	ncmConfigCapturedOn 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $config_captured_on"
+		::=  {  ncmAlertInfo  7  }
+		
+	ncmConfigAnnotation 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $config_annotation"
+		::=  {  ncmAlertInfo  8  }
+		
+	ncmConfigChangeType 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $config_change_type"
+		::=  {  ncmAlertInfo  9  }
+		
+	ncmConfigChangedBy 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $config_changed_by"
+		::=  {  ncmAlertInfo  10  }
+		
+	ncmConfigBackedupBy 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $config_backedup_by"
+		::=  {  ncmAlertInfo  11  }
+		
+	ncmConfigSize 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $config_size"
+		::=  {  ncmAlertInfo  12  }
+		
+	ncmConfigAuthorization 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $config_authorization"
+		::=  {  ncmAlertInfo  13  }
+		
+	ncmBackupInvokedBy 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $backup_invokedby"
+		::=  {  ncmAlertInfo  14  }
+		
+	ncmConfigletName 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $configlet_name"
+		::=  {  ncmAlertInfo  15  }
+		
+	ncmConfigletExecutionStatus 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $configlet_execution_status"
+		::=  {  ncmAlertInfo  16  }
+		
+	ncmConfigletInvokedBy 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $configlet_invoked_by"
+		::=  {  ncmAlertInfo  17  }
+		
+	ncmConfigletMode 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $configlet_mode"
+		::=  {  ncmAlertInfo  18  }
+		
+	ncmFwvCveid 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $fwv_cveid"
+		::=  {  ncmAlertInfo  19  }
+		
+	ncmFwvBasescore 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $fwv_basescore"
+		::=  {  ncmAlertInfo  20  }
+		
+	ncmFwvVulnerabilityType 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $fwv_vulnerability_type"
+		::=  {  ncmAlertInfo  21  }
+		
+	ncmFwvPublished 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $fwv_published"
+		::=  {  ncmAlertInfo  22  }
+		
+	ncmFwvLastUpdated 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $fwv_last_updated"
+		::=  {  ncmAlertInfo  23  }
+		
+	ncmFwvSummary 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $fwv_summary"
+		::=  {  ncmAlertInfo  24  }
+		
+	ncmFwvReferenceUrl 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $fwv_reference_urls"
+		::=  {  ncmAlertInfo  25  }
+		
+	ncmFwvSeverity 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $fwv_severity"
+		::=  {  ncmAlertInfo  26  }
+		
+	ncmCompliancePolicyName 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $comp_policy_name"
+		::=  {  ncmAlertInfo  27  }
+		
+	ncmComplianceRuleName 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $comp_rule_name"
+		::=  {  ncmAlertInfo  28  }
+		
+	ncmComplianceRemediationStatus 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $comp_remediation_status"
+		::=  {  ncmAlertInfo  29  }
+		
+	ncmProfile 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $profile_name"
+		::=  {  ncmAlertInfo  30  }
+		
+	ncmTemplate 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $template_name"
+		::=  {  ncmAlertInfo  31  }
+		
+	ncmRuleTriggeredOn 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $ruleTriggerTime"
+		::=  {  ncmAlertInfo  32  }
+		
+	ncmBackupStatus 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $backup_status"
+		::=  {  ncmAlertInfo  33  }
+		
+	ncmBaselineConflict 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $baseline_conflict"
+		::=  {  ncmAlertInfo  34  }
+		
+	ncmStartupConflict 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $startup_conflict"
+		::=  {  ncmAlertInfo  35  }
+		
+	ncmComplianceStatus 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $compliance_status"
+		::=  {  ncmAlertInfo  36  }
+		
+	ncmCredValidity 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $cred_validity"
+		::=  {  ncmAlertInfo  37  }
+		
+	ncmManaged 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $managed"
+		::=  {  ncmAlertInfo  38  }
+		
+	ncmCustomColumn1 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $custom_column1"
+		::=  {  ncmAlertInfo  39  }
+		
+	ncmCustomColumn2 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $custom_column2"
+		::=  {  ncmAlertInfo  40  }
+		
+	ncmCustomColumn3 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $custom_column3"
+		::=  {  ncmAlertInfo  41  }
+		
+	ncmDeviceTemplate 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $device_template"
+		::=  {  ncmAlertInfo  42  }
+		
+	ncmDeviceType 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $device_type"
+		::=  {  ncmAlertInfo  43  }
+		
+	ncmSystemVendor 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $system_vendor"
+		::=  {  ncmAlertInfo  44  }
+		
+	ncmSeries 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $series"
+		::=  {  ncmAlertInfo  45  }
+		
+	ncmModel 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $model"
+		::=  {  ncmAlertInfo  46  }
+		
+	ncmEndOfSale 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $end_of_sale"
+		::=  {  ncmAlertInfo  47  }
+		
+	ncmEndOfSupport 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $end_of_support"
+		::=  {  ncmAlertInfo  48  }
+		
+	ncmHostName 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $host_name"
+		::=  {  ncmAlertInfo  49  }
+		
+	ncmIpaddress 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $ipaddress"
+		::=  {  ncmAlertInfo  50  }
+		
+	ncmLastBackup 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $last_backup"
+		::=  {  ncmAlertInfo  51  }
+		
+	ncmLastOperationStatus 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $last_operation_status"
+		::=  {  ncmAlertInfo  52  }
+		
+	ncmMacAddress 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $mac_address"
+		::=  {  ncmAlertInfo  53  }
+		
+	ncmOsType 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $os_type"
+		::=  {  ncmAlertInfo  54  }
+		
+	ncmOsVersion 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $os_version"
+		::=  {  ncmAlertInfo  55  }
+		
+	ncmSyslogStatus 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $syslog_status"
+		::=  {  ncmAlertInfo  56  }
+		
+	ncmSerialNumber 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $serial_number"
+		::=  {  ncmAlertInfo  57  }
+		
+	ncmSystemContact 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $system_contact"
+		::=  {  ncmAlertInfo  58  }
+		
+	ncmSystemDesc 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $system_desc"
+		::=  {  ncmAlertInfo  59  }
+		
+	ncmSystemLocation 	OBJECT-TYPE
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Network Configuration Manager notification variable $system_location"
+		::=  {  ncmAlertInfo  60  }
+		
+	
+
+
+-- Trap Definitions
+
+opmAlertNotifications    OBJECT IDENTIFIER ::= { adventnetOpManagerMIBObjects 2 }
+ 
+trapNotifications NOTIFICATION-GROUP
+   NOTIFICATIONS { opManagerTrapNotification }
+   STATUS        current
+   DESCRIPTION
+      "The basic notifications implemented by an SNMP entity
+       supporting command responder applications."
+   ::= { adventnetOpManagerMIBObjects 2 }
+
+
+-- Notification types:
+ 
+opManagerTrapNotification NOTIFICATION-TYPE
+     OBJECTS { message, deviceName, category, stringseverity, strModTime,alarmid, eventType, entity, lastPolledValue, type, ipAddress, isSNMP, dependent, hardDiskSiz, ramSize, ifDescr, displayName, ifAlias, ifName, ifIpAddress, physMedia, ifIndex, ifCircuitID, ifSpeedIn, ifSpeedOut, customField, customIntfField}
+     STATUS       current
+     DESCRIPTION
+         "A notification about a change in the alert of OpManager."
+     ::= { opmAlertNotifications 1 }
+
+END

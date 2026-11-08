@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OpmCLICommands>
+
+    <!-- Chronyc NTP Time Drift CLI Commands -->
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F '[: ]+' '/System time/ {gsub(/[-+]/, &quot;&quot;, $3); printf &quot;%.2f\n&quot;, $3}'" CommandID="3606" CommandMappingID="netsnmp.Chronyc NTP Time Drift" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-NTPTimeDrift" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="122" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="192" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F '[: ]+' '/System time/ {gsub(/[-+]/, &quot;&quot;, $3); printf &quot;%.2f\n&quot;, $3}'" CommandID="3607" CommandMappingID="solaris.Chronyc NTP Time Drift" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-NTPTimeDrift" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="123" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="193" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F '[: ]+' '/System time/ {gsub(/[-+]/, &quot;&quot;, $3); printf &quot;%.2f\n&quot;, $3}'" CommandID="3608" CommandMappingID="hpux.Chronyc NTP Time Drift" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-NTPTimeDrift" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="124" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="194" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F '[: ]+' '/System time/ {gsub(/[-+]/, &quot;&quot;, $3); printf &quot;%.2f\n&quot;, $3}'" CommandID="3609" CommandMappingID="ibmaix.Chronyc NTP Time Drift" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-NTPTimeDrift" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="125" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="195" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F '[: ]+' '/System time/ {gsub(/[-+]/, &quot;&quot;, $3); printf &quot;%.2f\n&quot;, $3}'" CommandID="3611" CommandMappingID="macos.Chronyc NTP Time Drift" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-NTPTimeDrift" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="127" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="197" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <!-- NTPQ NTP Time Drift CLI Commands -->
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {gsub(/[-+]/,&quot;&quot;,$9); printf &quot;%.2f\n&quot;, $9/1000; exit}'" CommandID="3612" CommandMappingID="netsnmp.NTPQ NTP Time Drift" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="128" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="198" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {gsub(/[-+]/,&quot;&quot;,$9); printf &quot;%.2f\n&quot;, $9/1000; exit}'" CommandID="3613" CommandMappingID="solaris.NTPQ NTP Time Drift" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="129" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="199" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {gsub(/[-+]/,&quot;&quot;,$9); printf &quot;%.2f\n&quot;, $9/1000; exit}'" CommandID="3614" CommandMappingID="hpux.NTPQ NTP Time Drift" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="130" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="200" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {gsub(/[-+]/,&quot;&quot;,$9); printf &quot;%.2f\n&quot;, $9/1000; exit}'" CommandID="3615" CommandMappingID="ibmaix.NTPQ NTP Time Drift" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="131" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="201" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {gsub(/[-+]/,&quot;&quot;,$9); printf &quot;%.2f\n&quot;, $9/1000; exit}'" CommandID="3617" CommandMappingID="macos.NTPQ NTP Time Drift" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="133" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="203" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <!-- Manual NTP Time Drift CLI Commands -->
+
+    <OpmCLICommand CLICommand="(command -v perl &gt;/dev/null 2&gt;&amp;1 &amp;&amp; perl -MTime::HiRes=time -e 'printf(&quot;%.0f\n&quot;, time()*1000)') || date -u +&quot;%s&quot;" CommandID="3619" CommandMappingID="netsnmp.Manual NTP Time Drift" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="134" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="204" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="(command -v perl &gt;/dev/null 2&gt;&amp;1 &amp;&amp; perl -MTime::HiRes=time -e 'printf(&quot;%.0f\n&quot;, time()*1000)') || date -u +&quot;%s&quot;" CommandID="3620" CommandMappingID="solaris.Manual NTP Time Drift" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="135" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="205" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="(command -v perl &gt;/dev/null 2&gt;&amp;1 &amp;&amp; perl -MTime::HiRes=time -e 'printf(&quot;%.0f\n&quot;, time()*1000)') || date -u +&quot;%s&quot;" CommandID="3621" CommandMappingID="hpux.Manual NTP Time Drift" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="136" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="206" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="(command -v perl &gt;/dev/null 2&gt;&amp;1 &amp;&amp; perl -MTime::HiRes=time -e 'printf(&quot;%.0f\n&quot;, time()*1000)') || date -u +&quot;%s&quot;" CommandID="3622" CommandMappingID="ibmaix.Manual NTP Time Drift" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="137" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="207" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="(command -v perl &gt;/dev/null 2&gt;&amp;1 &amp;&amp; perl -MTime::HiRes=time -e 'printf(&quot;%.0f\n&quot;, time()*1000)') || date -u +&quot;%s&quot;" CommandID="3624" CommandMappingID="macos.Manual NTP Time Drift" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-NTPTimeDrift" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="139" EntityName="NTPTimeDrift" EntityUnits="seconds">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="209" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <!-- Chronyc NTP Sync Status CLI Commands -->
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F ': ' '/Leap status/ {print ($2==&quot;Normal&quot;)?&quot;SYNCED&quot;:&quot;NOT_SYNCED&quot;}'" CommandID="3625" CommandMappingID="netsnmp.Chronyc NTP Sync Status" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-NTPSyncStatus" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="140" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="210" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F ': ' '/Leap status/ {print ($2==&quot;Normal&quot;)?&quot;SYNCED&quot;:&quot;NOT_SYNCED&quot;}'" CommandID="3626" CommandMappingID="solaris.Chronyc NTP Sync Status" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-NTPSyncStatus" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="141" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="211" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F ': ' '/Leap status/ {print ($2==&quot;Normal&quot;)?&quot;SYNCED&quot;:&quot;NOT_SYNCED&quot;}'" CommandID="3627" CommandMappingID="hpux.Chronyc NTP Sync Status" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-NTPSyncStatus" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="142" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="212" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F ': ' '/Leap status/ {print ($2==&quot;Normal&quot;)?&quot;SYNCED&quot;:&quot;NOT_SYNCED&quot;}'" CommandID="3628" CommandMappingID="ibmaix.Chronyc NTP Sync Status" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-NTPSyncStatus" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="143" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="213" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v chronyc &gt;/dev/null 2&gt;&amp;1 &amp;&amp; chronyc tracking 2&gt;/dev/null | awk -F ': ' '/Leap status/ {print ($2==&quot;Normal&quot;)?&quot;SYNCED&quot;:&quot;NOT_SYNCED&quot;}'" CommandID="3629" CommandMappingID="macos.Chronyc NTP Sync Status" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-NTPSyncStatus" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="144" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="214" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <!-- NTPQ NTP Sync Status CLI Commands -->
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {print &quot;SYNCED&quot;; found=1; exit} END {if (!found) print &quot;NOT_SYNCED&quot;}'" CommandID="3630" CommandMappingID="netsnmp.NTPQ NTP Sync Status" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-NTPSyncStatus" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="145" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="215" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {print &quot;SYNCED&quot;; found=1; exit} END {if (!found) print &quot;NOT_SYNCED&quot;}'" CommandID="3631" CommandMappingID="solaris.NTPQ NTP Sync Status" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-NTPSyncStatus" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="146" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="216" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {print &quot;SYNCED&quot;; found=1; exit} END {if (!found) print &quot;NOT_SYNCED&quot;}'" CommandID="3632" CommandMappingID="hpux.NTPQ NTP Sync Status" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-NTPSyncStatus" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="147" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="217" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {print &quot;SYNCED&quot;; found=1; exit} END {if (!found) print &quot;NOT_SYNCED&quot;}'" CommandID="3633" CommandMappingID="ibmaix.NTPQ NTP Sync Status" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-NTPSyncStatus" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="148" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="218" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="command -v ntpq &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ntpq -pn 2&gt;/dev/null | awk 'NR&gt;2 &amp;&amp; $1 ~ /^\*/ {print &quot;SYNCED&quot;; found=1; exit} END {if (!found) print &quot;NOT_SYNCED&quot;}'" CommandID="3634" CommandMappingID="macos.NTPQ NTP Sync Status" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-NTPSyncStatus" isDefault="false">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="149" EntityName="NTPSyncStatus" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="219" SubEntityName="NTPSyncStatus"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <!-- GraphAlternativeOID Entries -->
+
+    <!-- Chronyc NTP Time Drift GraphAlternativeOIDs -->
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="netsnmp.Chronyc NTP Time Drift" DISPLAYNAME="Chronyc NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using Chronyc package" ISDEFAULT="true" VENDOR="net-snmp"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="solaris.Chronyc NTP Time Drift" DISPLAYNAME="Chronyc NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using Chronyc package" ISDEFAULT="true" VENDOR="Sun Microsystems"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="hpux.Chronyc NTP Time Drift" DISPLAYNAME="Chronyc NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using Chronyc package" ISDEFAULT="true" VENDOR="Hewlett-Packard"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="ibmaix.Chronyc NTP Time Drift" DISPLAYNAME="Chronyc NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using Chronyc package" ISDEFAULT="true" VENDOR="IBM"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="macos.Chronyc NTP Time Drift" DISPLAYNAME="Chronyc NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using Chronyc package" ISDEFAULT="true" VENDOR="Apple"/>
+
+    <!-- NTPQ NTP Time Drift GraphAlternativeOIDs -->
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="netsnmp.NTPQ NTP Time Drift" DISPLAYNAME="NTPQ NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using NTPQ package" ISDEFAULT="false" VENDOR="net-snmp"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="solaris.NTPQ NTP Time Drift" DISPLAYNAME="NTPQ NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using NTPQ package" ISDEFAULT="false" VENDOR="Sun Microsystems"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="hpux.NTPQ NTP Time Drift" DISPLAYNAME="NTPQ NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using NTPQ package" ISDEFAULT="false" VENDOR="Hewlett-Packard"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="ibmaix.NTPQ NTP Time Drift" DISPLAYNAME="NTPQ NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using NTPQ package" ISDEFAULT="false" VENDOR="IBM"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="macos.NTPQ NTP Time Drift" DISPLAYNAME="NTPQ NTP Time Drift" INFO="Monitors the time difference between the system clock and the NTP server using NTPQ package" ISDEFAULT="false" VENDOR="Apple"/>
+
+    <!-- Chronyc NTP Sync Status GraphAlternativeOIDs -->
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="netsnmp.Chronyc NTP Sync Status" DISPLAYNAME="Chronyc NTP Sync Status" INFO="Monitors the NTP synchronization status using Chronyc package" ISDEFAULT="true" VENDOR="net-snmp"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="solaris.Chronyc NTP Sync Status" DISPLAYNAME="Chronyc NTP Sync Status" INFO="Monitors the NTP synchronization status using Chronyc package" ISDEFAULT="true" VENDOR="Sun Microsystems"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="hpux.Chronyc NTP Sync Status" DISPLAYNAME="Chronyc NTP Sync Status" INFO="Monitors the NTP synchronization status using Chronyc package" ISDEFAULT="true" VENDOR="Hewlett-Packard"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="ibmaix.Chronyc NTP Sync Status" DISPLAYNAME="Chronyc NTP Sync Status" INFO="Monitors the NTP synchronization status using Chronyc package" ISDEFAULT="true" VENDOR="IBM"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="macos.Chronyc NTP Sync Status" DISPLAYNAME="Chronyc NTP Sync Status" INFO="Monitors the NTP synchronization status using Chronyc package" ISDEFAULT="true" VENDOR="Apple"/>
+
+    <!-- NTPQ NTP Sync Status GraphAlternativeOIDs -->
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="netsnmp.NTPQ NTP Sync Status" DISPLAYNAME="NTPQ NTP Sync Status" INFO="Monitors the NTP synchronization status using NTPQ package" ISDEFAULT="false" VENDOR="net-snmp"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="solaris.NTPQ NTP Sync Status" DISPLAYNAME="NTPQ NTP Sync Status" INFO="Monitors the NTP synchronization status using NTPQ package" ISDEFAULT="false" VENDOR="Sun Microsystems"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="hpux.NTPQ NTP Sync Status" DISPLAYNAME="NTPQ NTP Sync Status" INFO="Monitors the NTP synchronization status using NTPQ package" ISDEFAULT="false" VENDOR="Hewlett-Packard"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="ibmaix.NTPQ NTP Sync Status" DISPLAYNAME="NTPQ NTP Sync Status" INFO="Monitors the NTP synchronization status using NTPQ package" ISDEFAULT="false" VENDOR="IBM"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPSyncStatus" OID="macos.NTPQ NTP Sync Status" DISPLAYNAME="NTPQ NTP Sync Status" INFO="Monitors the NTP synchronization status using NTPQ package" ISDEFAULT="false" VENDOR="Apple"/>
+
+    <!-- Manual NTP Time Drift GraphAlternativeOIDs -->
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="netsnmp.Manual NTP Time Drift" DISPLAYNAME="Manual NTP Time Drift" INFO="Calculates the NTP time drift by fetching device UTC time via CLI and comparing with NTP server time" ISDEFAULT="false" VENDOR="net-snmp"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="solaris.Manual NTP Time Drift" DISPLAYNAME="Manual NTP Time Drift" INFO="Calculates the NTP time drift by fetching device UTC time via CLI and comparing with NTP server time" ISDEFAULT="false" VENDOR="Sun Microsystems"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="hpux.Manual NTP Time Drift" DISPLAYNAME="Manual NTP Time Drift" INFO="Calculates the NTP time drift by fetching device UTC time via CLI and comparing with NTP server time" ISDEFAULT="false" VENDOR="Hewlett-Packard"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="ibmaix.Manual NTP Time Drift" DISPLAYNAME="Manual NTP Time Drift" INFO="Calculates the NTP time drift by fetching device UTC time via CLI and comparing with NTP server time" ISDEFAULT="false" VENDOR="IBM"/>
+    <GraphAlternativeOID GRAPHNAME="CLI-NTPTimeDrift" OID="macos.Manual NTP Time Drift" DISPLAYNAME="Manual NTP Time Drift" INFO="Calculates the NTP time drift by fetching device UTC time via CLI and comparing with NTP server time" ISDEFAULT="false" VENDOR="Apple"/>
+
+    <!-- NVIDIA GPU Discovery/Inventory Commands -->
+
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=index,name,gpu_uuid,serial,driver_version,vbios_version,count,pstate,compute_mode,compute_cap --format=csv,noheader,nounits" CommandID="5100" CommandMappingID="netsnmp.NVIDIA.smi.GPUInventory" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="true" Vendor="net-snmp" GraphName="GPUDiscovery" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="5100" EntityName="GPUInventory" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="5200" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="cuda=$(nvidia-smi | sed -n 's/.*CUDA Version: \([0-9.]*\).*/\1/p'); nvidia-smi --query-gpu=uuid --format=csv,noheader,nounits | while read -r uuid; do echo &quot;$uuid=$cuda&quot;; done" CommandID="5101" CommandMappingID="netsnmp.NVIDIA.smi.CudaVersion" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="true" Vendor="net-snmp" GraphName="GPUDiscovery" isDefault="true">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="5101" EntityName="GPUCudaVersion" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="5201" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+</OpmCLICommands>
+

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Upload Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=":" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_ap_cli_fetch_config_ispec_1"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy config tftp text">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_ap_cli_fetch_config_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_ap_cli_fetch_config_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_ap_cli_fetch_config_ispec_2"/>
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_ap_cli_fetch_config_rec_3" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Download Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="Select the type of download&lt;1-4&gt;:" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_ap_cli_push_config_ispec_1"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy tftp file">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_ap_cli_push_config_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=":" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_ap_cli_push_config_ispec_2"/>
+</CLIInteractionSpec>
+
+<CLICommand command="4">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_ap_cli_push_config_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_ap_cli_push_config_rec_3" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_ap_cli_push_config_ispec_3"/>
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_ap_cli_push_config_rec_4" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

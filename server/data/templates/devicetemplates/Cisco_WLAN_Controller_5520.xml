@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Cisco WLAN Controller 5520" osType="Controller OS" templateName="Cisco_WLAN_Controller_5520">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="config paging disable" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show run-config" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="transfer upload mode tftp" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer upload datatype config" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer upload serverip ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer upload path ./" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="40" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer upload filename ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="50" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer upload start" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="60" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="transfer download mode tftp" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer download datatype config" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer download serverip ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer download path ./" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="40" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer download filename ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="50" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="transfer download start" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="60" timeout="120000" promptactionid="CiscoWLANControllerActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cisco WLAN Controller 5520" personalityName="CiscoWLANController5520">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BUILD_TYPE" size="15" desc="Build Type" displayname="Build Type" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="BOOTLOADER" size="150" desc="Bootloader" displayname="Bootloader" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoWLC5520HwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_cisco_wlan_controller_5520">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="BUILD_TYPE" EXPRESSION="\s*(--More--)*\s*Build Type\s*\S*\s*(.*)">
+											 <PARAM NAME="BUILD_TYPE" TOKENNO="2"/>
+										 </REGEX>
+
+										 <REGEX NAME="OSVERSION" EXPRESSION="\s*(--More--)*\s*Product Version\s*\S*\s*(.*)">
+											 <PARAM NAME="OSVERSION" TOKENNO="2"/>
+										 </REGEX>
+
+										 <REGEX NAME="MACADDRESS" EXPRESSION="\s*(--More--)*\s*Burned-in MAC Address\s*\S*\s*(.*)">
+											 <PARAM NAME="MACADDRESS" TOKENNO="2"/>
+										 </REGEX>
+						
+										 <REGEX EXPRESSION=".*PID:\s*(\S*)\s*,.*SN:\s*(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Bootloader\s*Version\S*\s*(.*)" NAME="BOOTLOADER">
+											<PARAM NAME="BOOTLOADER" TOKENNO="1"/>
+										</REGEX>
+										 
+										 <REGEX NAME="SERIES" EXPRESSION=".*DESCR:.*Cisco\s*(\S*)\s*Series.*">
+											 <PARAM NAME="SERIES" TOKENNO="1"/>
+										 </REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show inventory" parsercommandname="hardware_prop_cisco_wlan_controller_5520" responseparserid="cisco_wlan_5520_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid="CiscoWLANControllerActionId"/>
+						<Command commandstr="show sysinfo" parsercommandname="hardware_prop_cisco_wlan_controller_5520" responseparserid="cisco_wlan_5520_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid="CiscoWLANControllerActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

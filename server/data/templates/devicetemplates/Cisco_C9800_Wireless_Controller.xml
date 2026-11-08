@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Cisco C9800 Wireless Controller" osType="IOS XE" templateName="Cisco_C9800_Wireless_Controller">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Vlan">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show vlan" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>            	
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cisco C9800 Wireless Controller" personalityName="CiscoC9800WirelessController">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="MEMORY" size="150" desc="Memory" displayname="Memory" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="NON_VOLATILE_MEMORY" size="150" desc="Non-Volatile Configuration Memory" displayname="Non-Volatile Configuration Memory" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="PHYSICAL_MEMORY" size="150" desc="Physical Memory" displayname="Physical Memory" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="CONFIGURATION_REGISTER" size="150" desc="Configuration Register" displayname="Configuration Register" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="BOOTLOADER" size="150" desc="Boot Loader" displayname="Bootloader" defaultvalue="Not Available" sequenceid="5"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoC9800WlanHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_cisco_wlan_c9800">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">    
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Cisco\s*(IOS XE)\s*Software,\s*Version\s*(\S+).*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="SERIES" EXPRESSION=".*Cisco\s*IOS\s*Software.*,\s*(\S*)\s*Software.*,\s*Version.*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX> 
+										<REGEX NAME="MODEL" EXPRESSION=".*[Cc]isco\s*(\S*).*processor.*with\s*(\S* bytes)\s*of mem.*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="MEMORY" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Processor\s*board\s*ID\s*(.*)">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*MAC\s*Address\s*:\s*(.*)">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="NON_VOLATILE_MEMORY" EXPRESSION="(.*) of non-volatile.*">
+											<PARAM NAME="NON_VOLATILE_MEMORY" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PHYSICAL_MEMORY" EXPRESSION="(.*) of physical memory.*">
+											<PARAM NAME="PHYSICAL_MEMORY" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="CONFIGURATION_REGISTER" EXPRESSION=".*Configuration\s*register\s*is\s*(.*)">
+											<PARAM NAME="CONFIGURATION_REGISTER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="System\simage\sfile.*bootflash:(.*)\&quot;" NAME="IMAGEFILENAME">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX>
+										
+										
+										<REGEX EXPRESSION=".*PID:\s*(\S*)\s*,.*SN:\s*(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Bootloader\s*Version\S*\s*(.*)" NAME="BOOTLOADER">
+											<PARAM NAME="BOOTLOADER" TOKENNO="1"/>
+										</REGEX>
+									
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+								
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_cisco_wlan_c9800" responseparserid="Cisco_C98800_wlan_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+						<Command commandstr="show inventory" parsercommandname="hardware_prop_cisco_wlan_c9800" responseparserid="Cisco_C98800_wlan_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+						<Command commandstr="show sysinfo" parsercommandname="hardware_prop_cisco_wlan_c9800" responseparserid="Cisco_C98800_wlan_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

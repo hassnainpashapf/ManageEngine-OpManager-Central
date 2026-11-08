@@ -1,0 +1,1325 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<NCMDeviceSysOIDInfo>
+
+    <!--*********************************** CiscoIOSRouter Models **********************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.215"  model="804" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.214"  model="803" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.213"  model="802" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.212"  model="801" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.497"  model="831" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.499"  model="836" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.495"  model="837" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.382"  model="828" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.270"  model="827_4V" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.396"  model="813" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.395"  model="811" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.245"  model="805" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.284"  model="827" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.446"  model="827H" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.322"  model="826" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.321"  model="826QuadV" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.384"  model="806" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.571"  model="871" series="800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.113"  model="1601" series="1600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.114"  model="1602" series="1600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.115"  model="1603" series="1600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.116"  model="1604" series="1600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.120"  model="1604" series="1600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.172"  model="1605" series="1600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.416"  model="1760" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.326"  model="1751" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.444"  model="1721" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.539"  model="1712" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.538"  model="1711" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.200"  model="1710" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.550"  model="1701ADSLBRI" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.216"  model="1751" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.201"  model="1720" series="1700" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.929"  model="C296024S" series="2960" devicetemplateid="Cisco_IOS_Router"/>
+    
+
+
+	<!-- 1800 series -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.620"  model="1841" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.642"  model="1812" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.641"  model="1811" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.638"  model="1801" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.639"  model="1802" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.640"  model="1803" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.75"  model="2520" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2525 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.74"  model="2520" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2524 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.73"  model="2520" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2523 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.72"  model="2520" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2522 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.71"  model="2520" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2521 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.70"  model="2520" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.69"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2519 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.68"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2518 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.67"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2517 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.42"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2516 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.31"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2515 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.30"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2514 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.29"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2513 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.28"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2512 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.27"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2511 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.26"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2510 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.25"  model="2509" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.24"  model="2504" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2508 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.23"  model="2504" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2507 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.22"  model="2504" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2506 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.21"  model="2504" series="2500" devicetemplateid="Cisco_IOS_Router"/><!-- 2505 -->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.20"  model="2504" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.19"  model="2503" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.18"  model="2502" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.17"  model="2501" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.413"  model="2691" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.471"  model="2651XM" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.470"  model="2650XM" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.469"  model="2621XM" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.468"  model="2620XM" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.187"  model="2612" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.467"  model="2611XM" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.466"  model="2610XM" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.418"  model="2610M" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.419"  model="2611M" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.320"  model="2651" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.319"  model="2650" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.209"  model="2621" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.208"  model="2620" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.195"  model="2613" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.186"  model="2611" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.185"  model="2610" series="2600" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.619"  model="2801" series="2800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.576"  model="2811" series="2800" devicetemplateid="Cisco_IOS_Router"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.544"  model="3845" series="3800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.568"  model="876" series="800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.578"  model="2851" series="2800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.543"  model="3825" series="3800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.577"  model="2821" series="2800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.182"  model="12008" series="12000" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.173"  model="12012" series="12000" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.569"  model="877" series="800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.570"  model="878" series="800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.566"  model="851" series="800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.567"  model="857" series="800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.733"  model="815" series="800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.295"  model="802J" series="800" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.296"  model="804J" series="800" devicetemplateid="Cisco_IOS_Router"/>
+
+    <!-- Cisco Router uBR7100 series -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.346"  model="uBR7114" series="uBR7100" devicetemplateid="Cisco_IOS_Router"/>
+
+
+    <!-- Cisco Router 7200 series -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.222"  model="7206_VXR" series="7200" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.108"  model="7206" series="7200" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.223"  model="7204_VXR" series="7200" devicetemplateid="Cisco_IOS_Router"/>
+
+    <!-- Cisco Router 7500 series -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.46"  model="7513" series="7500" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.45"  model="7507" series="7500" devicetemplateid="Cisco_IOS_Router"/>
+
+    <!-- Cisco Router 7600 series -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.509"  model="7609" series="7600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.401"  model="7603" series="7600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.402"  model="7606" series="7600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.658"  model="7604" series="7600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.528"  model="7613" series="7600" devicetemplateid="Cisco_IOS_Router"/>
+
+    <!-- Cisco Router 7300 series -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.476"  model="7301" series="7300" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.439"  model="7304" series="7300" devicetemplateid="Cisco_IOS_Router"/>
+
+    <!-- Cisco Router 3600 & 3700 series -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.343"  model="3662" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.342"  model="3662" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.341"  model="3662" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.340"  model="3662" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.425"  model="3631Co" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.338"  model="3661Ac" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.339"  model="3661Dc" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.205"  model="3660" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.110"  model="3640" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.122"  model="3620" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.123"  model="3620Pro" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.124"  model="3640Pro" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.189"  model="3640SC" series="3600" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.436"  model="3745" series="3700" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.414"  model="3725" series="3700" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.479"  model="3250" series="3200" devicetemplateid="Cisco_IOS_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.403"  model="7401" series="7400" devicetemplateid="Cisco_IOS_Router"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.557"  model="MSFC3" series="MSFC" devicetemplateid="Cisco_IOS_Router"/>
+    <!--********************************************************************************************-->
+
+      <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.612"  model="Cisco Nexus 7010" series="Cisco Nexus 7010" devicetemplateid="Cisco_Nexus_Switch"/>
+ 	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.798"   model="Cisco Nexus 5010 " series="Cisco Nexus 5010" devicetemplateid="Cisco_Nexus_Switch"/>
+
+
+    <!--******************************* CiscoIOSSwitch Models **************************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.540"  model="2940_8TT" series="Catalyst 2940" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.542"  model="2940_8TF" series="Catalyst 2940" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.489"  model="2955C_12" series="Catalyst 2955" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.508"  model="2955S_12" series="Catalyst 2955" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.488"  model="2955T_12" series="Catalyst 2955" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.324"  model="2950_24" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.323"  model="2950_12" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.325"  model="2950C_24" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.429"  model="2950G_48_EI" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.472"  model="2950G_24_EI" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.428"  model="2950G_24_EI" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.427"  model="2950G_12_EI" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.560"  model="2950SX_48_SI" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.480"  model="2950SX_24" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.559"  model="2950T_48_SI" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.359"  model="2950T_24" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.430"  model="catalyst295024S" series="Catalyst 2950" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.183"  model="2924_XL" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.184"  model="2924C_XL" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.217"  model="2924_XLV" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.218"  model="2924C_XL" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.220"  model="2924M_XL" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.171"  model="2916M_XL" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.219"  model="catalyst2912XL" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.221"  model="2912MF_XL" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.275"  model="2948G_L3" series="Catalyst 2900" devicetemplateid="Cisco_IOS_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.312"  model="cat4840gL3" series="Cat L3-G" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.246"  model="3508G_XL" series="Catalyst 3500 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.278"  model="3548_XL" series="Catalyst 3500 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.248"  model="3524_XL" series="Catalyst 3500 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.247"  model="3512_XL" series="Catalyst 3500 XL" devicetemplateid="Cisco_IOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.287"  model="3524_PWR_XL " series="Catalyst 3500 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.367"  model="3550_48" series="Catalyst 3550" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.452"  model="cat355024Dc" series="Catalyst 3550" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.485"  model="3550_24PWR" series="Catalyst 3550" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.366"  model="3550_24" series="Catalyst 3550" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.431"  model="3550_12G" series="Catalyst 3550" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.368"  model="3550_12T" series="Catalyst 3550" devicetemplateid="Cisco_IOS_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.563"  model="3560_24PS" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.564"  model="3560_48PS" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.614"  model="3560G_24PS" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.616"  model="3560G_48PS" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.617"  model="3560G_48TS" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.793"  model="3560_24TD" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.794"  model="3560_48TD" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.795"  model="3560_24PD" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.796"  model="3560_48PD" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.797"  model="3560_8PC" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+        <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.956"  model="3560_12SD_E" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.453"  model="3550_24_FX" series="Catalyst 3550" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.516"  model="3750_Stack" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.513"  model="3750_24TS" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.625"  model="3750" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.530"  model="3750GE" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.511"  model="3750-24" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.512"  model="3750-48" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.514"  model="3750-24T" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.656"  model="3750_24FS" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.536"  model="3750_24PS" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.535"  model="3750_48PS" series="Catalyst 3750" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.591"  model="3750G_16TD" series="Catalyst 3750G" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.602"  model="3750G_24PS" series="Catalyst 3750G" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.604"  model="3750G_48TS" series="Catalyst 3750G" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.603"  model="3750G_48PS" series="Catalyst 3750G" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.448"  model="4006" series="Catalyst 4000" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.503"  model="4503" series="Catalyst 4500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.502"  model="4506" series="Catalyst 4500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.501"  model="4507R" series="Catalyst 4500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.537"  model="4510R" series="Catalyst 4500" devicetemplateid="Cisco_IOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.875"  model="4506_E" series="Catalyst 4500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.449"  model="6503" series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.657"  model="6504_E" series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.282"  model="6506" series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.283"  model="6509" series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.310"  model="6509-NEB" series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.534"  model="6509_NEB_A" series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.400"  model="6513" series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.832"  model="6509_V_E " series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.896"  model="1440_VSS" series="Catalyst 6500" devicetemplateid="Cisco_IOS_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.626"  model="4948" series="Catalyst 4900" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.659"  model="4948-10GE" series="Catalyst 4900" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.298"  model="4908G" series="Catalyst 4900" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.387"  model="4908G" series="Catalyst 4900" devicetemplateid="Cisco_IOS_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.561"  model="2970G_24TS" series="Catalyst 2970" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.527"  model="2970G_24T" series="Catalyst 2970" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.615"  model="3560G_24TS" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.633"  model="3560_24TS" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.370"  model="2912_LRE_XL" series="Catalyst 2900 XL" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.634"  model="3560_48TS" series="Catalyst 3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.716"  model="2960_24TT" series="Catalyst 2960" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.694"  model="2960_24TC" series="Catalyst 2960" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.717"  model="2960_48TT" series="Catalyst 2960" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.695"  model="2960_48TC" series="Catalyst 2960" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.697"  model="2960G_48TC" series="Catalyst 2960" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.696"  model="2960G_24TC" series="Catalyst 2960" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.798"  model="2960-8TC" series="Catalyst 2960" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.799"  model="2960G-8TC" series="Catalyst 2960" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.736"  model="3400_24TS" series="ME 3400" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.788"  model="4924" series="4900" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.748"  model="CBS3020" series="Cisco Catalyst Blade Switch" devicetemplateid="Cisco_IOS_Switch"/>
+    <!-- Cisco Catalyst Blade Switch 3000 series -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.947"  model="3120" series="3000" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.930"  model="C3560E" series="3560" devicetemplateid="Cisco_IOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1000"  model="CBS31X0" series="31X0" devicetemplateid="Cisco_IOS_Switch"/>
+
+    <!-- Cisco Gigabit Ethernet Switching Module -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.33.3.1.1"  model="371098_001" series="CGESM" devicetemplateid="Cisco_IOS_Switch"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--************************************* CiscoCatOSSwitch Models ******************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.62"  model="CatOS 2948G_GE_TX" series="Catalyst 2900" devicetemplateid="Cisco_CatOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.46"  model="CatOS 4006" series="Catalyst 4000" devicetemplateid="Cisco_CatOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.59"  model="CatOS 4506" series="Catalyst 4000" devicetemplateid="Cisco_CatOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.36"  model="CatOS 5509" series="Catalyst 5500" devicetemplateid="Cisco_CatOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.56"  model="CatOS 6503" series="Catalyst 6500" devicetemplateid="Cisco_CatOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.64"  model="CatOS 6504_E" series="Catalyst 6500" devicetemplateid="Cisco_CatOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.45"  model="CatOS 6506" series="Catalyst 6500" devicetemplateid="Cisco_CatOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.44"  model="CatOS 6509" series="Catalyst 6500" devicetemplateid="Cisco_CatOS_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.50"  model="CatOS 6513" series="Catalyst 6500" devicetemplateid="Cisco_CatOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.40"  model="CatOS 4003" series="Catalyst 4000" devicetemplateid="Cisco_CatOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.49"  model="WS-C2980" series="Catalyst 2980" devicetemplateid="Cisco_CatOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.51"  model="WS-C2980G-A" series="Catalyst 2980" devicetemplateid="Cisco_CatOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.42"  model="CatOS WS-C2948" series="Catalyst 2948" devicetemplateid="Cisco_CatOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.41"  model="CatOS WS-C4912" series="Catalyst 4912" devicetemplateid="Cisco_CatOS_Switch"/>
+
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.175"  model="Catalyst 1900 Lite Fx" series="Catalyst 1900" devicetemplateid="Cisco_CatOS_Switch_1900"/>
+ 	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.18"   model="Catalyst 1900 " series="Catalyst 1900" devicetemplateid="Cisco_CatOS_Switch_1900"/>
+ 	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.28"   model="Catalyst 1900c" series="Catalyst 1900" devicetemplateid="Cisco_CatOS_Switch_1900"/>
+    
+
+    <!--********************************************************************************************-->
+
+
+
+    <!--************************************* CiscoIAD Models **************************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.362"  model="2420" series="IAD 2400" devicetemplateid="Cisco_IAD"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.506"  model="2430" series="IAD 2400" devicetemplateid="Cisco_IAD"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.545"  model="2430" series="IAD 2400" devicetemplateid="Cisco_IAD"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.546"  model="24318FXS" series="IAD 2400" devicetemplateid="Cisco_IAD"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.547"  model="2431" series="IAD 2400" devicetemplateid="Cisco_IAD"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.548"  model="2431T1E1" series="IAD 2400" devicetemplateid="Cisco_IAD"/>
+    	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.549"  model="2432" series="IAD 2400" devicetemplateid="Cisco_IAD"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--******************************* CiscoAccessServer Models ***********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.679"  model="AS5350XM" series="AS5300" devicetemplateid="Cisco_AccessServer"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.668"  model="AS5400XM" series="AS5400" devicetemplateid="Cisco_AccessServer"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.162"  model="AS5350XM" series="AS5300" devicetemplateid="Cisco_AccessServer"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--******************************* CiscoContentSwitch Models **********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.9.368.4.7" model="11501" series="11500" devicetemplateid="Cisco_Content_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.9.368.4.6" model="11506" series="11500" devicetemplateid="Cisco_Content_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.9.368.4.5" model="11503" series="11500" devicetemplateid="Cisco_Content_Switch"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--******************************* CiscoAccessPoint Models ************************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.507"  model="1100" series="1100" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.618"  model="1100" series="1100" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.474"  model="1200" series="1200" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.525"  model="1200" series="1200" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.685"  model="1200" series="1200" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.552"  model="350" series="350" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--******************************* CiscoVoiceGateway Models **********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.417" model="224" series="200" devicetemplateid="Cisco_VoiceGateway"/>
+    <!--********************************************************************************************-->
+
+
+    <!--******************************* CiscoVoiceGateway Models **********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.647" model="4240" series="4200" devicetemplateid="Cisco_Intrusions_Detection_Sensor"/>
+    <!--********************************************************************************************-->
+
+    <!--******************************* CiscoFirewall Models **************************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.417" model="PIX 501" series="PIX 500" devicetemplateid="Cisco_PIX_Firewall_Version_7"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.450" model="PIX 506E" series="PIX 500" devicetemplateid="Cisco_PIX_Firewall_Version_7"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.390" model="PIX 515" series="PIX 500" devicetemplateid="Cisco_PIX_Firewall_Version_7"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.451" model="PIX 515E" series="PIX 500" devicetemplateid="Cisco_PIX_Firewall_Version_7"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.391" model="PIX 520" series="PIX 500" devicetemplateid="Cisco_PIX_Firewall_Version_7"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.392" model="PIX 525" series="PIX 500" devicetemplateid="Cisco_PIX_Firewall_Version_7"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.393" model="PIX 535" series="PIX 500" devicetemplateid="Cisco_PIX_Firewall_Version_7"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--******************************* CiscoASA Models ******************************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.745" model="5505" series="5500" devicetemplateid="Cisco_ASA"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.669" model="5510" series="5500" devicetemplateid="Cisco_ASA"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.670" model="5520" series="5500" devicetemplateid="Cisco_ASA"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.671" model="5520SC" series="5500" devicetemplateid="Cisco_ASA"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.672" model="5540" series="5500" devicetemplateid="Cisco_ASA"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.673" model="5540SC" series="5500" devicetemplateid="Cisco_ASA"/>
+    <!--********************************************************************************************-->
+
+    <!--******************************* CiscoACEModule******************************************-->
+      <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.730" model="ACE20-MOD-K9" series="ACE" devicetemplateid="Cisco_ACE_Module"/>
+
+    <!--********************************************************************************************-->
+
+    <!--*********************************** HPSwitch Models **************************************-->
+        <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.55"  model="2600_PWR" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.19"  model="2524" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.29"  model="2650" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.31"  model="2824" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.32"  model="2848" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.34"  model="2626" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.17"  model="5308xl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.43"  model="3400cl_48G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.42"  model="3400cl_24G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.49"  model="6410cl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.27"  model="4104gl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.7"  model="8000M" series="Procurve" devicetemplateid="HP_Procurve_MenuBased_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.9"  model="4000M" series="Procurve" devicetemplateid="HP_Procurve_MenuBased_Switch"/>
+
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.64"  model="2810_48G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.63"  model="2810_24G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.50"  model="5406zl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.61"  model="2510_24" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.20"  model="5304xl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.36"  model="2626_PWR" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+
+	<!--Newly added for HP-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.35"  model="2650_PWR" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.48"  model="6400cl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.23"  model="4108gl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.58"  model="3500yl_24G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.59"  model="3500yl_48G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<!--*************-->
+
+
+	<!-- Newly added for customer (Barry White) -->
+
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.45"  model="2626" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.44"  model="2650" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.76"  model="2610-24" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.77"  model="2610-48" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.78"  model="2610-24-PWR" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+
+
+	<!-- Added as per Isaac (Databridge) -->
+
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.51"  model="5412zl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+
+
+
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** HPAccessPoint Models *********************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.37"  model="420" series="Procurve" devicetemplateid="HP_Procurve_AccessPoint"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** ArubaWifiSwitch Models *******************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.14823.1.1.3"  model="800" series="Mobility Controller" devicetemplateid="Aruba_WifiSwitch"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** NortelPassportSwitch Models **************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2272.44"  model="1612G" series="Passport 1600" devicetemplateid="Nortel_Passport_1600_Series_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2272.30"  model="8610" series="Passport 8600" devicetemplateid="Nortel_Passport_8600_Series_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2272.47"  model="8310" series="Passport 8600" devicetemplateid="Nortel_Passport_8600_Series_Switch"/>
+    <!--********************************************************************************************-->
+
+    <!--********************************** Nortel PWRSwitchModule Models **************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.72.2"  model="2526T" series="PWR Switch" devicetemplateid="Nortel_PWR_Switch"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** NortelBayStackSwitch Models **************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.45.1"  model="380_24T" series="BayStack 380" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.59.1"  model="5520_24T_PWR" series="BayStack 5520" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.59.2"  model="5520_48T_PWR" series="BayStack 5520" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.53.1"  model="5510_48T" series="BayStack 5510" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.46.1"  model="470_48T" series="BayStack 470" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.54.1"  model="470_24T" series="BayStack 470" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.71.4"  model="4550T_PWR" series="BayStack 4550" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.71.2"  model="4548GT_PWR" series="BayStack 4548" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.71.6"  model="4526GTX_PWR" series="BayStack 4526" devicetemplateid="Nortel_BayStack_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.65"  model="5530_24TFD" series="BayStack 5530" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.66"  model="3510_24T" series="BayStack 3510" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.52.1"  model="5510_24T" series="BayStack 5510" devicetemplateid="Nortel_BayStack_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.35.1"  model="450_24T" series="BayStack 450" devicetemplateid="Nortel_BayStack_Switch"/>
+
+
+    <!--Newly added for Baystack -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.36.1"  model="410_24T" series="BayStack 410" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.43.1"  model="420_24T" series="BayStack 420" devicetemplateid="Nortel_BayStack_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.64.1"  model="470_48T_PWR" series="BayStack 470" devicetemplateid="Nortel_BayStack_Switch"/>
+    <!--*******-->
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.49.1"  model="460_24T_PWR" series="BayStack 460" devicetemplateid="Nortel_BayStack_460_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.45.3.40.1"  model="2000" series="Business Policy Switch" devicetemplateid="Nortel_BayStack_Business_Policy_2000_Series_Switch"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** NortelContivityVPNRouter Models **************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2505.1100"  model="1100" series="1000" devicetemplateid="Nortel_Contivity_VPNRouter"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2505.1050"  model="1050" series="1000" devicetemplateid="Nortel_Contivity_VPNRouter"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2505.1010"  model="1010" series="1000" devicetemplateid="Nortel_Contivity_VPNRouter"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2505.2700"  model="2700" series="2700" devicetemplateid="Nortel_Contivity_VPNRouter"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2505.5000"  model="5000" series="5000" devicetemplateid="Nortel_Contivity_VPNRouter"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2505.600"  model="600" series="600" devicetemplateid="Nortel_Contivity_VPNRouter"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2505.7"  model="1600" series="1600" devicetemplateid="Nortel_Contivity_VPNRouter"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** NortelSwitchModule Models **************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1872.1.18.1"  model="Layer2-3 GbE Switch Module(Copper)" series="Layer2-3 GbE Switch" devicetemplateid="Nortel_Switch_Module"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** FoundrySwitch Models *********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.25.1"  model="2402" series="FastIron Edge" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.25.2"  model="2402" series="FastIron Edge" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.26.1"  model="4802" series="FastIron Edge" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.26.2"  model="4802" series="FastIron Edge" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.27.1"  model="9604" series="FastIron Edge" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.27.2"  model="9604" series="FastIron Edge" devicetemplateid="Foundry_Edge_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.1.1"  model="SuperX" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.1.2"  model="SuperX" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.2.1"  model="SuperXPrem" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.2.2"  model="SuperXPrem" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.3.1"  model="SuperX800" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.3.2"  model="SuperX800" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.4.1"  model="SuperX800Prem" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.4.2"  model="SuperX800Prem" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.5.1"  model="SuperX1600" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.5.2"  model="SuperX1600" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.6.1"  model="SuperX1600Prem" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.36.6.2"  model="SuperX1600Prem" series="FastIron SuperX" devicetemplateid="Foundry_Edge_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.24.1"  model="1500" series="FastIron" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.24.2"  model="1500" series="FastIron" devicetemplateid="Foundry_Edge_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.34.1.1.1.1"  model="FESX424" series="FastIron Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.34.1.1.1.2"  model="FESX424" series="FastIron Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.34.1.3.1.2"  model="FESX424+2XG" series="FastIron Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.34.2.1.1.1"  model="FESX448" series="FastIron Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.34.2.1.1.2"  model="FESX448" series="FastIron Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.35.1.1.1.1"  model="FWSX424" series="FastIron Workgroup Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.35.1.1.1.2"  model="FWSX424" series="FastIron Workgroup Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.35.2.1.1.1"  model="FWSX448" series="FastIron Workgroup Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.35.2.1.1.2"  model="FWSX448" series="FastIron Workgroup Edge X" devicetemplateid="Foundry_Edge_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.45.1.1.1.1"  model="FGS624P" series="FastIron GS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.45.1.1.1.2"  model="FGS624P" series="FastIron GS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.45.1.3.1.1"  model="FGS624PPOE" series="FastIron GS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.45.1.3.1.2"  model="FGS624PPOE" series="FastIron GS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.45.2.1.1.1"  model="FGS648P" series="FastIron GS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.45.2.1.1.2"  model="FGS648P" series="FastIron GS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.45.2.2.1.1"  model="FGS648PPOE" series="FastIron GS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.45.2.2.1.2"  model="FGS648PPOE" series="FastIron GS" devicetemplateid="Foundry_Edge_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.46.1.1.1.1"  model="FLS624" series="FastIron LS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.46.1.1.1.2"  model="FLS624" series="FastIron LS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.46.2.1.1.1"  model="FLS648" series="FastIron LS" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.46.2.1.1.2"  model="FLS648" series="FastIron LS" devicetemplateid="Foundry_Edge_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.30.1"  model="4802_ILP" series="FastIron Edge" devicetemplateid="Foundry_Edge_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.6.1"  model="4000" series="BigIron" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.6.2"  model="4000" series="BigIron" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.7.1"  model="8000" series="BigIron" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.7.2"  model="8000" series="BigIron" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.14.1"  model="15000" series="BigIron" devicetemplateid="Foundry_Edge_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.14.2"  model="15000" series="BigIron" devicetemplateid="Foundry_Edge_Switch"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** 3ComSwitch Models ***********************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.10.27.4.1.2.4"  model="4400" series="SuperStack 3" devicetemplateid="3Com_MenuBased_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.1.8.39"  model="3824" series="SuperStack 3" devicetemplateid="3Com_MenuBased_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.1.8.41"  model="3226" series="SuperStack 3" devicetemplateid="3Com_MenuBased_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.10.27.4.1.2.5"  model="4950" series="SuperStack 3" devicetemplateid="3Com_MenuBased_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.1.8.43"  model="3870" series="SuperStack 3" devicetemplateid="3Com_MenuBased_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.10.27.4.1.2.11"  model="4226" series="4200" devicetemplateid="3Com_MenuBased_Switch"/>
+
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.1.16.4.3.22"  model="4500" series="4500" devicetemplateid="3Com_4500_Series_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.1.16.4.3.29"  model="4200G" series="4200G" devicetemplateid="3Com_4200G_Series_Switch"/>
+
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** AdtranLANSwitch Models ******************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.664.1.583"  model="1224STR" series="1000" devicetemplateid="Adtran_LANSwitch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.664.1.466"  model="3205" series="3200" devicetemplateid="Adtran_NetvantaRouter"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** DLinkSwitch Models **********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.71.3"  model="DXS_3250" series="DXS 3200" devicetemplateid="DLinkSwitch_DXS_3250"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.69.3"  model="DES_3828P" series="DES 3800" devicetemplateid="DLinkSwitch_DES_3800"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.64.1"  model="DES_3526" series="DES 3526" devicetemplateid="DLinkSwitch_DES_3800"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.67.2"  model="DES_3010PA" series="DES_3010PA" devicetemplateid="DLinkSwitch_DES_3010"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.70.3"  model="DGS_3400" series="DGS_3400" devicetemplateid="DLink_DGS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.70.5"  model="DGS_3600" series="DGS_3600" devicetemplateid="DLink_DGS_Switch_3600"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.101.1"  model="DGS_3200" series="DGS_3200" devicetemplateid="DLink_DGS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.59.5"  model="DGS_3324SR" series="DGS_3324SR" devicetemplateid="DLink_DGS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.59.7"  model="DXS_3326GSR" series="DXS_3326GSR" devicetemplateid="DLinkSwitch_DXS_3326"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.94.2"  model="DGS-3100-24P" series="DGS_3100" devicetemplateid="DLink_DGS_Switch_3100"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.63.9"  model="DES_3052P" series="DES_3052" devicetemplateid="DLink_DES_Switch_3052P"/>
+
+    <!--********************************************************************************************-->
+
+
+
+    <!--************************************* ExtremeSwitch Models *********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.11"  model="6808" series="6800" devicetemplateid="Extreme_BlackDiamond_Switch"/>
+    
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.6"  model="48" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.58"  model="400_48t" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.63"  model="400a_24t" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.54"  model="200_48" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.53"  model="200_24" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.55"  model="300_48" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.61"  model="300-24" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.67"  model="200-48" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.28"  model="48si" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.19"  model="1i" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.15"  model="5i" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.25"  model="24e3" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_Extremeware_Switch"/>
+    
+    
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.62"  model="8810" series="8800" devicetemplateid="Extreme_BlackDiamond_ExtremewareXOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.56"  model="10808" series="10808" devicetemplateid="Extreme_BlackDiamond_ExtremewareXOS_Switch"/>
+    
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.65"  model="X450_24x" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.76"  model="X450a_48t" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.91"  model="X250e_48t" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+    
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.72"  model="X450e-24p" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+    
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.79"  model="X450e-48" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.89"  model="X250-24p" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.20"  model="3804" series="Alpine" vendor="Extreme" devicetemplateid="Extreme_Alpine_Switch"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************** BlueCoatProxySG Models **********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3417.1.1.20"  model="SG800" series="SG800" devicetemplateid="BlueCoat_ProxySG"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--******************************* FortiGateFirewall Models ***********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.50"  model="50" series="50" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.60"  model="60" series="60" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.100"  model="100" series="100" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.200"  model="200" series="200" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.300"  model="300" series="300" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.400"  model="400" series="400" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.500"  model="500" series="500" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.800"  model="800" series="800" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.1000"  model="1000" series="1000" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.3000"  model="3000" series="3000" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.3600"  model="3600" series="3600" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.501"  model="50A" series="50" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.1001"  model="100A" series="100" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.2001"  model="200A" series="200" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.3001"  model="300A" series="300" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.4001"  model="400A" series="400" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.5001"  model="500A" series="500" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.10001"  model="1000A" series="1000" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.36001"  model="3600A" series="3600" devicetemplateid="FortiGate_Firewall_V2"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.102.1.4002"  model="400B" series="400" devicetemplateid="Fortigate_Fortianalyzer"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--******************************* NetscreenFirewall Models ***********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.14"  model="5GT" series="5" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.12"  model="5XP" series="5" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.1"  model="5GT" series="5" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.8"  model="25" series="25" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.7"  model="50" series="50" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.9"  model="204" series="200" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.10"  model="208" series="200" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.16"  model="ISG2000" series="ISG" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.28"  model="ISG1000" series="ISG" devicetemplateid="Netscreen_Firewall"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.35"  model="SSG20" series="SSG" devicetemplateid="Netscreen_Firewall"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************* ProximAccessPoint Models ***********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11898.2.4.12"  model="4000" series="AP" devicetemplateid="Proxim_AccessPoint"/>
+    <!--********************************************************************************************-->
+
+
+
+    <!--********************************* Force10Switch Models ***********************************-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.1"  model="E1200" series="E_Series" devicetemplateid="Force10_E_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.2"  model="E600" series="E_Series" devicetemplateid="Force10_E_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.4"  model="E600i" series="E_Series" devicetemplateid="Force10_E_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.3"  model="E300" series="E_Series" devicetemplateid="Force10_E_Series_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.1.3"  model="E300 Terascale" series="E_Series" devicetemplateid="Force10_E_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.3.1"  model="S50" series="S_Series" devicetemplateid="Force10_S_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.3.3"  model="S50V" series="S_Series" devicetemplateid="Force10_S_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.3.4"  model="S25P" series="S_Series" devicetemplateid="Force10_S_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.3.5"  model="S2410CP" series="S_Series" devicetemplateid="Force10_S_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.3.6"  model="S2410P" series="S_Series" devicetemplateid="Force10_S_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.3.7"  model="S50N" series="S_Series" devicetemplateid="Force10_S_Series_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.2.1"  model="C300" series="C_Series" devicetemplateid="Force10_C_Series_Switch"/>
+
+    <!--********************************************************************************************-->
+
+    <!-- Cisco VPN Concentrator -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3076.1.2.1.1.2.1" model="3005" series="3000" devicetemplateid="Cisco_VPN_Concentrator"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3076.1.2.1.1.1.2" model="3060" series="3000" devicetemplateid="Cisco_VPN_Concentrator"/>
+
+    <!-- Cisco MDS -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.376" model="9509" series="9500" devicetemplateid="Cisco_MDS_Switch"/>
+
+    <!-- Netgear Models -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.4526.100.1.7"  model="GSM7328FS" series="Prosafe" devicetemplateid="Netgear_Prosafe_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.4526.100.1.8"  model="FSM7328PS" series="Prosafe" devicetemplateid="Netgear_Prosafe_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.4526.100.1.4"  model="GSM7352S" series="Prosafe" devicetemplateid="Netgear_Prosafe_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.4526.100.2.1"  model="GSM7248" series="Prosafe" devicetemplateid="Netgear_Prosafe_Switch"/>
+
+
+    <!-- Juniper devices -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.13"  model="j2300" series="JSeries" devicetemplateid="Juniper_JSeries_Router"/> <!-- Tested Model -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.14"  model="j4300" series="JSeries" devicetemplateid="Juniper_JSeries_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.15"  model="j6300" series="JSeries" devicetemplateid="Juniper_JSeries_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.19"  model="j4350" series="JSeries" devicetemplateid="Juniper_JSeries_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.20"  model="j6350" series="JSeries" devicetemplateid="Juniper_JSeries_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.22"  model="j4320" series="JSeries" devicetemplateid="Juniper_JSeries_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.23"  model="j2320" series="JSeries" devicetemplateid="Juniper_JSeries_Router"/> <!-- Tested Model -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.24"  model="j2350" series="JSeries" devicetemplateid="Juniper_JSeries_Router"/>
+
+    <!-- Juniper E series-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.4874.1.1.1.1.4"  model="ERX-700" series="ESeries" devicetemplateid="Juniper_ESeries_Router"/>
+    <!--Juniper M series-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.10"  model="M7i" series="MSeries" devicetemplateid="Juniper_MSeries_Router"/>
+
+
+     <!-- Dell Switches -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3004"  model="5324" series="PowerConnect" devicetemplateid="Dell_PowerConnect_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.4"  model="5224" series="PowerConnect" devicetemplateid="Dell_PowerConnect_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3"  model="3248" series="PowerConnect" devicetemplateid="Dell_PowerConnect_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.1"  model="3024" series="PowerConnect" devicetemplateid="Dell_PowerConnect_Switch"/>
+
+    <!-- Alcatel devices -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6486.800.1.1.2.1.3.1.2"  model="6000" series="OmniSwitch" devicetemplateid="Alcatel_OmniSwitch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6486.800.1.1.2.1.1.1.2"  model="7800" series="OmniSwitch" devicetemplateid="Alcatel_OmniSwitch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6486.800.1.1.2.1.7.1.2"  model="6200" series="OmniStackSwitch" devicetemplateid="Alcatel_6200_OmniStackSwitch"/>
+
+
+
+
+    <!-- Enterasys devices -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.1.32"  model="1805" series="XSR" devicetemplateid="Enterasys_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.2.284"  model="C2G124-48" series="SecureStack C2 Series" devicetemplateid="Enterasys_SecureStack_C2_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.2.283"  model="C2G124-24" series="SecureStack C2 Series" devicetemplateid="Enterasys_SecureStack_C2_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.1.35"  model="1G582-09" series="Matrix E1 Series" devicetemplateid="Enterasys_Matrix_E1_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.1.60"  model="1G587-09" series="Matrix E1 Series" devicetemplateid="Enterasys_Matrix_E1_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.1.34"  model="1H582-51" series="Matrix E1 Series" devicetemplateid="Enterasys_Matrix_E1_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.52.3.9.20.1.4"  model="XP-8600" series="X-Pedition Series" devicetemplateid="Enterasys_X_Pedition_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.1.23"  model="ER16" series="X-Pedition Series" devicetemplateid="Enterasys_X_Pedition_Switch"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.1.87"  model="A2H124-24" series="SecureStack A2 Series" devicetemplateid="Enterasys_SecureStack_C2_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.1.89"  model="A2H124-48" series="SecureStack A2 Series" devicetemplateid="Enterasys_SecureStack_C2_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5624.2.1.52"  model="1H582-51" series="Matrix N7 Platinum" devicetemplateid="Enterasys_Matrix_E1_Switch"/>
+
+
+	<!-- Alaxala Router devices -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.21839.1.2.6"  model="AX2430-24T" series="AX2400S" devicetemplateid="Alaxala_2400_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.21839.1.2.7"  model="AX3630S-24T2X"  series="AX3630S" devicetemplateid="Alaxala_2400_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.21839.1.2.10"  model="AX1230S-24P2C" series="AX1230S" devicetemplateid="Alaxala_1230_Switch"/>
+
+
+	<!-- Radware Switches -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.89.1.1.62.2"  model="Pro AS" series="Web Server Director" devicetemplateid="Radware_WSD_Pro_AS"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.89.1.1.62.8"  model="Pro AS" series="Web Server Director" devicetemplateid="Radware_WSD_Pro_AS"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.89.1.1.62.20"  model="AppDirector" series="AppDirector with Cookie Persistency" devicetemplateid="AppDirector_Cookie_Persistency"/>
+	<!-- Cisco WLAN Controller devices -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.14179.1.1.4.3" model="4402" series="4400" devicetemplateid="Cisco_WLAN_Controller"/>
+
+	<!-- Brocade Switches -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1588.2.1.1.1"  model="200E" series="200" devicetemplateid="Brocade_Switch"/>
+
+    <!--Cisco WAAS-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.957"  model="OE674" series="WAAS" devicetemplateid="Cisco_WAAS"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.776"  model="OE512" series="WAAS" devicetemplateid="Cisco_WAAS"/>
+
+    <!-- Lambdadriver -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.629.100.2.1"  model="LD800" series="WDM" devicetemplateid="MRV_Lambda_Driver"/>
+
+    <!-- Dax -->
+    <NCMDeviceSysOID sysoid="1.3.6.1.4.1.259.6.10.74"  model="DX-5026MGV" series="DX 5026 Series" devicetemplateid="DaxDx5026mgv"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.738.1.5.100.1.1.11"  model="T5CL3-48T" series="G-Series" devicetemplateid="DaxBTI"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5651.1.0.0"  model="MP1700" series="DX-800" devicetemplateid="DaxDx800"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.4881.1.1.10.1.43"  model="DX-0830PC" series="Dax 0830 Series" devicetemplateid="DaxDx0830PC"/>
+
+
+    <!--Cisco IOS XR-->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.477"  model="12816/PRP" series="12000" devicetemplateid="Cisco_IOSXR"/>
+
+    <!-- H3C Switches -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.1.28"  model="S5100-24P" series="EI" devicetemplateid="H3C_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.1.30"  model="S5100-50C" series="EI" devicetemplateid="H3C_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.1.35"  model="S3600-28P-PWR" series="SI" devicetemplateid="H3C_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.1.200"  model="S3100-26TP-PWR" series="EI" devicetemplateid="H3C_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.1.31"  model="S5100-48P" series="EI" devicetemplateid="H3C_Switch"/>
+
+
+    <!-- Yamaha router -->
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.2"  model="RT100i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.3"  model="RT200i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.4"  model="RT80i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.5"  model="RT102i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.6"  model="RT103i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.7"  model="RT140i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.8"  model="RT140e" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.9"  model="RT140p" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.10"  model="RT140f" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.11"  model="RTA50i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.12"  model="RTA52i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.13"  model="RT300i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.14"  model="RT52pro" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.15"  model="RT105i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.16"  model="RT60w" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.17"  model="RT105e" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.18"  model="RT105p" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.19"  model="RTW65b" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.20"  model="RTW65i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.21"  model="RTW55i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.22"  model="RT56v" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.23"  model="RTX1000" series="RTX" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.24"  model="RTX2000" series="RTX" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.25"  model="RT57i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.27"  model="RTX1500" series="RTX" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.28"  model="RTX1100" series="RTX" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.29"  model="RT250i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.31"  model="RT107e" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.33"  model="RTX3000" series="RTX" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.34"  model="RT58i" series="RT" devicetemplateid="Yamaha_Router"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1182.1.37"  model="RTX1200" series="RTX" devicetemplateid="Yamaha_Router"/>
+    
+    <!-- AlliedTelesisSwitch -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.207.1.14.36"  model="AT-8824" series="AT-8800" devicetemplateid="AlliedTelesis_Switch"/>
+
+
+    <!-- F5 Big-ip -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3375.2.1.3.4.6"  model="LTM 3400" series="BIG-IP" devicetemplateid="F5_Big_IP"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3375.2.1.3.4.10"  model="LTM 6400" series="BIG-IP" devicetemplateid="F5_Big_IP"/>
+
+    <!-- CitrixNetscalerSwitch -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.5951.1"  model="" series="" devicetemplateid="Citrix_NetScaler"/>
+   
+    <!-- HitachiSwitch -->
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.278.1.27.49"  model="Apresia4328GT" series="Apresia4000Series" devicetemplateid="Hitachi_Switch"/>
+    
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.289.2.1.1.2"  model="SphereonSwitch" series="4500FibreChannelSwitch" devicetemplateid="sphereon_4500_fibre_switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6141.1.70"  model="CienaLEOSSwitch" series="" devicetemplateid="Ciena_LEOS_Switch"/>
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6141.1.78"  model="CienaSAOSSwitch" series="" devicetemplateid="Ciena_SAOS_Switch"/>
+	
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.207.1.4.156"  model="AlliedTelesis CenterCOM" series="GS900M" devicetemplateid="Alliedtelesis_CenterCOM_GS900M_Switch"/>
+
+    <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.248.14.10.40"  model="Hirschmann Switch" series="NA" devicetemplateid="Hirschmann_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.54.1.2.1.4"  model="Brocade FCX Switch" series="624S" devicetemplateid="Brocade_FastIron_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.52.2.4.1.3"  model="Brocade FWS Switch" series="648G" devicetemplateid="Brocade_FastIron_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.26543.1.7.7"  model="BNT RackSwitch" series="G8052 " devicetemplateid="BNT_Rackwitch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.22610.1.3.8"  model="AX2500" series="AX" devicetemplateid="A10_Networks"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.207.1.14.67"  model="X600" series="24Ts" devicetemplateid="AlliedTelesis_CenterCom_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.207.1.14.80"  model="x600-24Ts" series="X600" devicetemplateid="Alliedtelesis_Ethernet_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.207.1.4.181"  model="x200-GE-52T" series="X200" devicetemplateid="Alliedtelesis_Ethernet_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.207.1.14.69"  model="SBx908" series="SBx" devicetemplateid="Alliedtelesis_Ethernet_Switch"/>
+ 
+                                             <!-- Newly Added SYSOID'S -->
+ 
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.902"  model="1861" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.903"  model="1861" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.904"  model="1861" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.905"  model="1861" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.939"  model="1861" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.940"  model="1861" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.981"  model="1805" series="1800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.13"  model="2500" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.165"  model="2501" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.166"  model="2501" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.167"  model="2502" series="2500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.33"  model="3102" series="3100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.34"  model="3103" series="3100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.35"  model="3104" series="3100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.36"  model="3202" series="3200" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.37"  model="3204" series="3200" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.380"  model="350" series="350" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.14"  model="4500" series="Catalyst 4000" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.399"  model="4224" series="Catalyst 4000" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3076.1.2.1.1.3.1" model="3005" series="3000" devicetemplateid="Cisco_VPN_Concentrator"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.102"  model="700" series="700" devicetemplateid="Cisco_IOS_Router"/> 
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.103"  model="766" series="700" devicetemplateid="Cisco_IOS_Router"/> 
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.126"  model="771" series="700" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.127"  model="772" series="700" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.128"  model="775" series="700" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.129"  model="776" series="700" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.98"  model="761" series="700" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.99"  model="762" series="700" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.8"  model="7000" series="7000" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.12"  model="7010" series="7000" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.125"  model="7204" series="7200" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.194"  model="7202" series="7200" devicetemplateid="Cisco_IOS_Router"/>
+  <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.259"  model="7120-4T1" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.260"  model="7120T3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.261"  model="7120E3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.262"  model="7120At3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.263"  model="7120Ae3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.264"  model="7120Smi3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.266"  model="7140Duale3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.267"  model="7140Dualat3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.268"  model="7140Dualat3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.269"  model="7140Dualmm3" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.276"  model="C7100-JK2S-M" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.277"  model="7140-2FE" series="7100" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.744"  model="7000" series="7000" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.204"  model="7576" series="7500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.288"  model="RSP-PV-M" series="7500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.289"  model="7513" series="7500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.290"  model="7507" series="7500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.291"  model="RSP-JSV-M" series="7500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.48"  model="7505" series="7500" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.44"  model="1004" series="1000" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.354"  model="SOHO-76" series="800" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.782"  model="877" series="800 " devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.869"  model="860Ap" series="800 " devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.870"  model="880Ap" series="800 " devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.533"  model="BR1410" series="1410" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.753" model="5550" series="5500" devicetemplateid="Cisco_ASA"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.763" model="5550sc" series="5500" devicetemplateid="Cisco_ASA"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.764" model="5520sy" series="5500" devicetemplateid="Cisco_ASA"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.765" model="5540sy" series="5500" devicetemplateid="Cisco_ASA"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.766" model="5550sy" series="5500" devicetemplateid="Cisco_ASA"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.773" model="5510sc" series="5500" devicetemplateid="Cisco_ASA"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.774" model="5510sy" series="5500" devicetemplateid="Cisco_ASA"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.16"  model="cpw1900" series="1900" devicetemplateid="Cisco_CatOS_Switch_1900"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.5.31" model="1900i" series="1900" devicetemplateid="Cisco_CatOS_Switch_1900"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.950"  model="WS-C2960-24PC-L" series="2960" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.79"  model="2610-48-PWR" series="2610" devicetemplateid="HP_Procurve_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.863"  model="7606-S" series="7600" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.864"  model="7609-S" series="7600" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.876"  model="4507R-E" series="4500" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1025"  model="3560V2-48PS" series="3560" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1021"  model="3560V2-24PS" series="3560" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1145"  model="3925E" series="3900" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1045"  model="2911" series="2900" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1208"  model="WS-C2960S-24TS-L" series="2960s" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.30803"  model="VSE" series="6.4" devicetemplateid="Vyatta"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.119.1.84.13.1"  model="IX2025" series="IX2025" devicetemplateid="Juniper_SRX"/>
+ 
+ <!-- Newly added in DeviceExpert 5900 -->
+ 
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1286"  model="WS-C4507R+E" series="C4500" devicetemplateid="Cisco_CatOS_Switch"/> 
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1227"  model="WS-C3560X-48T-S" series="C3560X" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.917"  model="WS-C4900M" series="C4900M" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1318"  model="WS-C3560CG-8TC-S" series="C3560CG" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1229"  model="WS-C3560X-48PF-S" series="C3560X" devicetemplateid="Cisco_IOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3013"  model="6248P" series="PowerConnect" devicetemplateid="Dell_PowerConnect_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3011"  model="6248" series="PowerConnect" devicetemplateid="Dell_PowerConnect_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3009"  model="3448P" series="PowerConnect" devicetemplateid="Dell_PowerConnect_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1069" model="5508" series="5500" devicetemplateid="Cisco_WLAN_Controller"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1046"  model="2901" series="C2900" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.118"  model="Summit X650-24x" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.102"  model="Summit X150-24p" series="Summit" vendor="Extreme" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.1.16.4.3.21"  model="Superstack-3-4526" series="4500" devicetemplateid="3Com_4500_Series_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1016"  model="2960-48TT-S" series="2900" devicetemplateid="Cisco_CatOS_Switch"/> 
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.828" model="AIR-WLC2106-K9" series="2100" devicetemplateid="Cisco_WLAN_Controller"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.31" model="ex4200-24t" series="4200" devicetemplateid="Juniper_EX4200_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1043"  model="2951" series="C2951" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3807.1.20087" model="NA" series="NA" devicetemplateid="FiberHome_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3902.3.100.173"  model="ZSR" series="2842" devicetemplateid="ZXR_Router_ZSR"/>
+
+ <!-- Newly added in DeviceExpert 5960 -->
+
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.1.520" model="H3C S5120-52C-PWR-EI" series="H3C S5120-EI" devicetemplateid="H3C_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1055" model="SM-ES3G-24-P" series="2900" devicetemplateid="Cisco_IOS_Switch"/> 
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1054" model="SM-ES3G-24-P" series="2900" devicetemplateid="Cisco_IOS_Switch"/> 
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1044" model="2921" series="2900" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1279" model="2504" series="2500" devicetemplateid="Cisco_WLAN_Controller"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1047" model="1941" series="1900" devicetemplateid="Cisco_IOS_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.133" model="HP2620-48PoEP" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.40"  model="SRX650" series="650" devicetemplateid="Juniper_SRX"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.857"  model="891" series="800" devicetemplateid="Cisco_Integrated_Services_Router"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.1147"  model="N7004" series="N7K" devicetemplateid="Cisco_Nexus_Switch"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.34"  model="3600" series="3600" devicetemplateid="Juniper_SRX"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.8072.3.2.10"  model="Gaia" series="2.6.18-92cp" devicetemplateid="CheckPoint_Gaia_Firewall"/>
+ <NCMDeviceSysOID sysoid=".1.3.6.1.4.1.171.10.113.2.1"  model="DES" series="3200" devicetemplateid="DLink_Switch_DES3200"/>
+
+    <!--*********************************** MiMOMax GPS Models **********************************-->
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.31730.8"  model="BRU-T" series="BRU-T" devicetemplateid="MiMOMax_GPS_Tornado"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.31730.7"  model="RRU-T" series="RRU-T" devicetemplateid="MiMOMax_GPS_Tornado"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.31730.9"  model="NDL-T" series="LRU-T" devicetemplateid="MiMOMax_GPS_Tornado"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.31730.11"  model="BRU-P" series="BRU-P" devicetemplateid="MiMOMax_GPS_Pyxis"/>
+	<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.31730.10"  model="RRU-P" series="RRU-P" devicetemplateid="MiMOMax_GPS_Pyxis"/>
+	
+	
+										<!-- 30/03/2017 added sysoids for 12300 -->
+
+
+
+
+<!--           ********************* FortiGate Firewall - version 3.0 *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.10005" model="1000D" series="FortiGate" devicetemplateid="FortiGate_Firewall_V3"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.803" model="" series="" devicetemplateid="FortiGate_Firewall_V3"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.37000" model="3700D" series="3700" devicetemplateid="FortiGate_Firewall_V3"/>
+
+
+<!--           ********************* Cisco Nexus Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.1038" model="N5596UP" series="Nexus 5500" devicetemplateid="Cisco_Nexus_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.1062" model="" series="" devicetemplateid="Cisco_Nexus_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.1106" model="N3K-C3048" series="3000" devicetemplateid="Cisco_Nexus_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.1354" model="N77-C7706" series="7000" devicetemplateid="Cisco_Nexus_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.1388" model="N3K-C3172" series="3000" devicetemplateid="Cisco_Nexus_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.1626" model="C9372PX" series="Nexus 9000" devicetemplateid="Cisco_Nexus_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.1712" model="C9372PX" series="Nexus 9000" devicetemplateid="Cisco_Nexus_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.12.3.1.3.840" model="" series="" devicetemplateid="Cisco_Nexus_Switch"/>
+
+
+<!--           ********************* Cisco IOS Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2130" model="WS-C3560CX-8PT-S" series="3560" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1148" model="WS-C2960-48PST-S" series="CISCO 2960 Series" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1178" model="" series="" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1226" model="" series="" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1228" model="3560" series="Catalyst" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1256" model="" series="" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1257" model="2960" series="" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1317" model="WS-C3560CG-8PC-S" series="Cisco 3560CG Series" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1366" model="2960C-8PC-L" series="Cisco Catalyst 2960C-8PC-L" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1605" model="4500x" series="4500" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1641" model="" series="" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1644" model="3850" series="" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1700" model="C2960X-UNIVERSALK9-M" series="2960x" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1704" model="" series="" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1732" model="WS-4500X-16" series="C4500X" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1748" model="WS-C2960+48PST-L" series="C2960" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1749" model="WS-C2960+24PC-L" series="C2960+24PC-L" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1757" model="2960+24TC-S" series="2960" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1823" model="WS-C3650-24TS" series="C3650" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1825" model="WS-C3650-24PS" series="WS-C3650-24PS" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1830" model="WS-C3650-48PD" series="" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1934" model="C6807-XL" series="C68000" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2066" model="WS-C3650-24TS" series="C3650" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2133" model="C3560CX" series="IOS" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2134" model="C3560CX" series="C3560C" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2137" model="C2960CX" series="2960CX" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2191" model="WS-C2960CX-8PC-L" series="C2960CX" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.877" model="WS-C4510R-E" series="C4500" devicetemplateid="Cisco_IOS_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.6.1.73.2000.3" model="SGE2000P" series="Cisco SMB" devicetemplateid="Cisco_IOS_Switch"/>
+
+
+<!--           ********************* HP 1910 Series Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.11.1.9" model="HP V1905-24-PoE" series="HP V1905-24-PoE" devicetemplateid="HP_Ethernet_Switch"/>
+
+
+<!--           ********************* Cisco Integrated Services Router ISR *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2093" model="4321" series="4300" devicetemplateid="Cisco_Integrated_Services_Router"/>
+
+
+<!--           ********************* Cisco Aironet AccessPoint *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1269" model="AIR-AP1042N-E-K9" series="C1040" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1270" model="" series="" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1874" model="AIR-SAP702I-A-K9" series="SAP702" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1362" model="AP802-K9W7-M" series="AP802-K9W7-M" devicetemplateid="Cisco_Aironet_AccessPoint"/>
+
+
+<!--           ********************* BlueCoat ProxySG *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3417.1.1.34" model="SG900-20" series="ProxySG 900 Series" devicetemplateid="BlueCoat_ProxySG"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3417.1.6.2" model="ASG 6.6.3" series="ASG-S400" devicetemplateid="BlueCoat_ProxySG"/>
+
+
+<!--           ********************* Cisco WLAN Controller *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2170" model="5520" series="5500" devicetemplateid="Cisco_WLAN_Controller"/>
+
+
+<!--           ********************* 3Com 5500 Series Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.1.16.4.3.18" model="5500" series="5500" devicetemplateid="3com_5500_switch_switch"/>
+
+
+<!--           ********************* Mikrotik Router *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.14988.1" model="" series="RouterOS RB750r2" devicetemplateid="Mikrotik_Router"/>
+
+
+<!--           ********************* Aruba Controller *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.14823.1.1.2" model="Aruba2400" series="" devicetemplateid="Aruba_Controller"/>
+
+
+<!--           ********************* H3C Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.11.1.100" model="" series="" devicetemplateid="H3C_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.11.1.111" model="12508" series="12500" devicetemplateid="H3C_Switch"/>
+
+
+<!--           ********************* Cisco ASA *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1407" model="5512" series="5500x" devicetemplateid="Cisco_ASA"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1408" model="" series="" devicetemplateid="Cisco_ASA"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1421" model="Cisco ASA5515-X" series="Cisco ASA 5500X" devicetemplateid="Cisco_ASA"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2120" model="5508-X" series="Cisco ASA 5500-X" devicetemplateid="Cisco_ASA"/>
+
+
+<!--           ********************* F5 BIG-IP Version 11.X *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3375.2.1.3.4.43" model="" series="BigIP VM" devicetemplateid="F5_Big_IP_11"/>
+
+
+<!--           ********************* FortiGate Firewall VDOM - version 3.0 *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.3005" model="" series="" devicetemplateid="FortiGate_Firewall_VDOM_V3"/>
+
+
+<!--           ********************* Brocade Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.55.2.2" model="MLXe V5" series="Brocade MLXe" devicetemplateid="Brocade_Switch"/>
+
+
+<!--           ********************* Cisco Access Server *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1287" model="" series="" devicetemplateid="Cisco_AccessServer"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.6.1.83.10.1" model="SG300-10" series="SG300" devicetemplateid="Cisco_AccessServer"/>
+
+
+<!--           ********************* CheckPoint Gaia Firewall *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2620.1.6.123.1.38" model="" series="" devicetemplateid="CheckPoint_Gaia_Firewall"/>
+
+
+<!--           ********************* BNT RackSwitch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.20301.1.18.17" model="SI4093" series="IBM Flex System Fabric Interconnect Module" devicetemplateid="BNT_Rackwitch"/>
+
+
+<!--           ********************* Cisco IOS Router *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1041" model="C3945" series="C3900" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1042" model="" series="" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1191" model="Cisco 1900" series="Cisco 1900" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1274" model="887" series="Cisco 880" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1377" model="C887VA-W-E-K9" series="C887VA" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1525" model="" series="" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1537" model="" series="" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1707" model="ISR4451-X/K9" series="Cisco ISR4000" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1852" model="C881-K9" series="800" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1855" model="887" series="Cisco C800" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1935" model="" series="(X86_64_LINUX_IOSD-UNIVERSALK9-M)" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1999" model="4500" series="ISOXE" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2068" model="cisco ISR4331/K9" series="ISR4331" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.2273" model="C6816" series="C6800" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.274" model="C5400-IS-M" series="5400" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.837" model="CISCO881-K9" series="800" devicetemplateid="Cisco_IOS_Router"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1371" model="881" series="800" devicetemplateid="Cisco_IOS_Router"/>
+
+
+<!--           ********************* PaloAlto Firewall PA-4000 *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25461.2.3.12" model="PA-200" series="PA-200" devicetemplateid="PaloAlto_Firewall"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25461.2.3.18" model="PA-3020" series="PA-3000 Series" devicetemplateid="PaloAlto_Firewall"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25461.2.3.9" model="" series="PA-5000" devicetemplateid="PaloAlto_Firewall"/>
+
+
+<!--           ********************* Juniper SRX *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.137" model="" series="" devicetemplateid="Juniper_SRX"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.35" model="" series="" devicetemplateid="Juniper_SRX"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.39" model="SRX240" series="SRX" devicetemplateid="Juniper_SRX"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.49" model="SRX1400" series="Juniper SRX 1000" devicetemplateid="Juniper_SRX"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.86" model="" series="Juniper SRX 500" devicetemplateid="Juniper_SRX"/>
+
+
+<!--           ********************* Juniper J-Series Router *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3224.1.51" model="SSG550M" series="SSG" devicetemplateid="Juniper_JSeries_Router"/>
+
+
+<!--           ********************* HP Procurve Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.115" model="3500yl-48G-PoE+" series="3500" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.119" model="3800-24G-PoE+-2SFP+" series="3800" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.122" model="E3800-48G-4SFP+" series="HP 3800" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.131" model="2620-24-PoEP" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.137" model="2530-24G-PoEP" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.140" model="2530-24G" series="ProCurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.152" model="2920-24G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.153" model="2920-24G-PoE+" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.154" model="2920-48G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.161" model="HP 5412Rzl2" series="HP 5400R zl2 series" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.18" model="2512" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.181.20" model="Aruba 2930F-24G-PoE+-4SFP+" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.53" model="4208vl" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.56" model="4202vl-48G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.57" model="4202vl-72" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.80" model="2610-24/12PWR" series="ProCurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.84" model="2910al-24G-PoE" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.85" model="2910al-48G-PoE" series="ProCurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.86" model="2910al-24G -24G" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.96" model="2520G-8-PoE" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.8.5.2" model="3800 Switch Stack" series="3800" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.8.5.3" model="HP 2920 Switch Stack" series="Procurve" devicetemplateid="HP_Procurve_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.11.2.3.7.11.60" model="6200yl-24G" series="HP6200yl" devicetemplateid="HP_Procurve_Switch"/>
+
+
+<!--           ********************* Brocade FCX and FWS Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.55.3.2" model="XMR" series="Ironware V5.7" devicetemplateid="Brocade_FastIron_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1991.1.3.62.2.2.1.3" model="7250" series="ICX" devicetemplateid="Brocade_FastIron_Switch"/>
+
+
+<!--           ********************* H3C S Series Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.1.518" model="" series="" devicetemplateid="H3C_S7_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.25506.1.73" model="" series="HP 7506-6701" devicetemplateid="H3C_S7_Switch"/>
+
+
+<!--           ********************* 3Com Menu Based Switches *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.43.1.8.78" model="Baseline Switch 2426-PWR Plus" series="Baseline Switch 2426-PWR Plus" devicetemplateid="3Com_MenuBased_Switch"/>
+
+
+<!--           ********************* Cisco Intrusions Detection Sensor IDS *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.15497.1.2" model="IronPort Model S370" series="IronPort Model S370" devicetemplateid="Cisco_Intrusions_Detection_Sensor"/>
+
+
+<!--           ********************* Brocade VDX Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1588.3.3.1.151" model="" series="" devicetemplateid="Brocade_VDX_Switch"/>
+
+
+<!--           ********************* EdgeCore Metro Access Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.259.10.1.42.101" model="ECS4210-28T" series="ECS4200" devicetemplateid="EdgeCore_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.259.10.1.42.102" model="ECS4210-28P" series="" devicetemplateid="EdgeCore_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.259.10.1.42.103" model="ECS4210-12T" series="" devicetemplateid="EdgeCore_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.259.8.1.11" model="ES3510MA" series="" devicetemplateid="EdgeCore_Switch"/>
+
+
+<!--           ********************* Cisco CatOS Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1745" model="WS-C3850-48T" series="C3850" devicetemplateid="Cisco_CatOS_Switch"/>
+
+
+<!--           ********************* Juniper EX4200 Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.43" model="EX2200" series="EX" devicetemplateid="Juniper_EX4200_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.2636.1.1.1.2.76" model="3300" series="EX" devicetemplateid="Juniper_EX4200_Switch"/>
+
+
+<!--           ********************* Extreme Summit ExtremewareXOS Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.1916.2.154" model="x460-24x" series="x460" devicetemplateid="Extreme_Summit_ExtremewareXOS_Switch"/>
+
+
+<!--           ********************* Dell PowerConnect Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3007" model="3448" series="3400" devicetemplateid="Dell_PowerConnect_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3010" model="6224" series="PowerConnect" devicetemplateid="Dell_PowerConnect_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3014" model="6224F" series="" devicetemplateid="Dell_PowerConnect_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3060" model="N3048P" series="N30XX" devicetemplateid="Dell_PowerConnect_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3063" model="Dell N1524" series="Dell N1524 WAN" devicetemplateid="Dell_PowerConnect_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.674.10895.3066" model="N1548P" series="Dell Networking" devicetemplateid="Dell_PowerConnect_Switch"/>
+
+
+<!--           ********************* Force10 E-Series Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.6027.1.3.23" model="" series="" devicetemplateid="Force10_E_Series_Switch"/>
+
+
+<!--           ********************* Cisco Voice Gateway *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.558" model="VG224" series="VG224" devicetemplateid="Cisco_VoiceGateway"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.963" model="VG204" series="VG204" devicetemplateid="Cisco_VoiceGateway"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.964" model="" series="VG20X" devicetemplateid="Cisco_VoiceGateway"/>
+
+
+<!--           ********************* Cisco 300 Series Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.6.1.82.24.1" model="SF300-24" series="SB" devicetemplateid="Cisco_300_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.6.1.82.24.2" model="SRW224G4P-K9" series="300" devicetemplateid="Cisco_300_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.6.1.82.8.2" model="SF302-08P" series="300" devicetemplateid="Cisco_300_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.6.1.83.10.2" model="SG300-10P" series="C300" devicetemplateid="Cisco_300_Switch"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.6.1.83.10.3" model="SG300-10MP" series="SG300-10MP" devicetemplateid="Cisco_300_Switch"/>
+
+
+<!--           ********************* FortiGate Firewall - version 4.0 and 5.0 *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.1002" model="FortiGate 110C" series="Fortigate" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.1004" model="FortiGate 100D" series="Fortigate" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.30000" model="" series="" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.3006" model="300D" series="300" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.5004" model="" series="" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.615" model="Fortigate 60C" series="" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.616" model="FortiWiFi 60C" series="Fortigate" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.624" model="FortiGate 60D" series="Fortigate" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.625" model="FortiGate 60D" series="FortiGate" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.630" model="FortiGate 90D" series="FortiGate" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.631" model="FortiGate 90D-POE" series="FortiGate 90D-POE" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.800" model="Fortigate 80C" series="Fortigate" devicetemplateid="FortiGate_Firewall_V4"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.12356.101.1.8003" model="800C" series="800" devicetemplateid="FortiGate_Firewall_V4"/>
+
+
+<!--           ********************* F5 BIG-IP *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3375.2.1.3.4.109" model="BIG-IP i5800" series="BIG-IP i5800" devicetemplateid="F5_Big_IP"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3375.2.1.3.4.61" model="2000" series="BIG-IP" devicetemplateid="F5_Big_IP"/>
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.3375.2.1.3.4.72" model="BIG-IP i5800" series="BIG-IP i5800" devicetemplateid="F5_Big_IP"/>
+
+
+<!--           ********************* Netgear Prosafe Switch *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.4526.100.4.21" model="GS748Tv4H2" series="ProSafe" devicetemplateid="Netgear_Prosafe_Switch"/>
+
+<!--           ********************* Cisco ASR Router *********************                 -->
+
+<NCMDeviceSysOID sysoid=".1.3.6.1.4.1.9.1.1116" model="" series="ASR1000" devicetemplateid="Cisco_ASR_Router"/>
+
+				
+</NCMDeviceSysOIDInfo>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="IBM TS3500-MT-3584" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="IBM TS3500-MT-3584" graphName="dpStatusCPUUtilizationtenSeconds"/>
+    <DevicePackageToGraph deviceType="IBM TS3500-MT-3584" graphName="dpStatusMemoryUtilization"/>
+</GRAPHDETAIL>

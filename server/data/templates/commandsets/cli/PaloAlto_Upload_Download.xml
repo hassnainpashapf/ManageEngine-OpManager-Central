@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt=">" commandecho="false" promptecho="true" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="paloalto_firewall_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="set cli config-output-format set">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="paloalto_firewall_config_set_text_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="configure">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="paloalto_firewall_cli_configure_mode_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="#" commandecho="false" promptecho="true" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="paloalto_firewall_cli_ispec2"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="paloalto_firewall_cli_show_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt=">" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="30000" protocol="CLI" interactionid="paloalto_firewall_cli_ispec3"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="paloalto_firewall_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt=">" commandecho="false" promptecho="true" responseparserid="paloalto_firewall_hardware_prop_parser" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="paloalto_firewall_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show system info">
+	<CLIInputRecord parsercommandname="hardware_prop_paloalto_firewall" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="paloalto_firewall_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="set cli pager off">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="paloalto_firewall_cli_paging_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+                                     <!-- PaloAlto Panorama Firewall -->
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="paloalto_panorama_firewall_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="set cli pager off">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="paloalto_panorama_firewall_config_paging_disable_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show config running">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="paloalto_panorama_firewall_cli_show_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="paloalto_panorama_firewall_hardware_prop_parser" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="paloalto_panorama_firewall_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show system info">
+	<CLIInputRecord parsercommandname="hardware_prop_paloalto_panorama_firewall" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="paloalto_panorama_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

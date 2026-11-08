@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- execute copy running config tftp command mode -->
+
+   <CLIInteractionSpec  interactionverb="1" requesttimeout="20000" prompt="#(config)" commandecho="false" promptecho="true">
+         <InteractionSpec timeout="20000" protocol="CLI" interactionid="bluecoat_proxySG_cli_fetch_config_ispec"/>
+                </CLIInteractionSpec>
+
+               
+                <CLICommand command="archive-configuration protocol tftp">
+                <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                <Record type="CLI" recordid="bluecoat_proxySG_cli_fetch_config_rec_1" protocol="CLI"/>
+                </CLIInputRecord>
+                </CLICommand>
+
+                <CLICommand command="archive-configuration host ${UserInput:tftp_server_address}">
+                <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                <Record type="CLI" recordid="bluecoat_proxySG_cli_fetch_config_rec_2" protocol="CLI"/>
+                </CLIInputRecord>
+                </CLICommand>
+
+
+                <CLICommand command="archive-configuration filename-prefix ${UserInput:file_name}">
+                <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                <Record type="CLI" recordid="bluecoat_proxySG_cli_fetch_config_rec_3" protocol="CLI"/>
+                </CLIInputRecord>
+                </CLICommand>
+              
+              
+   <CLIInteractionSpec  interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+           <InteractionSpec timeout="20000" protocol="CLI" interactionid="bluecoat_proxySG_cli_fetch_config_ispec_1"/>
+                           </CLIInteractionSpec>
+
+                <CLICommand command="upload configuration">
+                <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                <Record type="CLI" recordid="bluecoat_proxySG_cli_fetch_config_rec_4" protocol="CLI"/>
+                </CLIInputRecord>
+                </CLICommand>
+                                    
+                <CLICommand command="configure network tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+                <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                <Record type="CLI" recordid="bluecoat_proxySG_cli_push_config_rec_1" protocol="CLI"/>
+                </CLIInputRecord>
+                </CLICommand>
+
+<!-- for Bluecoat Packet Shaper -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="PackershaperActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="packet_shaper_ispec"/>
+    </CLIInteractionSpec>
+           
+
+    <CLICommand command="setup capture complete backup.cmd">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="packet_shaper_cli_show_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="cat 9.256/cmd/backup.cmd">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="packet_shaper_cli_show_config_rec1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+               
+
+ <!-- For BlueCoat Proxy SGOS -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="50000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="PackershaperActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="bluecoat_proxy_sgos_ispec"/>
+    </CLIInteractionSpec>
+           
+
+    <CLICommand command="conf t">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="bluecoat_proxy_sgos_config_mode_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+		
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="50000" prompt=")" commandecho="false" promptecho="true" promptactionid="PackershaperActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="bluecoat_proxy_sgos_ispec1"/>
+    </CLIInteractionSpec>
+                  
+    <CLICommand command="line-vty">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="bluecoat_proxy_sgos_line_vty_mode_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+                  
+    <CLICommand command="no length">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="bluecoat_proxy_sgos_paging_disable_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>                    
+                  
+    <CLICommand command="show configuration with-keyrings unencrypted">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="bluecoat_proxy_sgos_cli_show_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>                                      
+                  
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="bluecoat_proxy_sgos_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>                                                         
+ 
+    <CLIInteractionSpec interactionverb="1" requesttimeout="50000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="PackershaperActionId" responseparserid="bluecoat_proxy_sgos_hardware_prop_parser">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="bluecoat_proxy_sgos_hardware_prop_ispec"/>
+    </CLIInteractionSpec>                                                      
+	
+	<CLICommand command="show version">
+		<CLIInputRecord parsercommandname="hardware_prop_bluecoat_proxy_sgos" messagesuffix="&#10;" inputsourcetype="1">
+		   <Record type="CLI" recordid="bluecoat_proxy_sgos_hardware_prop_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+  </CLICommandList>        

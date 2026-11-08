@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+
+   <CustomDevicePackageSet Category="LoadBalancer" Vendor="F5 Networks" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP i15600">
+      <SysOIDs>
+	<SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.116"/>
+       </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP i5600">
+      <SysOIDs>
+	<SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.108"/>
+       </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 10000F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.66"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 10000S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.67"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 10055">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.98"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 10350N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.93"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 11000F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.51"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 11050F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.52"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 11050N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.45"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 12050">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.92"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 2050">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.75"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 2250">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.76"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 4050">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.73"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 4250">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.74"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 6900N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.54"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 7000F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.68"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 7000S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.69"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 7000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.63"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 7055">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.96"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 7200S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.86"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP 800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.64"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP Pb200N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.58"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP VCMP GUEST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.94"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP VIRTUAL EDITION">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.43"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP VPR-B4300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.47"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP VPR-C2400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.48"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP Viprion-B4300N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.65"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP i10800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.113"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP i2600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.104"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IP i2800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.105"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 BIG-IQ 7000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.90"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 EM-3000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.14"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 EM-4000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.26"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 EM-500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.28"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 VELOS CX410">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12276.1.3.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 VELOS CX410 Partition">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12276.1.3.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="LoadBalancer" Vendor="ForeScout Technologies" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="ForeScout CounterACT Appliance">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11789.1.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="ForeScout CounterACT Enterprise Manager">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11789.1.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="LoadBalancer" Vendor="Gigamon Systems" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Gigamon GigaVUE-FM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.26866.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="LoadBalancer" Vendor="Hewlett-Packard" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="HP Server Management Processor">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.5.7.3.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="LoadBalancer" Vendor="IBM" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="IBM BladeCenter Adv-Mgmt-Module">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.158.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM Flex Chassis-Mgmt Module">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.51.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM IMM2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.51.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM RS Adapter II">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.158.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="LoadBalancer" Vendor="Opengear" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Opengear ACM5500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25049.1.81"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Opengear IM7200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25049.1.61"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="LoadBalancer" Vendor="Perle SystemsMoti" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Perle MCR-MGT">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1966.20.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="A10 Networks" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="A10 Networks AX1030">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.22610.1.3.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="A10 Thunder 1040S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.22610.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="NetApp, Inc." iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NetApp N0074">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6411.3.2.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="Rittal" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Rittal CMC-TC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2606.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="Avi Networks" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Avi Networks Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.45468"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="Radware" iconName="LoadBalancer.png" pingInterval="10">
+    <CustomDevicePackage deviceType="Radware Alteon Application 2208 E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.1.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Radware Alteon Application 2216">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Radware Alteon Application 3408 E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Radware Alteon Application 5208">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.3.10.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Radware Alteon Application 5224">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.3.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Radware Alteon Application 5412XL">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.3.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Radware Alteon Application 6420XL">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.3.9.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Radware Alteon Application 8420XL">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.3.11.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="Kemp Technologies" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Kemp LoadMaster">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12196.250.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="SEIKO" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="SEIKO Netwiser SX 3845">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.955.1.22"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="LoadBalancer" Vendor="Sangfor" iconName="LoadBalancer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Sangfor NAC6100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.35047.2.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="Fortinet" iconName="loadbalancer.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Fortinet FortiADC 2200F">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.12356.112.100.2203" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiADC 1000F">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.12356.112.100.1003" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiADC 1200F">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.12356.112.100.1203" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiADC 2000D">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.12356.112.100.2001" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiADC 1500D">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.12356.112.100.1501" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiADC 300D">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.12356.112.100.301" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiADC 100F">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.12356.112.100.103" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiADC VM">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.12356.112.100.30" />
+		</SysOIDs>
+	</CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="Citrix Systems, Inc." iconName="loadbalancer.png" pingInterval="15">
+      <CustomDevicePackage deviceType="Citrix SD-WAN VA Series">
+          <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.3845.31.1.2.1"/>
+          </SysOIDs>
+     </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="FatPipe Networks" iconName="loadbalancer.png" pingInterval="15">
+      <CustomDevicePackage deviceType="FatPipe Network Series">
+          <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.19306"/>
+          </SysOIDs>
+     </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="LoadBalancer" Vendor="Cell Technology Inc." iconName="loadbalancer.png" pingInterval="15">
+      <CustomDevicePackage deviceType="Cell iSurfJanus-TX2-5">
+          <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.3519.3"/>
+          </SysOIDs>
+     </CustomDevicePackage>
+  </CustomDevicePackageSet>
+</CustomDevicePackage>

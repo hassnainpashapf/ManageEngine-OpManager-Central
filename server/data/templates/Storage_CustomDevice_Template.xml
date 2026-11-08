@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+
+<CustomDevicePackageSet Category="Storage" Vendor="Cristie Data Products" iconName="storage.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cristie Data Products T650">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.41456"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<!-- CustomDevicePackageSet Category="Storage" Vendor="Tegile Storage, Inc." iconName="storage.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Tegile IntelliFlash T4200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43906.1">
+             <RULES customOid=".1.3.6.1.4.1.43906.1.1.9.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="T4200"/> 
+            </SysOID>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Tegile IntelliFlash T4100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43906.1">
+             <RULES customOid=".1.3.6.1.4.1.43906.1.1.9.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="T4100"/> 
+            </SysOID>
+        </SysOIDs>
+    </CustomDevicePackage>
+    
+     <CustomDevicePackage deviceType="Tegile IntelliFlash T4530">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43906.1">
+             <RULES customOid=".1.3.6.1.4.1.43906.1.1.9.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="T4530"/> 
+            </SysOID>
+        </SysOIDs>
+    </CustomDevicePackage>
+    
+     <CustomDevicePackage deviceType="Tegile IntelliFlash T4630">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43906.1">
+             <RULES customOid=".1.3.6.1.4.1.43906.1.1.9.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="T4630"/> 
+            </SysOID>
+        </SysOIDs>
+    </CustomDevicePackage>
+    
+     <CustomDevicePackage deviceType="Tegile IntelliFlash T4730">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43906.1">
+             <RULES customOid=".1.3.6.1.4.1.43906.1.1.9.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="T4730"/> 
+            </SysOID>
+        </SysOIDs>
+    </CustomDevicePackage>
+    
+     <CustomDevicePackage deviceType="Tegile IntelliFlash T4760">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43906.1">
+             <RULES customOid=".1.3.6.1.4.1.43906.1.1.9.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="T4760"/> 
+            </SysOID>
+        </SysOIDs>
+    </CustomDevicePackage>
+    
+    <CustomDevicePackage deviceType="Tegile IntelliFlash T4860">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43906.1">
+             <RULES customOid=".1.3.6.1.4.1.43906.1.1.9.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="T4860"/> 
+            </SysOID>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet-->
+
+  <CustomDevicePackageSet Category="Storage" Vendor="F5 Networks" iconName="storage.png" pingInterval="15">
+    <CustomDevicePackage deviceType="F5 Networks ARX1000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.29"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks ARX1500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.49"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks ARX2000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.30"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks ARX2500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.50"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks ARX4000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.31"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks ARX500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.32"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Storage" Vendor="Hitachi" iconName="storage.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Hitachi VSP G SERIES (VSP G130 GF350 GF370 GF700 GF900)">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.116.3.11.4.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  
+  <CustomDevicePackageSet Category="Storage" Vendor="IBM" iconName="storage.png" pingInterval="15">
+    <CustomDevicePackage deviceType="IBM TS3500-MT-3584">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.182.1.0.414.1"/>
+            <SysOID oid=".1.3.6.1.4.1.2.6.182.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+</CustomDevicePackage>

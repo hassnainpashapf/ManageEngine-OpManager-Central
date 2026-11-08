@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Extreme AccessPoint" osType="HiveOS" templateName="Extreme_AccessPoint">
+	<RestTemplate name=""/>
+	<Vendor displayName="Extreme" vendorName="Extreme">
+		<Commands>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+			<Command commandstr="show version"/>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandstr="console page 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+                	<Command commandstr="console page 22" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="4" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Extreme AccessPoint" personalityName="ExtremeAccessPoint">	
+		<Login enablecommand="enable" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Hardware Revision" displayname="Hardware Revision" name="HARDWARE_REVISION" sequenceid="1" size="50"/>
+				<Column defaultvalue="Not Available" desc="Bootloader Version" displayname="Bootloader Version" name="BOOTLOADER_VERSION" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="TPM Version" displayname="TPM Version" name="TPM_VERSION" sequenceid="3" size="50"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging on</Regex>
+					<Regex>logging trap (emergencies|alerts|critical|errors|warnings)</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="ExtremeAccessPointPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_extreme_accesspoint">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Serial\s*number:\s*(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Hardware\s*revision\s*:\s*(\S*).*" NAME="HARDWARE_REVISION">
+											<PARAM NAME="HARDWARE_REVISION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Version:\s*(HiveOS)\s*(\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*MAC\s*address\s*:\s*(.*)" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Bootloader\s*ver\s*:\s*(.*)" NAME="BOOTLOADER_VERSION">
+											<PARAM NAME="BOOTLOADER_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*TPM\s*ver\s*:\s*(.*)" NAME="TPM_VERSION">
+											<PARAM NAME="TPM_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Platform\s*:\s*(\S*).*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_extreme_accesspoint" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" responseparserid="extreme_ap_hardware_prop_parser" timeout="60000"/>
+						<Command commandstr="show hw-info" messagesuffix="${LF}" parsercommandname="hardware_prop_extreme_accesspoint" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" responseparserid="extreme_ap_hardware_prop_parser" timeout="60000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="AP410C" ostype="" series="" sysoid=".1.3.6.1.4.1.26928.1"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

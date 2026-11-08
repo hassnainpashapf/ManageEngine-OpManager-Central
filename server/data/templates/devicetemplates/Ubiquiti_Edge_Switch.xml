@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Ubiquiti Edge Switch" osType="EdgeOS" templateName="Ubiquiti_Edge_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Ubiquiti" vendorName="Ubiquiti">
+		<Commands>
+			<Command commandstr="cat /etc/version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show startup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Ubiquiti Edge Switch" personalityName="UbiquitiEdgeSwitch">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Software Version" displayname="Software Version" name="SOFTWARE_VERSION" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Part number" displayname="Part Number" name="PARTNUMBER" sequenceid="2" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="UbiquitiESwitchHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_ubiquiti_edge_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION="Software\sVersion\S*\s(.*)">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION="Machine\s*Type\S*\s(.*)">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION="Serial\s*Number\S*\s(.*)">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION="Burned\s*In\s*MAC\s*Address\S*\s(.*)">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PARTNUMBER" EXPRESSION="Part\s*Number\S*\s(.*)">
+											<PARAM NAME="PARTNUMBER" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_ubiquiti_edge_switch" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" responseparserid="ubiquiti_edge_switch_hardware_prop_parser" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

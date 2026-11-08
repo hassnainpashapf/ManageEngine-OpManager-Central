@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For all Citrix ADC Loadbalancer devices" displayName="Citrix ADC Loadbalancer" osType="" templateName="Citrix ADC Loadbalancer">
+	<RestTemplate name=""/>
+	<Vendor displayName="Citrix" vendorName="Citrix">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="EMERGENCY" number="6" sequenceid="1"/>
+			<Level name="ALERT" number="5" sequenceid="2"/>
+			<Level name="CRITICAL" number="4" sequenceid="3"/>
+			<Level name="ERROR" number="3" sequenceid="4"/>
+			<Level name="WARNING" number="2" sequenceid="5"/>
+			<Level name="NOTICE" number="1" sequenceid="6"/>
+			<Level name="INFORMATIONAL" number="0" sequenceid="7"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="set cli mode -page OFF" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show ns runningconfig" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="30000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="set cli mode -page OFF" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="show ns.conf" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Citrix ADC Loadbalancer" personalityName="CitrixADCLoadbalancer">	
+		<Login enablecommand="" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Platform" displayname="Platform" name="PLATFORM" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="CPU" displayname="CPU" name="CPU" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="UUID" displayname="UUID" name="UUID" sequenceid="3" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^(\s*)Done</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CitrixADCLoadbalancerHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_citrix_adc_loadbalancer">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="CPU" EXPRESSION=".*CPU:\s*(.*).*">
+											<PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PLATFORM" EXPRESSION=".*Platform:\s*(.*).*">
+											<PARAM NAME="PLATFORM" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="UUID" EXPRESSION=".*UUID:\s*(.*).*">
+											<PARAM NAME="UUID" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial\s*no:\s*(.*).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION" EXPRESSION=".*NetScaler\s*(.*),\s*Date.*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>			 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_citrix_adc_loadbalancer" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="30000"/>
+						<Command commandstr="show hardware" messagesuffix="${LF}" parsercommandname="hardware_prop_citrix_adc_loadbalancer" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="30000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

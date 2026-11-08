@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Upload Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_switch_scp_ispec"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="password:" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+	<InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_switch_scp_password_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="configupload -p scp ${UserInput:scp_server_address},${UserInput:scp_username},${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_switch_scp_fetch_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:scp_password}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_switch_scp_password_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Download Config -->
+<CLICommand command="configdownload -p scp ${UserInput:scp_server_address},${UserInput:scp_username},${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_switch_scp_push_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- SSH Backup command -->
+
+<CLICommand command="skip-page-display">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_switch_paging_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand> 
+
+<CLICommand command="sh running-config">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_switch_ssh_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="brocade_switch_hardware_prop_parser" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="version">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="chassisshow">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_switch_cli_hardware_showchassiss_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+                                                    <!-- BrocadeFastIronSwitch -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="brocade_fastiron_switch_hardware_prop_parser" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_fastiron_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_fastiron_switch" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_fastiron_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+ <CLIInteractionSpec interactionverb="1" requesttimeout="80000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="foundryActionId">
+	    <InteractionSpec timeout="80000" protocol="CLI" interactionid="brocade_fastiron_switch_backup_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="brocade_fastiron_switch_backup_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="copy startup-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="brocade_fastiron_switch_backup_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	<!-- Telnet -SSH command -->
+	
+	<!-- enable password-display -->
+
+<CLICommand command="enable password-display">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="brocade_fastiron_switch_cli_show_enablepassword_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="config t">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="brocade_fastiron_switch_cli_config_mode_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="exit">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="brocade_fastiron_switch_cli_exit_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- disable pagging question-->
+
+<CLICommand command="skip-page-display">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="brocade_fastiron_switch_cli_show_disablepagging_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Show Startup Config -->
+
+<CLICommand command="show configuration">
+ <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="brocade_fastiron_switch_show_startup_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- Show Running Config -->
+
+<CLICommand command="show running-config">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="brocade_fastiron_switch_show_running_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="write memory">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="brocade_fastiron_switch_sync_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!--- Upload Tftp commands -->
+
+
+    <CLICommand command="copy tftp startup-config ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="brocade_fastiron_switch_cli_upload_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="copy tftp running-config ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="brocade_fastiron_switch_cli_upload_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+     <CLICommand command="show chassis">
+         <CLIInputRecord parsercommandname="hardware_prop_brocade_fastiron_switch" messagesuffix="&#13;&#10;" inputsourcetype="1"> 
+        <Record type="CLI" recordid="brocade_fastiron_switch_cli_hardware_chassis_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="40000" prompt=">" commandecho="false" promptecho="true" promptactionid="foundryActionId">
+	    <InteractionSpec timeout="40000" protocol="CLI" interactionid="brocade_fastiron_switch_cli_hardware_ispec1"/>
+    </CLIInteractionSpec>
+	
+	
+	
+                                                                          <!-- Brocade SLKWRM Switch -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_fiber_switch_scp_ispec"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="password:" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+	<InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_fiber_switch_scp_password_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="configupload -scp ${UserInput:scp_server_address},${UserInput:scp_username},${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_switch_scp_fetch_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:scp_password}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_switch_scp_password_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="switchdisable">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_switch_ssh_disable_switch_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="switchenable">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_switch_ssh_enable_switch_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Config -->
+<CLICommand command="configdownload -scp ${UserInput:scp_server_address},${UserInput:scp_username},${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_switch_scp_push_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- SSH Backup command -->
+
+<CLICommand command="configshow">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_switch_ssh_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="brocade_fiber_switch_hardware_prop_parser" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_fiber_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="version">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_fiber_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_fiber_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="chassisshow">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_fiber_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_fiber_switch_cli_hardware_showchassiss_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+                                                                          <!-- Brocade SLKWRM0000385 Switch -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_fiber_3850_switch_scp_ispec1"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt=":" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_fiber_3850_switch_scp_ispec2"/>
+</CLIInteractionSpec>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="password:" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+	<InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_fiber_3850_switch_scp_password_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="configupload">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_3850_switch_scp_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="scp">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_3850_switch_scp_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:scp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_3850_switch_scp_ip_rec" protocol="CLI"/>
+   </CLIInputRecord>   
+</CLICommand>
+
+<CLICommand command="${UserInput:scp_username}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_3850_switch_scp_username_rec" protocol="CLI"/>
+   </CLIInputRecord>   
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_3850_switch_scp_filename_rec" protocol="CLI"/>
+   </CLIInputRecord>   
+</CLICommand>
+
+<CLICommand command="${UserInput:scp_password}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_fiber_3850_switch_scp_password_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="brocade_fiber_3850_switch_hardware_prop_parser" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_3850_fiber_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="version">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_fiber_3850_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_fiber_3850_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="chassisshow">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_fiber_3850_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_fiber_3850_switch_cli_hardware_showchassiss_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="60000" protocol="CLI" interactionid="brocade_vdx_switch_cli_ispec"/>
+</CLIInteractionSpec>
+<!-- Show Startup Config -->
+
+<CLICommand command="show startup-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="brocade_vdx_switch_show_startup_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- Show Running Config -->
+
+<CLICommand command="show running-config">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="brocade_vdx_switch_show_running_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="terminal length 0">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="brocade_vdx_switch_paging_disable_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="brocade_vdx_switch_hardware_prop_parser" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_vdx_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show ver">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_vdx_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="hardware_prop_brocade_vdx_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show system">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_vdx_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="hardware_prop_brocade_vdx_switch_cli_hardware_showsystem_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="60000" protocol="CLI" interactionid="brocade_router_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- SSH Backup command -->
+
+<CLICommand command="skip-page-display">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_router_paging_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand> 
+
+<CLICommand command="sh running-config">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="brocade_router_ssh_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="brocade_router_hardware_prop_parser" promptactionid="BrocadeActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="brocade_router_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="version">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_router" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_router_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="chassisshow">
+	<CLIInputRecord parsercommandname="hardware_prop_brocade_router" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="brocade_router_cli_hardware_showchassiss_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

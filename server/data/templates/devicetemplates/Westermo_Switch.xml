@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For all Westermo Switches" displayName="Westermo Switch" multiConfigTemplate="false" osType="WeOS" templateName="Westermo_Switch" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Westermo" vendorName="Westermo">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="EMERGENCY" number="0" sequenceid="1"/>
+			<Level name="ALERT" number="1" sequenceid="2"/>
+			<Level name="CRITICAL" number="2" sequenceid="3"/>
+			<Level name="ERROR" number="3" sequenceid="4"/>
+			<Level name="WARNING" number="4" sequenceid="5"/>
+			<Level name="NOTICE" number="5" sequenceid="6"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="no interactive" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="10" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="20" timeout="60000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="no interactive" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="10" timeout="20000"/>
+                	<Command commandecho="" commandstr="show startup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="20" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="copy running-config startiup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="" sequenceid="10" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Westermo Switches" personalityName="WestermoSwitches">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Bootloader version" displayname="Bootloader version" name="BOOTLOADER_VERSION" sequenceid="5" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="WestermoSwitchesHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_westermo_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Serial Number\s*:\s*(\S*).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Westermo\s*WeOS\s*v*(\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Model\s*:\s*(\S*).*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>	
+										<REGEX EXPRESSION=".*System Description.*primary:\s*v*(\S*)\,.*" NAME="OSVERSION2">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Product\s*:\s*(Lynx|RedFox-(\w+)-\S+).*" NAME="MODEL2">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="2"/>
+										</REGEX>			
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*MAC Address\s*:\s*(\S*).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>			
+										<REGEX NAME="BOOTLOADER_VERSION" EXPRESSION=".*Boot loader ver.\s*:\s*(\S*).*">
+											<PARAM NAME="BOOTLOADER_VERSION" TOKENNO="1"/>
+										</REGEX>										
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_westermo_switch" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+						<Command commandstr="show system" messagesuffix="${LF}" parsercommandname="hardware_prop_westermo_switch" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="Lynx-5512-E-F4G-T8G-LV" ostype="" series="Lynx 5500" sysoid=".1.3.6.1.4.1.16177"/>
+        <NCMDeviceSysOID model="Lynx-5512-E-F4G-T8G-LV" ostype="" series="Lynx 5500" sysoid="1.3.6.1.4.1.16177.1.2"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

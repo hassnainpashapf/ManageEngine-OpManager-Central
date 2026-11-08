@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="320000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="TransPortWirelessRouterId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="avocent_acs_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="list_configuration">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="avocent_acs_cli_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="avocent_acs_hardware_prop_parser" promptactionid="TransPortWirelessRouterId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="avocent_acs_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show system/information">
+	<CLIInputRecord parsercommandname="hardware_prop_avocent_acs" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="avocent_acs_cli_show_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="TransPortWirelessRouterId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="avocent_terminal_cli_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="cat /etc/portslave/pslave.conf">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="avocent_terminal_cli_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="avocent_terminal_hardware_prop_parser" promptactionid="TransPortWirelessRouterId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="avocent_terminal_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="cat /proc/version">
+	<CLIInputRecord parsercommandname="hardware_prop_avocent_terminal" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="avocent_terminal_cli_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

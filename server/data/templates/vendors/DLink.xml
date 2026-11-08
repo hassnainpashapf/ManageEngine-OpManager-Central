@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+<!-- For DES 3010PA -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3010PA" templatename="DLinkSwitch_DES_3010" displayname="DLink Switch DES 3010" description="For DLink Switche DES 3010 model">
+    <NCMVendorDevice vendorid="DLink" />
+    <NCMDevicePersonality personalityid="DLinkSwitch" />
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+        <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_des3010PA_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3010PA"
+                            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dlinkswitch_cli_startup_config_backup_type2" />
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dlinkswitch_cli_running_config_backup_type2" />
+        <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="dlinkswitch_cli_startup_config_upload_type2" />
+        <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="dlinkswitch_cli_running_config_upload_type2" />
+        <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="dlinkswitch_cli_copy_running_to_startup" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <!-- for SSH-TFTP-->
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_des3010PA_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3010PA"
+                            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dlinkswitch_cli_startup_config_backup_type2" />
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dlinkswitch_cli_running_config_backup_type2" />
+        <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="dlinkswitch_cli_startup_config_upload_type2" />
+        <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="dlinkswitch_cli_running_config_upload_type2" />
+        <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="dlinkswitch_cli_copy_running_to_startup" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3828P" templatename="DLinkSwitch_DES_3800" displayname="DLink Switch DES 3800 and 3526" description="For DLink Switche DES 3800 models">
+	<NCMVendorDevice vendorid="DLink" />
+	<NCMDevicePersonality personalityid="DLinkSwitch" />
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="TFTP"/>
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_des3828P_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3828P"
+				managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dlinkswitch_cli_running_config_backup_type1" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="dlinkswitch_cli_running_config_upload_type1" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+	<!-- for SSH-TFTP-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_des3828P_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3828P"
+				managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dlinkswitch_cli_running_config_backup_type1" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="dlinkswitch_cli_running_config_upload_type1" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+</NCMDeviceTemplate>
+
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_dxs3250P" templatename="DLinkSwitch_DXS_3250" displayname="DLink Switch DXS 3250" description="For DLink Switche DXS 3250 models">
+	<NCMVendorDevice vendorid="DLink" />
+	<NCMDevicePersonality personalityid="DLinkSwitch" />
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="TFTP"/>
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_dxs3250P_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_dxs3250P"
+				managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dlinkswitch_cli_startup_config_backup_type2" />
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dlinkswitch_cli_running_config_backup_type2" />
+			<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="dlinkswitch_cli_startup_config_upload_type2" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="dlinkswitch_cli_running_config_upload_type2" />
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="dlinkswitch_cli_copy_running_to_startup" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+	<!-- for SSH-TFTP-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_dxs3250P_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_dxs3250P"
+				managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dlinkswitch_cli_startup_config_backup_type2" />
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dlinkswitch_cli_running_config_backup_type2" />
+			<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="dlinkswitch_cli_startup_config_upload_type2" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="dlinkswitch_cli_running_config_upload_type2" />
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="dlinkswitch_cli_copy_running_to_startup" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+</NCMDeviceTemplate>
+
+<!-- For DLink DXS Switch -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_dxs3326GSR" templatename="DLinkSwitch_DXS_3326" displayname="DLink Switch DXS 3326" description="For DLink Switch DXS 3326GSR model">
+	<NCMVendorDevice vendorid="DLink" />
+	<NCMDevicePersonality personalityid="DLinkSwitch" />
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="TFTP"/>
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_dxs3326GSR_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_dxs3326GSR" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_Fetch_Type3" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_push_Type3" />
+			
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+<!-- for SSH-TFTP -->
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_dxs3326GSR_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_dxs3326GSR" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_Fetch_Type3" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_push_Type3" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+</NCMDeviceTemplate>
+
+<!-- For DLink DGS Switch -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch" templatename="DLink_DGS_Switch" displayname="DLink DGS Switch" description="For DLink Switch DGS models">
+	<NCMVendorDevice vendorid="DLink" />
+	<NCMDevicePersonality personalityid="DLinkSwitch" />
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="TFTP"/>
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_dgs_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_Fetch_Type3" />
+			<!--NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="DLinkSwitch_TELNET_Startup_Config_Fetch_Type3" /-->
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_push_Type3" />
+			<!--NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="DLinkSwitch_TELNET_Startup_Config_Push_Type3" /-->
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="DLinkSwitch_TELNET_copy_running_to_startup_Type3" />
+			
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+	<!-- for SSH-TFTP -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_dgs_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_Fetch_Type3" />
+			<!--NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="DLinkSwitch_TELNET_Startup_Config_Fetch_Type3" /-->
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_push_Type3" />
+			<!--NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="DLinkSwitch_TELNET_Startup_Config_Push_Type3" /-->
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="DLinkSwitch_TELNET_copy_running_to_startup_Type3" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+</NCMDeviceTemplate>
+
+<!-- DGS 3600 -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch_3600" templatename="DLink_DGS_Switch_3600" displayname="DLink DGS Switch 3600" description="For DLink Switch DGS 3600 models">
+	<NCMVendorDevice vendorid="DLink" />
+	<NCMDevicePersonality personalityid="DLinkSwitch" />
+
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="TFTP"/>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_dgs_switch_3600_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch_3600" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+	<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_3600_TELNET_Running_Config_Fetch" />
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="DLinkSwitch_3600_TELNET_Startup_Config_Fetch" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_3600_TELNET_Running_Config_push" />
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="DLinkSwitch_3600_TELNET_Startup_Config_Push" />
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="DLinkSwitch_3600_TELNET_copy_running_to_startup" />
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+<!-- for SSH-TFTP -->
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_dgs_switch_3600_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch_3600" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+	<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_3600_SSH_Running_Config_Fetch" />
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="DLinkSwitch_3600_SSH_Startup_Config_Fetch" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_3600_SSH_Running_Config_push" />
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="DLinkSwitch_3600_SSH_Startup_Config_Push" />
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="DLinkSwitch_3600_SSH_copy_running_to_startup" />
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch_3100" templatename="DLink_DGS_Switch_3100" displayname="DLink DGS Switch 3100" description="For DLink Switch DGS 3100 models">
+	<NCMVendorDevice vendorid="DLink" />
+	<NCMDevicePersonality personalityid="DLinkSwitch" />
+
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_dgs_switch_3100_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch_3100" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_3100_TELNET_Running_Config_Fetch" />
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="DLinkSwitch_3100_TELNET_Startup_Config_Fetch" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_3100_TELNET_Running_Config_push" />
+			<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="DLinkSwitch_3100_TELNET_Startup_Config_Push" />
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="DLinkSwitch_3100_TELNET_copy_running_to_startup" />
+	</NCMDeviceCriteria>                                                               </NCMProtocolCombination>
+	<!-- for SSH-TFTP -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_dgs_switch_3100_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_dgs_switch_3100" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">                  <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_3100_SSH_Running_Config_Fetch" />                                         
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="DLinkSwitch_3100_SSH_Startup_Config_Fetch" />                                         
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_3100_SSH_Running_Config_push" />
+			<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="DLinkSwitch_3100_TELNET_Startup_Config_Push" />
+	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="DLinkSwitch_3100_TELNET_copy_running_to_startup" />
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_des_switch_3052P" templatename="DLink_DES_Switch_3052P" displayname="DLink DES Switch 3052" description="For DLink Switch DES 3052 models">
+	<NCMVendorDevice vendorid="DLink" />
+	<NCMDevicePersonality personalityid="DLinkSwitch" />
+
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_des_switch_3052P_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_des_switch_3052P" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_push_3052" />
+			
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_3052_TELNET_Running_Config_Fetch" />
+			
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="DLinkSwitch_3052_TELNET_copy_running_to_startup" />
+
+                        <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DLinkSwitch_3052_TELNET_enable_change_detection" />
+
+                        <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DLinkSwitch_3052_TELNET_disable_change_detection" />
+	</NCMDeviceCriteria>
+    </NCMProtocolCombination>
+	<!-- for SSH-TFTP -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_des_switch_3052P_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_des_switch_3052P" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_TELNET_Running_Config_push_3052" />
+			
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_3052_TELNET_Running_Config_Fetch" />
+			
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="DLinkSwitch_3052_TELNET_copy_running_to_startup" />
+
+                        <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DLinkSwitch_3052_TELNET_enable_change_detection" />
+
+                        <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DLinkSwitch_3052_TELNET_disable_change_detection" />
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+<!-- For DLink DXS Switch -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3200" templatename="DLink_Switch_DES3200" displayname="DLink Switch DES 3200" description="For DLink Switch DXS 3326GSR model">
+	<NCMVendorDevice vendorid="DLink" />
+	<NCMDevicePersonality personalityid="DLinkDESSwitch" />
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="TFTP"/>
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_des3200_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3200" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_des3200_Running_Config_Fetch_rec" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_des3200_Running_Config_push_rec" />
+			
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+<!-- for SSH-TFTP -->
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dlink_switch_des3200_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dlink_switch_des3200" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="DLinkSwitch_des3200_Running_Config_Fetch_rec" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="DLinkSwitch_des3200_Running_Config_push_rec" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Garderos GRS Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:garderos_grs_router" templatename="Garderos_GRS_Router" ostype="GRS" displayname="Garderos GRS Router" description="For all Garderos GRS Routers">
+        <NCMVendorDevice vendorid="Garderos" />
+        <NCMDevicePersonality personalityid="GarderosRouter" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:garderos_grs_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:garderos_grs_router"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="garderos_grs_router_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="garderos_grs_router_cli_fetch_startup_rec"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="garderos_grs_router_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="garderos_grs_router_cli_fetch_running_rec"/>
+	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="garderos_sync_config_write_mem" />
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:garderos_grs_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:garderos_grs_router"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="garderos_grs_router_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="garderos_grs_router_cli_fetch_startup_rec"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="garderos_grs_router_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="garderos_grs_router_cli_fetch_running_rec"/>
+    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="garderos_sync_config_write_mem" />        
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	
+	
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

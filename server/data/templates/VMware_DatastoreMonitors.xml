@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	<Graph graphName="VMware-datastoreSummaryFreeSpacePercentage" displayName="Datastore Free Space(%)" description="VMware Datastore Freespace Monitor(Percentage) for non-vSAN datastores." protocol="VIWebService" YAXISTEXT="Percentage" oid="datastore.summary.freeSpace.percentage" period="900" saveAbsolutes="false" timeAvg="false" graphType="node" vendorName="VMware" isNumeric="true" pollDataType="3" vendorSubCategory="VMware-Datastore Monitors" >
+	<UserProps propName="COMMUNITY" propValue="Datastore"/>
+	<UserProps propName="GROUPNAME" propValue="default"/>
+	<UserProps propName="POLICYNAME" propValue="VMware-datastoreSummaryFreeSpacePercentage"/>
+	</Graph>
+</GRAPHDETAIL>

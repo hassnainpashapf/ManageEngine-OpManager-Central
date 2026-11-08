@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="Linux FreeBSD" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Linux FreeBSD" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Linux FreeBSD" graphName="Telnet-DiskUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Linux FreeBSD" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Mac OS" graphName="Telnet-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Mac OS" graphName="Telnet-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Mac OS" graphName="Telnet-DiskUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Mac OS" graphName="Mac-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="IBM AIX" graphName="AIX-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="HP-UX" graphName="HP-UX-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Linux" graphName="Linux-SystemReboot" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Solaris" graphName="Solaris-SystemReboot" dialtype="number" unit="Minutes"/>
+</GRAPHDETAIL>

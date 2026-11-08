@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="FS devices running comware OS" displayName="FS Comware OS Devices" osType="Comware Software" templateName="FS_Comware_OS_Devices" multiConfigTemplate="false" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="FS" vendorName="FS">
+		<Commands>
+			<Command commandstr="display version"/>
+			<Command commandstr="display device manuinfo"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="warnings" number="5" sequenceid="1"/>
+			<Level name="notifications" number="6" sequenceid="2"/>
+			<Level name="informational" number="7" sequenceid="3"/>
+			<Level name="debugging" number="8" sequenceid="4"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Startup">
+                	<Command commandstr="display saved-configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="15" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Running">
+                	<Command commandstr="display current-configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="15" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandstr="save main" messagesuffix="${LF}" prompt="enter key):" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="Enable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center source default channel loghost log level ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="]" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Disable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="undo info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="FSComwareOS" personalityName="FSComwareOS">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="DRAMSIZE" size="15" desc="Stores the dram size " displayname="DRAM Size" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="FLASHRAMSIZE" size="15" desc="Stores the flash ram size " displayname="Flash Memory Size" defaultvalue="Not Available" sequenceid="10"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>info-center loghost $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+				<SyslogState state="disable">
+					<Regex>info-center source default channel (2|loghost) log level error(s)?</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="FSComwareHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_fs_comware_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MODEL1" EXPRESSION=".*(?i)BOARD\s*_*TYPE\s*:\s*((\S+)-\S+).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION1" EXPRESSION=".*(Comware Software).*Version\s+(\S+),.*">
+												<PARAM NAME="OSTYPE" TOKENNO="1"/>
+												<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="IMAGEFILENAME1" EXPRESSION=".*(?i)System\s*image\s*:\s*(\S+)\sbytes.*">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX> 
+										<REGEX NAME="DRAMSIZE" EXPRESSION=".*(?i)DRAM\s*:\s*(\S+).*">
+											<PARAM NAME="DRAMSIZE" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="FLASHRAMSIZE" EXPRESSION=".*(?i)^FLASH\s*:\s*(\S+)\sbytes.*">
+											<PARAM NAME="FLASHRAMSIZE" TOKENNO="2"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" parsercommandname="hardware_prop_fs_comware_switch" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="H3CSwitchActionId"/>
+						<Command commandstr="display device manuinfo" parsercommandname="hardware_prop_fs_comware_switch" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="H3CSwitchActionId"/>
+						<Command commandstr="display boot-loader" parsercommandname="hardware_prop_fs_comware_switch" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="H3CSwitchActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

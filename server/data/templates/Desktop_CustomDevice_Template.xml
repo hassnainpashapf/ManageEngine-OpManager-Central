@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+
+<CustomDevicePackageSet Category="Desktop" Vendor="Cisco" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cisco Telepresence Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5596.150.6.4.1"/>
+        </SysOIDs>
+ </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  </CustomDevicePackage>

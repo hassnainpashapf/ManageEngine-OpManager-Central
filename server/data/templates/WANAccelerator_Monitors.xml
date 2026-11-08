@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+   <DevicePackageToGraph deviceType="F5 SWAN-WJ200" graphName="F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime"/>
+</GRAPHDETAIL>

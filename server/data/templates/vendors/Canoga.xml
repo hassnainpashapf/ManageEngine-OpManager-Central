@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id$keyword -->
+<DeviceConfiguration>
+
+    <!-- For Canoga Perkins switch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:canoga_perkins" templatename="Canoga_Perkins" displayname="Canoga Perkins Switch" ostype="CanogaOS" description="For all Canoga Perkins Devices">
+        <NCMVendorDevice vendorid="Canoga Perkins" />
+        <NCMDevicePersonality personalityid="CanogaPerkins" />
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+        <NCMSupportedProtocol protocolid="TFTP"/>
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:canoga_perkins_telnettftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:canoga_perkins" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig"  executiongroupid="canoga_perkins_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig"  executiongroupid="canoga_perkins_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig"  executiongroupid="canoga_perkins_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig"  executiongroupid="canoga_perkins_cli_running_config_upload" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="canoga_perkins_cli_copy_running_to_startup" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:canoga_perkins_sshtftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:canoga_perkins" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="canoga_perkins_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="canoga_perkins_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="canoga_perkins_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="canoga_perkins_cli_running_config_upload" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="canoga_perkins_cli_copy_running_to_startup" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:canoga_perkins_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:canoga_perkins"      managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="canoga_perkins_show_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="canoga_cli_push_show_startup_rec"/>
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="canoga_perkins_show_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="canoga_cli_push_show_running_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:canoga_perkins_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:canoga_perkins"  managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="canoga_perkins_show_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="canoga_cli_push_show_startup_rec"/>
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="canoga_perkins_show_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="canoga_cli_push_show_running_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+</DeviceConfiguration>

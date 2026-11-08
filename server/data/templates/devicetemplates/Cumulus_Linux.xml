@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="Cumulus Linux Nvidia" displayName="Cumulus Linux" osType="Linux" templateName="Cumulus_Linux">
+	<RestTemplate name="Nvidia"/>
+	<Vendor displayName="Cumulus" vendorName="Cumulus">
+		<Commands>
+			<Command commandstr="net show system"/>
+			<Command commandstr="net show version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="net show configuration" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cumulus Linux" personalityName="CumulusLinux">	
+		<Login suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="NCLU_VERSION" size="100" desc="NCLU Version" displayname="NCLU Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="CPU" size="150" desc="CPU" displayname="CPU" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="ASIC" size="150" desc="ASIC" displayname="ASIC" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="PART_NUMBER" size="150" desc="PART NUMBER" displayname="Part Number" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="ONIE_VERSION" size="150" desc="ONIE VERSION" displayname="ONIE Version" defaultvalue="Not Available" sequenceid="5"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CumulusLinuxHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_Cumulus_Linux">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Build\S*\s*(\S*\s*\S*)\s*(\S*).*" NAME="OSTYPE">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/> 
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX> 
+											
+										<REGEX EXPRESSION=".*Model\s*\S*\s*(\S*).*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Part\s*Number\s*\S*\s*(\S*).*" NAME="PART_NUMBER">
+											<PARAM NAME="PART_NUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*ONIE\s*Version\s*\S*\s*(\S*).*" NAME="ONIE_VERSION">
+											<PARAM NAME="ONIE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Serial\s*Number\S*\s*(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*ASIC\S*\s*(.*)" NAME="ASIC">
+											<PARAM NAME="ASIC" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*CPU\S*\s*(.*)" NAME="CPU">
+											<PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*NCLU_VERSION=(.*)" NAME="NCLU_VERSION">
+											<PARAM NAME="NCLU_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*MAC\s*Address\S*\s*(.*)" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							 </ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="net show system" parsercommandname="hardware_prop_Cumulus_Linux" responseparserid="Cumulus_Linux_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid="yesActionId"/>
+						<Command commandstr="net show version" parsercommandname="hardware_prop_Cumulus_Linux" responseparserid="Cumulus_Linux_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

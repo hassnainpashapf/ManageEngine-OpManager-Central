@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+    <!-- add promptactionid="3comActionId" if required -->	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt=":" commandecho="false" promptecho="true">
+       <InteractionSpec timeout="60000" protocol="CLI" interactionid="3com_switch_cli_ispec"/>
+    </CLIInteractionSpec>
+
+    <!-- Upload Config Commands -->
+    <CLICommand command="system backupConfig save">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="3com_switch_cli_fetch_config_rec_1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="3com_switch_cli_config_rec_2" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="option:" commandecho="false" promptecho="true" promptactionid="3comActionId">
+       <InteractionSpec timeout="120000" protocol="CLI" interactionid="3com_switch_cli_fetch_config_ispec_3"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="3com_switch_cli_config_rec_3" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+    <!-- Download Config Commands -->    
+    <CLICommand command="system backupConfig restore">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="3com_switch_cli_push_config_rec_1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="option:" commandecho="false" promptecho="true" promptactionid="3comActionId">
+       <InteractionSpec timeout="120000" protocol="CLI" interactionid="3com_switch_cli_push_config_ispec_3"/>
+    </CLIInteractionSpec>
+    
+    <!-- Exit Command -->
+    <CLICommand command="logout">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="3com_switch_cli_end_config" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+    
+    <!-- for 4500 series device backup commands-->
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="3comActionId">
+	    <InteractionSpec timeout="30000" protocol="CLI" interactionid="3com_switch_4500_cli_fetch_config_ispec_1"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="tftp ${UserInput:tftp_server_address} put 3comoscfg.cfg ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4500_cli_fetch_config_rec_1" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="tftp ${UserInput:tftp_server_address} put 3comoscfg.def ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4500_cli_fetch_config_rec_2" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="tftp ${UserInput:tftp_server_address} get ${UserInput:file_name} 3comoscfg.cfg">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4500_cli_push_config_rec_1" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="tftp ${UserInput:tftp_server_address} get ${UserInput:file_name} 3comoscfg.def">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4500_cli_push_config_rec_2" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <!-- for 3com 4200G-->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="]" commandecho="false" promptecho="true" promptactionid="3comActionId">>
+	    <InteractionSpec timeout="30000" protocol="CLI" interactionid="3com_switch_4200G_cli_ispec1"/>
+    </CLIInteractionSpec>
+    
+    
+    <CLICommand command="system">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_system_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    
+    <CLICommand command="tftp ascii">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_tftp_ascii_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    <CLICommand command="quit">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_quit_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="3comActionId">
+	    <InteractionSpec timeout="30000" protocol="CLI" interactionid="3com_switch_4200G_cli_config_ispec2"/>
+    </CLIInteractionSpec>
+    
+    <!--Startup-Backup-->
+    <CLICommand command="copy 3comoscfg.def ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_startup_copy_fetch_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="tftp ${UserInput:tftp_server_address} put unit1>flash:/${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_tftp_transfer_fetch_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <!--Running-Backup-->
+    <CLICommand command="copy 3comoscfg.cfg ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_running_copy_fetch_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <!--Startup Upload-->
+    <CLICommand command="copy ${UserInput:file_name} 3comoscfg.def">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_startup_copy_push_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="tftp ${UserInput:tftp_server_address} get ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_tftp_transfer_push_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <!--Running Upload-->
+    
+    <CLICommand command="copy ${UserInput:file_name} 3comoscfg.cfg">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_running_copy_push_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+   <!-- Hardware Properties for 4400-->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="3com_hardware_prop_parser">
+       <InteractionSpec timeout="20000" protocol="CLI" interactionid="3com_switch_hardware_ispec"/>
+    </CLIInteractionSpec>
+  
+    <CLICommand command="system summary">
+        <CLIInputRecord parsercommandname="hardware_prop_3com_switch" messagesuffix="&#13;&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="3com_switch_cli_hardware_prop" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+  
+    <!-- hardware commands for 3com 4500-->
+    <CLICommand command="display version">
+        <CLIInputRecord parsercommandname="hardware_prop_3com_switch_4500" messagesuffix="&#13;&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="3com_switch_4500_cli_hardware_rec_1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+    <!-- hardware commands for 3com 4200G-->
+    <CLICommand command="display version">
+	    <CLIInputRecord parsercommandname="hardware_prop_3com_switch_4200G" messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="3com_switch_4200G_cli_hardware_prop" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    
+    <!-- for 3com 5500 device commands -->
+	
+	<!-- Telnet/SSH backup -->
+ 
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="H3CSwitchActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="3com_5500_switch_ispec"/>
+    </CLIInteractionSpec>
+
+   
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="]" commandecho="false" promptecho="true" promptactionid="H3CSwitchActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="3com_5500_switch_ispec_1"/>
+    </CLIInteractionSpec>
+
+         
+    <CLICommand command="system-view">
+                      <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                    		<Record type="CLI" recordid="3com_5500_switch_system_view_rec" protocol="CLI"/>
+                      </CLIInputRecord>
+    </CLICommand>  
+  
+    <CLICommand command="user-interface vty 0 4">
+                        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                      		<Record type="CLI" recordid="3com_5500_switch_ui_rec" protocol="CLI"/>
+                        </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="screen-length 0">
+                    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                    	<Record type="CLI" recordid="3com_5500_switch_screen_length_rec" protocol="CLI"/>
+                    </CLIInputRecord>
+    </CLICommand>	
+	
+	    <CLICommand command="screen-length 24">
+                    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                    	<Record type="CLI" recordid="3com_5500_switch_undo_screen_length_rec" protocol="CLI"/>
+                    </CLIInputRecord>
+    </CLICommand>	
+	
+    <CLICommand command="quit">
+            <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1" >    
+                <Record type="CLI" recordid="3com_5500_switch_return_rec" protocol="CLI"/>
+	        </CLIInputRecord>
+    </CLICommand>
+
+    <!-- display current-config -->
+    
+    <CLICommand command="display current-configuration">
+         <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+              <Record type="CLI" recordid="3com_5500_switch_cli_current_config_rec" protocol="CLI"/>
+         </CLIInputRecord>
+     </CLICommand>
+
+
+ 
+    <!-- Hardware Properties -->
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="3com_5500_switch_hardware_prop_parser" promptactionid="H3CSwitchActionId">
+            <InteractionSpec timeout="20000" protocol="CLI" interactionid="3com_switch_5500_hardware_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="display version">
+        <CLIInputRecord parsercommandname="hardware_prop_3com_5500_switch" messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="3com_5500_switch_cli_hardware_prop" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+ <CLICommand command="display device manuinfo">
+        <CLIInputRecord parsercommandname="hardware_prop_3com_5500_switch" messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="3com_5500_switch_cli_hardware_prop1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+</CLICommandList>

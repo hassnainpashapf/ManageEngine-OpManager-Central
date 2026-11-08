@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DevicePersonalityConfiguration>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@12523381" personalityname="CiscoSwitch" displayname="Cisco Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@27072313" personalityname="CiscoRouter" displayname="Cisco Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@6270034" personalityname="CiscoFirewall" displayname="Cisco Firewall"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@6270035" personalityname="CiscoIAD" displayname="Cisco IAD"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@CiscoAccessPoint" personalityname="CiscoAccessPoint" displayname="Cisco AccessPoint"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoCatOSSwitch" personalityname="CiscoCatOSSwitch" displayname="Cisco CatOS Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoAccessServer" personalityname="CiscoAccessServer" displayname="Cisco AccessServer"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoContentSwitch" personalityname="CiscoContentSwitch" displayname="Cisco Content Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoASA" personalityname="CiscoASA" displayname="Cisco ASA"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@19548158" personalityname="HPSwitch" displayname="HP Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@14454249" personalityname="FoundrySwitch" displayname="Foundry Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@32040049" personalityname="3ComSwitch" displayname="3Com Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:UVH@32040053" personalityname="FortiGateFirewall" displayname="FortiGate Firewall"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NetscreenFirewall" personalityname="NetscreenFirewall" displayname="Netscreen Firewall"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:EnterasysSwitch" personalityname="EnterasysSwitch" displayname="Enterasys Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:EnterasysRouter" personalityname="EnterasysRouter" displayname="Enterasys Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AdtranLANSwitch" personalityname="AdtranLANSwitch" displayname="Adtran LAN Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoNexusSwitch" personalityname="CiscoNexusSwitch" displayname="Cisco Nexus Switch"/>
+<!--Adtran Netvanta Router-->
+<NCMPersonality personalityid="NCMPersonality:personalityid:AdtranNetvantaRouter" personalityname="AdtranNetvantaRouter" displayname="Adtran Netvanta Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NortelPassportSwitch" personalityname="NortelPassportSwitch" displayname="Nortel Passport Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NortelPWRSwitch" personalityname="NortelPWRSwitch" displayname="Nortel PWR Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:DLinkSwitch" personalityname="DLinkSwitch" displayname="DLink Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BlueCoatProxySG" personalityname="BlueCoatProxySG" displayname="BlueCoat ProxySG"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:PacketShaper" personalityname="PacketShaper" displayname="Packet Shaper"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HuaweiARRouter" personalityname="HuaweiARRouter" displayname="Huawei AR Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HPAccessPoint" personalityname="HPAccessPoint" displayname="HP AccessPoint"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HPPSeriesSwitch" personalityname="HPPSeriesSwitch" displayname="HP P Series Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NortelBayStackSwitch" personalityname="NortelBayStackSwitch" displayname="Nortel BayStack Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NortelContivityVPNRouter" personalityname="NortelContivityVPNRouter" displayname="Nortel Contivity VPN Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:ArubaWifiSwitch" personalityname="ArubaWifiSwitch" displayname="Aruba Wifi Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:ProximAccessPoint" personalityname="ProximAccessPoint" displayname="Proxim AccessPoint"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:ExtremeSwitch" personalityname="ExtremeSwitch" displayname="Extreme Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoVoiceGateway" personalityname="CiscoVoiceGateway" displayname="Cisco VoiceGateway"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:Force10Switch" personalityname="Force10Switch" displayname="Force10 Switch"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoVPNConcentrator" personalityname="CiscoVPNConcentrator" displayname="Cisco VPN Concentrator"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoMDS" personalityname="CiscoMDS" displayname="Cisco MDS Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NetgearSwitch" personalityname="NetgearSwitch" displayname="Netgear Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:JuniperRouter" personalityname="JuniperRouter" displayname="Juniper Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:JuniperMXRouter" personalityname="JuniperMXRouter" displayname="Juniper MX Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:JuniperSwitch" personalityname="JuniperSwitch" displayname="Juniper EX4200 Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:DellSwitch" personalityname="DellSwitch" displayname="Dell Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:SlimLine" personalityname="SlimLine" displayname="SlimLine"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:RiverbedSteelhead" personalityname="RiverbedSteelhead" displayname="Riverbed Steelhead"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlcatelSwitch" personalityname="AlcatelSwitch" displayname="Alcatel Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlcatelRouter" personalityname="AlcatelRouter" displayname="Alcatel Service Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlaxalaSwitch" personalityname="AlaxalaSwitch" displayname="Alaxala Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HitachiGR2000Router" personalityname="HitachiGR2000Router" displayname="Hitachi GR 2000 Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NortelSwitchModule" personalityname="NortelSwitchModule" displayname="Nortel Switch Module"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:RadwareSwitch" personalityname="RadwareSwitch" displayname="Radware Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoWLANController" personalityname="CiscoWLANController" displayname="Cisco WLAN Controller"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:RadwareLinkProofSwitch" personalityname="RadwareLinkProofSwitch" displayname="Radware Link Proof Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BrocadeSwitch" personalityname="BrocadeSwitch" displayname="Brocade Switch"/>
+<!--Cisco WAAS-->
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoWAAS" personalityname="CiscoWAAS" displayname="Cisco WAAS"/>
+<!-- CheckPoint Firewall -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:CheckPointFirewall" personalityname="CheckPointFirewall" displayname="CheckPoint Firewall"/>
+<!-- CiscoACEModule -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoACEModule" personalityname="CiscoACEModule" displayname="Cisco ACE Module"/>
+<!-- AvayaGateway -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:AvayaMediaGateway" personalityname="AvayaMediaGateway" displayname="Avaya Media Gateway"/>
+
+<!--LambdaDriver -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:LambdaDriver" personalityname="LambdaDriver" displayname="Lambda Driver"/>
+
+<!-- Dax Network Devices -->
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:DaxRouter" personalityname="DaxRouter" displayname="Dax Router"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:DaxSwitch" personalityname="DaxSwitch" displayname="Dax Switch"/>
+
+
+
+<!--Cisco IOS XR-->
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoIOSXR" personalityname="CiscoIOSXR" displayname="Cisco IOS XR"/>
+
+<!-- H3C Devices -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:H3CSwitch" personalityname="H3CSwitch" displayname="H3C Switches"/>
+
+<!-- Yamaha Router -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:YamahaRouter" personalityname="YamahaRouter" displayname="Yamaha Router"/>
+
+<!-- Vanguard Router -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:VanguardRouter" personalityname="VanguardRouter" displayname="Vanguard Router"/>
+
+<!-- AlliedTelesisSwitch -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlliedTelesisSwitch" personalityname="AlliedTelesisSwitch" displayname="Allied Telesis Switch"/>
+
+<!--f5 Big-ip -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:F5Bigip" personalityname="F5Bigip" displayname="F5 Big-ip"/>
+
+<!-- CiscoIDS -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoIDS" personalityname="CiscoIDS" displayname="Cisco IDS"/>
+
+<!-- Fujitsu -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:FujitsuPYCBSwitch" personalityname="FujitsuPYCBSwitch" displayname="Fujitsu PY CB Eth Switch/IBP 1Gb"/>
+
+
+<!-- HitachiSwitch -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:HitachiSwitch" personalityname="HitachiCableSwitch" displayname="Hitach Cable Switch"/>
+
+<!-- CitrixNetScalerSwitch -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:CitrixSwitchNetScaler" personalityname="CitrixNetScaler" displayname="Citrix NetScaler Firewall"/>
+
+<!-- Motorola  -->
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:Motorola" personalityname="Motorola" displayname="Motorola WS Switch"/>
+
+<!-- Sphereon 4500 Fibre Channel Switch   -->
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:SphereonSwitch" personalityname="SphereonSwitch" displayname="Sphereon Switch"/>
+
+<!-- Allied Telesis AT-8000S Switch -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlliedTelesisAT8000S" personalityname="AlliedTelesisAT8000S" displayname="Allied Telesis AT-8000S Switch"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:FortiGateFortiAnalyzer" personalityname="FortiGateFortiAnalyzer" displayname="FortiGate FortiAnalyzer"/>
+<!-- Canoga Perkins -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:CanogaPerkins" personalityname="CanogaPerkins" displayname="Canoga Perkins"/>
+
+<!-- WatchGuard Firewall -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:WatchGuardFirewall" personalityname="WatchGuardFirewall" displayname="WatchGuard Firewall"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:NetSD3800" personalityname="NetSD3800" displayname="Net-Net SD 3800"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CienaLEOSSwitch" personalityname="CienaLEOSSwitch" displayname="Ciena LEOS Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CienaSAOSSwitch" personalityname="CienaSAOSSwitch" displayname="Ciena SAOS Switch"/>
+
+<!-- PaloAlto Firewall -->
+<NCMPersonality personalityid="NCMPersonality:personalityid:PaloAltoFirewall" personalityname="PaloAltoFirewall" displayname="PaloAlto Firewall PA-4000"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:ADVAOPTICALNETWORKING" personalityname="ADVAOPTICALNETWORKING" displayname="ADVA FSP150CC-825"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:MeruWLANController" personalityname="MeruWLANController" displayname="Meru WLAN controller"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlaxalaSwitch5400" personalityname="AlaxalaSwitch5400" displayname="Alaxala 5400 Switch"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlliedTelesisGS900MSwitch" personalityname="AlliedTelesisGS900MSwitch" displayname="Allied Telesis CenterCOM Switch"/>
+							
+<NCMPersonality personalityid="NCMPersonality:personalityid:H3CSSeriesSwitch" personalityname="H3CSSeriesSwitch" displayname="H3C S Series Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HuaweiSwitch" personalityname="HuaweiSwitch" displayname="Huawei Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HuaweiSSwitch" personalityname="HuaweiSSwitch" displayname="Huawei S Series Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HirschmannSwitch" personalityname="HirschmannSwitch" displayname="Hirschmann Gigabit Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BrocadeFastIronSwitch" personalityname="BrocadeFastIronSwitch" displayname="Brocade FCX and FWS Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:TransPortWirelessRouter" personalityname="TransPortWirelessRouter" displayname="TransPort Wireless Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BrocadeFiberSwitch" personalityname="BrocadeFiberSwitch" displayname="Brocade Fiber Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:RedbackRouter" personalityname="RedbackRouter" displayname="Redback Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BNTRackSwitch" personalityname="BNTRackSwitch" displayname="BNT RackSwitch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AristaSwitch" personalityname="AristaSwitch" displayname="Arista Networks Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:DCSSwitch" personalityname="DCSSwitch" displayname="DCS Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:F5ARX" personalityname="F5ARX" displayname="F5 ARX"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AX2500LoadBalancers" personalityname="AX2500LoadBalancers" displayname="AX2500 LoadBalancers"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlliedTelesisCenterComSwitch" personalityname="AlliedTelesisCenterComSwitch" displayname="Allied Telesis CenterCom 87XX Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AlliedTelesisEthernetSwitch" personalityname="AlliedTelesisEthernetSwitch" displayname="Allied Telesis X600 and X200 and SBx Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:FoundryFastIronSwitch" personalityname="FoundryFastIronSwitch" displayname="Foundry FastIron Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:ZXRRouter" personalityname="ZXRRouter" displayname="ZXR Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:DellPowerConnectSwitch" personalityname="DellPowerConnectSwitch" displayname="Dell PowerConnect 5224 Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoASRRouter" personalityname="CiscoASRRouter" displayname="Cisco ASR Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BrocadeSilkWormFiberSwitch" personalityname="BrocadeSilkWormFiberSwitch" displayname="Brocade SilkWorm 3850 Fabric Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:F5Bigip10X" personalityname="F5Bigip10X" displayname="F5 BIG-IP Version 10.X"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BlueCoatProxySGOS" personalityname="BlueCoatProxySGOS" displayname="BlueCoatProxy SGOS Version 6.x"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoIronport" personalityname="CiscoIronport" displayname="Cisco Ironport"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:Vyatta" personalityname="Vyatta" displayname="Vyatta"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:RadwareAlteonSwitch" personalityname="RadwareAlteonSwitch" displayname="Radware Alteon Application Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BrocadeVDXSwitch" personalityname="BrocadeVDXSwitch" displayname="Brocade VDX Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:JuniperSRX" personalityname="JuniperSRX" displayname="Juniper SRX"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NECIX2025" personalityname="NECIX2025" displayname="NEC IX2025"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:ADVAFSP" personalityname="ADVAFSP" displayname="ADVA FSP150CC-GE201"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:MikrotikRouter" personalityname="MikrotikRouter" displayname="Mikrotik Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:WelotecRouter" personalityname="WelotecRouter" displayname="Welotec TK 7 Series"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CrescendoLoadBalancer" personalityname="CrescendoLoadBalancer" displayname="Crescendo Networks Load Balancer"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:RuggedComSwitch" personalityname="RuggedComSwitch" displayname="RuggedCom Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:RuijieSwitch" personalityname="RuijieSwitch" displayname="Ruijie Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:FujitsuFirewall" personalityname="FujitsuFirewall" displayname="Fujitsu IPCOM EX1100"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:F5Bigip11X" personalityname="F5Bigip11X" displayname="F5 BIG-IP Version 11.X"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:EdgeCoreSwitch" personalityname="EdgeCoreSwitch" displayname="EdgeCore Metro Access Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:TelcoSwitch" personalityname="TelcoSwitch" displayname="Telco Ethernet Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:OccamSwitch" personalityname="OccamSwitch" displayname="Occam Blade Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AdtranRouter" personalityname="AdtranRouter" displayname="Adtran 800 Series Netvanta Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoSBSwitch" personalityname="CiscoSBSwitch" displayname="Cisco 300 Series Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:NokiaIPSO" personalityname="NokiaIPSO" displayname="Nokia IPSO"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HPEthernetSwitch" personalityname="HPEthernetSwitch" displayname="HP 1910 Series Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CitrixNetScalerMPX" personalityname="CitrixNetScalerMPX" displayname="Citrix Netscaler MPX Firewall"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:3Com5500Switch" personalityname="3Com5500Switch" displayname="3Com 5500 Series Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:FortiGateFirewallVER4" personalityname="FortiGateFirewallVER4" displayname="FortiGate Firewall - version 4.0 and 5.0"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:FiberHomeSwitch" personalityname="FiberHomeSwitch" displayname="FiberHome Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:ZXRRouterZSR" personalityname="ZXRRouterZSR" displayname="ZXR Router ZSR Version 2.x"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:ArubaController" personalityname="ArubaController" displayname="Aruba Controller"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:TippingpointIPS" personalityname="TippingpointIPS" displayname="Tippingpoint IPS"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:MobileIronSentry" personalityname="MobileIronSentry" displayname="MobileIron Sentry"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:JuniperLoadBalancer" personalityname="JuniperLoadBalancer" displayname="Juniper LoadBalancer"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CienaSwitch" personalityname="CienaSwitch" displayname="Ciena Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:H3CDevice" personalityname="H3CDevice" displayname="H3C Device"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CheckPointGaiaFirewall" personalityname="CheckPointGaiaFirewall" displayname="CheckPoint Gaia Firewall"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AvocentACS" personalityname="AvocentACS" displayname="Avocent ACS"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:JuniperWLAN" personalityname="JuniperWLAN" displayname="Juniper WLAN controller"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:PravailAPS" personalityname="PravailAPS" displayname="Pravail APS"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:AvocentTerminal" personalityname="AvocentTerminal" displayname="Avocent Terminal"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:CiscoASRMobileGateway" personalityname="CiscoASRMobileGateway" displayname="Cisco ASR Mobile Gateway"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HP5500Switch" personalityname="HP5500Switch" displayname="HP 5500 Series Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:PaloAltoPanoramaFirewall" personalityname="PaloAltoPanoramaFirewall" displayname="PaloAlto Panorama Firewall"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HuaweiNERouter" personalityname="HuaweiNERouter" displayname="Huawei NE series Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:HuaweiS5300Switch" personalityname="HuaweiS5300Switch" displayname="Huawei S 5300 Switch"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:DLinkDESSwitch" personalityname="DLinkDESSwitch" displayname="DLink Switch DES 3200"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:BrocadeRouter" personalityname="BrocadeRouter" displayname="Brocade Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:insysmoros" personalityname="INSYSMoRoS" displayname="INSYS MoRoS"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:sonicwallfirewall" personalityname="SonicWALLFirewall" displayname="SonicWALL"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:trapezewlancontroller" personalityname="TrapezeWLANController" displayname="Trapeze WLAN Controller MX 800"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:ubiquitiairos" personalityname="UbiquitiAirOs" displayname="Ubiquiti Air Os"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:garderosrouter" personalityname="GarderosRouter" displayname="Garderos GRS Router"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:juniperfabricswitch" personalityname="JuniperFabricSwitch" displayname="Juniper Fabric QFX3000-G Switch"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:F5Netcon" personalityname="F5Netcon" displayname="F5 Netcon"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:F5Bigip114" personalityname="F5Bigip114" displayname="F5 BIG-IP 11.4"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:EdgeCoreL2Switch" personalityname="EdgeCoreL2Switch" displayname="EdgeCore L2 Switch"/>
+
+<NCMPersonality personalityid="NCMPersonality:personalityid:mimomax_gps_tornado" personalityname="MiMOMaxGPSTornado" displayname="MiMOMax Tornado"/>
+<NCMPersonality personalityid="NCMPersonality:personalityid:mimomax_gps_pyxis" personalityname="MiMOMaxGPSPyxis" displayname="MiMOMax Pyxis"/>
+</DevicePersonalityConfiguration>

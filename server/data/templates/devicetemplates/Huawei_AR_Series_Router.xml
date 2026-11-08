@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Huawei AR Series Router" osType="VRP" templateName="Huawei_AR_Series_Router">
+	<RestTemplate name=""/>
+	<Vendor displayName="Huawei" vendorName="Huawei">
+		<Commands>
+			<Command commandstr="display version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="warnings" number="5" sequenceid="1"/>
+			<Level name="notifications" number="6" sequenceid="2"/>
+			<Level name="informational" number="7" sequenceid="3"/>
+			<Level name="debugging" number="8" sequenceid="4"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="screen-length 0 temporary" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="60000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display saved-configuration" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="130000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="screen-length 0 temporary" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="60000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display current-configuration" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="130000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="info-center loghost ${UserInput:HostIpAddress} facility local5" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="1" timeout="60000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="undo info-center loghost ${UserInput:HostIpAddress} facility local5" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="1" timeout="60000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Huawei AR Series Router" personalityName="HuaweiARSeriesRouter">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BOARDTYPE" size="150" desc="Board Type" displayname="Board Type" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="SOFTWARE_VERSION" size="150" desc="Software Version" displayname="Software Version" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>.*loghost $SYSLOG_SERVER_IP.*</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HuaweiARSeriesRouterHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_Huawei_AR_Series_Router">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MODEL" EXPRESSION="Huawei\s*(\S*)\s*Router.*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="BOARDTYPE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION" EXPRESSION="(.*)\s\(R\)\ssoftware,\s*Version\s*(\S*)\s*\((\S*)\s*(\S*)\).*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+											<PARAM NAME="SERIES" TOKENNO="3"/>
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="4"/>
+										</REGEX>
+										<REGEX NAME="BOARDTYPE" EXPRESSION=".*Board\s*Type\s*:\s*(\S*).*">
+											<PARAM NAME="BOARDTYPE" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="ESN" EXPRESSION="Equipment SN.*:\s(.*)">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" parsercommandname="hardware_prop_Huawei_AR_Series_Router" responseparserid="Huawei_AR_Series_Router_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="130000" promptactionid="yesActionId"/>
+						<Command commandstr="display sn" parsercommandname="hardware_prop_Huawei_AR_Series_Router" responseparserid="Huawei_AR_Series_Router_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="130000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

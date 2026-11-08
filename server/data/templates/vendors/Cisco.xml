@@ -1,0 +1,2346 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Cisco IOS Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ios_router" templatename="Cisco_IOS_Router" ostype="IOS" displayname="Cisco IOS Router" description="For all Cisco IOS Routers">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoRouter" />
+
+        <NCMSupportedProtocol protocolid="SNMP">
+            <NCMDeviceCredential credentialgroupid="SNMP Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMSupportedProtocol protocolid="SCP"/>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ios_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ios_router" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup"/>
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ios_router_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ios_router" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_IOS_Router_backup_vlan_CLI" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_IOS_Router_CLI_backup_vlan_rec_1"/>
+		
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ios_router_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ios_router" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+		
+		<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_IOS_Router_backup_vlan_CLI" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_IOS_Router_CLI_backup_vlan_rec_1"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ios_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ios_router" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup"/>
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ios_router_ssh_scp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ios_router" managementprotocolid="SSH" transferprotocolid="SCP" displayname="SSH - SCP">
+            <NCMDeviceCriteria commandmapid="SSH_SCP_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_scp_startup_config_fetch"/>
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_scp_startup_config_push" />
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_scp_running_config_fetch" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_scp_running_config_push" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+
+        <!-- for SNMP-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ios_router_snmp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ios_router" managementprotocolid="SNMP" transferprotocolid="TFTP" displayname="SNMP - TFTP">
+            <NCMDeviceCriteria commandmapid="SNMP_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_upload_copy_mib" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_snmp_running_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_snmp_running_config_upload_copy_mib" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+    <!-- For Cisco IOS Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_switch_2924XLV" templatename="Cisco_IOS_Switch" displayname="Cisco IOS Switch" ostype="IOS" description="For all Cisco IOS Switches">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoSwitch"/>
+
+        <NCMSupportedProtocol protocolid="SNMP">
+            <NCMDeviceCredential credentialgroupid="SNMP Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMSupportedProtocol protocolid="SCP"/>
+
+        <!-- ###### WE ARE REUSING RECORDS DEFINED FOR ROUTERS FOR SNMP ALONE -->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_switch_2924XLV_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_switch_2924XLV" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoswitch_cli_startup_config_backup_ios" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscoswitch_cli_startup_config_upload_ios" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoswitch_cli_running_config_backup_ios" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoswitch_cli_running_config_upload_ios" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_switch_2924XLV_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_switch_2924XLV" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+	        <NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_IOS_Switch_backup_vlan_CLI" taskhandling="true"/>
+	        <NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_IOS_Switch_CLI_backup_vlan_rec_1"/>
+			
+			<NCMDeviceOperation operationid="BackupVtp" executiongroupid="Cisco_IOS_Switch_backup_vtp_CLI" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupVtp" recordid="Cisco_IOS_Switch_CLI_backup_vtp_rec_1"/>
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_switch_2924XLV_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_switch_2924XLV" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+	        <NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_IOS_Switch_backup_vlan_CLI" taskhandling="true"/>
+	        <NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_IOS_Switch_CLI_backup_vlan_rec_1"/>
+			
+			<NCMDeviceOperation operationid="BackupVtp" executiongroupid="Cisco_IOS_Switch_backup_vtp_CLI" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupVtp" recordid="Cisco_IOS_Switch_CLI_backup_vtp_rec_1"/>
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_switch_2924XLV_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_switch_2924XLV" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoswitch_cli_startup_config_backup_ios" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscoswitch_cli_startup_config_upload_ios" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoswitch_cli_running_config_backup_ios" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoswitch_cli_running_config_upload_ios" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-SCP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_switch_ssh_scp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_switch_2924XLV" managementprotocolid="SSH" transferprotocolid="SCP" displayname="SSH - SCP">
+            <NCMDeviceCriteria commandmapid="SSH_SCP_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_scp_startup_config_fetch"/>
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_scp_startup_config_push" />
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_scp_running_config_fetch" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_scp_running_config_push" />
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <!-- for SNMP-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_switch_2924XLV_snmp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_switch_2924XLV" managementprotocolid="SNMP" transferprotocolid="TFTP" displayname="SNMP - TFTP">
+            <NCMDeviceCriteria commandmapid="SNMP_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_upload_copy_mib" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_snmp_running_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_snmp_running_config_upload_copy_mib" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+    <!-- For Cisco AccessPoint -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscoAIRAP350" templatename="Cisco_Aironet_AccessPoint" displayname="Cisco Aironet AccessPoint" ostype="IOS" description="For all Cisco AironetAccessPoints">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoAccessPoint" />
+
+        <NCMSupportedProtocol protocolid="SNMP">
+            <NCMDeviceCredential credentialgroupid="SNMP Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciscoAIRAP350_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscoAIRAP350" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" />
+
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciscoAIRAP350_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscoAIRAP350" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciscoAIRAP350" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscoAIRAP350" managementprotocolid="SNMP" transferprotocolid="TFTP" displayname="SNMP - TFTP">
+            <NCMDeviceCriteria commandmapid="SNMP_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_upload_copy_mib" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_snmp_running_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_snmp_running_config_upload_copy_mib" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+		
+		 <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciscoAIRAP350_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscoAIRAP350" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+                 		<!-- Hardware Prop Retrieval -->
+        <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                        <!-- Change Tracking thru Syslog -->
+        <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+        <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciscoAIRAP350_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscoAIRAP350" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+             <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+             <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+             </NCMDeviceCriteria>
+        </NCMProtocolCombination>	
+		
+		
+    </NCMDeviceTemplate>
+
+
+    <!-- For Cisco Access Server -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_accessserver_5350XM" templatename="Cisco_AccessServer" displayname="Cisco Access Server" ostype="IOS" description="For all Cisco Access Server models">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoAccessServer" />
+
+        <NCMSupportedProtocol protocolid="SNMP">
+            <NCMDeviceCredential credentialgroupid="SNMP Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_accessserver_5350XM_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_accessserver_5350XM" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_accessserver_5350XM_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_accessserver_5350XM" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_accessserver_5350XM_snmp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_accessserver_5350XM" managementprotocolid="SNMP" transferprotocolid="TFTP" displayname="SNMP - TFTP">
+            <NCMDeviceCriteria commandmapid="SNMP_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_upload_copy_mib" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_snmp_running_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_snmp_running_config_upload_copy_mib" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+    <!-- Cisco ASA Models -->
+	<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa" templatename="Cisco_ASA" displayname="Cisco ASA" ostype="ASA" description="For all Cisco ASA Models">
+		<NCMVendorDevice vendorid="Cisco" />
+		<NCMDevicePersonality personalityid="CiscoASA" />
+
+		<NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+		</NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="TFTP"/>
+
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+			<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+				<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoasa_cli_startup_config_backup" />
+				<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscoasa_cli_startup_config_upload" />
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoasa_cli_running_config_backup" />
+				<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoasa_cli_running_config_upload" />
+				<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+				<!--NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" /-->
+
+				<!-- Change Tracking thru Syslog -->
+				<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+				<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+			</NCMDeviceCriteria>
+		</NCMProtocolCombination>
+
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_accessserver_5520_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+			<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+				<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoasa_cli_startup_config_backup" />
+				<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscoasa_cli_startup_config_upload" />
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoasa_cli_running_config_backup" />
+				<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoasa_cli_running_config_upload" />
+				<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+				<!--NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" /-->
+
+				<!-- Change Tracking thru Syslog -->
+				<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+				<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+			</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_ssh1" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_asa_startup_config_backup" taskhandling="true"/>
+            <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+
+            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_asa_running_config_backup" taskhandling="true"/>
+            <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+			
+			<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_asa_backup_vlan_CLI" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_asa_CLI_backup_vlan_rec_1"/>
+	
+		   <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_upload" taskhandling="true"/>
+		   <NCMUserInputKey operationid="UploadStartupConfig" userinputkey="FileContents"/>
+
+		   <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_upload" taskhandling="true"/>
+		   <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+
+                <!-- Change Tracking thru Syslog -->
+          <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+          <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+		  <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscofirewall_cli_copy_running_to_startup"/>
+
+          </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_telnet1" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_asa_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_asa_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+		
+		<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_asa_backup_vlan_CLI" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_asa_CLI_backup_vlan_rec_1"/>
+
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_upload" taskhandling="true"/>
+		<NCMUserInputKey operationid="UploadStartupConfig" userinputkey="FileContents"/>
+
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_upload" taskhandling="true"/>
+		<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscofirewall_cli_copy_running_to_startup"/>
+
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	</NCMDeviceTemplate>
+
+<!-- For Cisco ASA 5500 MultiContext -->
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_multicontext" templatename="Cisco_ASA_MultiContext" displayname="Cisco ASA MultiContext" ostype="ASA" description="For all Cisco ASA MultiContext Models">
+    <NCMVendorDevice vendorid="Cisco" />
+    <NCMMULTICONFIGTEMPLATES devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_multicontext" configcount="2" description="To backup each 2 configs a new license required"/>
+    <NCMDevicePersonality personalityid="CiscoASA" />
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+        <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+    
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_multicontext_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_multicontext" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_asa_multicontext_running_config" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="Cisco_asa_multicontext_CLI_backup_running_rec_0"/>	
+	
+			<NCMDeviceOperation operationid="BackupContext 1" executiongroupid="cisco_asa_multicontext_backup_context1" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupContext 1" recordid="Cisco_asa_multicontext_CLI_backup_context1_rec_1"/>	
+	
+			<NCMDeviceOperation operationid="BackupContext 2" executiongroupid="cisco_asa_multicontext_backup_context2" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupContext 2" recordid="Cisco_asa_multicontext_CLI_backup_context2_rec_1"/>
+
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+    
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_multicontext_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_multicontext" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+         
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_asa_multicontext_running_config" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="Cisco_asa_multicontext_CLI_backup_running_rec_0"/>	
+	
+			<NCMDeviceOperation operationid="BackupContext 1" executiongroupid="cisco_asa_multicontext_backup_context1" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupContext 1" recordid="Cisco_asa_multicontext_CLI_backup_context1_rec_1"/>	
+	
+			<NCMDeviceOperation operationid="BackupContext 2" executiongroupid="cisco_asa_multicontext_backup_context2" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupContext 2" recordid="Cisco_asa_multicontext_CLI_backup_context2_rec_1"/>
+			
+			<!-- Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_multicontext_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_multicontext" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoasa_cli_running_config_backup" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoasa_cli_running_config_upload" />
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+
+		<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_multicontext_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_multicontext" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+	    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoasa_cli_running_config_backup" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoasa_cli_running_config_upload" />
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+
+		<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+    	</NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+
+    <!-- Cisco CatOS Switch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_catos_switch" templatename="Cisco_CatOS_Switch" displayname="Cisco CatOS Switch" ostype="CatOS" description="For all Cisco CatOS Switches">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoCatOSSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_catos_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_catos_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoswitch_cli_running_config_backup_catos" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoswitch_cli_running_config_upload_catos" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_catos_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_catos_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoswitch_cli_running_config_backup_catos" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoswitch_cli_running_config_upload_catos" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+        	<!-- Telnet -->
+		
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_catos_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_catos_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+
+			<NCMDeviceOperation operationid="BackupVlan" executiongroupid="cisco_catos_switch_backup_vlan_CLI" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupVlan" recordid="cisco_catos_switch_CLI_backup_vlan_rec_1"/>
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+				
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_catos_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_catos_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+	
+		<NCMDeviceOperation operationid="BackupVlan" executiongroupid="cisco_catos_switch_backup_vlan_CLI" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupVlan" recordid="cisco_catos_switch_CLI_backup_vlan_rec_1"/>
+	
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+    </NCMDeviceTemplate>
+
+
+ <!-- ############################################Catalyst 1900 ###################################### -->
+ 	 
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_catos_switch_1900" templatename="Cisco_CatOS_Switch_1900" displayname="Cisco CatOS Switch 1900" ostype="CatOS" description="For Cisco CatOS Switches 2900">
+    <NCMVendorDevice vendorid="Cisco" />
+ 	   <NCMDevicePersonality personalityid="CiscoCatOSSwitch" />
+ 	 
+ 	    <NCMSupportedProtocol protocolid="TELNET">
+ 	        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+ 	     </NCMSupportedProtocol>
+ 	 
+ 	 <NCMSupportedProtocol protocolid="TFTP"/>
+ 	 
+ 	 <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_catos_switch_1900_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_catos_switch_1900" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+     <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+ 	    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoswitch_cli_running_config_backup_catos_1900" />
+ 	        <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoswitch_cli_running_config_upload_catos_1900" />
+ 	    </NCMDeviceCriteria>
+ 	 </NCMProtocolCombination>
+ 	 
+ 	 
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_catos_switch_1900_cli_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_catos_switch_1900" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+ 	 
+ 	 <NCMDeviceCriteria commandmapid="TELNET_Command">
+ 	    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoswitch_cli_running_config_backup_catos_1900_telnet" taskhandling="true"/>
+ 	    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+ 	    
+ 	    <NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_CatOS_Switch_1900_backup_vlan_CLI" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_CatOS_Switch_1900_CLI_backup_vlan_rec_1"/>
+ 	  </NCMDeviceCriteria>
+  
+  </NCMProtocolCombination>
+ 	 
+</NCMDeviceTemplate>
+    
+    <!-- For Cisco Content Switch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_contentswitch" templatename="Cisco_Content_Switch" displayname="Cisco Content Switch" description="For all Cisco Content Switches">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoContentSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_contentswitch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_contentswitch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscocontentswitch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscocontentswitch_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscocontentswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscocontentswitch_cli_running_config_upload" />
+
+                <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_contentswitch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_contentswitch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscocontentswitch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscocontentswitch_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscocontentswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscocontentswitch_cli_running_config_upload" />
+
+                <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+    <!-- For Cisco Firewall 7.x version -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall_v_7" templatename="Cisco_PIX_Firewall_Version_7" displayname="Cisco PIX Firewall Version 7.x" ostype="PIX" description="For all Cisco PIX firewalls with 7.x Version and above">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoFirewall" />
+
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_pix_firewall_v_7_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall_v_7" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v7_cli_startup_config_backup"/>
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_firewall_v7_cli_startup_config_push" />
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v7_cli_running_config_backup" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_firewall_v7_cli_running_config_push" />
+
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscofirewall_cli_copy_running_to_startup"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_pix_firewall_v_7_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall_v_7" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v7_cli_startup_config_backup"/>
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_firewall_v7_cli_startup_config_push" />
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v7_cli_running_config_backup" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_firewall_v7_cli_running_config_push" />
+
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscofirewall_cli_copy_running_to_startup"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+    <!-- For Cisco Firewall -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall" templatename="Cisco_PIX_Firewall_Version_6" displayname="Cisco PIX Firewall Version 6.x" ostype="PIX" description="For all Cisco PIX firewalls with 6.x Version">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoFirewall" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_pix_firewall_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+
+
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_upload" taskhandling="true"/>
+		<NCMUserInputKey operationid="UploadStartupConfig" userinputkey="FileContents"/>
+
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_upload" taskhandling="true"/>
+		<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscofirewall_cli_copy_running_to_startup"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_pix_firewall_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+
+
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_upload" taskhandling="true"/>
+		<NCMUserInputKey operationid="UploadStartupConfig" userinputkey="FileContents"/>
+
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_upload" taskhandling="true"/>
+		<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscofirewall_cli_copy_running_to_startup"/>
+
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+    <!-- For Cisco PIX Firewall Software Module (FWSM) -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:SVC_FMW_1" templatename="Cisco_PIX_Firewall_FWSM" displayname="Cisco PIX FWSM" ostype="PIX" description="For all Cisco PIX Firewall Software Modules">
+        <NCMVendorDevice vendorid="Cisco"/>
+        <NCMDevicePersonality personalityid="CiscoFirewall"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+
+        <!-- SSH - TFTP -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:SVC_FMW_1_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:SVC_FMW_1"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+					
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+			
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet - tftp  -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:SVC_FMW_1_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:SVC_FMW_1"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+					
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <!-- telnet -->
+        <!--################################################ -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:SVC_FMW_1_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:SVC_FMW_1" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_backup" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+			
+			
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+			
+			
+					
+			<!--Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+					
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:SVC_FMW_1_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:SVC_FMW_1" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+			
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_backup" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+			
+			
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+			
+			
+					
+			<!--Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+					
+        </NCMDeviceCriteria>
+
+
+        <!--################################################ -->
+
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+    <!-- For Cisco IAD Devices -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_iad" templatename="Cisco_IAD" displayname="Cisco IAD" ostype="IOS" description="For all Cisco IAD Devices">
+
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoIAD" />
+
+        <NCMSupportedProtocol protocolid="SNMP">
+            <NCMDeviceCredential credentialgroupid="SNMP Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_iad_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_iad" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_iad_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_iad" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SNMP-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_iad_snmp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_iad" managementprotocolid="SNMP" transferprotocolid="TFTP" displayname="SNMP - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SNMP_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_upload_copy_mib" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_snmp_running_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_snmp_running_config_upload_copy_mib" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+    <!-- Cisco Voice Gateway -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_vg" templatename="Cisco_VoiceGateway" displayname="Cisco Voice Gateway" ostype="IOS" description="For all Cisco Voice Gateway Devices">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoVoiceGateway" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+    </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_vg_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_vg" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_vg_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_vg" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+
+        </NCMProtocolCombination>
+        
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_vg_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_vg" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+				<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_vg_cli_startup_config_backup" taskhandling="true"/>
+				<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_vg_CLI_backup_startup_rec_1"/>
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_vg_cli_running_config_backup" taskhandling="true"/>
+				<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_vg_CLI_backup_running_rec_1"/>
+		   </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_vg_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_vg" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+				<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_vg_cli_startup_config_backup" taskhandling="true"/>
+				<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_vg_CLI_backup_startup_rec_1"/>
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_vg_cli_running_config_backup" taskhandling="true"/>
+				<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_vg_CLI_backup_running_rec_1"/>
+          </NCMDeviceCriteria>
+</NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+    <!-- Cisco VPN Concentrator -->
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_vpn_cntr" templatename="Cisco_VPN_Concentrator" displayname="Cisco VPN Concentrator" description="For all Cisco VPN Concentrator Devices">
+<NCMVendorDevice vendorid="Cisco" />
+<NCMDevicePersonality personalityid="CiscoVPNConcentrator" />
+
+<NCMSupportedProtocol protocolid="TELNET">
+<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="SSH">
+<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="TFTP"/>
+
+<!-- for TELNET-TFTP -->
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_vpn_cntr_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_vpn_cntr" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+    <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="CiscoVPNConcentrator_TELNET_Startup_Config_Fetch" />
+    </NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+<!-- for SSH-TFTP -->
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_vpn_cntr_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_vpn_cntr" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="CiscoVPNConcentrator_TELNET_Startup_Config_Fetch" />
+    </NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+<!-- For Cisco MDS -->
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscomds"  templatename="Cisco_MDS_Switch" displayname="Cisco MDS Switch" ostype="SAN_OS" description="For all Cisco MDS Devices">
+<NCMVendorDevice vendorid="Cisco" />
+<NCMDevicePersonality personalityid="CiscoMDS" />
+
+<NCMSupportedProtocol protocolid="TELNET">
+<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="SSH">
+<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="TFTP"/>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciscomds_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscomds" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="CiscoMDS_CLI_Startup_Config_Backup" />
+    <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="CiscoMDS_CLI_Startup_Config_Push" />
+    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="CiscoMDS_CLI_Running_Config_Backup" />
+    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="CiscoMDS_CLI_Running_Config_Push" />
+    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="CiscoMDS_CLI_Copy_Running_To_Startup" />
+
+    <!--
+    <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="Cisco_TELNET_Any_Command_In_Normal_Mode" /> -->
+	
+	<!-- Change Tracking thru Syslog -->
+    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_mds_cli_enable_syslog_change_tracking" />
+    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_mds_cli_disable_syslog_change_tracking" />
+
+
+</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciscomds_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciscomds" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="CiscoMDS_CLI_Startup_Config_Backup" />
+    <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="CiscoMDS_CLI_Startup_Config_Push" />
+    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="CiscoMDS_CLI_Running_Config_Backup" />
+    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="CiscoMDS_CLI_Running_Config_Push" />
+    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="CiscoMDS_CLI_Copy_Running_To_Startup" />
+    <!--
+    <NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="Cisco_TELNET_Any_Command_In_Normal_Mode" /> -->	
+	
+	<!-- Change Tracking thru Syslog -->
+    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_mds_cli_enable_syslog_change_tracking" />
+    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_mds_cli_disable_syslog_change_tracking" />
+
+
+</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+<!-- For Cisco WLAN Controller -->
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_wlan_controller"  templatename="Cisco_WLAN_Controller" displayname="Cisco WLAN Controller" ostype="Controller OS" description="For all Cisco WLAN Controller">
+<NCMVendorDevice vendorid="Cisco" />
+<NCMDevicePersonality personalityid="CiscoWLANController" />
+
+<NCMSupportedProtocol protocolid="TELNET">
+<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="SSH">
+<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="TFTP"/>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_wlan_controller_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_wlan_controller" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_wlan_cli_running_config_backup" />
+	<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_wlan_cli_running_config_push" />
+</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_wlan_controller_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_wlan_controller" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_wlan_cli_running_config_backup" />
+    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_wlan_cli_running_config_push" />
+</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+ <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_wlan_controller_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_wlan_controller" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_wlan_cli_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_wlan_cli_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_wlan_cli_show_run_config_rec"/>
+		   </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_wlan_controller_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_wlan_controller" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_wlan_cli_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_wlan_cli_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_wlan_cli_show_run_config_rec"/>
+          </NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+<!-- For Cisco WAAS -->
+	<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_WAAS" templatename="Cisco_WAAS" ostype="WAAS" displayname="Cisco WAAS" description="For Cisco Wide Area Application Services Software">
+	<NCMVendorDevice vendorid="Cisco" />
+	<NCMDevicePersonality personalityid="CiscoWAAS" />
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="TFTP"/>
+	
+	<!-- Telnet-TFTP -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_WAAS_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_WAAS" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscocontentswitch_cli_startup_config_backup"/>		
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscocontentswitch_cli_startup_config_upload" />		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscocontentswitch_cli_startup_config_backup" />		
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_waas_cli_running_config_upload" />		
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+		
+		<!--Hardware Prop Retrieval -->
+			<NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+			
+			<!--Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscowaas_cli_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscowaas_cli_disable_syslog_change_tracking" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+		
+	<!-- Telnet -->
+		
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_WAAS_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_WAAS" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+			
+			
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+			
+			<!--Hardware Prop Retrieval -->
+					<NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+					
+					<!--Change Tracking thru Syslog -->
+					<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscowaas_cli_enable_syslog_change_tracking" />
+					<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscowaas_cli_disable_syslog_change_tracking" />
+					
+				</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+				
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_WAAS_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_WAAS" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+		
+		
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+		
+		<!--Hardware Prop Retrieval-->
+			<NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+			
+			<!--Change Tracking thru Syslog-->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscowaas_cli_enable_syslog_change_tracking" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscowaas_cli_disable_syslog_change_tracking" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+					
+	<!-- for SSH-TFTP-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_WAAS_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_WAAS" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+		
+	    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscocontentswitch_cli_startup_config_backup"/>		
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscocontentswitch_cli_startup_config_upload" />		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscocontentswitch_cli_startup_config_backup" />		
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_waas_cli_running_config_upload" />		
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />	
+		
+		<!--Hardware Prop Retrieval-->
+				<NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+				
+				<!--Change Tracking thru Syslog-->
+				<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscowaas_cli_enable_syslog_change_tracking" />
+				<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscowaas_cli_disable_syslog_change_tracking" />
+				
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+		
+</NCMDeviceTemplate>
+
+
+<!-- ciscoacemodule -->
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ace_module" templatename="Cisco_ACE_Module" displayname="Cisco ACE Module" ostype="ACSW" description="For all Cisco ACE Module">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoACEModule" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ace_module_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ace_module" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_ace_cli_startup_config_backup"/>
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_ace_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_ace_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_ace_cli_running_config_upload" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ace_module_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ace_module" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_ace_cli_startup_config_backup"/>
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_ace_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_ace_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_ace_cli_running_config_upload" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+	           
+
+                 <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+                </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ace_module_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ace_module" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+		         <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		         <NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+	             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		         <NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+
+		    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+          
+            <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+            </NCMProtocolCombination>
+
+     <!-- for Telnet -->
+     <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_ace_module_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_ace_module" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+     
+         <NCMDeviceCriteria commandmapid="TELNET_Command">
+		 
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		     <NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		     <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+	         <NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+     	     <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+
+             <!-- Change Tracking thru Syslog -->
+             <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+             <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+    
+    <!-- For Cisco IOS XR -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_IOSXR" templatename="Cisco_IOSXR" ostype="IOS XR" displayname="Cisco IOS XR" description="For Cisco IOS XR Software">
+	    <NCMVendorDevice vendorid="Cisco" />
+	    <NCMDevicePersonality personalityid="CiscoIOSXR" />
+	    <NCMSupportedProtocol protocolid="TELNET">
+		    <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	    </NCMSupportedProtocol>
+	    
+	    <NCMSupportedProtocol protocolid="SSH">
+		    <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	    </NCMSupportedProtocol>
+	    
+	    <NCMSupportedProtocol protocolid="TFTP"/>
+	    
+		<!-- Telnet-TFTP -->
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_IOSXR_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_IOSXR" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+			<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+				
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_ace_cli_running_config_backup" />
+				
+				<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_ace_cli_startup_config_upload" />
+				
+				
+				<!--NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />-->
+			
+					<!--Hardware Prop Retrieval--> 
+					<NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+					
+					<!--Change Tracking thru Syslog -->
+					<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+					<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+					
+				</NCMDeviceCriteria>
+			</NCMProtocolCombination>
+		 
+		<!-- Telnet -->
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_IOSXR_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_IOSXR" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+			
+			<NCMDeviceCriteria commandmapid="TELNET_Command">
+				
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+				<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+				
+				<!--<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />-->
+				
+				<!--Hardware Prop Retrieval -->
+					<NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+					
+					<!--Change Tracking thru Syslog -->
+					<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+					<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />-->
+					
+				</NCMDeviceCriteria>
+			</NCMProtocolCombination>
+			
+		<!-- SSH -->
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_IOSXR_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_IOSXR" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+			<NCMDeviceCriteria commandmapid="SSH_Command">
+				
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+				<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+				
+				<!--<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />-->
+				
+				<!--Hardware Prop Retrieval-->
+						<NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+						
+						<!--Change Tracking thru Syslog-->
+						<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+						<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+						
+					</NCMDeviceCriteria>
+				</NCMProtocolCombination>
+				
+		<!-- for SSH-TFTP-->
+		
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_IOSXR_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_IOSXR" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+			
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_ace_cli_running_config_backup" />
+				
+				<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_ace_cli_startup_config_upload" />
+				
+				
+			
+				<!--<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />-->
+				
+				<!--Hardware Prop Retrieval-->
+					<NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+					
+					<!--Change Tracking thru Syslog-->
+					<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+					<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+					
+			</NCMDeviceCriteria>
+			</NCMProtocolCombination>
+							
+        </NCMDeviceTemplate>
+
+
+        <!--  ########################################## Cisco 1800 Integrated Services Router (ISR) ################################ -->
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_1800_integrated_services_router" templatename="Cisco_Integrated_Services_Router" displayname="Cisco Integrated Services Router ISR" ostype="IOS" description="For all Integrated Services Router series">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoRouter"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+         <NCMSupportedProtocol protocolid="SNMP">
+            <NCMDeviceCredential credentialgroupid="SNMP Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+
+        <!-- ###### WE ARE REUSING RECORDS DEFINED FOR ROUTERS FOR SNMP ALONE -->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_integrated_servies_router_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_1800_integrated_services_router" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+           
+                <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoswitch_cli_startup_config_backup_ios" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscoswitch_cli_startup_config_upload_ios" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoswitch_cli_running_config_backup_ios" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoswitch_cli_running_config_upload_ios" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+                
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_integrated_services_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_1800_integrated_services_router" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+			<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_Integrated_Services_Router_backup_vlan_CLI" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_Integrated_Services_Router_CLI_backup_vlan_rec_1"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_integrated_services_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_1800_integrated_services_router" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+         
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+			<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_Integrated_Services_Router_backup_vlan_CLI" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_Integrated_Services_Router_CLI_backup_vlan_rec_1"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_integrated_series_router_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_1800_integrated_services_router" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            
+                <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoswitch_cli_startup_config_backup_ios" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscoswitch_cli_startup_config_upload_ios" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoswitch_cli_running_config_backup_ios" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoswitch_cli_running_config_upload_ios" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+                
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SNMP-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_integrated_series_router_snmp_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_1800_integrated_services_router" managementprotocolid="SNMP" transferprotocolid="TFTP" displayname="SNMP - TFTP">
+            <NCMDeviceCriteria commandmapid="SNMP_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_snmp_startup_config_upload_copy_mib" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_snmp_running_config_backup_copy_mib" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_snmp_running_config_upload_copy_mib" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+    <!-- ############################################ -->
+
+       <!--  ########################################## Cisco 4200 IDS Sensors (intrusions Detection)################################ -->
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_4200_intrusions_detection_sensors" templatename="Cisco_Intrusions_Detection_Sensor" displayname="Cisco Intrusions Detection Sensor IDS" description="For Cisco 4200 Intrusion Detection Sensor">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoIDS"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+         <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_4200_sensors_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_4200_intrusions_detection_sensors" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoids_generic_telnet_show_config" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="ciscoids_generic_show_config_rec"/>
+
+        <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscoids_copy_cur_confing_to_backupconfig" taskhandling="true"/>
+		<NCMReadFromResponse operationid="CopyRunningToStartup" recordid="ciscoids_copy_cur_to_backupconfig"/>
+        </NCMDeviceCriteria>
+
+         </NCMProtocolCombination>
+
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_4200_sensors_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_4200_intrusions_detection_sensors" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoids_generic_telnet_show_config" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="ciscoids_generic_show_config_rec"/>
+
+        <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscoids_copy_cur_confing_to_backupconfig" taskhandling="true"/>
+		<NCMReadFromResponse operationid="CopyRunningToStartup" recordid="ciscoids_copy_cur_to_backupconfig"/>
+        </NCMDeviceCriteria>
+
+        </NCMProtocolCombination>
+
+
+
+    </NCMDeviceTemplate>
+
+    <!-- ############################################ -->
+
+<!-- For Cisco Nexus Switches -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_nexus_switch" templatename="Cisco_Nexus_Switch" displayname="Cisco Nexus Switch" ostype="Nexus" description="For all Cisco Nexus Switches">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoNexusSwitch"/>
+
+        <NCMSupportedProtocol protocolid="SNMP">
+            <NCMDeviceCredential credentialgroupid="SNMP Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_nexus_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_nexus_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisconexusswitch_cli_startup_config_backup" />
+               <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisconexusswitch_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisconexusswitch_cli_running_config_backup" />
+               <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisconexusswitch_cli_running_config_upload" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />     
+        					<!-- Change Tracking thru Syslog -->
+          <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisconexus_enable_syslog_change_tracking" />
+          <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisconexus_disable_syslog_change_tracking" />           
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_nexus_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_nexus_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />    
+        					<!-- Change Tracking thru Syslog -->
+          <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisconexus_enable_syslog_change_tracking" />
+          <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisconexus_disable_syslog_change_tracking" />      
+            
+	        <NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_Nexus_Switch_backup_vlan_CLI" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_Nexus_Switch_CLI_backup_vlan_rec_1"/>
+         
+         </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_nexus_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_nexus_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />     
+        					<!-- Change Tracking thru Syslog -->
+          <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisconexus_enable_syslog_change_tracking" />
+          <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisconexus_disable_syslog_change_tracking" />           
+        
+        <NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_Nexus_Switch_backup_vlan_CLI" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_Nexus_Switch_CLI_backup_vlan_rec_1"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_nexus_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_nexus_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisconexusswitch_cli_startup_config_backup" />
+                 <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisconexusswitch_cli_startup_config_upload" /> 
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisconexusswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisconexusswitch_cli_running_config_upload" /> 
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />         
+        					<!-- Change Tracking thru Syslog -->
+          <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisconexus_enable_syslog_change_tracking" />
+          <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisconexus_disable_syslog_change_tracking" />       
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>           
+</NCMDeviceTemplate>
+
+<!-- Cisco ASA with Interface value Models -->
+
+	<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_int" templatename="Cisco_ASA_INT" displayname="Cisco ASA WAN" ostype="ASA" description="For all Cisco ASA Models">
+		<NCMVendorDevice vendorid="Cisco" />
+		<NCMDevicePersonality personalityid="CiscoASA" />
+
+		<NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+		</NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="TFTP"/>
+
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_int_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_int" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+			<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+				<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoasa_int_cli_startup_config_backup" />
+				<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscoasa_int_cli_startup_config_upload" />
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoasa_int_cli_running_config_backup" />
+				<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoasa_int_cli_running_config_upload" />
+				<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+				<!--NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" /-->
+
+				<!-- Change Tracking thru Syslog -->
+				<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+				<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+			</NCMDeviceCriteria>
+		</NCMProtocolCombination>
+
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_accessserver_int_5520_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_int" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+			<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+				<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscoasa_int_cli_startup_config_backup" />
+				<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscoasa_int_cli_startup_config_upload" />
+				<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscoasa_int_cli_running_config_backup" />
+				<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscoasa_int_cli_running_config_upload" />
+				<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+				<!--NCMDeviceOperation operationid="ExecuteCommandInNormalMode" executiongroupid="cisco_cli_any_command_in_normal_mode" /-->
+
+				<!-- Change Tracking thru Syslog -->
+				<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+				<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+			</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_ssh2" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_int"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+            <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+
+            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_backup" taskhandling="true"/>
+            <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+
+			<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_asa_wan_backup_vlan_CLI" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_asa_wan_CLI_backup_vlan_rec_1"/>
+
+		   <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_upload" taskhandling="true"/>
+		   <NCMUserInputKey operationid="UploadStartupConfig" userinputkey="FileContents"/>
+
+		   <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_upload" taskhandling="true"/>
+		   <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+
+                <!-- Change Tracking thru Syslog -->
+          <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+          <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+		  <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscofirewall_cli_copy_running_to_startup"/>
+
+          </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asa_telnet2" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asa_int"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+		
+		<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_asa_wan_backup_vlan_CLI" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_asa_wan_CLI_backup_vlan_rec_1"/>
+		
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_upload" taskhandling="true"/>
+		<NCMUserInputKey operationid="UploadStartupConfig" userinputkey="FileContents"/>
+
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_upload" taskhandling="true"/>
+		<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="ciscofirewall_cli_copy_running_to_startup"/>
+
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	</NCMDeviceTemplate>
+
+<!-- For Cisco PIX FWSM Firewall Version 4.0(5) -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall_fwsm_v4" templatename="Cisco_PIX_Firewall_FWSM_V4" displayname="Cisco PIX FWSM 4.x" ostype="PIX" description="For all Cisco PIX Firewall Software Modules">
+        <NCMVendorDevice vendorid="Cisco"/>
+        <NCMDevicePersonality personalityid="CiscoFirewall"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+
+        <!-- SSH - TFTP -->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:Cisco_FWSM_v4_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall_fwsm_v4"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_fwsm_cli_running_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+					
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+			
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet - tftp  -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:Cisco_FWSM_v4_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall_fwsm_v4"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_fwsm_cli_running_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+					
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <!-- telnet -->
+        <!--################################################ -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:Cisco_FWSM_v4_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall_fwsm_v4" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_backup" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+			
+			
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+			
+			
+					
+			<!--Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+					
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:Cisco_FWSM_v4_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_pix_firewall_fwsm_v4" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+			
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_firewall_v6_cli_startup_config_backup" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_pix_startup"/>
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_firewall_v6_cli_running_config_backup" taskhandling="true"/>
+			
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_pix_running"/>
+			
+			
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+			
+			
+					
+			<!--Change Tracking thru Syslog -->
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="ciscofirewall_disable_syslog_change_tracking" />
+					
+        </NCMDeviceCriteria>
+
+
+        <!--################################################ -->
+
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+	
+	                                                    <!-- For Cisco ASR Router -->
+	
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asr_router" templatename="Cisco_ASR_Router" displayname="Cisco ASR Router" ostype="IOS XR" description="For all Cisco ASR9K routers">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoASRRouter" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asr_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asr_router"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_asr_router_cli_startup_config_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_cisco_asr_router_startup"/>
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_asr_router_cli_running_config_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_cisco_asr_router_running"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asr_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asr_router"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_asr_router_cli_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_cisco_asr_router_startup"/>
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_asr_router_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_cisco_asr_router_running"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+    </NCMDeviceTemplate>
+
+	
+	    <!-- For Cisco Ironport  -->
+		
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_iron_port" templatename="Cisco_Iron_Port" displayname="Cisco Ironport" ostype="Ironport Async" description="For all Cisco Ironport Series C and S ">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoIronport" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_iron_port_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_iron_port"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+			
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_iron_port_cli_running_config_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_iron_port_running"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_iron_port_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_iron_port"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_iron_port_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_iron_port_running"/>
+
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+	
+	    <!-- For Cisco 300 Switch  -->
+		
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_300_switch" templatename="Cisco_300_Switch" displayname="Cisco 300 Series Switch" ostype="NA" description="For all cisco 300 series switch">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoSBSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_300_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_300_switch"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+		
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_300_switch_cli_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_cisco_300_switch_startup"/>
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_300_switch_cli_running_config_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_cisco_300_switch_running"/>
+		
+		<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_300_Switch_backup_vlan_CLI" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_300_Switch_CLI_backup_vlan_rec_1"/>
+        
+         <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_300_switch_sync_config" />
+         
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_300_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_300_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="cisco_300_switch_cli_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_cisco_300_switch_startup"/>
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_300_switch_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_cisco_300_switch_running"/>
+
+				<NCMDeviceOperation operationid="BackupVlan" executiongroupid="Cisco_300_Switch_backup_vlan_CLI" taskhandling="true"/>
+				<NCMReadFromResponse operationid="BackupVlan" recordid="Cisco_300_Switch_CLI_backup_vlan_rec_1"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_300_switch_sync_config" />
+                
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+	
+		    <!-- For Cisco ASR Mobile Gateway  -->
+		
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asr_5000" templatename="Cisco_ASR_5000" displayname="Cisco ASR Mobile Gateway" ostype="NA" description="For all Cisco Systems ASR5000 Intelligent Mobile Gateway">
+        <NCMVendorDevice vendorid="Cisco" />
+        <NCMDevicePersonality personalityid="CiscoASRMobileGateway" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asr_5000_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asr_5000"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+		
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_asr_5000_cli_running_config_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_asr_5000_running_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:cisco_asr_5000_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:cisco_asr_5000"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="cisco_asr_5000_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_asr_5000_running_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+	
+</DeviceConfiguration>

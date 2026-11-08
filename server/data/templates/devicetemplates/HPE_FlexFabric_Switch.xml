@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="HPE FlexFabric Switch" osType="[NA]" templateName="HPE_FlexFabric_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="HPE" vendorName="HP">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="info" number="7" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="screen-length disable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display saved-configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="screen-length disable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display current-configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>            	
+            	<Operation name="Vlan">
+                	<Command commandstr="screen-length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display vlan" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="130000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="130000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="40" timeout="130000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="130000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="undo info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="130000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="130000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="HPE FlexFabric Switch" personalityName="HPEFlexFabricSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="continue" postlogincommand="" preloginprompt="continue" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SDRAM" size="100" desc="SDRAM" displayname="SDRAM" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="NOR_FLASH" size="100" desc="NOR-Flash" displayname="NOR Flash" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="NAND_FLASH" size="100" desc="NAND-Flash" displayname="NAND Flash" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="CONFIG_REGISTER" size="15" desc="Config Register" displayname="Config Register" defaultvalue="Not Available" sequenceid="5"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>.*Running\s*configuration.*</Regex>
+					<Regex>.*Startup\s*configuration:.*</Regex>
+					<Regex>.*show\s*running-config.*</Regex>
+					<Regex>.*show\s*config.*</Regex>
+					<Regex operation="upload">^password.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>info-center loghost $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HPEFlexFabricSwitchPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_hp_flex_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MODEL1" EXPRESSION=".*(?i)PRODUCT\s*_*NUMBER\s*:\s*(\S+).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL2" EXPRESSION=".*(?i)DEVICE\s*_*NAME\s*:\s*.*(J\S+).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL3" EXPRESSION=".*(?i)DEVICE\s*_*NAME\s*:\s*(.*)">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIES1" EXPRESSION=".*(?i)DEVICE\s*_*NAME\s*:\s*(\S+).*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*(?i)SERIAL\s*_*NUMBER\s*:\s*(\S+).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*(?i)MAC\s*_*ADDRESS\s*:\s*(\S+).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SDRAM" EXPRESSION="(\S*)\s*bytes\s*SDRAM.*">
+											<PARAM NAME="SDRAM" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="NOR_FLASH" EXPRESSION="(\S*)\s*bytes\s*Nor\s*Flash\s*Memory.*">
+											<PARAM NAME="NOR_FLASH" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="NAND_FLASH" EXPRESSION="(\S*)\s*bytes\s*Nand\s*Flash\s*Memory.*">
+											<PARAM NAME="NAND_FLASH" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="CONFIG_REGISTER" EXPRESSION=".*Config\s*Register points to (.*)">
+											<PARAM NAME="CONFIG_REGISTER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="IMAGEFILENAME" EXPRESSION=".*Boot\s*image\s*:\s*(.*)">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION1" EXPRESSION=".*Boot\s*image\s*version:\s*(.*)">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="(?i)(?:HP|HPE|.*)\s*(\S+\sSoftware),\s*Version\s*(\S+),.*" NAME="OSVERSION2">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*SERIAL_NUMBER\s*:\s*(\S*).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*MAC_ADDRESS\s*:\s*(\S*).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" parsercommandname="hardware_prop_hp_flex_switch" responseparserid="hpe_flexFabric_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+						<Command commandstr="display device manuinfo" parsercommandname="hardware_prop_hp_flex_switch" responseparserid="hpe_flexFabric_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

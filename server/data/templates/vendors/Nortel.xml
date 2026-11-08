@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Nortel BayStack Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_380_24T" templatename="Nortel_BayStack_Switch" displayname="Nortel BayStack Switch" description="For all Nortel BayStack Switches">
+        <NCMVendorDevice vendorid="Nortel"/>
+        <NCMDevicePersonality personalityid="NortelBayStackSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_baystack_switch_380_24T_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_380_24T"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelbaystackswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelbaystackswitch_cli_running_config_upload" taskhandling="true"/>
+
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="nortelbaystackswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="nortelbaystackswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_baystack_switch_380_24T_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_380_24T"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelbaystackswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelbaystackswitch_cli_running_config_upload" taskhandling="true"/>
+
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="nortelbaystackswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="nortelbaystackswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+    <!-- For Nortel BayStack Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_clm" templatename="Nortel_BayStack_Switch_Direct_CommandLine_Mode" displayname="Nortel BayStack Switch - CommandLine Mode" description="For all Nortel BayStack Switches directly logged into commandline mode">
+        <NCMVendorDevice vendorid="Nortel"/>
+        <NCMDevicePersonality personalityid="NortelBayStackSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_baystack_switch_clm_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_clm"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelbaystackswitch_clm_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelbaystackswitch_clm_cli_running_config_upload" taskhandling="true"/>
+
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="nortelbaystackswitch_clm_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="nortelbaystackswitch_clm_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_baystack_switch_clm_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_clm"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelbaystackswitch_clm_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelbaystackswitch_clm_cli_running_config_upload" taskhandling="true"/>
+
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="nortelbaystackswitch_clm_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="nortelbaystackswitch_clm_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+    <!-- For Nortel Passport 1600 Series Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_passport_switch_1612G" templatename="Nortel_Passport_1600_Series_Switch" displayname="Nortel Passport 1600 Series Switch" description="For all Nortel Passport 1600 Series Switches">
+        <NCMVendorDevice vendorid="Nortel"/>
+        <NCMDevicePersonality personalityid="NortelPassportSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_passport_switch_1612G_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_passport_switch_1612G"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelpassportswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelpassportswitch_cli_running_config_upload" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_passport_switch_1612G_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_passport_switch_1612G"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelpassportswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelpassportswitch_cli_running_config_upload" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	
+</NCMDeviceTemplate>
+
+
+
+
+    <!-- For Nortel Passport 8600 Series Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_passport_switch_8610" templatename="Nortel_Passport_8600_Series_Switch" displayname="Nortel Passport 8600 Series Switch" description="For all Nortel Passport 8600 Series Switches">
+        <NCMVendorDevice vendorid="Nortel"/>
+        <NCMDevicePersonality personalityid="NortelPassportSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_passport_switch_8610_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_passport_switch_8610"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelpassportswitch_8600_cli_running_config_backup" />
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_passport_switch_8610_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_passport_switch_8610"
+	managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+	<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelpassportswitch_8600_cli_running_config_backup" />
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+    <!-- For BayStack Business Policy Switch 2000 -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_bp_switch_2000" templatename="Nortel_BayStack_Business_Policy_2000_Series_Switch" displayname="Nortel BayStack Business Policy Switch" description="For all Nortel BayStack Business Policy 2000 Series Switches">
+        <NCMVendorDevice vendorid="Nortel"/>
+        <NCMDevicePersonality personalityid="NortelBayStackSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_bp_switch_2000_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_bp_switch_2000"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelbaystackswitch_bps_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelbaystackswitch_cli_running_config_upload" taskhandling="true"/>
+
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_bp_switch_2000_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_bp_switch_2000"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelbaystackswitch_bps_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelbaystackswitch_cli_running_config_upload" taskhandling="true"/>
+
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+    <!-- For BayStack Switch 460 -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_460_24T_pwr" templatename="Nortel_BayStack_460_Series_Switch" displayname="Nortel BayStack 460 Series Switch" description="For all Nortel BayStack 460 Series Switches">
+        <NCMVendorDevice vendorid="Nortel" />
+        <NCMDevicePersonality personalityid="NortelBayStackSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+	
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_baystack_switch_460_24T_pwr_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_460_24T_pwr" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelbaystackswitch_bps_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelbaystackswitch_cli_running_config_upload" taskhandling="true"/>
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_baystack_switch_460_24T_pwr_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_baystack_switch_460_24T_pwr" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelbaystackswitch_bps_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelbaystackswitch_cli_running_config_upload" taskhandling="true"/>
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+    <!-- For Nortel Contivity VPN Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_contivity_vpnrouter" templatename="Nortel_Contivity_VPNRouter" displayname="Nortel Contivity VPN Router" description="For all Nortel Contivity VPN Routers">
+        <NCMVendorDevice vendorid="Nortel"/>
+        <NCMDevicePersonality personalityid="NortelContivityVPNRouter"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_contivity_vpnrouter_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_contivity_vpnrouter" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelcontivityrouter_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="nortel_contivity_vpnrouter_fetch_config_rec2"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_contivity_vpnrouter_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_contivity_vpnrouter" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelcontivityrouter_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="nortel_contivity_vpnrouter_fetch_config_rec2"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+    <!-- For Nortel Layer2-3 Gb Ethernet Switch Module -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_switch_module" templatename="Nortel_Switch_Module" displayname="Nortel Layer2-3 GbE Switch Module" description="For all Nortel Switch Module">
+        <NCMVendorDevice vendorid="Nortel"/>
+        <NCMDevicePersonality personalityid="NortelSwitchModule"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_switch_module_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_switch_module" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortelswitchmodule_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="nortelswitchmodule_cli_running_config_upload"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+    
+    <!-- For Nortel 2625T-PWR Switches -->
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_2625t_pwr_switch" templatename="Nortel_PWR_Switch" displayname="Nortel PWR Switch" description="For all Nortel PWR Switches">
+        <NCMVendorDevice vendorid="Nortel"/>
+        <NCMDevicePersonality personalityid="NortelPWRSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+	
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_2625t_pwr_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_2625t_pwr_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortel_pwrswitch_cli_running_config_backup_telnet_tftp" />
+
+
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nortel_2625t_pwr_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nortel_2625t_pwr_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             	  <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nortel_pwrswitch_cli_running_config_backup_telnet" taskhandling="true"/>
+		  <NCMReadFromResponse operationid="BackupRunningConfig" recordid="nortel_pwrswitch_cli_fetch_config_rec"/>
+
+	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+
+
+
+</NCMDeviceTemplate>
+
+
+</DeviceConfiguration>

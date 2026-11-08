@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Nokia SR OS" osType="SR OS" templateName="Nokia_SR_OS" multiConfigTemplate="false" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Nokia" vendorName="Nokia">
+		<Commands>
+			<Command commandstr="show hardware info"/>
+			<Command commandstr="show configuration snapshot"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="info" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="60000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="NokiaSROS" personalityName="NokiaSROS">
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="PARTNUMBER" size="100" desc="" displayname="Part Number" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="BUILDNUMBER" size="100" desc="" displayname="Build Number" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="TOTALMEM" size="100" desc="" displayname="Total Memory" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="FREEMEM" size="100" desc="" displayname="Free Memory" defaultvalue="Not Available" sequenceid="4"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="NokiaSROSHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_nokia_sr_os_show_ver">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">				
+										<REGEX NAME="OSVERSION" EXPRESSION=".*(?i)Software\sVersion\s*:\s*(\S+).*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*(?i)Chassis\sType\s*:\s*(\S+)\s(\S+).*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*(?i)Serial\s*Number\s*:\s*(\S+).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*(?i)MAC\s*Address\s*:\s*(\S+).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX NAME="PARTNUMBER" EXPRESSION=".*(?i)Part\s*Number\s*:\s*(\S+).*">
+											<PARAM NAME="PARTNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BUILDNUMBER" EXPRESSION=".*(?i)Build\s*Number\s*:\s*(\S+).*">
+											<PARAM NAME="BUILDNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="TOTALMEM" EXPRESSION=".*(?i)Total\s*Memory\s*:\s*(.*)">
+											<PARAM NAME="TOTALMEM" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="FREEMEM" EXPRESSION=".*(?i)Free\s*Memory\s*:\s*(.*)">
+											<PARAM NAME="FREEMEM" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_nokia_sr_os_show_ver" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

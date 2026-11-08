@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For EtherWAN EX Series Switch devices" displayName="EtherWAN EX Series Switch" osType="" templateName="EtherWAN EX Series Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="EtherWAN" vendorName="EtherWAN">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show hardware"/>
+			<Command commandstr="show firmware"/>
+			<Command commandstr="show product series"/>
+			<Command commandstr="show product series2"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write memory" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="EtherWAN EX Series Switch" personalityName="EtherWANEXSeriesSwitch">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Software Version" displayname="Software Version" name="SOFTWARE_VERSION" sequenceid="1" size="50"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="EtherWANHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_etherwan_ex_series_switch1">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Version (\S*).*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>	  
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>	
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						<COMMAND NAME="hardware_prop_etherwan_ex_series_switch2">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MODEL" EXPRESSION="(^\S+).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>	  
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						<COMMAND NAME="hardware_prop_etherwan_ex_series_switch3">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="SERIES" EXPRESSION="(^\S+).*">  
+											<PARAM NAME="SERIES" TOKENNO="1"/>	
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_etherwan_ex_series_switch1" prompt="${UserInput:EnablePrompt}" promptactionid="NA" timeout="20000"/>
+						<Command commandstr="show product series" messagesuffix="${LF}" parsercommandname="hardware_prop_etherwan_ex_series_switch2" prompt="${UserInput:EnablePrompt}" promptactionid="NA" timeout="20000"/>
+						<Command commandstr="show product series2" messagesuffix="${LF}" parsercommandname="hardware_prop_etherwan_ex_series_switch3" prompt="${UserInput:EnablePrompt}" promptactionid="NA" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.2736.1.1"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

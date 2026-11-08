@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Hikvision Switch" osType="HIK Switch" templateName="Hikvision_Switch" multiConfigTemplate="false" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Hikvision" vendorName="Hikvision">
+		<Commands>
+			<Command commandstr="dis version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Startup">
+					<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="5" timeout="60000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+					<Command commandstr="user-interface vty 0 4" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="60000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="screen-length 0" messagesuffix="${LF}" prompt="]" sequenceid="15" timeout="60000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display current-configuration" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="60000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+					<Command commandstr="screen-length 24" messagesuffix="${LF}" prompt="]" sequenceid="25" timeout="60000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+					<Command commandstr="quit" messagesuffix="${LF}" prompt="]" sequenceid="30" timeout="60000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+					<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="35" timeout="60000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+				</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandstr="save" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Hikvision Switch" personalityName="HikvisionSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BOARDTYPE" size="50" desc="BOARD TYPE" displayname="BOARD TYPE" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="DRAMSIZE" size="100" desc="Identifies the size of DRAM in KB" displayname="DRAM Size" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="FLASHSIZE" size="100" desc="Identifies the size of FLASH in MB" displayname="Flash Size" defaultvalue="Not Available" sequenceid="15"/>
+				<Column name="PCB1VERSION" size="50" desc="PCB 1 Version" displayname="PCB 1 Version" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="BOOTROMVERSION" size="100" desc="Boot ROM Version" displayname="Boot ROM Version" defaultvalue="Not Available" sequenceid="25"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>syslog host\s*$SYSLOG_SERVER_IP</Regex>
+					<Regex>syslog\s*info\s*on</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HikvisionSwitchHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_hikvision_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MODEL" EXPRESSION="(?i).*BOARD\s*TYPE\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="BOARDTYPE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION" EXPRESSION="(?i).*Boot\s*image\s*version\s*:\s*([A-Za-z0-9\.]+).*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSTYPE" EXPRESSION="(?i)([A-Za-z\.\_\-]+ [A-Za-z\.\_\-]+)\s*Software.*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="IMAGEFILENAME" EXPRESSION="(?i).*Boot\s*image\s*:\s*flash:(\S*).*">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="DRAMSIZE" EXPRESSION="(?i)^DRAM\s*:\s*(.*)">
+											<PARAM NAME="DRAMSIZE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="FLASHSIZE" EXPRESSION="(?i)^FLASH\s*:\s*(.*)">
+											<PARAM NAME="FLASHSIZE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PCB1VERSION" EXPRESSION="(?i)^PCB.*Version\s*:\s*(\S*).*">
+											<PARAM NAME="PCB1VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BOOTROMVERSION" EXPRESSION="(?i)^Bootrom\s*Version\s*:\s*(\S*).*">
+											<PARAM NAME="BOOTROMVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="dis version" parsercommandname="hardware_prop_hikvision_switch" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.25506.12.1.1.124"/>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.25506.12.1.1.91"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

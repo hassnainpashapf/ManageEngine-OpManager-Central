@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OpmCLICommands>
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,utilization.gpu --format=csv,noheader,nounits | awk -F', ' '{printf &quot;%s %.2f\n&quot;, $1, $2}'" CommandID="5000" CommandMappingID="netsnmp.NVIDIA.smi.GPUUtilization" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_GPUUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1000" EntityName="GPUUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1000" SubEntityName="UUID"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1001" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,temperature.gpu --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{if($2==&quot;&quot; || $2==0){print $1&quot; NA&quot;}else{printf &quot;%s %.2f\n&quot;,$1,$2}}'" CommandID="5001" CommandMappingID="netsnmp.NVIDIA.smi.Temperature.Celsius" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_Temperature_Celsius">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1001" EntityName="GPUTemperature" EntityUnits="Celsius">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1002" SubEntityName="UUID"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1003" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,power.draw --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{if($2==&quot;[N/A]&quot;){print $1&quot; NA&quot;}else{printf &quot;%s %.2f\n&quot;,$1,$2}}'" CommandID="5002" CommandMappingID="netsnmp.NVIDIA.smi.PowerDraw.Watts" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_PowerDraw_Watts">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1002" EntityName="GPUPowerDrawWatts" EntityUnits="Watts">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1004" SubEntityName="UUID"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1005" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,power.draw,power.limit --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{if($2==&quot;[N/A]&quot;||$3==&quot;[N/A]&quot;){print $1&quot; NA&quot;}else{printf &quot;%s %.2f\n&quot;,$1,($2/$3*100)}}'" CommandID="5003" CommandMappingID="netsnmp.NVIDIA.smi.PowerDraw.Percent" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_PowerDraw_Percent">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1003" EntityName="GPUPowerDrawPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1006" SubEntityName="UUID"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1007" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,fan.speed --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{printf &quot;%s %.2f\n&quot;,$1,$2}'" CommandID="5004" CommandMappingID="netsnmp.NVIDIA.smi.FanSpeed.Percent" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_FanSpeed_Percent">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1004" EntityName="GPUFanSpeedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1008" SubEntityName="UUID"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1009" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,clocks.gr,clocks.max.gr --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{if($2==&quot;&quot;||$3==&quot;&quot;) printf &quot;%s NA\n&quot;,$1; else printf &quot;%s %.2f\n&quot;,$1,($2/$3*100)}'" CommandID="5005" CommandMappingID="netsnmp.NVIDIA.smi.ClockSpeed.Percent" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_ClockSpeed_Percent">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1005" EntityName="GPUClockSpeedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1010" SubEntityName="UUID"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1011" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,clocks.mem,clocks.max.mem --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{if($2==&quot;&quot;||$3==&quot;&quot;) printf &quot;%s NA\n&quot;,$1; else printf &quot;%s %.2f\n&quot;,$1,($2/$3*100)}'" CommandID="5006" CommandMappingID="netsnmp.NVIDIA.smi.MemClock.Percent" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_MemClock_Percent">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1006" EntityName="GPUMemClockPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1012" SubEntityName="UUID"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1013" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="if output=$(nvidia-smi --query-gpu=uuid --format=csv,noheader,nounits 2&gt;/dev/null); then if [[ -n &quot;$output&quot; ]]; then echo &quot;$output&quot; | while read -r uuid; do echo &quot;$uuid Available&quot;; done; fi; fi" CommandID="5007" CommandMappingID="netsnmp.NVIDIA.smi.Availability" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_Availability">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1007" EntityName="GPUAvailability" EntityUnits="Status">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1014" SubEntityName="UUID"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1015" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,compute_mode --format=csv,noheader,nounits 2>/dev/null | awk -F', ' '{if($2==&quot;&quot;){print $1&quot; NA&quot;}else{print $1&quot; &quot;$2}}'" CommandID="5008" CommandMappingID="netsnmp.NVIDIA.smi.ComputeMode" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_ComputeMode">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1008" EntityName="GPUComputeMode" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1016" SubEntityName="UUID"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1017" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,display_active --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{if($2==&quot;&quot;){print $1&quot; NA&quot;}else{print $1&quot; &quot;$2}}'" CommandID="5009" CommandMappingID="netsnmp.NVIDIA.smi.DisplayStatus" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_DisplayStatus">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1009" EntityName="GPUDisplayStatus" EntityUnits="Status">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1018" SubEntityName="UUID"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1019" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,persistence_mode --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{if($2==&quot;&quot;){print $1&quot; NA&quot;}else{print $1&quot; &quot;$2}}'" CommandID="5010" CommandMappingID="netsnmp.NVIDIA.smi.PersistenceMode" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_PersistenceMode">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1010" EntityName="GPUPersistenceMode" EntityUnits="">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1020" SubEntityName="UUID"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1021" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="nvidia-smi --query-gpu=uuid,memory.used,memory.total --format=csv,noheader,nounits 2&gt;/dev/null | awk -F', ' '{if($2==&quot;&quot; || $3==&quot;&quot; || $3==0){print $1&quot; NA&quot;}else{printf &quot;%s %.2f\n&quot;,$1,$2/$3*100}}'" CommandID="5011" CommandMappingID="netsnmp.NVIDIA.smi.MemUtilization" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI_NVIDIA_MemUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1011" EntityName="GPUMemUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="1022" SubEntityName="UUID"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="1023" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+    
+</OpmCLICommands>

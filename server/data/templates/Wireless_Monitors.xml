@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?><GRAPHDETAIL>
+    <Graph YAXISTEXT="No. of Clients" description="No of Clients currently associated with the WLAN." displayName="Number of clients connected" failureThreshold="1" graphName="CiscoNoOfClientsConnected" graphType="node" isNumeric="true" oid="SumOfColumnValues[.1.3.6.1.4.1.14179.2.1.1.1.38]" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of APs" description="This object specifies the count of AP's that are connected with WLC (work fine for the 5508 and 5520 series but not for the 5760)" displayName="Number of  APs connected with WLC" failureThreshold="1" graphName="clsSysApConnectCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.618.1.8.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cisco Wireless LAN Controller (WLC) - Current CPU load percentage" displayName="CPU Utilization" failureThreshold="1" graphName="agentCurrentCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14179.1.1.5.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Free RAM of the switch in Kbytes." displayName="Available Memory" failureThreshold="1" graphName="agentFreeMemory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14179.1.1.5.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="No of Users associated with this radio. (Append AP name/ipaddress as Index. Example format : .1.3.6.1.4.1.14179.2.2.2.1.15.index.0)" displayName="Number of Users for AP" failureThreshold="1" graphName="bsnApIfNoOfUsers" graphType="multiplenode" isNumeric="true" oid=".1.3.6.1.4.1.14179.2.2.2.1.15.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Operation State of the AP. When AP associates with the Airespace Switch its state will be associated. When Airespace AP is disassociated from the Switch, its state will be disassociating. The state is downloading when the AP is downloading its firmware. associated(1), disassociating(2), downloading(3)" displayName="Operation state of AP" failureThreshold="1" graphName="bsnAPOperationStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14179.2.2.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Admin State of the AP. Enable (1), disable (2)" displayName="Admin state of AP" failureThreshold="1" graphName="bsnAPAdminStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14179.2.2.1.1.37" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Status of the mobile station. idle(0), aaaPending(1), authenticated(2), associated(3), powersave(4), disassociated(5), tobedeleted(6), probing(7), blacklisted(8)" displayName="MobileStation Status" failureThreshold="1" graphName="bsnMobileStationStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14179.2.1.4.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Errors" description="This counter shall increment when an frame check sequence (FCS) error is detected in a received MPDU." displayName="Total FCS Errors detected" failureThreshold="1" graphName="InTotalFCSErrors" graphType="node" isNumeric="true" oid=".1.2.840.10036.2.2.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This counter shall increment when an MSDU is not transmitted successfully due to the number of transmit attempts exceeding either the dot11ShortRetryLimit or dot11LongRetryLimit." displayName="Total Transmit Attempt Failures" failureThreshold="1" graphName="OutTotalFailures" graphType="node" isNumeric="true" oid=".1.2.840.10036.2.2.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The number of bytes sent to this client." displayName="Total Bytes Sent" failureThreshold="1" graphName="InTotalBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.273.1.3.1.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The number of bytes received from this client." displayName="Total Bytes Received" failureThreshold="1" graphName="OutTotalBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.273.1.3.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Indicates Transmit rate of the channel. rate1Mbps(1), rate2Mbps(2), rate5point5Mbps(3), rate6Mbps(4), rate9Mbps(5), rate11Mbps(6), rate12Mbps(7), rate18Mbps(8), rate24Mbps(9), rate36Mbps(10), rate48Mbps(11), rate54Mbps(12)" displayName="Client TxRate" failureThreshold="1" graphName="staTransmitRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.2.2.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Indicates Receive rate of the channel. rate1Mbps(1), rate2Mbps(2), rate5point5Mbps(3), rate6Mbps(4), rate9Mbps(5), rate11Mbps(6), rate12Mbps(7), rate18Mbps(8), rate24Mbps(9), rate36Mbps(10), rate48Mbps(11), rate54Mbps(12)" displayName="Client RxRate" failureThreshold="1" graphName="staReceiveRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.2.2.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total Bytes Transmitted by the wireless station." displayName="Client TotalBytesTransmitted" failureThreshold="1" graphName="staTxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.2.3.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total Bytes Received by the wireless station." displayName="Client TotalBytesReceived" failureThreshold="1" graphName="staRxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.2.3.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Indicates the noise on the channel" displayName="Channel Noise Value" failureThreshold="1" graphName="apChannelNoise" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.3.3.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Mbps" description="Indicates Transmit rate of the channel. rate1Mbps(1), rate2Mbps(2), rate5point5Mbps(3), rate6Mbps(4), rate9Mbps(5), rate11Mbps(6), rate12Mbps(7), rate18Mbps(8), rate24Mbps(9), rate36Mbps(10), rate48Mbps(11), rate54Mbps(12)" displayName="Channel Transmit rate" failureThreshold="1" graphName="apTransmitRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.3.3.1.15" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Mbps" description="Indicates Receive rate of the channel. rate1Mbps(1), rate2Mbps(2), rate5point5Mbps(3), rate6Mbps(4), rate9Mbps(5), rate11Mbps(6), rate12Mbps(7), rate18Mbps(8), rate24Mbps(9), rate36Mbps(10), rate48Mbps(11), rate54Mbps(12)" displayName="Channel Receive rate" failureThreshold="1" graphName="apReceiveRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.3.3.1.16" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total Bytes Transmitted by the ap on this BSSID." displayName="Total Bytes transmitted by AP" failureThreshold="1" graphName="apBSSTxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.3.5.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total Bytes Received by the ap on this BSSID." displayName="Total Bytes received by AP" failureThreshold="1" graphName="apBSSRxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.3.5.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of stations" description="Indicates the number of stations associated to this BSSID.  BSSID is the MAC address of the wireless access point (WAP) generated by combining the 24 bit Organization Unique Identifier (the manufacturer's identity) and the manufacturer's assigned 24-bit identifier for the radio chipset in the WAP" displayName="Associated stations count" failureThreshold="1" graphName="wlanAPBssidNumAssociatedStations" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="SNR of the access point being monitored." displayName="Rogue AP SignalStrength" failureThreshold="1" graphName="monAPInfoRSSI" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.6.7.1.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Indicates whether this AP is considered to be up or down. up(1), down(2)" displayName="Rogue AP status" failureThreshold="1" graphName="monAPInfoStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.6.7.1.1.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="kb" description="Free memory in KB" displayName="Memory Free" failureThreshold="1" graphName="aos.memFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.1.11.1.4.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="kb" description="Used memory in KB" displayName="Memory Used" failureThreshold="1" graphName="aos.memUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.1.11.1.3.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of APs" description="Total Number of Access Points connected to the controller." displayName="Total Number of APs" failureThreshold="1" graphName="aossysTotalAPs" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.2.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Total Number of Stations Associated to the controller." displayName="Total Number of Associations" failureThreshold="1" graphName="aossysTotalAssociations" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.2.1.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="Total Number of the users." displayName="Total Number of Users" failureThreshold="1" graphName="aossysTotalUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.14.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of times this server responded with authentication failure.. format - aos.authFailedAuths.[{#SNMPVALUE}][{#SNMPINDEX}]" displayName="Server Failed Auths" failureThreshold="1" graphName="authFailedAuths" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.8.1.1.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of requests" description="The number of requests currently outstanding to this server. aos.authSrvOutstandReq.[{#SNMPVALUE}][{#SNMPINDEX}]" displayName="Server Outstanding Requests" failureThreshold="1" graphName="authServerOutStandingRequests" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.8.1.1.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The time since the server went into service with the controller. .1.3.6.1.4.1.14823.2.2.1.8.1.1.1.15.{#SNMPINDEX}" displayName="Server Uptime" failureThreshold="1" graphName="serverUpTime" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.8.1.1.1.15" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="size of the storage filesystem in MB." displayName="Disk Usage (MB)" failureThreshold="1" graphName="usedStorageInMB" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.1.10.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Storage used by system in %" displayName="Disk Utilization" failureThreshold="1" graphName="storageUsageAruba" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.4) * 100 / (.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.3)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total Packets Received by the Station" displayName="Total Bytes Received by Station" failureThreshold="1" graphName="OutTotalBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.2.3.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Signal to Noise ratio for the station." displayName="Signal strength in WLC" failureThreshold="1" graphName="SNR Ratio for the station" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.2.2.1.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Number(s)" description="Current number of active (optimized) connection" displayName="Active Connections" failureThreshold="1" graphName="activeConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.17163.1.1.5.2.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverBed">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Connections" description="Current number of established (optimized) connections" displayName="Established Connections" failureThreshold="1" graphName="establishedConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.17163.1.1.5.2.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverBed">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Connections" description="Current total number of half-closed (optimized) connections. Half closed connections are connections that are completed, however the server has not sent a fin flag to the client, and therefore the Steelhead is keeping the connection alive, as it has not got the confirmation that the session should be terminated, If you are sitting with a lot of half closed connections, you can bring done the timeout value for these connections via the command line." displayName="Half Closed Connections" failureThreshold="1" graphName="halfClosedConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.17163.1.1.5.2.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverBed">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Connections" description="Current total number of half-opened (optimized) connections. A half-open connection is a TCP connection that has not been fully established. Half-open connections count toward the connection count limit on the SteelHead because, at any time, they might become a fully open connection.If you are experiencing a large number of half-opened connections, consider a more appropriately sized SteelHead." displayName="Half Opened Connections" failureThreshold="1" graphName="halfOpenedConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.17163.1.1.5.2.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverBed">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Connections" description="Current total number of optimized connections" displayName="Optimized Connections" failureThreshold="1" graphName="optimizedConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.17163.1.1.5.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverBed">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current health of the system. The value is one amongst Healthy , Admission Control , Degraded , Critical" displayName="System Health" failureThreshold="1" graphName="health" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.17163.1.1.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverBed" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Connections" description="Total number of connections" displayName="Total Connections" failureThreshold="1" graphName="totalConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.17163.1.1.5.2.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverBed">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of APs" description="Represents the total number of APs which are connecting to AC." displayName="The number of online APs" failureThreshold="1" graphName="APCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.10.2.75.1.1.2.1.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Represents the bytes of frames that AP sends to AC through LWAPP tunnel." displayName="Upstream traffic" failureThreshold="1" graphName="trafficUpstream" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.10.2.75.1.1.2.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Represents the bytes of frames that AC sends to AP through LWAPP tunnel." displayName="Downstream traffic" failureThreshold="1" graphName="trafficDownstream" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.10.2.75.1.1.2.11.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="H3C - Memory utilization percentage for a specific entity instance (index 97), used across H3C/Huawei Comware devices" displayName="Memory Utilization" failureThreshold="1" graphName="memRTUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.10.2.6.1.1.1.1.8.97" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of transimitted Rapid Spanning Tree (RST) Bridge Protocol Data Units (BPDU). Effective in Common Internal Spanning Tree (CIST)." displayName="Transmitted RST Count" failureThreshold="1" graphName="hwdot1sMstiStpTXRSTPBPDU" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.2.23.1.14.20.1.20" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of received Multiple Spanning Tree protocol (MST) Bridge Protocol Data Units (BPDU). Effective in CIST." displayName="Transmitted MST Count" failureThreshold="1" graphName="hwdot1sMstiStpRXMSTPBPDU" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.2.23.1.14.20.1.21" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Mbps" description="This object indicates the rate at which the AP receives user packets." displayName="AP Receive rate" failureThreshold="1" graphName="hwWlanStaConnectRxRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.18.1.2.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Mbps" description="This object indicates the rate at which the AP sends packets to users." displayName="AP Transmit rate" failureThreshold="1" graphName="hwWlanStaConnectTxRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.18.1.2.1.15" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="This object indicates the number of upstream bytes received." displayName="Upstream bytes received" failureThreshold="1" graphName="hwWlanStaWirelessRxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.18.1.2.1.34" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="This object indicates the number of downstream bytes received." displayName="Downstream bytes received" failureThreshold="1" graphName="hwWlanStaWirelessTxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.18.1.2.1.37" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object indicates the AP state. {idle(1),autofind(2),typeNotMatch(3),fault(4),config(5),configFailed(6),download(7),normal(8),committing(9),commitFailed(10),standby(11),verMismatch(12),nameConflicted(13),invalid(14)}" displayName="Access Point state" failureThreshold="1" graphName="hwWlanApRunState" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.13.3.3.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object indicates the VAP state. up (1), down (2). Virtual Access Point is a multiplexed installation of a single physical Access Point (AP) so that it presents itself as multiple discrete Access Points.VAPs allow the network administrator to control wireless user access and security settings by setting up multiple custom configurations on a single physical interface." displayName="Virtual Access Point (VAP) Status" failureThreshold="1" graphName="hwWlanVapStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.17.1.1.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="The transmit power currently for the radio in dbm. The range is 0 to 20 dBm" displayName="Radio Transmit Power" failureThreshold="1" graphName="ahRadioTxPower" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.5.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of clients" description="Number of clients per SSID (1.3.6.1.4.1.26928.1.1.1.2.1.2.1.10)" displayName="Numbers of clients" failureThreshold="1" graphName="ahClientsCount" graphType="multiplenode" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.2.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="The noise floor for the radio dbm. The range is 0 to 256 dBm. The value of this variable is the actual value plus 256 dBm." displayName="Radio Noise Floor Value" failureThreshold="1" graphName="ahRadioNoiseFloor" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.5.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of frames" description="The total number of dropped received frames for the given interface." displayName="Total dropped frames on receipt" failureThreshold="1" graphName="ahRadioRxTotalFrameDropped" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.3.1.16" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of frames" description="The number of transmit frames dropped for the given interface." displayName="Total dropped frames on transmit" failureThreshold="1" graphName="ahRadioTxTotalFramesDropped" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.3.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="kbps" description="The rate (KBPS) of last received frame from client." displayName="Last received frame rate" failureThreshold="1" graphName="ahClientLastRxRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.2.1.29" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="kbps" description="The rate (KBPS) of last transmitting frame to the client." displayName="Last transmitted frame rate" failureThreshold="1" graphName="ahClientLastTxRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.2.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of transmitted Request To Send (RTS) failures from the Radio." displayName="Total RTS failures from Radio" failureThreshold="1" graphName="ahRadioTXRTSFailures" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.3.1.21" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of error frames" description="The number of received error frames for the given virtual interface." displayName="Total received error frames (VM)" failureThreshold="1" graphName="ahVIfRxErrorFrames" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.4.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of dropped frames" description="The number of received dropped frames for the given virtual interface." displayName="Total received dropped frames (VM)" failureThreshold="1" graphName="ahVIfRxDroppedFrames" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.4.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of dropped frames" description="The number of frames dropped due to Message Integrity Check failure from client to AP." displayName="Frames Dropped (Message Integrity Failure)" failureThreshold="1" graphName="ahClientRxMICFailures" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.26928.1.1.1.2.1.2.1.22" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aerohive Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Memory usage (RAM) for last 5 minutes in KBytes. Ranges between 0 and trpzSysCpuMemorySize." displayName="Memory Usage" failureThreshold="1" graphName="MemoryUsage" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.14525.4.8.1.1.12.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of APs" description="Number of APs present and seen by AC (AP in ''ALIVE'' state)." displayName="Number of Access Points" failureThreshold="1" graphName="NumberofAccessPoints" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.14525.4.5.1.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="Total number of sessions." displayName="Number of Sessions" failureThreshold="1" graphName="NumberofSessions" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.14525.4.4.1.1.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="Number of packets received. (Append instance)" displayName="Total Packets received" failureThreshold="1" graphName="RxPkt" graphType="multiple" isNumeric="" oid=".1.3.6.1.4.1.14525.4.5.1.1.11.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="Number of Association Response Packets transmitted." displayName="Association Response Packets Transmitted" failureThreshold="1" graphName="TxAssocPkt" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.14525.4.5.1.1.11.1.27" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="Number of Authentication Response Packets transmitted. (Append MVSNMPINDEX)" displayName="Authentication Packets Transmitted" failureThreshold="1" graphName="TxAuthPkt" graphType="multiple" isNumeric="" oid=".1.3.6.1.4.1.14525.4.5.1.1.11.1.26" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="Number of Data Packets transmitted." displayName="Number of Data Packets Transmitted" failureThreshold="1" graphName="TxDataPkt" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.14525.4.5.1.1.11.1.25" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of sessions" description="Number of client sessions using this radio at the current moment. (Append MVSNMPINDEX)" displayName="Number of User Sessions" failureThreshold="1" graphName="UserSessions" graphType="multiple" isNumeric="" oid=".1.3.6.1.4.1.14525.4.5.1.1.11.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="Current temperature in degrees celsius measured inside device enclosure." displayName="Device Temperature" failureThreshold="1" graphName="extremeCurrentTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.1.1.8.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Operational status of internal power supply of a device." displayName="Operational Status of Primary Power Supply" failureThreshold="1" graphName="extremePrimaryPowerOperational" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.1.1.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Operational status of an external redundant power supply to a device." displayName="Operational Status of Redundant Power Supply" failureThreshold="1" graphName="extremeRedundantPowerStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.1.1.11.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="Alarm status of overtemperature sensor in device enclosure." displayName="Over Temperature Status" failureThreshold="1" graphName="extremeOverTemperatureAlarm" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.1.1.7.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Total amount of free memory in Kbytes in the system." displayName="Free Memory" failureThreshold="1" graphName="extremeMemoryMonitorSystemFree" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.32.2.2.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Ruckus Connection status" displayName="Connection Status" failureThreshold="1" graphName="ruckusConnectionStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.4.2.1.1.2.2.1.16" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of stations" description="It reveals the total wireless clients associated" displayName="Associated Stations" failureThreshold="1" graphName="ruckusRadioStatsNumSta" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.25053.1.1.12.1.1.1.3.1.2.1) + (.1.3.6.1.4.1.25053.1.1.12.1.1.1.3.1.2.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of APs" description="The number of APs" displayName="Total Access Points" failureThreshold="1" graphName="ruckusSZSystemStatsNumAP" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.4.1.1.1.15.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of received bytes in WLAN." displayName="Total Rx Bytes" failureThreshold="1" graphName="ruckusSZSystemStatsWLANTotalRxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.4.1.1.1.15.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of transmitted bytes in WLAN." displayName="Total Tx Bytes" failureThreshold="1" graphName="ruckusSZSystemStatsWLANTotalTxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.4.1.1.1.15.9.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="current zd system status: if enable smart redundancy, the status is master or standby, if disable smart redundancy,the status is noredundancy" displayName="ZoneDirector Total Users" failureThreshold="1" graphName="ruckusZDSystemStatsAllNumSta" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.1.1.1.15.30.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of clients" description="Number of authorized client devices" displayName="ZoneDirector Total Auth Clients" failureThreshold="1" graphName="ruckusZDSystemStatsNumSta" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.1.1.1.15.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of APs" description="Number of APs in ZD (Ruckus ZoneDirector Controllers make it simple to set up and manage the network, enhance security, minimize troubleshooting)." displayName="Ruckus APs" failureThreshold="1" graphName="ruckusZDWLANAPCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.4.2.1.1.2.2.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Received bytes" displayName="Received Bytes (ZD)" failureThreshold="1" graphName="ruckusZDWLANRxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Transmitted bytes." displayName="Transmitted Bytes (ZD)" failureThreshold="1" graphName="ruckusZDWLANTxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.16" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Authentication fail." displayName="Authentication Failures (ZD)" failureThreshold="1" graphName="ruckusZDWLANAuthFail" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.29" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Count of transmitted bytes." displayName="Total Transmitted Bytes" failureThreshold="1" graphName="ruckusWLANStatsTxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.1.6.1.1.1.4.1.39" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Count of received bytes." displayName="Total Received Bytes" failureThreshold="1" graphName="ruckusWLANStatsRxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.1.6.1.1.1.4.1.24" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="Drops due to queue overflow." displayName="Packets dropped due to Queue Overflow" failureThreshold="1" graphName="ruckusWLANStaMQNumDropped" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.1.6.1.1.2.3.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MHz" description="This parameter represents the current bandwidth that Wireless is currently operating on. It is rRepresented in MHz" displayName="Current Bandwidth" failureThreshold="1" graphName="WirelessIfCurrentChannelBandwidth" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.841.1.1.1.1.1.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proxim">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="This parameter represents the number of bytes recevied." displayName="Received bytes" failureThreshold="1" graphName="WirelessIfStaStatsRxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.841.1.1.3.4.1.1.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proxim">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="This parameter represents the number of bytes from the station that are further transmitted either by the bridge/router or by the internal host." displayName="Transmitted bytes" failureThreshold="1" graphName="WirelessIfStaStatsTxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.841.1.1.3.4.1.1.1.28" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proxim">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="This parameter represents the RSSI (received signal strength) of the station." displayName="RSSI of Wireless station" failureThreshold="1" graphName="WirelessIfStaStatsRSSI" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.841.1.1.3.4.1.1.1.42" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proxim">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of frames" description="This parameter represents the failed authentication frames." displayName="Failed Authentication Frames" failureThreshold="1" graphName="WirelessIfStaStatsTxAuthenticationFailed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.841.1.1.3.4.1.1.1.35" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proxim">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="This parameter represents the transmitted rates for wireless." displayName="Total transmitted data rate" failureThreshold="1" graphName="WirelessIfTransmittedRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.841.1.1.1.1.1.1.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proxim">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="The number of data packets sent that were (finally) not received succesfully by the remote partner. Wireless Outdoor Router Protocol (WORP) is a protocol that protects the network from packet collisions, controls network bandwidth and solves the hidden node problem to transmit data" displayName="Failed Sent Data packets (WORP)" failureThreshold="1" graphName="oriWORPIfStatTableSendFailures" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11898.2.1.2.5.2.1.23" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proxim">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Client Connection Quality (CCQ) is a value in percent that shows how effective the bandwidth is used regarding the theoretically maximum available bandwidth. CCQ is weighted average of values Tmin/Treal, that get calculated for every transmitted frame, where Tmin is time it would take to transmit given frame at highest rate with no retries and Treal is time it took to transmit frame in real life (taking into account necessary retries it took to transmit frame and transmit rate). .1.3.6.1.4.1.14988.1.1.1.3.1.10.{#SNMPINDEX}" displayName="Bandwidth Usage % (Transmitted CCQ)" failureThreshold="1" graphName="TxCCQ" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.1.3.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="MiKroTik">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="bits per sec. 1.3.6.1.4.1.14988.1.1.1.3.1.2.{#SNMPINDEX}" displayName="Tranferred data rate" failureThreshold="1" graphName="TxRate" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.1.3.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="MiKroTik">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="wireless transmit rate is the speed that data is being transmitted from an AP to a wireless device. 1.3.6.1.4.1.14988.1.1.1.1.1.2.{#SNMPINDEX}" displayName="Wireless Station TxRate" failureThreshold="1" graphName="TxRateWireless" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.1.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="MiKroTik">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="wireless transmit rate is the speed that data is being received to an AP from wireless device..  1.3.6.1.4.1.14988.1.1.1.1.1.3.{#SNMPINDEX}" displayName="Wireless Station - RxRate" failureThreshold="1" graphName="RxRateWireless" graphType="multiple" isNumeric="true" oid="1.3.6.1.4.1.14988.1.1.1.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="MiKroTik">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="The Total number of Users Logged In for the IVE Node" displayName="Concurrent Users (ive node)" failureThreshold="1" graphName="iveConcurrentUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.12.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The Swap Utilization of the Instant Virtual Extranet  (IVE) system (0% is normally what swap usage should be.From 5% of swap usage, it needs monitoring)" displayName="Swap Memory Utilization" failureThreshold="1" graphName="iveSwapUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.24.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Wired Equivalent Privacy (WEP) Enabled status in AP" displayName="Wired Equivalent Privacy (WEP) Status" failureThreshold="1" graphName="WEPEnabled" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.388.50.1.3.4.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of stations" description="Total Number of Stations Associated to the controller." displayName="Total Stations Associated  to WLC" failureThreshold="1" graphName="wlsxWlanTotalNumStationsAssociated" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.2.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Aruba Instant Access Point - CPU utilization percentage per AP" displayName="CPU Utilization" failureThreshold="1" graphName="aiAPCPUUtilization" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.3.3.1.2.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Amount of memory free in the access point in bytes" displayName="Free Memory" failureThreshold="1" graphName="aiAPMemoryFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.3.3.1.2.1.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Signal to noise ratio of client connection to the access point" displayName="SNR ratio of client-AP connection" failureThreshold="1" graphName="aiClientSNR" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.3.3.1.2.4.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="mbps" description="Transmit rate of client in mbps" displayName="Transmit rate (client)" failureThreshold="1" graphName="aiClientTxRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.3.3.1.2.4.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="mbps" description="Receive rate of client in mbps" displayName="Receive rate (client)" failureThreshold="1" graphName="aiClientRxRate" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.14823.2.3.3.1.2.4.1.15" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current operational status of the system as a whole. A value 'unknown(1)' indicates that the current state of the system could not be determined. The value 'running(2)' indicates that the system is up and running and that no unusual error conditions are known. The 'warning(3)' state indicates that agent has been informed of an unusual error condition by the operational software (e.g., a device driver) but that the system is still 'operational'. (The xsysBootDiagsCode object may provide more information.) A value of 'testing(4)', indicates that the system is not available for use because it is in the testing state. The state of 'down(5)' is used only when the agent has been informed that the system is not available for any use. (How it can tell you it's down is an interesting question.)  Possible states : unknown(1), running(2), warning(3), testing(4), down(5)" displayName="Operational status" failureThreshold="1" graphName="xsysOperStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.838.3.1.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xedia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The average, over some implementation-defined sampling period, of the percentage of time that the system's (main) processor was not idle." displayName="CPU Utilization" failureThreshold="1" graphName="xsysCpuUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.838.3.1.1.5.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xedia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="A count of the number of octets dropped for this class because of lack of buffer space in the queue or because the class exceeded its allocated bandwidth." displayName="Dropped Octets due to low buffer space" failureThreshold="1" graphName="xtmClassStatsDroppedOctets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.838.3.2.1.3.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xedia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of octets sent by the source of the connection." displayName="Total Octets sent by source" failureThreshold="1" graphName="xtmConnectionSrcOctets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.838.3.2.1.11.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xedia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of octets sent by the destination of the connection." displayName="Total Octets sent by destination" failureThreshold="1" graphName="xtmConnectionDestOctets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.838.3.2.1.11.1.15" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xedia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Number(s)" description="The current number of active connections through this class." displayName="Active Connections" failureThreshold="1" graphName="xtmClassConnectionCurConnected" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.838.3.2.1.12.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xedia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="This object represents the current signal level calculated over the inbound packets from this station. This variable indicates the running average of the local signal level using the algorithm (3/4*oldvalue + 1/4*newvalue)." displayName="Current Signal Strength" failureThreshold="1" graphName="SignalStrength " graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11898.2.1.33.1.1.20" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Orinoco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of octets received from the station, including framing characters." displayName="Total Bytes In" failureThreshold="1" graphName="InTotalBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11898.2.1.33.1.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Orinoco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="This object represents the total number of octets send to the station, including framing characters." displayName="Total Bytes Out" failureThreshold="1" graphName="OutTotalBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11898.2.1.33.1.1.16" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Orinoco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="This object represents the number of unicast packets from the station that are further processed by either by the bridge/router or by the internal host." displayName="Total Unicast packets transmitted to Station" failureThreshold="1" graphName="InTotalUcastPackets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11898.2.1.33.1.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Orinoco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="This object represents the number of packets that the internal bridge/router or the internal host requested be transmitted to the station, including those that were discarded or not sent." displayName="Total NonUnicast packets transmitted to Station" failureThreshold="1" graphName="InTotalNUcastPackets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11898.2.1.33.1.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Orinoco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This counter is incremented when an ACK is not received when expected." displayName="Total Acknowledgment Failures" failureThreshold="1" graphName="InTotalACKFailures" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.2.2.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This counter is incremented when an FCS error is detected in a received MPDU." displayName="Total FCS Errors in received PDU" failureThreshold="1" graphName="coDot11FCSErrorCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.2.2.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This counter is incremented when an MSDU is not transmitted successfully due to the number of transmit attempts exceeding either the coDot11ShortRetryLimit or coDot11LongRetryLimit." displayName="Total MSDU failures (exceeded Tx attempts)" failureThreshold="1" graphName="coDot11FailedCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.2.2.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Strength of the wireless signal." displayName="Wireless Signal strength" failureThreshold="1" graphName="coDot11SignalLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.1.5.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Current receive rate of a station." displayName="Current receive rate of station" failureThreshold="1" graphName="InDataRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.1.5.1.20" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Current transmit rate of a station." displayName="Current transmit rate of status" failureThreshold="1" graphName="OutDataRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.1.5.1.19" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Number of octets received from the station after the association." displayName="Total Bytes received from station" failureThreshold="1" graphName="InTotalBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.1.5.1.23" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Number of octets send to the station after the association." displayName="Total Bytes sent to the station" failureThreshold="1" graphName="OutTotalBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.1.5.1.24" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="Number of packets received from the station after the association." displayName="Total packets received" failureThreshold="1" graphName="InTotalPackets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.1.5.1.21" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Number(s)" description="Number of packets send to the station after the association." displayName="Total packets sent" failureThreshold="1" graphName="OutTotalPackets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8744.5.4.1.5.1.22" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total Received Bytes" displayName="Total Received Bytes" failureThreshold="1" graphName="RxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.15983.1.1.3.1.7.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Meru">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total Trasmitted Bytes" displayName="Total Trasmitted Bytes" failureThreshold="1" graphName="TxBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.15983.1.1.3.1.7.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Meru">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Current Receive rate" displayName="Current Receive rate" failureThreshold="1" graphName="RxRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.15983.1.1.3.1.7.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Meru">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="Receive Signal Strength in dBm" displayName="Receive Signal Strength" failureThreshold="1" graphName="Rssi" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.15983.1.1.4.4.1.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Meru">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="Authenticated users count" displayName="Authenticated Users count" failureThreshold="1" graphName="AuthUser" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.15983.1.1.4.4.1.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Meru">
+        <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="CPU Utilization" vendorName="Aruba Networks" graphName="ArubaCPUUtilization" oid=".1.3.6.1.4.1.14823.2.2.1.2.1.13.1.3.1" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+	  </Graph>
+	  <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Memory Utilization" vendorName="Aruba Networks" graphName="ArubaMemoryUtilization" oid=" (.1.3.6.1.4.1.14823.2.2.1.2.1.15.1.3.1*100)/(.1.3.6.1.4.1.14823.2.2.1.2.1.15.1.2.1)" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+		  <UserProps/>
+	  </Graph>
+	  <Graph YAXISTEXT="Number(s)" isNumeric="true" graphType="node" description="Connections" vendorName="Ruckus" graphName="RuckusWlanConnections" oid=".1.3.6.1.4.1.25053.1.2.1.1.1.15.1.0" displayName="Connections" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+		  <UserProps/>
+	  </Graph>
+	  <Graph SaveAbsolutes="false" YAXISTEXT="mA" description="Current consumption in mA" displayName="Current consumption" failureThreshold="1" graphName="mtxrHlCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.3.13.0" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="MiKroTik">
+	<UserProps/>
+	</Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="Watts" description="Power consumption in watt" displayName="Power consumption" failureThreshold="1" graphName="mtxrHlPower" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.3.12.0" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="MiKroTik">
+	<UserProps/>
+	</Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="rpm" description="Fan speed slot2" displayName="Fan speed slot2" failureThreshold="1" graphName="mtxrHlFanSpeedSlot2" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.3.18.0" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="MiKroTik">
+	<UserProps/>
+	</Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="rpm" description="Fan speed slot1" displayName="Fan speed slot1" failureThreshold="1" graphName="mtxrHlFanSpeedSlot1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.3.17.0" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="MiKroTik">
+	<UserProps/>
+	</Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="bits per second" description="Active User Bytes In" displayName="Active User Bytes In" failureThreshold="1" graphName="mtxrHotspotActiveUserBytesIn" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.5.1.1.12" period="900" protocol="SNMP" sSave="true"  timeAvg="false" vendorName="MiKroTik">
+	<UserProps/>
+	</Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="Celsius" description="MikroTik RouterOS - CPU temperature reading from the hardware health monitor, used across multiple MikroTik models" dialType="number" displayName="CPU Temperature" failureThreshold="1" graphName="mtxrHlCpuTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.3.6.0" period="900" protocol="SNMP" sSave="true" timeAvg="false" unit="Celsius" vendorName="MiKroTik">
+	<UserProps/>
+	</Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="bps" description="Bits per sec" displayName="Received data rate" failureThreshold="1" graphName="mtxRxRate" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14988.1.1.1.3.1.3" period="300" protocol="SNMP" sSave="true" timeAvg="false" vendorName="MiKroTik">
+	<UserProps/>
+	</Graph>
+	<!-- WLC Monitors Starts -->
+	<!-- Aruba Monitors Starts -->
+	<Graph YAXISTEXT="Days" description="AP Uptime in days" displayName="AP SysUptime" failureThreshold="1" graphName="ArubaAPSysUpTime" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.12/8640000)" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Clients" description="No of clients connected to the Frequency Band" displayName="AP Band connected client count" failureThreshold="1" graphName="ArubaAPRadioClientCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.2.1.5.1.7" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba" DisplayColumn=".1.3.6.1.4.1.14823.2.2.1.5.2.1.5.1.2" Index=".1.3.6.1.4.1.14823.2.2.1.5.2.1.5.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="AP's Channel Utilization" displayName="Channel Utilization" failureThreshold="1" graphName="APChannelUtilization" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.37" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba" DisplayColumn=".1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.1" Index=".1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.1">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="dB" description="AP's Channel Noise" displayName="Channel Noise" failureThreshold="1" graphName="ArubaAPChannelNoise" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba" DisplayColumn=".1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.1" Index=".1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.1">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="MB" description="AP Channel Total Bytes" displayName="Channel Total Bytes" failureThreshold="1" graphName="APChannelTotalBytes" graphType="multiple" isNumeric="true" oid="BytesToMB[.1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.4]" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Aruba" DisplayColumn=".1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.1" Index=".1.3.6.1.4.1.14823.2.2.1.5.3.1.6.1.1">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Aruba Instant AP (IAP) - Memory utilization percentage calculated from used and total memory" displayName="Memory Utilization" failureThreshold="1" graphName="IAPMemoryUtilization" graphType="node" isNumeric="true" oid="((.1.3.6.1.4.1.14823.2.3.3.1.2.1.1.10-.1.3.6.1.4.1.14823.2.3.3.1.2.1.1.8)*100)/.1.3.6.1.4.1.14823.2.3.3.1.2.1.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Days" description="Instant AP Uptime in days" displayName="Instant AP SysUptime" failureThreshold="1" graphName="IAPSysUpTime" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.14823.2.3.3.1.2.1.1.9/8640000)" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="No. of Clients Connected" description="No. of Clients Connected" displayName="No. of Clients Connected" failureThreshold="1" graphName="NoOfClientsConnected" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.3.2.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Clients" description="BSSID Client Count" displayName="SSID Client Count" failureThreshold="1" graphName="BSSIDClientCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.3.1.1.1.2" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba" DisplayColumn=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.2,.1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.5" Index=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="MB" description="BSSID Received Bytes" displayName="SSID Received Bytes" failureThreshold="1" graphName="BSSIDReceivedBytes" graphType="multiple" isNumeric="true" oid="BytesToMB[.1.3.6.1.4.1.14823.2.2.1.5.3.1.1.1.6]" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba"  DisplayColumn=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.2,.1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.5" Index=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="MB" description="BSSID Transmitted Bytes" displayName="SSID Transmitted Bytes" failureThreshold="1" graphName="BSSIDTransmittedBytes" graphType="multiple" isNumeric="true" oid="BytesToMB[.1.3.6.1.4.1.14823.2.2.1.5.3.1.1.1.4]" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba" DisplayColumn=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.2,.1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.5" Index=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="dB" description="BSSID Signal to Noise" displayName="SSID Signal to Noise" failureThreshold="1" graphName="BSSIDSignalToNoise" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.18" period="1200" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Aruba" DisplayColumn=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.2,.1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.5" Index=".1.3.6.1.4.1.14823.2.2.1.5.2.1.7.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="BSSID" description="Radio Channel VS BSSID Count" displayName="Radio Channel VS BSSID Count" failureThreshold="1" graphName="RadioChannelVSBSSIDCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.5.2.1.5.1.9" period="1800" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Celsius" description="Internal temperature" displayName="Temperature" failureThreshold="1" graphName="internalTemperature" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.14823.2.2.1.2.1.10.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Aruba Wireless LAN Controller - System memory utilization" displayName="Memory Utilization" failureThreshold="1" graphName="arubaWLCMemoryUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.2.1.31.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Aruba Wireless LAN Controller - CPU utilization percentage" displayName="CPU Utilization" failureThreshold="1" graphName="arubaWLCCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.2.1.30.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+        <UserProps/>
+    </Graph>
+	<!-- Aruba Monitors End -->
+	<!-- Huawei Monitors Starts -->	
+	<Graph YAXISTEXT="Number(s)" description="No. Of Active Users" displayName="No. Of Active Users" failureThreshold="1" graphName="NoOfActiveUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.2.6.6.1.5.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="No. of APs" description="No. Of Aps connected" displayName="No. Of Aps connected" failureThreshold="1" graphName="NoOfAPsConnected" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.12.1.2.1.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="Count" description="2.4 Ghz User count" displayName="2.4 Ghz User count" failureThreshold="1" graphName="TwoPFourGHzUserCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.12.1.2.5.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="Count" description="5 Ghz User Count" displayName="5 Ghz User Count" failureThreshold="1" graphName="FiveGHzUserCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.12.1.2.6.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="%" description="AP CPU Usage Rate" displayName="AP CPU Usage Rate" failureThreshold="1" graphName="APCPUUsageRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.13.3.3.1.41" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="%" description="AP Memory Usage Rate" displayName="AP Memory Usage Rate" failureThreshold="1" graphName="APMemoryUsageRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.13.3.3.1.40" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="Count" description="AP Online User count" displayName="AP Online User count" failureThreshold="1" graphName="APOnlineUserCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.13.3.3.1.44" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="Celsius" description="AP Temperature" displayName="AP Temperature" failureThreshold="1" graphName="APTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.13.3.3.1.43" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="" description="Maximum number of APs under an AC." displayName="AP License" failureThreshold="1" graphName="APLicense" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.1.2.5" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Users" description="Total no. of associated users" displayName="Total no. of associated users" failureThreshold="1" graphName="associatedUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.139.12.1.2.2.0" period="1200" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Huawei">
+	<UserProps/>
+	</Graph>
+	<!-- Huawei Monitors End -->
+	<!-- Autelan Monitors Starts -->	
+	<Graph YAXISTEXT="%" description="CPU Utilization" displayName="CPU Utilization" failureThreshold="1" graphName="AutelanCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.2.1.2.13.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="%" description="Memory Utilization" displayName="Memory Utilization" failureThreshold="1" graphName="AutelanMemoryUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.2.1.2.8.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="" description="DHCP IP Pool Usage" displayName="DHCP IP Pool Usage" failureThreshold="1" graphName="AutelanDHCPIPPoolUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.2.6.3.1.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="Number(s)" description="No. Of Active Users" displayName="No. Of Active Users" failureThreshold="1" graphName="AutelanNoOfActiveUsers" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.2.3.1.3.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan" DisplayColumn=".1.3.6.1.4.1.31656.6.1.1.5.4.1.1" Index=".1.3.6.1.4.1.31656.6.1.1.5.3.1.1">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="Count" description="AP count" displayName="AP count" failureThreshold="1" graphName="AutelanAPCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.2.3.1.1.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan" DisplayColumn=".1.3.6.1.4.1.31656.6.1.1.5.4.1.1" Index=".1.3.6.1.4.1.31656.6.1.1.5.3.1.1">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="Count" description="Active AP Count" displayName="Active AP Count" failureThreshold="1" graphName="ActiveAPCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.2.3.1.2.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan" DisplayColumn=".1.3.6.1.4.1.31656.6.1.1.5.4.1.1" Index=".1.3.6.1.4.1.31656.6.1.1.5.3.1.1">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Count" description="AP Active User count" displayName="AP Active User count" failureThreshold="1" graphName="APActiveUserCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.1.2.4.1.6" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan" DisplayColumn=".1.3.6.1.4.1.31656.6.1.1.5.4.1.1" Index=".1.3.6.1.4.1.31656.6.1.1.5.3.1.1">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Memory Usage" displayName="Memory Usage" failureThreshold="1" graphName="AutelanMemoryUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.1.1.2.1.9" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan" DisplayColumn=".1.3.6.1.4.1.31656.6.1.1.5.4.1.1" Index=".1.3.6.1.4.1.31656.6.1.1.5.3.1.1">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="CPU Usage" displayName="CPU Usage" failureThreshold="1" graphName="AutelanCPUUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.31656.6.1.1.1.2.1.3" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Autelan" DisplayColumn=".1.3.6.1.4.1.31656.6.1.1.5.4.1.1" Index=".1.3.6.1.4.1.31656.6.1.1.5.3.1.1">
+	<UserProps/>
+	</Graph>
+	<!-- Autelan Monitors End -->
+	<!-- Cisco Monitors Starts -->	
+	<Graph YAXISTEXT="Hours" description="The time (in hundredths of a second) since the network management portion of the system was last re-initialized" displayName="SysUpTime	" failureThreshold="1" graphName="SysUpTime_CiscoAP" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.513.1.1.1.1.6/360000" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="AP CPU Usage Avg" displayName="AP CPU Usage Avg" failureThreshold="1" graphName="APCPUUsageAvg" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.513.1.1.1.1.58" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" DisplayColumn=".1.3.6.1.4.1.9.9.512.1.1.1.1.4" Index=".1.3.6.1.4.1.9.9.512.1.1.1.1.1">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="%" description="AP Memory Usage Avg" displayName="AP Memory Usage Avg" failureThreshold="1" graphName="APMemoryUsageAvg" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.513.1.1.1.1.56" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" DisplayColumn=".1.3.6.1.4.1.9.9.512.1.1.1.1.4" Index=".1.3.6.1.4.1.9.9.512.1.1.1.1.1">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="Count" description="AP Active User count" displayName="AP Active User count" failureThreshold="1" graphName="CiscoAPActiveUsercount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.513.1.1.1.1.72" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" DisplayColumn=".1.3.6.1.4.1.9.9.512.1.1.1.1.4" Index=".1.3.6.1.4.1.9.9.512.1.1.1.1.1">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="Nos" description="Number of stations on this RSSI Level" displayName="Number of stations per RSSI Level" failureThreshold="1" graphName="bsnAPIfStationCountOnRSSI" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14179.2.2.18.1.23" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" DisplayColumn=".1.3.6.1.4.1.14179.2.2.18.1.2" Index=".1.3.6.1.4.1.14179.2.2.18.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Nos" description="Number of stations on this SNR Level" displayName="Number of stations per SNR Level" failureThreshold="1" graphName="bsnAPIfStationCountOnSNR" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14179.2.2.19.1.23" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" DisplayColumn=".1.3.6.1.4.1.14179.2.2.19.1.2" Index=".1.3.6.1.4.1.14179.2.2.19.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="" description="ESSID Admin Status" displayName="ESSID Admin Status" failureThreshold="1" graphName="ESSIDAdminStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14179.2.1.1.1.6" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" DisplayColumn=".1.3.6.1.4.1.9.9.512.1.1.1.1.4" Index=".1.3.6.1.4.1.9.9.512.1.1.1.1.1">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="" description="AP IPAddress" displayName="AP IPAddress" failureThreshold="1" graphName="APIPAddress" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14179.2.2.1.1.19" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="MB" description="Cisco generic (multiple platforms) - CPU-wide system memory currently in use converted to megabytes" displayName="Total Used Memory" failureThreshold="1" graphName="cpmCPUMemoryUsedMB" graphType="node" isNumeric="true" oid="BytesToMB[.1.3.6.1.4.1.9.9.109.1.1.1.1.12]" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="MB" description="Cisco generic (multiple platforms) - Free memory from the CPU memory pool converted to megabytes, per processor index" displayName="Total Free Memory" failureThreshold="1" graphName="cpmCPUMemoryFreeMB" graphType="node" isNumeric="true" oid="BytesToMB[.1.3.6.1.4.1.9.9.109.1.1.1.1.13]" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="MB" description="Cisco IOS/IOS-XE devices - CPU-wide committed system memory converted to megabytes (CISCO-PROCESS-MIB)" displayName="Memory Used" failureThreshold="1" graphName="cpmCPUMemoryCommittedMB" graphType="multiple" isNumeric="true" oid="BytesToMB[.1.3.6.1.4.1.9.9.109.1.1.1.1.27]" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+	<!-- Cisco Monitors End -->
+	<!-- Hongxin Monitors Starts -->	
+	<Graph YAXISTEXT="%" description="CPU Utilization" displayName="CPU Utilization" failureThreshold="1" graphName="HongxinCPUUtilization" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.2.1.2.13.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Hongxin">
+        <UserProps/>
+    </Graph>	
+	<Graph YAXISTEXT="%" description="Memory Utilization" displayName="Memory Utilization" failureThreshold="1" graphName="HongxinMemoryUtilization" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.2.1.2.8.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Hongxin">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="" description="DHCP IP Pool Usage" displayName="DHCP IP Pool Usage" failureThreshold="1" graphName="DHCPIPPoolUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.2.6.3.1.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Hongxin">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Number(s)" description="No. Of Active Users" displayName="No. Of Active Users" failureThreshold="1" graphName="HongxinNoOfActiveUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.2.3.1.3.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Hongxin">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Count" description="AP Active User count" displayName="AP Active User count" failureThreshold="1" graphName="HongxinAPActiveUsercount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.1.2.4.1.6" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Hongxin">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Users" description="Authentication Count" displayName="Authentication Count" failureThreshold="1" graphName="HongxinAuthCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.2.3.1.13.0" period="900" protocol="SNMP" SaveAbsolutes="false" timeAvg="false" vendorName="Hongxin">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="AP" description="Number of AP(s) Connected" displayName="Connected AP" failureThreshold="1" graphName="HogxinAPNumbers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.2.3.1.1.0" period="900" protocol="SNMP" SaveAbsolutes="false" timeAvg="false" vendorName="Hongxin">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="AP" description="Number of Active AP(s)" displayName="Active AP" failureThreshold="1" graphName="HongxinOnlineAPNumbers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.2.3.1.2.0" period="900" protocol="SNMP" SaveAbsolutes="false" timeAvg="false" vendorName="Hongxin">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Memory Usage" displayName="Memory Usage" failureThreshold="1" graphName="HongxinMemoryUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.1.1.2.1.9" period="900" protocol="SNMP" SaveAbsolutes="false" timeAvg="false" vendorName="Hongxin">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="CPU Usage" displayName="CPU Usage" failureThreshold="1" graphName="HongxinCPUUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.33940.6.1.1.1.2.1.3" period="900" protocol="SNMP" SaveAbsolutes="false" timeAvg="false" vendorName="Hongxin">
+	<UserProps/>
+	</Graph>
+	<!-- Hongxin Monitors End -->
+	<!-- H3C Monitors Starts -->	
+	<Graph YAXISTEXT="Nos" description="H3C AP SSID User Count" displayName="H3C AP SSID User Count" failureThreshold="1" graphName="H3CAPSSIDUserCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.75.2.2.6.1.1" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C" DisplayColumn=".1.3.6.1.4.1.25506.2.75.2.1.4.1.4" Index=".1.3.6.1.4.1.25506.2.75.2.1.4.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="H3C AP CPU Usage" displayName="H3C AP CPU Usage" failureThreshold="1" graphName="H3CAPCPUUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.75.2.1.1.1.7" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+		<UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="dB" description="H3C AP Average Signal to Noise" displayName="H3C AP Average Signal to Noise" failureThreshold="1" graphName="H3CAPAverageSignaltoNoise" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.75.2.2.1.1.24" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+		<UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="MB" description="H3C AP SSID Transmitted Bytes" displayName="H3C AP SSID Transmitted Bytes" failureThreshold="1" graphName="H3CAPSSIDTransmittedBytes" graphType="multiple" isNumeric="true" oid="BytesToMB[.1.3.6.1.4.1.25506.2.75.2.2.5.1.2]" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C" DisplayColumn=".1.3.6.1.4.1.25506.2.75.2.1.4.1.4" Index=".1.3.6.1.4.1.25506.2.75.2.1.4.1.2">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="MB" description="H3C AP SSID Received Bytes" displayName="H3C AP SSID Received Bytes" failureThreshold="1" graphName="H3CAPSSIDReceivedBytes" graphType="multiple" isNumeric="true" oid="BytesToMB[.1.3.6.1.4.1.25506.2.75.2.2.4.1.2]" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C" DisplayColumn=".1.3.6.1.4.1.25506.2.75.2.1.4.1.4" Index=".1.3.6.1.4.1.25506.2.75.2.1.4.1.2">
+        <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="Bytes" description="H3C WLC UpStream Traffic" displayName="H3C WLC UpStream Traffic" failureThreshold="1" graphName="H3CWLCUpStreamTraffic" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.75.1.1.2.10.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+	</Graph>
+	
+	<Graph YAXISTEXT="Nos" description="H3C WLC Online User Count" displayName="H3C WLC Online User Count" failureThreshold="1" graphName="H3CWLCOnlineUserCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.75.1.1.6.1.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Nos" description="H3C WLC Online AP Count" displayName="H3C WLC Online AP Count" failureThreshold="1" graphName="H3CWLCOnlineAPCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.75.1.1.2.1.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Celsius" description="H3C WLC Temperature" displayName="H3C WLC Temperature" failureThreshold="1" graphName="H3CWLCTemperature" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.6.1.1.1.1.12" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="H3C WLC Memory Utilization" displayName="H3C WLC Memory Utilization" failureThreshold="1" graphName="H3CWLCMemoryUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.6.1.1.1.1.8.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="H3C WLC CPU Utilization" displayName="H3C WLC CPU Utilization" failureThreshold="1" graphName="H3CWLCCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.6.1.1.1.1.6.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+	<!-- H3C Monitors End -->
+	<!-- Ruckus Monitors Starts -->
+	<Graph YAXISTEXT="%" description="Ruckus ZoneDirector - Total number of wireless clients currently connected" displayName="No. of Clients Connected" failureThreshold="1" graphName="RuckusZDNoOfClientsConnected" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.1.1.1.15.2.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Ruckus ZD WLC Memory Utilization" displayName="Ruckus ZD WLC Memory Utilization" failureThreshold="1" graphName="RuckusZDWLCMemoryUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.1.1.1.5.59.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+        <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Ruckus ZD WLC CPU Utilization" displayName="Ruckus ZD WLC CPU Utilization" failureThreshold="1" graphName="RuckusZDWLCCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.1.1.1.5.58.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Ruckus SmartZone - Total number of wireless clients currently connected" displayName="No. of Clients Connected" failureThreshold="1" graphName="RuckusSZNoOfClientsConnected" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.4.1.1.1.15.2.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Ruckus SZ WLC CPU Utilization" displayName="Ruckus SZ WLC CPU Utilization" failureThreshold="1" graphName="RuckusSZWLCCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2021.11.9.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps/>
+	</Graph>
+	<!-- Ruckus Monitors End -->
+	<Graph YAXISTEXT="%" description="RuiJie Memory Utilization" displayName="Memory Utilization" failureThreshold="1" graphName="RuiJieWLCMemoryUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4881.1.1.10.2.35.1.1.1.3.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RuiJie">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="RuiJie - CPU utilization percentage for RuiJie wireless LAN controllers" displayName="CPU Utilization" failureThreshold="1" graphName="RuiJieWLCCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4881.1.1.10.2.36.1.1.2.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RuiJie">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="RuiJie AP CPU Usage" displayName="AP CPU Usage" failureThreshold="1" graphName="RuiJieFITAPCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4881.1.1.10.2.56.2.1.8.1.11" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RuiJie">
+		<UserProps/>
+	</Graph>
+	<!-- WLC Monitors End -->
+</Graph>
+</GRAPHDETAIL>

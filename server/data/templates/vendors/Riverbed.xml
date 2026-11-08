@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For RiverbedSteelhead -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:riverbed_steelhead" templatename="Riverbed_Steelhead" ostype="RiOS" displayname="Riverbed Steelhead"  description="For all steelhead">
+        <NCMVendorDevice vendorid="Riverbed"/>
+
+        <NCMDevicePersonality personalityid="RiverbedSteelhead"/>
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:riverbed_steelhead_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:riverbed_steelhead"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="riverbed_steelhead_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="riverbed_steelhead_cli_fetch_running_rec"/>
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:riverbed_steelhead_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:riverbed_steelhead"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="riverbed_steelhead_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="riverbed_steelhead_cli_fetch_running_rec"/>
+
+
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	
+	
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+
+
+

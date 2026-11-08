@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <Graph YAXISTEXT="GB" description="Monitors the total disk space in GB using CLI" displayName="Total Disk Space in GB" failureThreshold="1" graphName="Linux-TotalDiskSpaceInGB" graphType="multiplenode" isNumeric="true" oid="Linux-TotalDiskSpaceInGB" period="7200" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="net-snmp" pollDataType="3">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+    <Graph YAXISTEXT="GB" description="Monitors the total disk space in GB using CLI" displayName="Total Disk Space in GB" failureThreshold="1" graphName="Solaris-TotalDiskSpaceInGB" graphType="multiplenode" isNumeric="true" oid="Solaris-TotalDiskSpaceInGB" period="7200" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors" pollDataType="3">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+    <Graph YAXISTEXT="GB" description="Monitors the total disk space in GB using CLI" displayName="Total Disk Space in GB" failureThreshold="1" graphName="HP-UX-TotalDiskSpaceInGB" graphType="multiplenode" isNumeric="true" oid="HP-UX-TotalDiskSpaceInGB" period="7200" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="3">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+    <Graph YAXISTEXT="GB" description="Monitors the total disk space in GB using CLI" displayName="Total Disk Space in GB" failureThreshold="1" graphName="AIX-TotalDiskSpaceInGB" graphType="multiplenode" isNumeric="true" oid="AIX-TotalDiskSpaceInGB" period="7200" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="IBM" pollDataType="3" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+    <Graph YAXISTEXT="GB" description="Monitors the total disk space in GB using CLI" displayName="Total Disk Space in GB" failureThreshold="1" graphName="Mac-TotalDiskSpaceInGB" graphType="multiplenode" isNumeric="true" oid="Mac-TotalDiskSpaceInGB" period="7200" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="Apple" pollDataType="3">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph graphName="WMI-TotalDiskSpaceInGB" displayName="Total Disk Space in GB" period="7200" YAXISTEXT="GB" description="Monitors the total disk space in GB using WMI" failureThreshold="1" graphType="multiplenode" isNumeric="true" oid="WMI Total Disk Space in GB" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="WMI Monitors" pollDataType="3">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+</GRAPHDETAIL>

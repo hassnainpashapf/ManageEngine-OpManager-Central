@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- fetch Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="extreme_bdswitch_cli_fetch_config_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="upload configuration ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="extreme_bdswitch_cli_fetch_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- push Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="extreme_bdswitch_cli_push_config_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="download configuration ${UserInput:tftp_server_address} ${UserInput:file_name} incremental">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="extreme_bdswitch_cli_push_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Commands for Summit XOS -->
+<CLICommand command="tftp ${UserInput:tftp_server_address} -v VR-Default -p -l primary.cfg -r ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="extreme_summit_cli_xos_fetch_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="tftp ${UserInput:tftp_server_address} -v VR-Default -g -r ${UserInput:file_name} -l primary.cfg">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="extreme_summit_cli_xos_push_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="disable clipaging">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="extreme_summit_cli_xos_paging_disable_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show config detail">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="extreme_summit_cli_xos_backup_show_running" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

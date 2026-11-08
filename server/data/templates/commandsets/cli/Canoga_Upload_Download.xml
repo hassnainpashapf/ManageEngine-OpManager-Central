@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--$Id$keyword-->
+<CLICommandList>
+
+<!-- Upload Running -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="canoga_cli_config_get_irec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy running-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="canoga_cli_config_get_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Upload Startup -->
+<CLICommand command="copy startup-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="canoga_cli_upload_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Startup -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="canoga_cli_push_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="canoga_cli_push_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Running -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} running-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="canoga_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+ <!-- Config Sync Operation -->
+<CLICommand command="copy running-config startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="canoga_cli_sync_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="canoga_hardware_prop_parser" promptactionid="yesActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="canoga_perkins_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+    <CLIInputRecord parsercommandname="hardware_prop_canoga_perkins" messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="canoga_perkins_hardware_prop_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+
+
+
+
+
+<CLICommand command="show running">
+    <CLIInputRecord  messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="canoga_cli_push_show_running_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show startup-config">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="canoga_cli_push_show_startup_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="terminal length 0">
+    <CLIInputRecord  messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="canoga_terminal_length_0_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<ErrorCodeList>
+    
+    <NCMErrorCode 
+        error_code="ENABLE_USERNAME_PROMPT_FAILURE" 
+        description="ncm.ec.ENABLE_USERNAME_PROMPT_FAILURE"/>
+    <NCMErrorCode 
+        error_code="ENABLE_PASSWORD_PROMPT_FAILURE" 
+        description="ncm.ec.ENABLE_PASSWORD_PROMPT_FAILURE"/>
+    <NCMErrorCode 
+        error_code="ENABLE_USERNAME_OR_ENABLE_PASSWORD_OR_ENABLE_PROMPT_FAILURE" 
+        description="ncm.ec.ENABLE_USERNAME_OR_ENABLE_PASSWORD_OR_ENABLE_PROMPT_FAILURE"/>
+    <NCMErrorCode 
+        error_code="ENABLE_PASSWORD_OR_ENABLE_PROMPT_FAILURE" 
+        description="ncm.ec.ENABLE_PASSWORD_OR_ENABLE_PROMPT_FAILURE"/>
+    <!--NCMErrorCode 
+        error_code="PROMPT_FAILURE" 
+        description="'Prompt' value mismatched. Give common value for both 'Enable Prompt' and 'Prompt' parameters."/-->
+    <NCMErrorCode 
+        error_code="CONNECTION_PARAMETER_FAILURE" 
+        description="ncm.ec.CONNECTION_PARAMETER_FAILURE"/>
+    <NCMErrorCode 
+        error_code="CONNECTION_FAILURE" 
+        description="ncm.ec.CONNECTION_FAILURE"/>
+    <NCMErrorCode 
+        error_code="NOT_SUPPORTED_COMMAND_FAILURE" 
+        description="ncm.ec.NOT_SUPPORTED_COMMAND_FAILURE"/>
+    <NCMErrorCode 
+        error_code="FILE_NOT_UPLOADED_FAILURE" 
+        description="ncm.ec.FILE_NOT_UPLOADED_FAILURE"/>
+
+</ErrorCodeList>

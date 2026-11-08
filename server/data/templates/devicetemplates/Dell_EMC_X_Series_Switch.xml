@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Dell EMC X Series Switch" osType="" templateName="Dell_EMC_X_Series_Switch" multiConfigTemplate="false" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Dell" vendorName="Dell">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="debugging" number="8" sequenceid="3"/>
+			<Level name="information" number="7" sequenceid="2"/>
+			<Level name="notification" number="6" sequenceid="1"/>
+			<Level name="warning" number="5" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="DellXActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandstr="copy running-config startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="DellXActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Dell EMC X Series Switch" personalityName="DellEMCXSeriesSwitch">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="HARDWARE_VERSION" size="50" desc="HardWare Version" displayname="Hardware Version" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="BOOT_VERSION" size="50" desc="BOOT VERSION" displayname="BOOT VERSION" defaultvalue="Not Available" sequenceid="30"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="DellEMCXSeriesSwitchPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_dell_emc_x_series_switch_one">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*(?i)MAC ADDRESS\s*:\s*([0-9A-F:]+).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIES" EXPRESSION=".*[Ss]ystem [Tt]ype\s*:\s*(\S+).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>								
+										<REGEX NAME="OSTYPE" EXPRESSION=".*[Ss]ystem [Dd]escription\s*:\s*(\w+\s\w+\s[\w\-\_\/\(\)]+).*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						<COMMAND NAME="hardware_prop_dell_emc_x_series_switch_two">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*(?:(?i)Software|(?i)SW) [Vv]ersion\s+([\w\.]+).*">
+										<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HARDWARE_VERSION" EXPRESSION=".*(?:(?i)Hardware|(?i)HW)\s*[Vv]ersion\s+([\w\.]+).*">
+											<PARAM NAME="HARDWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BOOT_VERSION" EXPRESSION=".*[Bb]oot\s*[Vv]ersion\s+([\w\.]+).*">
+											<PARAM NAME="BOOT_VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system" parsercommandname="hardware_prop_dell_emc_x_series_switch_one" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show version" parsercommandname="hardware_prop_dell_emc_x_series_switch_two" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds>
+		<PromptActionId name="DellXActionId" prompt="return>" command="A" suffix="${LF}"/>
+		<PromptActionId name="DellXActionId" prompt="] ?" command="Y" suffix="${LF}"/>
+		<PromptActionId name="DellXActionId" prompt="(y/n)" command="y" suffix="${LF}"/>
+		<PromptActionId name="DellXActionId" prompt="[Yes/press any key for no]...." command="y" suffix="${LF}"/>
+	</PromptActionIds>
+</NCMDeviceTemplate>

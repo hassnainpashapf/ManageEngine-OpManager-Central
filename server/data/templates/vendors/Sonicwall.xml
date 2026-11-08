@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For SonicWALL Firewall -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:sonicwall_firewall" templatename="SonicWALL_Firewall" ostype="Air OS" displayname="SonicWALL" description="For all SonicWALL Firewall">
+        <NCMVendorDevice vendorid="Dell" />
+        <NCMDevicePersonality personalityid="SonicWALLFirewall" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:sonicwall_firewall_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:sonicwall_firewall"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+      <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="sonicwall_firewall_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="sonicwall_firewall_cli_fetch_running_rec"/>
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:sonicwall_firewall_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:sonicwall_firewall"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="sonicwall_firewall_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="sonicwall_firewall_cli_fetch_running_rec"/>	
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	
+	
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

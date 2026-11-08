@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Upload Running -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_contentswitch_cli_fetch_running_irec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="cisco_contentswitch_cli_fetch_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Upload Startup -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_contentswitch_cli_fetch_startup_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="copy startup-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="cisco_contentswitch_cli_fetch_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Startup -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_contentswitch_cli_push_startup_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="copy tftp ${UserInput:tftp_server_address} ${UserInput:file_name} startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="cisco_contentswitch_cli_push_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- CLI Command for Cisco WAAS  -->
+<CLICommand command="copy tftp ${UserInput:tftp_server_address} ${UserInput:file_name} running-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="cisco_waas_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

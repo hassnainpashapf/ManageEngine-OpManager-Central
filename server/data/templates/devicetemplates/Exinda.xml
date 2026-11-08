@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Exinda" osType="RiOS" templateName="Exinda">
+	<RestTemplate name=""/>
+	<Vendor displayName="Exinda" vendorName="Exinda">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show running-config"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="no cli session paging enable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="60000" promptactionid="yesActionId"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="60000" promptactionid="yesActionId" readfromresponse="true"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Exinda" personalityName="Exinda">	
+		<Login enablecommand="enable" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="MEMORYSIZE" size="15" desc="Identifies the size of system in MB" displayname="Total Memory Size" defaultvalue="Not Available" sequenceid="1"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="ExindaHardwarePropParser.xml"> 			
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_Exinda">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MEMORYSIZE" EXPRESSION="Memory\sSize\s*:\s*(\S+\s+\S+)\s*">
+											<PARAM NAME="MEMORYSIZE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*[M|m]odel\s*:\s*(\S+)\s*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION" EXPRESSION="Product\srelease\s*:\s*(\S+)\s*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							 
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol>
+					<Commands>
+						<Command commandstr="show version" parsercommandname="hardware_prop_Exinda" responseparserid="Exinda_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

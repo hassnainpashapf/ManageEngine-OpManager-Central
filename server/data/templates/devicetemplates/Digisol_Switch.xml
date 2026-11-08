@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For all Digisol Switches" displayName="Digisol Switch" osType="Digisol OS" templateName="Digisol Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Digisol" vendorName="Digisol">
+		<Commands/>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="60000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="20000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="60000"/>
+                	<Command commandecho="" commandstr="show startup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="copy running-config startup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="Startup">
+                	<Command commandstr="copy startup-config tftp: ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="?" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="60000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="Startup">
+                	<Command commandstr="copy tftp: startup-config ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="?" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="60000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Digisol Switch" personalityName="DigisolSwitch">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="CPLD Version" displayname="CPLD Version" name="CPLD_VERSION" sequenceid="1" size="50"/>
+				<Column defaultvalue="Not Available" desc="BootRom Version" displayname="BootRom Version" name="BOOTROM_VERSION" sequenceid="2" size="50"/>
+				<Column defaultvalue="Not Available" desc="Hardware Version" displayname="Hardware Version" name="HARDWARE_VERSION" sequenceid="2" size="50"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging on</Regex>
+					<Regex>logging trap (emergencies|alerts|critical|errors|warnings)</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="DigisolHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_digisol_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+									   <REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial\s(?:No\.?|Number):\s*(.*)">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="CPLD_VERSION" EXPRESSION=".*CPLD\sVersion\s*:?\s*(.*)">
+											<PARAM NAME="CPLD_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BOOTROM_VERSION" EXPRESSION=".*Boot\s*ROM\s*Version:\s*(.*)">
+											<PARAM NAME="BOOTROM_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BOOTROM_VERSION1" EXPRESSION=".*BootRom\s*Version\s*:?\s*(.*)">
+											<PARAM NAME="BOOTROM_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HARDWARE_VERSION" EXPRESSION=".*Hard[Ww]are\s*Version\s*:?\s*(.*)">
+											<PARAM NAME="HARDWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION="\s*(\S*)\s*Device\,\s*Compiled\s*on.*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*CPU\s*Mac\s*(.*)">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Soft[Ww]are\s*Package\s*Version\s*(.*)">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_digisol_switch" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

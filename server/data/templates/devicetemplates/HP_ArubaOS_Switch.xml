@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="HPE ArubaOS Switch" osType="ArubaOS" templateName="HPE_ArubaOS_Switch">
+	<RestTemplate name="HPEArubaOS"/>
+	<Vendor displayName="HPE" vendorName="HP">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="info" number="7" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="no page" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="no page" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Vlan">
+                	<Command commandstr="no page" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show vlans" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="config t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging severity ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="config t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="copy startup-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="startup">
+                	<Command commandstr="copy tftp startup-config ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${LF}" prompt="." sequenceid="2" timeout="60000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy tftp running-config ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${LF}" prompt="." sequenceid="2" timeout="60000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="config t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging severity ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="config t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="HPE ArubaOS Switch" personalityName="HPEArubaOSSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="continue" postlogincommand="" preloginprompt="continue" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="ROMVERSION" size="15" desc="Version of ROM in the switch" displayname="ROM Version" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex operation="upload">^password.*</Regex>
+					<Regex>.*show\s*config.*</Regex>
+					<Regex>.*show\s*running-config.*</Regex>
+					<Regex>.*Startup\s*configuration:.*</Regex>
+					<Regex>.*Running\s*configuration.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>logging\s*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HPArubaOsHardwarePropParser.xml"/>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system" parsercommandname="hardware_prop_hp_arubaOs_switch" responseparserid="hp_arubaOs_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+						<Command commandstr="show system-information" parsercommandname="hardware_prop_hp_arubaOs_switch" responseparserid="hp_arubaOs_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+						<Command commandstr="show modules" parsercommandname="hardware_prop_hp_arubaOs_switch" responseparserid="hp_arubaOs_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+						<Command commandstr="show version" parsercommandname="hardware_prop_hp_arubaOs_switch" responseparserid="hp_arubaOs_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+						<Command commandstr="show dhcp client vendor-specific" parsercommandname="hardware_prop_hp_arubaOs_switch" responseparserid="hp_arubaOs_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="Aruba 2930M" ostype="" series="" sysoid=".1.3.6.1.4.1.11.2.3.7.8.5.7"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

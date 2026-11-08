@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Fortinet FortiNAC" osType="FortiNAC" templateName="Fortinet_FortiNAC" multiConfigTemplate="false" category="Controller">
+	<Vendor displayName="Fortinet" vendorName="Fortinet">
+		<Commands/>
+		<LoggingLevels>
+			<Level name="information" number="0" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="show" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="5" timeout="240000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="FortiNAC" personalityName="FortiNAC">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="PARTNUMBER" size="100" desc="PARTNUMBER" displayname="Part Number" defaultvalue="Not Available" sequenceid="1"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>set server "$SYSLOG_SERVER_IP"</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="FortiNACHardwareParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="fortiNAC_getSystemStatusCmd_hardware_prop">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Serial[\s|-]Number\s*:\s*(\S*).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Part[\s|-]Number\s*:\s*(\S*).*" NAME="PARTNUMBER">
+											<PARAM NAME="PARTNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Version:\s*((Fort\w+)-(\S*))\s*(\S*),build.*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="OSTYPE" TOKENNO="2"/>
+											<PARAM NAME="SERIES" TOKENNO="3"/>
+											<PARAM NAME="OSVERSION" TOKENNO="4"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>	
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="get system status" parsercommandname="fortiNAC_getSystemStatusCmd_hardware_prop" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

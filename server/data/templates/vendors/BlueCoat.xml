@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+	<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:BlueCoatProxySG" templatename="BlueCoat_ProxySG" displayname="BlueCoat ProxySG" description="For all BlueCoat ProxySG devices">
+    <NCMVendorDevice vendorid="BlueCoat" />
+    <NCMDevicePersonality personalityid="BlueCoatProxySG" />
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+    </NCMSupportedProtocol>
+    
+    <NCMSupportedProtocol protocolid="SSH">
+	    <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+    
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:BlueCoatProxySG_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:BlueCoatProxySG"
+                            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+  <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+  <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="bluecoat_cli_running_config_backup"/>
+  <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="bluecoat_cli_running_config_upload"/>
+  
+  <!-- Entry to support Syslog -->  
+  <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="bluecoat_enable_cli_syslog_change_tracking" />
+    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="bluecoat_disable_cli_syslog_change_tracking" />
+  
+</NCMDeviceCriteria>
+  </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:BlueCoatProxySG_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:BlueCoatProxySG"
+                            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+  <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+  <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="bluecoat_cli_running_config_backup"/>
+  <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="bluecoat_cli_running_config_upload"/>
+
+  <!-- Entry to support Syslog -->
+    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="bluecoat_enable_cli_syslog_change_tracking" />
+        <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="bluecoat_disable_cli_syslog_change_tracking" />
+
+  </NCMDeviceCriteria>
+  </NCMProtocolCombination>
+  
+</NCMDeviceTemplate>
+
+ <!-- For BlueCoat Packet Shaper -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:packet_shaper" templatename="packet_shaper" displayname="Packet Shaper" ostype="Bluecoat" description="For all BlueCoat Packet Shaper devices">
+        <NCMVendorDevice vendorid="BlueCoat"/>
+        <NCMDevicePersonality personalityid="PacketShaper"/>
+
+		
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+       
+
+	<!-- TELNET -->
+
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:packet_shaper_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:packet_shaper"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="packet_shaper_cli_telnet_backup" taskhandling="true"/>                                
+            <NCMReadFromResponse operationid="BackupRunningConfig" recordid="packet_shaper_cli_show_config_rec1"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+
+		<!-- SSH -->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:packet_shaper_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:packet_shaper"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+              <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="packet_shaper_cli_telnet_backup" taskhandling="true"/>                                
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="packet_shaper_cli_show_config_rec1"/>            
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+ <!-- For BlueCoat Proxy SGOS -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:blueCoat_sgos_version_6" templatename="BlueCoat_Sgos_Version_6" displayname="BlueCoatProxy SGOS Version 6.x" ostype="Bluecoat" description="For all BlueCoat SGOS Version 6 devices">
+        <NCMVendorDevice vendorid="BlueCoat"/>
+        <NCMDevicePersonality personalityid="BlueCoatProxySGOS"/>
+
+		
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>    
+
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:blueCoat_sgos_version_6_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:blueCoat_sgos_version_6" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="bluecoat_proxy_sgos_cli_telnet_backup" taskhandling="true"/>                                
+            <NCMReadFromResponse operationid="BackupRunningConfig" recordid="bluecoat_proxy_sgos_cli_show_config_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>  
+
+
+     <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:blueCoat_sgos_version_6_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:blueCoat_sgos_version_6" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+              <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="bluecoat_proxy_sgos_cli_telnet_backup" taskhandling="true"/>                                
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="bluecoat_proxy_sgos_cli_show_config_rec"/>                        
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination> 
+
+ </NCMDeviceTemplate>
+ 
+</DeviceConfiguration>

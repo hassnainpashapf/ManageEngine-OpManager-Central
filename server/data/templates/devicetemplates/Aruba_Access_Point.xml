@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Aruba Access point devices" displayName="Aruba Access Point" osType="ArubaOS" templateName="Aruba Access Point">
+	<RestTemplate name=""/>
+	<Vendor displayName="Aruba" vendorName="Aruba">
+		<Commands/>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="no page" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="no page" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="show configuration" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write memory" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Changedetection">
+            	<Operation name="Enable">
+                	<Command commandecho="" commandstr="config t" delay="" messagesuffix="${LF}" prompt="" promptactionid="hpActionId" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="logging ${UserInput:HostIpAddress}" delay="" messagesuffix="${LF}" prompt="" promptactionid="hpActionId" promptecho="" readfromresponse="" sequenceid="3" timeout=""/>
+                	<Command commandecho="" commandstr="logging severity ${UserInput:LoggingLevel}" delay="" messagesuffix="${LF}" prompt="" promptactionid="hpActionId" promptecho="" readfromresponse="" sequenceid="4" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="hpActionId" promptecho="" readfromresponse="" sequenceid="5" timeout=""/>
+            	</Operation>
+            	<Operation name="Disable">
+                	<Command commandecho="" commandstr="config t" delay="" messagesuffix="${LF}" prompt="" promptactionid="hpActionId" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="no logging ${UserInput:HostIpAddress}" delay="" messagesuffix="${LF}" prompt="" promptactionid="hpActionId" promptecho="" readfromresponse="" sequenceid="3" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="hpActionId" promptecho="" readfromresponse="" sequenceid="4" timeout=""/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="copy startup-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Aruba Access Point" personalityName="ArubaAccessPoint">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="continue" prelogincommand="" preloginprompt="continue" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Build" displayname="Build" name="BUILD" sequenceid="10" size="100"/>
+				<Column defaultvalue="Not Available" desc="Software Revision" displayname="Software Revision" name="SOFTWARE_REVISION" sequenceid="20" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+                    <Regex>^.*Running\s*configuration.*$</Regex>
+                    <Regex>^.*Current\s*configuration.*$</Regex>
+                    <Regex>^.*Startup\s*configuration:.*$</Regex>
+                    <Regex>^.*show\s*running-config.*$</Regex>
+                    <Regex>^.*show\s*config.*$</Regex>
+					<Regex operation="upload">^password.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>logging\s*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="ArubaAccessPointPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_Aruba_Access_Point">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">							
+										<REGEX NAME="OSVERSION" EXPRESSION="\s*ArubaOS\s*\(MODEL\s*:\s*(\S*)\),\s*Version\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>	  
+										</REGEX>
+										<REGEX EXPRESSION=".*Base\sMAC\sAddr\s*:\s(\S+).*" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BUILD" EXPRESSION=".*build\s*(\S*)\).*">
+											<PARAM NAME="BUILD" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX EXPRESSION=".*Software\srevision\s*:\s(\S+).*" NAME="SOFTWARE_REVISION">
+											<PARAM NAME="SOFTWAREREVISION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_Aruba_Access_Point" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="hpActionId"/>
+						<Command commandstr="show system" parsercommandname="hardware_prop_Aruba_Access_Point" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="hpActionId"/>						
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

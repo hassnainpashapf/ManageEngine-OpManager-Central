@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="scriptExecutionActionId">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="show_command_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:CommandToExecute}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="show_command_generic_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:CommandToExecute}">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="show_command_foundry_switch_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!--Alaxala 1230-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="scriptExecutionActionId">
+	<InteractionSpec timeout="60000" protocol="CLI" interactionid="show_command_alaxala_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:CommandToExecute}">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="show_command_alaxala_switch_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- Execution Groups -->
+
+<!--Alaxala 1230-->
+<NCMExecutionGroup executiongroupid="NCMExecutionGroup:executiongroupid:AlaxalaExecGrp" executiongroupname="Alaxala_Switch_Show_Command_Execution" description="show command execution grp for alaxala switch">
+<NCMExecutionGroupInfo sequenceid="1" interactionspecid="show_command_alaxala_ispec" recordid="show_command_alaxala_switch_rec" is_iterative="true" iterative_key="CommandToExecute"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup executiongroupid="NCMExecutionGroup:executiongroupid:GenericExecGrp" executiongroupname="Generic_Show_Command_Execution" description="This is a generic group for show command execution">
+<NCMExecutionGroupInfo sequenceid="1" interactionspecid="show_command_ispec" recordid="show_command_generic_rec" is_iterative="true" iterative_key="CommandToExecute"/>
+</NCMExecutionGroup>
+
+<!-- Foundry -->
+
+<NCMExecutionGroup executiongroupid="NCMExecutionGroup:executiongroupid:FoundryExecGrp" executiongroupname="Foundry_Switch_Show_Command_Execution" description="show command execution grp for foundry switch">
+<NCMExecutionGroupInfo sequenceid="1" interactionspecid="show_command_ispec" recordid="show_command_foundry_switch_rec" is_iterative="true" iterative_key="CommandToExecute"/>
+</NCMExecutionGroup>
+
+<!-- HP 4000M -->
+
+<NCMExecutionGroup executiongroupid="NCMExecutionGroup:executiongroupid:HP4000MExecGrp" executiongroupname="HP_4000M_Switch_Show_Command_Execution" description="show command execution grp for HP 4000M switch">
+<NCMExecutionGroupInfo sequenceid="1" interactionspecid="hp_4000M_switch_cli_prompt_ispec" recordid="hp_4000M_switch_cli_prompt_rec"/>
+<NCMExecutionGroupInfo sequenceid="2" interactionspecid="hp_4000M_switch_cli_fetch_running_ispec" recordid="show_command_generic_rec" is_iterative="true" iterative_key="CommandToExecute"/>
+<NCMExecutionGroupInfo sequenceid="3" interactionspecid="hp_4000M_switch_cli_exit_ispec" recordid="hp_4000M_switch_cli_exit_rec"/>
+<NCMExecutionGroupInfo sequenceid="4" interactionspecid="hp_4000M_switch_cli_logout_ispec_1" recordid="hp_4000M_switch_cli_logout_rec_1"/>
+<NCMExecutionGroupInfo sequenceid="5" interactionspecid="hp_4000M_switch_cli_logout_ispec_2" recordid="hp_4000M_switch_cli_logout_rec_2"/>
+</NCMExecutionGroup>
+
+<!-- BayStack -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true" promptactionid="scriptExecutionActionId">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="show_command_baystack_ispec"/>
+</CLIInteractionSpec>
+
+<NCMExecutionGroup executiongroupid="NCMExecutionGroup:executiongroupid:BayStackExecGrp" executiongroupname="BayStack_Show_Command_Execution" description="show command execution grp for Nortel BayStack switch">
+<NCMExecutionGroupInfo sequenceid="1" interactionspecid="show_command_baystack_ispec" recordid="nortel_baystackswitch_cli_climode_rec"/>
+<NCMExecutionGroupInfo sequenceid="2" interactionspecid="show_command_baystack_ispec" recordid="show_command_generic_rec" is_iterative="true" iterative_key="CommandToExecute"/>
+<NCMExecutionGroupInfo sequenceid="3" interactionspecid="nortel_baystackswitch_cli_mainmenu_irec" recordid="nortel_baystackswitch_cli_exit_rec"/>
+</NCMExecutionGroup>
+
+<!-- Hitachi GR 2000 Router -->
+<NCMExecutionGroup executiongroupid="NCMExecutionGroup:executiongroupid:Hitachi_GR_2000_Router_Show_Command_Execution" executiongroupname="Hitachi_GR_2000_Router_Show_Command_Execution" description="show command execution grp for Hitachi GR 2000 Router">
+<NCMExecutionGroupInfo sequenceid="1" interactionspecid="show_command_hitachi_gr_2000_router_ispec" recordid="show_command_hitachi_gr_2000_router_rec" is_iterative="true" iterative_key="CommandToExecute"/>
+</NCMExecutionGroup>
+
+<!--  Rest Api Execution Group -->
+<NCMExecutionGroup executiongroupid="NCMExecutionGroup:executiongroupid:GenericRestExecGrp" executiongroupname="Generic_RestAPI_Execution" description="This is a generic group for RestAPI execution"/>
+	
+</CLICommandList>

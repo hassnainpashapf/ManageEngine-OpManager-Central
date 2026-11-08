@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<!-- ************* For PWR 2625T *************** -->
+<CLICommandList>
+	<CLIInteractionSpec interactionverb="1" requesttimeout="120000" commandecho="false" promptecho="true" prompt="${UserInput:Prompt}"  responseparserid="nortel_hardware_prop_parser" promptactionid="nortelPPActionId">
+    <InteractionSpec timeout="120000" protocol="CLI" interactionid="nortel_pwrswitch_cli_command_exec_irec"/> 
+</CLIInteractionSpec> 
+
+
+<CLICommand command="show running-config">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_pwrswitch_cli_fetch_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy running-config tftp address ${UserInput:tftp_server_address} filename ${UserInput:file_name}">
+    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_pwrswitch_cli_fetch_running_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="terminal length 0">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="nortel_pwrswitch_cli_terminal_mute_rec" protocol="CLI"/>
+        </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

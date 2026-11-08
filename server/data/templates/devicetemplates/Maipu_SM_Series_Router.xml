@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Maipu SM Series Routers" displayName="Maipu SM Series Router" osType="MyPower" templateName="Maipu SM Series Router">
+	<RestTemplate name=""/>
+	<Vendor displayName="Maipu" vendorName="Maipu">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="50000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="50000"/>
+                	<Command commandecho="" commandstr="show startup-config" delay="" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write mem" delay="" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" promptactionid="maipuActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Maipu SM Series Router" personalityName="MaipuSMSeriesRouter">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${CRLF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="BootRom Version" displayname="BootRom Version" name="BOOTROM_VERSION" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Hardware Version" displayname="Hardware Version" name="HARDWARE_VERSION" sequenceid="2" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="MaipuSwitchHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_maipu_sm_series">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*SoftWare\sVersion\s(.*)">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BOOTROM_VERSION" EXPRESSION=".*BootRom\sVersion\s(.*)">
+											<PARAM NAME="BOOTROM_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HARDWARE_VERSION" EXPRESSION=".*HardWare\sVersion\s(.*)">
+											<PARAM NAME="HARDWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Device\sserial\snumber\s(.*)">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX> 
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${CRLF}" parsercommandname="hardware_prop_maipu_sm_series" prompt="${UserInput:Prompt}" promptactionid="NA" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds>
+		<PromptActionId name="maipuActionId" prompt=")?" command="Y" suffix="${CRLF}"/>
+	</PromptActionIds>
+</NCMDeviceTemplate>

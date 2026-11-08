@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Vubiq Ethernet Switch" osType="" templateName="Vubiq_Ethernet_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Vubiq" vendorName="Vubiq">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">				
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="false" sequenceid="3" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="4" timeout="60000"/>
+            	</Operation> 
+            </OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Vubiq Ethernet Switch" personalityName="VubiqEthernetSwitch">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Chipset ID" displayname="Chipset ID" name="CHIPSET_ID" sequenceid="1" size="100"/>
+			   
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="VubiqEthernetSwitchHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_vubiq_ethernet_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Software\s*Version\s*:\s*(\S*)\-.*build.*">								
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>								
+										 <REGEX NAME="Chipset ID" EXPRESSION=".*Chipset\s*ID\s*:\s*(\S*).*">
+											<PARAM NAME="CHIPSET_ID" TOKENNO="1"/>
+										</REGEX>
+									    <REGEX NAME="MACADDRESS" EXPRESSION=".*MAC\s*Address\s*:\s*(\S*).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION="Product\s*:\s*Vitesse\s*(\S*)\s*Switch.*">	
+											<PARAM NAME="MODEL" TOKENNO="1"/>										
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="IMAGEFILENAME" EXPRESSION=".*Image\s*:\s*(\S*).*">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_vubiq_ethernet_switch" prompt="${UserInput:Prompt}" promptactionid="yesActionId" responseparserid="vubiq_ethernet_switch_hardware_prop_parser" timeout="20000"/>
+						
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="mimomax_gps_tornado_hardware_prop_parser" promptactionid="yesActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="mimomax_gps_tornado_show_version_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_mimomax_gps_tornado" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="mimomax_gps_tornado_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!--Show Running Config -->
+ 
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="mimomax_gps_tornado_cli_show_running_config_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="">
+<!--CLICommand command="show running-config"-->
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="mimomax_gps_tornado_cli_fetch_running_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="mimomax_gps_pyxis_hardware_prop_parser" promptactionid="yesActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="mimomax_gps_pyxis_show_version_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_mimomax_gps_pyxis" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="mimomax_gps_pyxis_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!--Show Running Config -->
+ 
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="mimomax_gps_pyxis_cli_show_running_config_irec" />
+</CLIInteractionSpec>
+
+
+<!--CLICommand command="show running-config"-->
+<CLICommand command="">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="mimomax_gps_pyxis_cli_fetch_running_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

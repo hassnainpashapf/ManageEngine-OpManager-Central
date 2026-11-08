@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Welotec Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:mobileiron_sentry" templatename="MobileIron_Sentry" displayname="MobileIron Sentry" ostype="NA" description="For all Tippingpoint IPS">
+        <NCMVendorDevice vendorid="MobileIron"/>
+        <NCMDevicePersonality personalityid="MobileIronSentry"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:mobileiron_sentry_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:mobileiron_sentry" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="mobileiron_sentry_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="mobileiron_sentry_cli_show_config_rec"/>
+         
+		 </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:mobileiron_sentry_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:mobileiron_sentry" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="mobileiron_sentry_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="mobileiron_sentry_cli_show_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

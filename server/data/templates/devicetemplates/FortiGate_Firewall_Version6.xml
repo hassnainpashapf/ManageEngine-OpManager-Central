@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="FortiGate Firewall" displayName="FortiGate Firewall Version 6" osType="FortiOS" templateName="FortiGate_Firewall_Version6" multiConfigTemplate="true">
+	<RestTemplate name="FortiOS"/>
+	<Vendor displayName="Fortinet" vendorName="Fortinet">
+		<Commands/>
+		<LoggingLevels>
+			<Level name="information" number="0" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="config global" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="execute backup config tftp ${UserInput:file_name} ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="config global" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="execute restore config tftp ${UserInput:file_name} ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="config global" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set event enable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set admin enable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set severity ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="config log syslogd setting" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set server ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set port 514" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="8" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set status enable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="9" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="11" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="config global" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="config log syslogd setting" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="unset server" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="config global" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="config system console" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set out standard" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="50" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="60" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="70" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="config global" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set event enable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set admin enable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set severity ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="config log syslogd setting" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set server ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set port 514" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="8" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set status enable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="9" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="11" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="config global" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="config log syslogd setting" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="unset server" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="FortiGate Firewall Version6" personalityName="FortiGateFirewallVersion6">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="a):" postlogincommand="a" preloginprompt="a):" prelogincommand="a"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BIOSVERSION" size="20" desc="Bios Version" displayname="BIOS Version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="VIRUSDB" size="50" desc="Virus DB" displayname="Virus DB" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="IPSDB" size="50" desc="Ips DB" displayname="IPS DB" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="OPERATIONMODE" size="20" desc="Operation Mode" displayname="Operation Mode" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="LOGHARDDISK" size="20" desc="Log Hard Disk Availability" displayname="Log Hard Disk" defaultvalue="Not Available" sequenceid="6"/>
+				<Column name="MAXVIRTUALDOMAINS" size="15" desc="Maximum number of virtual domains" displayname="Maximum Virtual Domains" defaultvalue="Not Available" sequenceid="7"/>
+				<Column name="CURRENTVIRTUALDOMAIN" size="15" desc="Current Virtual Domain" displayname="Current Virtual Domain" defaultvalue="Not Available" sequenceid="8"/>
+				<Column name="CURRENTHASTATUS" size="20" desc="Current HA Status" displayname="Current HA Status" defaultvalue="Not Available" sequenceid="9"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>set\s*status\s*enable</Regex>
+					<Regex>set\s*server\s*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="FortiOSDevPropParser.xml"/>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="get system status" parsercommandname="fortios_device_hardware_prop" responseparserid="fortios_device_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

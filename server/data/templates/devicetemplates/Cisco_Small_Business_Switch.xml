@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Cisco Small Business Switch" osType="NA" templateName="Cisco_Small_Business_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal datadump" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show startup-config" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="60000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="terminal datadump" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="60000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cisco 300 Series Switch" personalityName="CiscoSBSwitch"/>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="SF500-24" ostype="NA" series="SB 500" sysoid=".1.3.6.1.4.1.9.6.1.80.24.1"/>
+        <NCMDeviceSysOID model="SG500-28" ostype="IOS" series="SB 500" sysoid=".1.3.6.1.4.1.9.6.1.81.28.1"/>
+        <NCMDeviceSysOID model="SG500-52" ostype="NA" series="SB 500" sysoid=".1.3.6.1.4.1.9.6.1.81.52.1"/>
+        <NCMDeviceSysOID model="SF302-08" ostype="NA" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.82.8.1"/>
+        <NCMDeviceSysOID model="SF302-08MP" ostype="NA" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.82.8.3"/>
+        <NCMDeviceSysOID model="SF300-08" ostype="NA" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.82.8.4"/>
+        <NCMDeviceSysOID model="SF300-48" ostype="NA" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.82.48.1"/>
+        <NCMDeviceSysOID model="SF300-48P" ostype="NA" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.82.48.2"/>
+        <NCMDeviceSysOID model="SG300-10SFP" ostype="NA" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.83.10.5"/>
+        <NCMDeviceSysOID model="SG300-20" ostype="IOS" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.83.20.1"/>
+        <NCMDeviceSysOID model="SG300-28" ostype="IOS" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.83.28.1"/>
+        <NCMDeviceSysOID model="SG300-28P" ostype="NA" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.83.28.2"/>
+        <NCMDeviceSysOID model="SG300-28MP" ostype="NA" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.83.28.3"/>
+        <NCMDeviceSysOID model="SG350-28" ostype="NA" series="SB 350" sysoid=".1.3.6.1.4.1.9.6.1.95.28.1"/>
+        <NCMDeviceSysOID model="SF302-08P" ostype="IOS" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.82.8.2"/>
+        <NCMDeviceSysOID model="SF300-24" ostype="IOS" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.82.24.1"/>
+        <NCMDeviceSysOID model="SF300-24P" ostype="IOS" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.82.24.2"/>
+        <NCMDeviceSysOID model="SG300-10" ostype="IOS" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.83.10.1"/>
+        <NCMDeviceSysOID model="SG300-10P" ostype="IOS" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.83.10.2"/>
+        <NCMDeviceSysOID model="SG300-10MP" ostype="IOS" series="SB 300" sysoid=".1.3.6.1.4.1.9.6.1.83.10.3"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id ,Exp $ -->
+
+<DeviceConfiguration>
+
+     <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_switch" templatename="Hitachi_Switch" displayname="Apresia Switch" ostype="AEOS" description="Apresia Switch">
+        <NCMVendorDevice vendorid="Hitachi Cable" />
+        <NCMDevicePersonality personalityid="HitachiCableSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hitachi_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hitachi_switch_running_config_fetch" />
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hitachi_switch_startup_config_fetch"/>
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="hitachi_switch_startup_config_push" />               
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="hitachi_switch_running_startup_sync" />
+
+		<!-- Enable change Tracking Thru Syslog -->                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Hitachi_Enable_Change_Tracking_Syslog" />                    
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Hitachi_Disable_Change_Tracking_Syslog" />
+                    
+
+                
+                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+          <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hitachi_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hitachi_switch_running_config_fetch" />
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hitachi_switch_startup_config_fetch"/>
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="hitachi_switch_startup_config_push" />               
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="hitachi_switch_running_startup_sync" />
+		
+			<!-- Enable change Tracking Thru Syslog -->                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Hitachi_Enable_Change_Tracking_Syslog" />                    
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Hitachi_Disable_Change_Tracking_Syslog" />
+                    
+
+                
+                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+<!-- telnet\ssh backup  -->
+	
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hitachi_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        	<NCMDeviceCriteria commandmapid="SSH_Command">
+        
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hitachi_switch_cli_telnet_running_fetch" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="hitachi_switch_cli_show_run_rec"/>
+
+        		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hitachi_switch_cli_telnet_flash_fetch" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="hitachi_switch_cli_show_flash_rec"/>
+
+        		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="hitachi_switch_running_startup_sync" />
+	
+			<!-- Enable change Tracking Thru Syslog -->                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Hitachi_Enable_Change_Tracking_Syslog" />                    
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Hitachi_Disable_Change_Tracking_Syslog" />
+                    
+
+			 
+        	
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hitachi_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        
+        	<NCMDeviceCriteria commandmapid="TELNET_Command">
+        
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hitachi_switch_cli_telnet_running_fetch" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="hitachi_switch_cli_show_run_rec"/>
+
+        		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hitachi_switch_cli_telnet_flash_fetch" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="hitachi_switch_cli_show_flash_rec"/>
+
+        		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="hitachi_switch_running_startup_sync" />
+
+
+
+				<!-- Enable change Tracking Thru Syslog -->                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Hitachi_Enable_Change_Tracking_Syslog" />                    
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Hitachi_Disable_Change_Tracking_Syslog" />
+                    
+
+			 
+        	
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+</NCMDeviceTemplate>
+
+
+    <!-- For HITACHI - GR2000 Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_gr_2000_router" templatename="Hitachi_GR_2000_Router" ostype="NA"  displayname="Hitachi GR 2000 Router"  description="For Hitachi GR 2000 Router">
+        <NCMVendorDevice vendorid="Hitachi Cable"/>
+
+        <NCMDevicePersonality personalityid="HitachiGR2000Router"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_gr_2000_router" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hitachi_gr_2000_router_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="hitachi_gr_2000_router_cli_startup_config_push"/>
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hitachi_gr_2000_router_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hitachi_gr_2000_router_cli_running_config_push"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="hitachi_gr_2000_router_cli_copy_running_to_startup"/>  
+                
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="hitachi_gr_2000_router_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <!--NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="hitachi_gr_2000_router_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="hitachi_gr_2000_router_Disable_Change_Tracking_Syslog" /-->
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- For Telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_gr_2000_router" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hitachi_gr_2000_router_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="hitachi_gr_2000_router_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hitachi_gr_2000_router_telnet_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="hitachi_gr_2000_router_show_running_config_rec"/>
+		<!--Upload Running config-->		
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hitachi_gr_2000_router_telnet_running_config_upload" taskhandling="true"/>
+			<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+			<!-- Hardware Prop Retrieval -->
+			<NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="hitachi_gr_2000_router_cli_get_hardware_interface" />
+			
+			
+			<!-- Change Tracking thru Syslog -->
+		<!--NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="hitachi_gr_2000_router_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="hitachi_gr_2000_router_Disable_Change_Tracking_Syslog" /-->
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+<!--SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_gr_2000_router" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hitachi_gr_2000_router_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="hitachi_gr_2000_router_cli_startup_config_push"/>
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hitachi_gr_2000_router_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hitachi_gr_2000_router_cli_running_config_push"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="hitachi_gr_2000_router_cli_copy_running_to_startup"/>
+                
+                
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="hitachi_gr_2000_router_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <!--NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="hitachi_gr_2000_router_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="hitachi_gr_2000_router_Disable_Change_Tracking_Syslog" /-->
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- For SSH -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hitachi_gr_2000_router" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hitachi_gr_2000_router_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="hitachi_gr_2000_router_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hitachi_gr_2000_router_telnet_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="hitachi_gr_2000_router_show_running_config_rec"/>
+		<!--Upload Running config-->	
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hitachi_gr_2000_router_telnet_running_config_upload" taskhandling="true"/>
+			<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+	
+			<!-- Hardware Prop Retrieval -->
+			<NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="hitachi_gr_2000_router_cli_get_hardware_interface" />
+			
+			
+			<!-- Change Tracking thru Syslog -->
+		<!--NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="hitachi_gr_2000_router_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="hitachi_gr_2000_router_Disable_Change_Tracking_Syslog" /-->
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

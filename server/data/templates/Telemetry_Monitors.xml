@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	<Graph YAXISTEXT="Days" description="SysUpTime in days" displayName="SysUpTime (Days)" failureThreshold="1" graphName="TelemetryOpenConfigSysUpTime" graphType="node" isNumeric="true" oid="TelemetryOpenConfigSysUpTime" period="900" protocol="gNMI" saveAbsolutes="true" timeAvg="false" vendorName="-">
+		<UserProps propName="GROUPNAME" propValue="gNMI"/>
+	</Graph>
+	<TELEMETRYGRAPHDETAILS GRAPHNAME="TelemetryOpenConfigSysUpTime" METHOD="SAMPLE" XPATH="openconfig-system:system/state/boot-time" ORIGIN="rfc7951">
+		<TELEMETRYGRAPHPROPS PROPNAME="VENDOR" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="CATEGORY" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="DEVICE_TYPE" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+	</TELEMETRYGRAPHDETAILS>
+
+	<Graph YAXISTEXT="Percentage" description="CPU Utilization" displayName="CPU Utilization" failureThreshold="1" graphName="TelemetryOpenConfigCPUUtilization" graphType="multiple" isNumeric="true" oid="TelemetryOpenConfigCPUUtilization" period="900" protocol="gNMI" saveAbsolutes="true" timeAvg="false" vendorName="-">
+		<UserProps propName="GROUPNAME" propValue="gNMI"/>
+	</Graph>
+	<TELEMETRYGRAPHDETAILS GRAPHNAME="TelemetryOpenConfigCPUUtilization" METHOD="SAMPLE" XPATH="openconfig-platform:components/component/cpu/utilization" ORIGIN="rfc7951">
+		<TELEMETRYGRAPHPROPS PROPNAME="VENDOR" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="CATEGORY" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="DEVICE_TYPE" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+	</TELEMETRYGRAPHDETAILS>
+
+	<Graph YAXISTEXT="Percentage" description="Memory Utilization" displayName="Memory Utilization" failureThreshold="1" graphName="TelemetryCiscoXEMemoryUtilization" graphType="multiple" isNumeric="true" oid="TelemetryCiscoXEMemoryUtilization" period="900" protocol="gNMI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+		<UserProps propName="GROUPNAME" propValue="gNMI"/>
+	</Graph>
+	<TELEMETRYGRAPHDETAILS GRAPHNAME="TelemetryCiscoXEMemoryUtilization" METHOD="SAMPLE" XPATH="Cisco-IOS-XE-memory-oper:memory-statistics/memory-statistic" ORIGIN="rfc7951">
+		<TELEMETRYGRAPHPROPS PROPNAME="VENDOR" PROPVALUE="Cisco"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="CATEGORY" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="DEVICE_TYPE" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+	</TELEMETRYGRAPHDETAILS>
+
+	<Graph YAXISTEXT="Percentage" description="CPU Utilization" displayName="CPU Utilization (5 mins)" failureThreshold="1" graphName="TelemetryCiscoXECPUUtilization5Min" graphType="multiple" isNumeric="true" oid="TelemetryCiscoXECPUUtilization5Min" period="900" protocol="gNMI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+		<UserProps propName="GROUPNAME" propValue="gNMI"/>
+	</Graph>
+	<TELEMETRYGRAPHDETAILS GRAPHNAME="TelemetryCiscoXECPUUtilization5Min" METHOD="SAMPLE" XPATH="Cisco-IOS-XE-process-cpu-oper:cpu-usage/cpu-utilization/five-minutes" ORIGIN="rfc7951">
+		<TELEMETRYGRAPHPROPS PROPNAME="VENDOR" PROPVALUE="Cisco"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="CATEGORY" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="DEVICE_TYPE" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+	</TELEMETRYGRAPHDETAILS>
+
+	<Graph YAXISTEXT="Percentage" description="CPU Utilization" displayName="CPU Utilization (1 mins)" failureThreshold="1" graphName="TelemetryCiscoXECPUUtilization1Min" graphType="multiple" isNumeric="true" oid="TelemetryCiscoXECPUUtilization1Min" period="900" protocol="gNMI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+		<UserProps propName="GROUPNAME" propValue="gNMI"/>
+	</Graph>
+	<TELEMETRYGRAPHDETAILS GRAPHNAME="TelemetryCiscoXECPUUtilization1Min" METHOD="SAMPLE" XPATH="Cisco-IOS-XE-process-cpu-oper:cpu-usage/cpu-utilization/one-minute" ORIGIN="rfc7951">
+		<TELEMETRYGRAPHPROPS PROPNAME="VENDOR" PROPVALUE="Cisco"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="CATEGORY" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="DEVICE_TYPE" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+	</TELEMETRYGRAPHDETAILS>
+
+	<Graph YAXISTEXT="Percentage" description="Memory Utilization" displayName="Memory Utilization" failureThreshold="1" graphName="TelemetryOpenConfigMemoryUtilization" graphType="node" isNumeric="true" oid="TelemetryOpenConfigMemoryUtilization" period="900" protocol="gNMI" saveAbsolutes="true" timeAvg="false" vendorName="-">
+		<UserProps propName="GROUPNAME" propValue="gNMI"/>
+	</Graph>
+	<TELEMETRYGRAPHDETAILS GRAPHNAME="TelemetryOpenConfigMemoryUtilization" METHOD="SAMPLE" XPATH="openconfig-platform:components/component/state/memory" ORIGIN="rfc7951">
+		<TELEMETRYGRAPHPROPS PROPNAME="VENDOR" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="CATEGORY" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+		<TELEMETRYGRAPHPROPS PROPNAME="DEVICE_TYPE" PROPVALUE="ALL"></TELEMETRYGRAPHPROPS>
+	</TELEMETRYGRAPHDETAILS>
+</GRAPHDETAIL>
+

@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <Graph YAXISTEXT="" description="Current high-availability state. (need to convert to numeric).  VM-Series firewall in Microsoft Azure does not support HA. If  VM firewall is deployed with Amazon Elastic Load Balancing (ELB), it does not support HA" displayName="Current HA State" failureThreshold="1" graphName="panSysHAState" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.25461.2.1.2.1.11.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Monitors the active GlobalProtect tunnels on a gateway and measures tunnel utilization. Use this metric if you use this VM-Series firewall as a VPN gateway to secure remote users." displayName="GP Gateway Utilization" failureThreshold="1" graphName="panGPGWUtilizationPct" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.5.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Tunnels" description="Monitors the number of active GlobalProtect sessions on a firewall deployed as a GlobalProtect gateway. Use this metric if you use this VM-Series firewall as a VPN gateway to secure remote users. Check the datasheet for the maximum number of active tunnels supported for your firewall model." displayName="GP Active Tunnels" failureThreshold="1" graphName="panGPGWUtilizationActiveTunnels" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.5.1.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Percent table utilization for all active user sessions. Note that 1 connection = many sessions.. Values should be between 0 and 100. GetNext used." displayName="Session Utilization" failureThreshold="1" graphName="panSessionUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Vsys utilization percentage, if session limit is configured. If session limit is not configured, this value is '0'.   (A virtual system (vsys) is an independent (virtual) firewall instance that you can separately manage within a physical firewall.)" displayName="Virtual system session utilization" failureThreshold="1" graphName="panVsysSessionUtilizationPct" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Sessions" description="Active sessions on this Vsys" displayName="Virtual system active sessions" failureThreshold="1" graphName="panVsysActiveSessions" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Sessions" description="Total number of Active Sessions" displayName="Active Sessions Count" failureThreshold="1" graphName="panSessionActive" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Sessions" description="Total number of active TCP Sessions" displayName="Active TCP Sessions Count" failureThreshold="1" graphName="panSessionActiveTcp" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Sessions" description="Total number of active UDP sessions." displayName="Active UDP Sessions Count" failureThreshold="1" graphName="panSessionActiveUdp" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Sessions" description="Total number of active ICMP sessions." displayName="Active ICMP Sessions Count" failureThreshold="1" graphName="panSessionActiveICMP" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="write rate/sec" description="The write rate in logs/s on the Log Collection" displayName="Log writes per sec" failureThreshold="1" graphName="panLcLogRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.3.30.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="Log Disk Usage of logical disk on the Log Collector. Log Disk Usage is available as MB in use. (append the instances in OID for each logical disk)" displayName="Log Disk Usage" failureThreshold="1" graphName="panLcDiskUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.3.30.1.3" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU load average over last 60 seconds. Utilization of CPUs on dataplane that are used for system functions." displayName="Dataplane CPU utilization (60 secs)" failureThreshold="1" graphName="hrProcessorLoad.2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.25.3.3.1.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU load average over last 60 seconds." displayName="CPU utilization (60 secs)" failureThreshold="1" graphName="hrProcessorLoad" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.25.3.3.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="Total number of active SSL proxy sessions." displayName="Active SSL Proxy sessions" failureThreshold="1" graphName="panSessionActiveSslProxy" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.7.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="SSL proxy Session utilization percentage. Values should be between 0 and 100." displayName="SSL Proxy sessions Utilization" failureThreshold="1" graphName="panSessionSslProxyUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25461.2.1.2.3.8.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="Number of users who are connected to AMON (Application monitor) via VPN tunnel" displayName="Connected users" failureThreshold="1" graphName="dtpsConnectedUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.9.5.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="The number of accepted packets." displayName="Packets accepted" failureThreshold="1" graphName="fwAccepted" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="The number of dropped packets." displayName="Packets dropped" failureThreshold="1" graphName="fwDropped" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="The number of rejected packets." displayName="Packets rejected" failureThreshold="1" graphName="fwRejected" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of connections" description="Number of concurrent IPv6 and IPv4 connections since last reboot" displayName="Concurrent connections" failureThreshold="1" graphName="fwNumConn" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.25.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of connections" description="Peak number of concurrent connections since last reboot" displayName="Peak concurrent connections" failureThreshold="1" graphName="fwPeakNumConn" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.25.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="HighAvailability state. 0 (OK) - if availability is standby. 1 (Warning) - if availability is active." displayName="HA state" failureThreshold="1" graphName="haState" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.2620.1.5.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Errors" description="VPN Decryption errors" displayName="VPN Decryption errors" failureThreshold="1" graphName="VPNErrorIn" graphType="multiple" isNumeric="false" oid=".1.3.6.1.4.1.2620.1.2.4.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="HighAvailability (HA) Status Code.0 Member is up and working(active or standby)1 Attention. There is a problempreventing it to switch to active orstandby2 HA is down." displayName="HA Status Code" failureThreshold="1" graphName="haStatCode" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.5.101.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="IP Encapsulating Security Payload (ESP)  encrypted packets. An Encapsulating Security Payload (ESP) is a protocol within the IPSec for providing authentication, integrity and confidentially of network packets data/payload in IPv4 and IPv6 networks. ESP provides message/payload encryption and the authentication of a payload and its origin within the IPSec protocol suite." displayName="IPsec ESP encrypted packets" failureThreshold="1" graphName="cpvIpsecEspEncPkts" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.2620.1.2.5.4.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="IP Encapsulating Security Payload (ESP)  decrypted packets" displayName="IPsec ESP decrypted packets" failureThreshold="1" graphName="cpvIpsecEspDecPkts" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.2620.1.2.5.4.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="To check the VPN Tunnels status (can also use 1.3.6.1.4.1.2620.500.9003.1.3). Append the instance (ipaddress) obtained from .1.3.6.1.4.1.2620.500.9002.1.1 to get values. Need to add in graphoidcolumninfo table. active(3), destroy(4), idle(129), phase1(130), down(131), init(132)" displayName="VPN peer tunnel state" failureThreshold="1" graphName="tunnelState" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.500.9002.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of connections" description="Number of active/concurrent user connections for the VSX instances." displayName="VSX Concurrent Connections" failureThreshold="1" graphName="vsxCountersConnNum" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.16.23.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of connections" description="Peak number of active connections over VSX instances" displayName="VSX Peak active connections" failureThreshold="1" graphName="vsxCountersConnPeakNum" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.16.23.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total number of accepted bytes  in each VSX" displayName="VSX Total Accepted Bytes" failureThreshold="1" graphName="vsxCountersBytesAcceptedTotal" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.16.23.1.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total number of dropped bytes  in each VSX" displayName="VSX Total Dropped bytes" failureThreshold="1" graphName="vsxCountersBytesDroppedTotal" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.16.23.1.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total number of rejected bytes  in each VSX" displayName="VSX Total Rejected bytes" failureThreshold="1" graphName="vsxCountersBytesRejectedTotal" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.16.23.1.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Interface In Bytes" displayName="Accepted In Bytes" failureThreshold="1" graphName="fwAcceptBytesIn64" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.25.5.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Interface Out Bytes" displayName="Accepted Out Bytes" failureThreshold="1" graphName="fwAcceptBytesOut64" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.25.5.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Packets dropped out" displayName="Packets dropped out" failureThreshold="1" graphName="fwDropPcktsOut" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.25.5.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="Packets dropped in" displayName="Packets dropped In" failureThreshold="1" graphName="fwDropPcktsIn" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.25.5.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="Accepted In Packets" displayName="Packets Accepted In" failureThreshold="1" graphName="fwAcceptPcktsIn" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.25.5.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="Accepted Out Packets" displayName="Packets Accepted Out" failureThreshold="1" graphName="fwAcceptPcktsOut" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.1.25.5.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="seconds" description="Up time of SSL VPN tunnels (in secs) from the time of VPN reboot." displayName="VPN SSL Tunnel Uptime" failureThreshold="1" graphName="fgVpnSslTunnelUpTime" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.4.1.6.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="attacks" description="The number of direct requests to Fortigate local stack from external, reflecting DOS attack towards the Fortigate." displayName="Number of direct requests to FortiGate local stack" failureThreshold="1" graphName="fgSIAdvSesNoListenerCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.4.6.2.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No of Active Sessions" description="Number of active sessions on the device" displayName="Active sessions" failureThreshold="1" graphName="fgSysSesCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.4.1.8.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Number of bytes received on tunnel since instantiation" displayName="VPN Bytes Received" failureThreshold="1" graphName="fgVpnDialupInOctets" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.1.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Number of bytes sent on tunnel since instantiation" displayName="VPN Bytes sent" failureThreshold="1" graphName="fgVpnDialupOutOctets" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.1.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The number of incoming bytes of L2 traffic through this tunnel since it was established" displayName="VPN Tunnel Traffic In" failureThreshold="1" graphName="fgVpnSslTunnelBytesIn" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.4.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The number of outgoing bytes of L2 traffic through this tunnel since it was established" displayName="VPN Tunnel Traffic Out" failureThreshold="1" graphName="fgVpnSslTunnelBytesOut" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.4.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="Represents the number of WTPs (Wireless Transaction Protocol) that are connecting to the AC (Access Controller or Wireless Controller).  The instance/peer can be identified from fgWcWtpSessionWtpId.1 OID" displayName="WTP Sessions" failureThreshold="1" graphName="fgWcInfoWtpSessions" graphType="multiplenode" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.14.2.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Tunnels" description="The current number of active SSL tunnels in the virtual domain" displayName="Active VPN SSL Tunnels" failureThreshold="1" graphName="fgVpnSslStatsActiveTunnels" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.3.1.6.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="The current number of users logged in through SSL-VPN tunnels in the virtual domain" displayName="Active SSL VPN Users" failureThreshold="1" graphName="fgVpnSslStatsLoginUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.3.1.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="High-availability status of Fortigate.  System modes are (Standalone, A-A or A-P) otherwise (master (1), backup (2), standalone (3))" displayName="HA Status" failureThreshold="1" graphName="fgHaSystemMode" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.13.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="kb" description="Total physical and swap memory installed (KB)" displayName="Total Memory" failureThreshold="1" graphName="totalMemory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.103.2.1.3.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="Fortinet FortiMail - Current hard disk usage in megabytes" displayName="Disk Usage" failureThreshold="1" graphName="diskUsageCurrent" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.103.2.1.4.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Network bandwidth usage of the cluster member (kbps)" displayName="Bandwidth Usage of Cluster" failureThreshold="1" graphName="fgHaStatsNetUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.13.2.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Number of virus transmissions detected in the virtual domain since start-up" displayName="Number of Virus Transmissions detected" failureThreshold="1" graphName="fgAvVirusDetected" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.8.2.1.1.1" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Number of intrusions detected since start-up in the VDOM." displayName="Number of Intrusions detected" failureThreshold="1" graphName="fgIpsIntrusionsDetected" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.9.2.1.1.1" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="HTTP proxy current connections" displayName="HTTP session count" failureThreshold="1" graphName="httpSessionsCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.10.100.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" polledDataType="1">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="Listing of total MAX connections in use at any one time since system startup." displayName="Max Connections" failureThreshold="1" graphName="MaxConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.147.1.2.2.2.1.5.40.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Monitors the Memory Utilization of Cisco device" displayName="Memory Utilization" failureThreshold="1" graphName="CiscoMemoryUtilization" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.9.9.48.1.1.1.5.1*100)/(.1.3.6.1.4.1.9.9.48.1.1.1.5.1 + .1.3.6.1.4.1.9.9.48.1.1.1.6.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT=".1.3.6.1.4.1.9.9.171.1.3.1.1.0" description="node" displayName="Active IPSEC VPN sessions" failureThreshold="1" graphName="Active IPSEC VPN sessions" graphType="node" isNumeric="content security management appliance m170" oid="cipSecGlobalActiveTunnels" period="300" protocol="SNMP" saveAbsolutes="no. of tunnels" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of tunnels" description="The number of currently active IPsec Phase-1 IKE (Internet Key Exchange) Tunnels." displayName="Active IPSEC IKE Tunnels" failureThreshold="1" graphName="IKEActiveTunnel" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.171.1.2.1.1.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of failures" description="The number of failures to grant a buffer to a requester due to reasons other than insufficient memory. For example, in systems where there are different execution contexts, it may be too expensive to create new buffers when running in certain contexts. In those cases it may be preferable to fail the request." displayName="Buffer Failures" failureThreshold="1" graphName="cempMemBufferFailures" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.221.1.1.2.1.21" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of buffers" description="Indicates the number of times a buffer has been requested, but no buffers were available in the cache pool." displayName="Buffer Cache Misses" failureThreshold="1" graphName="cempMemBufferCacheMiss" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.221.1.1.3.1.5" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="true" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="The number of currently active IPSec sessions." displayName="Active IPSEC sessions" failureThreshold="1" graphName="crasIPSecNumSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.26.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="The number of currently active LAN to LAN sessions." displayName="Active LAN-To-LAN sessions" failureThreshold="1" graphName="crasL2LNumSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.29.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No of Active Sessions" description="The number of currently active sessions. A session is a connection terminating on the managed entity which has been established to provide remote access connectivity to a user. A session is said to be 'active' if it is ready to carry application traffic between the user and the managed entity. A session which is not active is defined to be 'dormant'." displayName="VPN Session Count" failureThreshold="1" graphName="cfwConnectionStatValueCurrentInUse" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Huawei networking devices - Memory utilization calculated from total and free memory (generic Huawei MIB)" displayName="Memory Utilization" failureThreshold="1" graphName="MemoryUtilization" graphType="node" isNumeric="true" oid="((.1.3.6.1.4.1.2011.6.3.5.1.1.2 - .1.3.6.1.4.1.2011.6.3.5.1.1.3)*100)/( .1.3.6.1.4.1.2011.6.3.5.1.1.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Huawei - Entity temperature reading in Celsius (board slot 9)" displayName="Temperature" failureThreshold="1" graphName="hwEntityTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.1.1.11.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="The value of this object identifies the sizes of all the storage devices, in KB." displayName="Total Disk Space" failureThreshold="1" graphName="hwStorageSpace" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.9.1.4.2.1.3.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="This object indicates the remaining space, in KB." displayName="Free Disk Space" failureThreshold="1" graphName="hwStorageSpaceFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.6.9.1.4.2.1.4.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Indicates current status of local appliance. disabled(0), unknown(1), as-primary-active(2), as-secondary-active(3), aa-primary-ative(4), aa-secondary-active(5), aa-primary-takeover(6), aa-secondary-takeover(7), standby(8), admin(9), failed(10), unavailable(11)" displayName="Cluster status" failureThreshold="1" graphName="wgClusterEnabled" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.3097.6.6.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="WatchGuard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of bytes sent since system is up. This number includes both cut through traffic and host traffic." displayName="Total Bytes Sent" failureThreshold="1" graphName="wgSystemTotalSendBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3097.6.3.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="WatchGuard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of bytes received since system is up. This number includes both cut through traffic and host traffic." displayName="Total Bytes Received" failureThreshold="1" graphName="wgSystemTotalRecvBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3097.6.3.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="WatchGuard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU Usage of Active main board (AMB)" displayName="CPU Usage (Active Main Board)" failureThreshold="1" graphName="CPULoadAMB" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.25506.2.6.1.1.1.1.6.19" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU usage of the Standby Main board (SMB)" displayName="CPU Usage (Standby Main Board)" failureThreshold="1" graphName="CPUUsageSMB" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.6.1.1.1.1.6.20" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The number of bytes being counted pertaining to the specified counter. For policers, this field is always zero because policers do not count number of bytes." displayName="Number of Bytes counted" failureThreshold="1" graphName="jnxFWBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.5.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Used Memory in percent for RE 0" displayName="Total Used memory (RE 0)" failureThreshold="1" graphName="jnxOperatingMemoryRE0" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.2636.3.1.13.1.11.9.1.0.0)  / 100 * (.1.3.6.1.4.1.2636.3.1.13.1.15.9.1.0.0)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Memory usage in percent for RE 1" displayName="Total Used memory (RE1)" failureThreshold="1" graphName="jnxOperatingMemoryRE1" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.2636.3.1.13.1.11.9.2.0.0)  / 100 * (.1.3.6.1.4.1.2636.3.1.13.1.15.9.2.0.0)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Node average session created in last 96 seconds." displayName="Average Sessions (last 96 secs)" failureThreshold="1" graphName="jnxJsNodeSessionCreationPerSecond" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.39.1.12.1.4.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="JuniperSRX AvailableSession calculated as {Juniper_SRX_MonitoringMaxFlowSession}-{jnxJsSPUMonitoringCurrentFlowSession}" displayName="JuniperSRX_AvailableSession" failureThreshold="1" graphName="jnxAvailableSession" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.2636.3.39.1.12.1.1.1.7 -  1.3.6.1.4.1.2636.3.39.1.12.1.1.1.6)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The temperature in Celsius (degrees C) of this subject. Zero if unavailable or inapplicable." displayName="JuniperSRX_OperatingTemp" failureThreshold="1" graphName="jnxOperatingTemp" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.7.9.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="sessions" description="Current number of Flow sessions" displayName="Flow Sessions (Current)" failureThreshold="1" graphName="jnxJsSPUMonitoringCurrentFlowSession" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.39.1.12.1.1.1.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The Internet Key Exchange (IKE)'s Phase 1 status - inactive(0), active(1)" displayName="JuniperSOS_IKE_P1" failureThreshold="1" graphName="nsVpnMonP1State" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3224.4.1.1.1.21" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The Internet Key Exchange (IKE)'s Phase 2 status - inactive(0), active(1)" displayName="JuniperSOS_IKE_P2" failureThreshold="1" graphName="nsVpnMonP2State" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3224.4.1.1.1.23" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Memory allocated." displayName="JuniperSOS_nsResMemAllocate" failureThreshold="1" graphName="nsResMemAllocate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3224.16.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current tunnel status determined by the icmp ping if The monitoring status is on. (down 0, up 1)" displayName="JuniperSOS_TunnelState" failureThreshold="1" graphName="nsVpnMonTunnelState" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3224.4.1.1.1.20" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Incoming bytes through this sa." displayName="Incoming Traffic" failureThreshold="1" graphName="nsVpnMonBytesIn" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.3224.4.1.1.1.35" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="The Total number of Users Logged In for the IVE Node" displayName="JuniperSA_iveConcurrentUsers" failureThreshold="1" graphName="iveConcurrentUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.12.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Difference between the time a message was received by the Barracuda Spam Firewall and the time it is sent to the mail server." displayName="Average Email Latency" failureThreshold="1" graphName="avgEmailLatency" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages blocked in the past 24 hours." displayName="Daily Inbound Messages Blocked" failureThreshold="1" graphName="dailyInboundBlocked" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.21" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages quarantined in the past 24 hours." displayName="Daily Inbound Messages Quarantined" failureThreshold="1" graphName="dailyInboundQuarantined" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.30" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages deferred due to Rate Control in the past 24 hours." displayName="Daily Inbound deferred" failureThreshold="1" graphName="dailyInboundRateControlled" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.27" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages blocked due to viruses in the past 24 hours." displayName="Daily Inbound Virus Blocked" failureThreshold="1" graphName="dailyInboundVirusBlocked" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.24" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of messages deferred because they could not be processed, and will be requeued for processing." displayName="Deferred Queue Size" failureThreshold="1" graphName="deferredQueueSize" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of messages waiting to be processed by the Barracuda Spam Firewall." displayName="In Queue Size" failureThreshold="1" graphName="inQueueSize" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount of disk storage used for message and log storage." displayName="Maillog Storage Percent" failureThreshold="1" graphName="maillogStorage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.18" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Count of messages in the notification queue." displayName="Notify Queue Size" failureThreshold="1" graphName="notifyQueueSize" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of messages waiting to be sent to the mail server. Note that alerts and notifications are queued separately from outbound email." displayName="Out Queue Size" failureThreshold="1" graphName="outQueueSize" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages blocked since last system reset." displayName="Total Inbound Messages Blocked" failureThreshold="1" graphName="totalInboundBlocked" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.20" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages quarantined since last system reset." displayName="Total Inbound Quarantined" failureThreshold="1" graphName="totalInboundQuarantined" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.29" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages deferred due to Rate Control since last system reset" displayName="Total Inbound Rate Controlled" failureThreshold="1" graphName="totalInboundRateControlled" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.26" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages blocked due to viruses since last system reset." displayName="Total Inbound Virus Blocked" failureThreshold="1" graphName="totalInboundVirusBlocked" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.23" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of outbound messages deferred due to Rate Control since last system reset." displayName="Total Outbound Rate Controlled" failureThreshold="1" graphName="totalOutboundRateControlled" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.47" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of recipients" description="Number of unique recipients of mail processed by the Barracuda Spam Firewall." displayName="Total Unique Recipients" failureThreshold="1" graphName="uniqueRecipients" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="connections" description="Web Filter active tcp connections" displayName="Active TCP Connections" failureThreshold="1" graphName="ActiveTCPConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.3.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="blocks" description="Web Filter virus download block" displayName="Total Virus Download Blocks" failureThreshold="1" graphName="VirusDownloadBlock" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.3.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="CPU temperature in degrees Celsius" displayName="System Temperature" failureThreshold="1" graphName="systemTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.3.1.10.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of messages sent to the Barracuda Message Center for encryption and delivery in the past hour." displayName="Number of Messages sent for Encryption (1 hour)" failureThreshold="1" graphName="hourlyEncrypted" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.55" period="3600" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of messages redirected to another mail server in the past hour." displayName="Number of Messages  Redirected (1 hour)" failureThreshold="1" graphName="hourlyRedirected" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.58" period="3600" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of outbound messages delivered to the intended recipient, without modification, in the past hour" displayName="hourlySent" failureThreshold="1" graphName="hourlySent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.61" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of messages sent to the Barracuda Message Center for encryption and delivery since last system reset." displayName="Total Messages Encrypted" failureThreshold="1" graphName="totalEncrypted" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.53" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of messages redirected to another mail server since last system reset." displayName="Total Messages redirected" failureThreshold="1" graphName="totalRedirected" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.56" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Number of outbound messages delivered to the intended recipient, without modification, since last system reset." displayName="Total Messages Sent" failureThreshold="1" graphName="totalSent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.59" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages blocked in the past hour." displayName="Hourly Inbound Messages Blocked" failureThreshold="1" graphName="hourlyInboundBlocked" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.22" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages quarantined in the past hour." displayName="Hourly Inbound Messages Quarantined" failureThreshold="1" graphName="hourlyInboundQuarantined" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.31" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of inbound messages deferred due to Rate Control in the past hour." displayName="Hourly Inbound deferred" failureThreshold="1" graphName="hourlyInboundRateControlled" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.28" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of outbound messages blocked due to policy in the past hour." displayName="Hourly outbound policy blocked" failureThreshold="1" graphName="hourlyOutboundPolicyBlocked" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.40" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of outbound messages quarantined in the past hour." displayName="Hourly outbound policy quarantined" failureThreshold="1" graphName="hourlyOutboundQuarantined" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.52" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="messages" description="Total number of outbound messages deferred due to Rate Control in the past hour." displayName="hourly outbound deferred" failureThreshold="1" graphName="hourlyOutboundRateControlled" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20632.2.49" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of tunnels" description="Number of live client-to-site VPN tunnels" displayName="VPN Tunnels count" failureThreshold="1" graphName="vpnUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10704.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="session (s)" description="number of live firewall sessions" displayName="Concurrent Sessions" failureThreshold="1" graphName="fwConcurrentSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10704.1.10.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bits" description="data throughput in bits / second" displayName="Data throughput" failureThreshold="1" graphName="fwDataThroughput" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10704.1.10.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="VPN tunnel status" displayName="VPN Tunnel status" failureThreshold="1" graphName="vpnState" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10704.1.6.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="RaidEventSeverity (0 : unknown, 1 : error, 2 : warning, 3 : information, 4: debug)" displayName="RAID disk status" failureThreshold="1" graphName="raidEventSev" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10704.1.5.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="box service status (0 : down 1 : up, 2 : block, 3 : wild, 4 : removed)" displayName="Barracuda box service status" failureThreshold="1" graphName="boxServiceState" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10704.1.0.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Barracuda">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="Total decrypted packet count for this phase2 Security Association (SA)." displayName="Total Decrypted packets" failureThreshold="1" graphName="sonicSAStatDecryptPktCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.8741.1.3.2.1.1.1.10" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="SonicWALL, Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="Incoming Fragmented packet count for this phase2 Security Association (SA)" displayName="Fragmented packets (Inbound)" failureThreshold="1" graphName="sonicSAStatInFragPktCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8741.1.3.2.1.1.1.12" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="SonicWALL, Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="Outgoing Fragmented packet count for this phase2 Security Association (SA)" displayName="Fragmented packets (Outbound)" failureThreshold="1" graphName="sonicSAStatOutFragPktCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8741.1.3.2.1.1.1.13" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="SonicWALL, Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="Total encrypted packet count for this phase2 Security Association (SA)." displayName="Total Encrypted packets" failureThreshold="1" graphName="sonicSAStatEncryptPktCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.8741.1.3.2.1.1.1.8" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="SonicWALL, Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Incoming ICMP traffic" displayName="Incoming ICMP Traffic" failureThreshold="1" graphName="ASQStatsStatefulIcmpInBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11256.1.12.1.39" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stromshield">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Outgoing ICMP traffic" displayName="Outgoing ICMP Traffic" failureThreshold="1" graphName="ASQStatsStatefulIcmpOutBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11256.1.12.1.40" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stromshield">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Dialup Interfaces Count" displayName="Dialup Interfaces Count" failureThreshold="1" graphName="DialuptInterfacesNumber" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.11256.1.0.8.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stromshield" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="High Availability Master (1 for UP, 2 for DOWN)" displayName="HA Master Availability" failureThreshold="1" graphName="HAMasterAvailability" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11256.1.11.7.1.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stromshield">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Give the status for HA Master, 1 for active, 2 for passive" displayName="HA Master Status" failureThreshold="1" graphName="HAMasterStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11256.1.11.7.1.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stromshield">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="High Availability Slave (1 for UP, 2 for DOWN)" displayName="HA Slave Availability" failureThreshold="1" graphName="HASlaveAvailability" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11256.1.11.7.1.3.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stromshield">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Give the status for HA slave, 1 for active, 2 for passive" displayName="HA Slave Status" failureThreshold="1" graphName="HASlaveStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11256.1.11.7.1.10.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stromshield">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Update Status (Vulnerability Management)" displayName="Update Status (Vulnerability Management)" failureThreshold="1" graphName="UpdateStatusVulnerabilityManagement" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.11256.1.9.1.1.3.5" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Stromshield" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Number(s)" description="Number of current/active connections" displayName="Active Connections" failureThreshold="1" graphName="fwConnNumber" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1369.5.2.1.4.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Number of available bytes of physical memory" displayName="Total Physical Memory" failureThreshold="1" graphName="fwMemBytesTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1369.5.2.1.11.2.4.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Amount of memory being in use" displayName="Total Used Memory" failureThreshold="1" graphName="fwMemBytesUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1369.5.2.1.11.2.5.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total swap space in bytes" displayName="Swap Memory (in bytes)" failureThreshold="1" graphName="fwSwapBytesTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1369.5.2.1.11.2.1.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Number of received bytes between the end-point pair" displayName="VPN Received Bytes" failureThreshold="1" graphName="fwVpnEp4ReceivedBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1369.5.2.1.13.1.5" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Number of sent bytes between the end-point pair" displayName="VPN Sent Bytes" failureThreshold="1" graphName="fwVpnEp4SentBytes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1369.5.2.1.13.1.6" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Number of currently established IPsec SAs (Security Associations) between the end-point pair" displayName="Current IPSec SAs" failureThreshold="1" graphName="fwVpnEp4IpsecSa" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1369.5.2.1.13.1.7" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The status of the DSL link or communication statuswith DSL modem in case of communication error." displayName="DSL Link Status" failureThreshold="1" graphName="adslConnStatus" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.1369.5.2.1.12.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Forcepoint" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current status of DSL line." displayName="Current DSL Line Status" failureThreshold="1" graphName="adslLineStatus" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.1369.5.2.1.12.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Forcepoint" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of bit errors upstream" displayName="Bit errors (Upstream)" failureThreshold="1" graphName="adslBitErrorsUp" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.1369.5.2.1.12.20.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of bit errors downstream" displayName="Bit errors (Downstream)" failureThreshold="1" graphName="adsIBitErrorsDown" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.1369.5.2.1.12.21.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Forcepoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Number(s)" description="Count of live users connected" displayName="Active Users Count" failureThreshold="1" graphName="liveUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21067.2.1.2.7" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cyberoam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Number(s)" description="Cyberoam UTM Firewall - Count of SMTP protocol hits processed by the device" displayName="SMTP Hits" failureThreshold="1" graphName="smtpHits" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21067.2.1.2.10.3" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cyberoam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="% usage of swap memory" displayName="Swap Memory Utillization" failureThreshold="1" graphName="swapPercentUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21067.2.1.2.5.4" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cyberoam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cyberoam firewall - Disk usage percentage" displayName="Disk Utilization" failureThreshold="1" graphName="diskPercentUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21067.2.1.2.4.2" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cyberoam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Amount of memory available for use" displayName="Memory Available" failureThreshold="1" graphName="cbsModuleMemoryFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.3.2.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="The amount of memory in use." displayName="Memory Used" failureThreshold="1" graphName="cbsModuleMemoryUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.3.2.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Total memory that can be utilized by the operating system." displayName="Total Memory" failureThreshold="1" graphName="cbsModuleMemoryTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.3.2.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MHz" description="The speed of the processor(s) in MHz." displayName="Processor Speed" failureThreshold="1" graphName="cbsModuleCPUSpeed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.3.1.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Amount of free swap space." displayName="Free Swap Memory" failureThreshold="1" graphName="cbsModuleSwapFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.3.3.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Total swap space available to the operating system." displayName="Total Swap Memory" failureThreshold="1" graphName="cbsModuleSwapTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.3.3.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="The amount of swap space in use." displayName="Used Swap Memory" failureThreshold="1" graphName="cbsModuleSwapUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.3.3.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of processes" description="The average number of processes ready to run in the last minute." displayName="Average process count (1 min)" failureThreshold="1" graphName="cbsModuleCPULoad1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.3.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of processes" description="The average number of processes ready to run in the last 5 minutes." displayName="Average process count (5 min)" failureThreshold="1" graphName="cbsModuleCPULoad5" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.6848.2.3.1.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The current CPU temperature in degrees centigrade." displayName="CPU Temperature" failureThreshold="1" graphName="cbsHwModuleCpuTemp" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.1.6.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The current voltage level of the processor supply. Thisnumber is in 1/100ths of a volt and the ideal value dependson the speed of the processor." displayName="CPU Voltage" failureThreshold="1" graphName="cbsHwModuleCPUVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6848.2.1.6.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Crossbeam">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Mean throughput of ports in bits per second" displayName="Average Throughput" failureThreshold="1" graphName="MeanThroughputUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.12.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="System Memory stats total" displayName="Total Memory" failureThreshold="1" graphName="MpMemStatsTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.8.1.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The Current Number of session in the  session table in the last 64 seconds" displayName="Current Sessions" failureThreshold="1" graphName="slbStatMaintCurBindings64" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.4.2.5.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The maximum number entries in the session  table" displayName="Maximum Sessions Count" failureThreshold="1" graphName="slbStatMaintMaximumSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.4.2.5.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Peak throughput of ports in bits per second" displayName="Peak Throughput" failureThreshold="1" graphName="SNMP-Throughput-bps" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.12.1.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="Initial free RAM(Mb)." displayName="Free Memory" failureThreshold="1" graphName="systemMemStatsInitFreeRam" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.15.4.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The available Virtual Application Delivery Control (vADC) Capacity Units (1 - 28)" displayName="Available VADC Units" failureThreshold="1" graphName="vADCInfoAvailableCU" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.6.1.2.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Mbps" description="vADC available throughput in Mbps (1 to 20000)" displayName="VADC Available Throughput" failureThreshold="1" graphName="vADCInfoAvailableThruput" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.6.1.2.1.2.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="Current throughput of ports in bits per second." displayName="Current Throughput (Ports)" failureThreshold="1" graphName="curThroughputUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.12.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current number of bindings on the port." displayName="Current Port Bindings" failureThreshold="1" graphName="slbStatSpMaintCurBindings" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.4.2.5.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="This variable returns the number of attacks the TippingPoint IPS device has blocked since boot or counter reset." displayName="Attacks Blocked" failureThreshold="1" graphName="policyPacketsBlocked" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.1.2.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Trend Micro">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="The total number of packetsdiscarded due to networkcongestion." displayName="Packets Discarded (Congestion)" failureThreshold="1" graphName="policyPacketsDropped" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.1.1.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Trend Micro">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current fault state of the device. 0 normal, 1 fallback.  Enum type metric." displayName="Current HA Fault State" failureThreshold="1" graphName="highAvailFaultState" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.6.2.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Trend Micro">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Mbps" description="The current transmit rate in Mbps." displayName="Current Transmit Rate" failureThreshold="1" graphName="npstatsTiersTransmitMbps" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.10.2.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Trend Micro">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The percent utilization of this tier." displayName="Stats Tier Utilization" failureThreshold="1" graphName="npstatsTiersUtilizationPercent" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.10.2.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Trend Micro">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Flows" description="The number of flows that have triggered this filter." displayName="Flows Triggered (per filter)" failureThreshold="1" graphName="npstatsRulesFlows" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.10.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Trend Micro">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The chassis temperature in degrees C." displayName="Chassis Temperature" failureThreshold="1" graphName="resourceChassisTempDegreesC" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.5.5.1.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Trend Micro">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No of Active Sessions" description="Active Sessions" displayName="Active Sessions" failureThreshold="1" graphName="sysSessionNum" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.890.1.6.22.1.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ZyXEL">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU Utilization %" displayName="CPU Utilization" failureThreshold="1" graphName="CPUUtilization" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.890.1.6.22.1.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ZyXEL">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="VPN Bandwidth" displayName="VPN Bandwidth" failureThreshold="1" graphName="vpnBandlwidth" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.890.1.6.22.2.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ZyXEL">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="The total size of transmitted packets from tunnel was up for each tunnel." displayName="VPN Tunnel Rx packets" failureThreshold="1" graphName="vpnTunnelTxPktSize" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.890.1.6.1.3.1.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ZyXEL">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="The total size of received packets from tunnel was up for each tunnel" displayName="VPN Tunnel Tx packets" failureThreshold="1" graphName="vpnTunnelRxPktSize" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.890.1.6.1.3.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ZyXEL">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Temperature" description="Average chassis temperature over the latest sample period (percent)." displayName="Temperature" failureThreshold="1" graphName="Temperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6486.800.1.2.1.16.1.1.1.17.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Stack1 Master Operational status" displayName="Stack1 Operational status" failureThreshold="1" graphName="OperationalStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6486.801.1.1.1.1.1.1.1.1.209" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The state of this  VLAN port association (vpa):1. inactive - link down2. blocking - link up, forwarding down3. forwarding - link up, forwarding up." displayName="VLAN Port Association state" failureThreshold="1" graphName="vpaState" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.6486.800.1.2.1.3.1.1.2.1.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Status of critical temperature reading.Possible Values:Alert: Critical Temperature: Critial temperature out of range;This indicates that the box is running at a critically hightemperature above the normal operating range. This is onlysupported on certain platforms. See the Admin Guide for alist of platforms which support this.The box must be shut down immediately. Component failuremay already have occurred. If the reason for such a highoperating temperature cannot be determined, contact aqualified Nortel representative." displayName="Temperature" failureThreshold="1" graphName="criticalTemperature" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.2505.1.1.17.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nortel Networks" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Status of internal firewall.Possible Values:Disabled: Firewall: Firewall disabled;Disabled: Firewall: Firewall stopped;Warning: Firewall: Current Firewall is %s. Reboot is required to start %s;Warning: Firewall: Firewall state is not known!;Warning: Firewall: Daemon loading policy;Alert: Firewall: Firewall requires reboot to start;Alert: Firewall: Daemon task does not exist;Alert: Firewall: Daemon task is suspended;The values have the following meaning:-- The first two possible values are common to all firewalls.Disabled: Firewall: Firewall disabled;Warning: Firewall: Current Firewall is %s. Reboot is required to start %s;-- The firewall type (Contivity / CheckPoint) has been change, but for it-- to take effect, the Contivity must be restarted.-- Contivity Firewall specific values.Warning: Firewall: Firewall state is not known!; -- The Contivity firewall's-- state cannot be determined.-- CheckPoint Firewall specific values.Disabled: Firewall: Firewall stopped;Warning: Firewall: Daemon loading policy;Alert: Firewall: Firewall requires reboot to start;Alert: Firewall: Daemon task does not exist;Alert: Firewall: Daemon task is suspended;" displayName="Firewall Status" failureThreshold="1" graphName="fireWall" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.2505.1.3.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nortel Networks" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="users" description="Connected users" displayName="Total Connected Users" failureThreshold="1" graphName="connectedUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4526.100.7.5.7.5.1.1.24" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="Disk temperature" displayName="Temperature" failureThreshold="1" graphName="Temperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4526.22.5.1.2.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Netgear">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The capacity of the disk in bytes." displayName="Total Disk Space" failureThreshold="1" graphName="DiskCapacity" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.4526.22.3.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The current state of the Disk. Possible states: 0: Online 1: Offline" displayName="Current Disk Status" failureThreshold="1" graphName="DiskState" graphType="multiplenode" isNumeric="false" oid=".1.3.6.1.4.1.4526.22.3.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="Free space on the volume in megabytes." displayName="Free Volume Space" failureThreshold="1" graphName="VolumeFreeSpace" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4526.22.7.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of connections" description="The number of TCP connections in the listen state. Connections in the listen state are waiting for a connection request from any remote TCP and        port." displayName="Current TCP Connections" failureThreshold="1" graphName="dpStatusTCPSummarylisten" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14685.3.1.12.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="IBM">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Nokia IPSO - Processor utilization percentage for Nokia IPSO-based security appliances" displayName="CPU Utilization" failureThreshold="1" graphName="ipsoProcessorUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.94.1.21.1.7.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nokia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="packets" description="Missed packets received on a particular interface." displayName="Number of Missed Packets" failureThreshold="1" graphName="ipsodot3StatsRxMissedPackets" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.94.1.21.1.12.1.1.3" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Nokia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The total data holding capacity of the disk drive." displayName="Total Disk Size" failureThreshold="1" graphName="ipsoDiskDriveCapacity" graphType="multiple" isNumeric="false" oid=".1.3.6.1.4.1.94.1.21.1.10.13.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nokia" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current status of SecureXL." displayName="Secure XL Status" failureThreshold="1" graphName="ipsoSxlStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.94.1.21.1.13.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nokia">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="deviceDiskUsage Percentage of primary data partition used." displayName="Disk Utilization" failureThreshold="1" graphName="deviceDiskUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.5.2.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="deviceSwapSpaceUsage Percentage of swap space used." displayName="Swap Memory Utilization" failureThreshold="1" graphName="deviceSwapSpaceUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.5.2.8.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of users" description="Monitors the number of users in the cluster that are logged in. This number counts towards the user licenses. Not critical in monitoring health: informational only." displayName="Concurrent Users (Cluster)" failureThreshold="1" graphName="clusterConcurrentUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.13.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The Swap Utilization of the Instant Virtual Extranet  (IVE) system (0% is normally what swap usage should be.From 5% of swap usage, it needs monitoring)" displayName="Swap Memory Utilization" failureThreshold="1" graphName="iveSwapUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.24.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Juniper SA/MAG (Pulse Secure) - Disk full percentage (normal &lt;80%, critical &gt;=90%)" displayName="Disk Utilization" failureThreshold="1" graphName="diskFullPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.25.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The Temperature of MAG application blade (&lt; 75 deg C is normal From 70 deg C, monitor temperature closely as a precaution 75 deg C and above is not normal and will fire a trap)" displayName="MAG Temperature" failureThreshold="1" graphName="iveTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.42.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The Total number of hits via the Web Interface since the last reboot" displayName="Total Web Hits" failureThreshold="1" graphName="iveWebHits" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.16.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Could not login into archive server. Verify FTP username and password." displayName="Failed Login Count" failureThreshold="1" graphName="archiveServerLoginFailed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.251.13" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="connections" description="Total number of SSL connection" displayName="Total SSL Connections" failureThreshold="1" graphName="iveSSLConnections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.44" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of concurrent Pulse IPSec and NC users" displayName="Concurrent VPN Tunnels" failureThreshold="1" graphName="iveVPNTunnels" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.43" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="The total amount of memory free or available for use onthis host. This value typically covers both real memoryand swap space or virtual memory." displayName="Total Free Memory" failureThreshold="1" graphName="memTotalFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2021.4.11.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="F5 Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The total amount of real or virtual memory currently allocated for use as shared memory.This object will not be implemented on hosts where the underlying operating system does not explicitly identify memory as specifically reserved for this purpose." displayName="Total Shared Memory" failureThreshold="1" graphName="memShared" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2021.4.13.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="F5 Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Total amount of buffer memory derived from UCD-SNMP-MIB." displayName="Total Buffer memory" failureThreshold="1" graphName="memBuffer" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2021.4.14.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="F5 Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The total amount of real or virtual memory currently allocated for use as cached memory.This object will not be implemented on hosts where the underlying operating system does not explicitly identify memory as specifically reserved for this purpose." displayName="Total Caced memory" failureThreshold="1" graphName="memCached" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2021.4.15.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="F5 Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="connections" description="The average total SSL connections from client-side to the system in last five minutes." displayName="Total SSL Connections (5 mins)" failureThreshold="1" graphName="sysClientsslStatTotConns5m" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3375.2.1.1.2.9.54.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="F5 Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="count" description="Attack count" displayName="Total Attacks" failureThreshold="1" graphName="ipsMatchCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25597.1.1.2.1.45" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="FireEye">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This is a count of all the attachment that are determined to be malicious and is the same as 'Total Attachments Considered Malicious' that we currently show in the output to CLI command 'show email-analysis statistics'. This will be the cumulative value and is maintained across appliance reboots." displayName="Total Attachments Considered Malicious" failureThreshold="1" graphName="feInfectedAttachmentCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25597.13.1.22.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="FireEye">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This is a count of Bypassed Emails and is the same as 'Total Emails Bypassed' that we currently show in the output to CLI command 'show email-analysis statistics'. This will be the cumulative value and is maintained across appliance reboots." displayName="feBypassEmailCount" failureThreshold="1" graphName="feBypassEmailCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25597.13.1.41.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="FireEye">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This is a count of all the emails containing at least one attachment determined to be malicious. This value will be the cumulative and preserved across appliance reboots." displayName="feTotalEmailHasBadAttachment" failureThreshold="1" graphName="feTotalEmailHasBadAttachment" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25597.13.1.34.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="FireEye">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This is a count of deferred emails and will represent snapshot current value." displayName="feDeferredEmailCount" failureThreshold="1" graphName="feDeferredEmailCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25597.13.1.44.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="FireEye">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This is a count of all samples that has file type 'url' and also are malicious." displayName="feTotalMaliciousUrlCount" failureThreshold="1" graphName="feTotalMaliciousUrlCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25597.15.1.10.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="FireEye">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This is a count of all object that has no parent (basically children will not be counted), and are not URL." displayName="feTotalMaliciousFileCount" failureThreshold="1" graphName="feTotalMaliciousFileCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25597.15.1.16.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="FireEye">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of connection attempts" displayName="Number of Connection Attempts" failureThreshold="1" graphName="g3connectAttempts" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6889.2.8.1.1.4" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Avaya">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of switch connection errors" displayName="Number of Switch Connection Errors" failureThreshold="1" graphName="g3connectErrors" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6889.2.8.1.1.8" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Avaya">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number switch requests in the input queue" displayName="Number of queued requests" failureThreshold="1" graphName="g3connectQueued" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6889.2.8.1.1.9" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Avaya">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Infections" description="This monitor returns the number of infections detected by the McAfee Gateway Antimalware Engine. This value should be as low as possible." displayName="Number of Detected Infections" failureThreshold="1" graphName="Number of Detected Infections" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1230.2.7.2.1.2.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="connections" description="This monitor returns the number of blocked connections. This value should be as low as possible." displayName="Number of Blocked Connections" failureThreshold="1" graphName="Number of Blocked Connections" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.1230.2.7.2.1.5.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="connections" description="This monitor returns the number of connections that have been blocked by the URL filter. This value should be as low as possible." displayName="Number of Blocked Connections by URL Filter" failureThreshold="1" graphName="Number of Blocked Connections by URL Filter" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.1230.2.7.2.1.7.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="This monitor returns the number of bytes transferred from client to proxy using the HTTP protocol." displayName="HTTP: Bytes Transferred From Client to Proxy" failureThreshold="1" graphName="HTTP: Bytes Transferred From Client to Proxy" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.1230.2.7.2.2.3.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="This monitor returns the number of HTTPS requests." displayName="HTTPS: Number requests" failureThreshold="1" graphName="HTTPS: Number requests" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.1230.2.7.2.3.1.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="This monitor returns the number of bytes transferred from client(s) to proxy using the FTP protocol." displayName="FTP: Bytes Transferred From Clients to Proxy" failureThreshold="1" graphName="FTP: Bytes Transferred From Clients to Proxy" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.1230.2.7.2.4.2.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="This monitor returns the current overall CPU usage in percent. This value should be as low as possible." displayName="CPU Usage (%)" failureThreshold="1" graphName="CPU Usage (%)" graphType="multiplenode" isNumeric="true" oid="1.3.6.1.4.1.1230.2.7.2.5.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="clients" description="This monitor returns the number of currently connected clients." displayName="Currently Connected Clients" failureThreshold="1" graphName="Currently Connected Clients" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.1230.2.7.2.5.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="connections" description="This monitor returns the number of open network sockets in use by the proxy." displayName="Network Connections in Use by Proxy" failureThreshold="1" graphName="Network Connections in Use by Proxy" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1230.2.7.2.5.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The state of this Trusted Computing Base (TCB) connection. The only value which may be set by a management station is delete Trusted Computing Base (TCB) (12). Accordingly, it is appropriate for an agent to return a `badValue' response if a management station attempts to set this object to any other value. If a management station sets this object to the value delete Trusted Computing Base (TCB)(12), then this has the effect of deleting the Trusted Computing Base (TCB) (as defined in RFC 793) of the corresponding connection on the managed node, resulting in immediate termination of the connection. As an implementation-specific option, a RST segment may be sent from the managed node to the other Trusted Computing Base (TCP) endpoint (note however that RST segments are not sent reliably).closed (1),listen (2),synSent (3),synReceived (4), established (5),finWait1 (6),finWait2 (7),closeWait (8),lastAck (9),closing (10),timeWait (11), deleteTCB (12)} ACCESSread-write" displayName="TCB Connection State" failureThreshold="1" graphName="swTcbConnState" graphType="multiple" isNumeric="true" oid="1.3.6.1.4.1.1573.3.1.7.3.1.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The total number of configured Burbs." displayName="Total Burbs configured" failureThreshold="1" graphName="swBurbTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1573.3.1.6.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="McAfee">
+        <UserProps/>
+</Graph>
+
+    <Graph saveAbsolutes="false" YAXISTEXT="sessions" description="Total Clientless only WEB VPN Sessions" displayName="Total Clientless only WEB VPN sessions" failureThreshold="1"  graphName="clientLessWebVpnConnections" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.9.9.392.1.3.38.0-.1.3.6.1.4.1.9.9.392.1.3.35.0)" period="300" protocol="SNMP" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="Users" description="The number of users who have active sessions." dialType="number" displayName="Users with Active sessions" failureThreshold="1" graphName="crasNumUsers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.3.0" period="300" protocol="SNMP" timeAvg="false" unit="Users" vendorName="Cisco">
+       <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="sessions" description="The number of currently active SVC sessions." dialType="number" displayName="SSL VPN Connection (svc or anyconnect)" failureThreshold="1" graphName="crasSVCNumSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.35.0" period="900" protocol="SNMP" timeAvg="false" unit="VPN Remote Access" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="sessions" description="The number of currently active Webvpn sessions." displayName="Active Web VPN sessions" failureThreshold="1" graphName="crasWebvpnNumSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.38.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="Days" customGraph="false" description="The time (in hundredths of a second) since the network management portion of the system was last re-initialized in days" displayName="SysUpTime (Days)" failureThreshold="1" graphName="SysUpTimeInDays" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.1.3.0/8640000)" period="900" protocol="SNMP" timeAvg="false">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="sessions"  description="The number of peak concurrent Webvpn sessions since system up." displayName="Peak concurrent Webvpn sessions" failureThreshold="1" graphName="asacrasWebvpnPeakConcurrentSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.40.0" period="900" protocol="SNMP"  timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="sessions"  description="The number of peak concurrent LAN to LAN sessions since system up." displayName="Peak concurrent LAN-to-LAN sessions" failureThreshold="1" graphName="asacrasL2LPeakConcurrentSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.31.0" period="900" protocol="SNMP"  timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="sessions"  description="The number of peak concurrent SVC sessions since system up." displayName="Peak concurrent SVC sessions" failureThreshold="1" graphName="asacrasSVCPeakConcurrentSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.37.0" period="900" protocol="SNMP"  timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="sessions"  description="The number of peak concurrent Email proxy sessions since system up" displayName="Peak concurrent Email proxy sessions" failureThreshold="1" graphName="asacrasEmailPeakConcurrentSessions" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.392.1.3.25.0" period="900" protocol="SNMP"  timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="Packets" description="The total number of the packets received since system is up. The number includes both cut through traffic and host traffic." displayName="Total number of the packets received" failureThreshold="1" graphName="wgSystemTotalRecvPackets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3097.6.3.11.0" period="900" protocol="SNMP" timeAvg="false" vendorName="WatchGuard">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="Packets" description="The total number of the packets sent since system is up. This number includes both cut through traffic and host traffic." displayName="Total number of the packets sent (cut through traffic and host traffic)" failureThreshold="1" graphName="wgSystemTotalSendPackets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3097.6.3.10.0" period="900" protocol="SNMP" timeAvg="false" vendorName="WatchGuard">
+		<UserProps/>
+	</Graph>
+   <Graph YAXISTEXT="No of Active Sessions" isNumeric="true" graphType="node" description="Active Connection Count" vendorName="Juniper" graphName="jnxJsSPUMonitoringCurrentTotalSession"
+oid=".1.3.6.1.4.1.2636.3.39.1.12.1.2.0" displayName="Active Connection Count" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+   <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Fortinet FortiGate - System disk utilization percentage" vendorName="Fortinet" graphName="fgSysDiskUtilization" oid="(.1.3.6.1.4.1.12356.101.4.1.6.0*100)/(.1.3.6.1.4.1.12356.101.4.1.7.0)" displayName="Disk Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false">
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="%" isNumeric="false" graphType="node" description="Ruijie Networks - Memory utilization percentage (alternate MIB tree)" vendorName="RuiJie" graphName="RuiJieMemoryUtilization1" oid=".1.3.6.1.4.1.24968.1.3.11.0" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="Number(s)" isNumeric="true" graphType="node" description="Connections" vendorName="RuiJie" graphName="RuiJieConnections" oid=".1.3.6.1.4.1.24968.1.10.1.0" displayName="Connections" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="CPU Utilization" vendorName="Sangfor" graphName="SangforCPUUtilization" oid=".1.3.6.1.4.1.35047.1.3.0" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="%" isNumeric="false" graphType="node" description="Sangfor - Memory utilization percentage (generic across Sangfor devices)" vendorName="Sangfor" graphName="SangforMemoryUtilization" oid=".1.3.6.1.4.1.35047.1.5.1.6.0" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="No. of users" isNumeric="true" graphType="node" description="Current Users" vendorName="Sangfor" graphName="SangforCurrentUser" oid=".1.3.6.1.4.1.35047.2.1.1.1.0"
+displayName="Current Users" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false">
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="No. of orgs" isNumeric="true" graphType="node" description="Current Orgs" vendorName="Sangfor" graphName="SangforCurrentOrgs" oid=".1.3.6.1.4.1.35047.2.1.1.3.0" displayName="Current Orgs" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="No. of Connections" isNumeric="true" graphType="node" description="Connections" vendorName="Sangfor" graphName="SangforConnections" oid=".1.3.6.1.4.1.35047.2.1.1.6.0"
+displayName="Number of Connections" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+   <Graph YAXISTEXT="Celsius" isNumeric="true" graphType="node" description="CPU Temperature" vendorName="DPtech" graphName="DPtechCPUTemperature" oid=".1.3.6.1.4.1.31648.3.15.4.0" displayName="CPU Temperature" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="C" isNumeric="true" graphType="node" description="Mainboard Temperature" vendorName="DPtech" graphName="DPtechMainboardTemperature" oid=".1.3.6.1.4.1.31648.3.15.8.0" displayName="Mainboard Temperature" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="CPU Utilization" vendorName="WSTON" graphName="WSTONCPUUtilization" oid=".1.3.6.1.4.1.4881.1.1.10.2.35.1.1.1.1.1" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph SaveAbsolutes="false" YAXISTEXT="%" description="HR Storage RAM Utilization" displayName="HR Storage RAM Utilization" failureThreshold="1" graphName="HRStorageRAMUtilization" graphType="node" isNumeric="true" numericType="3" oid="(.1.3.6.1.2.1.25.2.3.1.6.1020*100)/(.1.3.6.1.2.1.25.2.3.1.5.1020)" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="Juniper">
+	<UserProps/>
+   </Graph>
+   <Graph SaveAbsolutes="false" YAXISTEXT="Celsius" description="RE0 Temperature" displayName="REO Temperature" failureThreshold="1" graphName="TemperatureREO" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2636.3.1.13.1.7.9.1.0.0" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="Juniper">
+	<UserProps/>
+    </Graph>
+
+    <!-- Site-to-Site VPN Monitors starts -->
+    <Graph DisplayColumn=".1.3.6.1.4.1.9.9.171.1.3.2.1.5" Index=".1.3.6.1.4.1.9.9.171.1.3.2.1.5" YAXISTEXT="status" description="Cisco VPN Tunnel Status" displayName="Cisco VPN Tunnel Status" failureThreshold="1" graphName="CiscoVPNTunnelStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.171.1.3.2.1.51" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.9.9.171.1.3.2.1.5" Index=".1.3.6.1.4.1.9.9.171.1.3.2.1.5" YAXISTEXT="seconds" description="The length of time the IPsec Phase-2 Tunnel has been active in hundredths of seconds." displayName="Cisco VPN Tunnel - UpTime" failureThreshold="1" graphName="CiscoVPNTunnel-UpTime" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.171.1.3.2.1.10" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.9.9.171.1.3.2.1.5" Index=".1.3.6.1.4.1.9.9.171.1.3.2.1.5" YAXISTEXT="bytes" description="Cisco VPN Tunnel - Rx Bytes" displayName="Cisco VPN Tunnel - Rx Bytes" failureThreshold="1" graphName="CiscoVPNTunnel-RxBytes" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.171.1.3.2.1.26" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.9.9.171.1.3.2.1.5" Index=".1.3.6.1.4.1.9.9.171.1.3.2.1.5" YAXISTEXT="bytes" description="Cisco VPN Tunnel - Tx Bytes" displayName="Cisco VPN Tunnel - Tx Bytes" failureThreshold="1" graphName="CiscoVPNTunnel-TxBytes" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.171.1.3.2.1.39" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.12356.101.12.2.2.1.4" Index=".1.3.6.1.4.1.12356.101.12.2.2.1.4" YAXISTEXT="status" description="Fortinet VPN Tunnel Status" displayName="Fortinet VPN Tunnel Status" failureThreshold="1" graphName="FortinetVPNTunnelStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.2.1.20" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.12356.101.12.2.2.1.4" Index=".1.3.6.1.4.1.12356.101.12.2.2.1.4" YAXISTEXT="seconds" description="Lifetime of tunnel in seconds" displayName="Fortinet VPN Tunnel - UpTime" failureThreshold="1" graphName="FortinetVPNTunnel-UpTime" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.2.1.15" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.12356.101.12.2.2.1.4" Index=".1.3.6.1.4.1.12356.101.12.2.2.1.4" YAXISTEXT="bytes" description="Fortinet VPN Tunnel - Tx Bytes" displayName="Fortinet VPN Tunnel - Tx Bytes" failureThreshold="1" graphName="FortinetVPNTunnel-TxBytes" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.2.1.19" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.12356.101.12.2.2.1.4" Index=".1.3.6.1.4.1.12356.101.12.2.2.1.4" YAXISTEXT="bytes" description="Fortinet VPN Tunnel - Rx Bytes" displayName="Fortinet VPN Tunnel - Rx Bytes" failureThreshold="1" graphName="FortinetVPNTunnel-RxBytes" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.2.1.18" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.12356.101.12.2.2.1.4" Index=".1.3.6.1.4.1.12356.101.12.2.2.1.4" YAXISTEXT="status" description="Fortinet Inc VPN Tunnel Status" displayName="FortinetInc VPN Tunnel Status" failureThreshold="1" graphName="FortinetIncVPNTunnelStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.2.1.20" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet, Inc." pollDataType="1" vendorSubCategory="VPN Monitors">
+        <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.12356.101.12.2.2.1.4" Index=".1.3.6.1.4.1.12356.101.12.2.2.1.4" YAXISTEXT="seconds" description="Lifetime of tunnel in seconds" displayName="FortinetInc VPN Tunnel - UpTime" failureThreshold="1" graphName="FortinetIncVPNTunnel-UpTime" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.2.1.15" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet, Inc." pollDataType="1" vendorSubCategory="VPN Monitors">
+        <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.12356.101.12.2.2.1.4" Index=".1.3.6.1.4.1.12356.101.12.2.2.1.4" YAXISTEXT="bytes" description="Fortinet Inc VPN Tunnel - Tx Bytes" displayName="FortinetInc VPN Tunnel - Tx Bytes" failureThreshold="1" graphName="FortinetIncVPNTunnel-TxBytes" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.2.1.19" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet, Inc." pollDataType="1" vendorSubCategory="VPN Monitors">
+        <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.12356.101.12.2.2.1.4" Index=".1.3.6.1.4.1.12356.101.12.2.2.1.4" YAXISTEXT="bytes" description="Fortinet Inc VPN Tunnel - Rx Bytes" displayName="FortinetInc VPN Tunnel - Rx Bytes" failureThreshold="1" graphName="FortinetIncVPNTunnel-RxBytes" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.12.2.2.1.18" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet, Inc." pollDataType="1" vendorSubCategory="VPN Monitors">
+        <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.3097.6.5.1.2.1.3" Index=".1.3.6.1.4.1.3097.6.5.1.2.1.3" YAXISTEXT="seconds" description="The life time (in hundredths of a second) of the tunnel." displayName="Watchguard VPN Tunnel - UpTime" failureThreshold="1" graphName="WatchguardVPNTunnel-UpTime" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.3097.6.5.1.2.1.13" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="WatchGuard" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.3097.6.5.1.2.1.3" Index=".1.3.6.1.4.1.3097.6.5.1.2.1.3" YAXISTEXT="bytes" description="Watchguard VPN Tunnel - Rx Bytes" displayName="Watchguard VPN Tunnel - Rx Bytes" failureThreshold="1" graphName="WatchguardVPNTunnel-RxBytes" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.4.1.3097.6.5.1.2.1.28*1000)" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="WatchGuard" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.3097.6.5.1.2.1.3" Index=".1.3.6.1.4.1.3097.6.5.1.2.1.3" YAXISTEXT="bytes" description="Watchguard VPN Tunnel - Tx Bytes" displayName="Watchguard VPN Tunnel - Tx Bytes" failureThreshold="1" graphName="WatchguardVPNTunnel-TxBytes" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.4.1.3097.6.5.1.2.1.29*1000)" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="WatchGuard" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+
+    <Graph DisplayColumn=".1.3.6.1.4.1.3097.6.5.1.2.1.3" Index=".1.3.6.1.4.1.3097.6.5.1.2.1.3" YAXISTEXT="bytes" description="Tunnel status is considered as active if traffic flows through the tunnel. Else tunnel is down." displayName="Watchguard VPN Tunnel Status" failureThreshold="1" graphName="WatchguardVPNTunnelStatus" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.4.1.3097.6.5.1.2.1.28+.1.3.6.1.4.1.3097.6.5.1.2.1.29)" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="WatchGuard" pollDataType="1" vendorSubCategory="VPN Monitors">
+    <UserProps/>
+    </Graph>
+    <!-- Site-to-Site VPN Monitors starts -->
+	
+	<Graph YAXISTEXT="%" isNumeric="false" graphType="node" description="Sangfor - Memory utilization calculated from dual OIDs (used/total)" vendorName="Sangfor" graphName="MemoryUtilizationSangfor" oid=".1.3.6.1.4.1.35047.1.13.2.0-.1.3.6.1.4.1.35047.1.13.1.0/100" displayName="Memory Utilization" failureThreshold="1" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false">
+      <UserProps/>
+  </Graph>
+    <!-- Check Point VPN Monitor Starts-->
+    <Graph DisplayColumn=".1.3.6.1.4.1.2620.500.9002.1.1" Index=".1.3.6.1.4.1.2620.500.9002.1.1" YAXISTEXT="status" description="CheckPoint VPN Tunnel Status" displayName="CheckPoint VPN Tunnel Status" failureThreshold="1" graphName="CheckpointVPNTunnelStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.500.9002.1.3" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="CheckPoint" pollDataType="1" vendorSubCategory="VPN Monitors">
+        <UserProps/>
+    </Graph>
+
+    <!-- Check Point VPN Monitor Ends-->
+
+</GRAPHDETAIL>

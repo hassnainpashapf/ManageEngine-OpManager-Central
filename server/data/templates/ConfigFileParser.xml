@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $Id$ -->
+<CONFIG-FILE-PARSER>
+	
+<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">	
+<COMMAND NAME="cisco_generic_startup">
+	<VALID-RULE>
+		<METADATA>
+			<SCALAR REFERENCEREQ="false">
+
+				<REGEX NAME="CPU" EXPRESSION=".* NVRAM config last updated .* by (\S+).*">
+					<PARAM NAME="ChangedBY" TOKENNO="1"/>
+				</REGEX>
+			</SCALAR>
+		</METADATA>
+	</VALID-RULE>
+</COMMAND>
+
+<COMMAND NAME="cisco_generic_running">
+		<VALID-RULE>
+			<METADATA>
+				<SCALAR REFERENCEREQ="false">
+
+					<REGEX NAME="CPU" EXPRESSION=".* Last configuration .* by (\S+).*">
+						<PARAM NAME="ChangedBY" TOKENNO="1"/>
+					</REGEX>
+				</SCALAR>
+			</METADATA>
+		</VALID-RULE>
+	</COMMAND>
+</PARSER>
+</CONFIG-FILE-PARSER>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>	
+	<DevicePackageToGraph deviceType="Novell NetWare" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Compaq" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Novell" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Macintosh" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="IBM X" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="HP ProLiant Servers" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="IBM Bladcenter H Series" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="BlackBerry Enterprise Server" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco Secure Network Server 3595" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="HP cpqSm2ProdRILO4" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="HP Proliant iLO 4" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="HP iLO5 5 1.20" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Lenovo XCC Server" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="APEM-5900" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Digi PortServer" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Linux" graphName="SysUpTime" dialtype="number" unit="Hours"/>	
+	<DevicePackageToGraph deviceType="Solaris" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="IBM AIX" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Mac OS" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+</GRAPHDETAIL>

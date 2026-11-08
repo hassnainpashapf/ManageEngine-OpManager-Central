@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<GRAPHDETAIL>
+
+    <!-- DELL POWERSTORE MONITORS START -->
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_DISK_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_Powersupply_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_Battery_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_Fan_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_Enclosure_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_Node_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Capacity Utilization" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="RAID_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="RAID_CONFIGURED_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="RAID_USED_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="RAID_FREE_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="RAID_Read_Latency" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Raid Latency" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="RAID_Write_Latency" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Raid Reads/sec" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Raid Writes/sec" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage Throughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Raid_ReadData/sec" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Raid_WriteData/sec" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Raid_Throughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Read_Latency" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Total_Latency" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Write_Latency" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Read_IOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Write_IOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Total_IOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Write_Throughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Read_Throughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Appliance_Total_Throughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_Read_Latency" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_Latency" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_Write_Latency" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_READIOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_WRITEIOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_IOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_WriteThroughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_ReadThroughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Node_Throughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VOLUMELATENCY_OUT" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Volume_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VOLUMELATENCY_IN" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Volume_Reads/sec" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Volume_Writes/sec" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Volume_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VOLUME_WRITE_MBPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VOLUME_READ_MBPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VOLUME_TOTAL_MBPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Volume_Utilization" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_Read_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_Write_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_READ_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_WRITE_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_TOTAL_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_Write_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_Read_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="VolumeGroup_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_Read_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_Total_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_Write_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_ReadIO" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_WriteIO" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_TotalIO" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_Writes" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_Reads" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FileSystem_Utilization" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Host_Read_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Host_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Host_Write_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Host_Reads/sec" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Host_Writes/sec" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HOST_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HOST_WRITE_MBPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HOST_READ_MBPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HOST_TOTAL_MBPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_Read_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_Write_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_Reads/sec" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_Writes/sec" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_Write_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_Read_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="HostGroup_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_READ_LATENCY" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_LATENCY" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_WRITE_LATENCY" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_READ_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_WRITE_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_TOTAL_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_WRITE_THROUGHPUT" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_READ_THROUGHPUT" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_THROUGHPUT" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_CURRENT_LOGINS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_DUMPED_FRAMES_PER_SEC" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_LOSS_SIGNAL_COUNT_PER_SEC" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="FCPORT_LINK_FAILURE_COUNT_PER_SEC" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Ethernet_RX" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Ethernet_TX" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Ethernet_RX_KBPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Ethernet_TX_KBPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_Ethernet_PORT_Link_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_SAS_PORT_Link_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Dell PowerStore" graphName="Storage_FC_PORT_Link_Status" minInterval ="300"/>
+
+    <!-- DELL POWERSTORE MONITORS END -->
+
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="Capacity Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="Storagepool_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="STORAGEPOOL_READIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="STORAGEPOOL_WRITEIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="STORAGEPOOL_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="STORAGEPOOL_BANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="Controller_BLOCKBANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="Interface_BLOCKBANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="RAID_Cache_Hit_Ratio" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="Controller_HITRATIO" minInterval="900"/>
+    <StorageModelToGraph deviceType="Tegile IntelliFlash" graphName="Controller_CPUUSAGE" minInterval="900"/>
+
+
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Capacity Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Controller_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_CPUSpeed" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Controller_Health" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_CPULoad" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_WriteCacheUsage" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="StorageAPI_Controller Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_DiskPool_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_DiskPool_Health" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DiskPool Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DiskGroup_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DiskPool_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DiskPool_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DiskPool_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DiskPool_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_DISK_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_RPM" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_LifeRemaining" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_TotalData_Transferred" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_Average_Response_Time" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_Temperature" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_DISK_Temperature_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_DISK_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Disk Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Disk_QUEUELENGTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Chassis_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Chassis_Power" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Chassis_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Fan_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Fan_RPM" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Fan_Health" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Port Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Port_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Port_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Port_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="PORT_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="PORT_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="PORT_queueLength" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="PORT_AVG_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="PORT_AVG_READ_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="PORT_AVG_WRITE_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Port_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Port_Health" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_StoragePool_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Powersupply_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Powersupply_Health" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Snapshot_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Volume_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_WriteCachePresent" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid Writes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_WriteData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_AVG_WRITE_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_Avg_Write_QUEUELENGTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_Write_IOCount" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid Reads/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_ReadData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_AVG_READ_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_Avg_Read_QUEUELENGTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_Read_IOCount" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_Total_Bytes" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="RAID_Total_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Raid_AVG_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_HITRATIO" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_ReadCacheHitRatio" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Controller_WriteCacheHitRatio" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_Cache_Hit_Ratio" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_ReadCacheHitRatio" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Volume_WriteCacheHitRatio" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DiskGroup_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storagepool_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="StoragePool_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="StoragePool_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DATAWRITTEN_STORAGEPOOL" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="DATAREAD_STORAGEPOOL" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="IOPS_STORAGEPOOL" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="STORAGEPOOL_Throughput_BPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="StoragePool_AVG_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="StoragePool_AVG_READ_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="StoragePool_AVG_WRITE_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Voltage_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Temperature_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Current_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Charge_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Capacitance_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Resistance_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Temperature_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Voltage_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Current_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Charge_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Capacitance_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="HPE MSA(API)" graphName="Storage_Resistance_Sensor_Value" minInterval="900"/>
+
+
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Capacity Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_FileSystem_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FileSystem_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_Snapshot_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_Port_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_Node_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_StoragePool_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storagepool_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_DISK_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_DISK_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Volume_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_VServer_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Node_NVRAM_Usage" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_Ethernet_PORT_RX" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_Ethernet_PORT_TX" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_FC_PORT_Link_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FCPort_RX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FCPort_TX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Storage_Ethernet_PORT_Link_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="EthernetPort_RX" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="EthernetPort_TX" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="EthernetPort_RX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="EthernetPort_TX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Total_NODE_Disk_Read_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Total_NODE_Disk_Write_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_Ethernet_PORT_RX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_Ethernet_PORT_TX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_FC_PORT_RX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_FC_PORT_TX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_MFB_Load" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_MMB_Load" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_Storage_RX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_Storage_TX_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_Operations" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="Node_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FileSystem_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FileSystem_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FileSystem_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FileSystem_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FileSystem_Operations" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="FileSystem_TotalIO" minInterval="900"/>
+    <StorageModelToGraph deviceType="Hitachi NAS" graphName="NODE_HEAP_USAGE" minInterval="900"/>
+
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Capacity Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="RAID_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="RAID_CONFIGURED_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="RAID_USED_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="RAID_FREE_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_DISK_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_DISK_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_READIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_WRITEIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_BANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_READBANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_WRITEBANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_Read_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_Write_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Disk_Total_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Volume_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Volume_Reads/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Volume_Writes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Volume_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="VOLUMELATENCY_IN" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="VOLUMELATENCY_OUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="VOLUME_TOTAL_MBPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="VOLUME_READ_MBPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="VOLUME_WRITE_MBPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_Volume_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Raid Reads/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Raid Writes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="RAID_Read_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Raid Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="RAID_Write_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Raid_ReadData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Raid_WriteData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Raid_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_READ_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_WRITE_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_TOTAL_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_READ_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_WRITE_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_WRITE_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_READ_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="FCPORT_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_FC_PORT_Link_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPORT_READ_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPORT_WRITE_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPORT_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPort_READ_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPort_WRITE_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPort_TOTAL_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPort_WRITE_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPort_READ_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="SASPort_TOTAL_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_SAS_PORT_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_ReadIO" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_WriteIO" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_TOTAL_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_TOTAL_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_READ_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_WRITE_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="EthernetPort_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_Ethernet_PORT_Link_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_Fan_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_Powersupply_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_Temperature_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_StoragePool_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storage_Controller_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo Storage" graphName="Storagepool_Utilization" minInterval="900"/>
+
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Capacity Utilization" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Storage_Health_Status" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Storage_Node_Status" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Storage_Volume_Status" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Storage_Host_Status" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Storage_Snapshot_Status" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Storage_Chassis_Status" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Storage_Port_Status" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Volume_Utilization" minInterval="60"/>
+    <StorageModelToGraph deviceType="IBM DS Series(API)" graphName="Storagepool_Utilization" minInterval="60"/>
+
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_Fan_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_Powersupply_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_StoragePool_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_DISK_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_DISK_Health_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_Chassis_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_Memory_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_LUN_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storage_Disk Throughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Disk_Throughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Total_Disk_Write_Throughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Total_Disk_Throughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Total_Disk_Read_Throughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Total_Disk_Write_IOPS" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Total_Disk_Read_IOPS" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Total_Disk_IOPS" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Controller_CPUUSAGE" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="Storagepool_Utilization" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Oracle ZFS Storage" graphName="STORAGEPOOL_IOPS" minInterval ="900"/>
+
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Capacity Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="RAID_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="RAID_CONFIGURED_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="RAID_USED_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="RAID_FREE_CAPACITY" minInterval ="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_DISK_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_DISK_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_READIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_WRITEIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_BANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_READBANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_WRITEBANDWIDTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_Read_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_Write_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Disk_Total_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Volume_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Volume_Reads/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Volume_Writes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Volume_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="VOLUMELATENCY_IN" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="VOLUMELATENCY_OUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="VOLUME_TOTAL_MBPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="VOLUME_READ_MBPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="VOLUME_WRITE_MBPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_Volume_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Raid Reads/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Raid Writes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="RAID_Read_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Raid Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="RAID_Write_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Raid_ReadData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Raid_WriteData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Raid_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_READ_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_WRITE_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_TOTAL_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_READ_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_WRITE_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_WRITE_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_READ_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="FCPORT_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_FC_PORT_Link_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPORT_READ_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPORT_WRITE_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPORT_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPort_READ_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPort_WRITE_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPort_TOTAL_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPort_WRITE_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPort_READ_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="SASPort_TOTAL_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_SAS_PORT_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_ReadIO" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_WriteIO" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_TOTAL_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_TOTAL_THROUGHPUT" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_READ_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_WRITE_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="EthernetPort_LATENCY" minInterval="900"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_Ethernet_PORT_Link_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_Fan_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_Powersupply_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_Temperature_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_StoragePool_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storage_Controller_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="NetApp E Series" graphName="Storagepool_Utilization" minInterval="900"/>
+
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="RAID_CAPACITY" minInterval ="60"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="RAID_CONFIGURED_CAPACITY" minInterval ="60"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="RAID_USED_CAPACITY" minInterval ="60"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="RAID_FREE_CAPACITY" minInterval ="60"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Capacity Utilization" minInterval ="60"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage Throughput" minInterval ="60"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Total_Raid_Throughput" minInterval ="60"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Node_IOPS" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Node_Throughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Total_iSCSI_Received" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Total_iSCSI_Errors" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Total_iSCSI_Transmitted" minInterval ="900"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Volume_Utilization" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Aggregate_Utilization" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Lun_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Lun_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Lun_Utilization" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Average_Lun_IOPS" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Average_Lun_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Disk Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Disk_Throughput" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Disk_Latency" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Disk_Utilization" minInterval ="1800"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_DISK_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Port_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Fan_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Powersupply_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Battery_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Temperature_Sensor_Value" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Aggregate_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Volume_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_LUN_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_LUN_Health_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_QTree_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Shelf_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Shelf_State" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_VServer_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Node_Utilization" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Fan_Speed" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Powersupply_Value" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Battery_Value" minInterval ="300"/>
+    <StorageModelToGraph deviceType="Lenovo DG/DM Series" graphName="Storage_Temperature_Sensor_Status" minInterval ="300"/>
+
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Storage Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Raid Reads/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Raid Writes/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Raid_Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Raid_ReadData/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Raid_WriteData/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="RAID_Read_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="RAID_Write_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Raid Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Disk_Utilization" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Disk_IOPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Disk_READIOPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Disk_WRITEIOPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="RAID_Disk_Read_throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="RAID_Disk_Write_throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Disk_Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Total_Disk_Read_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Total_Disk_Write_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Disk_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_IOPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_READIOPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_WRITEIOPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_READ_Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_WRITE_Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_READ_LATENCY" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_WRITE_LATENCY" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="STORAGEPOOL_LATENCY" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="HOST_IOPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Host_Reads/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Host_Writes/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="HOST_READ_MBPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="HOST_WRITE_MBPS" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Host_Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Host_Read_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Host_Write_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Dell PowerMax(API)" graphName="Host_Latency" minInterval="300"/>
+
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Capacity Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Controller_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_CPUSpeed" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Controller_Health" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_CPULoad" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_WriteCacheUsage" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="StorageAPI_Controller Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_DiskPool_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_DiskPool_Health" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DiskPool Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DiskGroup_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DiskPool_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DiskPool_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DiskPool_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DiskPool_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_DISK_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_RPM" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_LifeRemaining" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_TotalData_Transferred" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_Average_Response_Time" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_Temperature" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_DISK_Temperature_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_DISK_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Disk Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Disk_QUEUELENGTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Chassis_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Chassis_Power" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Chassis_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Fan_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Fan_RPM" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Fan_Health" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Port Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Port_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Port_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Port_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="PORT_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="PORT_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="PORT_queueLength" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="PORT_AVG_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="PORT_AVG_READ_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="PORT_AVG_WRITE_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Port_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Port_Health" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_StoragePool_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Powersupply_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Powersupply_Health" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Snapshot_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Volume_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume Bytes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_IOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_Data_Read" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_Data_Written" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_WriteCachePresent" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid Writes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_WriteData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_AVG_WRITE_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_Avg_Write_QUEUELENGTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_Write_IOCount" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid Reads/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_ReadData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_AVG_READ_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_Avg_Read_QUEUELENGTH" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_Read_IOCount" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_Total_Bytes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="RAID_Total_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Raid_AVG_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_HITRATIO" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_ReadCacheHitRatio" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Controller_WriteCacheHitRatio" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_Cache_Hit_Ratio" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_ReadCacheHitRatio" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Volume_WriteCacheHitRatio" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DiskGroup_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storagepool_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="StoragePool_Reads" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="StoragePool_Writes" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DATAWRITTEN_STORAGEPOOL" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="DATAREAD_STORAGEPOOL" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="IOPS_STORAGEPOOL" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="STORAGEPOOL_Throughput_BPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="StoragePool_AVG_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="StoragePool_AVG_READ_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="StoragePool_AVG_WRITE_RESPONSE_TIME" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Voltage_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Temperature_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Current_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Charge_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Capacitance_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Resistance_Sensor_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Temperature_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Voltage_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Current_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Charge_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Capacitance_Sensor_Value" minInterval="900"/>
+    <StorageModelToGraph deviceType="Lenovo DS Series" graphName="Storage_Resistance_Sensor_Value" minInterval="900"/>
+
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_CPU_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_CPU_Health_State" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_SNMP_Memory_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_Memory_Health_State" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_RAIDIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_RAID_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_RAID_Read_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_RAID_Write_Latency" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskReadIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskWriteIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskTotalIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskReadThroughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskWriteThroughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskTotalThroughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskLatency" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskReadLatency" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskWriteLatency" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskState" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_DiskHealthState" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_SpareDiskCount" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_LUNIOPSREAD" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_LUNIOPSWrite" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_LUNIOPSTotal" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_LUNIOAvgWrite" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_LUNIOAvgRead" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_LUNIOAvgTotal" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_LUNReadLatency" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_LUNWriteLatency" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_PortTotalIOPS" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_PortThroughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_Port_Conn_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_Port_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_BatteryHealthState" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_BatteryChargedState" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_FanState" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_PowerModState" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_PoolStatus" minInterval="900"/>
+    <StorageModelToGraph deviceType="MacroSAN" graphName="MacroSAN_Storage_SNMP_PoolUtilization" minInterval="900"/>
+
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Capacity Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="RAID_CAPACITY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="RAID_USED_CAPACITY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="RAID_FREE_CAPACITY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="INSPUR_DISK_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Storage_Node_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Storagepool_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Storage_StoragePool_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Volume_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Directory Quota Usage" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="INSPUR_Powersupply_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="INSPUR_Fan_Speed" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Storage_CPU_Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Node_CPUUSAGE" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Storage Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Raid Reads/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Raid Writes/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="RAID_Total_Throughput" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Raid_ReadData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Raid_WriteData/sec" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Node_CPU_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Node_Memory_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Node_Disk_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Node_Disk_Health_Status" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Node_Disk_Usage" minInterval="900"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="Node_NIC_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Inspur Storage" graphName="NFS_Client_Connections" minInterval="900"/>
+
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Storage_Health_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Storage_DISK_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Storage_Node_Status" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Capacity Utilization" minInterval="900"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="RAID_CAPACITY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="RAID_USED_CAPACITY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="RAID_FREE_CAPACITY" minInterval="900"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Raid Reads/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Raid Writes/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Raid Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Raid_Read_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Raid_Write_Latency" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Storage Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Raid_Throughput" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Raid_ReadData/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="Raid_WriteData/sec" minInterval="300"/>
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="SMB_Share_Directory_Usage" minInterval="900" />
+    <StorageModelToGraph deviceType="Qumulo Storage" graphName="SMB_Share_Folder_Size" minInterval="900" />
+
+</GRAPHDETAIL>

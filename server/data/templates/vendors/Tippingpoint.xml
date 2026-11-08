@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Welotec Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:tippingpoint_ips" templatename="Tippingpoint_IPS" displayname="Tippingpoint IPS" ostype="NA" description="For all Tippingpoint IPS">
+        <NCMVendorDevice vendorid="Tippingpoint"/>
+        <NCMDevicePersonality personalityid="TippingpointIPS"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:tippingpoint_ips_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:tippingpoint_ips" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="tippingpoint_ips_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="tippingpoint_ips_cli_show_config_rec"/>
+         
+		 </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:tippingpoint_ips_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:tippingpoint_ips" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="tippingpoint_ips_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="tippingpoint_ips_cli_show_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

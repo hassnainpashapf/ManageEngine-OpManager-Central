@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Digi TransPort wireless Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:occam_switch" templatename="Occam_Switch" displayname="Occam Blade Switch" ostype="OccamOS" description="For all Occam Blade Switch 6440, 6450, 6312, 6314">
+        <NCMVendorDevice vendorid="Calix"/>
+        <NCMDevicePersonality personalityid="OccamSwitch"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:occam_switch_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:occam_switch"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="occam_switch_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="occam_switch_cli_show_startup_config_rec"/>
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="occam_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="occam_switch_cli_show_running_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:occam_switch_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:occam_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="occam_switch_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="occam_switch_cli_show_startup_config_rec"/>			 
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="occam_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="occam_switch_cli_show_running_config_rec"/>
+			 
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

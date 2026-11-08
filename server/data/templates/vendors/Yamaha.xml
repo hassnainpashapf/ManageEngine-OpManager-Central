@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Yamaha Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:yamaha_router" templatename="Yamaha_Router" displayname="Yamaha Router" ostype="Yamaha" description="For all Yamaha devices">
+        <NCMVendorDevice vendorid="Yamaha"/>
+        <NCMDevicePersonality personalityid="YamahaRouter"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:yamaha_router_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:yamaha_router"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="yamaha_router_cli_telnet_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="yamaha_router_cli_show_config_rec"/>
+             
+             <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Yamaha_Router_Enable_Change_Tracking_Syslog" />
+	     
+	     <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Yamaha_Router_Disable_Change_Tracking_Syslog" />
+
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:yamaha_router_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:yamaha_router"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="yamaha_router_cli_telnet_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="yamaha_router_cli_show_config_rec"/>
+             
+             <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Yamaha_Router_Enable_Change_Tracking_Syslog" />
+	     	     
+	     <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Yamaha_Router_Disable_Change_Tracking_Syslog" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

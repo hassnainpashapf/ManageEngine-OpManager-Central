@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+	<CLIResponseParser responseparserid="flash_file_list_parser" parsertype="2" parserfilename="FlashFileListParser.xml" parserrulename="rule1"/>
+        <CLIResponseParser responseparserid="fujitsu_show_hardware_version" parsertype="2" parserfilename="FujitsuHardwarePropParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="flash_size_parser" parsertype="2" parserfilename="FlashSizeParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="cisco_hardware_prop_parser" parsertype="2" parserfilename="CiscoHardwarePropParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="foundry_hardware_prop_parser" parsertype="2" parserfilename="FoundryHardwarePropParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="3com_hardware_prop_parser" parsertype="2" parserfilename="ThreeComHardwarePropParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="foundry_interface_details_parser" parsertype="2" parserfilename="FoundryInterfaceDetailsParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="hp_hardware_prop_parser" parsertype="2" parserfilename="HPHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="netscreen_hardware_prop_parser" parsertype="2" parserfilename="NetscreenHardwarePropParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="vlan_parser" parsertype="2" parserfilename="VlanNameList.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="stp_parser" parsertype="2" parserfilename="STPParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="response_parser" parsertype="2" parserfilename="GeneralResponse.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="fortigate_hardware_prop_parser" parsertype="2" parserfilename="FortiGateHarwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="adtran_hardware_prop_parser" parsertype="2" parserfilename="AdtranHarwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="nortel_hardware_prop_parser" parsertype="2" parserfilename="NortelHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="dlink_hardware_prop_parser" parsertype="2" parserfilename="DLinkHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="huawei_ar_hardware_prop_parser" parsertype="2" parserfilename="HuaweiHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="aruba_hardware_prop_parser" parsertype="2" parserfilename="ArubaHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="proxim_hardware_prop_parser" parsertype="2" parserfilename="ProximHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="extreme_hardware_prop_parser" parsertype="2" parserfilename="ExtremeHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="force10_hardware_prop_parser" parsertype="2" parserfilename="Force10HardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="bluecoat_hardware_prop_parser" parsertype="2" parserfilename="BlueCoatHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="packet_shaper_hardware_prop_parser" parsertype="2" parserfilename="BlueCoatHardwarePropParser.xml" parserrulename="rule1"/>
+
+    <CLIResponseParser responseparserid="enterasys_hardware_prop_parser" parsertype="2" parserfilename="EnterasysHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="netgear_hardware_prop_parser" parsertype="2" parserfilename="NetgearPropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="juniper_hardware_prop_parser" parsertype="2" parserfilename="JuniperPropParser.xml" parserrulename="rule1"/>
+    
+    <CLIResponseParser responseparserid="juniper_mx_router_hardware_prop_parser" parsertype="2" parserfilename="JuniperPropParser.xml" parserrulename="rule1"/>
+    
+    <CLIResponseParser responseparserid="dell_hardware_prop_parser" parsertype="2" parserfilename="DellPropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="slim_line_hardware_prop_parser" parsertype="2" parserfilename="SlimLinePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="riverbed_steelhead_hardware_prop_parser" parsertype="2"
+    parserfilename="RiverbedHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="alcatel_switch_hardware_prop_parser" parsertype="2"
+    parserfilename="AlcatelHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="alaxala_switch_hardware_prop_parser" parsertype="2"
+    parserfilename="AlaxalaPropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="radware_switch_hardware_prop_parser" parsertype="2"
+    parserfilename="RadwareHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="radware_link_proof_switch_hardware_prop_parser" parsertype="2"
+    parserfilename="RadwareHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="brocade_switch_hardware_prop_parser" parsertype="2"
+        parserfilename="BrocadeHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="checkpoint_hardware_prop_parser" parsertype="2"
+        parserfilename="CheckPointHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="avaya_media_gateway_hardware_prop_parser" parsertype="2"
+        parserfilename="AvayaHardwarePropParser.xml" parserrulename="rule1"/>
+    <CLIResponseParser responseparserid="mrv_hardware_prop_parser" parsertype="2"
+        parserfilename="LambdaDriverHardwarePropParser.xml" parserrulename="rule1"/>
+        
+    <CLIResponseParser responseparserid="dax_hardware_prop_parser" parsertype="2"
+        parserfilename="DaxHardwarePropParser.xml" parserrulename="rule1"/>
+        
+    <CLIResponseParser responseparserid="h3c_switch_hardware_prop_parser" parsertype="2"
+        parserfilename="H3CHardwarePropParser.xml" parserrulename="rule1"/>
+
+    <CLIResponseParser responseparserid="yamaha_router_hardware_prop_parser" parsertype="2"
+        parserfilename="YamahaHardwarePropParser.xml" parserrulename="rule1"/>
+
+    <CLIResponseParser responseparserid="vanguard_hardware_prop_parser" parsertype="2"
+	parserfilename="VanguardHardwarePropParser.xml" parserrulename="rule1"/>
+	
+	
+     <CLIResponseParser responseparserid="alliedtelesis_switch_hardware_prop_parser" parsertype="2"
+	parserfilename="AlliedTelesisHardwarePropParser.xml" parserrulename="rule1"/>
+     
+     <CLIResponseParser responseparserid="f5bigip_hardware_prop_parser" parsertype="2"
+         parserfilename="F5BigipHardwarePropParser.xml" parserrulename="rule1"/>
+
+     <CLIResponseParser responseparserid="citrix_hardware_prop_parser" parsertype="2"
+         parserfilename="CitrixHardwarePropParser.xml" parserrulename="rule1"/>
+
+     <CLIResponseParser responseparserid="hitachi_switch_hardware_prop_parser" parsertype="2"
+         parserfilename="HitachiHardwarePropParser.xml" parserrulename="rule1"/>
+         
+     <CLIResponseParser responseparserid="hitachi_gr_2000_router_hardware_prop_parser" parsertype="2"
+    parserfilename="HitachiHardwarePropParser.xml" parserrulename="rule1"/>
+    
+     <CLIResponseParser responseparserid="motorola_ws_hardware_prop_parser" parsertype="2"
+         parserfilename="MotorolaHardwarePropParser.xml" parserrulename="rule1"/>
+
+     <CLIResponseParser responseparserid="juniper_switch_hardware_prop_parser" parsertype="2"
+         parserfilename="JuniperPropParser.xml" parserrulename="rule1"/>
+
+     <CLIResponseParser responseparserid="sphereon_4500_fibre_switch_hardware_prop_parser" parsertype="2" parserfilename="SphereonHardwarePropParser.xml" parserrulename="rule1"/>
+
+<CLIResponseParser responseparserid="alcatel_7500_servicerouter_hardware_prop_parser" parsertype="2" parserfilename="AlcatelHardwarePropParser.xml" parserrulename="rule1"/>
+<CLIResponseParser responseparserid="canoga_hardware_prop_parser" parsertype="2" parserfilename="CanogaHardwarePropParser.xml" parserrulename="rule1"/>
+
+<CLIResponseParser responseparserid="watchguard_firewall_hardware_prop_parser" parsertype="2" parserfilename="WatchguardHardwarePropParser.xml" parserrulename="rule1"/>
+
+ <CLIResponseParser responseparserid="acmepacket_hardware_prop_parser" parsertype="2" parserfilename="AmcePacketHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="ciena_hardware_prop_parser_leos" parsertype="2" parserfilename="CienaHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="ciena_hardware_prop_parser_soas" parsertype="2" parserfilename="CienaHardwarePropParser.xml" parserrulename="rule2"/>
+ 
+ <CLIResponseParser responseparserid="paloalto_firewall_hardware_prop_parser" parsertype="2" parserfilename="PaloAltoHardwarePropParser.xml" parserrulename="rule1"/>
+ 
+ <CLIResponseParser responseparserid="adva_fsp150ccf_hardware_prop_parser" parsertype="2" parserfilename="AdvaHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="meru_wlan_controller_hardware_prop_parser" parsertype="2" parserfilename="MeruHardwarePropParser.xml" parserrulename="rule1"/>
+
+ <CLIResponseParser responseparserid="alliedtelesis_gs900m_hardware_prop_parser" parsertype="2" parserfilename="AlliedTelesisHardwarePropParser.xml" parserrulename="rule1"/>
+
+ <CLIResponseParser responseparserid="hirschmann_switch_hardware_prop_parser" parsertype="2" parserfilename="HirschmannHardwarePropParser.xml" parserrulename="rule1"/>
+
+<CLIResponseParser responseparserid="brocade_fastiron_switch_hardware_prop_parser" parsertype="2" parserfilename="BrocadeHardwarePropParser.xml" parserrulename="rule1"/> 
+<CLIResponseParser responseparserid="digi_router_hardware_prop_parser" parsertype="2" parserfilename="DigiHardwarePropParser.xml" parserrulename="rule1"/>
+<CLIResponseParser responseparserid="brocade_fiber_switch_hardware_prop_parser" parsertype="2" parserfilename="BrocadeHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="redback_router_hardware_prop_parser" parsertype="2" parserfilename="RedbackHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="bnt_rackswitch_cli_hardware_prop_parser" parsertype="2" parserfilename="IBMHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="arista_switch_hardware_prop_parser" parsertype="2" parserfilename="AristaHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="dcn_switch_hardware_prop_parser" parsertype="2" parserfilename="IBMHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="F5_arx_hardware_prop_parser" parsertype="2" parserfilename="F5BigipHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="a10_networks_cli_hardware_prop_parser" parsertype="2" parserfilename="A10HardwarePropParser.xml" parserrulename="rule1"/>
+  <CLIResponseParser responseparserid="alliedtelesis_centercom_switch_hw_prop_parser" parsertype="2" parserfilename="AlliedTelesisHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="alliedtelesis_ethernet_switch_hardware_prop_parser" parsertype="2" parserfilename="AlliedTelesisHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="zxr_router_hardware_prop_parser" parsertype="2" parserfilename="ZTEHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="dell_5224_hardware_prop_parser" parsertype="2" parserfilename="DellPropParser.xml" parserrulename="rule1"/> 
+ <CLIResponseParser responseparserid="show_cisco_asr_hardware_prop_parser" parsertype="2" parserfilename="CiscoHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="brocade_fiber_3850_switch_hardware_prop_parser" parsertype="2" parserfilename="BrocadeHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="f5bigip_10x_hardware_prop_parser" parsertype="2" parserfilename="F5BigipHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="bluecoat_proxy_sgos_hardware_prop_parser" parsertype="2" parserfilename="BlueCoatHardwarePropParser.xml" parserrulename="rule1"/> 
+ <CLIResponseParser responseparserid="cisco_iron_port_hardware_prop_parser" parsertype="2" parserfilename="CiscoHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="vyatta_cli_hardware_prop_parser" parsertype="2" parserfilename="VyattaHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="radware_alteon_switch_hardware_prop_parser" parsertype="2" parserfilename="RadwareHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="brocade_vdx_switch_hardware_prop_parser" parsertype="2" parserfilename="BrocadeHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="juniper_srx_hardware_prop_parser" parsertype="2" parserfilename="JuniperPropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="nec_ix2025_hardware_prop_parser" parsertype="2" parserfilename="NECHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="adva_fsp150cc_ge201_hardware_prop_parser" parsertype="2" parserfilename="AdvaHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="mikrotik_router_hardware_prop_parser" parsertype="2" parserfilename="MikrotikHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="welotec_router_hardware_prop_parser" parsertype="2" parserfilename="WelotecHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="F5_crescendo_networks_hardware_prop_parser" parsertype="2" parserfilename="F5BigipHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="ruggedcom_switch_hardware_prop_parser" parsertype="2" parserfilename="RuggedComHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="ruijie_switch_hardware_prop_parser" parsertype="2" parserfilename="RuijieHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="fujitsu_firewall_hardware_prop_parser" parsertype="2" parserfilename="FujitsuHardwarePropParser.xml" parserrulename="rule1"/> 
+ <CLIResponseParser responseparserid="f5bigip_11x_hardware_prop_parser" parsertype="2" parserfilename="F5BigipHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="F5_Netcon_hardware_prop_parser" parsertype="2" parserfilename="F5BigipHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="F5_Bigip_11_4_hardware_prop_parser" parsertype="2" parserfilename="F5BigipHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="edgecore_switch_cli_hardware_prop_parser" parsertype="2" parserfilename="EdgeCoreHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="EdgeCore_L2_Switch_cli_hardware_prop_parser" parsertype="2" parserfilename="EdgeCoreHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="telco_switch_hardware_prop_parser" parsertype="2" parserfilename="TelcoHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="occam_switch_hardware_prop_parser" parsertype="2" parserfilename="CalixHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="adtran_router_hardware_prop_parser" parsertype="2" parserfilename="AdtranHarwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="cisco_300_switch_hardware_prop_parser" parsertype="2" parserfilename="CiscoHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="nokia_ipso_hardware_prop_parser" parsertype="2" parserfilename="NokiaHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="hp_ethernet_hardware_prop_parser" parsertype="2" parserfilename="HPHardwarePropParser.xml" parserrulename="rule1"/>
+  <CLIResponseParser responseparserid="citrix_netscaler_mpx_hardware_prop_parser" parsertype="2" parserfilename="CitrixHardwarePropParser.xml" parserrulename="rule1"/> 
+ <CLIResponseParser responseparserid="3com_5500_switch_hardware_prop_parser" parsertype="2" parserfilename="ThreeComHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="fortigate_v4_hardware_prop_parser" parsertype="2" parserfilename="FortiGateHarwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="fiberhome_switch_hardware_prop_parser" parsertype="2" parserfilename="FiberHomeHarwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="zxr_router_zsr_hardware_prop_parser" parsertype="2" parserfilename="ZTEHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="aruba_controller_hardware_prop_parser" parsertype="2" parserfilename="ArubaHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="tippingpoint_ips_hardware_prop_parser" parsertype="2" parserfilename="TippingpointHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="mobileiron_sentry_hardware_prop_parser" parsertype="2" parserfilename="MobileIronHardwarePropParser.xml" parserrulename="rule1"/>
+  <CLIResponseParser responseparserid="juniper_load_balancer_hardware_prop_parser" parsertype="2" parserfilename="JuniperPropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="ciena_switch_hardware_prop_parser" parsertype="2" parserfilename="CienaHardwarePropParser.xml" parserrulename="rule1"/>
+  <CLIResponseParser responseparserid="checkpoint_gaia_firewall_hardware_prop_parser" parsertype="2" parserfilename="CheckPointHardwarePropParser.xml" parserrulename="rule1"/>  
+  <CLIResponseParser responseparserid="avocent_acs_hardware_prop_parser" parsertype="2" parserfilename="AvocentHardwarePropParser.xml" parserrulename="rule1"/>
+  <CLIResponseParser responseparserid="juniper_wlan_hardware_prop_parser" parsertype="2" parserfilename="JuniperPropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="pravail_aps_hardware_prop_parser" parsertype="2" parserfilename="PravailHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="avocent_terminal_hardware_prop_parser" parsertype="2" parserfilename="AvocentHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="cisco_asr_5000_hardware_prop_parser" parsertype="2" parserfilename="CiscoHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="paloalto_panorama_firewall_hardware_prop_parser" parsertype="2" parserfilename="PaloAltoHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="huawei_ne_router_hardware_prop_parser" parsertype="2" parserfilename="HuaweiHardwarePropParser.xml" parserrulename="rule1"/>
+  <CLIResponseParser responseparserid="huawei_s_5300_switch_hardware_prop_parser" parsertype="2" parserfilename="HuaweiHardwarePropParser.xml" parserrulename="rule1"/>
+ <CLIResponseParser responseparserid="dlink_des3200_hardware_prop_parser" parsertype="2" parserfilename="DLinkHardwarePropParser.xml" parserrulename="rule1"/> 
+    <CLIResponseParser responseparserid="brocade_router_hardware_prop_parser" parsertype="2" parserfilename="BrocadeHardwarePropParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="insys_hardware_prop_parser" parsertype="2" parserfilename="InsysHardwarePropParser.xml" parserrulename="rule1"/> 
+	<CLIResponseParser responseparserid="sonicwall_hardware_prop_parser" parsertype="2" parserfilename="SonicwallHardwarePropParser.xml" parserrulename="rule1"/> 
+	<CLIResponseParser responseparserid="trapeze_hardware_prop_parser" parsertype="2" parserfilename="TrapezeHardwarePropParser.xml" parserrulename="rule1"/>
+	<CLIResponseParser responseparserid="ubiquiti_hardware_prop_parser" parsertype="2" parserfilename="UbiquitiHardwarePropParser.xml" parserrulename="rule1"/> 
+	<CLIResponseParser responseparserid="garderos_hardware_prop_parser" parsertype="2" parserfilename="GarderosHardwarePropParser.xml" parserrulename="rule1"/> 
+	<CLIResponseParser responseparserid="juniper_fabric_switch_hardware_prop_parser" parsertype="2" parserfilename="JuniperPropParser.xml" parserrulename="rule1"/> 
+
+        <CLIResponseParser responseparserid="mimomax_gps_tornado_hardware_prop_parser" parsertype="2" parserfilename="MiMOMaxGPSHardwarePropParser.xml" parserrulename="rule1"/> 
+
+    <CLIResponseParser responseparserid="mimomax_gps_pyxis_hardware_prop_parser" parsertype="2" parserfilename="MiMOMaxGPSHardwarePropParser.xml" parserrulename="rule1"/> 
+</CLICommandList>
+

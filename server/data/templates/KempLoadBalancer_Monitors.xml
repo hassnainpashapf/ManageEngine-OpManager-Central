@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	<!--  Kemp Load Balancer monitor Starts -->
+	<Graph YAXISTEXT="Transactions/sec" description="Total current Transactions Per Second (TPS)" displayName="Total current Transactions Per Second (TPS)" failureThreshold="1" graphName="KempLBTotalTPS" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.0.11.0" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="Transactions/sec" description="Current SSL Transactions Per Second (TPS)" displayName="Current SSL Transactions Per Second (TPS)" failureThreshold="1" graphName="KempLBSSLTPS" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.0.12.0" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	
+	<!--  Kemp Load Balancer monitor Ends -->
+	<!--  Kemp Load Balancer VS monitor Starts -->
+	
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.1.1.13" Index=".1.3.6.1.4.1.12196.13.1.1.1" YAXISTEXT="connection(s)" description="Total number of connections for the Virtual Service" displayName="Total number of connections for the Virtual Service" failureThreshold="1" graphName="KempVSTotalConns" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.1.1.16" period="300" protocol="SNMP" sSave="true" showDial="true" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.1.1.13" Index=".1.3.6.1.4.1.12196.13.1.1.1" YAXISTEXT="No. of Packets" description="Total number of incoming packets to the Virtual Service" displayName="Total number of incoming packets to the Virtual Service" failureThreshold="1" graphName="KempVSInPackets" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.1.1.17" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.1.1.13" Index=".1.3.6.1.4.1.12196.13.1.1.1" YAXISTEXT="No. of Packets" description="Total number of outgoing packets to the Virtual Service" displayName="Total number of outgoing packets to the Virtual Service" failureThreshold="1" graphName="KempVSOutPackets" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.1.1.18" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.1.1.13" Index=".1.3.6.1.4.1.12196.13.1.1.1" YAXISTEXT="Bytes" description="Total number of incoming bytes to the Virtual Service" displayName="Total number of incoming bytes to the Virtual Service" failureThreshold="1" graphName="KempVSInBytes" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.1.1.19" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph  DisplayColumn=".1.3.6.1.4.1.12196.13.1.1.13" Index=".1.3.6.1.4.1.12196.13.1.1.1" YAXISTEXT="Bytes" description="Total number of outgoing bytes to the Virtual Service" displayName="Total number of outgoing bytes to the Virtual Service" failureThreshold="1" graphName="KempVSOutBytes" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.1.1.20" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	
+	<!--  Kemp Load Balancer VS monitor Ends -->
+	
+	<!--  Kemp Load Balancer RS monitor Starts -->
+	
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.2.1.2" Index=".1.3.6.1.4.1.12196.13.2.1.5" YAXISTEXT="connection(s)" description="Total number of connections for the Real Server" displayName="Total number of connections for the Real Server" failureThreshold="1" graphName="KempRSTotalConns" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.2.1.12" period="300" protocol="SNMP" sSave="true" showDial="true" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.2.1.2" Index=".1.3.6.1.4.1.12196.13.2.1.5" YAXISTEXT="No. of Packets" description="Total number of incoming packets to the Real Server" displayName="Total number of incoming packets to the Real Server" failureThreshold="1" graphName="KempRSInPackets" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.2.1.13" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.2.1.2" Index=".1.3.6.1.4.1.12196.13.2.1.5" YAXISTEXT="No. of Packets" description="Total number of outgoing packets to the Real Server" displayName="Total number of outgoing packets to the Real Server" failureThreshold="1" graphName="KempRSOutPackets" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.2.1.14" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.2.1.2" Index=".1.3.6.1.4.1.12196.13.2.1.5" YAXISTEXT="Bytes" description="Total number of incoming bytes to the Real Server" displayName="Total number of incoming bytes to the Real Server" failureThreshold="1" graphName="KempRSInBytes" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.2.1.15" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	<Graph DisplayColumn=".1.3.6.1.4.1.12196.13.2.1.2" Index=".1.3.6.1.4.1.12196.13.2.1.5" YAXISTEXT="Bytes" description="Total number of outgoing bytes to the Real Server" displayName="Total number of outgoing bytes to the Real Server" failureThreshold="1" graphName="KempRSOutBytes" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12196.13.2.1.16" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Kemp Technologies">
+		<UserProps/>
+    </Graph>
+	
+	<!--  Kemp Load Balancer RS monitor Ends -->
+	<DevicePackageToGraph deviceType="Kemp LoadMaster" graphName="KempLBTotalTPS|KempLBSSLTPS|KempVSInPackets|KempVSOutPackets|KempVSInBytes|KempVSOutBytes|KempRSInPackets|KempRSOutPackets|KempRSInBytes|KempRSOutBytes"/>
+	<DevicePackageToGraph deviceType="Kemp LoadMaster" graphName="KempVSTotalConns|KempRSTotalConns" dialtype="number" unit="connection(s)"/>
+	
+</GRAPHDETAIL>

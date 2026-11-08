@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="XASJ NetOpti" displayName="XASJ NetOpti" osType="[NA]" templateName="XASJ_NetOpti">
+	<RestTemplate name=""/>
+	<Vendor displayName="XASJ" vendorName="XASJ">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="conf t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="XASJNetOpti" personalityName="XASJNetOpti">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SYSTEM_CPU" size="150" desc="System CPU" displayname="System CPU" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="SYSTEM_RAM" size="150" desc="System RAM" displayname="System RAM" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="SSL_HW" size="150" desc="SSL HW" displayname="SSL HW" defaultvalue="Not Available" sequenceid="30"/>
+				<Column name="COMPRESSION_HW" size="150" desc="Compression HW" displayname="Compression HW" defaultvalue="Not Available" sequenceid="40"/>
+				<Column name="POWER_SUPPLY" size="150" desc="Power Supply" displayname="Power Supply" defaultvalue="Not Available" sequenceid="50"/>
+				<Column name="NETWORK_INTERFACE" size="150" desc="Network Interface" displayname="Network Interface" defaultvalue="Not Available" sequenceid="60"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="XASJNetOptiHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_XASJ_NetOpti">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="\s*System CPU :\s*(.*)" NAME="SYSTEM_CPU">
+											<PARAM NAME="SYSTEM_CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*System RAM :\s*(.*)" NAME="SYSTEM_RAM">
+											<PARAM NAME="SYSTEM_RAM" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*SSL HW :\s*(.*)" NAME="SSL_HW">
+											<PARAM NAME="SSL_HW" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Compression HW :\s*(.*)" NAME="COMPRESSION_HW">
+											<PARAM NAME="COMPRESSION_HW" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Network Interface :\s*(.*)" NAME="NETWORK_INTERFACE">
+											<PARAM NAME="NETWORK_INTERFACE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Model :\s*(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Serial Number :\s*(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_XASJ_NetOpti" responseparserid="XASJ_NetOpti_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000" promptactionid=""/>
+					</Commands>
+					<Commands operation="enterAdvancedMode">
+						<Command commandstr="conf t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000"/>
+					</Commands>
+					<Commands operation="exitAdvancedMode">
+						<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

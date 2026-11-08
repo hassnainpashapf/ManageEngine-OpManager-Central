@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Cisco Supervisor Engine" osType="CatOS" templateName="Cisco_Supervisor_Engine">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="copy config tftp" messagesuffix="${LF}" prompt="?" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="?" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="30000" promptactionid="catOSActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="copy tftp config" messagesuffix="${LF}" prompt="?" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="?" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="30000" promptactionid="catOSActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="CiscoSupervisorEngine" personalityName="CiscoSupervisorEngine">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="HARDWAREVERSION" size="15" desc="Hardware Version" displayname="Hardware Version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="DRAMSIZE" size="15" desc="Identifies the size of DRAM in KB" displayname="DRAM Size" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="NVRAMSIZE" size="15" desc="Identifies the size of NVRAM in KB" displayname="NVRAM Size" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="CONFIGREGISTER" size="50" desc="System Configuration Register" displayname="Configuration Register" defaultvalue="Not Available" sequenceid="6"/>
+				<Column name="FLASHSIZE" size="15" desc="Identifies the size of FLASH in KB" displayname="Flash Size" defaultvalue="Not Available" sequenceid="7"/>
+				<Column name="BOOTSTRAPVERSION" size="15" desc="System Bootstrap Version" displayname="Bootstrap Version" defaultvalue="Not Available" sequenceid="8"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoHardwarePropParser.xml"/> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_cisco_catos_switch" responseparserid="cisco_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="Catalyst 6000-MFSC2A" ostype="IOS" series="Catalyst 6000" sysoid=".1.3.6.1.4.1.9.1.706"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

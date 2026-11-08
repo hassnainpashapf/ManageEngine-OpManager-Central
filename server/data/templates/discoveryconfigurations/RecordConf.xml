@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<RecordConf>
+
+    <SnmpGetRecord recordid="general-discovery-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+        <Record type="GET" recordid="general-discovery-get" protocol="SNMP"/>
+        <SnmpGetParamList>
+            <SnmpGetParam paramindex="0" oidname="1.1.0" label="SYSTEMDESCRIPTION"/>
+            <SnmpGetParam paramindex="1" oidname="1.2.0" label="SYSTEMOBJECTID"/>
+        </SnmpGetParamList>
+    </SnmpGetRecord>
+
+    <SnmpGetRecord recordid="cisco-router-hardware-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	    <Record type="GET" recordid="cisco-router-hardware-get" protocol="SNMP"/>
+	    <SnmpGetParamList>
+    	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.4.1.9.3.6.2.0" label="CHASSISVERSION"/>
+   			<SnmpGetParam paramindex="1" oidname=".1.3.6.1.4.1.9.3.6.3.0" label="CHASSISID"/>
+	        <SnmpGetParam paramindex="2" oidname=".1.3.6.1.4.1.9.3.6.6.0" label="PROCESSORRAM"/>
+	        <SnmpGetParam paramindex="3" oidname=".1.3.6.1.4.1.9.3.6.7.0" label="NVRAMSIZE"/>
+	        <SnmpGetParam paramindex="4" oidname=".1.3.6.1.4.1.9.3.6.9.0" label="CONFIGREGISTER"/>
+			<SnmpGetParam paramindex="5" oidname=".1.3.6.1.4.1.9.2.10.1.0" label="FLASHSIZE"/>
+	    </SnmpGetParamList>
+    </SnmpGetRecord>
+
+    <SnmpGetRecord recordid="cisco-switch-hardware-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	    <Record type="GET" recordid="cisco-switch-hardware-get" protocol="SNMP"/>
+	    <SnmpGetParamList>
+			<SnmpGetParam paramindex="0" oidname=".1.3.6.1.4.1.9.3.6.3.0" label="CHASSISID"/>
+	        <SnmpGetParam paramindex="1" oidname=".1.3.6.1.4.1.9.3.6.6.0" label="PROCESSORRAM"/>
+	        <SnmpGetParam paramindex="2" oidname=".1.3.6.1.4.1.9.3.6.7.0" label="NVRAMSIZE"/>
+	        <SnmpGetParam paramindex="3" oidname=".1.3.6.1.4.1.9.3.6.9.0" label="CONFIGREGISTER"/>
+			<SnmpGetParam paramindex="4" oidname=".1.3.6.1.4.1.9.2.10.1.0" label="FLASHSIZE"/>
+	    </SnmpGetParamList>
+    </SnmpGetRecord>
+
+   <SnmpGetRecord recordid="cisco-accesspoint-hardware-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	    <Record type="GET" recordid="cisco-accesspoint-hardware-get" protocol="SNMP"/>
+	    <SnmpGetParamList>
+    	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.4.1.9.3.6.2.0" label="CHASSISVERSION"/>
+   			<SnmpGetParam paramindex="1" oidname=".1.3.6.1.4.1.9.3.6.3.0" label="CHASSISID"/>
+	        <SnmpGetParam paramindex="2" oidname=".1.3.6.1.4.1.9.3.6.6.0" label="PROCESSORRAM"/>
+	        <SnmpGetParam paramindex="3" oidname=".1.3.6.1.4.1.9.3.6.7.0" label="NVRAMSIZE"/>
+	        <SnmpGetParam paramindex="4" oidname=".1.3.6.1.4.1.9.3.6.9.0" label="CONFIGREGISTER"/>
+	    </SnmpGetParamList>
+    </SnmpGetRecord>
+
+    <SnmpGetRecord recordid="cisco-interfaces-iftable-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+		<Record type="GET" recordid="cisco-interfaces-iftable-get" protocol="SNMP"/>
+		<SnmpGetParamList>
+			<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.2.2.1.1" label="IFINDEX"/>
+			<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.2.2.1.2" label="IFDESCR"/>
+		</SnmpGetParamList>
+    </SnmpGetRecord>
+
+    <SnmpGetRecord recordid="cisco-interfaces-ipaddrtable-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+		<Record type="GET" recordid="cisco-interfaces-ipaddrtable-get" protocol="SNMP"/>
+		<SnmpGetParamList>
+			<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.4.20.1.1" label="IPADENTADDR"/>
+			<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.4.20.1.2" label="IPADENTIFINDEX"/>
+		</SnmpGetParamList>
+    </SnmpGetRecord>
+
+</RecordConf>

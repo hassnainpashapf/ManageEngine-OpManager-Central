@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Datacom 4000 Series Switch" osType="DatacomOS" templateName="Datacom_4000_Series_Switch" multiConfigTemplate="false" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Datacom" vendorName="Datacom">
+		<Commands>
+			<Command commandstr="show inventory | nomore"/>
+			<Command commandstr="show firmware"/>
+			<Command commandstr="show platform"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="show running-config | nomore" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Datacom4000" personalityName="Datacom4000">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="PARTNUMBER" size="150" desc="" displayname="Part Number" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="PRODUCTREVISION" size="150" desc="" displayname="Product Revision" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="PCBVERSION" size="150" desc="" displayname="PCB Version" defaultvalue="Not Available" sequenceid="30"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging server $SYSLOG_SERVER_IP$</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>logging server $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="Datacom4000SeriesHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+		            <PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_datacom_4000_show_platform">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="SERIES" EXPRESSION="^\d\s+(\S+).*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION="^\d+\/\d+\s+(\S+)\s+\S+\s+\S+\s+(\S+)">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						<COMMAND NAME="hardware_prop_datacom_4000_show_firmware">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*\s+(\S+)\s+Active.*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						<COMMAND NAME="hardware_prop_datacom_4000_show_inventory">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="SERIES" EXPRESSION=".*(?i)Product\s*model\s*[:=]\s*(DM\S+).*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION="(?i)Product\s*model\s*[:=]\s*((?!DM)\S+)">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*(?i)Serial\s*number\s*[:=]\s*(\S+).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*(?i)Base\s*MAC\s*address\s*[:=]\s*(\S+).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PARTNUMBER" EXPRESSION=".*(?i)Part\s*number\s*[:=]\s*(\S+).*">
+											<PARAM NAME="PARTNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PRODUCTREVISION" EXPRESSION=".*(?i)Product\s*revision\s*[:=]\s*(\S+).*">
+											<PARAM NAME="PRODUCTREVISION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PCBVERSION" EXPRESSION=".*(?i)PCB\s*revision\s*[:=]\s*(\S+).*">
+											<PARAM NAME="PCBVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+		            </PARSER>
+		        </MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show platform | nomore" parsercommandname="hardware_prop_datacom_4000_show_platform" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show firmware | nomore" parsercommandname="hardware_prop_datacom_4000_show_firmware" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show inventory | nomore" parsercommandname="hardware_prop_datacom_4000_show_inventory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+    <CustomDevicePackage deviceType="HPE Nimble" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#HPE NIMBLE"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="HPE"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Pure Storage(API)" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Pure Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="PureStorage"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="DELL Compellent" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#DELL Compellent"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Netapp ONTAP(Cluster)" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#NetAppONTAP(Cluster)"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="NetApp"/>
+    </CustomDevicePackage>
+	
+	<CustomDevicePackage deviceType="Huawei Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Huawei_Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+	
+	<CustomDevicePackage deviceType="Hitachi Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Hitachi Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Hitachi"/>
+    </CustomDevicePackage>
+	
+	<CustomDevicePackage deviceType="Fujitsu Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Fujitsu Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Fujitsu"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Huawei 18800 series" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Huawei18800 Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+	
+	<CustomDevicePackage deviceType="Huawei 9000 Cluster" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Huawe9000 Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    
+    <CustomDevicePackage deviceType="Huawei Fusion Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Fusion Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+    
+        <CustomDevicePackage deviceType="Synology DSM" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Synology Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Synology"/>
+    </CustomDevicePackage>
+
+<CustomDevicePackage deviceType="INFINIBOX Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#INFINIBOX Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="INFINIDAT"/>
+    </CustomDevicePackage>
+    
+
+<CustomDevicePackage deviceType="HP MSA Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#MSA Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="HPE"/>
+    </CustomDevicePackage>
+    
+    <CustomDevicePackage deviceType="IBM FS 840/900 Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#IBM FS Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+        <CustomDevicePackage deviceType="EMC Isilon Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#EMC_ISILON_Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="IBM Spectrum Virtualize" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#IBM SpectrumVirtualize Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    
+    
+    <CustomDevicePackage deviceType="Kaminario Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Kaminario Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Kaminario"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="IBM DS Series" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#IBM dsxiv Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+
+<!--    <CustomDevicePackage deviceType="EMC Unity Storage" iconName="router.png" pingInterval="900">-->
+<!--        <SysOIDs>-->
+<!--            <SysOID oid="SAN#UNITYEMC"/>-->
+<!--        </SysOIDs>-->
+<!--        <Category name="RAID"/>-->
+<!--        <Vendor name="EMC"/>-->
+<!--    </CustomDevicePackage>-->
+
+
+    <CustomDevicePackage deviceType="HPE StoreOnce" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#HPE StoreOnce"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="HPE"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HPE Storage Device(WSAPI)" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#HPE Primera Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="HPE"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="EMC Unity Storage" iconName="router.png" pingInterval="900">
+         <SysOIDs>
+             <SysOID oid="SAN#UNITYEMC"/>
+         </SysOIDs>
+         <Category name="RAID"/>
+         <Vendor name="EMC"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Huawei Fusion Storage 8.x" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Fusion8.x"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Huawei"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Qnap QTS Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Qnap_QTS_Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="QNAP"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="DELL EMC Data Domain" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Dell_EMC_Data_Domain"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Dell"/>
+    </CustomDevicePackage>
+    
+    <CustomDevicePackage deviceType="EMC Unisphere(Symmetrix)" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Unisphere_Powermax"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="HPE XP" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#HPE XP"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="HPE"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="DELL EMC PowerVault ME4" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#DELL EMC PowerVault ME4"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="DELL EMC"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Tegile IntelliFlash" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Tegile IntelliFlash"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Tegile"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="HPE MSA(API)" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#HPE MSA(API)"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="HPE"/>
+    </CustomDevicePackage>
+    
+    <CustomDevicePackage deviceType="Dell PowerStore" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#DellPowerstore"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Dell"/>
+    </CustomDevicePackage>
+    
+    <CustomDevicePackage deviceType="Hitachi NAS" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Hitachi NAS"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Hitachi"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Lenovo Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#HLenovoStorage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Lenovo"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM DS Series(API)" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#IBM DS Series(API)"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Oracle ZFS Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#OracleZFSStorage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Oracle"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="NetApp E Series" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#NetApp E Series"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="NetApp"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Lenovo DG/DM Series" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Lenovo DG/DM Series"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Lenovo"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Dell PowerMax(API)" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Dell PowerMax(API)"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Dell"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Lenovo DS Series" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Lenovo DS Series"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Lenovo"/>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Inspur Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Inspur Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Inspur"/>
+    </CustomDevicePackage>
+
+
+    <CustomDevicePackage deviceType="MacroSAN" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#MacroSAN"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="MacroSAN"/>
+    </CustomDevicePackage>
+    
+    <CustomDevicePackage deviceType="Qumulo Storage" iconName="router.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="SAN#Qumulo Storage"/>
+        </SysOIDs>
+        <Category name="RAID"/>
+        <Vendor name="Qumulo"/>
+    </CustomDevicePackage>
+
+</CustomDevicePackage>

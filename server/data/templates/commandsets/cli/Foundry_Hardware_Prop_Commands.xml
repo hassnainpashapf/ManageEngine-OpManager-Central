@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="foundry_hardware_prop_parser" promptactionid="foundryActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_switch_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<!-- Commands to get Hardware Properties -->
+<!-- CLI -->
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_foundry_switch" messagesuffix="&#13;&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="foundry_switch_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- SSH -->
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_foundry_switch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="foundry_switch_ssh_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- Commands to get Interfaces -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="foundry_interface_details_parser" promptactionid="foundryActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_switch_interface_details_ispec"/>
+</CLIInteractionSpec>
+
+<!-- CLI -->
+<CLICommand command="show interfaces | include .* is up|down">
+<CLIInputRecord parsercommandname="interface_details_foundry_switch" messagesuffix="&#13;&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="foundry_switch_interface_details" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- SSH -->
+<CLICommand command="show interfaces | include .* is up|down">
+<CLIInputRecord parsercommandname="interface_details_foundry_switch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="foundry_switch_ssh_interface_details" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

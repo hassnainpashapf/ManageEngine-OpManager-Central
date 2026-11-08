@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+<!-- BGP Vendor Neutral Monitor MIB starts-->
+<Graph  YAXISTEXT="In Updates" description="BGP Peer In Updates" displayName="BGP Peer In Updates" failureThreshold="1" graphName="BGPPeerInUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.2.1.15.3.1.10" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Default">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Out Updates" description="BGP Peer Out Updates" displayName="BGP Peer Out Updates" failureThreshold="1" graphName="BGPPeerOutUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.2.1.15.3.1.11" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Default">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Sent" description="BGP Peer Total Messages Sent" displayName="BGP Peer Total Messages Sent" failureThreshold="1" graphName="BGPPeerTotalMessageSent" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.2.1.15.3.1.13" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Default">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Received" description="BGP Peer Total Messages Received" displayName="BGP Peer Total Messages Received" failureThreshold="1" graphName="BGPPeerTotalMessageReceived" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.2.1.15.3.1.12" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Default">
+		<UserProps/>
+</Graph>
+<!--BGP  Vendor Neutral Monitor MIB Ends -->
+
+<!-- cisco BGP Monitor MIB starts-->
+<Graph   YAXISTEXT="In Updates" description="BGP Peer In Updates" displayName="BGP Peer In Updates" failureThreshold="1" graphName="ciscoBGPPeerInUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.187.1.2.5.1.13" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+		<UserProps/>
+</Graph>
+<Graph   YAXISTEXT="Out Updates" description="BGP Peer Out Updates" displayName="BGP Peer Out Updates" failureThreshold="1" graphName="ciscoBGPPeerOutUpdate" graphType="multiple" CiscoisNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.187.1.2.5.1.14" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+		<UserProps/>
+</Graph>
+<Graph   YAXISTEXT="Total Messages Sent" description="BGP Peer Total Messages Sent" displayName="BGP Peer Total Messages Sent" failureThreshold="1" graphName="ciscoBGPPeerTotalMessageSent" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.187.1.2.5.1.16" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Received" description="BGP Peer Total Messages Received" displayName="BGP Peer Total Messages Received" failureThreshold="1" graphName="ciscoBGPPeerTotalMessageReceived" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.187.1.2.5.1.15" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+		<UserProps/>
+</Graph>
+<!-- cisco BGP Monitor MIB Ends-->
+
+<!-- Juniper BGP Monitor MIB starts-->
+<Graph  YAXISTEXT="In Updates" description="BGP Peer In Updates" displayName="BGP Peer In Updates" failureThreshold="1" graphName="juniperBGPPeerInUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.4874.2.2.29.1.4.1.11" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Out Updates" description="BGP Peer Out Updates" displayName="BGP Peer Out Updates" failureThreshold="1" graphName="juniperBGPPeerOutUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.4874.2.2.29.1.4.1.12" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Sent" description="BGP Peer Total Messages Sent" displayName="BGP Peer Total Messages Sent" failureThreshold="1" graphName="juniperBGPPeerTotalMessageSent" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.4874.2.2.29.1.4.1.14" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Received" description="BGP Peer Total Messages Received" displayName="BGP Peer Total Messages Received" failureThreshold="1" graphName="juniperBGPPeerTotalMessageReceived" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.4874.2.2.29.1.4.1.13" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+		<UserProps/>
+</Graph>
+<!-- Juniper BGP Monitor MIB Ends-->
+
+<!-- Huawei BGP Monitor MIB starts-->
+<Graph  YAXISTEXT="In Updates" description="BGP Peer In Updates" displayName="BGP Peer In Updates" failureThreshold="1" graphName="huaweiBGPPeerInUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2011.5.25.177.1.1.4.1.4" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Out Updates" description="BGP Peer Out Updates" displayName="BGP Peer Out Updates" failureThreshold="1" graphName="huaweiBGPPeerOutUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2011.5.25.177.1.1.4.1.9" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Sent" description="BGP Peer Total Messages Sent" displayName="BGP Peer Total Messages Sent" failureThreshold="1" graphName="huaweiBGPPeerTotalMessageSent" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2011.5.25.177.1.1.4.1.2" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Received" description="BGP Peer Total Messages Received" displayName="BGP Peer Total Messages Received" failureThreshold="1" graphName="huaweiBGPPeerTotalMessageReceived" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2011.5.25.177.1.1.4.1.1" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+		<UserProps/>
+</Graph>
+<!-- Huawei BGP Monitor MIB Ends-->
+
+<!-- Arista BGP Monitor MIB starts-->
+<Graph  YAXISTEXT="In Updates" description="BGP Peer In Updates" displayName="BGP Peer In Updates" failureThreshold="1" graphName="aristaBGPPeerInUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.30065.4.1.1.7.1.1" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Arista">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Out Updates" description="BGP Peer Out Updates" displayName="BGP Peer Out Updates" failureThreshold="1" graphName="aristaBGPPeerOutUpdate" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.30065.4.1.1.7.1.2" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Arista">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Sent" description="BGP Peer Total Messages Sent" displayName="BGP Peer Total Messages Sent" failureThreshold="1" graphName="aristaBGPPeerTotalMessageSent" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.30065.4.1.1.7.1.4" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Arista">
+		<UserProps/>
+</Graph>
+<Graph  YAXISTEXT="Total Messages Received" description="BGP Peer Total Messages Received" displayName="BGP Peer Total Messages Received" failureThreshold="1" graphName="aristaBGPPeerTotalMessageReceived" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.30065.4.1.1.7.1.3" period="300" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Arista">
+		<UserProps/>
+</Graph>
+<!-- Arista BGP Monitor MIB Ends-->
+
+</GRAPHDETAIL>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--$Id$ -->
+<DeviceConfiguration>
+
+    <!-- For ciena LEOS Switch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:Ciena_LEOS_Switch" templatename="Ciena_LEOS_Switch" ostype="LEOS" displayname="Ciena LEOS Switch" description="For all Ciena LEOS Switch">
+        <NCMVendorDevice vendorid="Ciena" />
+        <NCMDevicePersonality personalityid="CienaLEOSSwitch" />
+        
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+       
+            <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciena_leos_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:Ciena_LEOS_Switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+                    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciena_cli_show_startup_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="ciena_cli_show_startup_config_rec"/> 
+
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciena_cli_show_running_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="ciena_cli_show_running_config_rec"/>                    
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+ <!-- For ciena SAOS Switch -->
+     <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:Ciena_SAOS_Switch" templatename="Ciena_SAOS_Switch" ostype="SAOS" displayname="Ciena SAOS Switch" description="For all Ciena SAOS Switch">
+        <NCMVendorDevice vendorid="Ciena" />
+        <NCMDevicePersonality personalityid="CienaSAOSSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+            <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciena_saos_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:Ciena_SAOS_Switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+                    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciena_cli_show_startup_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="ciena_cli_show_startup_config_rec"/> 
+                    
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciena_cli_show_running_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="ciena_cli_show_running_config_rec"/>                    
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+	
+     <!-- For ciena SAOS 3916 Switch -->
+	 
+     <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciena_switch" templatename="Ciena_Switch" ostype="SAOS" displayname="Ciena Switch" description="For all Ciena SAOS 3916 Series Switch">
+        <NCMVendorDevice vendorid="Ciena" />
+        <NCMDevicePersonality personalityid="CienaSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+            <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciena_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciena_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciena_switch_cli_show_running_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="ciena_switch_cli_show_running_config_rec"/>                    
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+		  <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ciena_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:ciena_switch"  managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+               
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciena_switch_cli_show_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="ciena_switch_cli_show_running_config_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+	
+</DeviceConfiguration>

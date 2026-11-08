@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_bigip_config_ispec" />
+</CLIInteractionSpec>
+
+
+<!--Startup-config Telnet, SSH-->
+	
+<CLICommand command="echo -----------CONTENTS OF bigip_base.conf ------------ > F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_show_startup_config_rec1" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip_base.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_show_startup_config_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo ----------CONTENTS OF bigip.conf------------- >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_show_startup_config_rec3" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_show_startup_config_rec4" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_show_startup_config_rec5" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+<!--Startup Using SCP-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="word:" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_bigip_scp_password_startup_config_ispec_1" />
+</CLIInteractionSpec>
+
+<CLICommand command="scp F5BigIPConfigFile.txt ${UserInput:scp_username}@${UserInput:scp_server_address}:${UserInput:file_name}">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_scp_get_startup_rec_1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_bigip_scp_startup_config_ispec_2" />
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:scp_password}">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_scp_get_startup_rec_2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!--Hardware cmds-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="f5bigip_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="f5bigip_version_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="bigpipe version">
+	<CLIInputRecord parsercommandname="hardware_prop_f5_bigip" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_bigip_hardware_prop_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="bigpipe platform">
+	<CLIInputRecord parsercommandname="hardware_prop_f5_bigip" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_bigip_hardware_prop_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- F5 ARX device -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_arx_config_ispec" />
+</CLIInteractionSpec>
+
+	
+<CLICommand command="show global-config">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_arx_show_startup_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show running-config">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_arx_show_running_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>	
+	
+<CLICommand command="terminal length 0">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_arx_show_paging_config_rec" protocol="CLI"/>
+	</CLIInputRecord>	
+</CLICommand>
+
+                                       <!--Hardware command-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="F5_arx_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="F5_arx_version_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_f5_arx" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_arx_hardware_prop_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_bigip_10x_config_ispec" />
+</CLIInteractionSpec>
+
+
+<!--Startup-config Telnet, SSH-->
+	
+<CLICommand command="echo -----------CONTENTS OF bigip_base.conf ------------ > F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_10x_show_startup_config_rec1" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip_base.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_10x_show_startup_config_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo ----------CONTENTS OF bigip.conf------------- >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_10x_show_startup_config_rec3" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_10x_show_startup_config_rec4" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+	
+<CLICommand command="echo -----------CONTENTS OF bigip_sys.conf------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_10x_show_startup_config_rec5" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip_sys.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_10x_show_startup_config_rec6" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_10x_show_startup_config_rec7" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="bigpipe export">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_10x_show_running_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!--Hardware cmds-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="f5bigip_10x_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="f5bigip_10x_version_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="bigpipe version">
+	<CLIInputRecord parsercommandname="hardware_prop_f510x_bigip" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_10x_bigip_hardware_prop_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="bigpipe platform">
+	<CLIInputRecord parsercommandname="hardware_prop_f510x_bigip" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_10x_bigip_hardware_prop_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+	   <!-- For F5 Crescendo Networks-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_crescendo_networks_config_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="show running config">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_crescendo_networks_running_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="show startup config">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_crescendo_networks_startup_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="no cli more">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_crescendo_networks_paging_disable_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!--Hardware cmds-->
+	   
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="F5_crescendo_networks_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="F5_crescendo_networks_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_F5_crescendo_networks" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_crescendo_networks_hardware_prop_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_bigip_11x_config_ispec" />
+</CLIInteractionSpec>
+
+
+<!--Startup-config Telnet, SSH-->
+	
+<CLICommand command="echo -----------CONTENTS OF /config/bigip_base.conf ------------ > F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec1" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip_base.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo ----------CONTENTS OF /config/bigip.conf------------- >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec3" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec4" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+	
+<CLICommand command="echo -----------CONTENTS OF /config/bigip.license------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec5" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip.license >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec6" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /config/bigip_user.conf------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec7" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip_user.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec8" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+	
+<CLICommand command="echo -----------CONTENTS OF /config/bigip_sys.conf------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec9" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigip_sys.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec10" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /config/default_base.conf------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec11" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/default_base.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec12" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /config/bigconfig/openssl.conf------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec13" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /config/bigconfig/openssl.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec14" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="echo -----------CONTENTS OF /config/ssh/ssh_host_key------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec15" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat  /config/ssh/ssh_host_key >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec16" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /config/ssh/ssh_host_key.pub------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec17" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat  /config/ssh/ssh_host_key.pub >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec18" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /config/ssh/ssh_host_dsa_key------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec19" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat  /config/ssh/ssh_host_dsa_key >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec20" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /config/ssh/ssh_host_dsa_key.pub------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec21" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat  /config/ssh/ssh_host_dsa_key.pub >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec22" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /etc/hosts------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec23" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /etc/hosts >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec24" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="echo -----------CONTENTS OF /etc/hosts.deny------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec25" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /etc/hosts.deny >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec26" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="echo -----------CONTENTS OF /etc/hosts.allow------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec27" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /etc/hosts.allow >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec28" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+<CLICommand command="echo -----------CONTENTS OF /etc/pki/tls/openssl.cnf------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec29" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /etc/pki/tls/openssl.cnf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec30" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /etc/passwd------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec31" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /etc/passwd >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec32" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="echo -----------CONTENTS OF /etc/master.passwd------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec33" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /etc/master.passwd >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec34" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="echo -----------CONTENTS OF /etc/inetd.conf------------ >> F5BigIPConfigFile.txt">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		  <Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec35" protocol="CLI"/>
+		</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat /etc/inetd.conf >> F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec36" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cat F5BigIPConfigFile.txt">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec37" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="cd ..">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_bigip_11x_show_startup_config_rec38" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+<!--Hardware cmds-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="f5bigip_11x_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="f5bigip_11x_version_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="tmsh show sys version">
+	<CLIInputRecord parsercommandname="hardware_prop_f511x_bigip" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_11x_bigip_hardware_prop_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="tmsh show sys hardware">
+	<CLIInputRecord parsercommandname="hardware_prop_f511x_bigip" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_11x_bigip_hardware_prop_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+	   <!-- For F5 Netcon-->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_Netcon_config_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="bash">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_Netcon_bash_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!--Hardware cmds-->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="F5_Netcon_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="F5_Netcon_version_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+
+<CLICommand command="tmsh show sys version">
+	<CLIInputRecord parsercommandname="hardware_prop_f5_netcon" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_netcon_hardware_prop_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="tmsh show sys hardware">
+	<CLIInputRecord parsercommandname="hardware_prop_f5_netcon" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_netcon_hardware_prop_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+
+
+	   <!-- For F5 Big Ip11.4-->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="F5_Bigip_11_4_config_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="modify cli preference pager disabled">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_Bigip_11_4_pager_disabled_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show running-config">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="F5_Bigip_11_4_show_running_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!--Hardware cmds-->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="F5_Bigip_11_4_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="F5_Bigip_11_4_version_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+
+<CLICommand command="show /sys version">
+	<CLIInputRecord parsercommandname="hardware_prop_f5_bigip_11_4" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="f5_bigip_11_4_hardware_prop_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

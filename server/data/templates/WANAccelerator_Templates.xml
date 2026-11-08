@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?><CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco APIC Server M2" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2238"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Network Analysis Module" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.5.1.3.1.1.2.914"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Prime NAM 2320 Appliance" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1528"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Citrix NetScaler SDX 8015" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5951.6"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Citrix"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell I/O Aggregator" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6027.1.4.2"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="General Electric MDS Mercury 3650" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4130.2.1.4"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="General Electric"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Ixia NTO 5260" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.32620.1.1"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Ixia"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout ATM/Ethernet Probe 8150" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8150"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Channelized E1 WAN/Ethernet Probe 8822" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8822"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Channelized T1 WAN/Ethernet Probe 8812" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8812"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout DEC Packet Probe 3210" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.3210"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Ethernet Probe 6010" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.6010"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Fast EtherChannel Probe 8281" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8281"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Fast EtherChannel Probe 8283" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8283"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Fast Ethernet Dual Interface Half Probe 8221" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8221"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Fast Ethernet Dual Interface Half Probe 8223" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8223"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Fast Ethernet Full Duplex Single Probe 8211" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8211"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Fast Ethernet Full Duplex Single Probe 8213" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8213"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Fast Ethernet Single Interface Probe 8201" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8201"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Fast Ethernet Single Interface Probe 8203" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8203"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Gigabit Ethernet 1000Base LX Probe 8911" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8911"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout Gigabit Ethernet 1000Base SX Probe 8912" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.8912"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout WAN/Ethernet Probe 6050" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.6050"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout WAN/Ethernet Probe 7401" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.7401"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="NetScout"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 1000" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.3"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 10000" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.17"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 1200" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.18"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 1400" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.22"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 1500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.6"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 1550" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.14"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 1700" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.21"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 2000" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.1"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 2500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.4"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 2550" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.16"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 3500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.19"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 4000" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.2"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 4500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.5"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 6500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.11"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 7500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.20"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 8500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.12"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Packeteer PacketShaper 9500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2334.1.1.15"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Packeteer"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="RiverBed SMC 8500" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.17163.1.4"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Riverbed Technology, Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="RiverBed Steelhead EX560" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.17163.1.51"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Riverbed Technology, Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Silver Peak NX5700" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.23867.1.2.14"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Silver Peak"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Silver Peak NX8600" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.23867.1.2.19"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Silver Peak"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Silver Peak NX9700" iconName="WANAccelerator.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.23867.1.2.22"/>
+        </SysOIDs>
+        <Category name="WANAccelerator"/>
+        <Vendor name="Silver Peak"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For McAfee Devices" displayName="McAfee Device" osType="" templateName="McAfee Device">
+	<RestTemplate name=""/>
+	<Vendor displayName="McAfee" vendorName="McAfee">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="debugging" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="notifications" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="/opt/mwg/bin/mwg-coordinator -B file:in=ACTIVE,out=/home/mwgc/anyName.backup" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="60000"/>
+                	<Command commandecho="" commandstr="cat /home/mwgc/anyName.backup" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="McAfee Device" personalityName="McAfeeDevice">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Machine UUID" displayname="Machine UUID" name="MACHINE_UUID" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Deployment" displayname="Deployment" name="DEPLOYMENT" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="CPU" displayname="CPU" name="CPU" sequenceid="3" size="100"/>
+				<Column defaultvalue="Not Available" desc="Memory" displayname="Memory" name="MEMORY" sequenceid="4" size="100"/>
+		
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="McAfeeDeviceHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_mcafee_device">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MACHINE_UUID" EXPRESSION=".*Machine\s*UUID\s*:\s*(.*)">
+										  <PARAM NAME="MACHINE_UUID" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="DEPLOYMENT" EXPRESSION=".*Deployment\s*:\s*(.*)">
+											<PARAM NAME="DEPLOYMENT" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Operating System\s*:\s*McAfee\s*(\S*)\s*release\s*(\S*).*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="CPU" EXPRESSION=".*CPU\(s\)\s*:\s*(.*)">
+											<PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MEMORY" EXPRESSION=".*Memory\s*:\s*(.*)">
+											<PARAM NAME="MEMORY" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*Hardware\s*Model\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>				
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>   
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="/opt/mwg/bin/mwg-core -S system" messagesuffix="${LF}" parsercommandname="hardware_prop_mcafee_device" prompt="${UserInput:Prompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="Stonegate" ostype="" series="" sysoid=".1.3.6.1.4.1.1369.5.2"/>
+        <NCMDeviceSysOID model="Sidewinder" ostype="" series="" sysoid=".1.3.6.1.4.1.1573.2.1"/>
+        <NCMDeviceSysOID model="Gateway" ostype="" series="Gateway" sysoid=".1.3.6.1.4.1.1230.2.7.1.1"/>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.3401.2"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

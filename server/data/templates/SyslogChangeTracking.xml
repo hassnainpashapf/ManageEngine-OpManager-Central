@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<VendorSyslogTrackingLevel>
+<!-- Cisco -->
+<NCMVendorSyslogTrackingLevel vendorid="Cisco" logging_level="notifications" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Cisco" logging_level="informational" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Cisco" logging_level="debugging" logging_level_number="7" sequenceid="2"/>
+
+<!-- Foundry -->
+<NCMVendorSyslogTrackingLevel vendorid="Foundry" logging_level="informational" logging_level_number="6" sequenceid="0"/>
+
+<!-- Adtran -->
+<NCMVendorSyslogTrackingLevel vendorid="Adtran" logging_level="notice" logging_level_number="4" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Adtran" logging_level="info" logging_level_number="5" sequenceid="1"/>
+
+<!-- Netscreen -->
+<NCMVendorSyslogTrackingLevel vendorid="Netscreen" logging_level="warning" logging_level_number="4" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Netscreen" logging_level="notification" logging_level_number="5" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Netscreen" logging_level="information" logging_level_number="6" sequenceid="2"/>
+<NCMVendorSyslogTrackingLevel vendorid="Netscreen" logging_level="debugging" logging_level_number="7" sequenceid="3"/>
+
+<!-- Nortel -->
+<NCMVendorSyslogTrackingLevel vendorid="Nortel" logging_level="informational" logging_level_number="0" sequenceid="0"/>
+
+<!-- Fortinet -->
+<NCMVendorSyslogTrackingLevel vendorid="Fortinet" logging_level="information" logging_level_number="0" sequenceid="0"/>
+
+<!-- Force10 -->
+<NCMVendorSyslogTrackingLevel vendorid="Force10" logging_level="notifications" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Force10" logging_level="informational" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Force10" logging_level="debugging" logging_level_number="7" sequenceid="2"/>
+
+<!-- Enterasys -->
+<NCMVendorSyslogTrackingLevel vendorid="Enterasys" logging_level="notifications" logging_level_number="6" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Enterasys" logging_level="informational" logging_level_number="7" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Enterasys" logging_level="debugging" logging_level_number="8" sequenceid="2"/>
+
+<!-- Extreme -->
+<NCMVendorSyslogTrackingLevel vendorid="Extreme" logging_level="info" logging_level_number="0" sequenceid="0"/>
+
+<!-- Dell -->
+<NCMVendorSyslogTrackingLevel vendorid="Dell" logging_level="warning" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Dell" logging_level="notification" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Dell" logging_level="information" logging_level_number="7" sequenceid="2"/>
+<NCMVendorSyslogTrackingLevel vendorid="Dell" logging_level="debugging" logging_level_number="8" sequenceid="3"/>
+
+<!-- Cisco Nexus Switch -->
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoNexusSwitch1" personalityid="CiscoNexusSwitch" regex="no logging server $SYSLOG_SERVER_IP$" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoNexusSwitch2" personalityid="CiscoNexusSwitch" regex="logging server $SYSLOG_SERVER_IP"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:Dell1" personalityid="DellSwitch" regex="logging $SYSLOG_SERVER_IP$ severity (warning|notification|information|debugging)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:Dell2" personalityid="DellSwitch" regex="no logging $SYSLOG_SERVER_IP$" type="1"/>
+
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:1" personalityid="CiscoRouter" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:2" personalityid="CiscoRouter" regex="(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:3" personalityid="CiscoRouter" regex="logging trap (emergencies|alerts|critical|errors|warnings)" type="1"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoIAD1" personalityid="CiscoIAD" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoIAD2" personalityid="CiscoIAD" regex="(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoIAD3" personalityid="CiscoIAD" regex="logging trap (emergencies|alerts|critical|errors|warnings)" type="1"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoAccessServer1" personalityid="CiscoAccessServer" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoAccessServer2" personalityid="CiscoAccessServer" regex="(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoAccessServer3" personalityid="CiscoAccessServer" regex="logging trap (emergencies|alerts|critical|errors|warnings)" type="1"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:4" personalityid="CiscoSwitch" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:5" personalityid="CiscoSwitch" regex="(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:6" personalityid="CiscoSwitch" regex="logging trap (emergencies|alerts|critical|errors|warnings)" type="1"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoVG1" personalityid="CiscoVoiceGateway" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoVG2" personalityid="CiscoVoiceGateway" regex="(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoVG3" personalityid="CiscoVoiceGateway" regex="logging trap (emergencies|alerts|critical|errors|warnings)" type="1"/>
+
+<!--NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoCatOS1" personalityid="CiscoCatOSSwitch" regex="set logging server enable"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoCatOS2" personalityid="CiscoCatOSSwitch" regex="set logging server $SYSLOG_SERVER_IP$"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoCatOS3" personalityid="CiscoCatOSSwitch" regex="set logging server severity (6|7)"/-->
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:7" personalityid="CiscoFirewall" regex="logging (on|enable)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:8" personalityid="CiscoFirewall" regex="logging host \S+ $SYSLOG_SERVER_IP$"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:9" personalityid="CiscoFirewall" regex="logging trap (notifications|informational|debugging)"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoAP1" personalityid="CiscoAccessPoint" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoAP2" personalityid="CiscoAccessPoint" regex="(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoAP3" personalityid="CiscoAccessPoint" regex="logging trap (emergencies|alerts|critical|errors|warnings)" type="1"/>
+
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoASA1" personalityid="CiscoASA" regex="logging enable"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoASA2" personalityid="CiscoASA" regex="logging host \S+ $SYSLOG_SERVER_IP$"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoASA3" personalityid="CiscoASA" regex="logging trap (notifications|informational|debugging)"/>
+
+<!-- CiscoACE -->
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoACE1" personalityid="CiscoACEModule"  regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoACE2" personalityid="CiscoACEModule" regex="logging host \S+ $SYSLOG_SERVER_IP$"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoACE3" personalityid="CiscoACEModule" regex="logging trap (emergencies|alerts|critical|errors|warnings)" type="1"/>
+
+<!-- CiscoIOSXR -->
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoIOSXR1" personalityid="CiscoIOSXR" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoIOSXR2" personalityid="CiscoIOSXR" regex="(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoIOSXR3" personalityid="CiscoIOSXR" regex="logging trap (notifications|informational|debugging)"/>
+
+<!-- CiscoWAAS -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoWAAS1" personalityid="CiscoWAAS" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoWAAS2" personalityid="CiscoWAAS" regex="(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$) priority (information|debug|notice)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoWAAS3" personalityid="CiscoWAAS" regex="logging facility syslog"/>
+
+
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:10" personalityid="FoundrySwitch" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:11" personalityid="FoundrySwitch" regex="logging (host\s)?$SYSLOG_SERVER_IP$"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:12" personalityid="FoundrySwitch" regex="no logging buffered informational" type="1"/>
+
+<!-- Netscreen -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NetscreenFirewall1" personalityid="NetscreenFirewall" regex="set syslog config &quot;$SYSLOG_SERVER_IP&quot;"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NetscreenFirewall3" personalityid="NetscreenFirewall" regex="set syslog enable"/>
+
+<!--NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NetscreenFirewall2" personalityid="NetscreenFirewall" regex="set syslog config $SYSLOG_SERVER_IP port 514"/-->
+<!--NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NetscreenFirewall4" personalityid="NetscreenFirewall" regex="set log module system level (warning|notification|information|debugging) destination syslog"/-->
+
+
+<!-- Adtran -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AdtranLANSwitch1" personalityid="AdtranLANSwitch" regex="no logging forwarding on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AdtranLANSwitch2" personalityid="AdtranLANSwitch" regex="no logging facility syslog" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AdtranLANSwitch3" personalityid="AdtranLANSwitch" regex="logging forwarding priority-level (info|notice)"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AdtranLANSwitch4" personalityid="AdtranLANSwitch" regex="logging forwarding receiver-ip $SYSLOG_SERVER_IP$"/>
+
+
+<!-- Nortel Baystack -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NortelBSSwitch1" personalityid="NortelBayStackSwitch" regex="logging enable"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NortelBSSwitch2" personalityid="NortelBayStackSwitch" regex="logging remote address $SYSLOG_SERVER_IP$"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NortelBSSwitch3" personalityid="NortelBayStackSwitch" regex="logging remote level informational"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NortelBSSwitch4" personalityid="NortelBayStackSwitch" regex="logging remote enable"/>
+
+
+<!-- Fortinet -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FortinetFW1" personalityid="FortiGateFirewall" regex="config log syslogd filter"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FortinetFW3" personalityid="FortiGateFirewall" regex="set severity information"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FortinetFW2" personalityid="FortiGateFirewall" regex="config log syslogd setting"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FortinetFW4" personalityid="FortiGateFirewall" regex='set server "$SYSLOG_SERVER_IP"'/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FortinetFW5" personalityid="FortiGateFirewall" regex="set status enable"/>
+
+
+<!-- Force10_E_Switch -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:Force10E1" personalityid="Force10Switch" regex="no logging on" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:Force10E2" personalityid="Force10Switch" regex="logging $SYSLOG_SERVER_IP$"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:Force10E3" personalityid="Force10Switch" regex="logging trap (emergencies|alerts|critical|errors|warning)" type="1"/>
+
+<!-- EnterasysSwitch -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:Enterasys1" personalityid="EnterasysSwitch" regex="set logging server \d ip-addr $SYSLOG_SERVER_IP\s\S*\s\S*\sseverity [6|7|8] state enable"/>
+
+<!-- ExtremeSwitch -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:Extreme1" personalityid="ExtremeSwitch" regex="configure syslog\s*\S* $SYSLOG_SERVER_IP local0 info"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:Extreme2" personalityid="ExtremeSwitch" regex="enable syslog"/>
+
+<!-- AlaxalaSwitch -->
+<NCMVendorSyslogTrackingLevel vendorid="Alaxala" logging_level="notifications" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Alaxala" logging_level="information" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Alaxala" logging_level="debugging"     logging_level_number="7" sequenceid="2"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AlaxalaSwitch1" personalityid="AlaxalaSwitch" regex="logging host $SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AlaxalaSwitch2" personalityid="AlaxalaSwitch" regex="logging trap (notifications|information|debugging)"/>
+
+
+
+<!-- AvayaGateway -->
+
+<NCMVendorSyslogTrackingLevel vendorid="Avaya" logging_level="notifications" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Avaya" logging_level="informational" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Avaya" logging_level="debugging" logging_level_number="7" sequenceid="2"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:avayamediagateway" personalityid="AvayaMediaGateway" regex="logging server condition all\s*([5-7]|(notification|informational|debugging))\s*$SYSLOG_SERVER_IP$"/>
+
+
+<!-- LambdaDriver -->
+
+
+<NCMVendorSyslogTrackingLevel vendorid="MRV" logging_level="secure" logging_level_number="7" sequenceid="0"/>
+
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:lambdadriver" personalityid="LambdaDriver" regex="rsyslog\s*$SYSLOG_SERVER_IP"/>
+
+
+<!-- DaxDx -->
+<NCMVendorSyslogTrackingLevel vendorid="Dax" logging_level="notifications" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Dax" logging_level="informational" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Dax" logging_level="debugging" logging_level_number="7" sequenceid="2"/>
+
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:daxdx1" personalityid="DaxRouter" regex="logging $SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:daxdx2" personalityid="DaxSwitch" regex="log module default server $SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:daxdx3" personalityid="DaxSwitch" regex="logging host $SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:daxdx4" personalityid="DaxSwitch" regex="logging trap ([0-4]|(emergencies|alerts|critical|errors|warning))" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:daxdx5" personalityid="DaxSwitch" regex="logging server $SYSLOG_SERVER_IP"/>
+
+
+
+
+<!-- H3C -->
+
+<NCMVendorSyslogTrackingLevel vendorid="H3C" logging_level="warnings" logging_level_number="5" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="H3C" logging_level="notifications" logging_level_number="6" sequenceid="2"/>
+<NCMVendorSyslogTrackingLevel vendorid="H3C" logging_level="informational" logging_level_number="7" sequenceid="3"/>
+<NCMVendorSyslogTrackingLevel vendorid="H3C" logging_level="debugging" logging_level_number="8" sequenceid="4"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:h3c1" personalityid="H3CSwitch" regex="info-center loghost $SYSLOG_SERVER_IP"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:h3c2" personalityid="H3CSwitch" regex="info-center source default channel (2|loghost) log level error(s)?" type="1"/>
+
+
+<!-- BlueCoatProxySG -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:BlueCoatProxy1" personalityid="BlueCoatProxySG" regex="syslog enable" />
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:BlueCoatProxy2" personalityid="BlueCoatProxySG" regex="(syslog hostname\s*$SYSLOG_SERVER_IP|syslog loghost\s*$SYSLOG_SERVER_IP)" />
+
+<!-- BlueCoatProxySG -->
+<NCMVendorSyslogTrackingLevel vendorid="BlueCoat" logging_level="informational" logging_level_number="0" sequenceid="0"/>
+
+<!-- Yamaha Router -->
+<!-- For these type of devices the loglevelwithno. has to be same as loglevel. hence level number given as 90001 that could be handled in server or jsp page -->
+<NCMVendorSyslogTrackingLevel vendorid="Yamaha" logging_level="info" logging_level_number="90001" sequenceid="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:yamaharouter1" personalityid="YamahaRouter" regex="syslog host\s*$SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:yamaharouter2" personalityid="YamahaRouter" regex="syslog\s*info\s*on"/>
+
+<!--CitrixNetScaler -->
+
+<NCMVendorSyslogTrackingLevel vendorid="Citrix" logging_level="EMERGENCY" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Citrix" logging_level="ALERT" logging_level_number="5" sequenceid="2"/>
+<NCMVendorSyslogTrackingLevel vendorid="Citrix" logging_level="CRITICAL" logging_level_number="4" sequenceid="3"/>
+<NCMVendorSyslogTrackingLevel vendorid="Citrix" logging_level="ERROR" logging_level_number="3" sequenceid="4"/>
+<NCMVendorSyslogTrackingLevel vendorid="Citrix" logging_level="WARNING" logging_level_number="2" sequenceid="5"/>
+<NCMVendorSyslogTrackingLevel vendorid="Citrix" logging_level="NOTICE" logging_level_number="1" sequenceid="6"/>
+<NCMVendorSyslogTrackingLevel vendorid="Citrix" logging_level="INFORMATIONAL" logging_level_number="0" sequenceid="7"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:citrixnetscaler1" personalityid="CitrixNetScaler" regex="add audit syslogAction name $SYSLOG_SERVER_IP -logLevel (EMERGENCY|ALERT|CRITICAL|ERROR|WARNING|NOTICE|INFORMATIONAL)"/>
+
+<!-- Hitachi Switch -->
+<!-- <NCMVendorSyslogTrackingLevel vendorid="Hitachi Cable" logging_level="emerg" logging_level_number="0" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Hitachi Cable" logging_level="alert" logging_level_number="1" sequenceid="2"/>
+<NCMVendorSyslogTrackingLevel vendorid="Hitachi Cable" logging_level="crit" logging_level_number="2" sequenceid="3"/>
+<NCMVendorSyslogTrackingLevel vendorid="Hitachi Cable" logging_level="error" logging_level_number="3" sequenceid="4"/>
+<NCMVendorSyslogTrackingLevel vendorid="Hitachi Cable" logging_level="notice" logging_level_number="4" sequenceid="5"/>
+<NCMVendorSyslogTrackingLevel vendorid="Hitachi Cable" logging_level="warning" logging_level_number="6" sequenceid="1"/> -->
+
+<NCMVendorSyslogTrackingLevel vendorid="Hitachi Cable" logging_level="info" logging_level_number="5" sequenceid="1"/> 
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:hitachi11" personalityid="HitachiCableSwitch" regex="logging\s*ip\s*$SYSLOG_SERVER_IP\s*local[0-7]\s*(info)"/>
+
+<!-- For Dlink 3052P -->
+<NCMVendorSyslogTrackingLevel vendorid="DLink" logging_level="all" logging_level_number="5" sequenceid="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:DLink1" personalityid="DLinkSwitch" regex="enable syslog"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:DLink2" personalityid="DLinkSwitch" regex="config\ssystem_severity\slog\sinformation"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:DLink3" personalityid="DLinkSwitch" regex="config\ssystem_severity\strap\sinformation"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:DLink4" personalityid="DLinkSwitch" regex="create\ssyslog\shost\s[0-9]\sseverity\sall\sfacility\slocal[0-9]\sudp_port\s514\sipaddress\s$SYSLOG_SERVER_IP$\sstate\senable" />
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:DLink5" personalityid="DLinkSwitch" regex="config\slog_save_timing\son_demand"/>
+
+<!-- Cisco MDS Switch -->
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoMDSSwitch1" personalityid="CiscoMDS" regex="no logging server  $SYSLOG_SERVER_IP$" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:CiscoMDSSwitch2" personalityid="CiscoMDS" regex="logging server $SYSLOG_SERVER_IP"/>
+
+
+ <!-- Meru WLAN Controller -->
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:MeruWLANController1" personalityid="MeruWLANController" regex="no syslog-host $SYSLOG_SERVER_IP$" type="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:MeruWLANController2" personalityid="MeruWLANController" regex="syslog-host $SYSLOG_SERVER_IP"/>
+
+<!-- Alaxala 5400 Switch -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AlaxalaSwitch5400" personalityid="AlaxalaSwitch5400" regex="logger syslog $SYSLOG_SERVER_IP"/>
+
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:alliedtelesisgs900m1" personalityid="AlliedTelesisGS900MSwitch" regex="set log output=syslog server=$SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:alliedtelesisgs900m2" personalityid="AlliedTelesisGS900MSwitch" regex="enable log output=syslog" type="1"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:BrocadeFastIronSwitch2" personalityid="BrocadeFastIronSwitch" regex="logging host $SYSLOG_SERVER_IP"/>
+
+<!-- A10Networks -->
+<NCMVendorSyslogTrackingLevel vendorid="A10Networks" logging_level="notifications" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="A10Networks" logging_level="informational" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="A10Networks" logging_level="debugging" logging_level_number="7" sequenceid="2"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AX2500LoadBalancers1" personalityid="AX2500LoadBalancers" regex="logging host $SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AX2500LoadBalancers2" personalityid="AX2500LoadBalancers" regex="logging syslog (notification|information|debugging)"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AlliedTelesisCenterComSwitch" personalityid="AlliedTelesisCenterComSwitch" regex="dest=syslog server=$SYSLOG_SERVER_IP secure"/>
+
+
+<!-- AlliedTelesis -->
+<NCMVendorSyslogTrackingLevel vendorid="AlliedTelesis" logging_level="notices" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="AlliedTelesis" logging_level="informational" logging_level_number="6" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="AlliedTelesis" logging_level="debugging" logging_level_number="7" sequenceid="2"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:AlliedTelesisEthernetSwitch1" personalityid="AlliedTelesisEthernetSwitch" regex="log host $SYSLOG_SERVER_IP level (notices|informational|debugging)"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:F5Bigip10X" personalityid="F5Bigip10X" regex="host $SYSLOG_SERVER_IP"/>
+
+
+<NCMVendorSyslogTrackingLevel vendorid="NEC" logging_level="info" logging_level_number="4" sequenceid="0"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NEC1" personalityid="NECIX2025" regex="syslog\s*ip\s*host\s*$SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NEC2" personalityid="NECIX2025" regex="logging\s*subsystem\s*cnfg\s*info"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:NEC3" personalityid="NECIX2025" regex="logging\s*subsystem\s*tels\s*info"/>
+
+
+<!-- Fortinet -->
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FortiGateFirewall1" personalityid="FortiGateFirewallVER4" regex="set\s*server\s*$SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FortiGateFirewall2" personalityid="FortiGateFirewallVER4" regex="set\s*status\s*enable"/>
+
+<NCMVendorSyslogTrackingLevel vendorid="FiberHome" logging_level="info" logging_level_number="5" sequenceid="0"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FiberHomeSwitch1" personalityid="FiberHomeSwitch" regex="syslog\s*server\s*$SYSLOG_SERVER_IP"/>
+
+
+<!-- ZTE -->
+<NCMVendorSyslogTrackingLevel vendorid="ZTE" logging_level="notifications" logging_level_number="6" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="ZTE" logging_level="informational" logging_level_number="7" sequenceid="1"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:ZXRRouterZSR" personalityid="ZXRRouterZSR" regex="syslog-server\s*host\s*$SYSLOG_SERVER_IP"/>
+
+
+<!-- Juniper -->
+<NCMVendorSyslogTrackingLevel vendorid="Juniper" logging_level="notice" logging_level_number="5" sequenceid="0"/>
+<NCMVendorSyslogTrackingLevel vendorid="Juniper" logging_level="warning" logging_level_number="6" sequenceid="1"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:JuniperSwitch" personalityid="JuniperSwitch" regex="set\s*system\s*syslog\s*host\s*$SYSLOG_SERVER_IP"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:JuniperRouter" personalityid="JuniperRouter" regex="set\s*system\s*syslog\s*host\s*$SYSLOG_SERVER_IP"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:JuniperMXRouter" personalityid="JuniperMXRouter" regex="set\s*system\s*syslog\s*host\s*$SYSLOG_SERVER_IP"/>
+
+
+<!-- Fujitsu Firewall -->
+
+<NCMVendorSyslogTrackingLevel vendorid="Fujitsu" logging_level="session" logging_level_number="7" sequenceid="0"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:FujitsuFirewall" personalityid="FujitsuFirewall" regex="syslog\s*$SYSLOG_SERVER_IP"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:h3cs" personalityid="H3CSSeriesSwitch" regex="info-center loghost $SYSLOG_SERVER_IP$"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:h3cs2" personalityid="H3CSSeriesSwitch" regex="info-center source default channel (2|loghost) log level"/>
+
+<!-- Huawei -->
+
+<NCMVendorSyslogTrackingLevel vendorid="Huawei" logging_level="warnings" logging_level_number="5" sequenceid="1"/>
+<NCMVendorSyslogTrackingLevel vendorid="Huawei" logging_level="notifications" logging_level_number="6" sequenceid="2"/>
+<NCMVendorSyslogTrackingLevel vendorid="Huawei" logging_level="informational" logging_level_number="7" sequenceid="3"/>
+<NCMVendorSyslogTrackingLevel vendorid="Huawei" logging_level="debugging" logging_level_number="8" sequenceid="4"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:huawei1" personalityid="HuaweiSSwitch" regex="info-center loghost $SYSLOG_SERVER_IP$"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:JuniperSRX" personalityid="JuniperSRX" regex="set\s*system\s*syslog\s*host\s*$SYSLOG_SERVER_IP"/>
+
+<!-- HP -->
+<NCMVendorSyslogTrackingLevel vendorid="HP" logging_level="info" logging_level_number="7" sequenceid="0"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:HPSwitch" personalityid="HPSwitch" regex="logging\s*$SYSLOG_SERVER_IP"/>
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:huaweinerouter" personalityid="HuaweiNERouter" regex="info-center loghost $SYSLOG_SERVER_IP facility local5"/>
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:huaweiS5300Switch" personalityid="HuaweiS5300Switch" regex="info-center loghost $SYSLOG_SERVER_IP facility local5"/>
+
+
+<NCMSyslogStateCheckerRegEx regexid="NCMSyslogStateCheckerRegEx:regexid:BrocadeRouter2" personalityid="BrocadeRouter" regex="logging host $SYSLOG_SERVER_IP"/>
+
+</VendorSyslogTrackingLevel>
+
+
+
+

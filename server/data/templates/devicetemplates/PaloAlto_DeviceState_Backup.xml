@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="Palo alto firewall device-state backup device template" displayName="PaloAlto device-state Backup" osType="PAN-OS" templateName="PaloAlto_DeviceState_Backup">
+	<RestTemplate name=""/>
+	<Vendor displayName="PaloAlto" vendorName="PaloAlto"/>
+	<Protocols>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="scp export device-state to ${UserInput:scp_username}@${UserInput:scp_server_address}:${UserInput:file_name}" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="50" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="scp import device-state from ${UserInput:scp_username}@${UserInput:tftp_server_address}:${UserInput:file_name}" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            		<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="28000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="40" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="50" timeout="28000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Paloalto device-state Backup" personalityName="PaloaltoDeviceStateBackup">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SW_VERSION" size="50" desc="Software Version" displayname="SW-Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="VPNCLIENT_VER" size="50" desc="VPN Client Version" displayname="VPN Client version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="APP_VERSION" size="50" desc="Application Version" displayname="App Version" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="AV_VERSION" size="50" desc="AV Version" displayname="AV Version" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="THREAT_VERSION" size="50" desc="Threat Version" displayname="Threat Version" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="LOGDB_VERSION" size="50" desc="LogDB Version" displayname="Log DB Verson" defaultvalue="Not Available" sequenceid="6"/>
+				<Column name="URL_FILTERING" size="50" desc="URL Filtering Version" displayname="URL Filtering Version" defaultvalue="Not Available" sequenceid="7"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="tgz">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="PaloAltoFWDevStHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_paloalto_firewall">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*sw-version: (\S+).*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											<PARAM NAME="SW_VERSION" TOKENNO="1"/>
+										</REGEX>
+									   <REGEX NAME="MACADDRESS" EXPRESSION=".*mac-address: (\S+).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*serial: (\S+).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="VPNCLIENT_VER" EXPRESSION=".*vpnclient-package-version: (\S+).*">
+											<PARAM NAME="VPNCLIENT_VER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="APP_VERSION" EXPRESSION=".*app-version: (\S+).*">
+											<PARAM NAME="APP_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="AV_VERSION" EXPRESSION=".*av-version: (\S+).*">
+											<PARAM NAME="AV_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="THREAT_VERSION" EXPRESSION=".*threat-version: (\S+).*">
+											<PARAM NAME="THREAT_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="LOGDB_VERSION" EXPRESSION=".*logdb-version: (\S+).*">
+											<PARAM NAME="LOGDB_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="URL_FILTERING" EXPRESSION=".*url-filtering-version: (\S+).*">
+											<PARAM NAME="URL_FILTERING" TOKENNO="1"/>
+										</REGEX>
+										
+										<REGEX NAME="SERIES" EXPRESSION=".*family\s*:\s*(\S*).*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*model\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system info" parsercommandname="hardware_prop_paloalto_firewall" responseparserid="paloalto_fwa_devState_dt_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

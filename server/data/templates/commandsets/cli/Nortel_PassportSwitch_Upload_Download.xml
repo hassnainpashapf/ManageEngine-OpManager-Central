@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Upload Running -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="nortel_passportswitch_cli_fetch_running_irec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="upload configuration ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="nortel_passportswitch_cli_fetch_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Running -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="40000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="nortelPPActionId">
+  <InteractionSpec timeout="40000" protocol="CLI" interactionid="nortel_passportswitch_cli_push_running_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="download configuration ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="nortel_passportswitch_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+
+<!-- ************* For Passport 8600 series *************** -->
+
+<!-- Upload Running -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="nortel8600ActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="nortel_passport_8600_cli_fetch_running_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy /flash/config.cfg ${UserInput:tftp_server_address}:${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="nortel_passport_8600_cli_fetch_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

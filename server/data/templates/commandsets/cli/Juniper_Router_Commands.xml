@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<cliconfiguration>
+
+<!-- for Juniper Router -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="juniper_router_ispec"/>
+    </CLIInteractionSpec>
+
+        
+    <CLICommand command="set cli screen-length 0">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_set_length_0" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    <CLICommand command="show configuration">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="show_juniper_running" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <!--Juniper E-series-->
+        <CLICommand command="terminal length 0">
+	      <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	      <Record type="CLI" recordid="juniper_cli_terminal_length_0_rec" protocol="CLI"/>
+	      </CLIInputRecord>
+	</CLICommand>
+
+
+
+
+
+    <!-- H/W population -->
+    
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="juniper_hardware_prop_parser" promptactionid="yesActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_router_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="show chassis hardware">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_router" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_router_hardware_prop_rec1" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="show version">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_router" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_router_hardware_prop_rec2" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="show chassis mac-addresses">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_router" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_router_hardware_prop_rec3" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+<!-- for Juniper WLAN controller -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="juniper_wlan_ispec"/>
+    </CLIInteractionSpec>
+
+        
+    <CLICommand command="Set Length 0">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_wlan_set_length_0" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="show configuration">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="juniper_wlan_cli_show_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+    <!-- H/W population -->
+    
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="juniper_wlan_hardware_prop_parser" promptactionid="yesActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_wlan_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="show version">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_wlan" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_wlan_hardware_prop_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    
+    
+   <!-- Juniper MX Router Series -->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_mx_router_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=">" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_mx_router_syslog_ispec1"/>
+    </CLIInteractionSpec>
+
+
+
+
+
+
+    <CLICommand command="configure">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_mx_router_configure_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+    <CLICommand command="set system syslog host ${UserInput:HostIpAddress} any any">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_mx_router_enable_command_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="commit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_mx_router_commit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+	<CLICommand command="delete system syslog host ${UserInput:HostIpAddress} any any">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_mx_router_disable_command_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_mx_router_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	 
+
+
+
+
+
+
+
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="juniper_mx_router_ispec"/>
+    </CLIInteractionSpec>
+
+
+    <CLICommand command="set cli screen-length 0">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_mx_router_set_length_0" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="show configuration">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="show_juniper_mx_router_running" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="juniper_mx_router_hardware_prop_parser" promptactionid="yesActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_mx_router_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="show chassis hardware">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_mx_router" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_mx_router_hardware_prop_rec1" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="show version">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_mx_router" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_mx_router_hardware_prop_rec2" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="show chassis mac-addresses">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_mx_router" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_mx_router_hardware_prop_rec3" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+</cliconfiguration>

@@ -1,0 +1,2029 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+
+<CustomDevicePackageSet Category="Wireless" Vendor="Hewlett-Packard" iconName="Wireless.png" pingInterval="15">
+<CustomDevicePackage deviceType="HP Colubris MAP-625">
+	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.8744.1.28"/>
+	</SysOIDs>
+</CustomDevicePackage>    
+<CustomDevicePackage deviceType="HP Colubris MSM410">
+	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.8744.1.41"/>
+	</SysOIDs>
+</CustomDevicePackage>
+<CustomDevicePackage deviceType="HP-nLSU3WCMD0">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.15.1.3.1"/>
+        </SysOIDs>
+</CustomDevicePackage>
+
+<CustomDevicePackage deviceType="HP-n8308PTAALSW">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.15.1.3.10"/>
+        </SysOIDs>
+</CustomDevicePackage>
+
+<CustomDevicePackage deviceType="HP-n870WCM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.15.1.3.11"/>
+        </SysOIDs>
+</CustomDevicePackage>
+
+<CustomDevicePackage deviceType="HP-n870LSW">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.15.1.3.12"/>
+        </SysOIDs>
+</CustomDevicePackage>
+
+<CustomDevicePackage deviceType="HP-n850">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.15.1.3.13"/>
+        </SysOIDs>
+</CustomDevicePackage>
+
+<CustomDevicePackage deviceType="HP-n870TAAWCM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.15.1.3.14"/>
+        </SysOIDs>
+</CustomDevicePackage>
+<CustomDevicePackage deviceType="HP Acesspoint 420(J8131A)">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.14.11.6.4.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Acesspoint 530(J8987A)">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.14.11.6.4.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP 10ag (J9141A)">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.14.11.6.4.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP EdgeService Xl(J9001A)">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.11.17.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Redundant Xl(J9003A)">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.11.17.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Edge Zl(J9051A)">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.11.50.14"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Redundant Zl(J9052A)">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.11.50.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP WX3008">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43.1.20.45"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP WX5002">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43.1.20.49"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP VCX7005">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43.48.1.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+     <CustomDevicePackage deviceType="HP Msm310">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP E-Msm466">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.55"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP E-Msm430">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.54"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Wireless" Vendor="Agere Systems" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Agere Systems AP-1000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11898.2.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Wireless" Vendor="Aruba" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Aruba Networks 620">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.23"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+
+
+  <CustomDevicePackageSet Category="Wireless" Vendor="Cisco" iconName="Wireless.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Cisco AIR AP3502">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.1125"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MR36">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.29671.2.37"/>
+	    <SysOID oid=".1.3.6.1.4.1.29671.2.41"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR46">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.38"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Aironet 1560">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.9.1.2374"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Aironet 1540">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.9.1.2490"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Aironet 1830">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.9.1.2371"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR70">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.29"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR72">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.21"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR62">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.16"/>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.15"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR84">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.25"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR12">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.11"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR34">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.17"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR24">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.14"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR26">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.19"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR16">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.13"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR42E">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.32"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Aironet 3800">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.9.1.2373"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR86">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.42"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR45">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.29671.2.30"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Aironet 1815">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.9.1.2489"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco AIR 4800">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2670"/>
+            </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco AIR AP3501">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.9.1.1124"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+   <CustomDevicePackage deviceType="Cisco Meraki MR56">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.29671.2.40"/>
+       </SysOIDs>
+   </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Cisco Meraki MR52">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.23"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR32">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Meraki MR74">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.28"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MR18">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.18"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MR42">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29671.2.22"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR 5760 WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1645"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco C819G-LTE-MNA-K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2309"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-AP2802I-E-K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2370"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WsSvcWLAN1K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.599"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIR-CAP3702I-A-K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1873"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIRAP2702">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1938"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco WS SVC NAM 2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.5.1.3.1.1.2.291"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAP 150">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.6.1.34.150.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Wireless" Vendor="Westernmultiplex" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Westernmultiplex Tsunami 100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3727.21"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Westernmultiplex Tsunami 480">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3727.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Wi LAN" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Wi LAN Giga-VUE-HB1">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.26866"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Juniper" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Juniper WXC-590">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WXC 3400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.14"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WXC-250">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WXC1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WXC2600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Juniper ISM200WXC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WX55">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WX80">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WX15">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WX60">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+ <CustomDevicePackageSet Category="Wireless" Vendor="Allied Telesis" iconName="Wireless.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Allied Telesis AT TQ5403">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.36"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT MWS 600 AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.28"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT MWS 1750 AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.30"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT MWS 900 AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.29"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT MWS 2533 AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.35"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ 2403">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ 2403EX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ 3600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.22"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ 2450 AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.19"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ 3200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.24"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ 3400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.25"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ 4400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.26"/>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.27"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ 4400E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.34"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Century Systems" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Century Systems WXR 250">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.10.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="D-Link" iconName="Wireless.png" pingInterval="15">
+	<CustomDevicePackage deviceType="D-Link DWL-6600AP">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.4413.1.1.28"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="D-Link DAP-2610">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.171.10.37.59"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DAP 1353">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.38"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DAP 2690">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.39"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DAP 2590">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.36"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DAP 2553">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.35"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DAP 3520">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.37"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DAP 3690">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.41"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DWL 3600AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.129.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DWL 2600AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.130.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DWL 7700AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.25"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DWL 8600AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.29.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="D-Link DWL 3260AP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.171.10.37.30"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="YAMAHA" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="YAMAHA WLX302">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.43"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA WLX202">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.48"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA WLX402">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.50"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA WLX313">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.59"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Alvarion" iconName="Wireless.png" pingInterval="15">
+     <CustomDevicePackage deviceType="Alvarion BrzNetB-BU-B14">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12394.4.1.21"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Alvarion BrzNetB-RB-B14">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12394.4.1.31"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Digi International" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Digi Transportwr41h AEU-B00">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.16378.59"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Digi Transportwr21 HX1B-DE1-XX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.16378.69"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Digi USB-14">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.332.11.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Meru" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Meru MC1000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.15983.1.1.7.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Meru MC3000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.15983.1.1.7.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Meru MC5000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.15983.1.1.7.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Motorola" iconName="Wireless.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Motorola AP 6521">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.388.50.1.1.2"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Motorola AP-7532">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.388.50.1.1.40"/>
+		</SysOIDs>
+	</CustomDevicePackage>
+    <CustomDevicePackage deviceType="Motorola RFS7000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.388.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Motorola RFS6000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.388.16"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Motorola AP6522">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.388.50.1.1.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Motorola AP7131">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.388.50.1.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Zhone Technologies" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Zhone TNE 1584">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8059.1.4.1.1.6549537.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="H3C" iconName="Wireless.png" pingInterval="1800">
+    <CustomDevicePackage deviceType="H3C wx5004">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.562"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Ceragon" iconName="Wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ceragon FibeAir-Ip-20 Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.3.2"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.1.4"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.1.2"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.3.1"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.1.3"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.2"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.2.3"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.2.4"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.1.2.22"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.2.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20.2.2.3"/>
+            <SysOID oid=".1.3.6.1.4.1.2281.1.20"/>
+        </SysOIDs>
+       </CustomDevicePackage>
+    </CustomDevicePackageSet>
+<!-- WLC Templates -->
+<CustomDevicePackageSet Category="WirelessLANController" Vendor="Cisco" iconName="Switch.png" pingInterval="5">
+      <CustomDevicePackage deviceType="Cisco Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco 9800-L Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2860"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	  <CustomDevicePackage deviceType="Cisco AIR-CT3504-K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2427"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco 5508 WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1069"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco AirCt2504K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1279"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 8540 Wireless Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2171"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 1830 Wireless Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2250"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco 9800 WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2530"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cisco AIR AP3502">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.1125"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Meraki MR36">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.29671.2.37"/>
+	    <SysOID oid=".1.3.6.1.4.1.29671.2.41"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 5508 AP">
+        <SysOIDs>
+            <SysOID oid="Cisco 5508 AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco AIR-CT3504-K9 AP">
+        <SysOIDs>
+            <SysOID oid="Cisco AIR-CT3504-K9 AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco AirCt2504K9 AP">
+        <SysOIDs>
+            <SysOID oid="Cisco AirCt2504K9 AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Thin AP">
+        <SysOIDs>
+            <SysOID oid="Cisco Thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessLANController" Vendor="Huawei" iconName="Switch.png" pingInterval="5">
+	<CustomDevicePackage deviceType="Huawei Controller">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.2011.2.240"/>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.23"/>
+		</SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Huawei AirEngine9700 WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.240.24"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Huawei acu2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.240.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Huawei" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Huawei ACU2 AP">
+        <SysOIDs>
+            <SysOID oid="Huawei ACU2 AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Huawei" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Huawei thin AP">
+        <SysOIDs>
+            <SysOID oid="Huawei thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessLANController" Vendor="Hongxin" iconName="Switch.png" pingInterval="5">
+	<CustomDevicePackage deviceType="Hongxin Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.33940.2.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Hongxin AC2400 WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.33940.2.1.7.605"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Hongxin" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Hongxin thin AP">
+        <SysOIDs>
+            <SysOID oid="Hongxin thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Hongxin AC2400 AP">
+        <SysOIDs>
+            <SysOID oid="Hongxin AC2400 AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessLANController" Vendor="Autelan" iconName="Switch.png" pingInterval="5">
+	<CustomDevicePackage deviceType="Autelan Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31656.2.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Autelan AX7605 WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.31656.2.1.7.605"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Autelan" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Autelan thin AP">
+        <SysOIDs>
+            <SysOID oid="Autelan thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Autelan AX7605 AP">
+        <SysOIDs>
+            <SysOID oid="Autelan AX7605 AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessLANController" Vendor="Aruba" iconName="Switch.png" pingInterval="5">
+	<CustomDevicePackage deviceType="Aruba Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Aruba  7010-US">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.40"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Aruba A7280 Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.51"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba  3400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Aruba  7210">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.1.32"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP Master Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-207">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.84"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-305">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.86"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-315">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.82"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-325">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.78"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba IAP-515">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.107"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Aruba Networks IAP-205H">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.76"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-228">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.75"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-303H">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.87"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-304">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.85"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-314">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.81"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-324">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.77"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-334">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.79"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-335">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.80"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Networks IAP-615">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.134"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Aruba" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Aruba A7280 Access Point">
+        <SysOIDs>
+            <SysOID oid="Aruba A7280 Access Point"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Thin AP">
+        <SysOIDs>
+            <SysOID oid="Aruba Thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba AP 515">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.107"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba AP 535">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.102"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="WirelessLANController" Vendor="H3C" iconName="Switch.png" pingInterval="5">
+	<CustomDevicePackage deviceType="H3C Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="H3C WX3520X Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.2444"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="H3C WX3520H WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.1183"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="H3C WX5540H WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.1185"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="H3C" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="H3C thin AP">
+        <SysOIDs>
+            <SysOID oid="H3C thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="H3C Thin Access Point">
+        <SysOIDs>
+            <SysOID oid="H3C Thin Access Point"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessLANController" Vendor="RuiJie" iconName="Switch.png" pingInterval="5">
+    <CustomDevicePackage deviceType="Ruijie Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4881.1.3.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Ruijie WS6008 WLC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4881.1.3.1.1.115"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="RuiJie" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Ruijie FIT AP">
+        <SysOIDs>
+            <SysOID oid="Ruijie FIT AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Wireless" Vendor="Ubiquiti Networks" iconName="Wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Ubiquiti AirMAX NanoStation">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.41112.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Ubiquiti airMAX CPE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10002.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiController" Vendor="Cisco" iconName="merakicontroller.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki Controller">
+        <SysOIDs>
+            <SysOID oid="MerakiController"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="MerakiSecurity" Vendor="Cisco" iconName="merakisecurity.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MX Series">
+        <SysOIDs>
+            <SysOID oid="MerakiSecurity"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Meraki Z Series">
+        <SysOIDs>
+            <SysOID oid="MerakiSecurity.Z"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="MerakiSwitch" Vendor="Cisco" iconName="merakiswitch.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MS Series">
+        <SysOIDs>
+            <SysOID oid="MerakiSwitch"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="MerakiRadio" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MR Series">
+        <SysOIDs>
+            <SysOID oid="MerakiRadio"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Meraki CW Series">
+        <SysOIDs>
+            <SysOID oid="MerakiRadio.CW"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="MerakiVision" Vendor="Cisco" iconName="merakivision.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MV Series">
+        <SysOIDs>
+            <SysOID oid="MerakiVision"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="MerakiCellularGateway" Vendor="Cisco" iconName="meraki-cellulargateway.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MG Series">
+        <SysOIDs>
+            <SysOID oid="MerakiCellularGateway"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT Series">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT10">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor.MT10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT11">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor.MT11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT12">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor.MT12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT14">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor.MT14"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT15">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor.MT15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT20">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor.MT20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT30">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor.MT30"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="MerakiSensor" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Meraki MT40">
+        <SysOIDs>
+            <SysOID oid="MerakiSensor.MT40"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Wireless" Vendor="Axis Communications AB" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Axis Network Device">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.368.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="WirelessLANController" Vendor="Ruckus" iconName="wireless.png" pingInterval="5">
+	<CustomDevicePackage deviceType="Ruckus SZ Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Ruckus ZD Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Ruckus" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Ruckus SZ thin AP">
+        <SysOIDs>
+            <SysOID oid="Ruckus SZ thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Ruckus ZD thin AP">
+        <SysOIDs>
+            <SysOID oid="Ruckus ZD thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Cambium" iconName="wireless.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Cambium ePMP MP 3000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.17713.21.9.62"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cambium PTP 450i">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.161.19.250.256"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cambium PTP 550">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.17713.21.9.33"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cambium ePMP Force 180">
+        <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.17713.21.9.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cambium ePMP Force 200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.17713.21.1.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Cambium" iconName="wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cambium MAXrP 19R">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.17713.21.9.54"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Fortinet" iconName="wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Fortinet FAP 431F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.120.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="MELCO Inc." iconName="access_point.png" pingInterval="15">
+  	<CustomDevicePackage deviceType="BUFFALO AirStationPro WAPM">
+    	<SysOIDs>
+        	<SysOID oid=".1.3.6.1.4.1.5227.18"/>
+    	</SysOIDs>
+	</CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="IoT" Vendor="AKCP" iconName="default.png" pingInterval="15">
+  	<CustomDevicePackage deviceType="AKCP SensorProb2">
+    	<SysOIDs>
+        	<SysOID oid=".1.3.6.1.4.1.3854.1"/>
+    	</SysOIDs>
+	</CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Aruba" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Aruba A7280 Access Point">
+        <SysOIDs>
+            <SysOID oid="Aruba A7280 Access Point"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba Thin AP">
+        <SysOIDs>
+            <SysOID oid="Aruba Thin AP"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+      <CustomDevicePackage deviceType="Aruba IAP">
+          <SysOIDs>
+              <SysOID oid="Aruba IAP"/>
+          </SysOIDs>
+      </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Aruba" iconName="access_point.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Aruba AP-577">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.14823.1.2.115"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Aruba AP-365">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.14823.1.2.88"/>
+            </SysOIDs>
+         </CustomDevicePackage>
+            <CustomDevicePackage deviceType="Aruba AP-93">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.14823.1.2.41"/>
+            </SysOIDs>
+         </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba AP 515">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.107"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Aruba AP 535">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14823.1.2.102"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  	<CustomDevicePackage deviceType="Aruba AP 505">
+    	<SysOIDs>
+        	<SysOID oid=".1.3.6.1.4.1.14823.1.2.111"/>
+    	</SysOIDs>
+	</CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Teltonika" iconName="wireless.png" pingInterval="15">
+  	<CustomDevicePackage deviceType="Teltonika Wireless Device">
+    	<SysOIDs>
+        	<SysOID oid=".1.3.6.1.4.1.48690"/>
+    	</SysOIDs>
+	</CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="IoT" Vendor="AVTECH" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="AVTECH RoomAlert 12E">
+         <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.20916.1.10"/>
+         </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="AVTECH RA 32E">
+         <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.20916.1.8"/>
+         </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="IoT" Vendor="ServersCheck" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="ServersCheck Temperature Sensor Gateway">
+         <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.17095"/>
+         </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Allied Telesis" iconName="access_point.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Allied Telesis AT TQ5403">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.13.36"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Wireless" Vendor="Mimosa" iconName="wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Mimosa B24 Bridge Antenna">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.43356.1.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  
+  <CustomDevicePackageSet Category="IoT" Vendor="APC" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="APC ACRP102">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.14.6.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC HW_NB_NBRK0200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.8.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+        <CustomDevicePackage deviceType="APC NBRK0250">
+            <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.318.1.3.8.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz WM 355">
+	    <SysOIDs>
+	        <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2016" />
+	    </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz5">
+	    <SysOIDs>
+	        <SysOID oid=".1.3.6.1.4.1.52674.500" />
+	    </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz Rack Access PX">
+		<SysOIDs>
+		    <SysOID oid=".1.3.6.1.4.1.318.1.3.22.1" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="APC ACSC101">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.318.1.3.14.4" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="APC NetBotz 570">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2017" />
+		</SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="APC InROW">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.318.1.3.14.5" />
+		</SysOIDs>
+	</CustomDevicePackage>
+    </CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="IoT" Vendor="HWGroup" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="HWGroup HWg-STE">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.21796.4.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="IoT" Vendor="Mercury Security" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Mercury Alarm System">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.40334.1.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="IoT" Vendor="Raritan" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Raritan EMX">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.13742.8" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="IoT" Vendor="Stulz" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Stulz WIB 8000">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.29462.10" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="IoT" Vendor="Hanwha Techwin" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Hanwha SND-L6013R">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.36849.1.2.91" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Hanwha SND-5084">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.36849.1.2.43" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Hanwha PNM-9020V">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.36849.1.2.292" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="Radwin Ltd." iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Radwin HSU ODU">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.4458.20.6.1.1"/>
+                <SysOID oid=".1.3.6.1.4.1.4458.20.6.1.3"/>
+                <SysOID oid=".1.3.6.1.4.1.4458.20.5.1.2"/>
+                <SysOID oid=".1.3.6.1.4.1.4458.20.5.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    
+    <CustomDevicePackageSet Category="Wireless" Vendor="Ruckus" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ruckus R510">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.91"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+
+    <CustomDevicePackage deviceType="Ruckus ZF7372">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.40"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Ruckus R500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.71"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Ruckus R310">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.88"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7731">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.16"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7782">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.28"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7321">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.22"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7055">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.52"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7352">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.45"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7762-AC">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.35"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7782S">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.29"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7762S">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.8"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="Ruckus" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ruckus H320">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.93"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus H500">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.78"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T310S">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.106"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T310N">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.105"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus R750">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.109"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T750">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.112"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T310C">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.103"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T310D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.104"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus R610">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.100"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus R710">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.69"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T610">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.101"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T710">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.90"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus R730">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.108"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T301N">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.76"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus H510">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.92"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T610S">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.99"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T301S">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.77"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus T300">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.74"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus R700">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.68"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus R720">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.102"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus R600">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.72"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus R300">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.67"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus P300">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.81"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7731">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.16"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7782">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.28"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7321">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.22"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7055">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.52"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7352">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.45"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7762-AC">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.35"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7782S">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.29"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Ruckus ZF7762S">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25053.3.1.4.8"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="TP-Link" iconName="wireless.png" pingInterval="15">
+	<CustomDevicePackage deviceType="TP-Link DSL">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.16972"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="TP-Link EAP225">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.11863.3.2.10"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="Cisco" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cisco ESSE">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.556"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco WAP571">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.6.1.34.571.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki Mini">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR30H">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.26"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco WAP4410">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.6.1.32.4410.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C819HG-LTE-MNA-K9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2392"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="Redline Communications" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Redline AN50">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.10728.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="Ceragon" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ceragon FibeAir IP-10">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2281.1.7.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="CommScope" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="CommScope ION">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.331.1.2.1.6.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="Huawei" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Huawei E352">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.10.1.160"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="Extreme Networks" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Extreme Wing AP 7632">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.388.50.1.1.54"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Extreme Wing AP 8432">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.388.50.1.1.49"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Extreme Wing AP 7662">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.388.50.1.1.55"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Wireless" Vendor="Intermec Technologies" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Intermec WA21">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.469.1000.1.14"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="D-Link" iconName="access_point.png" pingInterval="15">
+        <CustomDevicePackage deviceType="D-Link DWL-6600AP">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.4413.1.1.28"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="D-Link DAP-2610">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.171.10.37.59"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Hewlett-Packard" iconName="access_point.png" pingInterval="15">
+        <CustomDevicePackage deviceType="HP Colubris MAP-625">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.8744.1.28"/>
+            </SysOIDs>
+        </CustomDevicePackage>    
+	    <CustomDevicePackage deviceType="HP Colubris MSM410">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.8744.1.41"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Cisco" iconName="access_point.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cisco Aironet 1830">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2371"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR70">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.29"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR72">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.21"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR62">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.16"/>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.15"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR84">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.25"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR12">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.11"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR34">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.17"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR24">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.14"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR26">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.19"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR16">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.13"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR42E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.32"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Aironet 3800">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2373"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR86">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.42"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco AIR 4800">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2670"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR45">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.30"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Aironet 1815">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2489"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Meraki MR46">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.29671.2.38"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Aironet 1560">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2374"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Aironet 1540">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2490"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco AIR AP3501">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.1124"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Aruba" iconName="access_point.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Aruba AP-577">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.14823.1.2.115"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Aruba AP-365">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.14823.1.2.88"/>
+            </SysOIDs>
+         </CustomDevicePackage>
+            <CustomDevicePackage deviceType="Aruba AP-93">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.14823.1.2.41"/>
+            </SysOIDs>
+         </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Motorola" iconName="access_point.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Motorola AP 6521">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.388.50.1.1.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Motorola AP-7532">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.388.50.1.1.40"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="IoT" Vendor="Rittal" iconName="default.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Rittal CIII CMC">
+	    <SysOIDs>
+	        <SysOID oid=".1.3.6.1.4.1.2606.7" />
+	    </SysOIDs>
+	</CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="IoT" Vendor="Hikvision" iconName="default.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Hikvision AIoT">
+	    <SysOIDs>
+	        <SysOID oid=".1.3.6.1.4.1.50001" />
+	    </SysOIDs>
+	</CustomDevicePackage>
+     </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="IoT" Vendor="Teracom" iconName="default.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Teracom Ethernet IO">
+	    <SysOIDs>
+	        <SysOID oid=".1.3.6.1.4.1.38783"/>
+	    </SysOIDs>
+	</CustomDevicePackage>
+     </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="IoT" Vendor="Vertiv" iconName="default.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Vertiv Geist WATCHDOG 15-P NPS">
+	    <SysOIDs>
+	        <SysOID oid=".1.3.6.1.4.1.21239.42.1.31"/>
+	    </SysOIDs>
+	</CustomDevicePackage>
+     </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessLANController" Vendor="Arista" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Arista Cloud WirelessController" >
+            <SysOIDs>
+                <SysOID oid="AristaCloudWLCRestAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Arista" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Arista Thin AccessPoint" >
+            <SysOIDs>
+                <SysOID oid="AristaCloudWLCRestAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessLANController" Vendor="Extreme Networks" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Extreme Campus Controller" >
+            <SysOIDs>
+                <SysOID oid="ExtremeWLCRestAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+		
+		<CustomDevicePackage deviceType="Extreme WiNG Controller" >
+            <SysOIDs>
+                <SysOID oid="ExtremeWiNGWLCRestAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Extreme Networks" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Extreme Thin Access Point" >
+            <SysOIDs>
+                <SysOID oid="ExtremeAPRestAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+		
+		<CustomDevicePackage deviceType="Extreme WiNG Thin AccessPoint" >
+            <SysOIDs>
+                <SysOID oid="ExtremeWINGAPRestAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessLANController" Vendor="Fortinet" iconName="wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="FortiWiFi Controller">
+            <SysOIDs>
+                <SysOID oid="FortiWiFiWLCRestAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Fortinet" iconName="wireless.png" pingInterval="15">
+    <CustomDevicePackage deviceType="FortiWiFi Thin AccessPoint" >
+        <SysOIDs>
+            <SysOID oid="FortiWiFiAPRestAPI"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    
+   <!--Celona Device Template starts-->
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Celona" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Celona Orchestrator">
+            <SysOIDs>
+                <SysOID oid="Celona Orchestrator"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Celona" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Celona Edge Express">
+            <SysOIDs>
+                <SysOID oid="CN-EDGE-EXP"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Celona" iconName="access_point.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Celona Access Points">
+            <SysOIDs>
+                <SysOID oid="Celona Access Points"/>
+            </SysOIDs>
+        </CustomDevicePackage>        
+    </CustomDevicePackageSet>
+
+<!--Celona Device Template ends-->
+
+
+    <CustomDevicePackageSet Category="WirelessLANController" Vendor="Ubiquiti Networks" iconName="Wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ubiquiti Controller" >
+            <SysOIDs>
+                <SysOID oid="UbiquitiWLCRESTAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Ubiquiti Networks" iconName="Wireless.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ubiquiti Thin AccessPoint" >
+            <SysOIDs>
+                <SysOID oid="UbiquitiAPRESTAPI"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+</CustomDevicePackage>
+

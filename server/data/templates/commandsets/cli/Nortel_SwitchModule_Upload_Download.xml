@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- ************* For Nortel Networks Layer2-3 Gb Ethernet Switch Module *************** -->
+
+<!-- Upload Running -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="nortel_hardware_prop_parser" promptactionid="nortelPPActionId">
+    <InteractionSpec timeout="120000" protocol="CLI" interactionid="nortel_switchmodule_cli_ispec1"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt=":" commandecho="false" promptecho="true" promptactionid="nortelPPActionId">
+    <InteractionSpec timeout="120000" protocol="CLI" interactionid="nortel_switchmodule_cli_ispec2"/>
+</CLIInteractionSpec>
+
+<CLICommand command="cfg">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_switchmodule_configmode_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="ptcfg">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_switchmodule_backup_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="gtcfg">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_switchmodule_upload_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_switchmodule_tftpaddress_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_switchmodule_filename_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_switchmodule_empty_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

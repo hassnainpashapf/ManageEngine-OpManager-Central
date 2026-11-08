@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="Brocade Ruckus ZD1200" graphName="ruckusWLANStatsTxBytes|ruckusWLANStatsRxBytes|ruckusZDWLANRxBytes|ruckusZDWLANAPCount|ruckusZDSystemMemoryUtilization|ruckusZDWLANTxBytes|ruckusWLANStaMQNumDropped|ruckusZDSystemCPUUtilization|ruckusRadioStatsNumSta|ruckusZDWLANAuthFail"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard HP MSM Colubris" graphName="InDataRate|OutDataRate|InTotalBytes|coDot11FailedCount|OutTotalBytes|coDot11SignalLevel"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard MSM760" graphName="InDataRate|OutDataRate|InTotalBytes|coDot11FailedCount|OutTotalBytes|coDot11SignalLevel"/>
+    <DevicePackageToGraph deviceType="Aruba  200" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  2400-F" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  2424" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  3200-8" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  3400-32" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  3600" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  3600-64" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  6000" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  650-US" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  651" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  7005" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  7030" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba  7205" graphName="staRxBytes|wlsxWlanTotalNumStationsAssociated|aossysTotalAPs|aiClientTxRate|aiAPMemoryFree|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aiClientRxRate|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI|aiAPCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Aruba  7220" graphName="staRxBytes|wlsxWlanTotalNumStationsAssociated|aossysTotalAPs|aiClientTxRate|aiAPMemoryFree|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aiClientRxRate|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI|aiAPCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Aruba  7240" graphName="staRxBytes|wlsxWlanTotalNumStationsAssociated|aossysTotalAPs|aiClientTxRate|aiAPMemoryFree|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aiClientRxRate|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI|aiAPCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Aruba 2450" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba AP 61" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="Aruba AP 65" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="ArubaOS (MODEL: Aruba3200-US) Version 3.3.2.1 (19126)" graphName="staRxBytes|aossysTotalAPs|wlanAPBssidNumAssociatedStations|aosMemoryUtilization|aossysTotalUsers|apBSSRxBytes|apBSSTxBytes|aos.CPUUtilization|OutTotalBytes|storageUsageAruba|staTxBytes|monAPInfoRSSI"/>
+    <DevicePackageToGraph deviceType="MiKroTik RouterOS" graphName="RxRate|TxRateWireless|TxRate|TxCCQ|RxRateWireless"/>
+    <DevicePackageToGraph deviceType="Proxim ap-800" graphName="WirelessIfCurrentChannelBandwidth|WirelessIfStaStatsRxBytes|WirelessIfStaStatsTxAuthenticationFailed|WirelessIfStaStatsTxBytes"/>
+    <DevicePackageToGraph deviceType="Proxim ap-8000" graphName="WirelessIfCurrentChannelBandwidth|WirelessIfStaStatsRxBytes|WirelessIfStaStatsTxAuthenticationFailed|WirelessIfStaStatsTxBytes"/>
+    <DevicePackageToGraph deviceType="Brocade Ruckus ZD1000" graphName="ruckusZDSystemMemoryUtilization|ruckusZDSystemCPUUtilization|ruckusRadioStatsNumSta"/>
+    <DevicePackageToGraph deviceType="Brocade Ruckus ZD1100" graphName="ruckusZDSystemMemoryUtilization|ruckusZDSystemCPUUtilization|ruckusRadioStatsNumSta"/>
+    <DevicePackageToGraph deviceType="Brocade Ruckus ZD3000" graphName="ruckusZDSystemMemoryUtilization|ruckusZDSystemCPUUtilization|ruckusRadioStatsNumSta|RuckusWlanConnections"/>
+    <DevicePackageToGraph deviceType="Brocade Ruckus ZD5000" graphName="ruckusZDSystemMemoryUtilization|ruckusZDSystemCPUUtilization|ruckusRadioStatsNumSta"/>
+    <DevicePackageToGraph deviceType="Cisco WLC 5520" graphName="clsSysApConnectCount|bsnMobileStationStatus|agentFreeMemory|agentCurrentCPUUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco WLC 5520" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+    <DevicePackageToGraph deviceType="Pulse Secure IC4000" graphName="iveSwapUtil|iveMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Pulse Secure IC4500" graphName="iveSwapUtil|iveMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Pulse Secure IC6500" graphName="iveSwapUtil|iveMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="H3C wcm-wx5002" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wcm-wx5002-128ap" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx3008lsw" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx3010lsw" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx3010wcm" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx3024lsw" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx3024wcm" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx5004" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx6100EWPX" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx6100LSB" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx6100LSQ" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx6100LSR" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="H3C wx6100SW" graphName="trafficDownstream|APCount|trafficUpstream|memRTUsage"/>
+    <DevicePackageToGraph deviceType="Extreme Network summitX450a-24t" graphName="extremeMemoryUtilizationSystem|extremeTotalCPUUtilization|extremeCPUUtilization5mins|extremeCurrentTemperature|extremeMemoryMonitorSystemFree"/>
+    <DevicePackageToGraph deviceType="Extreme Network summitX450a-24tDC" graphName="extremeMemoryUtilizationSystem|extremeTotalCPUUtilization|extremeCPUUtilization5mins|extremeCurrentTemperature|extremeMemoryMonitorSystemFree"/>
+    <DevicePackageToGraph deviceType="Extreme Network summitX450a-24x" graphName="extremeMemoryUtilizationSystem|extremeTotalCPUUtilization|extremeCPUUtilization5mins|extremeCurrentTemperature|extremeMemoryMonitorSystemFree"/>
+    <DevicePackageToGraph deviceType="Extreme Network summitX450a-24xDC" graphName="extremeMemoryUtilizationSystem|extremeTotalCPUUtilization|extremeCPUUtilization5mins|extremeCurrentTemperature|extremeMemoryMonitorSystemFree"/>
+    <DevicePackageToGraph deviceType="Extreme Network summitX450a-48tDC" graphName="extremeMemoryUtilizationSystem|extremeTotalCPUUtilization|extremeCPUUtilization5mins|extremeCurrentTemperature|extremeMemoryMonitorSystemFree"/>
+    <DevicePackageToGraph deviceType="Extreme Summit X450a_48t" graphName="extremeMemoryUtilizationSystem|extremeTotalCPUUtilization|extremeCPUUtilization5mins|extremeCurrentTemperature|extremeMemoryMonitorSystemFree"/>
+    <DevicePackageToGraph deviceType="ORiNOCO Access Point" graphName="InTotalNUcastPackets|InTotalBytes|SignalStrength |InTotalUcastPackets|OutTotalBytes"/>
+    <DevicePackageToGraph deviceType="Cisco AIR AP1041" graphName="InTotalBytes|OutTotalBytes|OutTotalFailures"/>
+    <DevicePackageToGraph deviceType="Cisco AIR AP1042" graphName="InTotalBytes|OutTotalBytes|OutTotalFailures"/>
+    <DevicePackageToGraph deviceType="Cisco AIR AP1261" graphName="InTotalBytes|OutTotalBytes|OutTotalFailures"/>
+    <DevicePackageToGraph deviceType="Cisco AIR AP1530" graphName="InTotalBytes|OutTotalBytes|OutTotalFailures"/>
+    <DevicePackageToGraph deviceType="Cisco AIR-AP1601" graphName="InTotalBytes|OutTotalBytes|OutTotalFailures"/>
+    <DevicePackageToGraph deviceType="Cisco AIR-AP2600" graphName="InTotalBytes|OutTotalBytes|OutTotalFailures"/>
+    <DevicePackageToGraph deviceType="Cisco AIR-AP3601" graphName="InTotalBytes|OutTotalBytes|OutTotalFailures"/>
+    <DevicePackageToGraph deviceType="Agere Systems AP-1000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks 620" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-205H" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-207" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-228" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-303H" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-304" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-305" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-314" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-315" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-324" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-325" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-334" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-335" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Aruba Networks IAP-615" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cisco AIR 5760 WLC" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|CiscoWLCTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco C819G-LTE-MNA-K9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|CiscoWLCTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco WsSvcWLAN1K9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|CiscoWLCTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco AIR-CAP3702I-A-K9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|CiscoWLCTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco AIRAP2702" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|CiscoWLCTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="HP-nLSU3WCMD0" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP-n8308PTAALSW" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP-n870WCM" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP-n870LSW" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP-n850" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP-n870TAAWCM" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cisco AIR-AP2802I-E-K9" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Westernmultiplex Tsunami 100" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Westernmultiplex Tsunami 480" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Wi LAN Giga-VUE-HB1" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Juniper WXC-590" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper WXC 3400" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper WXC-250" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper WXC1800" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper WXC2600" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="D-Link DAP 1353" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DAP 2553" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DAP 2590" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DAP 2690" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DAP 3520" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DAP 3690" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DWL 2600AP" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DWL 3260AP" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DWL 3600AP" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DWL 7700AP" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="D-Link DWL 8600AP" graphName="CPUUtilization_5mins|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT MWS 1750 AP" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT MWS 2533 AP" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT MWS 600 AP" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT MWS 900 AP" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT TQ 2403" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT TQ 2403EX" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT TQ 2450 AP" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT TQ 3200" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT TQ 3400" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT TQ 3600" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT TQ 4400" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT TQ 4400E" graphName="CPUUtilizationMax|CPUUtilizationMaxLast5Minutes|freeMemory|totalBuffers|CPUUtilizationAvg"/>
+    <DevicePackageToGraph deviceType="YAMAHA WLX202" graphName="rtyrhCPUUtilization5min|yshInboxTemperature|yshMemoryUtilization|yshMultiCpuUtilization"/>
+    <DevicePackageToGraph deviceType="YAMAHA WLX302" graphName="rtyrhCPUUtilization5min|yshInboxTemperature|yshMemoryUtilization|yshMultiCpuUtilization"/>
+    <DevicePackageToGraph deviceType="YAMAHA WLX313" graphName="rtyrhCPUUtilization5min|yshInboxTemperature|yshMemoryUtilization|yshMultiCpuUtilization"/>
+    <DevicePackageToGraph deviceType="YAMAHA WLX402" graphName="rtyrhCPUUtilization5min|yshInboxTemperature|yshMemoryUtilization|yshMultiCpuUtilization"/>
+    <DevicePackageToGraph deviceType="RuiJie-RG-P-720" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RG-P-780" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RG-WG54P" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="ZoneDirector 3000" graphName="RuckusWlanConnections"/>
+    <DevicePackageToGraph deviceType="Cisco Meraki MR42" graphName="SysUpTime"/>
+	<!-- WLC Monitor Association -->
+	<DevicePackageToGraph deviceType="Aruba Controller" graphName="NoOfClientsConnected" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Aruba Controller" graphName="arubaWLCMemoryUtilization|arubaWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Aruba Controller" graphName="internalTemperature"/>
+	
+	<DevicePackageToGraph deviceType="Aruba A7280 Controller" graphName="NoOfClientsConnected" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Aruba A7280 Controller" graphName="arubaWLCMemoryUtilization|arubaWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Aruba A7280 Controller" graphName="internalTemperature"/>	
+	
+	<DevicePackageToGraph deviceType="Aruba  7210" graphName="NoOfClientsConnected" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Aruba  7210" graphName="arubaWLCMemoryUtilization|arubaWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Aruba  7210" graphName="internalTemperature"/>
+	<DevicePackageToGraph deviceType="Aruba A7280 Access Point" graphName="BSSIDReceivedBytes|BSSIDTransmittedBytes" dialtype="number" unit="MB"/>
+	<DevicePackageToGraph deviceType="Aruba A7280 Access Point" graphName="BSSIDSignalToNoise" dialtype="number" unit="dB"/>
+	<DevicePackageToGraph deviceType="Aruba A7280 Access Point" graphName="BSSIDClientCount" dialtype="number" unit="Nos"/>	
+	<DevicePackageToGraph deviceType="Aruba A7280 Access Point" graphName="ArubaAPChannelNoise|APChannelTotalBytes|APChannelUtilization|ArubaAPRadioClientCount|ArubaAPSysUpTime"/>	
+
+	<DevicePackageToGraph deviceType="Aruba IAP" graphName="aiAPCPUUtilization|IAPMemoryUtilization|IAPSysUpTime"/>
+
+	<DevicePackageToGraph deviceType="Huawei Controller" graphName="NoOfActiveUsers|NoOfAPsConnected|TwoPFourGHzUserCount|FiveGHzUserCount|APLicense" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Huawei Controller" graphName="hwEntityTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Huawei Controller" graphName="Huawei-AR1220-CPUUtilization|Huawei-AR1220-MemoryUtilization" dialtype="meter" unit="%"/>
+	
+	<DevicePackageToGraph deviceType="Huawei S6730-H24X6C WLC" graphName="NoOfActiveUsers|NoOfAPsConnected|TwoPFourGHzUserCount|FiveGHzUserCount|APLicense" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Huawei S6730-H24X6C WLC" graphName="hwEntityTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Huawei S6730-H24X6C WLC" graphName="Huawei-AR1220-CPUUtilization|Huawei-AR1220-MemoryUtilization" dialtype="meter" unit="%"/>
+	
+	<DevicePackageToGraph deviceType="Huawei AirEngine9700 WLC" graphName="NoOfActiveUsers|NoOfAPsConnected|TwoPFourGHzUserCount|FiveGHzUserCount|APLicense" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Huawei AirEngine9700 WLC" graphName="hwEntityTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Huawei AirEngine9700 WLC" graphName="Huawei-AR1220-CPUUtilization|Huawei-AR1220-MemoryUtilization" dialtype="meter" unit="%"/>
+	
+	<DevicePackageToGraph deviceType="Huawei acu2" graphName="NoOfActiveUsers|NoOfAPsConnected|TwoPFourGHzUserCount|FiveGHzUserCount|APLicense" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Huawei acu2" graphName="hwEntityTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Huawei acu2" graphName="Huawei-AR1220-CPUUtilization|Huawei-AR1220-MemoryUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Huawei ACU2 AP" graphName="APCPUUsageRate|APMemoryUsageRate" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Huawei ACU2 AP" graphName="APOnlineUserCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Huawei ACU2 AP" graphName="APTemperature" dialtype="number" unit="C"/>
+	
+	<DevicePackageToGraph deviceType="Huawei thin AP" graphName="APCPUUsageRate|APMemoryUsageRate" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Huawei thin AP" graphName="APOnlineUserCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Huawei thin AP" graphName="APTemperature" dialtype="number" unit="C"/>	
+	
+	<DevicePackageToGraph deviceType="Hongxin Controller" graphName="HongxinCPUUtilization|HongxinMemoryUtilization|DHCPIPPoolUsage" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Hongxin Controller" graphName="HogxinAPNumbers|HongxinOnlineAPNumbers|HongxinAuthCount|HongxinNoOfActiveUsers" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Hongxin thin AP" graphName="HongxinAPActiveUsercount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Hongxin thin AP" graphName="HongxinMemoryUsage|HongxinCPUUsage" dialtype="meter" unit="%"/>
+	
+	
+	<DevicePackageToGraph deviceType="Hongxin AC2400 WLC" graphName="HongxinCPUUtilization|HongxinMemoryUtilization|DHCPIPPoolUsage" dialtype="meter" unit="%"/>  
+	<DevicePackageToGraph deviceType="Hongxin AC2400 WLC" graphName="HogxinAPNumbers|HongxinOnlineAPNumbers|HongxinAuthCount|HongxinNoOfActiveUsers" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Hongxin AC2400 AP" graphName="HongxinAPActiveUsercount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Hongxin AC2400 AP" graphName="HongxinMemoryUsage|HongxinCPUUsage" dialtype="meter" unit="%"/>
+	
+	<DevicePackageToGraph deviceType="Autelan Controller" graphName="AutelanCPUUtilization|AutelanMemoryUtilization|AutelanDHCPIPPoolUsage" dialtype="meter" unit="%"/>																									 
+	<DevicePackageToGraph deviceType="Autelan thin AP" graphName="APActiveUserCount|ActiveAPCount|AutelanAPCount|AutelanNoOfActiveUsers" dialtype="number" unit="Nos"/>	
+	<DevicePackageToGraph deviceType="Autelan thin AP" graphName="AutelanCPUUsage|AutelanMemoryUsage" dialtype="number" unit="%"/>
+	
+	<DevicePackageToGraph deviceType="Autelan AX7605 WLC" graphName="AutelanCPUUtilization|AutelanMemoryUtilization|AutelanDHCPIPPoolUsage" dialtype="meter" unit="%"/>																									 
+	<DevicePackageToGraph deviceType="Autelan AX7605 AP" graphName="APActiveUserCount|ActiveAPCount|AutelanAPCount|AutelanNoOfActiveUsers" dialtype="number" unit="Nos"/>	
+	<DevicePackageToGraph deviceType="Autelan AX7605 AP" graphName="AutelanCPUUsage|AutelanMemoryUsage" dialtype="number" unit="%"/>
+
+	<DevicePackageToGraph deviceType="Cisco Controller" graphName="CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|cpmTotal5sec_CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco Controller" graphName="CiscoWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Cisco Controller" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco Controller" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco 9800-L Controller" graphName="CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|cpmTotal5sec_CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco 9800-L Controller" graphName="CiscoWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Cisco 9800-L Controller" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco 9800-L Controller" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco 5508 WLC" graphName="CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|cpmTotal5sec_CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco 5508 WLC" graphName="CiscoWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Cisco 5508 WLC" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco 5508 WLC" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco AIR-CT3504-K9" graphName="CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|cpmTotal5sec_CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco AIR-CT3504-K9" graphName="CiscoWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Cisco AIR-CT3504-K9" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco AIR-CT3504-K9" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco AirCt2504K9" graphName="CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|cpmTotal5sec_CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco AirCt2504K9" graphName="CiscoWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Cisco AirCt2504K9" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco AirCt2504K9" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco AirCt2504K9 AP" graphName="APCPUUsageAvg|APMemoryUsageAvg" dialtype="number" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco AirCt2504K9 AP" graphName="CiscoAPActiveUsercount" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco 5508 AP" graphName="APCPUUsageAvg|APMemoryUsageAvg" dialtype="number" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco 5508 AP" graphName="CiscoAPActiveUsercount" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco AIR-CT3504-K9 AP" graphName="APCPUUsageAvg|APMemoryUsageAvg" dialtype="number" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco AIR-CT3504-K9 AP" graphName="CiscoAPActiveUsercount" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Aruba  7010-US" graphName="NoOfClientsConnected" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Aruba  7010-US" graphName="arubaWLCMemoryUtilization|arubaWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Aruba  7010-US" graphName="internalTemperature"/>
+	
+	<DevicePackageToGraph deviceType="Aruba  3400" graphName="NoOfClientsConnected" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Aruba  3400" graphName="arubaWLCMemoryUtilization|arubaWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Aruba  3400" graphName="internalTemperature"/>
+	
+	<DevicePackageToGraph deviceType="Aruba Thin AP" graphName="BSSIDReceivedBytes|BSSIDTransmittedBytes" dialtype="number" unit="MB"/>
+	<DevicePackageToGraph deviceType="Aruba Thin AP" graphName="BSSIDSignalToNoise" dialtype="number" unit="dB"/>
+	<DevicePackageToGraph deviceType="Aruba Thin AP" graphName="BSSIDClientCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Aruba Thin AP" graphName="ArubaAPChannelNoise|APChannelTotalBytes|APChannelUtilization|ArubaAPRadioClientCount|ArubaAPSysUpTime"/>	
+	
+	<DevicePackageToGraph deviceType="Cisco 8540 Wireless Controller" graphName="CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|cpmTotal5sec_CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco 8540 Wireless Controller" graphName="CiscoWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Cisco 8540 Wireless Controller" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco 8540 Wireless Controller" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco 1830 Wireless Controller" graphName="CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|cpmTotal5sec_CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco 1830 Wireless Controller" graphName="CiscoWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Cisco 1830 Wireless Controller" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco 1830 Wireless Controller" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco 9800 WLC" graphName="CiscoWLCCPUUtilization|CiscoWLCMemoryUtilization|cpmTotal5sec_CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco 9800 WLC" graphName="CiscoWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="Cisco 9800 WLC" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco 9800 WLC" graphName="CiscoNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	
+	<DevicePackageToGraph deviceType="Cisco Thin AP" graphName="APCPUUsageAvg|APMemoryUsageAvg" dialtype="number" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco Thin AP" graphName="SysUpTime_CiscoAP" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Cisco Thin AP" graphName="CiscoAPActiveUsercount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Cisco Thin AP" graphName="bsnAPIfStationCountOnRSSI"/>
+	<DevicePackageToGraph deviceType="Cisco Thin AP" graphName="bsnAPIfStationCountOnSNR"/>
+	<!-- Topo 2481 Starts -->
+    <DevicePackageToGraph deviceType="Cisco WAP 150" graphName="InTotalFCSErrors|OutTotalFailures|SysUpTimeInDays|Win-CPUUtilization|Win-MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Ubiquiti airMAX CPE" graphName="SysUpTime|ubntAirMaxMemoryUtilization|ubntAirMaxFrequency|ubnt5MinAvgCPUUtilization|ubntAirMaxAirtime"/>
+    <!-- Topo 2481 Ends -->
+	
+	<DevicePackageToGraph deviceType="H3C Controller" graphName="H3CWLCUpStreamTraffic" dialtype="number" unit="MB"/>
+	<DevicePackageToGraph deviceType="H3C Controller" graphName="H3CWLCOnlineUserCount|H3CWLCOnlineAPCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="H3C Controller" graphName="H3CWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="H3C Controller" graphName="H3CWLCMemoryUtilization|H3CWLCCPUUtilization" dialtype="number" unit="C"/>
+	
+	<DevicePackageToGraph deviceType="H3C WX3520X Controller" graphName="H3CWLCUpStreamTraffic" dialtype="number" unit="MB"/>
+	<DevicePackageToGraph deviceType="H3C WX3520X Controller" graphName="H3CWLCOnlineUserCount|H3CWLCOnlineAPCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="H3C WX3520X Controller" graphName="H3CWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="H3C WX3520X Controller" graphName="H3CWLCMemoryUtilization|H3CWLCCPUUtilization" dialtype="number" unit="C"/>
+	
+	<DevicePackageToGraph deviceType="H3C WX5540H WLC" graphName="H3CWLCUpStreamTraffic" dialtype="number" unit="MB"/>
+	<DevicePackageToGraph deviceType="H3C WX5540H WLC" graphName="H3CWLCOnlineUserCount|H3CWLCOnlineAPCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="H3C WX5540H WLC" graphName="H3CWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="H3C WX5540H WLC" graphName="H3CWLCMemoryUtilization|H3CWLCCPUUtilization" dialtype="number" unit="C"/>
+	
+	<DevicePackageToGraph deviceType="H3C WX3520H WLC" graphName="H3CWLCUpStreamTraffic" dialtype="number" unit="MB"/>
+	<DevicePackageToGraph deviceType="H3C WX3520H WLC" graphName="H3CWLCOnlineUserCount|H3CWLCOnlineAPCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="H3C WX3520H WLC" graphName="H3CWLCTemperature" dialtype="number" unit="C"/>
+	<DevicePackageToGraph deviceType="H3C WX3520H WLC" graphName="H3CWLCMemoryUtilization|H3CWLCCPUUtilization" dialtype="number" unit="C"/>
+	
+	<DevicePackageToGraph deviceType="H3C thin AP" graphName="H3CAPSSIDUserCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="H3C thin AP" graphName="H3CAPCPUUsage" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="H3C thin AP" graphName="H3CAPAverageSignaltoNoise" dialtype="number" unit="dB"/>
+	<DevicePackageToGraph deviceType="H3C thin AP" graphName="H3CAPSSIDTransmittedBytes|H3CAPSSIDReceivedBytes" dialtype="number" unit="MB"/>
+	
+	<DevicePackageToGraph deviceType="H3C Thin Access Point" graphName="H3CAPSSIDUserCount" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="H3C Thin Access Point" graphName="H3CAPCPUUsage" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="H3C Thin Access Point" graphName="H3CAPAverageSignaltoNoise" dialtype="number" unit="dB"/>
+	<DevicePackageToGraph deviceType="H3C Thin Access Point" graphName="H3CAPSSIDTransmittedBytes|H3CAPSSIDReceivedBytes" dialtype="number" unit="MB"/>
+	
+	<!--  2788 Starts -->
+	<DevicePackageToGraph deviceType="Ubiquiti AirMAX NanoStation" graphName="ubntAirMaxAirtime|SysUpTime|ubntAirMaxFrequency|ubnt5MinAvgCPUUtilization|ubntStaSignal|ubntWlStatSignal|ubntWlStatCcq|ubntWlStatTxRate|ubntWlStatRxRate|ubntStaTxBytes|ubntStaRxBytes"/>
+	<DevicePackageToGraph deviceType="Cambium PTP 450i" graphName="SysUpTime|cambiumboxTemperatureC"/>
+	<!--  Ruckus Starts -->
+	<DevicePackageToGraph deviceType="Ruckus ZD Controller" graphName="RuckusZDNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Ruckus ZD Controller" graphName="RuckusZDWLCMemoryUtilization|RuckusZDWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Ruckus SZ Controller" graphName="RuckusSZNoOfClientsConnected" dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Ruckus SZ Controller" graphName="RuckusSZWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<!--  Ruckus Starts -->
+	<DevicePackageToGraph deviceType="Ruijie WS6008 WLC" graphName="RuiJieWLCMemoryUtilization|RuiJieWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Ruijie WS6008 WLC" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Ruijie Controller" graphName="RuiJieWLCMemoryUtilization|RuiJieWLCCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Ruijie Controller" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+	<DevicePackageToGraph deviceType="Ruijie FIT AP" graphName="RuiJieFITAPCPUUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="H3C-WX3008" graphName="memRTUsage"/>
+</GRAPHDETAIL>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id ,Exp $ -->
+
+<DeviceConfiguration>
+
+     <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:redback_router" templatename="Redback_Router" displayname="Redback Router" ostype="" description="Redback Router">
+        <NCMVendorDevice vendorid="EricssonRedback" />
+        <NCMDevicePersonality personalityid="RedbackRouter" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:redback_router_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:redback_router" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="redback_router_startup_backup_config"/>                             
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+          <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:redback_router_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:redback_router" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">                          
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="redback_router_startup_backup_config"/>
+                                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+<!-- telnet\ssh backup  -->
+	
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:redback_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:redback_router" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">        
+        	<NCMDeviceCriteria commandmapid="SSH_Command">
+        
+        		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="redback_router_cli_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="redback_router_cli_show_config_rec"/>			 
+        	
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:redback_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:redback_router" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">        
+        	<NCMDeviceCriteria commandmapid="TELNET_Command">        
+			
+        		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="redback_router_cli_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="redback_router_cli_show_config_rec"/>
+				
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

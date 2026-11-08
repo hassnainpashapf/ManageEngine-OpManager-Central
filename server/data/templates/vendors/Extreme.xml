@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+<!-- For Black Diamond Switch -->
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_bd_switch_6808" templatename="Extreme_BlackDiamond_Switch" displayname="Extreme Black Diamond Switch" ostype="ExtremeWare" description="For all Extreme Black Diamond Switches">
+
+    <NCMVendorDevice vendorid="Extreme"/>
+    <NCMDevicePersonality personalityid="ExtremeSwitch"/>
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+        <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+<!--Telnet-->
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_bd_switch_6808_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_bd_switch_6808"
+        managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extremebdswitch_cli_running_config_backup"/>
+        <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extremebdswitch_cli_running_config_upload"/>
+
+	<!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <!--SSH-->
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_bd_switch_6808_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_bd_switch_6808"
+     managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+	    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extremebdswitch_cli_running_config_backup"/>
+		    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extremebdswitch_cli_running_config_upload"/>
+
+		    <!-- Change Tracking thru Syslog -->
+		    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+					executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+		    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+					executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+	    </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+<!-- Black Diamond extremeware OS -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_bd_extremewarexos" templatename="Extreme_BlackDiamond_ExtremewareXOS_Switch" displayname="Extreme Black Diamond ExtremewareXOS Switch" ostype="ExtremeXOS" description="For all Extreme BlackDiamond switches running with ExtremewareXOS">
+
+    <NCMVendorDevice vendorid="Extreme"/>
+    <NCMDevicePersonality personalityid="ExtremeSwitch"/>
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+        <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_bd_extremewarexos_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_bd_extremewarexos"
+        managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extreme_summit_xos_running_config_fetch" />
+	<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extreme_summit_xos_running_config_push"/>
+
+	<!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <!-- for ssh-tftp -->
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_bd_extremewarexos_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_bd_extremewarexos"
+        managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extreme_summit_xos_running_config_fetch" />
+	<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extreme_summit_xos_running_config_push"/>
+
+	<!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+<!-- For Alpine Switch -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_ap_switch" templatename="Extreme_Alpine_Switch" displayname="Extreme Alpine Switch" ostype="ExtremeWare" description="For all Extreme Alpine Switches">
+
+	<NCMVendorDevice vendorid="Extreme"/>
+	<NCMDevicePersonality personalityid="ExtremeSwitch"/>
+
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="TFTP"/>
+
+	<!--Telnet-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_ap_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_ap_switch"
+				managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extremebdswitch_cli_running_config_backup"/>
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extremebdswitch_cli_running_config_upload"/>
+
+			<!-- Change Tracking thru Syslog
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+					    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+					    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />-->
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+	<!--SSH-->
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_ap_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_ap_switch"
+				managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extremebdswitch_cli_running_config_backup"/>
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extremebdswitch_cli_running_config_upload"/>
+
+			<!-- Change Tracking thru Syslog
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+					    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+			<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+					    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />-->
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+
+</NCMDeviceTemplate>
+
+<!-- summit extremeware OS -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_summit_extremeware" templatename="Extreme_Summit_Extremeware_Switch" displayname="Extreme Summit Extremeware Switch" ostype="ExtremeOS" description="For all Extreme Summit switches running with Extremeware">
+
+    <NCMVendorDevice vendorid="Extreme"/>
+    <NCMDevicePersonality personalityid="ExtremeSwitch"/>
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+        <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_summit_extremeware_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_summit_extremeware"
+        managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extremebdswitch_cli_running_config_backup"/>
+        <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extremebdswitch_cli_running_config_upload"/>
+
+	    <!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <!-- for ssh-tftp -->
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_summit_extremeware_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_summit_extremeware"
+        managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extremebdswitch_cli_running_config_backup"/>
+        <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extremebdswitch_cli_running_config_upload"/>
+
+	    <!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+
+</NCMDeviceTemplate>
+
+
+<!-- ExtremewareXos Models -->
+
+<!-- summit extremeware OS -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_summit_extremewarexos" templatename="Extreme_Summit_ExtremewareXOS_Switch" displayname="Extreme Summit ExtremewareXOS Switch" ostype="ExtremeXOS" description="For all Extreme Summit switches running with ExtremewareXOS">
+
+    <NCMVendorDevice vendorid="Extreme"/>
+    <NCMDevicePersonality personalityid="ExtremeSwitch"/>
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+        <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_summit_extremewarexos_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_summit_extremewarexos"
+        managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extreme_summit_xos_running_config_fetch" />
+	<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extreme_summit_xos_running_config_push"/>
+
+	    <!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <!-- for ssh-tftp -->
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_summit_extremewarexos_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_summit_extremewarexos"
+        managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extreme_summit_xos_running_config_fetch" />
+	<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="extreme_summit_xos_running_config_push"/>
+
+	    <!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+	
+<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_summit_extremewarexos_switch_ssh_cli" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_summit_extremewarexos"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+      
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extreme_summit_extremewarexos_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="extreme_summit_cli_xos_backup_show_running"/>
+	
+	    <!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:extreme_summit_extremewarexos_switch_telnet_cli" devicetemplateid="NCMDeviceTemplate:devicetemplateid:extreme_summit_extremewarexos"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+	
+
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="extreme_summit_extremewarexos_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="extreme_summit_cli_xos_backup_show_running"/>
+	
+	    <!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog"
+			    executiongroupid="Extreme_Switch_Disable_Change_Tracking_Syslog" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

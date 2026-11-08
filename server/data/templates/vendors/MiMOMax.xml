@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For MiMOMax GPS Tornado-->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:mimomax_gps_tornado" templatename="MiMOMax_GPS_Tornado" ostype="NA" displayname="MiMOMax-T" description="For all MiMOMax GPS Tornado">
+        <NCMVendorDevice vendorid="MimoMax" />
+        <NCMDevicePersonality personalityid="MiMOMaxGPSTornado" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:mimomax_gps_tornado_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:mimomax_gps_tornado"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+      <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="mimomax_gps_tornado_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="mimomax_gps_tornado_cli_fetch_running_rec"/>
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:mimomax_gps_tornado_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:mimomax_gps_tornado"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="mimomax_gps_tornado_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="mimomax_gps_tornado_cli_fetch_running_rec"/>	
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+    <!-- For MiMOMax GPS Pyxis-->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:mimomax_gps_pyxis" templatename="MiMOMax_GPS_Pyxis" ostype="NA" displayname="MiMOMax-P" description="For all MiMOMax GPS Pyxis">
+        <NCMVendorDevice vendorid="MimoMax" />
+        <NCMDevicePersonality personalityid="MiMOMaxGPSPyxis" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:mimomax_gps_pyxis_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:mimomax_gps_pyxis"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+      <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="mimomax_gps_pyxis_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="mimomax_gps_pyxis_cli_fetch_running_rec"/>
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:mimomax_gps_pyxis_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:mimomax_gps_pyxis"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="mimomax_gps_pyxis_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="mimomax_gps_pyxis_cli_fetch_running_rec"/>	
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

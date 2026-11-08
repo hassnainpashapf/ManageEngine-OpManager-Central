@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+
+	<Graph YAXISTEXT="GB" description="Monitors the Memory Utilization in GB using CLI" displayName="Memory Utilization in GB" failureThreshold="1" graphName="Linux-Memory_Utilization-GB" graphType="multiple" isNumeric="true" oid="Linux-Memory Utilization-GB" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="net-snmp" >
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="%" description="Monitoring the swap memory utilaization of the Device using CLI" displayName="Swap Memory Utilization" failureThreshold="1" graphName="Linux-SwapMemoryUtilization" graphType="multiple" isNumeric="true" oid="Linux-Swap Memory Utilization" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="net-snmp" >
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+	
+
+	<Graph YAXISTEXT="Percentage" description="Monitors the Inode utilization using CLI" displayName="Inode utilization" failureThreshold="1" graphName="CLI-InodeUtilization" graphType="multiple" isNumeric="true" oid="Inode Utilization" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  standardGraph="CLI Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+
+	<Graph YAXISTEXT="Minutes" description="Monitors the System reboot time using CLI" displayName="System Reboot time" failureThreshold="1" graphName="Linux-SystemReboot" graphType="multiple" isNumeric="true" oid="Linux-SystemReboot" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="net-snmp" >
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+	
+	
+	<Graph YAXISTEXT="Processes" description="Monitors the Run queue using CLI" displayName="Run Queue Length of CPU" failureThreshold="1" graphName="CLI-RunQueue" graphType="multiple" isNumeric="true" oid="Run Queue" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" standardGraph="CLI Monitors" >
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+		
+	<Graph YAXISTEXT="Percentage" description="Monitors the System CPU Idle(%) using CLI" displayName="CPU Idle(%)" failureThreshold="1" graphName="CLI-CPUIdle" graphType="multiple" isNumeric="true" oid="CPU Idle" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" standardGraph="CLI Monitors" >
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Load" description="Monitors the Load Average using CLI" displayName="Load Average" failureThreshold="1" graphName="CLI-LoadAverage" graphType="multiplenode" isNumeric="true" oid="Load Average" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" standardGraph="CLI Monitors" pollDataType="3">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Percentage" description="Monitors the Load Average Per Logical Processor Percentage using CLI" displayName="Load Average Per Processor" failureThreshold="1" graphName="CLI-LoadAveragePerProcessor" graphType="multiplenode" isNumeric="true" oid="Load Average Per Processor" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" standardGraph="CLI Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="seconds" description="Monitors the time difference between the system clock and the NTP server. It first attempts to retrieve data using utilities such as chronyc, or ntpq. If these are not available, it calculates the time difference directly using the NTP server" displayName="NTP Time Drift" failureThreshold="1" graphName="CLI-NTPTimeDrift" graphType="multiple" isNumeric="true" oid="NTP Time Drift" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" standardGraph="CLI Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+    <Graph YAXISTEXT="status" description=" Monitors the synchronization status between the monitored device and the NTP server. This monitor returns data only when utilities such as chronyc, or ntpq are available on the device" displayName="NTP Sync Status" failureThreshold="1" graphName="CLI-NTPSyncStatus" graphType="multiple" isNumeric="false" oid="NTP Sync Status" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" standardGraph="CLI Monitors">
+        <UserProps propName="GROUPNAME" propValue="CLI"/>
+    </Graph>
+	
+	<DevicePackageToGraph deviceType="Unix" graphName="SysUpTime|Win-CPUUtilization|Win-MemoryUtilization|DiskUtilization|PartitionWiseDiskDetails"/>
+	
+</GRAPHDETAIL>

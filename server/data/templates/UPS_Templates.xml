@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?><CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC AIS 5000 UPS" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.16"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Environmental Monitoring Unit (AP9319) (AP9319)" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.8.3"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC InRow ACRC301S (0N-9580) (0N-9580)" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.14.10"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC InRow RC (ACRP) (ACRP)" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.14.7.7.7.7.7.7.7"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC InRow RP (100 Series) (ACRP) (ACRP)" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.14.6"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC InfraStruXure PDU (0M-5103) (0M-5103)" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.15"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Matrix-UPS 3000" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.3.1"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz 320E" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2011"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <!--CustomDevicePackage deviceType="APC NetBotz Rack Monitor 200 (NBRK0200) (NBRK0200)" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.8.4"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage-->
+    <CustomDevicePackage deviceType="APC NetBotz Rack Monitor 450" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2014"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz Rack Monitor 550" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2013"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Netbotz Wall Monitor 455" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2015"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart UPS 3 Phase" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.17"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS 1250" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.5"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS 1400" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.10"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS 2000" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.6"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS 250" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.1"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS 400" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.2"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS 600" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.3"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS 700" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.8"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS 900" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.4"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS RT 10000 XL" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.15"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS RT 3000 XL" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.17"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS RT 5000 XL" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.13"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS RT 6000 RM XL" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS RT 7500 RM XL" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.14"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS RT 8000 XL" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.2.19"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS VT 30 kVA" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.17.4"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Smart-UPS VT 40 kVA" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.17.5"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra 100K" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.23.5"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra 20K" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.13.4"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra 40K" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.13.1"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra 48K" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.23.1"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra 80K" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.13.3"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra UPS 3 Phase" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.13"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra-UPS 12kVA" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.5.3"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra-UPS 16kVA" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.5.4"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Symmetra-UPS 8kVA" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.5.2"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC UPS Network Management Card (AP9617) (AP9617)" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC Web/SNMP Management Card" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.4.2"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="APC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Emerson Libert Power" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13400.2.19.2"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="Emerson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Emerson Libert UPS" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="1.3.6.1.4.1.476.1.1"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="Emerson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Schneider Electric MGE Galaxy 5000 80 kVA" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.705.1.2"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="Schneider Electric"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="TrippLite SU6000RT4UHVPM" iconName="UPS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.850.1.1.1"/>
+        </SysOIDs>
+        <Category name="UPS"/>
+        <Vendor name="TrippLite"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

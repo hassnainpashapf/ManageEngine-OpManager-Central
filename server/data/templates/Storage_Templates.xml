@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?><CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell EqualLogic PS Series" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12740.17.1"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 120" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.15"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 140" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.23"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 160" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.30"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 200" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.1"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 200 Proto" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.2"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 2500" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.36"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 400G" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.6"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 410" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.3"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 4200" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.37"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 430" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.4"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 4500" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.32"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 460" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.5"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 460G" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.7"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 510" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.14"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 530" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.13"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 560" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.8"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 560G" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.9"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 565" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.12"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 580" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.10"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 580G" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.11"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 610" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.21"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 620" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.29"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 630" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.22"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 640" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.28"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 660" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.18"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 670" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.24"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 6800" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.41"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 690" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.16"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 690G" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.17"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 7200" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.33"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 860" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.25"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 860G" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.26"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 880" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.19"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 880G" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.20"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 890" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.27"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain 990" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.35"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain Apollo" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.39"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain Intrepid" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.31"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain Jupiter" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.43"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain Koala M1" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.38"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC DataDomain VE" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19746.3.1.34"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="EMC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard StoreEver ESL G3 Tape Library" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.10.2.1.3.28"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard StoreEver MSL4048 Tape Library" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.10.2.1.3.25"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard StoreEver MSL6480 Tape Library" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.10.2.1.3.29"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard StoreOnce 6500 Backup" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.10.3.1.3.27"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hitachi HCP G10" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.116.5.46"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Hitachi"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hitachi HNAS" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11096.6.1.1"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Hitachi"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM FlashSystem" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.255.1"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM TS3400 (Machine Type 3577)" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.220.1.11"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM TS3500 (Machine Type 3584)" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.182.1.0.422.1"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM TS4500 (Machine Type 3584)" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.254.1"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetApp Vserver" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.789.2.6"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="NetApp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Oracle StorageTek T10000C" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.32925.1"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Oracle"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Quantum Scalar i6000" iconName="Storage.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3764.1.1"/>
+        </SysOIDs>
+        <Category name="Storage"/>
+        <Vendor name="Quantum"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

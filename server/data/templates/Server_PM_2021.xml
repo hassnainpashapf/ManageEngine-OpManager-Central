@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	<Graph YAXISTEXT="%" description="Net-SNMP based devices - CPU utilization derived from idle percentage, used across multiple platforms" displayName="CPU Utilization" failureThreshold="1" graphName="NetSNMPCPUUtilization" graphType="multiple" isNumeric="true" oid="100-.1.3.6.1.4.1.2021.11.11.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+	</Graph>
+	
+	<Graph YAXISTEXT="%" description="Net-SNMP based devices - CPU utilization from raw idle CPU counter, used across multiple platforms" displayName="CPU Utilization" failureThreshold="1" graphName="NetSNMPCPUUtilizationRaw" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.11.53.0/$DELTA_TIME" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+	</Graph>
+	
+	<Graph YAXISTEXT="%" description="Net-SNMP based devices - Memory utilization calculated from total and available real memory (UCD-SNMP MIB)" displayName="Memory Utilization" failureThreshold="1" graphName="NetSNMPMemoryUtilization" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.4.1.2021.4.5.0-.1.3.6.1.4.1.2021.4.6.0)/.1.3.6.1.4.1.2021.4.5.0*100" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+	</Graph>
+
+	<Graph YAXISTEXT="%" description="Monitors the CPU utilization for Inflobox" displayName="CPU Utilization" failureThreshold="1" graphName="IBCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.7779.3.1.1.2.1.8.1.1.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Infoblox">
+	</Graph>
+
+	<Graph YAXISTEXT="%" description="Monitors the Memory utilization for Inflobox" displayName="Memory Utilization" failureThreshold="1" graphName="IBMemoryUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.7779.3.1.1.2.1.8.2.1.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Infoblox">
+	</Graph>
+</GRAPHDETAIL>

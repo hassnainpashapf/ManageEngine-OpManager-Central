@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Maipu MP Series Routers" displayName="Maipu MP Series Router" osType="MyPower" templateName="Maipu MP Series Router">
+	<RestTemplate name=""/>
+	<Vendor displayName="Maipu" vendorName="Maipu">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="more off" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="50000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="more off" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="50000"/>
+                	<Command commandecho="" commandstr="show startup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write mem" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="maipuActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Maipu MP Series Router" personalityName="MaipuMPSeriesRouter">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="System ID" displayname="System ID" name="SYSTEM_ID" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Hardware Model" displayname="Hardware Model" name="HARDWARE_MODEL" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="Hardware Version" displayname="Hardware Version" name="HARDWARE_VERSION" sequenceid="3" size="100"/>
+				<Column defaultvalue="Not Available" desc="MPU CPLD Version" displayname="MPU CPLD Version" name="MPU_CPLD_VERSION" sequenceid="4" size="100"/>
+				<Column defaultvalue="Not Available" desc="Monitor Version" displayname="Monitor Version" name="MONITOR_VERSION" sequenceid="5" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="MaipuSwitchHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_maipu_mp_series">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Software\sVersion\s*:\s(\S*)">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="IMAGEFILENAME" EXPRESSION=".*Software\sImage\sFile\s*:\s(.*)">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SYSTEM_ID" EXPRESSION=".*System\sID\s*:\s(\S*)">
+											<PARAM NAME="SYSTEM_ID" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HARDWARE_MODEL" EXPRESSION=".*Hardware\sModel\s*:\s(\S*)">
+											<PARAM NAME="HARDWARE_MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HARDWARE_VERSION" EXPRESSION=".*Hardware\sVersion\s*:\s(\S*)">
+											<PARAM NAME="HARDWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MPU_CPLD_VERSION" EXPRESSION=".*MPU\sCPLD\sVersion\s*:\s(\S*)">
+											<PARAM NAME="MPU_CPLD_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MONITOR_VERSION" EXPRESSION=".*Monitor\sVersion\s*:\s(\S*)">
+											<PARAM NAME="MONITOR_VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_maipu_mp_series" prompt="${UserInput:Prompt}" promptactionid="NA" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="MP1800" ostype="" series="" sysoid=".1.3.6.1.4.1.5651.1.101.35"/>
+        <NCMDeviceSysOID model="MP1800" ostype="" series="" sysoid=".1.3.6.1.4.1.5651.1.101.36"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds>
+		<PromptActionId name="maipuActionId" prompt=")?" command="Y" suffix="${LF}"/>
+	</PromptActionIds>
+</NCMDeviceTemplate>

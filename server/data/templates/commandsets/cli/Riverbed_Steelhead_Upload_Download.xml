@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<cliconfiguration>
+
+<!-- for RIVERBED STEELHEAD  -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="60000" protocol="CLI" interactionid="riverbed_steelhead_cli_ispec"/>
+    </CLIInteractionSpec>
+    
+    
+     <CLICommand command="no cli session paging enable">
+       	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+       		    <Record type="CLI" recordid="riverbed_steelhead_cli_no_paging_rec" protocol="CLI"/>
+       	    </CLIInputRecord>
+           </CLICommand>       
+   
+   
+    
+    <CLICommand command="show running-config">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="riverbed_steelhead_cli_fetch_running_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+</cliconfiguration>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+       <!-- For IBM BNT Rackswitches -->
+	   
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:bnt_rackswitch" templatename="BNT_Rackwitch" displayname="BNT RackSwitch" ostype="NA" description="For all Blade Network Technologies RackSwitch G8052">
+        <NCMVendorDevice vendorid="IBM" />
+        <NCMDevicePersonality personalityid="BNTRackSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:bnt_rackswitch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:bnt_rackswitch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="bnt_rackswitch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="bnt_rackswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="bnt_rackswitch_cli_copy_running_to_startup" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+		
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:bnt_rackswitch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:bnt_rackswitch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="bnt_rackswitch_cli_startup_config_backup" />             
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="bnt_rackswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="bnt_rackswitch_cli_copy_running_to_startup" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:bnt_rackswitch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:bnt_rackswitch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="bnt_rackswitch_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="bnt_rackswitch_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="bnt_rackswitch_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="bnt_rackswitch_cli_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="bnt_rackswitch_sync_config_write_mem" />
+                
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:bnt_rackswitch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:bnt_rackswitch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="bnt_rackswitch_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="bnt_rackswitch_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="bnt_rackswitch_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="bnt_rackswitch_cli_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="bnt_rackswitch_sync_config_write_mem" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

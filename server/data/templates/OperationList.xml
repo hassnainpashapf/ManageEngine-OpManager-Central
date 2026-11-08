@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<OperationList>
+<NCMOperationToFileMap filetype="Startup">
+<NCMOperation operationid="NCMOperation:operationid:1" operationname="BackupStartupConfig" operationtype="Backup" displayname="Backup" description="This operation is for uploading Startup Configuration"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Running">
+<NCMOperation operationid="NCMOperation:operationid:2" operationname="BackupRunningConfig" operationtype="Backup" displayname="Backup" description="This operation is for uploading Running Configuration"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Startup">
+<NCMOperation operationid="NCMOperation:operationid:3" operationname="UploadStartupConfig" operationtype="Upload" displayname="Upload" description="This operation is for downloadloading Startup Configuration"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Running">
+<NCMOperation operationid="NCMOperation:operationid:4" operationname="UploadRunningConfig" operationtype="Upload" displayname="Upload" description="This operation is for downloading Running Configuration"/>
+</NCMOperationToFileMap>
+
+<NCMOperation operationid="NCMOperation:operationid:5" operationname="CopyRunningToStartup" operationtype="CopyRunningToStartup" displayname="Config Sync" description="This is to sync running to startup"/>
+
+<NCMOperation operationid="NCMOperation:operationid:6" operationname="ExecuteCommandInEnableMode" operationtype="General" displayname="General" description="This is to execute any command in enable mode"/>
+
+<NCMOperation operationid="NCMOperation:operationid:7" operationname="ExecuteCommandInNormalMode" operationtype="General" displayname="General" description="This is to execute any command in enable mode"/>
+
+<NCMOperation operationid="NCMOperation:operationid:scriptexecution" operationname="ScriptExecution" operationtype="ScriptExecution" displayname="Script Execution" description="Script Execution"/>
+
+<NCMOperation operationid="NCMOperation:operationid:restapiconfiglets" operationname="RESTAPIConfigletExecution" operationtype="RESTAPIConfigletExecution" displayname="REST API Configlet Execution" description="REST API Configlet Execution"/>
+
+<!--NCMOperation operationid="NCMOperation:operationid:hardwarepropfetch" operationname="FetchHardwareProperties" operationtype="FetchHardwareProperties" displayname="Fetch Hardware Properties" description="Fetch Hardware Properties"/-->
+
+<NCMOperation operationid="NCMOperation:operationid:12" operationname="GetCiscoHardwareInterfaces" operationtype="GetHardwareProp" displayname="Retrieve Hardware Properties" description="This operation gets the interfaces available in a device"/>
+
+<!-- Operation for Change Tracking through Syslog -->
+<NCMOperation operationid="NCMOperation:operationid:13" operationname="EnableConfigChangeTrackingThruSyslog" operationtype="EnableChangeTracking" displayname="Enable Change Detection" description="Enabling the Config Change Detection through Syslog Feature"/>
+
+<NCMOperation operationid="NCMOperation:operationid:14" operationname="DisableConfigChangeTrackingThruSyslog" operationtype="DisableChangeTracking" displayname="Disable Change Detection" description="Disabling the Config Change Detection through Syslog Feature"/>
+
+<NCMOperation operationid="NCMOperation:operationid:15" operationname="GetHardwareInterfaces" operationtype="GetHardwareProp" displayname="Retrieve Hardware Properties" description="This operation gets the interfaces available in a device"/>
+<NCMOperation operationid="NCMOperation:operationid:16" operationname="PasswordRetrieveFromPMP" operationtype="General" displayname="Password Retrieve From PMP" description="PasswordRetrieveFromPMP"/>
+<NCMOperation operationid="NCMOperation:operationid:17" operationname="PCIReview" operationtype="PCIReview" displayname="PCI Review" description="This is to do Periodic Config Review to cater to PCI DSS rule number 1.1.7"/>
+
+
+<NCMOperationToFileMap filetype="Vlan">
+<NCMOperation operationid="NCMOperation:operationid:18" operationname="BackupVlan" operationtype="Backup" displayname="Backup" description="This operation is for uploading VLANs currently running in the switch"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Interface">
+<NCMOperation operationid="NCMOperation:operationid:19" operationname="BackupInterface" operationtype="Backup" displayname="Backup" description="This operation is for uploading status of router's interfaces"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Inventory">
+    <NCMOperation operationid="NCMOperation:operationid:20" operationname="BackupInventory" operationtype="Backup" displayname="Backup" description="This operation is for uploading interface details"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Vtp">
+    <NCMOperation operationid="NCMOperation:operationid:21" operationname="BackupVtp" operationtype="Backup" displayname="Backup" description="This operation is for uploading VTP Management domain details"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Flash">
+    <NCMOperation operationid="NCMOperation:operationid:22" operationname="BackupFlash" operationtype="Backup" displayname="Backup" description="This operation is for uploading flash memory file system details"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Ip route">
+    <NCMOperation operationid="NCMOperation:operationid:23" operationname="BackupIp route" operationtype="Backup" displayname="Backup" description="This operation is for uploading IPv4 routing table of a router"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Ip bgp summary">
+    <NCMOperation operationid="NCMOperation:operationid:24" operationname="BackupIp bgp summary" operationtype="Backup" displayname="Backup" description="This operation is for uploading status of all BGP connections."/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Ip ospf neighbor">
+    <NCMOperation operationid="NCMOperation:operationid:25" operationname="BackupIp ospf neighbor" operationtype="Backup" displayname="Backup" description="This operation is for uploading OSPF neighbors details"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Dhcp">
+    <NCMOperation operationid="NCMOperation:operationid:26" operationname="BackupDhcp" operationtype="Backup" displayname="Backup" description="This operation is for uploading DHCP server details" ismulticonfig="true"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Healthd">
+    <NCMOperation operationid="NCMOperation:operationid:27" operationname="BackupHealthd" operationtype="Backup" displayname="Backup" description="This operation is for uploading Healthd details" ismulticonfig="true"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Context 1">
+    <NCMOperation operationid="NCMOperation:operationid:28" operationname="BackupContext 1" operationtype="Backup" displayname="Backup" description="This operation is for uploading context 1" ismulticonfig="true"/>
+</NCMOperationToFileMap>
+
+<NCMOperationToFileMap filetype="Context 2">
+    <NCMOperation operationid="NCMOperation:operationid:29" operationname="BackupContext 2" operationtype="Backup" displayname="Backup" description="This operation is for uploading context 2" ismulticonfig="true"/>
+</NCMOperationToFileMap>
+<NCMOperation operationid="NCMOperation:operationid:35" operationname="ComplianceScriptExecution" operationtype="CompScriptExec" displayname="Compliance Script Execution" description="This is to do Compliance Script Execution"/>
+
+
+</OperationList>

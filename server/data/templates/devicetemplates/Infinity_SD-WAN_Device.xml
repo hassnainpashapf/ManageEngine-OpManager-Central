@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For SD-WAN Device" displayName="Infinity SD-WAN Device" osType="Infinity" templateName="Infinity SD-WAN Device">
+	<RestTemplate name=""/>
+	<Vendor displayName="Infinity" vendorName="Infinity">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show hardware cpu"/>
+			<Command commandstr="show hardware dmi"/>
+			<Command commandstr="show hardware mem"/>
+			<Command commandstr="show hardware pci"/>
+			<Command commandstr="show hardware storage"/>
+			<Command commandstr="show hardware usb"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="set terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show configuration commands" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="sudo saveGoldenConfig" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Infinity SD-WAN Device" personalityName="InfinitySDWANDevice">	
+		<Login enablecommand="" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Build UUID" displayname="Build UUID" name="BUILDUUID" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Hardware UUID" displayname="Hardware UUID" name="HARDWAREUUID" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="CPU Model" displayname="CPU Model" name="CPUMODEL" sequenceid="3" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="InfinitySDWANHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_infinity_sd_wan">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Hardware\s*S\/N:\s*(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Version:\s*(\S*)\s*(\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Hardware\s*model:\s*(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Build\s*UUID:\s*(\S*).*" NAME="BUILDUUID">
+											<PARAM NAME="BUILDUUID" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Hardware\s*UUID:\s*(\S*).*" NAME="HARDWAREUUID">
+											<PARAM NAME="HARDWAREUUID" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Model:.*CPU\s*(\S*).*" NAME="CPUMODEL">
+											<PARAM NAME="CPUMODEL" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_infinity_sd_wan" prompt="${UserInput:Prompt}" promptactionid="yesActionId" timeout="20000"/>
+						<Command commandstr="show hardware cpu" messagesuffix="${LF}" parsercommandname="hardware_prop_infinity_sd_wan" prompt="${UserInput:Prompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- ************* For Contivity Router 1100 *************** -->
+
+<!-- Upload Running -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true"  promptactionid="NortelContivityActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="nortel_contivity_vpnrouter_term_paging_irec"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="240000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true"  promptactionid="NortelContivityActionId">
+    <InteractionSpec timeout="240000" protocol="CLI" interactionid="nortel_contivity_vpnrouter_fetch_config_irec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="terminal paging off">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_contivity_vpnrouter_fetch_config_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show running-config">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_contivity_vpnrouter_fetch_config_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="terminal paging on">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_contivity_vpnrouter_fetch_config_rec3" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

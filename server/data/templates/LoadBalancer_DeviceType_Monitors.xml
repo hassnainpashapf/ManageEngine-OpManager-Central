@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 10000F" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 10000S" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 10055" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 10350N" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 11000F" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 11050F" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 11050N" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 12050" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 2050" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 2250" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 4050" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 4250" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 6900N" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 7000F" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 7000S" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 7000" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 7055" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 7200S" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 800" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP Pb200N" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP VCMP GUEST" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP VIRTUAL EDITION" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP VPR-B4300" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP VPR-C2400" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP Viprion-B4300N" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP i10800" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP i2600" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP i2800" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IQ 7000" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 EM-3000" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 EM-4000" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="F5 EM-500" graphName="F5-CPUUtilization|F5-MemoryUtilization|F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime|sysStatClientCurConns"/>
+    <DevicePackageToGraph deviceType="ForeScout CounterACT Appliance" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="ForeScout CounterACT Enterprise Manager" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Gigamon GigaVUE-FM" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP Server Management Processor" graphName="SysUpTime|hpMemoryUsed"/>
+    <DevicePackageToGraph deviceType="IBM BladeCenter Adv-Mgmt-Module" graphName="SysUpTime|dpStatusCPUUtilizationtenSeconds|dpStatusMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="IBM IMM2" graphName="SysUpTime|dpStatusCPUUtilizationtenSeconds|dpStatusMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="IBM RS Adapter II" graphName="SysUpTime|dpStatusCPUUtilizationtenSeconds|dpStatusMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Opengear ACM5500" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Opengear IM7200" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Perle MCR-MGT" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP_4100" graphName="F5MemoryUtilization|F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 wj300" graphName="F5MemoryUtilization|F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 wj400" graphName="F5MemoryUtilization|F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 wj500" graphName="F5MemoryUtilization|F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 wj800" graphName="F5MemoryUtilization|F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP_VIPRION" graphName="F5MemoryUtilization|F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP_6900" graphName="F5MemoryUtilization|F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP_8900" graphName="F5MemoryUtilization|F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 1600" graphName="F5MemoryUtilization|F5CPUUtilization|F5PoolMemberActiveConns"/>
+    <!-- 1947 dt start-->
+    <DevicePackageToGraph deviceType="Avi Networks Controller" graphName="ProcessCount|PartitionWiseDiskDetails|Win-CPUUtilization|SysUpTime"/>
+    <!-- 1947 dt end-->
+    <!--  Topo 2788 -->
+    <DevicePackageToGraph deviceType="Kemp LoadMaster" graphName="Lin-MemoryUtilization|SysUpTime"/>
+	<DevicePackageToGraph deviceType="Kemp LoadMaster" graphName="KemprSActiveConns|KempvSActiveConns" dialtype="number" unit="connection(s)"/>
+	<DevicePackageToGraph deviceType="Kemp LoadMaster" graphName="SangforUCD5MinAgvCPUUtilization" dialtype="meter" unit="%"/>
+    <!-- New Graph addition for M7 changes starts -->
+    <DevicePackageToGraph deviceType="F5 VELOS CX410" graphName="F5_VELOS_Controller_1_CPU1minavg|F5_VELOS_Controller_2_CPU1minavg|F5_VELOS_Controller_1_current|F5_VELOS_Controller_2_current|F5_VELOS_Controller_1_Memory|F5_VELOS_Controller_2_Memory|SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 VELOS CX410 Partition" graphName="F5_VELOS_Blade_1_CPU1minavg|F5_VELOS_Blade_2_CPU1minavg|F5_VELOS_Blade_1_CPUcurrent|F5_VELOS_Blade_2_CPUcurrent|SysUpTime"/>
+    <!-- New Graph addition for M7 changes ends -->
+    <DevicePackageToGraph deviceType="F5 BIG-IP 1000" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 1500" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 2400" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 3400" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 3600" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 5100" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 5110" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 520" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 540" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 6400" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 6800" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 8400" graphName="F5PoolMemberActiveConns"/>
+    <DevicePackageToGraph deviceType="F5 BIG-IP 8800" graphName="F5PoolMemberActiveConns"/>
+</GRAPHDETAIL>

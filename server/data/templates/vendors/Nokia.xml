@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Yamaha Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nokia_ipso" templatename="Nokia_IPSO" displayname="Nokia IPSO" ostype="NA" description="For all Nokia IPSO devices">
+        <NCMVendorDevice vendorid="Nokia"/>
+        <NCMDevicePersonality personalityid="NokiaIPSO"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nokia_ipso_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:nokia_ipso"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nokia_ipso_cli_backup_rec" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="nokia_ipso_cli_show_config_rec"/>           
+             
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nokia_ipso_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:nokia_ipso"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nokia_ipso_cli_backup_rec" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="nokia_ipso_cli_show_config_rec"/>
+             
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

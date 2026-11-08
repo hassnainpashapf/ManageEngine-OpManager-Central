@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+
+	<Graph YAXISTEXT="%" description="Monitoring the swap memory utilaization of the Device using CLI" displayName="Swap Memory Utilization" failureThreshold="1" graphName="AIX-SwapMemoryUtilization" graphType="multiple" isNumeric="true" oid="AIX Swap Memory Utilization" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Percentage" description="Monitors the Paging Utilization using CLI" displayName="Paging Utilization(%)" failureThreshold="1" graphName="AIX-PagingUtilization" graphType="multiple" isNumeric="true" oid="AIX Paging Utilization" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="kb/s" description="Monitors the Disk Read Rate using CLI" displayName="Disk Read Rate" failureThreshold="1" graphName="AIX-DiskReadRate" graphType="multiple" isNumeric="true" oid="AIX Disk Read Rate" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="kb/s" description="Monitors the Disk Write Rate using CLI" displayName="Disk Write Rate" failureThreshold="1" graphName="AIX-DiskWriteRate" graphType="multiple" isNumeric="true" oid="AIX Disk Write Rate" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Count/s" description="Monitors the Disk Service Queue Full using CLI" displayName="Disk Service Queue Full" failureThreshold="1" graphName="AIX-DiskServiceQueueFull" graphType="multiple" isNumeric="true" oid="AIX Disk Service Queue Full" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+	
+	<Graph YAXISTEXT="Minutes" description="Monitors the System reboot time using CLI" displayName="System Reboot time" failureThreshold="1" graphName="AIX-SystemReboot" graphType="multiple" isNumeric="true" oid="AIX-SystemReboot" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Bytes Per Second" description="Monitors the Utilization of Fibre Cards" displayName="Fibre Cards Utilization" failureThreshold="1" graphName="AIX-FibreCardsUtilization" graphType="multiple" isNumeric="true" oid="AIX Fibre Cards Utilization" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Count" description="Monitors the Network CRC errors of the interfaces" displayName="Network CRC errors" failureThreshold="1" graphName="AIX-NetworkCRCerrors" graphType="multiple" isNumeric="true" oid="AIX Network CRC errors" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Count" description="Monitors the Network DMA Overrun of the interfaces" displayName="Network DMA Overrun" failureThreshold="1" graphName="AIX-NetworkDMAOverrun" graphType="multiple" isNumeric="true" oid="AIX Network DMA Overrun" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Count" description="Monitors the Network Alignment Errors of the interfaces" displayName="Network Alignment Errors" failureThreshold="1" graphName="AIX-NetworkAlignmentErrors" graphType="multiple" isNumeric="true" oid="AIX Network Alignment Errors" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Status" description="Monitors the Link Status of Network and Fibre cards" displayName="Link Status Of Network and Fibre Cards" failureThreshold="1" graphName="AIX-LinkStatusOfNetworkandFibreCards" graphType="multiple" isNumeric="false" pollDataType="2" oid="AIX Link Status Of Network and Fibre Cards" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Transactions Per Second" description="Monitors the IOPS Of Fibre Cards" displayName="IOPS Of Fibre Cards" failureThreshold="1" graphName="AIX-IOPSOfFibreCards" graphType="multiple" isNumeric="true" oid="AIX IOPS Of Fibre Cards" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="WWN" description="Monitors the World Wide Name of the Fibre Cards" displayName="WWN Of Fibre Cards" failureThreshold="1" graphName="AIX-WWNOfFibreCards" graphType="multiple" isNumeric="false" pollDataType="2" oid="AIX WWN Of Fibre Cards" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Percentage" description="Monitors the Computational Memory Utilization" displayName="Computational Memory Utilization" failureThreshold="1" graphName="AIX-ComputationalMemoryUtilization" graphType="multiple" isNumeric="true" oid="AIX Computational Memory Utilization" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="IBM" vendorSubCategory="AIX Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+</GRAPHDETAIL>

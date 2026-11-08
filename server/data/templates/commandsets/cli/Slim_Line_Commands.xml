@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="slim_line_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- Backup Running -->
+<CLICommand command="save config from flash to tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="slim_line_cli_backup_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="save config from tftp ${UserInput:tftp_server_address} ${UserInput:file_name} to flash">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="slim_line_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Hardware commands -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="slim_line_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="slim_line_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="get system">
+	<CLIInputRecord parsercommandname="hardware_prop_slim_line" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="slim_line_hardware_prop_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+</CLICommandList>

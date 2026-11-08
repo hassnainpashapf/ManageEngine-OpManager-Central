@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="Cisco ASR 1000 Series Router" displayName="Cisco ASR 1000 Series Router" osType="IOS XE" templateName="Cisco_ASR_1000_Series_Router">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="copy nvram:/startup-config tftp" messagesuffix="${LF}" prompt="?" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="?" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy system:/running-config tftp" messagesuffix="${LF}" prompt="?" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="?" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="startup">
+                	<Command commandstr="copy tftp nvram:/startup-config" messagesuffix="${LF}" prompt="?" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="?" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy tftp system:/running-config" messagesuffix="${LF}" prompt="?" sequenceid="3" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="?" sequenceid="4" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="60000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="copy running-config startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="hardwareProp">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="40000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging trap ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="40000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="40000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write mem" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="hardwareProp">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="40000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging trap ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="copy startup-config scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy running-config scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="startup">
+                	<Command commandstr="copy scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name} startup-config" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name} running-config" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="copy running-config startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="hardwareProp">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="40000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging trap ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cisco ASR1000 Router" personalityName="CiscoASR1000Router">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="CPU" size="50" desc="Router CPU" displayname="CPU" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="REVISION" size="100" desc="Revision Number" displayname="Revision" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="DRAMSIZE" size="100" desc="Identifies the size of DRAM in KB" displayname="DRAM Size" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="PROCESSORBOARDID" size="100" desc="Processor Board ID" displayname="Processor Board ID" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="CONFIGREGISTER" size="50" desc="Config Register" displayname="Configuration Register" defaultvalue="Not Available" sequenceid="5"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Using.*out.*</Regex>
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging on</Regex>
+					<Regex>logging trap (emergencies|alerts|critical|errors|warnings)</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoASR1000HwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_cisco_asr_1000_router">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*(?i)PID\s*:\s*(\S+).*SN\s*:\s*(\S+).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="SERIES1" EXPRESSION=".*cisco\s*(\S*)\s*\(\)\s*processor.*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIES2" EXPRESSION=".*(?i)Cisco\s*(\S+)\s*Series.*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIES3" EXPRESSION=".*(?i)DESCR\s*:\s*&quot;*(?:Cisco)\s*(\S+)\s*Series.*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIES4" EXPRESSION=".*Cisco\s*IOS\s*Software.*,\s*(\S+)\s*Software.*,\s*Version\s*(\S*),.*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION="Cisco\s*(.*)\s+Software,\s*Version\s*(\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Cisco\s*.*Software.*,\s*(.*)\s+Software.*" NAME="SERIES">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										
+										<REGEX EXPRESSION=".*System\simage\sfile\sis\s&quot;(.*)&quot;" NAME="IMAGEFILENAME">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Processor\sboard\sID\s(\S*)" NAME="PROCESSORBOARDID">
+											<PARAM NAME="PROCESSORBOARDID" TOKENNO="1"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX EXPRESSION=".*Configuration\sregister\sis\s(\S*)" NAME="CONFIGREGISTER">
+											<PARAM NAME="CONFIGREGISTER" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX EXPRESSION="\s*cisco\s*(.*)\s(\S+)\sprocessor\s\(revision\s(\S+)\)\swith\s(\S+)\sbytes\sof\smem.*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="CPU" TOKENNO="2"/>
+											<PARAM NAME="REVISION" TOKENNO="3"/>
+											<PARAM NAME="DRAMSIZE" TOKENNO="4"/>
+										</REGEX>
+
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_cisco_asr_1000_router" responseparserid="cisco_asr_1000_router_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show inventory" parsercommandname="hardware_prop_cisco_asr_1000_router" responseparserid="cisco_asr_1000_router_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

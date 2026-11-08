@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="FortiSwitch" osType="FortiOS" templateName="FortiSwitch">
+	<RestTemplate name="FortiSwitchOS"/>
+	<Vendor displayName="Fortinet" vendorName="Fortinet">
+		<Commands/>
+		<LoggingLevels>
+			<Level name="information" number="0" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="config system console" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set out standard" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show full-configuration" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="40" timeout="240000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="FortiSwitch" personalityName="FortiSwitch">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="CPU" size="100" desc="CPU" displayname="CPU" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="RAM" size="50" desc="RAM" displayname="RAM" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="MTD_FLASH" size="100" desc="MTD Flash" displayname="MTD Flash" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="BIOS_VERSION" size="50" desc="BIOS Version" displayname="BIOS Version" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="PART_NUMBER" size="50" desc="System Part Number" displayname="Part Number" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="DISTRIBUTION" size="50" desc="Distribution" displayname="Distribution" defaultvalue="Not Available" sequenceid="6"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>set server "$SYSLOG_SERVER_IP"</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="FortiSwitchHwPropParser.xml"/>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="get system status" parsercommandname="hardware_prop_fortiswitch" responseparserid="fortiswitch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="60000" promptactionid="yesActionId"/>
+						<Command commandstr="get hardware status" parsercommandname="hardware_prop_fortiswitch" responseparserid="fortiswitch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="60000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

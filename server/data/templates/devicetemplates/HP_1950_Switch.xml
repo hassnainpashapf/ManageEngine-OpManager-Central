@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="HP 1950 Switch" osType="Comware Software" templateName="HP_1950_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="HPE" vendorName="HP">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="info" number="7" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="screen-length disable" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display saved-configuration" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="180000" promptactionid="hpActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="screen-length disable" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display current-configuration" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="180000" promptactionid="hpActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="HP Switch 1950" personalityName="HPSwitch1950">	
+		<Login enablecommand="xtd-cli-mode" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SOFTWARE_VERSION" size="150" desc="Software Version" displayname="Software Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="REBOOT_REASON" size="150" desc="Reboot Reason" displayname="Reboot Reason" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HPSwitch1950HardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="HP_1950_Switch_prop_parser_cmd">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*SERIAL_NUMBER\s*:\s*(\S+).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/> 
+										</REGEX>
+										<REGEX EXPRESSION=".*MAC_ADDRESS\s*:\s*(\S+).*" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*HPE\s*(.*)\s*[Ss]witch\s*uptime.*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*[Ss]ystem\s*image\s*:\s*flash:\/(\S+).*" NAME="IMAGEFILENAME">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*HPE\s*(.*[Ss]oftware),\s*[Vv]ersion\s*(\S+),.*" NAME="OSVERSION">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*[Rr]eboot\s*[Rr]eason\s*:\s*(.*)" NAME="REBOOT_REASON">
+											<PARAM NAME="REBOOT_REASON" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" parsercommandname="HP_1950_Switch_prop_parser_cmd" responseparserid="HP_1950_Switch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="120000" promptactionid="hpActionId"/>
+						<Command commandstr="display device manuinfo" parsercommandname="HP_1950_Switch_prop_parser_cmd" responseparserid="HP_1950_Switch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="120000" promptactionid="hpActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

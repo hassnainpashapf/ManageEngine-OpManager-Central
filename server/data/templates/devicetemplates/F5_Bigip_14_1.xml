@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For F5 Big-Ip 14.1" displayName="F5 BIG-IP 14.1" osType="BIG-IP" templateName="F5_Bigip_14_1">
+	<RestTemplate name=""/>
+	<Vendor displayName="F5" vendorName="F5">
+		<Commands>
+			<Command commandstr="bigpipe version"/>
+			<Command commandstr="bigpipe platform"/>
+			<Command commandstr="show /sys version"/>
+			<Command commandstr="show /sys hardware"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+            		<Command commandstr="modify cli preference pager disabled" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="run /util bash" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tmsh -q -c 'cd /; show running-config recursive all-properties'" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="30000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+					<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="40" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="F5 BIG-IP 14.1" personalityName="F5Bigip141">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BUILD" size="100" desc="Build" displayname="Build" defaultvalue="Not Available" sequenceid="1"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="F5BigipHardwarePropParser.xml"/> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show /sys version" parsercommandname="hardware_prop_f5_bigip_14_1" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show /sys hardware | grep -i -A 15 platform" parsercommandname="hardware_prop_f5_bigip_14_1" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

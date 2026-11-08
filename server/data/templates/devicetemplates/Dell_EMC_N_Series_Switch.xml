@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Dell EMC-N Series Switch" osType="NOS" templateName="Dell_EMC_N_Series_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Dell" vendorName="Dell">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="warning" number="5" sequenceid="0"/>
+			<Level name="notification" number="6" sequenceid="1"/>
+			<Level name="information" number="7" sequenceid="2"/>
+			<Level name="debugging" number="8" sequenceid="3"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress} severity ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="copy startup-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy running-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="startup">
+                	<Command commandstr="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="copy running-config startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress} severity ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="DellActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Dell EMC-N Series Switch" personalityName="DellEMCNSeriesSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SOC_VERSION" size="50" desc="SOC Version" displayname="SOC Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="HARDWARE_VERSION" size="50" desc="HardWare Version" displayname="Hardware Version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="SERVICE_TAG" size="100" desc="Service Tag ID" displayname="Service Tag" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="CPLD_VERSION" size="100" desc="CPLD Version" displayname="CPLD Version" defaultvalue="Not Available" sequenceid="4"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>.*logging $SYSLOG_SERVER_IP.*</Regex>
+				</SyslogState>
+				<SyslogState state="disable">
+					<Regex>no logging $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="DellEMCNSwitchPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_dell_emc_n_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial [Nn]umber\s*:\s*(\S*).*">
+										  <PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*\s*MAC Address\S*\s*(.*)">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Image\s*File\S*\s*((\S*)(v[0-9]\S*)).*">
+											<PARAM NAME="SERIES" TOKENNO="2"/>
+											<PARAM NAME="OSVERSION" TOKENNO="3"/>
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HARDWARE_VERSION" EXPRESSION=".*HW Version\S*\s*(.*)">
+											<PARAM NAME="HARDWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIES" EXPRESSION=".*Machine\s*Description.*Dell\s*(\S*)\s*Networking\s*Switch.*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>								
+										<REGEX NAME="MODEL" EXPRESSION=".*System\s*Model\s*ID\S*\s*(.*)">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERVICE_TAG" EXPRESSION=".*[Ss]ervice\s*[Tt]ag\s*:\s*(.*)">
+											<PARAM NAME="SERVICE_TAG" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="CPLD_VERSION" EXPRESSION="CPLD\s*[Vv]ersion\S*\s*(.*)">
+											<PARAM NAME="CPLD_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SOC_VERSION" EXPRESSION=".*SOC\s*[Vv]ersion\S*\s*(.*)">
+											<PARAM NAME="SOC_VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system id" parsercommandname="hardware_prop_dell_emc_n_switch" responseparserid="dell_emc_n_switch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show version" parsercommandname="hardware_prop_dell_emc_n_switch" responseparserid="dell_emc_n_switch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show system" parsercommandname="hardware_prop_dell_emc_n_switch" responseparserid="dell_emc_n_switch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?><CustomDevicePackage>
+    <CustomDevicePackage deviceType="A10 Networks AX3200-12" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.22610.1.3.16"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="A10 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Brocade ServerIron ADX 1008-1" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1991.1.3.47.12.1"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Brocade"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ACE 04G" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.729"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ACE 30-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1231"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ACE GSS 4492R" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.517"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco APV2600" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7564"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CD7305" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.504"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CDE100" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.936"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CDE200" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.937"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CDE300" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.938"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-501" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.612"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-507" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.409"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-507AV" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.432"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-508" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.490"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-510" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.505"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-511" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.595"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-512" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.759"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-560" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.410"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-560AV" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.433"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-565" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.491"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-566" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.596"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-590" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.411"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-611" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.708"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-612" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.761"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-674" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.996"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-7306" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.600"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-7320" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.412"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-7325" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.492"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-7371" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.983"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CSS 11800" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.9.368.4.2"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-274-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.987"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-474-k9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.986"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-511" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.785"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-512" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.776"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-611" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.786"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-612-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.777"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-674" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.957"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-726" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.787"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-7326-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.601"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-7341" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.907"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAE-7371" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.908"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAVE 7541" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1351"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAVE 8541" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1349"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAVE-294-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1354"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAVE-574-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.985"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAVE-594-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1353"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAVE-694-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1352"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WAVE-7571-K9" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1350"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Citrix NetScaler Virtual" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5951.1"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Citrix"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Coyote Point Equalizer E650GX" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.24427.2.2.2.1"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Coyote Point"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks 7200V" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.85"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.60"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10050" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.79"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10200" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.87"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10200F" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.88"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10200S" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.89"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10250" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.80"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10255" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.99"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10350" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.102"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 10350v" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.103"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 11000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.44"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 2200" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.81"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 3410" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.33"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 4000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.59"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 4200" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.82"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 5050" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.71"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 5200" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.83"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 5250" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.72"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 5250F" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.91"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 6900F" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.53"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 6900S" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.55"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 7050" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.77"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 7200v" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.84"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 7255" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.97"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 8900F" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.56"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 8950" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.25"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP 8950S" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.57"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP Application Delivery Controller" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP I5800" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.109"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP I7800" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.111"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP Pb100" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.34"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP Pb100n" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.35"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP VPR-B2100" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.46"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP VPR-B2150" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.101"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP VPR-B2250" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.70"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP i4600" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.106"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks BIG-IP i4800" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.107"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="F5 Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper WXC-2600" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.3.41.1.1.5.5"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Juniper"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel Networks Alteon Application Switch 2216 E" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.1.10"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Nortel Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel Networks Alteon Application Switch 2424 E" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.1.7"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Nortel Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel Networks Alteon Application Switch 4408" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.3.3"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Nortel Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel Networks Alteon Application Switch 5224XL" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1872.1.13.3.5.2"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Nortel Networks"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Riverbed Steelhead Interceptor 9350" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.17163.1.3"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Riverbed Technology, Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec AV1200" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.3.7"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec AV1400" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.3.5"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec AV510" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.3.4"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec AV810" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.3.3"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG S400" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.37"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG S500" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.36"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG-S200" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.38"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG100" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.2"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG1000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.1"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG110" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.9"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG2000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.4"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG210" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.26"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG300" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.32"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG3000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.7"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG3000s" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.14"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG500" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.3"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG5000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.5"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG5000s" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.15"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG500A" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.6"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG510" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.27"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG600" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.10"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG610" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.12"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG611" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.19"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG7000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.18"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG710" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.17"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG810" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.25"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG8100" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.28"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SG9000" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.29"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SGME710" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.2.1"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SGME800" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.2.2"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Symantec SGME810" iconName="LoadBalancer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.2.3"/>
+        </SysOIDs>
+        <Category name="LoadBalancer"/>
+        <Vendor name="Symantec"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

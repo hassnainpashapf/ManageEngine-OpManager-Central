@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLITransportProtocolList>
+	<!-- For normal Telnet -->
+	<CLITransportProtocol transportprotocolname="telnet" transportproviderclassname="com.adventnet.ncm.cli.transport.NCMTelnetTransportImpl" protocoloptionsclassname="com.adventnet.cli.transport.TelnetProtocolOptionsImpl"/>
+
+	<!-- For SSH Telnet -->
+	<CLITransportProtocol transportprotocolname="ssh" transportproviderclassname="com.adventnet.ncm.cli.transport.NCMSSHTransportImpl" protocoloptionsclassname="com.adventnet.cli.transport.ssh.SshProtocolOptionsImpl"/>
+</CLITransportProtocolList>

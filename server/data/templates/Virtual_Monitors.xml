@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	<!-- Proxmox Monitors starts -->
+    
+	<Graph description="Monitors the CPU utilization of Proxmox Node" displayName="CPU Utilization" graphName="Proxmox-hostCPUUtilization" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostCPUUtilization" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<Graph description="Monitors the Memory utilization of Proxmox Node" displayName="Memory Utilization" graphName="Proxmox-hostMemoryUtilization" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostMemoryUtilization" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<Graph description="Monitors the Root filesystem disk utilization of Proxmox Node" displayName="Root Filesystem Disk Utilization" graphName="Proxmox-hostRootfsDiskUtilization" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostRootfsDiskUtilization" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<Graph description="Monitors the received Network traffic of Proxmox Node" displayName="Network Traffic In" graphName="Proxmox-hostNetworkTrafficIn" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostNetworkTrafficIn" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<Graph description="Monitors the transmitted Network traffic from Proxmox Node" displayName="Network Traffic Out" graphName="Proxmox-hostNetworkTrafficOut" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostNetworkTrafficOut" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<Graph description="Monitors the swap memory usage of Proxmox Node" displayName="Swap Memory Usage" graphName="Proxmox-hostSwapMemoryUsage" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostSwapMemoryUsage" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<Graph description="Monitors the Load average of Proxmox Node" displayName="Load Average" graphName="Proxmox-hostLoadAverage" YAXISTEXT="Load" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostLoadAverage" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<Graph description="Monitors the proportion of time the CPU spends idle while waiting for I/O operations to complete" displayName="IO Delay" graphName="Proxmox-hostIOWait" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostIOWait" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<Graph description="Monitors the total time elapsed in minutes since last system startup of Proxmox Node" displayName="System Uptime" graphName="Proxmox-hostSystemUptime" YAXISTEXT="Minutes" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-hostSystemUptime" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-Node Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Node"/>
+    </Graph>
+
+	<DevicePackageToGraph deviceType="Proxmox Node" graphName="Proxmox-hostCPUUtilization|Proxmox-hostMemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+	<DevicePackageToGraph deviceType="Proxmox Node" graphName="Proxmox-hostRootfsDiskUtilization|Proxmox-hostNetworkTrafficIn|Proxmox-hostNetworkTrafficOut|Proxmox-hostIOWait|Proxmox-hostSystemUptime"/>
+
+	<Graph description="Monitors the CPU utilization of Proxmox Virtual Machine" displayName="CPU Utilization" graphName="Proxmox-vmCPUUtilization" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-vmCPUUtilization" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-VM Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+    </Graph>
+
+	<Graph description="Monitors the Memory utilization of Proxmox Virtual Machine" displayName="Memory Utilization" graphName="Proxmox-vmMemoryUtilization" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-vmMemoryUtilization" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-VM Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+    </Graph>
+
+	<Graph description="Monitors the received Network traffic of Proxmox Virtual Machine" displayName="Network Traffic In" graphName="Proxmox-vmNetworkTrafficIn" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-vmNetworkTrafficIn" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-VM Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+    </Graph>
+
+	<Graph description="Monitors the transmitted Network traffic of Proxmox Virtual Machine" displayName="Network Traffic Out" graphName="Proxmox-vmNetworkTrafficOut" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-vmNetworkTrafficOut" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-VM Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+    </Graph>
+
+	<Graph description="Monitors the Disk Read Rate of Proxmox Virtual Machine" displayName="Disk Read Rate" graphName="Proxmox-vmDiskReadRate" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-vmDiskReadRate" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-VM Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+    </Graph>
+
+	<Graph description="Monitors the Disk Write Rate of Proxmox Virtual Machine" displayName="Disk Write Rate" graphName="Proxmox-vmDiskWriteRate" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-vmDiskWriteRate" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-VM Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+    </Graph>
+
+	<Graph description="Monitors the total time elapsed in minutes since last system startup of Proxmox Virtual Machine" displayName="System Uptime" graphName="Proxmox-vmSystemUptime" YAXISTEXT="Minutes" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-vmSystemUptime" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-VM Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+    </Graph>
+
+	<DevicePackageToGraph deviceType="Proxmox Virtual Machine" graphName="Proxmox-vmCPUUtilization|Proxmox-vmMemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+	<DevicePackageToGraph deviceType="Proxmox Virtual Machine" graphName="Proxmox-vmDiskReadRate|Proxmox-vmDiskWriteRate|Proxmox-vmSystemUptime"/>
+
+	<Graph description="Monitors the CPU utilization of Proxmox Container" displayName="CPU Utilization" graphName="Proxmox-ctCPUUtilization" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-ctCPUUtilization" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-LXC Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Container"/>
+    </Graph>
+
+	<Graph description="Monitors the Memory utilization of Proxmox Container" displayName="Memory Utilization" graphName="Proxmox-ctMemoryUtilization" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-ctMemoryUtilization" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-LXC Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Container"/>
+    </Graph>
+
+	<Graph description="Monitors the Disk utilization of Proxmox Container" displayName="Disk Utilization" graphName="Proxmox-ctDiskUtilization" YAXISTEXT="%" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-ctDiskUtilization" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-LXC Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Container"/>
+    </Graph>
+
+	<Graph description="Monitors the received Network traffic of Proxmox Container" displayName="Network Traffic In" graphName="Proxmox-ctNetworkTrafficIn" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-ctNetworkTrafficIn" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-LXC Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Container"/>
+    </Graph>
+
+	<Graph description="Monitors the transmitted Network traffic of Proxmox Container" displayName="Network Traffic Out" graphName="Proxmox-ctNetworkTrafficOut" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-ctNetworkTrafficOut" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-LXC Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Container"/>
+    </Graph>
+
+	<Graph description="Monitors the Disk Read Rate of Proxmox Container" displayName="Disk Read Rate" graphName="Proxmox-ctDiskReadRate" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-ctDiskReadRate" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-LXC Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Container"/>
+    </Graph>
+
+	<Graph description="Monitors the Disk Write Rate of Proxmox Container" displayName="Disk Write Rate" graphName="Proxmox-ctDiskWriteRate" YAXISTEXT="MBps" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-ctDiskWriteRate" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-LXC Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Container"/>
+    </Graph>
+
+	<Graph description="Monitors the total time elapsed in minutes since last system startup of Proxmox Container" displayName="System Uptime" graphName="Proxmox-ctSystemUptime" YAXISTEXT="Minutes" failureThreshold="1" graphType="node" isNumeric="true" oid="Proxmox-ctSystemUptime" period="300" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Proxmox" vendorSubCategory="Proxmox-LXC Monitors">
+    	<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+        <UserProps propName="COMMUNITY" propValue="Container"/>
+    </Graph>
+
+	<DevicePackageToGraph deviceType="Proxmox Container" graphName="Proxmox-ctCPUUtilization|Proxmox-ctMemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+	<DevicePackageToGraph deviceType="Proxmox Container" graphName="Proxmox-ctDiskUtilization|Proxmox-ctDiskReadRate|Proxmox-ctDiskWriteRate|Proxmox-ctSystemUptime"/>
+
+	<!-- Proxmox Monitors ends -->
+
+
+</GRAPHDETAIL>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:nec_ix2025" templatename="NEC_IX2025" ostype="NA" displayname="NEC IX2025" description="For all NEC IX2025Operating System Software">
+   	<NCMVendorDevice vendorid="NEC" />
+   	<NCMDevicePersonality personalityid="NECIX2025" />
+
+   	<NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+   	</NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nec_ix2025_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nec_ix2025" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="nec_ix2025_CLI_Startup_Config_Backup" />
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nec_ix2025_CLI_Running_Config_Backup" />
+	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="nec_ix2025_copy_running_to_startup" />
+	
+	 <!-- Change Tracking thru Syslog -->
+	 
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="nec_ix2025_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="nec_ix2025_cli_disable_syslog_change_tracking" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+	
+   <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:nec_ix2025_telnet_cli" devicetemplateid="NCMDeviceTemplate:devicetemplateid:nec_ix2025" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="nec_ix2025_cli_telnet_startup_config_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="nec_ix2025r_cli_show_startup_command"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="nec_ix2025_cli_telnet_running_config_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="nec_ix2025r_cli_show_running_command"/>
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="nec_ix2025_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="nec_ix2025_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>		
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

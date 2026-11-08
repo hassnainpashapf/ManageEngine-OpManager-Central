@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MonitorProfiles>
+	<MonitorProfile profileName="Juniper_MonitorProfile" description="Priority Monitors for Juniper" isDefault="true">
+		<MonitorProfileAssociation graphName="JuniperSSGMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="Netscreen-MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="Juniper-EX-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="Juniper-EX-MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="jnxJsSPUMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="iveCPUUtilization"/>
+		<MonitorProfileAssociation graphName="iveMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="diskFullPercent"/>
+		<MonitorProfileAssociation graphName="CPUUtilizationWLC"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Cisco_MonitorProfile" description="Priority Monitors for Cisco" isDefault="true">
+		<MonitorProfileAssociation graphName="CiscoBufferBgMiss"/>
+		<MonitorProfileAssociation graphName="CiscoBufferMdMiss"/>
+		<MonitorProfileAssociation graphName="CiscoBufferSmMiss"/>
+		<MonitorProfileAssociation graphName="ciscoMemoryPoolFree"/>
+		<MonitorProfileAssociation graphName="ciscoMemoryPoolUsed"/>
+		<MonitorProfileAssociation graphName="cpm5minTotal_CPUUtilization"/>
+		<MonitorProfileAssociation graphName="cpm1minTotal_CPUUtilization"/>
+		<MonitorProfileAssociation graphName="BackplaneUtilization"/>
+		<MonitorProfileAssociation graphName="RouterHugeBuffMisses"/>
+		<MonitorProfileAssociation graphName="RouterHugeBuffHits"/>
+		<MonitorProfileAssociation graphName="cpmTotal1minRevCPUUtilization"/>
+		<MonitorProfileAssociation graphName="CiscoFirewallCPUUtilization" category="Firewall"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoEnergywise_MonitorProfile_Parent" description="Priority Monitors for Cisco Energywise monitoring" isDefault="true">
+		<MonitorProfileAssociation graphName="NeighborSysUptime"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoEnergywise_MonitorProfile_Child" description="Priority Monitors for Cisco Energywise monitoring" isDefault="true" parentProfile="CiscoEnergywise_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="NeighborSysUptime"/>
+		<MonitorProfileAssociation graphName="EnergyWiseCurrentEnergyUsage"/>
+		<MonitorProfileAssociation graphName="EnergyWiseOperationalStatus"/>
+		<MonitorProfileAssociation graphName="EnergyWiseAdminStatus"/>
+		<MonitorProfileAssociation graphName="EnergyWiseMaximumPowerDraw"/>
+		<MonitorProfileAssociation graphName="EnergyWiseCurrentLevel"/>
+		<MonitorProfileAssociation graphName="NumberOfNeighbors"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoVPN_MonitorProfile_Parent" description="Priority Monitors for Cisco VPN monitoring" isDefault="true">
+		<MonitorProfileAssociation graphName="crasWebvpnNumSessions"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoVPN_MonitorProfile_Child" description="Priority Monitors for Cisco VPN monitoring" isDefault="true" parentProfile="CiscoVPN_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="crasWebvpnNumSessions"/>
+		<MonitorProfileAssociation graphName="asacrasSVCPeakConcurrentSessions"/>
+		<MonitorProfileAssociation graphName="crasSVCNumSessions"/>
+		<MonitorProfileAssociation graphName="crasNumUsers"/>
+		<MonitorProfileAssociation graphName="crasL2LNumSessions"/>
+		<MonitorProfileAssociation graphName="crasIPSecNumSessions"/>
+		<MonitorProfileAssociation graphName="cfwConnectionStatValueCurrentInUse"/>
+		<MonitorProfileAssociation graphName="VPNtunnelstatus"/>
+		<MonitorProfileAssociation graphName="VPNTunnelOutDropPackets"/>
+		<MonitorProfileAssociation graphName="VPNTunnelOutPackets"/>
+		<MonitorProfileAssociation graphName="VPNTunnelInDropPackets"/>
+		<MonitorProfileAssociation graphName="VPNTunnelInPackets"/>
+		<MonitorProfileAssociation graphName="IKEActiveTunnel"/>
+		<MonitorProfileAssociation graphName="CiscoPIX501FirewallSessionCount"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoNexus_MonitorProfile_Parent" description="Priority Monitors for Cisco Nexus monitoring" isDefault="true">
+		<MonitorProfileAssociation graphName="CiscoNexusMemoryUtilization"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoNexus_MonitorProfile_Child" description="Priority Monitors for Cisco Nexus monitoring" isDefault="true" parentProfile="CiscoNexus_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="CiscoNexusMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="CiscoNexusCPUUtilization"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoEnvironment_MonitorProfile_Parent" description="Priority Monitors for Cisco Environment monitoring" isDefault="true">
+		<MonitorProfileAssociation graphName="CiscoTemperature"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoEnvironment_MonitorProfile_Child" description="Priority Monitors for Cisco Environment monitoring" isDefault="true" parentProfile="CiscoEnvironment_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="CiscoTemperature"/>
+		<MonitorProfileAssociation graphName="ciscoEnvMonVoltageThresholdHigh"/>
+		<MonitorProfileAssociation graphName="ciscoEnvMonVoltageStatusValue"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoMeraki_MonitorProfile_Parent" description="Priority Monitors for Cisco Meraki monitoring" isDefault="true">
+		<MonitorProfileAssociation graphName="devSerial"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoMeraki_MonitorProfile_Child" description="Priority Monitors for Cisco Meraki monitoring" isDefault="true" parentProfile="CiscoMeraki_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="devSerial"/>
+		<MonitorProfileAssociation graphName="devpublicIP"/>
+		<MonitorProfileAssociation graphName="devMeshstatus"/>
+		<MonitorProfileAssociation graphName="devStatu"/>
+		<MonitorProfileAssociation graphName="devName"/>
+		<MonitorProfileAssociation graphName="devMac"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoIronPort_MonitorProfile_Parent" description="Priority Monitors for Cisco IronPort monitoring" isDefault="true">
+		<MonitorProfileAssociation graphName="IronportTemperature"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoIronPort_MonitorProfile_Child" description="Priority Monitors for Cisco IronPort monitoring" isDefault="true" parentProfile="CiscoIronPort_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="IronportTemperature"/>
+		<MonitorProfileAssociation graphName="IronportDiskUtilization"/>
+		<MonitorProfileAssociation graphName="IronportCPUUtilization"/>
+		<MonitorProfileAssociation graphName="IronportOutstandingDNSRequests"/>
+		<MonitorProfileAssociation graphName="IronportMemoryUtilization"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoAirespace_MonitorProfile_Parent" description="Priority Monitors for Cisco Airespace monitoring" isDefault="true" >
+		<MonitorProfileAssociation graphName="CiscoWLCTemperature"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoAirespace_MonitorProfile_Child" description="Priority Monitors for Cisco Airespace monitoring" isDefault="true" parentProfile="CiscoAirespace_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="CiscoWLCTemperature"/>
+		<MonitorProfileAssociation graphName="bsnApIfNoOfUsers"/>
+		<MonitorProfileAssociation graphName="CiscoWLCNoOfMobileStations"/>
+		<MonitorProfileAssociation graphName="agentFreeMemory"/>
+		<MonitorProfileAssociation graphName="agentCurrentCPUUtilization"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoOSPF_MonitorProfile_Parent" description="Priority Monitors for Cisco OSPF monitoring" isDefault="true" >
+		<MonitorProfileAssociation graphName="ospfIfState"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="CiscoOSPF_MonitorProfile_Child" description="Priority Monitors for Cisco OSPF monitoring" isDefault="true" parentProfile="CiscoAirespace_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="ospfIfState"/>
+		<MonitorProfileAssociation graphName="ospfNbrState"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Xerox_MonitorProfile" description="Priority Monitors for Xerox" isDefault="true">
+		<MonitorProfileAssociation graphName="CartridgedrumlevelPercent-black"/>
+		<MonitorProfileAssociation graphName="CartridgetonerlevelPercent-Cyan"/>
+		<MonitorProfileAssociation graphName="CartridgetonerlevelPercent-Magenta"/>
+		<MonitorProfileAssociation graphName="CartridgetonerlevelPercent-Yellow"/>
+		<MonitorProfileAssociation graphName="Pagesprinted-total"/>
+		<MonitorProfileAssociation graphName="PaperLeftinTray1"/>
+		<MonitorProfileAssociation graphName="PaperLeftinTray2"/>
+		<MonitorProfileAssociation graphName="PaperLeftinTray3"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Huawei_MonitorProfile" description="Priority Monitors for Huawei" isDefault="true">
+		<MonitorProfileAssociation graphName="Eudemon1000E-MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="Huawei-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="hwWlanStaConnectRxRate" category="Wireless"/>
+		<MonitorProfileAssociation graphName="hwWlanStaConnectTxRate" category="Wireless"/>
+		<MonitorProfileAssociation graphName="hwWlanStaWirelessRxBytes" category="Wireless"/>
+		<MonitorProfileAssociation graphName="hwWlanStaWirelessTxBytes" category="Wireless"/>
+		<MonitorProfileAssociation graphName="hwWlanVapStatus" category="Wireless"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="H3C_MonitorProfile" description="Priority Monitors for H3C" isDefault="true">
+		<MonitorProfileAssociation graphName="CPUUtilizationPer5Minute"/>
+		<MonitorProfileAssociation graphName="h3cEntityExtCPUUtilization"/>
+		<MonitorProfileAssociation graphName="h3cEntityExtMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="h3cEntityExtTemperature"/>
+		<MonitorProfileAssociation graphName="trafficDownstream"/>
+		<MonitorProfileAssociation graphName="trafficUpstream"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Citrix_MonitorProfile" description="Priority Monitors for Citrix" isDefault="true">
+		<!--<MonitorProfileAssociation graphName="NSlbvsvrAvgSvrTTFB"/>-->
+		<MonitorProfileAssociation graphName="NSMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="NSActiveSeverConnections"/>
+		<MonitorProfileAssociation graphName="NSCurrentClientConnections"/>
+		<MonitorProfileAssociation graphName="NSCPUUtilization"/>
+		<!--<MonitorProfileAssociation graphName="NSDiskUtilization"/>-->
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="IBM_MonitorProfile" description="Priority Monitors for IBM" isDefault="true">
+		<MonitorProfileAssociation graphName="dpStatusMemoryUtilization"/>
+		<!--<MonitorProfileAssociation graphName="dpStatusCPUUtilizationtenSeconds"/>
+		<MonitorProfileAssociation graphName="IBMInterfaceInUtilized"/>
+		<MonitorProfileAssociation graphName="IBMInterfaceOutUtilized"/>
+		<MonitorProfileAssociation graphName="IBMPSGTemperatureSensorCurrentReading"/>
+		<MonitorProfileAssociation graphName="IBMPSGVoltageSensorCurrentReading"/>
+		<MonitorProfileAssociation graphName="proXfaceGenericMaintFails"/>-->
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Dell_MonitorProfile" description="Priority Monitors for Dell" isDefault="true">
+		<MonitorProfileAssociation graphName="chStackUnitTemp"/>
+		<MonitorProfileAssociation graphName="DELL_CPUUtilization"/>
+		<MonitorProfileAssociation graphName="DELL_Force10_S25N_CPUUtilization" category="Switch"/>
+		<MonitorProfileAssociation graphName="DELL_Force10_S25N_MemoryUtilization" category="Switch"/>
+		<!--<MonitorProfileAssociation graphName="dellRACpowerSupplyStatus" category="Server"/>-->
+		<MonitorProfileAssociation graphName="hrPrinterStatus" category="Printer"/>
+		<MonitorProfileAssociation graphName="prtMarkerLifeCount" category="Printer"/>
+		<MonitorProfileAssociation graphName="hrPrinterDetectedErrorState" category="Printer"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Hewlett_MonitorProfile" description="Priority Monitors for Hewlett Packard" isDefault="true">
+		<MonitorProfileAssociation graphName="coDot11SignalLevel" category="Wireless"/>
+		<MonitorProfileAssociation graphName="consumable-status-page-count-a4-letter" category="Printer"/>
+		<MonitorProfileAssociation graphName="consumable-status-page-count-b5-executive" category="Printer"/>
+		<MonitorProfileAssociation graphName="gdStatusPaperJam" category="Printer"/>
+		<MonitorProfileAssociation graphName="gdStatusPaperOut" category="Printer"/>
+		<MonitorProfileAssociation graphName="hp.black.toner.now" category="Printer"/>
+		<MonitorProfileAssociation graphName="hp.cyan.toner.now" category="Printer"/>
+		<MonitorProfileAssociation graphName="hp.yellow.toner.now" category="Printer"/>
+		<MonitorProfileAssociation graphName="hpMemoryUsed" category="Switch"/>
+		<MonitorProfileAssociation graphName="hpememTotal" category="Switch"/>
+		<MonitorProfileAssociation graphName="ProCurveCPUUtilization" category="Switch"/>
+		<MonitorProfileAssociation graphName="ProCurveMemoryUtilization" category="Switch"/>
+		<MonitorProfileAssociation graphName="resourceChassisTempDegreesC"/>
+		<MonitorProfileAssociation graphName="resourceHPCPUUtilization"/>
+		<MonitorProfileAssociation graphName="resourceHPMemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Barracuda_MonitorProfile" description="Priority Monitors for Barracuda" isDefault="true">
+		<MonitorProfileAssociation graphName="ActiveTCPConnections"/>
+		<MonitorProfileAssociation graphName="BarracudaBufferMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="BarracudaCPUUtilization15min"/>
+		<MonitorProfileAssociation graphName="BarracudaMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="cpuTemperature"/>
+		<MonitorProfileAssociation graphName="fwConcurrentSessions"/>
+		<MonitorProfileAssociation graphName="maillogStorage"/>
+		<MonitorProfileAssociation graphName="systemTemperature"/>
+		<MonitorProfileAssociation graphName="vpnUsers"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Compaq_MonitorProfile" description="Priority Monitors for Compaq" isDefault="true">
+		<!--<MonitorProfileAssociation graphName="CpqHeTemperatureCelsius"/>-->
+		<MonitorProfileAssociation graphName="CpqHeTrapLogMaxSize"/>
+		<!--<MonitorProfileAssociation graphName="CpqHeTrapPkts"/>-->
+		<MonitorProfileAssociation graphName="CpqHoCPUUtilizationMin"/>
+		<MonitorProfileAssociation graphName="CpqHoPagingMemoryFree"/>
+		<MonitorProfileAssociation graphName="CpqHoPhysicalMemoryFree"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="NetApp_MonitorProfile" description="Priority Monitors for NetApp" isDefault="true">
+		<MonitorProfileAssociation graphName="NetAppFailedDiskcount"/>
+		<MonitorProfileAssociation graphName="NetAppTotalDiskCount"/>
+		<MonitorProfileAssociation graphName="NetAppBatteryStatus"/>
+		<MonitorProfileAssociation graphName="NetAppPowerSupplyStatus"/>
+		<MonitorProfileAssociation graphName="NetAppTemperature"/>
+		<MonitorProfileAssociation graphName="NetAppDiskWriteBytes"/>
+		<MonitorProfileAssociation graphName="NetAppDiskReadBytes"/>
+		<MonitorProfileAssociation graphName="NetAppCPUUtilization"/>
+		<MonitorProfileAssociation graphName="NetAppIscsiWriteBytes"/>
+		<MonitorProfileAssociation graphName="NetAppIscsiReadBytes"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Aruba_MonitorProfile" description="Priority Monitors for Aruba" isDefault="true">
+		<MonitorProfileAssociation graphName="storageUsageAruba"/>
+		<MonitorProfileAssociation graphName="aosMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="aos.CPUUtilization"/>
+		<MonitorProfileAssociation graphName="staTxBytes"/>
+		<MonitorProfileAssociation graphName="OutTotalBytes"/>
+		<MonitorProfileAssociation graphName="staRxBytes"/>
+		<MonitorProfileAssociation graphName="serverUpTime"/>
+		<MonitorProfileAssociation graphName="aiAPCPUUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Brocade_MonitorProfile" description="Priority Monitors for Brocade" isDefault="true">
+		<MonitorProfileAssociation graphName="ruckusSZSystemStatsNumAP"/>
+		<MonitorProfileAssociation graphName="ruckusSZSystemStatsWLANTotalRxBytes"/>
+		<MonitorProfileAssociation graphName="ruckusSZSystemStatsWLANTotalTxBytes"/>
+		<MonitorProfileAssociation graphName="ruckusZDSystemCPUUtilization"/>
+		<MonitorProfileAssociation graphName="ruckusZDSystemMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="ruckusZDWLANAuthFail"/>
+		<MonitorProfileAssociation graphName="snAgGblCPUUtilization1MinAvg"/>
+		<MonitorProfileAssociation graphName="swMemCPUUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="F5Networks_MonitorProfile" description="Priority Monitors for F5Networks" isDefault="true">
+		<MonitorProfileAssociation graphName="f5LBCPUUtilization5MinAvg"/>
+		<MonitorProfileAssociation graphName="F5CPUUtilization"/>
+		<MonitorProfileAssociation graphName="F5-MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="F5PoolMemberActiveConns"/>
+		<MonitorProfileAssociation graphName="F5CPUFanSpeed"/>
+		<MonitorProfileAssociation graphName="F5CPUTemperature"/>
+		<MonitorProfileAssociation graphName="F5-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="F5-BIG-IP-1600-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="F5-BIG-IP-1600-ActiveClientConnections"/>
+		<MonitorProfileAssociation graphName="F5ActiveClientConnections"/>
+		<MonitorProfileAssociation graphName="memTotalFree"/>
+		<MonitorProfileAssociation graphName="F5-BIG-IP-1600-MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="F5MemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Fortigate_MonitorProfile" description="Priority Monitors for Fortigate" isDefault="true">
+		<MonitorProfileAssociation graphName="FortigateFirewallCPUUtilization"/>
+		<MonitorProfileAssociation graphName="FortigateFirewallMemoryUtilization"/>
+		<!--<MonitorProfileAssociation graphName="fgVpnDialupOutOctets"/>
+		<MonitorProfileAssociation graphName="fgVpnDialupInOctets"/>-->
+		<MonitorProfileAssociation graphName="fortinetCurrentCPUUtilization"/>
+		<MonitorProfileAssociation graphName="fgsys_MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="fgSysSesCount"/>
+		<MonitorProfileAssociation graphName="diskUsageCurrent"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Checkpoint_MonitorProfile" description="Priority Monitors for Checkpoint" isDefault="true">
+		<MonitorProfileAssociation graphName="dtpsConnectedUsers"/>
+		<MonitorProfileAssociation graphName="fwRejected"/>
+		<!--<MonitorProfileAssociation graphName="fwAcceptBytesIn64"/>
+		<MonitorProfileAssociation graphName="fwAcceptBytesOut64"/>-->
+		<MonitorProfileAssociation graphName="haState"/>
+		<!--<MonitorProfileAssociation graphName="svnProcUsage"/>
+		<MonitorProfileAssociation graphName="tunnelState"/>
+		<MonitorProfileAssociation graphName="vsxCountersConnNum"/>
+		<MonitorProfileAssociation graphName="vsxCountersConnPeakNum"/>-->
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="APC_MonitorProfile" description="Priority Monitors for APC" isDefault="true">
+		<MonitorProfileAssociation graphName="APC.CPUUtilization"/>
+		<MonitorProfileAssociation graphName="upsAdvBatteryCapacity"/>
+		<MonitorProfileAssociation graphName="upsAdvBatteryReplaceIndicator"/>
+		<MonitorProfileAssociation graphName="upsAdvBatteryRunTimeRemaining"/>
+		<MonitorProfileAssociation graphName="upsAdvBatteryTemperature"/>
+		<MonitorProfileAssociation graphName="upsAdvInputLineVoltage"/>
+		<MonitorProfileAssociation graphName="upsBasicBatteryStatus"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Alcatel_MonitorProfile" description="Priority Monitors for Alcatel" isDefault="true">
+		<MonitorProfileAssociation graphName="AlcatelDeviceCPUUtilization"/>
+		<MonitorProfileAssociation graphName="AlcatelDeviceMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="CPUUtilizationPercent"/>
+		<MonitorProfileAssociation graphName="MemoryUtilizationUsedPercent"/>
+		<MonitorProfileAssociation graphName="healthDeviceRxLatest"/>
+		<MonitorProfileAssociation graphName="healthDeviceTxLatest"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Riverbed_MonitorProfile" description="Priority Monitors for Riverbed" isDefault="true">
+		<MonitorProfileAssociation graphName="SteelheadActiveConnections"/>
+		<MonitorProfileAssociation graphName="SteelheadBWAggregateInLAN"/>
+		<MonitorProfileAssociation graphName="SteelheadBWAggregateInWAN"/>
+		<MonitorProfileAssociation graphName="SteelheadBWAggregateOutLAN"/>
+		<MonitorProfileAssociation graphName="SteelheadBWAggregateOutWAN"/>
+		<MonitorProfileAssociation graphName="SteelheadBWPassthroughTotal"/>
+		<MonitorProfileAssociation graphName="SteelheadSystemHealthStatus"/>
+		<MonitorProfileAssociation graphName="SteelheadTotalConnections"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Emerson_MonitorProfile" description="Priority Monitors for Riverbed" isDefault="true">
+		<MonitorProfileAssociation graphName="lcUpsBatKWhours"/>
+		<MonitorProfileAssociation graphName="lcUpsBatTemperature"/>
+		<MonitorProfileAssociation graphName="lcUpsBatTimeRemaining"/>
+		<MonitorProfileAssociation graphName="lcUpsBatVoltage"/>
+		<MonitorProfileAssociation graphName="lcUpsInputTransients"/>
+		<MonitorProfileAssociation graphName="lcUpsInputVoltage"/>
+		<MonitorProfileAssociation graphName="lcUpsInverterStatus"/>
+		<MonitorProfileAssociation graphName="lcUpsInverterTemp"/>
+		<MonitorProfileAssociation graphName="lcUpsOutputCurrent"/>
+		<MonitorProfileAssociation graphName="lcUpsOutputLoad"/>
+		<MonitorProfileAssociation graphName="lcUpsOutputVoltage"/>
+		<MonitorProfileAssociation graphName="lcUpsOutputWatts"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Motorola_MonitorProfile" description="Priority Monitors for Motorola" isDefault="true">
+		<MonitorProfileAssociation graphName="cdx6500allportsOverrunErrors"/>
+		<MonitorProfileAssociation graphName="cdx6500allportsPktsInPerSec"/>
+		<MonitorProfileAssociation graphName="cdx6500allportsPktsOutPerSec"/>
+		<MonitorProfileAssociation graphName="cdxstatsMaxCPUUtilization"/>
+		<MonitorProfileAssociation graphName="cdx6500NMNPSstatsmemDram"/>
+		<MonitorProfileAssociation graphName="tnppPFSStatDataFramesInDiscarded"/>
+		<MonitorProfileAssociation graphName="tnppPFSStatDataFramesOutDiscarded"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Radware_MonitorProfile" description="Priority Monitors for Radware" isDefault="true">
+		<MonitorProfileAssociation graphName="Radware-AD-508-MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="Radware-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="Radware-DP-502-MemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="SOCOMEC_MonitorProfile" description="Priority Monitors for SOCOMEC UPS" isDefault="true">
+		<MonitorProfileAssociation graphName="NETVISIONBatCapacity"/>
+		<MonitorProfileAssociation graphName="NETVISIONBatVoltage"/>
+		<MonitorProfileAssociation graphName="NETVISIONLoad1"/>
+		<MonitorProfileAssociation graphName="NETVISIONLoad2"/>
+		<MonitorProfileAssociation graphName="NETVISIONLoad3"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Sharp_MonitorProfile" description="Priority Monitors for Sharp" isDefault="true">
+		<MonitorProfileAssociation graphName="sharp.printer.toner.black.usage"/>
+		<MonitorProfileAssociation graphName="sharp.printer.toner.cyan.usage"/>
+		<MonitorProfileAssociation graphName="sharp.printer.toner.magenta.usage"/>
+		<MonitorProfileAssociation graphName="sharp.printer.toner.waste.usage"/>
+		<MonitorProfileAssociation graphName="sharp.printer.toner.yellow.usage"/>
+		<MonitorProfileAssociation graphName="sharpPrintedPages"/>
+		<MonitorProfileAssociation graphName="sharpPrinterPagesCopied"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="A10Networks_MonitorProfile" description="Priority Monitors for A10 Networks" isDefault="true">
+		<MonitorProfileAssociation graphName="A10CPUUtilization"/>
+		<MonitorProfileAssociation graphName="A10DiskUtilization"/>
+		<MonitorProfileAssociation graphName="A10MemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Bluecoat_MonitorProfile" description="Priority Monitors for Bluecoat systems" isDefault="true">
+		<MonitorProfileAssociation graphName="Bluecoat-proxySG-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="Bluecoat-proxySG-MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="BlueCoatCpuUtilization"/>
+		<MonitorProfileAssociation graphName="BlueCoatDiskUtilization"/>
+		<MonitorProfileAssociation graphName="BlueCoatMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="BlueCoatObjectsInCache"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Cyberoam_MonitorProfile" description="Priority Monitors for Cyberoam" isDefault="true">
+		<MonitorProfileAssociation graphName="CyberoamLiveUsers"/>
+		<MonitorProfileAssociation graphName="swapPercentUsage"/>
+		<MonitorProfileAssociation graphName="CyberoamMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="CyberoamDiskUsage"/>
+		<MonitorProfileAssociation graphName="CyberoamCPUUtilization"/>
+		<MonitorProfileAssociation graphName="CyberoamSmtpHits"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="TrippLite_MonitorProfile" description="Priority Monitors for TrippLite" isDefault="true">
+		<MonitorProfileAssociation graphName="TLUPSBatteryStatus"/>
+		<MonitorProfileAssociation graphName="TLUPSOutputVoltage"/>
+		<MonitorProfileAssociation graphName="TLUPSInputVoltage"/>
+		<MonitorProfileAssociation graphName="upsEstimatedMinutesRemaining"/>
+		<MonitorProfileAssociation graphName="upsOutputPower1"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="PaloAlto_MonitorProfile" description="Priority Monitors for PaloAlto" isDefault="true">
+		<MonitorProfileAssociation graphName="hrProcessorLoad.2"/>
+		<MonitorProfileAssociation graphName="panGPGWUtilizationActiveTunnels"/>
+		<MonitorProfileAssociation graphName="panLcLogRate"/>
+		<MonitorProfileAssociation graphName="panSessionActive"/>
+		<MonitorProfileAssociation graphName="panSessionActiveICMP"/>
+		<MonitorProfileAssociation graphName="panSessionActiveSslProxy"/>
+		<MonitorProfileAssociation graphName="panSessionActiveTcp"/>
+		<MonitorProfileAssociation graphName="panSessionActiveUdp"/>
+		<MonitorProfileAssociation graphName="panSessionSslProxyUtilization"/>
+		<MonitorProfileAssociation graphName="panSessionUtilization"/>
+		<MonitorProfileAssociation graphName="panSysHAState"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="YAMAHA_MonitorProfile" description="Priority Monitors for YAMAHA" isDefault="true">
+		<MonitorProfileAssociation graphName="yshCPUUtilization5Mins"/>
+		<MonitorProfileAssociation graphName="yshMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="yshInboxTemperature"/>
+		<MonitorProfileAssociation graphName="rtyrhCPUUtilization5min"/>
+		<MonitorProfileAssociation graphName="rtyrhMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="rtyrhInboxTemperature"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Eaton_MonitorProfile" description="Priority Monitors for Eaton" isDefault="true">
+		<MonitorProfileAssociation graphName="PWUPSCharge"/>
+		<MonitorProfileAssociation graphName="PWUPSLoad"/>
+		<MonitorProfileAssociation graphName="PWUPSOutputVoltage"/>
+		<MonitorProfileAssociation graphName="PWUPSTimeRemaining"/>
+		<MonitorProfileAssociation graphName="upsInputVoltage"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="RIM_MonitorProfile" description="Priority Monitors for Research In Motion" isDefault="true">
+		<MonitorProfileAssociation graphName="BesAvgResponceTime"/>
+		<MonitorProfileAssociation graphName="BesConfigLicenseUsed"/>
+		<MonitorProfileAssociation graphName="BesFailedConn"/>
+		<MonitorProfileAssociation graphName="BesMessageReceived"/>
+		<MonitorProfileAssociation graphName="BesMessageReceivedpermin"/>
+		<MonitorProfileAssociation graphName="BesMessageSentPerMin"/>
+		<MonitorProfileAssociation graphName="BesTotalUsers"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Canon_MonitorProfile" description="Priority Monitors for Canon" isDefault="true">
+		<MonitorProfileAssociation graphName="prtInputCurrentLevelTray4"/>
+		<MonitorProfileAssociation graphName="prtInputCurrentLevelTray3"/>
+		<MonitorProfileAssociation graphName="prtInputCurrentLevelTray2"/>
+		<MonitorProfileAssociation graphName="prtInputCurrentLevelTray1"/>
+		<MonitorProfileAssociation graphName="prtTrayLevelManual"/>
+		<MonitorProfileAssociation graphName="prtWasteTonerLevel"/>
+		<MonitorProfileAssociation graphName="prtYellowTonerLevel"/>
+		<MonitorProfileAssociation graphName="prtMagentaTonerLevel"/>
+		<MonitorProfileAssociation graphName="prtCyanTonerLevel"/>
+		<MonitorProfileAssociation graphName="prtblackTonerLevel"/>
+		<MonitorProfileAssociation graphName="prtPrintsAll"/>
+		<MonitorProfileAssociation graphName="hrPrinterDetectedErrorState"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Extreme_MonitorProfile" description="Priority Monitors for Extreme" isDefault="true">
+		<MonitorProfileAssociation graphName="extremeMemoryUtilizationUser"/>
+		<MonitorProfileAssociation graphName="extremeMemoryMonitorSystemFree"/>
+		<MonitorProfileAssociation graphName="extremeCPUUtilization5mins"/>
+		<MonitorProfileAssociation graphName="extremeCurrentTemperature"/>
+		<MonitorProfileAssociation graphName="extremeRedundantPowerStatus"/>
+		<MonitorProfileAssociation graphName="extremePrimaryPowerOperational"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Aerohive_MonitorProfile" description="Priority Monitors for Aerohive Networks" isDefault="true">
+		<MonitorProfileAssociation graphName="ahClientLastRxRate"/>
+		<MonitorProfileAssociation graphName="ahClientLastTxRate"/>
+		<MonitorProfileAssociation graphName="ahRadioTxPower"/>
+		<MonitorProfileAssociation graphName="ahRadioTXRTSFailures"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Forcepoint_MonitorProfile" description="Priority Monitors for Forcepoint" isDefault="true">
+		<MonitorProfileAssociation graphName="adslConnStatus"/>
+		<MonitorProfileAssociation graphName="adslLineStatus"/>
+		<MonitorProfileAssociation graphName="fwConnNumber"/>
+		<MonitorProfileAssociation graphName="fwMemBytesUsed"/>
+		<MonitorProfileAssociation graphName="fwVpnEp4IpsecSa"/>
+		<MonitorProfileAssociation graphName="fwVpnEp4ReceivedBytes"/>
+		<MonitorProfileAssociation graphName="fwVpnEp4SentBytes"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="MaAfee_MonitorProfile" description="Priority Monitors for MaAfee" isDefault="true">
+		<MonitorProfileAssociation graphName="swBurbTotal"/>
+		<MonitorProfileAssociation graphName="Currently Connected Clients"/>
+		<MonitorProfileAssociation graphName="Network Connections in Use by Proxy"/>
+		<MonitorProfileAssociation graphName="CPU Usage (%)"/>
+		<MonitorProfileAssociation graphName="Number of Blocked Connections by URL Filter"/>
+		<MonitorProfileAssociation graphName="Number of Blocked Connections"/>
+		<MonitorProfileAssociation graphName="Number of Detected Infections"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Avaya_MonitorProfile" description="Priority Monitors for Avaya" isDefault="true">
+		<MonitorProfileAssociation graphName="g3connectErrors"/>
+		<MonitorProfileAssociation graphName="s5ChasUtilMemoryAvailable"/>
+		<MonitorProfileAssociation graphName="s5ChasUtilTable"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Schneider_MonitorProfile" description="Priority Monitors for Schneider" isDefault="true">
+		<MonitorProfileAssociation graphName="upsmgBatteryChargerFault"/>
+		<MonitorProfileAssociation graphName="upsmgBatteryCurrent"/>
+		<MonitorProfileAssociation graphName="upsmgBatteryLowCondition"/>
+		<MonitorProfileAssociation graphName="upsmgBatteryReplacement"/>
+		<MonitorProfileAssociation graphName="upsmgBatteryTemperature"/>
+		<MonitorProfileAssociation graphName="upsmgBatteryVoltage"/>
+		<MonitorProfileAssociation graphName="upsmgOutputOnBattery"/>
+	</MonitorProfile>
+
+	<MonitorProfile profileName="Panasonic_MonitorProfile" description="Priority Monitors for Panasonic" isDefault="true">
+		<MonitorProfileAssociation graphName="DrumLevel"/>
+		<MonitorProfileAssociation graphName="TonercartridgeblackPercent"/>
+		<MonitorProfileAssociation graphName="TonerLevel"/>
+		<MonitorProfileAssociation graphName="Totalpagescopied"/>
+		<MonitorProfileAssociation graphName="Totalpagesscanned"/>
+		<MonitorProfileAssociation graphName="upsmgBatteryVoltage"/>
+		<MonitorProfileAssociation graphName="TotalPrintPage"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Alvarion_MonitorProfile" description="Priority Monitors for Alvarion" isDefault="true">
+		<MonitorProfileAssociation graphName="ifHighSpeed2"/>
+		<MonitorProfileAssociation graphName="ifInOctets2"/>
+		<MonitorProfileAssociation graphName="ifOutOctets2"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Crossbeam_MonitorProfile" description="Priority Monitors for Crossbeam" isDefault="true">
+		<MonitorProfileAssociation graphName="cbsModuleCPULoad5"/>
+		<MonitorProfileAssociation graphName="cbsModuleMemoryFree"/>
+		<MonitorProfileAssociation graphName="cbsModuleMemoryTotal"/>
+		<MonitorProfileAssociation graphName="cbsModuleSwapFree"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="ZhongXing_MonitorProfile" description="Priority Monitors for ZhongXing" isDefault="true">
+		<MonitorProfileAssociation graphName="ZhongXing-CPUUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="3Com_MonitorProfile" description="Priority Monitors for 3Com" isDefault="true">
+		<MonitorProfileAssociation graphName="CPUUtilization"/>
+		<MonitorProfileAssociation graphName="hwCpuCostRatePer1Min"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="ArborNetworks_MonitorProfile" description="Priority Monitors for ArborNetworks" isDefault="true">
+		<MonitorProfileAssociation graphName="deviceCPUUtilizationAvg5min"/>
+		<MonitorProfileAssociation graphName="deviceDiskUsage"/>
+		<MonitorProfileAssociation graphName="devicePhysicalMemoryUtilization"/>
+		<MonitorProfileAssociation graphName="deviceTotalFlows"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Ericsson_MonitorProfile" description="Priority Monitors for Ericsson" isDefault="true">
+		<MonitorProfileAssociation graphName="ggsnCompletedActivation"/>
+		<MonitorProfileAssociation graphName="ggsnCompletedDeactivation"/>
+		<MonitorProfileAssociation graphName="ggsnGtpControlPacketDrops"/>
+		<MonitorProfileAssociation graphName="ggsnGtpErrorIndicationReceived"/>
+		<MonitorProfileAssociation graphName="ggsnGtpNbrOfTunnels"/>
+		<MonitorProfileAssociation graphName="ggsnNbrOfActivePdpContexts"/>
+	</MonitorProfile>
+	
+	<!-- Server Priority Monitors-->
+	<MonitorProfile profileName="Server_Default_NetSNMP_MonitorProfile" description="Default Priority Monitors for Servers" isDefault="true">
+		<MonitorProfileAssociation graphName="NetSNMPCPUUtilization"/>
+		<MonitorProfileAssociation graphName="NetSNMPCPUUtilizationRaw"/>
+		<MonitorProfileAssociation graphName="NetSNMPMemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Server_Default_HostResource_MonitorProfile" description="Default Priority Monitors for Servers" isDefault="true">
+		<MonitorProfileAssociation graphName="AristaMemoryUsage"/>
+		<MonitorProfileAssociation graphName="Win-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="Win-MemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Infoblox_Server_MonitorProfile" description="Priority Monitors for Infoblox" isDefault="true">
+		<MonitorProfileAssociation graphName="IBCPUUtilization"/>
+		<MonitorProfileAssociation graphName="IBMemoryUtilization"/>
+	</MonitorProfile>
+		
+	<MonitorProfile profileName="Avaya_Server_MonitorProfile" description="Priority Monitors for Avaya" isDefault="true">
+		<MonitorProfileAssociation graphName="s5ChasTotalCPUUtilization"/>
+		<MonitorProfileAssociation graphName="s5ChasUtilMemoryUtilization"/>
+	</MonitorProfile>
+		
+	<MonitorProfile profileName="Linux_Server_MonitorProfile" description="Priority Monitors for Linux" isDefault="true">
+		<MonitorProfileAssociation graphName="Lin-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="Lin-MemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Cisco_Server_MonitorProfile" description="Priority Monitors for Cisco" isDefault="true">
+		<MonitorProfileAssociation graphName="CiscoMemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Nortel_Networks_Server_MonitorProfile" description="Priority Monitors for Nortel Networks" isDefault="true">
+		<MonitorProfileAssociation graphName="s5ChasTotalCPUUtilization"/>
+		<MonitorProfileAssociation graphName="s5ChasUtilMemoryUtilization"/>
+	</MonitorProfile>
+		
+	<MonitorProfile profileName="SUN_Server_MonitorProfile" description="Priority Monitors for SUN" isDefault="true">
+		<MonitorProfileAssociation graphName="Lin-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="Win-MemoryUtilization"/>
+		<MonitorProfileAssociation graphName="DiskUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="IBM_Server_MonitorProfile" description="Priority Monitors for IBM" isDefault="true">
+		<MonitorProfileAssociation graphName="Win-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="dpStatusCPUUtilizationtenSeconds"/>
+		<MonitorProfileAssociation graphName="Win-MemoryUtilization"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="3Com_Server_MonitorProfile" description="Priority Monitors for 3Com" isDefault="true">
+		<MonitorProfileAssociation graphName="hwMemFree"/>
+	</MonitorProfile>
+	
+	<MonitorProfile profileName="Dell_Server_MonitorProfile" description="Priority Monitors for Dell Inc." isDefault="true">
+		<MonitorProfileAssociation graphName="Win-CPUUtilization"/>
+		<MonitorProfileAssociation graphName="Win-MemoryUtilization"/>
+	</MonitorProfile>
+		
+	<VendorToMonitorProfile profileName="Juniper_MonitorProfile" vendorName="Juniper"/>
+	<VendorToMonitorProfile profileName="Cisco_MonitorProfile" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="CiscoEnergywise_MonitorProfile_Parent" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="CiscoVPN_MonitorProfile_Parent" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="CiscoNexus_MonitorProfile_Parent" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="CiscoEnvironment_MonitorProfile_Parent" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="CiscoMeraki_MonitorProfile_Parent" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="CiscoIronPort_MonitorProfile_Parent" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="CiscoAirespace_MonitorProfile_Parent" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="CiscoOSPF_MonitorProfile_Parent" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="Xerox_MonitorProfile" vendorName="Xerox"/>
+	<VendorToMonitorProfile profileName="Huawei_MonitorProfile" vendorName="Huawei"/>
+	<VendorToMonitorProfile profileName="H3C_MonitorProfile" vendorName="H3C"/>
+	<VendorToMonitorProfile profileName="Citrix_MonitorProfile" vendorName="Citrix Systems, Inc."/>
+	<VendorToMonitorProfile profileName="IBM_MonitorProfile" vendorName="IBM"/>
+	<VendorToMonitorProfile profileName="Dell_MonitorProfile" vendorName="Dell Inc."/>
+	<VendorToMonitorProfile profileName="Hewlett_MonitorProfile" vendorName="Hewlett-Packard"/>
+	<VendorToMonitorProfile profileName="Barracuda_MonitorProfile" vendorName="Barracuda"/>
+	<VendorToMonitorProfile profileName="Compaq_MonitorProfile" vendorName="Compaq"/>
+	<VendorToMonitorProfile profileName="NetApp_MonitorProfile" vendorName="NetApp"/>
+	<VendorToMonitorProfile profileName="Aruba_MonitorProfile" vendorName="Aruba"/>
+	<VendorToMonitorProfile profileName="Brocade_MonitorProfile" vendorName="Brocade"/>
+	<VendorToMonitorProfile profileName="F5Networks_MonitorProfile" vendorName="F5 Networks"/>
+	<VendorToMonitorProfile profileName="Fortigate_MonitorProfile" vendorName="Fortinet"/>
+	<VendorToMonitorProfile profileName="Checkpoint_MonitorProfile" vendorName="CheckPoint"/>
+	<VendorToMonitorProfile profileName="APC_MonitorProfile" vendorName="APC"/>
+	<VendorToMonitorProfile profileName="Alcatel_MonitorProfile" vendorName="Alcatel"/>
+	<VendorToMonitorProfile profileName="Riverbed_MonitorProfile" vendorName="Riverbed Technology, Inc."/>
+	<VendorToMonitorProfile profileName="Emerson_MonitorProfile" vendorName="Emerson"/>
+	<VendorToMonitorProfile profileName="Motorola_MonitorProfile" vendorName="Motorola"/>
+	<VendorToMonitorProfile profileName="Radware_MonitorProfile" vendorName="Radware"/>
+	<VendorToMonitorProfile profileName="SOCOMEC_MonitorProfile" vendorName="SOCOMEC UPS"/>
+	<VendorToMonitorProfile profileName="Sharp_MonitorProfile" vendorName="Sharp"/>
+	<VendorToMonitorProfile profileName="A10Networks_MonitorProfile" vendorName="A10 Networks"/>
+	<VendorToMonitorProfile profileName="Bluecoat_MonitorProfile" vendorName="Blue Coat Systems, Inc."/>
+	<VendorToMonitorProfile profileName="Cyberoam_MonitorProfile" vendorName="Cyberoam"/>
+	<VendorToMonitorProfile profileName="TrippLite_MonitorProfile" vendorName="TrippLite"/>
+	<VendorToMonitorProfile profileName="PaloAlto_MonitorProfile" vendorName="Palo Alto Networks"/>
+	<VendorToMonitorProfile profileName="YAMAHA_MonitorProfile" vendorName="YAMAHA"/>
+	<VendorToMonitorProfile profileName="Eaton_MonitorProfile" vendorName="Eaton"/>
+	<VendorToMonitorProfile profileName="RIM_MonitorProfile" vendorName="Research In Motion"/>
+	<VendorToMonitorProfile profileName="Canon_MonitorProfile" vendorName="CANON Inc."/>
+	<VendorToMonitorProfile profileName="Extreme_MonitorProfile" vendorName="Extreme"/>
+	<VendorToMonitorProfile profileName="Forcepoint_MonitorProfile" vendorName="Forcepoint"/>
+	<VendorToMonitorProfile profileName="Aerohive_MonitorProfile" vendorName="Aerohive Networks"/>
+	<VendorToMonitorProfile profileName="MaAfee_MonitorProfile" vendorName="McAfee"/>
+	<VendorToMonitorProfile profileName="Schneider_MonitorProfile" vendorName="Schneider"/>
+	<VendorToMonitorProfile profileName="Avaya_MonitorProfile" vendorName="Avaya"/>
+	<VendorToMonitorProfile profileName="Panasonic_MonitorProfile" vendorName="Panasonic"/>
+	<VendorToMonitorProfile profileName="Alvarion_MonitorProfile" vendorName="Alvarion"/>
+	<VendorToMonitorProfile profileName="Crossbeam_MonitorProfile" vendorName="Crossbeam"/>
+	<VendorToMonitorProfile profileName="ZhongXing_MonitorProfile" vendorName="ZhongXing"/>
+	<VendorToMonitorProfile profileName="3Com_MonitorProfile" vendorName="3Com"/>
+	<VendorToMonitorProfile profileName="ArborNetworks_MonitorProfile" vendorName="Arbor Networks"/>
+	<VendorToMonitorProfile profileName="Ericsson_MonitorProfile" vendorName="Ericsson"/>
+	
+	<!-- Server Priority Monitor Mappings -->
+	<VendorToMonitorProfile profileName="Infoblox_Server_MonitorProfile" vendorName="Infoblox"/>
+	<VendorToMonitorProfile profileName="Avaya_Server_MonitorProfile" vendorName="Avaya"/>
+	<VendorToMonitorProfile profileName="Linux_Server_MonitorProfile" vendorName="Linux"/>
+	<VendorToMonitorProfile profileName="Cisco_Server_MonitorProfile" vendorName="Cisco"/>
+	<VendorToMonitorProfile profileName="Nortel_Networks_Server_MonitorProfile" vendorName="Nortel Networks"/>
+	<VendorToMonitorProfile profileName="SUN_Server_MonitorProfile" vendorName="SUN"/>
+	<VendorToMonitorProfile profileName="IBM_Server_MonitorProfile" vendorName="IBM"/>
+	<VendorToMonitorProfile profileName="3Com_Server_MonitorProfile" vendorName="3Com"/>
+	<VendorToMonitorProfile profileName="Dell_Server_MonitorProfile" vendorName="Dell Inc."/>
+
+	<!--<MonitorProfile profileName="Microsoft_MonitorProfile_Parent" description="Priority Monitors for Microsoft g" isDefault="true">
+		<MonitorProfileAssociation graphName="SysUpTime"/>
+	</MonitorProfile>
+	<MonitorProfile profileName="Microsoft_MonitorProfile_Child" description="Priority Monitors for Microsoft g" isDefault="true" parentProfile="Microsoft_MonitorProfile_Parent">
+		<MonitorProfileAssociation graphName="SysUpTime"/>
+		<MonitorProfileAssociation graphName="ProcessCount"/>
+	</MonitorProfile>
+	<VendorToMonitorProfile profileName="Microsoft_MonitorProfile_Parent" vendorName="Microsoft"/>-->
+</MonitorProfiles>

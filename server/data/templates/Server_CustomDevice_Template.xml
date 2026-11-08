@@ -1,0 +1,2173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+
+<CustomDevicePackageSet Category="Server" Vendor="Schweitzer Engineering Laboratories" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="SEL-3610">
+        <SysOIDs>
+            <SysOID oid="1.3.6.1.4.1.31823.1.3610"/>
+        </SysOIDs>
+  </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="3Com" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="3Com SuperStack TR Adv RMON Agent Ver F3.10.0">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.260.1.100"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="APC" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="APC AP9619">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="APC NetBotz 420 Wall">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2001"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz 420 Rack">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2003"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz 320 Rack">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2005"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz 420E Rack">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2006"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz 320E Rack">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2007"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC NetBotz 320E Wall">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2012"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Acgate" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Acgate Octel-200 Voice Mail System">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.662.1.1.7.28.4.0.0"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Adva" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Adva FSP 2000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2544.1.7.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Alcatel" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Alcatel Voice Device">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.637.64.4400.1.1.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Allen-Bradley" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Allen-Bradley 1756-ENET">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.95.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Alpha" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Alpha AlphaServer 4100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.36.2.15.13.6.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Avaya" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Avaya Security Gateway 203 3DES Encryption">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1866.1.17"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya IP Office 401">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.2.1.5.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya IP Office 403">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.2.1.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya IP Phone 4610">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.69.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya IP Phone 4612">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.69.1.2"/>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.69.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya IP Phone 4624">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.69.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya IP600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1751.1.49"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya SG200 Security Gateway">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1866.1.14"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya SG5X Security Gateway">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1866.1.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya VPNet Service 100 3DES Encryption">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1866.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya VPNet Service 10000 3DES Encryption">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1866.1.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya VPNet Service 208 3DES Encryption">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1866.1.18"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya VSU-2000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1866.1.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya VSU-5000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1866.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya s8500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avaya IP Office IP500 V2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.2.1.10.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Server" Vendor="Avocent Corporation" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Avocent DSR2020">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10418.7.1.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avocent DSR4020">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10418.7.1.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Avocent ACS6032">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10418.16.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avocent ACS6008">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10418.16.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avocent ACS6048">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10418.16.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Avocent ACS8048">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10418.26.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Blue Coat" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Blue Coat Director">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.2.0"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Blue Coat SG600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.1.31"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Blue Coat AV2400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3417.1.3.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="BlueCat" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="BlueCat Adonis Server">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13315.100.101"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="BlueCat Proteus">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13315.100.200"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="CanogaPerkins" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="CanogaPerkins 8835 Fiber Optic Repeater">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.919.1.1.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Server" Vendor="Cisco" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cisco Umbrella VA">
+    	<SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.8072.3.2.10.ciscoVA"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco UCS C220 M5">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2492"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ISE 3315 K9">
+      <SysOIDs>
+          <SysOID oid=".1.3.6.1.4.1.9.1.1423"/>
+      </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CDM-4630">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.486"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CDM-4650">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.487"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CE-2636">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.454"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco DPA 7610">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.381"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco DPA 7630">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.365"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ICM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.693"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco MCS-7815I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.582"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco MCS-7825H">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.583"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco MCS-7835H">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.584"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco MCS-7845I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.587"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco MeetingPlace Express">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.710"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NAMApp2220">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1033"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NM-CUE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.622"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Pwr C2935Poe DC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.9999"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco TerminalServer">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WLSE 1130">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.630"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco WLSE1133">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.752"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco-NmWae">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.823"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco UCS C220 M4S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2178"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco UCS C200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1512"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco UCS C210">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1513"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Sce8000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.913"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Isevmk9">
+      <SysOIDs>
+          <SysOID oid=".1.3.6.1.4.1.9.1.1426"/>
+      </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco SNS 3415 K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2140"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ISE SNS-3515-K9">
+      <SysOIDs>
+          <SysOID oid=".1.3.6.1.4.1.9.1.2265"/>
+      </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Secure Network Server 3595">
+      <SysOIDs>
+          <SysOID oid=".1.3.6.1.4.1.9.1.2266"/>
+      </SysOIDs>
+    </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Cisco UCS C240 M5">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2493"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Server" Vendor="Cyclades" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cyclades AlterPath ACS48">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2925.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Cylink" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cylink Frame Encryptor">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.687"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cylink SNMP Agent">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.687.2.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="DEC" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="DEC DECserver700-08">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.36.2.15.5.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DEC DECserver700-16">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.36.2.15.6.6.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DEC DECserver716">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6200.1.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DEC DECserver900TM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.36.2.15.6.7.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="DEC DECserver90M">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.36.2.15.6.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="EMC" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="EMC Celerra">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1139"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC Clarion IP4700 File Server">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.106.1.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="EMC EDL710R0275">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7368.5.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="F5 Networks" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="F5 Networks FirePass 1200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.37"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks FirePass 4100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.38"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="F5 Networks FirePass 4300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.39"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="FW" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="FW FW Rev 1.97">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.321.1.1.0"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="General DataComm" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="General DataComm SNMP553SD-3/IFP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.498.6.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="H3C" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="H3C H3C4GbVCFCModule">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3873.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Hewlett-Packard" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Hewlett-Packard H3CJ2603A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.8.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Onboard-Administrator">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.5.7.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP BladeSystem-SMC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.5.7.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="HP DCM Controller">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.11.102"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP TMS ZL Module">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.11.50.17"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP DTC22">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.3.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP cpqSm2ProdRILO4">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.232.9.4.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP 3COM SUPERSTACKTR">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.260.1.99"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP ARCSIGHT DL380">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4976"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="HP Proliant iLO 4">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.232.9.4.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+   <CustomDevicePackage deviceType="HP iLO5 5 1.20">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.232.9.4.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Server" Vendor="Hitachi" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Hitachi 9900 Raid Array">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.116.3.11.4.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Hubbell-Pulsecom" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Hubbell-Pulsecom DSLAM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2218.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Hughes" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Hughes DNCC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.303.3.3.12.1.1.18"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hughes webACS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.303.3.3.12.1.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Server" Vendor="IBM" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="IBM WebSphere Cast Iron">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13336.2.2.1.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM BladeCenter Management Module">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.158.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM Oce digital copier">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.46"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM zSeries">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="IMC Networks" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="IMC Networks AccessEtherLinX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.661.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="ION Networks" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="ION Networks 3100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1476.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="IQinVision" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="IQinVision IQeye1">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3720.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="ITWatchDogs" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="ITWatchDogs SuperGoose">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.901.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Lantronix" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Lantronix ETS16PR">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.244.24"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Liebert" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Liebert UPS AP311/312">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.476.1.1.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Linux" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Linux Linux host">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2312"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP BSD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP H3CUX10">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP H3CUX11">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.14"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP H3CUX9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP IRIX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP NETBSD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP OPENBSD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP OSF">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP SUNOS4">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP ULTRIX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP Unknown">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.255"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux Net-SNMP WIN32">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux NetBotz">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.100.20.10.2000"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux linuxEMANATEMasterAgent">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.99.1.1.3.28"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="MGE" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="MGE UPS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.705.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  
+<CustomDevicePackageSet Category="Server" Vendor="Micromuse" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Micromuse Generic Agent">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1977.1.6.1279.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  
+<CustomDevicePackageSet Category="Server" Vendor="Mirapoint" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Mirapoint M300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3246.254.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="NCR" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NCR MP-RAS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.607.1.5.1.0"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="NEC" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NEC NC Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.2.3.123"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="NetBotz" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NetBotz RackBotz 303 Appliance">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.30.1006"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetBotz WallBotz 310 Appliance">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5528.30.1007"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="NetScout" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NetScout 9981PET">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.9981"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout NetScout 6910">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.6910"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Server" Vendor="NetScout" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NetScout 4910">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.4910"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout 9320">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.9320"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NetScout 9903RET">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.141.1.1.9903"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Network Appliance" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NetApp Release 5.3.4R392">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.789.1.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Network Associates" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Net Sniffer Pro 3.0">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3401.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Niksun" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Niksun NetCVR RMON Device">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5713.1.1.2.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Nokia" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Nokia WAP Server">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.94.1.33"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Nortel" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Nortel DMSSupernode">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.562.4.2.1"/>
+            <SysOID oid=".1.3.6.1.4.1.562.4.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel ITG">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.562.3.11.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel Voice Gateway Media Card">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.562.3.11.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Nuera" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Nuera F200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1550.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Omnitron" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Omnitron Media Converter">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7342.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Omnitronix" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Omnitronix SL10">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3052.40"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Paradyne" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Paradyne T1 CSU/DSU">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1795"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Paradyne T1 DSU/CSU">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1795.1.14.2.5.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Paradyne T3 DSU/CSU Model 9580">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1795.1.14.2.4.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Peribit" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Peribit SM-500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Peribit SR-100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8239.1.2.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Perle" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Perle Iolan rack Terminal Server">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.441"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="PowerDsine" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="PowerDsine PoE PD-6506">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7428.1.1.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="PowerDsine PoE PD-6512">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7428.1.1.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="PowerDsine PoE PD-6524">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7428.1.1.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Powerware" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Powerware ConnectUPS Adapter">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.534.2.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Precidia" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Precidia Ether3201-202">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6664.10.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="QMS-Inc." iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="QMS 3225 Print System">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.480"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Quantum" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Quantum 140-NOE-771-00">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3833.1.7.255.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Quick Eagle" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Quick Eagle DL3800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.300.102"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Radware" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Radware CT100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.89.1.1.62.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="SUN" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="SUN ss73vnvnc02">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.42.2.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="SUN ss73vnvsm01">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.42.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Sun SunFire">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.42.2.70"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sun T300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.42.1.2.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="ServerTech" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="ServerTech MSSLite">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1718.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="SilverPeak" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="SilverPeak MX960">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.23867.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Sitara" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Sitara QoS Works">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2302"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Specialix" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Specialix JETSTREAM 8500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.667.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Spectracom" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Spectracom GPS NTP Server">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1723.2.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>  
+  <CustomDevicePackageSet Category="Server" Vendor="Tandem NonStop" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Tandem NonStop NonStop Kernel System Version: G6">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.169.3.155.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Transition Networks" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Transition Networks E-MCC-1600 Media Converter">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.868.1.4.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="UB" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="UB NIU">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.75.5.3"/>
+            <SysOID oid=".1.3.6.1.4.1.75.5.55"/>
+            <SysOID oid=".1.3.6.1.4.1.75.5.71.8.256.43.256"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="USHApro" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="USHApro Card v4.3">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2468.1.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Unisys" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Unisys ClearPath HMP NX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.223.16"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="UnixSystem" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="UnixSystem Unix System V Release 4.2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.607.1.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Vegastream" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Vegastream 400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4686.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Visual Networks" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Visual Networks T1 CSU ASE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1246.1.1.1134"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="WavePOINT-II" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="WavePOINT-II SN-00UT01200771 V3.20">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.762.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="Xyplex" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Xyplex CSERV-20">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.33.8.1.4.5"/>
+            <SysOID oid=".1.3.6.1.4.1.33.8.1.5.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xyplex IN-Reach Manager-Soft-V3.1">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.33.8.1.131.0"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xyplex UNIX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.33.8.1.4.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Server" Vendor="eComServer" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="eComServer NetWatch">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1764.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <!-- CustomDevicePackageSet iconName="Server.png" pingInterval="15" Category="Server" Vendor="Dell">
+        <CustomDevicePackage deviceType="Dell PowerEdge C4140">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                    <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="C4140"/>
+                </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge C6320p">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="C6320p"/>
+                  </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge C6420">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="C6420"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge FC430">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="FC430"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge FC630">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="FC630"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge FC640">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="FC640"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge FC830">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="FC830"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge FD332">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="FD332"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge FX2s">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.2">
+		       <RULES customOid=".1.3.6.1.4.1.674.10892.2.1.1.10.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="FX2s"/>
+	   	   </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge M420">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="M420"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge M600">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="M600"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge M610">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="M610"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge M620">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="M620"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge M630">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="M630"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge M640">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="M640"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge M830">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="M830"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge M1000e">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.2">
+		      <RULES customOid=".1.3.6.1.4.1.674.10892.2.1.1.10.0" operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="M1000"/>
+		  </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge MX740c">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="MX740c"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge MX840c">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="MX840c"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge MX5016s">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="MX5016s"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge MX7000">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="MX7000"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R430">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R430"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R440">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R440"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R520">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R520"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R540">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R540"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R620">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R620"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R630">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R630"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R640">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R640"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R720">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R720"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R720xd">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R720xd"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R730">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R730"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R730xd">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R730xd"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R740">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R740"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R740xd">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R740xd"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R830">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R830"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R840">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R840"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R930">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R930"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R940">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R940"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R940xa">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R940xa"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Dell PowerEdge R7425">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                      <RULES customOid=".1.3.6.1.4.1.674.10892.5.1.3.12.0" operatorDispName="webclient.admin.ruleaction.operator.endswith" operatorID="12" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue="R7425"/>
+                    </SysOID>
+            </SysOIDs>
+        </CustomDevicePackage>
+   </CustomDevicePackageSet-->
+   
+   <CustomDevicePackageSet Category="Server" Vendor="Fujitsu" iconName="Server.png" pingInterval="15">
+     <CustomDevicePackage deviceType="Fujitsu iRMC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.231.1.28.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM EX1100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM EX1200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM EX2000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM EX2000D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM EX2200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM EX2200D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM L1410 STEP2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM L1420 STEP2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM S1000 S1200 S1400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM S2000 S2200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu IPCOM S2400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.4.1.3.50.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu PRIMERGY PG SW112">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.231"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Lenovo" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Lenovo XCC Server">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19046.11.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="MicroAqua Network system" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="APEM-5900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.34672"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Cyclades" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cyclades Acs5000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2925.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Infoblox" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Infoblox 1000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1101"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1102"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1103"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 550">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1201"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1050">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1202"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1550">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1203"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1552">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1204"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 2000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1205"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 250">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1206"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1220">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1207"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 550-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1301"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1050-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1302"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1550-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1303"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1552-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1304"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox I1852-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1305"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 250-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1306"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 2000-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1307"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 820">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1402"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1410">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1403"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1420">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1404"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 1400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1405"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Infoblox 2220">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7779.1.1413"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="InfoBlox IB 1425">
+          <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.7779.1.1504"/>
+          </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Microsoft" iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="WindowsNT">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.311.1.1.3.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Opengear" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Opengear OGI-M4216">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25049.1.60"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+     <CustomDevicePackage deviceType="Opengear ogACM500x">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25049.1.80"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Perle IOLAN" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Perle IOLAN Sds">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1966.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Server" Vendor="Vnetek" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Vnetek DEC90M">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6200.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Vnetek DEC732">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6200.1.2.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Digi International" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Digi PortServer">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.332.11.5.3.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Moxa" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Moxa NP 5000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8691.2.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="ELTEK" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="ELTEK SmartPack Sys">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12148.8"/>
+            <SysOID oid=".1.3.6.1.4.1.12148.9"/>
+        </SysOIDs>
+       </CustomDevicePackage>
+        <CustomDevicePackage deviceType="ELTEK SmartPack2 and Compack eNexus">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12148.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <!--CustomDevicePackageSet Category="Server" Vendor="Dell Inc." iconName="Server.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Dell PowerEdge M1000e">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10892.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet-->
+ <CustomDevicePackageSet Category="Server" Vendor="Foxtech" iconName="default.png" pingInterval="15">
+     <CustomDevicePackage deviceType="Foxtech NVR Device">
+         <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.1004849.3.2.10"/>
+         </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Server" Vendor="Dell Inc." iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Dell PowerEdge MX7000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10892.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell PowerEdge iDRAC">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.5">
+                    </SysOID>
+            </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell PowerEdge CMC">
+            <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.674.10892.2">
+                    </SysOID>
+            </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="AVTECH" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="AVTECH TemPageR 4E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20916.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Fortinet" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Fortinet FortiProxy 400E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.109.1.10405"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet Fortimail VM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.105"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fortinet FortiAnalyzer VM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.12356.103.3.64"/>
+        </SysOIDs>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fortinet FortiManager VM">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.12356.103.1.64"/>
+	    <SysOID oid=".1.3.6.1.4.1.12356.103.1.1001"/>
+        </SysOIDs>
+	</CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="MITEL" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="MITEL MAS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1027.1.6.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Polycom" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Polycom View Station">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2684.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet> 
+  <CustomDevicePackageSet Category="Server" Vendor="Supermicro" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Supermicro Server">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10876.SuperMicro"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Broadpeak" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Broadpeak Bks350">
+        <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.40643.1"/>
+		<SysOID oid=".1.3.6.1.4.1.40643.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Affirmed" iconName="default.png" pingInterval="15">
+      <CustomDevicePackage deviceType="Affirmed AN3000">
+          <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.37963"/>
+          </SysOIDs>
+      </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+ <CustomDevicePackageSet Category="Server" Vendor="Oracle" iconName="default.png" pingInterval="15">
+     <CustomDevicePackage deviceType="Oracle Sparc ILOM">
+         <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.42.2.200.2.1.1"/>
+         </SysOIDs>
+     </CustomDevicePackage>
+ </CustomDevicePackageSet>
+ 
+ <CustomDevicePackageSet Category="Server" Vendor="HPE" iconName="default.png" pingInterval="15">
+     <CustomDevicePackage deviceType="HPE OpenVMS">
+         <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.36.2.15.22.1"/>
+         </SysOIDs>
+     </CustomDevicePackage>
+ </CustomDevicePackageSet>
+ 
+ <CustomDevicePackageSet Category="Server" Vendor="Entrust" iconName="default.png" pingInterval="15">
+     <CustomDevicePackage deviceType="Entrust RFS">
+         <SysOIDs>
+             <SysOID oid=".1.3.6.1.4.1.7682.2"/>
+         </SysOIDs>
+     </CustomDevicePackage>
+ </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Server" Vendor="Symantec" iconName="default.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Symantec Blue Coat SG-VA Series">
+	    <SysOIDs>
+		    <SysOID oid=".1.3.6.1.4.1.3417.1.1.30"/>
+	    </SysOIDs>
+	</CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+	<CustomDevicePackageSet Category="Server" Vendor="MITEL" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="MITEL 3300 ICP">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.1027.1.2.3" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Perle" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Perle IOLAN DS1">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.1966.13" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Symantec" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage
+			deviceType="Symantec Management center">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.14501.6" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="NetScout" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="NetScout 4595D">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.141.1.1.4595" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="NetScout InfiniStream-6990C">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.141.1.1.6990" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="D-Link" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="D-Link DNS-343">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.171.50.1.4.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Raritan" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Raritan KVM">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.13742.3.2.10" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Symantec" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="BlueCoat SG KVM">
+                    <SysOIDs>
+                        <SysOID oid=".1.3.6.1.4.1.3417.1.1.44"/>
+                    </SysOIDs>
+                </CustomDevicePackage>
+		<CustomDevicePackage deviceType="BlueCoat SG XEN">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.3417.1.1.43" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Bluecoat CAS S500">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.3417.1.4.2" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Opengear" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Opengear CM71xx">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.25049.1.11" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Opengear ACM700x">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.25049.1.90" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Moxa" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Moxa NPort 6000 serie">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.8691.2.8" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Digi International" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Digi CM Server">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.332" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Polycom" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Poly RMX2000">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.13885.9.1.10.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Sonus Networks" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Sonus Ribbon SBC">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.2879.1.9.7" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Cisco" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cisco ISE SNS-3615-K9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2784"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco MCS7816I">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.898" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco Tandberg Telepresence">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.5596.10.6.4.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco MCS7828I">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.899" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco UCS C460">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.1516" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco UCS C250">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.1514" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco Telepresence Conductor">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.5596.180.6.4.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco QvPC-DI">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.12.3.1.3.1585" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco Flow Agent 300">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.1539" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco Unified SIP Proxy">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.2352" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco CA Manager">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.1143" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco WebEx Meeting Server">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.9.809.1.1.2" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco TelePresence MCU 5310">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.1540" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco UCS E160D M2K9">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.2183" />
+			</SysOIDs>
+		</CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ISE3395">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.1424" />
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Identity Services Engine">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.1425" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.3270" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.3271" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.3272" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.1423" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.1424" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.2139" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.2266" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.2265" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.2784" />
+                <SysOID oid=".1.3.6.1.4.1.9.1.1426" />
+            </SysOIDs>
+        </CustomDevicePackage>
+		<CustomDevicePackage deviceType="Cisco IDS">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9.1.352" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Hewlett-Packard" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Hewlett-Packard Teradici Server">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.25071.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Infoblox" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Infoblox VNIOS">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.7779.1.1004" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Infoblox IB-1415">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.7779.1.1503" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Infoblox 1405">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.7779.1.1507" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Infoblox ND-1405">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.7779.1.1542" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Avaya" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage
+			deviceType="Avaya Aura Media Server">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.6889.1.58" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Avaya Aura Messaging Host">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.6889.2.42.3.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Avaya Aura System Manager">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.6889.1.35" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Huawei" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Huawei iBMC">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.2011.2.235" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Fortinet" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Fortinet FortiManager 1000F">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.12356.103.1.10006" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Fortinet FortiGate FOSVM64">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.12356.101.1.90000" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Fortinet FortiWeb-HyperV">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.12356.107.1.50005" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Spectracom" iconName="default.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Spectracom SecureSync">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.18837" />
+				<SysOID oid=".1.3.6.1.4.1.18837.3.2" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="Server" Vendor="Trend Micro" iconName="default.png" pingInterval="15">
+	  <CustomDevicePackage deviceType="Trend Micro TippingPoint SMS H3">
+              <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.10734.1.4.11"/>
+              </SysOIDs>
+	  </CustomDevicePackage>
+	  <CustomDevicePackage deviceType="Trend Micro TippingPoint vSMS">
+              <SysOIDs>
+                  <SysOID oid=".1.3.6.1.4.1.10734.1.4.7"/>
+              </SysOIDs>
+          </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Server" Vendor="Genetec" iconName="default.png" pingInterval="15">
+      <CustomDevicePackage deviceType="Genetec IP VMS">
+          <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.17475"/>
+          </SysOIDs>
+      </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Server" Vendor="Libraesva" iconName="default.png" pingInterval="15">
+      <CustomDevicePackage deviceType="Libraesva ESG">
+          <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.41091.1.1"/>
+          </SysOIDs>
+      </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Server" Vendor="Apple" iconName="default.png" pingInterval="15">
+      <CustomDevicePackage deviceType="Mac OS">
+          <SysOIDs>
+              <SysOID oid="MacOS"/>
+          </SysOIDs>
+      </CustomDevicePackage>
+    </CustomDevicePackageSet>
+</CustomDevicePackage>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="IronportId">
+   <InteractionSpec timeout="60000" protocol="CLI" interactionid="cisco_iron_port_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="showconfig">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="show_iron_port_running" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="cisco_iron_port_hardware_prop_parser">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_iron_port_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="version">
+	<CLIInputRecord parsercommandname="hardware_prop_cisco_iron_port" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="cisco_iron_port_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="NEC QX 31XX Switch" displayName="NEC QX 31XX Switch" osType="Comware Platform Software" templateName="NEC_QX_31XX_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="NEC" vendorName="NEC">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="info" number="4" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="screen length disable" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="90000" promptactionid="necActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display saved-configuration" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="90000" promptactionid="necActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="screen length disable" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="90000" promptactionid="necActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display current-configuration" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="90000" promptactionid="necActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="save" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="90000" promptactionid="necActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="NEC QX31XX Switch" personalityName="NECQX31XXSwitch">	
+		<Login enablecommand="" suffix="${CRLF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BOOTROM_VER" size="100" desc="Bootrom Version" displayname="Bootrom Version" defaultvalue="Not Available" sequenceid="10"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="NECQX31XXHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+
+						<COMMAND NAME="hardware_prop_nec_qx31xx">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+
+										<REGEX EXPRESSION=".*Comware\s*Software,\s*Version\s*(\S*)" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX EXPRESSION=".*Bootrom\s*Version\s*is\s*(\S*)" NAME="BOOTROM_VER">
+											<PARAM NAME="BOOTROM_VER" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX EXPRESSION=".*DEVICE_SERIAL_NUMER\s*:\s*(\S*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>    
+										</REGEX> 
+
+										<REGEX EXPRESSION=".*MAC_ADDRESS\s*:\s*(\S*)" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>    
+										</REGEX>
+										
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display device manuinfo" parsercommandname="hardware_prop_nec_qx31xx" responseparserid="nec_qx31xx_hardware_prop_parser" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" timeout="20000" promptactionid="necActionId"/>
+						<Command commandstr="display version" parsercommandname="hardware_prop_nec_qx31xx" responseparserid="nec_qx31xx_hardware_prop_parser" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" timeout="20000" promptactionid="necActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

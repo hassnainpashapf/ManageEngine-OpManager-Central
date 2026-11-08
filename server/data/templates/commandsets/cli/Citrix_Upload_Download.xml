@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--  $Id$ -->
+
+<CLICommandList>
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="citrix_cli_ispec"/>
+    </CLIInteractionSpec>
+
+ <!-- backup running-config -->
+    
+    <CLICommand command="scp /nsconfig/ns.conf ${UserInput:scp_username}@${UserInput:scp_server_address}:${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_cli_fetch_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+ <!-- Telnet/SSH backup -->
+
+    <CLICommand command="sh run">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_cli_run_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+   
+    <!-- Upload file config -->
+    <CLICommand command="scp ${UserInput:scp_username}@${UserInput:scp_server_address}:${UserInput:file_name} /nsconfig/ns.conf">
+          <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+               <Record type="CLI" recordid="citrix_cli_push_rec" protocol="CLI"/>
+          </CLIInputRecord>
+    </CLICommand>
+
+ 
+    <!-- Hardware Properties -->
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="#" commandecho="false" promptecho="true" responseparserid="citrix_hardware_prop_parser" promptactionid="yesActionId">
+            <InteractionSpec timeout="20000" protocol="CLI" interactionid="citrix_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="sysctl -a netscaler">
+        <CLIInputRecord parsercommandname="citrix_hardware_prop_parser" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_hardware_prop_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+     <CLICommand command="shell">
+        <CLIInputRecord  messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_shell_prompt" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+     <CLICommand command="exit">
+        <CLIInputRecord  messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_shell_exit" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+	
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="citrix_netscaler_mpx_cli_ispec"/>
+    </CLIInteractionSpec>
+	
+ <!-- SSH backup -->
+
+    <CLICommand command="echo ------ CONTENTS OF /nsconfig/ns.conf ------ > Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="cat /nsconfig/ns.conf >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec2" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="echo ------ CONTENTS OF /nsconfig/rc.netscaler ------ >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec3" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="cat /nsconfig/rc.netscaler >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec4" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="echo ------ CONTENTS OF /nsconfig/ntp.conf ------ >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec5" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="cat /nsconfig/ntp.conf >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec6" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="echo ------ CONTENTS OF /var/Download/mapping-custom ------ >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec7" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="cat /var/Download/mapping-custom >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec8" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="echo ------ CONTENTS OF /var/Download/mapping-htmlerrorpage ------ >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec9" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="cat /var/Download/mapping-htmlerrorpage >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec10" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="echo ------ CONTENTS OF /var/Download/custom_signatures ------ >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec11" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="cat /var/Download/custom/custom_signatures >> Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec12" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="cat Cirtix_mpx_backupfile.txt">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec13" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_cli_run_rec14" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+	
+ 
+    <!-- Hardware Properties -->
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="#" commandecho="false" promptecho="true" responseparserid="citrix_netscaler_mpx_hardware_prop_parser" promptactionid="yesActionId">
+            <InteractionSpec timeout="20000" protocol="CLI" interactionid="citrix_netscaler_mpx_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="sysctl -a netscaler">
+        <CLIInputRecord parsercommandname="hardware_prop_citrix_netscaler_mpx" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_hardware_prop_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+     <CLICommand command="shell">
+        <CLIInputRecord  messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_shell_prompt" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+     <CLICommand command="exit">
+        <CLIInputRecord  messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="citrix_netscaler_mpx_shell_exit" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+</CLICommandList>
+

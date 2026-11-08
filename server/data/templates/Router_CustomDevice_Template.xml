@@ -1,0 +1,2883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+
+<CustomDevicePackageSet Category="Router" Vendor="AI" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="AI AI194">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.539.2.194.7.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Router" Vendor="Adtran" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Adtran 908e">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.664.1.989"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Adtran Net Vanta 3448">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.664.1.877"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="ALAXALA" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="ALAXALA AX2000R">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.21839.1.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="ALAXALA AX7700R">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.21839.1.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="ALAXALA AX7800R">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.21839.1.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Alcatel" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Alcatel PizzaPort">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.800.3.1.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Alcatel-Lucent" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Alcatel-Lucent alcatel7705SAR">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6527.6.1.1.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.6527.6.1.1.2.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Allied Telesyn" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Allied Telesyn AT-3624TR">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Avaya" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Avaya G250-DS1">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.45.103.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Avaya Communication" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Avaya Communication Aura Communication Manager">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6889.1.8.1.58"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Bay" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Bay 5000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.45.3.13.1"/>
+            <SysOID oid=".1.3.6.1.4.1.45.3.21.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Bay BayStack 200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.45.3.31.1"/>
+            <SysOID oid=".1.3.6.1.4.1.45.3.33.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Bay NMM 331XA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.45.3.27.1"/>
+            <SysOID oid=".1.3.6.1.4.1.45.3.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Cabletron" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cabletron MINIMMAC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.52"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cabletron MMAC-44T">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.52.3.9.5.10.68"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cabletron MRXI">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.52.3.2.65569"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cabletron MicroMMAC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.52.3.9.3.4.1"/>
+            <SysOID oid=".1.3.6.1.4.1.52.3.9.3.4.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cabletron SEHI">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.52.3.9.3.4.10"/>
+            <SysOID oid=".1.3.6.1.4.1.52.3.9.3.4.11"/>
+            <SysOID oid=".1.3.6.1.4.1.52.3.9.3.4.34"/>
+            <SysOID oid=".1.3.6.1.4.1.52.3.9.3.4.35"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cabletron TRMM-2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.52.3.2.180"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cabletron TRMM-4">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.52.3.2.183"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cabletron TRMM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.52.3.2.187"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Carrier Access" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Carrier Access caAdit600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.964.3.4.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Router" Vendor="Cisco" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Cisco NCS-55A2-MOD-S">
+          <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.9.1.2571"/>
+	  </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NCS 6008">
+          <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.9.1.1851"/>
+	  </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Catalyst 8300 Series">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2963"/>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2964"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco RV345P">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.6.1.23.3.18.0.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 4461 ISR">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2680"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NCS 5501">
+          <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.9.1.2400"/>
+	  </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NCS 5502">
+	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.9.1.2401"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NCS 5501 SE">
+	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.9.1.2350"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NCS 5502 SE">
+	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.9.1.2351"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NCS 5508">
+	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.9.1.2349"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NCS 55A1-36H-S">
+	<SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2429"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco C1121-4P">
+	<SysOIDs>
+	   <SysOID oid=".1.3.6.1.4.1.9.1.2764"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco Catalyst 8200 Series">
+	<SysOIDs>
+	   <SysOID oid=".1.3.6.1.4.1.9.1.2961"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 900 Series ISR">
+	<SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2708"/>
+	</SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR 9906">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.9.1.2572"/>
+       </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco C921-4PLTEGB">
+       <SysOIDs>
+           <SysOID oid=".1.3.6.1.4.1.9.1.2711"/>
+       </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco IR1101 K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2661"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 9314PK9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2709"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 1111 4P ISR">
+        <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.9.1.2505"/>
+		<SysOID oid=".1.3.6.1.4.1.9.1.2506"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 887VAGW+7-E-K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.12.3.1.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR 901-12C-F-D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1818"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR 901S-2SG-F-D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1820"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR 901S-3SG-F-AH">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1821"/>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1822"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR 901S-3SG-F-D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1819"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 819G4GVK9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1496"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 887VA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1274"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR92-24SZIM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2100"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR920-12-CZ-D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2158"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR920-12-CZA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2157"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR920-24TZM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2101"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR920-4S-ZA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2159"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR920-4S-ZD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2155"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR920-8S-Z0A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2156"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR920-8S-Z0D">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2160"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ASR920">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2062"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco C888K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1857"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CBR-8">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2141"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco NMECUE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.866"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco wsc1000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.5.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 819-GWLTEGA-EK9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2232"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco880">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2057"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco899-LTE-GA-K9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2056"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco IR829-2LTE-EA-BK9">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2410"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco VG202XM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1746"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco VG204XM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1747"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco VG204">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.963"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco VG320">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1770"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco VX310">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1769"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco cisco880 ISR">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.847"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ciscoASR901">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1521"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ciscoVG350">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1557"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco Mxe5600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1175"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco AIRAP702">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1874"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco SM-X-ES3-24-P">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1679"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco vEdge 100 Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.41916.3.2.10"/>
+            <SysOID oid=".1.3.6.1.4.1.41916.3.2.11"/>
+            <SysOID oid=".1.3.6.1.4.1.41916.3.2.6"/>
+            <SysOID oid=".1.3.6.1.4.1.41916.3.2.7"/>
+            <SysOID oid=".1.3.6.1.4.1.41916.3.2.8"/>
+            <SysOID oid=".1.3.6.1.4.1.41916.3.2.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco 1000 series ISR">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2443"/>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2448"/>
+	    <SysOID oid=".1.3.6.1.4.1.9.1.2668"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+</CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Router" Vendor="Digilink" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Digilink DL 3100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.300.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Router" Vendor="EdgewaterNetworks" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="EdgewaterNetworks EM4508 Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.19139.16"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Encore Networks" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Encore Networks Bandit III">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.635.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Ericsson" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Ericsson SSR8004">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2352.1.19"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Router" Vendor="General DataComm" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="General DataComm Xedge 6002">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.251.3.7.16"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="H3C" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="H3C MSR954">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.144"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C 6604-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.67"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C 6604">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.21"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C 6608">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.22"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C 6616-A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.69"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C 6616">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.23"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C A6602">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C A8800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.50"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C HSR 6602-XG">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.66"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR1003-8 AC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.100"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR20-10">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR20-11">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR20-12-W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.28"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR20-13-W-NA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.32"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR20-13">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR20-20">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR20-21">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR20-40">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR2003 AC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.55"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C msr30-10">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR30-11E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR30-11F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR3012 AC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.56"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR3012 DC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.57"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR3024 AC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.58"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR3024 DC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.59"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR3024 PoE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.60"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR3044">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.61"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR3064">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.62"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR4060">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.63"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR4080">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.64"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR50-40">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.18"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR9304GLTEA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.90"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR930G">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.71"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C VSR1000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.102"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C VSR1001 VSR E-LTU">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.97"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C VSR1004 VSR E-LTU">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.98"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C VSR1008 VSR E-LTU">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.99"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C-3com MSR9304GLTEG">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.83"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C-3com MSR930">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.70"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C-3com MSR931">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.74"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C-3com h3c-MSR260010">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.913"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="H3C MSR36-10">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.764"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR56-60">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.771"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR36-20">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.766"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR36-40">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.769"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="H3C MSR2630">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.1.763"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="Hewlett-Packard" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Hewlett-Packard AMSR900">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.25506.11.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP H3CJ3303A">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.5.21"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<!--CustomDevicePackage deviceType="HP Ethertwist12">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP 10basethub12m">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.5.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP 10t100thub24m">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.7.5.23"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Msm310">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Msm710">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.35"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Msm765">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.47"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP E-Msm430">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.54"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP E-Msm466">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.55"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Msm720">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8744.1.56"/>
+        </SysOIDs>
+    </CustomDevicePackage-->
+	<CustomDevicePackage deviceType="HP MSR 1002-4">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.25506.11.2.107"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Router" Vendor="Huawei" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Huawei AR6120">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.224.294"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei R2611">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.1.1.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Huawei USG6350">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.6.133.25"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei AR1220C">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.224.147"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Huawei AR161">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2011.2.224.119"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Hypercom Corporation" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Hypercom IN-tact 1101">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.626.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="IBM" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="IBM mdl 13 s/n 23t7677">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.6.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Router" Vendor="Juniper" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Juniper ACX2200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.117"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper MX2010">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.99"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper MX2020">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.93"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper MX40">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.88"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Juniper ACX1100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.87"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper MX204">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.144"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper MX150">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.152"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Lucent" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Lucent AP 50-LAN">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.838.5.1.50.0.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lucent STACK">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.81.17.1.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="MAIPU" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="MAIPU 2816">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5651.1.101.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="MAIPU 801E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5651.1.101.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Motorola" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Motorola BSR2000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4981.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="NBASE" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NBASE NH1026">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.629.14.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Network Equipment Technologies" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NEC SBC 1000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.177.15.1.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC SBC 2000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.177.15.1.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Nortel" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Nortel Media Gateway">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.562.3.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel SR3120">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.562.73.2.2.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nortel SR4134">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.562.73.2.2.4.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="PairGain" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="PairGain REX2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.927.3.4.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="PairGain REX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.927.3.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Paradyne" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Paradyne GranDSLAM-4200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1795.1.14.17.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Paradyne iMarc 9123">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1795.1.14.2.4.11.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="PowerDsine" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="PowerDsine PD-6006-AC-SNMP-PoE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7428.3.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Redback" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Redback SMS 1000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2352.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Redback SMS 500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2352.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Redback SSR8010">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2352.1.18"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Redback SmartEdge 600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2352.1.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Sarian Systems" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Sarian Systems WR44-L1A3-N13-SB">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.16378.73"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Satelcom" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Satelcom MegaBOX-E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.397.1.38"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Satelcom MegaPAC-E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.397.1.31"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Sonus Networks" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Sonus Networks SBC 5110">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2879.1.9.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Sonus Networks, Inc." iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Sonus Networks, Inc. Tenor AX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6618.1.1.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Router" Vendor="Teldat" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Teldat teldat-4Ge">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2007.1.1.201"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Teldat teldat-C1iPlus">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2007.1.1.123"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Teldat teldat-atlas-60">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2007.1.1.187"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Teldat teldat-c1plusl">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2007.1.1.174"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Teldat teldat-h1plus">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2007.1.1.177"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Teldat teldat-m1">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2007.1.1.199"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Teldat teldat-v">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2007.1.1.191"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Tiesse" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Tiesse IMOLA CPU Multi Protocol Router">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4799.3.2.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Vbrick" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Vbrick 4200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4289.1.2.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Viptela" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Viptela vedge2000AC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.41916.3.2.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Visual Networks" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Visual Networks M112">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1246.1.1.112"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Visual Networks M115">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1246.1.1.115"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="ZTE" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="ZTE ZXR10 M6000-8S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3902.3.100.6008.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="ZTE ZXR10 M6000-3S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3902.3.100.6008.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Router" Vendor="Allied Telesis" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR720">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR300L">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR310">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR300LU">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.14"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR300U">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR310U">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.16"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR350">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.17"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR370">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.18"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR330">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.19"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR395">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR390">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.21"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR370U">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.22"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR740">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.23"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR140S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.24"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR140U">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.25"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR320">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.26"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR130S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.27"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR130U">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.28"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR160">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.29"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR740">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.43"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR120">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.44"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR410">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.47"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR725">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.48"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR745">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.49"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR410V2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.50"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR410V3">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.51"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR725 ROUTERDC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.52"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR745 ROUTERDC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.53"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR450">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.54"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR450 DUAL">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.55"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR440">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.59"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR441">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.60"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR442">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.61"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR443">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.62"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR444">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.63"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR420">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.64"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR550">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.73"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR551">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.74"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR552">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.75"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR550S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.76"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR570">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.78"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR770">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.79"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis CENTRECOM AR 300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR750S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.80"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR560S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.81"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR3050S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.82"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR4050S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.85"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR2050V">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.88"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Allied Telesis AT AR2010V">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.207.1.1.89"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="Century Systems" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Century Systems NXR 130">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 120">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 1200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 125">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 155WM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 155XW">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 155L">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 230">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 350">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 1300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR 1320">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems VXR X86">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.90"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems CXR X86">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.91"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems VXR X64">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.92"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems CXR X64">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.93"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.100"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.101"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100KL">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.102"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.103"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100S">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.104"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100NL">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.105"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100SL">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.106"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100KT">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.107"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100NLW">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.108"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100KLW">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.109"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100SLW">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.110"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100WM">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.111"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100KL R2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.112"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100L">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.113"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100WM R2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.114"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G100KLW R2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.115"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G240">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.120"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G240L">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.121"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G240ML CA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.122"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G240L CA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.123"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G260">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.140"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G260L">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.141"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G260ML CA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.142"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems NXR G260L CA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.8.143"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems XR 1100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems XR 640 L2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems XR 410 L2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems XR 540">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems XR 510">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems XR 430">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems XR 730">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Century Systems XR 1200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.20376.1.1.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="NEC" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NEC UNIVERGE WA">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.194"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC WA1020">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.194.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC WA2020">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.194.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC WA2021">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.194.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC WA1500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.194.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC WA2600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.194.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 1000 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 1010">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 1020">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 1050">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 1011">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 1035I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 1036">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 1036I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.1.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 2015">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG510">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG520">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.3.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG530">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.3.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG540">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.3.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG531">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.3.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG400 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG600">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG610">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.9.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG650">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.9.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG611">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.9.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC AG651">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.9.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 3110">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.10.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC RTU SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.12"/>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.12.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC RTU B">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.12.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC RTU 2106">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.12.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 2215 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.16"/>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.16.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 2207 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.18"/>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.18.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC HX 2105 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.19"/>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.19.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 3015 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.20"/>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.20.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 3315 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.21"/>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.21.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 2106 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.22"/>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.22.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC CGW SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.23"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC IX 2216 SERIES">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.24"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC ix2000-Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC ix2004-Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.8.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC ix2005-Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.11.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC ix2025-Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.13.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NEC ix2105-Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.119.1.84.14.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="YAMAHA" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="YAMAHA NVR700W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.51"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA NVR510">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.52"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 100I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 200I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 80I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 102I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 103I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 140I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 140E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 140P">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.9"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 140F">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT A50I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT A52I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.12"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 300I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 52PRO">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.14"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 105I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 60W">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.16"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 105E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.17"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 105P">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.18"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT W65B">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.19"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT W65I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.20"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT A55I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.21"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 56V">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.22"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X2000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.24"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 57I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.25"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT V700">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.26"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X1500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.27"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 250I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.29"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA YTD 442">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.30"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 107E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.31"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT V01">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.32"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X3000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.33"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT 58I">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.34"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA SRT 100">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.35"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA PJP MC24">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.38"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.39"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X5000">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.44"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X3500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.45"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X1210">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.46"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X820">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.49"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RT X830">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.53"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA YSL V810">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.54"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA SWR2311P">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.58"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="YAMAHA RTX1220">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1182.1.71"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="DCN" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="DCN DCRS-7608E">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6339.1.1.3.11"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="RuiJie" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="RuiJie EG1000M">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.4881.1.5.1.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="Adva" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Adva Fiberservicef7">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2544.1.11.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="Acme Packet" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Acme Apnet6300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9148.1.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="Brocade" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Brocade Vyatta VyOS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.30803"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="Comtech" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Comtech CDM-570">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6247.24"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Comtech CDD-564">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6247.25"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="NET" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="NET VX400">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.177.11.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NET VX900T">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.177.11.5.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NET VX900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.177.11.5.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NET VX2500">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.177.11.5.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NET VX1200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.177.11.5.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="NET VX1800">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.177.11.5.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="OneAccess" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="OneAccess oacOne60">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13191.1.1.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="OneAccess oacOne150">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13191.1.1.15"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="OneAccess oacOne300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13191.1.1.30"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="OneAccess oacOne90">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13191.1.1.90"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="OneAccess oacLbb230">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13191.1.1.230"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="OneAccess oacLbb141">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13191.1.1.141"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="OneAccess oacLbb140">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.13191.1.1.140"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="XKL" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="XKL 10g">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.21150.3.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="XKL dba">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.21150.3.5"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="XKL dra">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.21150.3.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="XKL dsm">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.21150.3.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="Fujitsu" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Fujitsu SI-R G210">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.1.127.48.46"/>
+        </SysOIDs>
+    </CustomDevicePackage>      
+    <CustomDevicePackage deviceType="Fujitsu SI-R G200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.211.1.127.48.36"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+      <CustomDevicePackageSet Category="Router" Vendor="D-Link" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="D-Link DI-SR2800-20">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3320.1.550"/>
+        </SysOIDs>
+       </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Router" Vendor="Romantis" iconName="router.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Romantis UHP 332">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8000.22.6"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+   <CustomDevicePackageSet Category="Router" Vendor="MiKroTik" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="MiKroTik Router">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.14988.1"/>
+        </SysOIDs>
+       </CustomDevicePackage>
+   </CustomDevicePackageSet>
+   <CustomDevicePackageSet Category="Router" Vendor="Ubiquiti Networks" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ubiquiti EdgeRouter">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.41112.1.5"/>
+        </SysOIDs>
+       </CustomDevicePackage>
+   </CustomDevicePackageSet>
+   <CustomDevicePackageSet Category="Router" Vendor="LANCOM Systems" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="LANCOM LC833">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2356.11.8.635"/>
+        </SysOIDs>
+       </CustomDevicePackage>
+   </CustomDevicePackageSet>
+   <CustomDevicePackageSet Category="Router" Vendor="iXsystems" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="iXsystems Router">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.50536.3.1"/>
+        </SysOIDs>
+       </CustomDevicePackage>
+   </CustomDevicePackageSet>
+   
+   <CustomDevicePackageSet Category="Router" Vendor="Harmonic" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Harmonic NSG9000 EdgeQAM">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1563.1.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Juniper" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Juniper MX10003">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.139"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Juniper VMX">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.108"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Juniper VRR">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.110"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Juniper vSRX">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2636.1.1.1.2.96"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="AirLink Communications" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="AirLink RV50">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.20542.9.17"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Tansmode" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Tansmode TS1100">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.11857.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Arista Networks" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Arista Networks vEOS">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.30065.1.2759"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="OneAccess" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="OneAccess One20D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.13191.1.1.7"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="OneAccess One425">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.13191.1.1.425"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="OneAccess One200">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.13191.1.1.20"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="OneAccess One420">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.13191.1.1.420"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="OneAccess One540">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.13191.1.1.540"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="OneAccess ONE421">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.13191.1.1.421"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Patton Electronics" iconName="router.png" pingInterval="15">
+            <CustomDevicePackage deviceType="Patton SN4970 1E30V EUI">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1768.100.4.23.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Ericsson" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ericsson SSR 8000 Series">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.193.218.1.19"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Adtran" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Adtran NetVanta 3430">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.664.1.876"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Adtran Atlast 550">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.664.1.219"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Adtran NetVanta 4430">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.664.1.1069"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Adtran NetVanta 2100">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.664.1.503"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Adtran NetVanta 1335 PoE">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.664.1.934"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Adtran NetVanta 1335">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.664.1.932"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Adtran NetVanta 1224R">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.664.1.582"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Adtran NetVanta 7100">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.664.1.841"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Cradlepoint" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cradlepoint AER 1600">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.20992.2.24"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cradlepoint IBR900">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.20992.2.31"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cradlepoint AER 3100">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.20992.2.23"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cradlepoint IBR1150">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.20992.2.19"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Brocade" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Brocade ICX6610-48-HPOERt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.56.2.2.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade FastIronStack ICX7750Rt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.48.7.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6450-48-HPOERt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.58.2.2.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade FastIronStack ICX6450PR">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.48.5.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6450-48PRt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.58.2.1.1.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade FCX624SAdvRt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.54.1.1.1.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX645024-HPOEBaseRt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.58.1.2.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade FastIronStack ICX6610Rt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.48.3.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6610-24BaseL3R">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.56.1.1.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6610-48-HPOE AR">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.56.2.2.1.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6610-24PR">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.56.1.1.1.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade FCX624S-HPOERt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.54.1.2.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade Brocade MLXe-16">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.55.1.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6610-48P Rt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.56.2.1.1.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade FastIronStack ICX6450R">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.48.5.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX 6610 24FR">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.56.1.3.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6450-48 Rt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.58.2.1.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade FCX 624SRt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.54.1.1.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade FCX624SFRt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.54.1.3.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6450-48-POE Rt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.58.2.2.1.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6450-24Rt">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.58.1.1.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Brocade ICX6610-48-HPOE PR">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1991.1.3.56.2.2.1.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="LANCOM Systems" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="LANCOM 8011">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2356.500.2.8011"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="LANCOM 1711">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2356.500.2.1711"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="LANCOM 1722">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2356.500.7.1722"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="LANCOM LC1781VA-4G">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2356.11.8.612"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    	<CustomDevicePackage deviceType="LANCOM LC1783VAW">
+	    <SysOIDs>
+	        <SysOID oid=".1.3.6.1.4.1.2356.11.8.623" />
+	    </SysOIDs>
+	</CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Palo Alto Networks" iconName="router.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Palo Alto Prisma ION 1000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.50114.11.1.10.1000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Palo Alto Prisma ION 2000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.50114.11.1.10.2000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Palo Alto Prisma ION 3000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.50114.11.1.10.3000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Palo Alto Prisma ION 7000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.50114.11.1.10.7000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Palo Alto Prisma ION 9000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.50114.11.1.10.9000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Alcatel" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Alcatel ESS Series">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.6527.6.2.1.2.8.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Waystream" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Waystream DRG100">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9303.1.3.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Cisco" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cisco ASR 9903">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.3075"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ISR C1111-8PWA">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2447"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco Catalyst C8300-1N1S-4T2X">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2990"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco NCS 5501 HD">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2430"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C6816XLE">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2273"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco NCS 5011">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2411"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C1113-8P">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2534"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco NCS-55A1-36H-SE">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2428"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ISRV">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2408"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco IR809G-LTE-NA-K9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2106"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco NCS 5504">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2413"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco IR829M-2LTE-EA-AK9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2610"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C819G-4G-NA-K9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2050"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco NCS 5002">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2318"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C899G-LTE-LA-K9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2381"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco VG450">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2693"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C1111-4PLTELA">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2507"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ASR-920-12SZ-A">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2679"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C1117-4PLTELA">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2523"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ASR 902">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.1897"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco NCS 55A1-24H">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2432"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ISR C1161X-8P">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2754"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C1121X 8P">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2752"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco NCS 540-12Z20G-SYS-A">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2985"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ISR C1117-4PLTEEA">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2522"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C8300-1N1S-6T">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2989"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco NCS-55A2-MOD-SE-S">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2570"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C1111-8PLTELA">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2445"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco IR829GW-LTE-VZ-AK9">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2108"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco ASR-920-12SZ-D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2678"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco C1117-4P">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.9.1.2520"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Huawei" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Huawei AR6121E">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.224.347"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei AR169FGW-L">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.224.133"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei AR6300">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.224.299"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei NE8000 F1A-8H20Q">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.360.1.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei NE40E-X2-M16A">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.62.25"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei AR611W">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.224.317"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei Quidway AR 19-10">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.10.1.224"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei NE40E-M2K">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.62.27"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei AR161F">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.224.132"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei NE8000 M8">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.360.1.9"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei NE8000 M1A">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.360.1.11"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Huawei AR6280">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2011.2.224.300"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Fortinet" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Fortinet fgr60D">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.12356.101.1.643"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Motorola" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Motorola BSR 64000">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.4981.4.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Nokia" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Nokia 7750 SR-a4">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.6527.1.3.9"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="PepLink" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="PepLink MediaFast">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.23695"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <!-- Nokia DT starts -->
+    <CustomDevicePackageSet Category="Router" Vendor="Nokia" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Nokia 7750 SR-1e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.6527.1.3.11"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Nokia" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Nokia 7750 SR-2e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.6527.1.3.12"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Nokia" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Nokia 7750 SR-1s">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.6527.1.3.18"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Nokia" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Nokia 7750 SR-2s">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.6527.1.3.19"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Nokia" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Nokia 7750 SR-7s">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.6527.1.3.17"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Nokia" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Nokia 7750 SR-a8">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.6527.1.3.10"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <!-- Nokia DT ends -->
+</CustomDevicePackage>

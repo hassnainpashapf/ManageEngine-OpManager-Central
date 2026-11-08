@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- execute copy running config tftp command mode -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_switch_cli_fetch_running_ios_12_0_irec_1"/>
+    </CLIInteractionSpec>
+
+<CLICommand command="copy system:/running-config tftp">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_switch_cli_config_get_running_ios_12_0_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_switch_cli_fetch_running_ios_12_0_irec_2" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_switch_cli_config_get_running_ios_12_0_rec_2" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_switch_cli_fetch_running_ios_12_0_irec_3" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_switch_cli_config_get_running_ios_12_0_rec_3" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+		<CLICommand command="terminal length 0">
+			<CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+				<Record protocol="CLI" recordid="Cisco_IOS_Switch_CLI_backup_vlan_rec_0" type="CLI"/>
+			</CLIInputRecord>
+		</CLICommand>
+		<CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" requesttimeout="20000">
+			<InteractionSpec interactionid="Cisco_IOS_Switch_CLI_backup_vlan_ispec_0" protocol="CLI" timeout="20000"/>
+		</CLIInteractionSpec>		
+		<CLICommand command="show vlan brief">
+			<CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+				<Record protocol="CLI" recordid="Cisco_IOS_Switch_CLI_backup_vlan_rec_1" type="CLI"/>
+		    </CLIInputRecord>
+		</CLICommand>
+		<CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" promptactionid="yesActionId" requesttimeout="20000">
+			<InteractionSpec interactionid="Cisco_IOS_Switch_CLI_backup_vlan_ispec_1" protocol="CLI" timeout="20000"/>
+		</CLIInteractionSpec>
+
+        <CLICommand command="show vtp status">
+            <CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+                <Record protocol="CLI" recordid="Cisco_IOS_Switch_CLI_backup_vtp_rec_1" type="CLI"/>
+            </CLIInputRecord>
+        </CLICommand>
+        <CLICommand command="terminal length 0">
+            <CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+                <Record protocol="CLI" recordid="Cisco_IOS_Switch_CLI_backup_vtp_rec_0" type="CLI"/>
+            </CLIInputRecord>
+        </CLICommand>
+
+        <CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" requesttimeout="20000">
+            <InteractionSpec interactionid="Cisco_IOS_Switch_CLI_backup_vtp_ispec_0" protocol="CLI" timeout="20000"/>
+        </CLIInteractionSpec>
+        <CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" promptactionid="yesActionId"  requesttimeout="20000">
+            <InteractionSpec interactionid="Cisco_IOS_Switch_CLI_backup_vtp_ispec_1" protocol="CLI" timeout="20000"/>
+        </CLIInteractionSpec>
+
+</CLICommandList>

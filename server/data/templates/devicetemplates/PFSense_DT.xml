@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="PFSense" osType="[NA]" templateName="PFSense">
+	<RestTemplate name="PFSense"/>
+	<Vendor displayName="PFSense" vendorName="PFSense">
+		<Commands/>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="cd /cf/conf" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="3" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tftp ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt=">" sequenceid="4" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="get ${UserInput:file_name} config.xml" messagesuffix="${LF}" prompt=">" sequenceid="5" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="6" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="cd /cf/conf" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="3" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tftp ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt=">" sequenceid="4" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="put config.xml ${UserInput:file_name}" messagesuffix="${LF}" prompt=">" sequenceid="5" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="6" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="cat /cf/conf/config.xml" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="300000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="scp /cf/conf/config.xml ${UserInput:scp_username}@${UserInput:scp_server_address}:${UserInput:file_name}" messagesuffix="${LF}" prompt="word:" sequenceid="1" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="2" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="scp -r ${UserInput:scp_username}@${UserInput:scp_server_address}:${UserInput:file_name} /cf/conf/config.xml" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="PFSense Firewall 2.x" personalityName="PFSenseFirewallDevice">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="option:" postlogincommand="8" preloginprompt="option:" prelogincommand="8"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="APPLICATION_VERSION" size="30" desc="Application Version" displayname="Application Version" defaultvalue="Not Available" sequenceid="1"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="PFSenseFirewallDeviceHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+					<!-- To parse the output of show hardware inventory command and get the hardware properties for Cisco SD WAN -->
+						<COMMAND NAME="hardware_prop_pfsense_osVer">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="\s*([^-]*)-.*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						
+						<COMMAND NAME="hardware_prop_pfsense_appVer">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="\s*([^-]*)-.*" NAME="APPLICATION_VERSION">
+											<PARAM NAME="APPLICATION_VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="freebsd-version" parsercommandname="hardware_prop_pfsense_osVer" responseparserid="pfsense_fw2x_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="300000" promptactionid="yesActionId"/>
+						<Command commandstr="cat /etc/version" parsercommandname="hardware_prop_pfsense_appVer" responseparserid="pfsense_fw2x_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="300000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="proxim_ap_cli_config_ispec_1"/>
+</CLIInteractionSpec>
+
+<!-- Upload Config -->
+<CLICommand command="upload ${UserInput:tftp_server_address} ${UserInput:file_name} config">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="proxim_ap_cli_fetch_config_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Config -->
+
+<CLICommand command="download ${UserInput:tftp_server_address} ${UserInput:file_name} config">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="proxim_ap_cli_push_config_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

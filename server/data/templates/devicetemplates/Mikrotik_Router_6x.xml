@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="Mikrotik Router 6.x" displayName="Mikrotik Router 6.x" osType="RouterOS" templateName="Mikrotik_Router_6x">
+	<RestTemplate name=""/>
+	<Vendor displayName="Mikrotik" vendorName="Mikrotik">
+		<Commands>
+			<Command commandstr="/system resource print"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="/export compact" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="/system logging action add name=SyslogNCM remote=${UserInput:HostIpAddress} syslog-severity=info target=remote" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="/system logging add action=SyslogNCM topics=info" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="/system logging remove [find action=SyslogNCM]" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" sequenceid="3" timeout="30000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Mikrotik Router 6.x" personalityName="MikrotikRouter6x">	
+		<Login suffix="${CRLF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="CURRENT_FIRMWARE" size="100" desc="Current Firmware" displayname="Current Firmware" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="UPGRADE_FIRMWARE" size="100" desc="Upgrade Firmware" displayname="Upgrade Firmware" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="BOARD_NAME" size="100" desc="Board Name" displayname="Board Name" defaultvalue="Not Available" sequenceid="30"/>
+				<Column name="ARCHITECTURE" size="100" desc="Architecture Name" displayname="Architecture Name" defaultvalue="Not Available" sequenceid="40"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>.*remote=$SYSLOG_SERVER_IP.*</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="MikrotikHardwarePropParser.xml"/> 
+			<Protocols>
+				<Protocol>
+					<Commands>
+						<Command commandstr="/system routerboard print" parsercommandname="mikrotik_router_hardware_prop" responseparserid="mikrotik_router_hardware_prop_parser" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid=""/>
+						<Command commandstr="/system resource print" parsercommandname="mikrotik_router_hardware_prop" responseparserid="mikrotik_router_hardware_prop_parser" messagesuffix="${CRLF}" prompt="${UserInput:Prompt}" timeout="30000" promptactionid=""/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

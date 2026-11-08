@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Ericsson Mini-Link" displayName="Ericsson Mini-Link" osType="" templateName="Ericsson Mini-Link">
+	<RestTemplate name=""/>
+	<Vendor displayName="Ericsson" vendorName="Ericsson">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="1"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="2" timeout="20000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="show startup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="2" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write mem" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Changedetection">
+            	<Operation name="Enable">
+                	<Command commandecho="" commandstr="rsyslog enable" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout="30000"/>
+                	<Command commandecho="" commandstr="rsyslogsec enable" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout="30000"/>
+                	<Command commandecho="" commandstr="rsyslog server 1 ${UserInput:HostIpAddress} 514" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="4" timeout="30000"/>
+                	<Command commandecho="" commandstr="rsyslogsec server 1 ${UserInput:HostIpAddress} 514" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="5" timeout="30000"/>
+                	<Command commandecho="" commandstr="rsyslog trapseverity 0x08" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="6" timeout="30000"/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="7" timeout="30000"/>
+            	</Operation>
+            	<Operation name="Disable">
+                	<Command commandecho="" commandstr="no rsyslog enable" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout="30000"/>
+                	<Command commandecho="" commandstr="no rsyslogsec enable" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout="30000"/>
+                	<Command commandecho="" commandstr="no rsyslog server 1 ${UserInput:HostIpAddress} 514" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="4" timeout="30000"/>
+                	<Command commandecho="" commandstr="no rsyslogsec server 1 ${UserInput:HostIpAddress} 514" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="5" timeout="30000"/>
+                	<Command commandecho="" commandstr="no rsyslog trapseverity" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="6" timeout="30000"/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="7" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Ericsson Mini Link" personalityName="EricssonMiniLink">	
+		<Login enablecommand="enable user admin_user" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="CPU" displayname="CPU" name="CPU" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="CPU Clock" displayname="CPU Clock" name="CPU_CLOCK" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="CPU Revision" displayname="CPU Revision" name="CPU_REVISION" sequenceid="3" size="100"/>
+				<Column defaultvalue="Not Available" desc="CPU BogoMips" displayname="CPU BogoMips" name="CPU_BOGOMIPS" sequenceid="4" size="100"/>
+				<Column defaultvalue="Not Available" desc="Memory" displayname="Memory" name="MEMORY" sequenceid="5" size="100"/>
+				<Column defaultvalue="Not Available" desc="Mode" displayname="Mode" name="MODE" sequenceid="7" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>		
+				<Criteria type="deleteLine">
+					<Regex>^Using.*out.*</Regex>
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>rsyslog server.*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="EricssonMiniLinkHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_ericcson_minilink">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">		
+										<REGEX EXPRESSION=".*CPU\s*:(.*)" NAME="CPU">
+											<PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*CPU\sClock\s*:(.*)" NAME="CPU_CLOCK">
+											<PARAM NAME="CPU_CLOCK" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*CPU\sRevision\s*:(.*)" NAME="CPU_REVISION">
+											<PARAM NAME="CPU_REVISION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*CPU\sBogoMips\s*:(.*)" NAME="CPU_BOGOMIPS">
+											<PARAM NAME="CPU_BOGOMIPS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Memory\s*:(.*)" NAME="MEMORY">
+											<PARAM NAME="MEMORY" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Mode\s*:(.*)" NAME="MODE">
+											<PARAM NAME="MODE" TOKENNO="1"/>
+										</REGEX>					
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>   
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_ericcson_minilink" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.193.167.1.1.1.1"/>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.193.223.2.1"/>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.193.81.1.1.3"/>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.193.81.5"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:netgear_switch" templatename="Netgear_Prosafe_Switch" displayname="Netgear Prosafe Switch" description="For all Netgear Prosafe Switches">
+   	<NCMVendorDevice vendorid="Netgear" />
+   	<NCMDevicePersonality personalityid="NetgearSwitch" />
+
+   	<NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+   	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+	    <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:netgear_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:netgear_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="Netgear_Switch_CLI_Startup_Config_Backup" />
+
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Netgear_Switch_CLI_Running_Config_Backup" />
+	<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="Netgear_Switch_CLI_Running_Config_Push" />
+	
+	<!--
+	<NCMDeviceOperation operationid="Upload RunningConfig" executiongroupid="FoundrySwitch_SSH_Running_Config_Upload" />
+	<NCMDeviceOperation operationid="Download RunningConfig" executiongroupid="FoundrySwitch_SSH_Running_Config_Download" />
+	-->
+
+    <!-- Change Tracking thru Syslog -->
+    <!--
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Foundry_SSH_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Foundry_SSH_Disable_Change_Tracking_Syslog" />
+	-->
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:netgear_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:netgear_switch"                          managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+		
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="Netgear_Switch_CLI_Startup_Config_Backup" />
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Netgear_Switch_CLI_Running_Config_Backup" />
+	<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="Netgear_Switch_CLI_Running_Config_Push" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

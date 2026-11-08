@@ -1,0 +1,95 @@
+<!--$Id$-->
+<CLICommandList>
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	  <InteractionSpec timeout="120000" protocol="CLI" interactionid="ciena_cli_ispec"/>
+  </CLIInteractionSpec>
+
+<CLICommand command="configuration show">
+	  <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="ciena_cli_show_running_config_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+  </CLICommand>
+
+<CLICommand command="cd config">
+	  <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="ciena_cli_cd_config" protocol="CLI"/>
+	  </CLIInputRecord>
+  </CLICommand>
+
+<CLICommand command="cat startup-config">
+	  <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="ciena_cli_show_startup_config_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+  </CLICommand> 
+
+ <CLICommand command="system shell set more off">
+ <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="ciena_cli_more_off_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+ <CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="ciena_hardware_prop_parser_leos" promptactionid="yesActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="ciena_cli_hardware_ispec_leos"/>
+</CLIInteractionSpec>
+
+ <CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="ciena_hardware_prop_parser_soas" promptactionid="yesActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="ciena_cli_hardware_ispec_saos"/>
+</CLIInteractionSpec>
+
+  <CLICommand command="software show">
+	<CLIInputRecord parsercommandname="hardware_prop_ciena_switch_saos" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="ciena_switch_cli_hardware_version_rec_saos" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+  <CLICommand command="software show">
+	<CLIInputRecord parsercommandname="hardware_prop_ciena_switch_leos" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="ciena_switch_cli_hardware_version_rec_leos" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+ <CLICommand command="chassis show mac">
+	<CLIInputRecord parsercommandname="hardware_prop_ciena_switch_leos" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="ciena_switch_mac_rec_leos" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand> 
+
+
+<CLICommand command="chassis show mac">
+	<CLIInputRecord parsercommandname="hardware_prop_ciena_switch_saos" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="ciena_switch_mac_rec_saos" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>   
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	  <InteractionSpec timeout="120000" protocol="CLI" interactionid="ciena_switch_cli_ispec"/>
+  </CLIInteractionSpec>
+
+<CLICommand command="configuration show">
+	  <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="ciena_switch_cli_show_running_config_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+  </CLICommand>
+
+ <CLICommand command="system shell set global-more off">
+ <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="ciena_switch_cli_more_off_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+ <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="ciena_switch_hardware_prop_parser" promptactionid="yesActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="ciena_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+  <CLICommand command="chassis show">
+	<CLIInputRecord parsercommandname="hardware_prop_ciena_switch" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="ciena_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

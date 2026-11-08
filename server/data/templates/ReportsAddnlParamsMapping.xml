@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- THIS XML FILE IS USED TO UPDATE OR INSERT INTO PERFGROUPID INTO AddnlReportParams Table BASED ON PerfGroupName(Value column should have PerfGroupName)  -->
+<!-- This is done as PerfGroups will be dumped during Startup via devicepackagepopulator concept and hence we cannot get PERFGROUPID during DO Dumping Framework-->
+<!-- Hence we do not add PerfGroup Entries in ReportDetails_New.xml file and it will be inserted via this file during startup after dumping PerfGroup -->
+<!-- OPERATION can either be UPDATE OR ADD.
+If OPERATION is given as UPDATE, Existing row will be updated with KEYCOLUMN = "PERFGROUPID" and VALUECOLUMN = <PERFGROUPID of Given PERFGROUPNAME in VALUECOLUMN>
+If Operation is given as ADD, a new row will be inserted with REPORTID=<ReportId of given ReportName> and KEYCOLUMN = "PERFGROUPID" and VALUECOLUMN = <PERFGROUPID of Given PERFGROUPNAME in VALUECOLUMN>
+-->
+<REPORTMAPPING>
+    <AddnlReportParams REPORTNAME="opmanager.cpureport.name" KEYCOLUMN="PERFGROUPNAME" VALUECOLUMN="CPU Utilization" OPERATION="UPDATE"/>
+    <AddnlReportParams REPORTNAME="opmanager.diskreport.name" KEYCOLUMN="PERFGROUPNAME" VALUECOLUMN="Disk Utilization" OPERATION="UPDATE"/>
+    <AddnlReportParams REPORTNAME="opmanager.memoryreport.name" KEYCOLUMN="PERFGROUPNAME" VALUECOLUMN="Memory Utilization" OPERATION="UPDATE"/>
+    <AddnlReportParams REPORTNAME="opmanager.powerreport.name" KEYCOLUMN="PERFGROUPNAME" VALUECOLUMN="Consumed Power (PoE)" OPERATION="UPDATE"/>
+</REPORTMAPPING>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="fortigate_hardware_prop_parser" promptactionid="yesActionId">
+ <InteractionSpec timeout="60000" protocol="CLI" interactionid="fortigate_firewall_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="get system status">
+<CLIInputRecord parsercommandname="hardware_prop_fortigate_firewall" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="fortigate_firewall_hardware_prop_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="fortigate_v4_hardware_prop_parser" promptactionid="yesActionId">
+ <InteractionSpec timeout="60000" protocol="CLI" interactionid="fortigate_firewall_v4_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="get system status">
+<CLIInputRecord parsercommandname="hardware_prop_fortigate_v4_firewall" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="fortigate_firewall_v4_hardware_prop_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

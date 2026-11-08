@@ -1,0 +1,1337 @@
+﻿<Graphs>
+    <Graph graphName="  CiscoBufferHgMiss  ">
+        <Property name="description" value="Cisco IOS devices - Number of huge buffer allocation misses (used across multiple models)"/>
+    </Graph>
+    <Graph graphName="ADICOMBatCapacity">
+        <Property name="description" value="SOCOMEC ADICOM UPS - Battery voltage in volts"/>
+    </Graph>
+    <Graph graphName="adtranMemoryUsage">
+        <Property name="oid" value=".1.3.6.1.4.1.664.5.53.1.4.8"/>
+    </Graph>
+    <Graph graphName="agentCurrentCPUUtilization">
+        <Property name="description" value="Cisco Wireless LAN Controller (WLC) - Current CPU load percentage"/>
+    </Graph>
+    <Graph graphName="agentFreeMemory">
+        <Property name="description" value="Cisco Wireless LAN Controller (Airespace) - Free RAM in kilobytes"/>
+    </Graph>
+    <Graph graphName="agentSwitchCpuProcessPercentageUtilization.">
+        <Property name="description" value="Netgear - Per-process CPU utilization percentage for Netgear managed switches"/>
+    </Graph>
+    <Graph graphName="agentSwitchProcessTotalCPUUtilization">
+        <Property name="description" value="Dell PowerConnect/Networking Switch - Total CPU utilization over 5, 60, and 300 second intervals with configurable rising threshold"/>
+    </Graph>
+    <Graph graphName="aiAPCPUUtilization">
+        <Property name="description" value="Aruba Instant Access Point - CPU utilization percentage per AP"/>
+    </Graph>
+    <Graph graphName="aos.CPUUtilization">
+        <Property name="description" value="Aruba Wireless Controller (ArubaOS) - Per-processor 1-minute average CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="aosCPUUtilization1MinAvg">
+        <Property name="description" value="Alcatel-Lucent OmniSwitch (AOS) - 1-minute average CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="aosMemoryUtilization">
+        <Property name="description" value="Aruba AOS Wireless Controller - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="aosMemoryUtilization1MinAvg">
+        <Property name="description" value="Alcatel-Lucent OmniSwitch (AOS) - 1-minute average memory utilization"/>
+    </Graph>
+    <Graph graphName="apcATSInputVoltage">
+        <Property name="description" value="APC Automatic Transfer Switch (ATS) - Input source voltage"/>
+    </Graph>
+    <Graph graphName="apcATSSWOutputCurrent">
+        <Property name="description" value="APC Automatic Transfer Switch (ATS) - Output current per phase in tenths of amperes"/>
+    </Graph>
+    <Graph graphName="APMemoryCurrentUsage">
+        <Property name="description" value="Cisco Wireless Access Point - Current average memory usage (CISCO-LWAPP-AP-MIB)"/>
+    </Graph>
+    <Graph graphName="arubaCPUCDCPUUtilization">
+        <Property name="description" value="Aruba ClearPass/Controller - CPU utilization derived from UCD-SNMP-MIB raw idle counter"/>
+    </Graph>
+    <Graph graphName="arubaCPUCDMemoryUtilization">
+        <Property name="description" value="Aruba device - Memory utilization calculated from UCD-SNMP MIB free memory"/>
+    </Graph>
+    <Graph graphName="arubaWLCCPUUtilization">
+        <Property name="description" value="Aruba Wireless LAN Controller - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="arubaWLCMemoryUtilization">
+        <Property name="description" value="Aruba Wireless LAN Controller - System memory utilization"/>
+    </Graph>
+    <Graph graphName="avayaERS3.10CPUUtilization">
+        <Property name="description" value="Avaya ERS Switch - CPU utilization percentage (index 3.10.0 variant)"/>
+    </Graph>
+    <Graph graphName="avayaERS3.10MemoryUtilization">
+        <Property name="description" value="Avaya ERS (Ethernet Routing Switch) - Memory utilization for slot 3 port 10"/>
+    </Graph>
+    <Graph graphName="avayaERSCPUUtilization">
+        <Property name="description" value="Avaya ERS Switch - CPU utilization percentage (generic index variant)"/>
+    </Graph>
+    <Graph graphName="avayaERSMemoryUtilization">
+        <Property name="description" value="Avaya ERS (Ethernet Routing Switch) - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="BarracudaCPUUtilization15min">
+        <Property name="description" value="Barracuda appliance - 15-minute CPU load average (UCD-SNMP-MIB laLoad)"/>
+    </Graph>
+    <Graph graphName="black.cartridge.procents">
+        <Property name="description" value="Konica-Minolta printer - Black cartridge level as a percentage (marker supply index 1.4)"/>
+    </Graph>
+    <Graph graphName="black.cartridge.toner">
+        <Property name="description" value="Konica-Minolta printer - Black toner cartridge level as a percentage (marker supply index 1.1)"/>
+    </Graph>
+    <Graph graphName="blbSystemLoad">
+        <Property name="description" value="Barracuda Load Balancer - System CPU and load percentage"/>
+    </Graph>
+    <Graph graphName="BlueCoatCpuUtilization">
+        <Property name="description" value="Blue Coat ProxySG - CPU resource utilization percentage"/>
+    </Graph>
+    <Graph graphName="BlueCoatMemoryUtilization">
+        <Property name="description" value="Blue Coat ProxySG - System memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="Bluecoat-proxySG-CPUUtilization">
+        <Property name="description" value="Blue Coat ProxySG - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="Bluecoat-proxySG-MemoryUtilization">
+        <Property name="description" value="Blue Coat ProxySG - Memory utilization via SGOS MIB"/>
+    </Graph>
+    <Graph graphName="brocade-SysMemoryUtilization">
+        <Property name="description" value="Brocade Fibre Channel Switch - System memory utilization"/>
+    </Graph>
+    <Graph graphName="BufferFailures">
+        <Property name="description" value="Cisco IOS device - Total number of buffer allocation failures"/>
+    </Graph>
+    <Graph graphName="ccMemberOperStatus">
+        <Property name="oid" value=".1.3.6.1.4.1.9.9.134.1.2.1.1.3"/>
+    </Graph>
+    <Graph graphName="cdx6500NMNPScallsPerSecCur">
+        <Property name="oid" value=".1.3.6.1.4.1.449.2.1.1.2.3.14.0"/>
+    </Graph>
+    <Graph graphName="cfwConnectionStatValueCurrentInUse">
+        <Property name="yaxistext" value="No of Active Sessions"/>
+    </Graph>
+    <Graph graphName="CheckPointMemoryUtilization">
+        <Property name="description" value="Check Point Security Gateway - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="chStackUnitTemp">
+        <Property name="description" value="Dell Force10 (S-series/Z-series) - Stack unit temperature reading"/>
+    </Graph>
+    <Graph graphName="CiscoBufferBgMiss">
+        <Property name="description" value="Cisco IOS device - Number of big buffer pool allocation misses"/>
+    </Graph>
+    <Graph graphName="CiscoBufferMdMiss">
+        <Property name="description" value="Cisco IOS devices - Number of medium buffer allocation misses (used across multiple models)"/>
+    </Graph>
+    <Graph graphName="CiscoBufferSmMiss">
+        <Property name="description" value="Cisco IOS devices - Number of small buffer pool misses (used across multiple models)"/>
+    </Graph>
+    <Graph graphName="ciscocempHCMemoryUtilization">
+        <Property name="description" value="Cisco devices - Enhanced memory pool HC (64-bit) utilization per physical entity (CISCO-ENHANCED-MEMPOOL-MIB)"/>
+    </Graph>
+    <Graph graphName="ciscocempMemoryUtilization">
+        <Property name="description" value="Cisco devices - Enhanced memory pool utilization per physical entity (CISCO-ENHANCED-MEMPOOL-MIB)"/>
+    </Graph>
+    <Graph graphName="ciscoCerentEnvMonTemperature">
+        <Property name="description" value="Cisco Cerent (ONS series) - Current temperature sensor reading on optical networking platform"/>
+    </Graph>
+    <Graph graphName="cisco-cpmCPUMemoryUtilization">
+        <Property name="description" value="Cisco IOS/IOS-XE devices - CPU-wide system memory utilization (CISCO-PROCESS-MIB)"/>
+    </Graph>
+    <Graph graphName="Cisco-CPUUtilization">
+        <Property name="description" value="Cisco IOS/IOS-XE devices - 5-minute CPU utilization percentage (index 2), used across multiple models"/>
+    </Graph>
+    <Graph graphName="ciscoEnvMonTemperatureStatusValue">
+        <Property name="description" value="Cisco - Environment monitor temperature sensor current reading (used across multiple models)"/>
+    </Graph>
+    <Graph graphName="CiscoNexusCPUUtilization">
+        <Property name="description" value="Cisco Nexus Switch - Average CPU utilization on the active supervisor module"/>
+    </Graph>
+    <Graph graphName="CiscoNexusMemoryUtilization">
+        <Property name="description" value="Cisco Nexus Switch - Average memory utilization on the active supervisor"/>
+    </Graph>
+    <Graph graphName="ciscoSWDiskUtilization">
+        <Property name="description" value="Cisco software-based platform - Disk utilization percentage via UCD-SNMP-MIB dskPercent"/>
+    </Graph>
+    <Graph graphName="CiscoUMVADiskUtilization">
+        <Property name="description" value="Cisco Umbrella Virtual Appliance - Disk utilization percentage retrieved via NET-SNMP extend mechanism"/>
+    </Graph>
+    <Graph graphName="CiscoUVASSCPUUtilization">
+        <Property name="description" value="Cisco Umbrella Virtual Appliance - CPU utilization derived from UCD-SNMP-MIB raw idle counter"/>
+    </Graph>
+    <Graph graphName="CitrixCPUUtilization">
+        <Property name="description" value="Citrix Server - CPU utilization calculated from UCD-SNMP-MIB raw CPU counters (user, system, nice)"/>
+    </Graph>
+    <Graph graphName="CitrixDiskUtilization">
+        <Property name="description" value="Citrix appliance - Disk utilization percentage via UCD-SNMP-MIB (specific disk index)"/>
+    </Graph>
+    <Graph graphName="CitrixMemoryUtilization">
+        <Property name="description" value="Citrix Server - Memory utilization using UCD-SNMP total real free memory OID"/>
+    </Graph>
+    <Graph graphName="citrixSDWANStatsCPUUtilization">
+        <Property name="description" value="Citrix SD-WAN appliance - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="citrixSDWANStatsMemoryUtilization">
+        <Property name="description" value="Citrix SD-WAN appliance - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="ContadorTotal">
+        <Property name="description" value="Kyocera printer - Total pages printed counter via Kyocera private MIB"/>
+    </Graph>
+    <Graph graphName="coolingDeviceStatus">
+        <Property name="description" value="Dell iDRAC (PowerEdge servers) - Cooling device/fan operational status via Dell OMSA MIB"/>
+    </Graph>
+    <Graph graphName="cpmCPULoadAvg5min ">
+        <Property name="description" value="Cisco IOS/IOS-XE - Five-minute CPU load average from CISCO-PROCESS-MIB, used across multiple Cisco platforms"/>
+    </Graph>
+    <Graph graphName="cpmCPUMemoryCommitted">
+        <Property name="description" value="Cisco IOS/IOS-XE devices - CPU-wide committed system memory in bytes (CISCO-PROCESS-MIB)"/>
+    </Graph>
+    <Graph graphName="cpmCPUMemoryCommittedMB">
+        <Property name="description" value="Cisco IOS/IOS-XE devices - CPU-wide committed system memory converted to megabytes (CISCO-PROCESS-MIB)"/>
+    </Graph>
+    <Graph graphName="cpmCPUMemoryFree">
+        <Property name="description" value="Cisco generic (multiple platforms) - Free memory bytes from the CPU memory pool, per processor index"/>
+    </Graph>
+    <Graph graphName="cpmCPUMemoryFreeMB">
+        <Property name="description" value="Cisco generic (multiple platforms) - Free memory from the CPU memory pool converted to megabytes, per processor index"/>
+    </Graph>
+    <Graph graphName="cpmCPUMemoryHCUsed">
+        <Property name="description" value="Cisco IOS/IOS-XE devices - 64-bit CPU-wide memory currently in use (CISCO-PROCESS-MIB)"/>
+    </Graph>
+    <Graph graphName="cpmCPUMemoryUsed">
+        <Property name="description" value="Cisco generic (multiple platforms) - CPU-wide system memory currently in use in bytes, per processor index"/>
+    </Graph>
+    <Graph graphName="cpmCPUMemoryUsedMB">
+        <Property name="description" value="Cisco generic (multiple platforms) - CPU-wide system memory currently in use converted to megabytes"/>
+    </Graph>
+    <Graph graphName="cpMemActiveRealMemoryUtilization">
+        <Property name="description" value="Check Point Security Gateway - Active real memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="cpmTotal5sec_CPUUtilization">
+        <Property name="description" value="Cisco generic (CISCO-PROCESS-MIB) - Overall CPU busy percentage in the last 5 seconds (deprecated by cpmTotal5secRev, used across multiple models)"/>
+    </Graph>
+    <Graph graphName="cpmTotal5secRev_CPUUtilization">
+        <Property name="description" value="Cisco generic (CISCO-PROCESS-MIB) - Overall CPU busy percentage in the last 5 seconds (revised, range 0-100, used across multiple models)"/>
+    </Graph>
+    <Graph graphName="cpqDaPhyDrvCondition">
+        <Property name="description" value="HP ProLiant Server - Physical drive condition from the Smart Array controller"/>
+    </Graph>
+    <Graph graphName="cpqDaPhyDrvStatus">
+        <Property name="description" value="HP ProLiant Server - Physical drive status from the Smart Array controller"/>
+    </Graph>
+    <Graph graphName="cpqHeThermalFanStatus">
+        <Property name="description" value="HPE ProLiant server - Thermal fan status via Insight Management Agents MIB"/>
+    </Graph>
+    <Graph graphName="cpsupsAdvanceOutputVoltage">
+        <Property name="oid" value=".1.3.6.1.4.1.3808.1.1.1.4.2.1.0*10"/>
+    </Graph>
+    <Graph graphName="CPUUtilization_percentusage">
+        <Property name="description" value="Cyberoam (Sophos) UTM Firewall - CPU usage percentage (generic instance)"/>
+    </Graph>
+    <Graph graphName="CPUUtilizationPercent">
+        <Property name="description" value="Alcatel-Lucent OmniSwitch (legacy AOS) - Average device-level CPU utilization over the latest sample period in percent"/>
+    </Graph>
+    <Graph graphName="csNXRSystemMemoryBuffers">
+        <Property name="description" value="Century Systems NXR series router - Buffered memory size in kilobytes"/>
+    </Graph>
+    <Graph graphName="csNXRSystemMemoryFree">
+        <Property name="description" value="Century Systems NXR series router - Free system memory in KB"/>
+    </Graph>
+    <Graph graphName="csNXRSystemMemoryUsed">
+        <Property name="description" value="Century Systems NXR series router - Used memory size in kilobytes"/>
+    </Graph>
+    <Graph graphName="CSUPSInputVoltage">
+        <Property name="description" value="Generic UPS (RFC 1628 UPS-MIB) - Input line voltage per phase"/>
+    </Graph>
+    <Graph graphName="csXRSystemMemoryBuffers">
+        <Property name="description" value="Century Systems XR series router - Buffered memory size in kilobytes"/>
+    </Graph>
+    <Graph graphName="csXRSystemMemoryFree">
+        <Property name="description" value="Century Systems XR series router - Free system memory in KB"/>
+    </Graph>
+    <Graph graphName="csXRSystemMemoryUsed">
+        <Property name="description" value="Century Systems XR series router - Used memory size in kilobytes"/>
+    </Graph>
+    <Graph graphName="cvSysmemoryUsed">
+        <Property name="description" value="Cisco Viptela (SD-WAN) - Current system memory usage"/>
+    </Graph>
+    <Graph graphName="CyberoamCPUUtilization">
+        <Property name="description" value="Cyberoam (Sophos) UTM Firewall - CPU usage percentage (scalar instance)"/>
+    </Graph>
+    <Graph graphName="CyberoamDiskUsage">
+        <Property name="description" value="Cyberoam firewall - Disk usage percentage (scalar instance)"/>
+    </Graph>
+    <Graph graphName="CyberoamMemoryUtilization">
+        <Property name="description" value="Cyberoam UTM appliance - Memory utilization percentage monitoring"/>
+    </Graph>
+    <Graph graphName="CyberoamSmtpHits">
+        <Property name="description" value="Cyberoam UTM Firewall - Count of SMTP protocol hits processed by the device"/>
+    </Graph>
+    <Graph graphName="DCN-CPUutilization">
+        <Property name="description" value="DCN network device - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="DCN-DCRS-CPUUtilization">
+        <Property name="description" value="DCN DCRS series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="DCN-DCRS-MemoryUtilization">
+        <Property name="description" value="DCN DCRS series switch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="DCN-MemoryUtilization">
+        <Property name="description" value="DCN network device - Memory utilization calculated from free/total memory OIDs"/>
+    </Graph>
+    <Graph graphName="DELL_CPUUtilization">
+        <Property name="description" value="Dell Force10 series - CPU utilization percentage (generic across Force10 devices)"/>
+    </Graph>
+    <Graph graphName="DELL_Force10_S25N_CPUUtilization">
+        <Property name="description" value="Dell Force10 S25N Switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="DELL_MemoryUtilization">
+        <Property name="description" value="Dell Force10 series - Memory utilization percentage (generic across Force10 models)"/>
+    </Graph>
+    <Graph graphName="Dell_TemperatureStatus">
+        <Property name="description" value="Dell Networking managed switch - Temperature status of the switch hardware"/>
+    </Graph>
+    <Graph graphName="DelldmmPSUVoltage">
+        <Property name="description" value="Dell iDRAC (Dell Modular Managed) - Power supply unit voltage reading"/>
+    </Graph>
+    <Graph graphName="dellNetStackUnitTemp">
+        <Property name="description" value="Dell Networking OS10 (S-series) - Stack unit temperature reading"/>
+    </Graph>
+    <Graph graphName="dellRACpowerSupplyStatus">
+        <Property name="description" value="Dell iDRAC (PowerEdge server) - Power supply unit operational status"/>
+    </Graph>
+    <Graph graphName="developer.cartridge.procents">
+        <Property name="description" value="Konica-Minolta printer - Black developer cartridge level as a percentage (marker supply index 1.3)"/>
+    </Graph>
+    <Graph graphName="developerblack.cartridge.procents">
+        <Property name="description" value="Konica-Minolta printer - Black developer cartridge level as a percentage (marker supply index 1.12)"/>
+    </Graph>
+    <Graph graphName="diskFullPercent">
+        <Property name="description" value="Juniper SA/MAG (Pulse Secure) - Disk full percentage (normal &lt;80%, critical &gt;=90%)"/>
+    </Graph>
+    <Graph graphName="diskPercentUsage">
+        <Property name="description" value="Cyberoam firewall - Disk usage percentage"/>
+    </Graph>
+    <Graph graphName="diskUsageCurrent">
+        <Property name="description" value="Fortinet FortiMail - Current hard disk usage in megabytes"/>
+    </Graph>
+    <Graph graphName="DiskUtilization">
+        <Property name="description" value="Generic device - Disk utilization via HOST-RESOURCES-MIB hrStorageUsed (used across multiple vendors/models)"/>
+    </Graph>
+    <Graph graphName="DNOS.FanStatus">
+        <Property name="description" value="DNOS - Fan operational status"/>
+    </Graph>
+    <Graph graphName="DNOS.MemoryUtilization">
+        <Property name="description" value="DNOS - Memory utilization calculated from total and free memory"/>
+    </Graph>
+    <Graph graphName="DNOS.PowerSupplyStatus">
+        <Property name="description" value="Dell Networking (DNOS) switch - Power supply unit status"/>
+    </Graph>
+    <Graph graphName="DPtech-CPUUtilization">
+        <Property name="description" value="DPtech devices - CPU utilization percentage via DPtech proprietary MIB"/>
+    </Graph>
+    <Graph graphName="DPtech-MemoryUtilization">
+        <Property name="description" value="DPtech network device - Memory utilization percentage (generic across DPtech models)"/>
+    </Graph>
+    <Graph graphName="DPX8000-A12-MemoryUtilization">
+        <Property name="description" value="DPtech DPX8000-A12 - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="drsFanCurrStatus">
+        <Property name="description" value="DRAC server - Current fan status"/>
+    </Graph>
+    <Graph graphName="drsGlobalSystemStatus">
+        <Property name="description" value="Dell OpenManage (DRS) - Overall global system health status via Dell Remote Access Controller"/>
+    </Graph>
+    <Graph graphName="drsPSUVoltsReading">
+        <Property name="description" value="Dell DRAC/CMC (chassis) - Power supply unit voltage reading"/>
+    </Graph>
+    <Graph graphName="drumblack.cartridge.procents">
+        <Property name="description" value="Konica-Minolta printer - Black drum cartridge level as a percentage (marker supply index 1.11)"/>
+    </Graph>
+    <Graph graphName="drumcartridge.cartridge.procents">
+        <Property name="description" value="Konica-Minolta printer - Black drum cartridge level as a percentage (marker supply index 1.2)"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSW1MinAvgCPUUtilization">
+        <Property name="description" value="Edgecore ECS4620 Switch - CPU utilization averaged over 1 minute"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSW511MinAvgCPUUtilization">
+        <Property name="description" value="Edgecore ECS5520 Switch - CPU utilization averaged over 1 minute"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSW51FanSpeed">
+        <Property name="description" value="Edgecore ECS series or similar managed switches - Fan speed monitoring"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSW51FanStatus">
+        <Property name="description" value="Edgecore ECS5520 series - Fan operational status"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSW51MemoryUtilization">
+        <Property name="description" value="Edgecore ECS5520 Switch - Memory utilization calculated from used and total memory"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSw51PowerStatus">
+        <Property name="description" value="Edgecore ECS5520 Switch - Power supply unit operational status"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSW51Temperature">
+        <Property name="description" value="Edgecore ECS5520 Switch - Temperature sensor reading"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSWFanSpeed">
+        <Property name="description" value="Edgecore ECS4620-Series Switch - Fan speed monitoring"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSWFanStatus">
+        <Property name="description" value="Edgecore ECS4620 Series - Fan operational status"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSWMemoryUtilization">
+        <Property name="description" value="Edgecore ECS4620 Switch - Memory utilization calculated from used and total memory"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSwPowerStatus">
+        <Property name="description" value="Edgecore ECS4620 Switch - Power supply unit operational status"/>
+    </Graph>
+    <Graph graphName="EdgeCoreSWTemperature">
+        <Property name="description" value="Edgecore ECS4620 Switch - Temperature sensor reading"/>
+    </Graph>
+    <Graph graphName="etsysResourceCPUUtilization5min">
+        <Property name="description" value="Extreme Networks (Enterasys) - CPU utilization percentage over the last 5 minutes"/>
+    </Graph>
+    <Graph graphName="extreme.system.memory.utilization">
+        <Property name="description" value="Extreme Networks switch - Per-process memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="extremeCPUUtilizationMax">
+        <Property name="description" value="Extreme Networks Switch - Maximum CPU utilization by a process since process start"/>
+    </Graph>
+    <Graph graphName="extremeMemoryUtilization">
+        <Property name="description" value="Extreme Networks switch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="extremeNetSysCPUUtilization">
+        <Property name="description" value="ExtremeXOS - CPU utilization percentage over the last 5 minutes"/>
+    </Graph>
+    <Graph graphName="extremeTotalCPUUtilization">
+        <Property name="description" value="Extreme Networks Switch - Total CPU utilization percentage as of last sampling"/>
+    </Graph>
+    <Graph graphName="F5-BIG-IP-1600-CPUUtilization">
+        <Property name="description" value="F5 BIG-IP 1600 Load Balancer - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="F5CPUUtilization">
+        <Property name="description" value="F5 Networks Load Balancer - CPU utilization percentage (computed as 100 minus idle ratio)"/>
+    </Graph>
+    <Graph graphName="F5-CPUUtilization">
+        <Property name="description" value="F5 BIG-IP Load Balancer - CPU utilization percentage (generic across BIG-IP models)"/>
+    </Graph>
+    <Graph graphName="F5MemoryUtilization">
+        <Property name="description" value="F5 Networks BIG-IP load balancer - Memory utilization percentage (generic across F5 models)"/>
+    </Graph>
+    <Graph graphName="F5-MemoryUtilization">
+        <Property name="description" value="F5 Networks BIG-IP load balancer - Host memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="fadcSysLogDiskUsage">
+        <Property name="description" value="Fortinet FortiADC - Instantaneous log disk usage"/>
+    </Graph>
+    <Graph graphName="fgsys_MemoryUtilization">
+        <Property name="description" value="Fortinet FortiGate firewall - Current RAM utilization percentage"/>
+    </Graph>
+    <Graph graphName="fgSysDiskUtilization">
+        <Property name="description" value="Fortinet FortiGate - System disk utilization percentage"/>
+    </Graph>
+    <Graph graphName="fgSysSesCountNew">
+        <Property name="description" value="Fortinet FortiGate - Instantaneous active session count on the device"/>
+    </Graph>
+    <Graph graphName="fgSysSesCountOld">
+        <Property name="description" value="Fortinet FortiGate (legacy MIB, non-indexed) - Instantaneous active session count"/>
+    </Graph>
+    <Graph graphName="fgVdEntCpuUsage">
+        <Property name="description" value="Fortinet FortiGate - CPU usage percentage per virtual domain (VDOM)"/>
+    </Graph>
+    <Graph graphName="fgVdEntMemUsage">
+        <Property name="description" value="Fortinet FortiGate firewall - Virtual domain (VDOM) memory usage percentage"/>
+    </Graph>
+    <Graph graphName="fgVdEntSesCount">
+        <Property name="description" value="Fortinet FortiGate - Number of active sessions per virtual domain (VDOM)"/>
+    </Graph>
+    <Graph graphName="fgVpnSslStatsActiveTunnels">
+        <Property name="yaxistext" value="No. of Tunnels"/>
+    </Graph>
+    <Graph graphName="fgWcWtpSessionWtpMemoryUsage">
+        <Property name="description" value="Fortinet FortiGate wireless controller - WTP (managed access point) memory usage percentage"/>
+    </Graph>
+    <Graph graphName="FiberHome-EPON-CPUUtilization">
+        <Property name="description" value="FiberHome EPON 5516 OLT - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="FiberHome-PAF-CPUUtilization">
+        <Property name="description" value="FiberHome S2200ME-PAF Switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="fmlSysCPUUtilization">
+        <Property name="description" value="Fortinet FortiMail - System CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="fmlSysMemoryUtilization">
+        <Property name="description" value="Fortinet FortiMail - System memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="fmSys_CPUUtilization">
+        <Property name="description" value="Fortinet FortiManager - System CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="fnadcMemoryUtilization">
+        <Property name="description" value="Fortinet FortiADC application delivery controller - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="fnfacSysCPUUtilization">
+        <Property name="description" value="Fortinet FortiAuthenticator - System CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="fnfacSysMemoryUtilization">
+        <Property name="description" value="Fortinet FortiAuthenticator - System memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="fnfddSysCPUUtilization">
+        <Property name="description" value="Fortinet FortiDDoS - System CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="fnfddSysDiskUsage">
+        <Property name="description" value="Fortinet FortiDDoS - System disk usage percentage"/>
+    </Graph>
+    <Graph graphName="fnfddSysMemoryUtilization">
+        <Property name="description" value="Fortinet FortiDDoS - System memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="fnFMSysDiskUsage">
+        <Property name="description" value="Fortinet FortiManager - System disk usage percentage"/>
+    </Graph>
+    <Graph graphName="fnfsDiskUtilization">
+        <Property name="description" value="Fortinet FortiSwitch - Disk utilization percentage"/>
+    </Graph>
+    <Graph graphName="fnFwSysCPUUtilization">
+        <Property name="description" value="Fortinet FortiWeb - System CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="fnfwSysDiskUsage">
+        <Property name="description" value="Fortinet FortiWeb - System disk usage percentage"/>
+    </Graph>
+    <Graph graphName="fnFwSysMemoryUtilization">
+        <Property name="description" value="Fortinet FortiWeb - System memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="FortigateFirewallCPUUtilization">
+        <Property name="description" value="Fortinet FortiGate Firewall - CPU utilization percentage (legacy MIB)"/>
+    </Graph>
+    <Graph graphName="FortigateFirewallMemoryUtilization">
+        <Property name="description" value="Fortinet FortiGate firewall - Memory utilization percentage (legacy MIB)"/>
+    </Graph>
+    <Graph graphName="FortigateFirewallSessionCount">
+        <Property name="description" value="Fortinet FortiGate (legacy) - Active firewall session count"/>
+    </Graph>
+    <Graph graphName="fortinetCurrentCPUUtilization">
+        <Property name="description" value="Fortinet FortiGate Firewall - Current CPU utilization percentage (FortiOS MIB)"/>
+    </Graph>
+    <Graph graphName="fsaSysCPUUtilization">
+        <Property name="description" value="Fortinet FortiSandbox - System CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="fsaSysMemoryUtilization">
+        <Property name="description" value="Fortinet FortiSandbox - System memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="fsMemoryUtilization">
+        <Property name="description" value="Fortinet FortiSwitch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="fsSys_CPUUtilization">
+        <Property name="description" value="Fortinet FortiSwitch - System CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="fwSysCpuUsage">
+        <Property name="description" value="Fortinet FortiWeb - Current CPU usage percentage (alternate OID)"/>
+    </Graph>
+    <Graph graphName="globalSystemStatus">
+        <Property name="description" value="Dell iDRAC7/8 (12G/13G servers) - Overall global system health status via iDRAC"/>
+    </Graph>
+    <Graph graphName="H3C.EntityExtCPUUtilization">
+        <Property name="description" value="H3C devices - CPU utilization percentage via HH3C entity extension MIB (generic, instance varies by model)"/>
+    </Graph>
+    <Graph graphName="H3c.MemoryUtilization">
+        <Property name="description" value="H3C - Generic memory utilization percentage for H3C Comware devices using HH3C enterprise MIB"/>
+    </Graph>
+    <Graph graphName="H3C_S3600-28TP-SI-CPUUtilization">
+        <Property name="description" value="H3C S3600-28TP-SI switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C_S3600-28TP-SI-MemoryUtilization">
+        <Property name="description" value="H3C S3600-28TP-SI - Memory utilization percentage for the S3600-28TP-SI switch"/>
+    </Graph>
+    <Graph graphName="H3C_S7506E-S_CPUUtilization">
+        <Property name="description" value="H3C S7506E-S switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C_S7506E-S_MemoryUtilization">
+        <Property name="description" value="H3C S7506E-S - Memory utilization percentage for the S7506E-S switch (legacy OID)"/>
+    </Graph>
+    <Graph graphName="H3C_SR8808-CPUUtilization">
+        <Property name="description" value="H3C SR8808 router - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C_SR8808-MemoryUtilization">
+        <Property name="description" value="H3C SR8808 - Memory utilization percentage for the SR8808 router"/>
+    </Graph>
+    <Graph graphName="H3CCPUUtilization">
+        <Property name="description" value="DPtech devices - CPU utilization percentage via H3C/HH3C entity extension MIB"/>
+    </Graph>
+    <Graph graphName="h3cEntityExtCPUUtilization">
+        <Property name="description" value="H3C/HP Comware devices - CPU utilization percentage via legacy Huawei-H3C MIB (instance determined by entPhysicalDescr)"/>
+    </Graph>
+    <Graph graphName="h3cEntityExtMemoryUtilization">
+        <Property name="description" value="H3C - Memory utilization percentage for HP/H3C Comware devices, identified via entPhysicalDescr"/>
+    </Graph>
+    <Graph graphName="H3CHuaweiCPUUtilization">
+        <Property name="description" value="H3C devices - CPU utilization percentage (instance 18, legacy Huawei-H3C MIB)"/>
+    </Graph>
+    <Graph graphName="H3CHuaweiMemoryUtilization">
+        <Property name="description" value="H3C - Memory utilization percentage for H3C/Huawei devices (entity index 18)"/>
+    </Graph>
+    <Graph graphName="H3CMemoryUtilization">
+        <Property name="description" value="DPtech device (H3C-compatible MIB) - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S12508-CPUUtilization">
+        <Property name="description" value="H3C S12508 Switch - CPU utilization percentage (instance 26915)"/>
+        <Property name="oid" value=".1.3.6.1.4.1.25506.2.6.1.1.1.1.6.26915"/>
+    </Graph>
+    <Graph graphName="H3C-S12508-MemoryUtilization">
+        <Property name="description" value="H3C S12508 - Memory utilization percentage for the S12508 switch"/>
+        <Property name="oid" value=".1.3.6.1.4.1.25506.2.6.1.1.1.1.8.26915"/>
+    </Graph>
+    <Graph graphName="H3CS3100CPUUtilization">
+        <Property name="description" value="H3C S3100 Switch - CPU utilization percentage (instance 20, legacy Huawei-H3C MIB)"/>
+    </Graph>
+    <Graph graphName="H3CS3100MemoryUtilization">
+        <Property name="description" value="H3C S3100 - Memory utilization percentage for the S3100 series switch"/>
+    </Graph>
+    <Graph graphName="H3CS3CPUUtilization">
+        <Property name="description" value="H3C S3 series Switch - CPU utilization percentage via Huawei system MIB"/>
+    </Graph>
+    <Graph graphName="H3CS3MemoryUtilization">
+        <Property name="description" value="H3C S3 series - Memory utilization percentage computed from used and free memory OIDs"/>
+    </Graph>
+    <Graph graphName="H3C-S5120-CPUUtilization">
+        <Property name="description" value="H3C S5120 series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S5120-MemoryUtilization">
+        <Property name="description" value="H3C S5120 - Memory utilization percentage for the S5120 series switch"/>
+    </Graph>
+    <Graph graphName="H3C-S5500-28C-CPUUtilization">
+        <Property name="description" value="H3C S5500-28C switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S5500-28C-MemoryUtilization">
+        <Property name="description" value="H3C S5500-28C - Memory utilization percentage for the S5500-28C switch"/>
+    </Graph>
+    <Graph graphName="H3C-S5500-CPUUtilization">
+        <Property name="description" value="H3C S5500 series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S5500-MemoryUtilization">
+        <Property name="description" value="H3C S5500 - Memory utilization percentage for the S5500 series switch"/>
+    </Graph>
+    <Graph graphName="H3CS58CPUUtilization">
+        <Property name="description" value="H3C S58 series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3CS58MemoryUtilization">
+        <Property name="description" value="H3C S58 series - Memory utilization percentage for the S58xx series switch"/>
+    </Graph>
+    <Graph graphName="H3C-S7500-CPUUtilization">
+        <Property name="description" value="H3C S7500 series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S7500-MemoryUtilization">
+        <Property name="description" value="H3C S7500 - Memory utilization percentage for the S7500 series switch"/>
+    </Graph>
+    <Graph graphName="H3C-S7503E-S-CPUUtilization">
+        <Property name="description" value="H3C S7503E-S switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S7503E-S-MemoryUtilization">
+        <Property name="description" value="H3C S7503E-S - Memory utilization percentage for the S7503E-S switch"/>
+    </Graph>
+    <Graph graphName="H3C-S7506E-CPUUtilization">
+        <Property name="description" value="H3C S7506E switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S7506E-MemoryUtilization">
+        <Property name="description" value="H3C S7506E - Memory utilization percentage for the S7506E switch"/>
+    </Graph>
+    <Graph graphName="H3C-S7510E-CPUUtilization">
+        <Property name="description" value="H3C S7510E switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S7510E-MemoryUtilization">
+        <Property name="description" value="H3C S7510E - Memory utilization percentage for the S7510E switch"/>
+    </Graph>
+    <Graph graphName="H3CS75CPUUtilization">
+        <Property name="description" value="H3C S75 series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3CS75EMemoryUtilization">
+        <Property name="description" value="H3C S75E series - Memory utilization percentage for the S75E series switch"/>
+    </Graph>
+    <Graph graphName="H3C-S9508-CPUUtilization">
+        <Property name="description" value="H3C S9508 switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S9508-MemoryUtilization">
+        <Property name="description" value="H3C S9508 - Memory utilization percentage computed from used and free memory OIDs"/>
+    </Graph>
+    <Graph graphName="H3C-S9512E-CPUUtilization">
+        <Property name="description" value="H3C S9512E switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-S9512E-MemoryUtilization">
+        <Property name="description" value="H3C S9512E - Memory utilization percentage for the S9512E switch"/>
+    </Graph>
+    <Graph graphName="H3CS95CPUUtilization">
+        <Property name="description" value="H3C S95 series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3CS95MemoryUtilization">
+        <Property name="description" value="H3C S95 series - Memory utilization percentage computed from used and free memory OIDs"/>
+    </Graph>
+    <Graph graphName="H3CSCPUUtilization">
+        <Property name="description" value="H3C Switch - CPU utilization percentage (instance 22, HH3C entity extension MIB)"/>
+    </Graph>
+    <Graph graphName="H3C-SecBlade-CPUUtilization">
+        <Property name="description" value="H3C SecBlade firewall module - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3C-SecBlade-MemoryUtilization">
+        <Property name="description" value="H3C SecBlade - Memory utilization percentage for the SecBlade firewall module"/>
+    </Graph>
+    <Graph graphName="H3CSMemoryUtilization">
+        <Property name="description" value="H3C S series - Memory utilization percentage (entity index 22) for H3C S-series devices"/>
+    </Graph>
+    <Graph graphName="H3CSRCPUUtilization">
+        <Property name="description" value="H3C SR series router - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="H3CSRMemoryUtilization">
+        <Property name="description" value="H3C SR series - Memory utilization percentage for H3C SR series routers"/>
+    </Graph>
+    <Graph graphName="hardwareMemoryUsage">
+        <Property name="description" value="Nokia (Check Point) Firewall - Hardware memory usage percentage currently in use"/>
+    </Graph>
+    <Graph graphName="hardwarePrimaryCPU">
+        <Property name="description" value="Nokia - Primary CPU load percentage for Nokia security appliances"/>
+    </Graph>
+    <Graph graphName="hh3cEntityExtMemAvgUsage">
+        <Property name="description" value="H3C - Average memory utilization over a period of time for H3C Comware devices"/>
+    </Graph>
+    <Graph graphName="hp.black.toner.now">
+        <Property name="description" value="HP Printer - Current black toner supply level (standard Printer MIB marker supplies)"/>
+    </Graph>
+    <Graph graphName="hp6300MMemoryUtilization">
+        <Property name="description" value="HP 6300M Switch - Memory utilization percentage via HOST-RESOURCES-MIB"/>
+    </Graph>
+    <Graph graphName="hpColubrisCurrCPUUtilization">
+        <Property name="description" value="HP Colubris (MSM) wireless platform - Current CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="hpColubrisCurrMemoryUtilization">
+        <Property name="description" value="HP Colubris/MSM wireless devices - Current memory utilization percentage (calculated from memory stats)"/>
+    </Graph>
+    <Graph graphName="hpe3Com.MemoryUtilization">
+        <Property name="description" value="HPE/3Com networking devices - Memory utilization percentage (H3C entity extension MIB)"/>
+    </Graph>
+    <Graph graphName="hpearubaWlsxMemoryUtilization">
+        <Property name="description" value="HP Aruba wireless controller - Memory utilization percentage (wlsx system MIB)"/>
+    </Graph>
+    <Graph graphName="hpH3CDevMFanStatus">
+        <Property name="description" value="HP H3C series switch - Fan operational status via H3C device management MIB"/>
+    </Graph>
+    <Graph graphName="HPH3CEntityExtTemperature">
+        <Property name="description" value="HP H3C series - Entity extension temperature reading for hardware components"/>
+    </Graph>
+    <Graph graphName="hpnicfEntityExtMemAvgUsage">
+        <Property name="description" value="HPE Comware networking devices - Average memory utilization over a period (hpnicf entity extension MIB)"/>
+    </Graph>
+    <Graph graphName="hpnicfEntityExtTemperature">
+        <Property name="description" value="HP/H3C (HPN-ICF) series - Entity extension temperature reading for hardware components"/>
+    </Graph>
+    <Graph graphName="HuaweiEntityTemperature">
+        <Property name="description" value="Huawei - Entity temperature reading in Celsius (generic, used across multiple models)"/>
+    </Graph>
+    <Graph graphName="Huawei-Eudemon300-CPUUtilization">
+        <Property name="description" value="Huawei Eudemon 300 firewall - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="Huawei-Eudemon300-MemoryUtilization">
+        <Property name="description" value="Huawei Eudemon 300 Firewall - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="Huawei-NE40E-X3-MemoryUtilization">
+        <Property name="description" value="Huawei NE40E-X3 Router - Memory utilization calculated from total and free memory"/>
+    </Graph>
+    <Graph graphName="Huawei-S2403-CPUUtilization">
+        <Property name="description" value="Huawei S2403 switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="Huawei-S3328-CPUUtilization">
+        <Property name="description" value="Huawei S3328 switch - CPU utilization percentage for entity index 150994945"/>
+    </Graph>
+    <Graph graphName="Huawei-S3328-MemoryUtilization">
+        <Property name="description" value="Huawei S3328 Switch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="Huawei-S3552G-CPUUtilization">
+        <Property name="description" value="Huawei S3552G switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="Huawei-S3700-CPUUtilization">
+        <Property name="description" value="Huawei S3700 switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="Huawei-S3700-MemoryUtilization">
+        <Property name="description" value="Huawei S3700 Switch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="HuaweiS5700CPUUtilization">
+        <Property name="description" value="Huawei S5700 switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="Huawei-S5700-CPUUtilization">
+        <Property name="description" value="Huawei S5700 switch - CPU utilization percentage (alternate OID)"/>
+    </Graph>
+    <Graph graphName="HuaweiS5700MemoryUtilization">
+        <Property name="description" value="Huawei S5700 Switch - Memory utilization calculated from total and free memory"/>
+    </Graph>
+    <Graph graphName="Huawei-S5700POE-MemoryUtilization">
+        <Property name="description" value="Huawei S5700 PoE Switch - Memory utilization calculated from total and free memory"/>
+    </Graph>
+    <Graph graphName="Huawei-S9300-CPUUtilization">
+        <Property name="description" value="Huawei S9300 switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="HuaweiSCPUUtilization">
+        <Property name="description" value="Huawei S-series switches - CPU utilization percentage (generic S-series OID)"/>
+    </Graph>
+    <Graph graphName="HuaweiSMemoryUtilization">
+        <Property name="description" value="Huawei S-series devices - Memory utilization calculated from total and free memory"/>
+    </Graph>
+    <Graph graphName="hwCESWCPUUtilization">
+        <Property name="description" value="Huawei CE series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="hwCESWMemoryUtilization">
+        <Property name="description" value="Huawei CloudEngine switches - Memory utilization calculated from total and free memory"/>
+    </Graph>
+    <Graph graphName="hwDevMemoryUtilization">
+        <Property name="description" value="Huawei networking devices - Memory utilization calculated from total and free memory (hwDev MIB)"/>
+    </Graph>
+    <Graph graphName="hwEntityFanSpeed">
+        <Property name="description" value="Huawei network device - Entity fan speed via hwEntityFanSpeed MIB (used across multiple models)"/>
+    </Graph>
+    <Graph graphName="hwEntityFanState">
+        <Property name="description" value="Huawei networking devices - Entity fan state from Huawei entity extensions MIB (used across multiple models)"/>
+    </Graph>
+    <Graph graphName="hwEntityMemoryUtilization">
+        <Property name="description" value="Huawei networking devices - Entity memory utilization percentage (generic hwEntity MIB, used across multiple models)"/>
+    </Graph>
+    <Graph graphName="hwEntityTemperature">
+        <Property name="description" value="Huawei - Entity temperature reading in Celsius (board slot 9)"/>
+    </Graph>
+    <Graph graphName="hwibmcFanSpeed">
+        <Property name="description" value="Huawei server iBMC - Fan speed via baseboard management controller MIB"/>
+    </Graph>
+    <Graph graphName="hwibmcFanStatus">
+        <Property name="description" value="Huawei iBMC (server baseboard management controller) - Fan operational status"/>
+    </Graph>
+    <Graph graphName="IAPMemoryUtilization">
+        <Property name="description" value="Aruba Instant AP (IAP) - Memory utilization percentage calculated from used and total memory"/>
+    </Graph>
+    <Graph graphName="ipsoProcessorUtilization">
+        <Property name="description" value="Nokia IPSO - Processor utilization percentage for Nokia IPSO-based security appliances"/>
+    </Graph>
+    <Graph graphName="IronportCPUUtilization">
+        <Property name="description" value="Cisco IronPort (AsyncOS) appliance - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="IronportDiskUtilization">
+        <Property name="description" value="Cisco IronPort appliance - Disk I/O utilization percentage via asyncOS MIB"/>
+    </Graph>
+    <Graph graphName="IronportMemoryUtilization">
+        <Property name="description" value="Cisco IronPort (ESA/WSA) - Device memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="iveMemoryUtilization">
+        <Property name="description" value="Juniper IVE (Pulse Secure/SA Series) - Memory utilization percentage of the Instant Virtual Extranet system"/>
+    </Graph>
+    <Graph graphName="jnxHrStoragePercentUsed">
+        <Property name="description" value="Juniper Networks - Storage percent (used across multiple Junos models)"/>
+    </Graph>
+    <Graph graphName="jnxJsSPUCPUUtilization">
+        <Property name="description" value="Juniper SRX series - Current Security Processing Unit (SPU) CPU utilization percentage (scalar instance)"/>
+    </Graph>
+    <Graph graphName="jnxOperatingCPUUtilization">
+        <Property name="description" value="Juniper devices - Generic operating CPU utilization percentage (used across multiple models)"/>
+    </Graph>
+    <Graph graphName="Juniper-CPUUtilization">
+        <Property name="description" value="Juniper NetScreen firewall - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="JuniperSPUCPUUtilization">
+        <Property name="description" value="Juniper SRX series - Security Processing Unit (SPU) CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="JuniperSSGMemoryUtilization">
+        <Property name="description" value="Juniper SSG Series Firewall - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="kmbizhubSysTotalPagePrint">
+        <Property name="description" value="Konica-Minolta bizhub series - System-level total page print counter"/>
+    </Graph>
+    <Graph graphName="kmbizhubtotalBlackPrinted">
+        <Property name="description" value="Konica-Minolta bizhub series - Total number of black (monochrome) pages printed (alternate counter)"/>
+    </Graph>
+    <Graph graphName="kmbizhubtotalBlackPrints">
+        <Property name="description" value="Konica-Minolta bizhub series - Total number of black (monochrome) pages printed"/>
+    </Graph>
+    <Graph graphName="lancom1711CPUUtilization">
+        <Property name="description" value="LANCOM Systems 1711 router - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="lancom1711MemoryUtilization">
+        <Property name="description" value="LANCOM 1711 Router - Memory utilization calculated from used and total memory"/>
+    </Graph>
+    <Graph graphName="lancom1722CPUUtilization">
+        <Property name="description" value="LANCOM Systems 1722 router - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="lancom1722MemoryUtilization">
+        <Property name="description" value="LANCOM 1722 Router - Memory utilization calculated from used and total memory"/>
+    </Graph>
+    <Graph graphName="lancomSysCPUUtilization">
+        <Property name="description" value="LANCOM Systems routers - CPU utilization percentage (generic, used across multiple models)"/>
+    </Graph>
+    <Graph graphName="lancomSysMemoryUtilization">
+        <Property name="description" value="LANCOM Systems - Generic memory utilization calculated from used and total memory (used across multiple models)"/>
+        <Property name="oid" value="(.1.3.6.1.4.1.2356.11.1.47.4.0-.1.3.6.1.4.1.2356.11.1.47.5.0)*100/.1.3.6.1.4.1.2356.11.1.47.4.0"/>
+    </Graph>
+    <Graph graphName="MAIPU-CPUUtilization">
+        <Property name="description" value="Maipu - Generic CPU utilization percentage (used across multiple Maipu network devices)"/>
+    </Graph>
+    <Graph graphName="MAIPU-MemoryUtilization">
+        <Property name="description" value="MAIPU - Generic memory utilization percentage (used across multiple models)"/>
+    </Graph>
+    <Graph graphName="MASTERYSBatCapacity">
+        <Property name="description" value="SOCOMEC MASTERYS UPS - Estimated battery charge remaining as a percentage of full charge"/>
+    </Graph>
+    <Graph graphName="MASTERYSLoadPhase1">
+        <Property name="description" value="SOCOMEC MASTERYS UPS - Output load rate for Phase 1 expressed in percent"/>
+    </Graph>
+    <Graph graphName="mem_5min_used">
+        <Property name="description" value="Cisco IOS devices - Bytes currently in use from the processor memory pool (CISCO-MEMORY-POOL-MIB)"/>
+    </Graph>
+    <Graph graphName="MemoryUtilization">
+        <Property name="description" value="Huawei networking devices - Memory utilization calculated from total and free memory (generic Huawei MIB)"/>
+    </Graph>
+    <Graph graphName="MemoryUtilizationPercent">
+        <Property name="description" value="Cyberoam UTM appliance - Percentage of main memory utilization"/>
+    </Graph>
+    <Graph graphName="MemoryUtilizationSangfor">
+        <Property name="description" value="Sangfor - Memory utilization calculated from dual OIDs (used/total)"/>
+    </Graph>
+    <Graph graphName="MemoryUtilizationUsedPercent">
+        <Property name="description" value="Alcatel-Lucent OmniSwitch (legacy AOS) - Average device-level memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="memRTUsage">
+        <Property name="description" value="H3C - Memory utilization percentage for a specific entity instance (index 97), used across H3C/Huawei Comware devices"/>
+    </Graph>
+    <Graph graphName="MiKroTik.CPUtemperature">
+        <Property name="description" value="MikroTik RouterOS - CPU temperature in Celsius from an alternate health OID, used across multiple MikroTik models"/>
+    </Graph>
+    <Graph graphName="mtxrHlCpuTemperature">
+        <Property name="description" value="MikroTik RouterOS - CPU temperature reading from the hardware health monitor, used across multiple MikroTik models"/>
+    </Graph>
+    <Graph graphName="Netscreen-MemoryUtilization">
+        <Property name="description" value="Juniper NetScreen Firewall - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="NetSNMPCPUUtilization">
+        <Property name="description" value="Net-SNMP based devices - CPU utilization derived from idle percentage, used across multiple platforms"/>
+    </Graph>
+    <Graph graphName="NetSNMPCPUUtilizationRaw">
+        <Property name="description" value="Net-SNMP based devices - CPU utilization from raw idle CPU counter, used across multiple platforms"/>
+    </Graph>
+    <Graph graphName="NetSNMPMemoryUtilization">
+        <Property name="description" value="Net-SNMP based devices - Memory utilization calculated from total and available real memory (UCD-SNMP MIB)"/>
+    </Graph>
+    <Graph graphName="NETVISIONBatCapacity">
+        <Property name="description" value="SOCOMEC NETVISION UPS - Estimated battery charge remaining as a percentage of full charge"/>
+    </Graph>
+    <Graph graphName="NETVISIONBatVoltage">
+        <Property name="description" value="SOCOMEC NETVISION UPS - Battery voltage in volts"/>
+    </Graph>
+    <Graph graphName="ng_SwitchCPUUtilization">
+        <Property name="description" value="Netgear Switch - Memory utilization based on total free memory"/>
+    </Graph>
+    <Graph graphName="ng_SwitchTotalCPUUtilization">
+        <Property name="description" value="Netgear - Total CPU utilization percentage for Netgear managed switches"/>
+    </Graph>
+    <Graph graphName="NGAgentSWCpuTotalUtilization">
+        <Property name="description" value="Netgear - Total CPU utilization over 5/60/300 second intervals for Netgear managed switches"/>
+    </Graph>
+    <Graph graphName="NGAgentSWMemoryUtilization">
+        <Property name="description" value="Netgear Switch - Memory utilization percentage calculated from free memory ratio"/>
+    </Graph>
+    <Graph graphName="NSCPUUtilization">
+        <Property name="description" value="Citrix NetScaler (ADC) - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="NSMemoryUtilization">
+        <Property name="description" value="Citrix NetScaler (ADC) - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="OpZoonCPUUtilization">
+        <Property name="description" value="OpZoon - Generic CPU utilization percentage for OpZoon network devices"/>
+    </Graph>
+    <Graph graphName="OpZoonMemoryUtilization">
+        <Property name="description" value="OpZoon Switch - Memory utilization percentage (generic)"/>
+    </Graph>
+    <Graph graphName="OpZoon-MemoryUtilization">
+        <Property name="description" value="OpZoon Switch - Memory utilization percentage via H3C-compatible MIB"/>
+    </Graph>
+    <Graph graphName="os10FanOperStatus">
+        <Property name="description" value="Dell OS10 (networking switches) - Fan operational status via OS10 enterprise MIB"/>
+    </Graph>
+    <Graph graphName="os10PowerSupplyOperStatus">
+        <Property name="description" value="Dell OS10 switch - Power supply operational status"/>
+    </Graph>
+    <Graph graphName="panAllStorageUtilization">
+        <Property name="description" value="Palo Alto Networks Firewall - Overall storage/memory utilization via Host Resources MIB"/>
+    </Graph>
+    <Graph graphName="panMgmtMemoryUtilization1020">
+        <Property name="description" value="Palo Alto Networks Firewall - Management plane memory utilization (hrStorageUsed index 1020)"/>
+    </Graph>
+    <Graph graphName="panMgmtMemoryUtilization20">
+        <Property name="description" value="Palo Alto Networks Firewall - Management plane memory utilization (hrStorageUsed index 20)"/>
+    </Graph>
+    <Graph graphName="PowerSupplyInputVoltage">
+        <Property name="description" value="Dell PowerEdge server (via Dell OpenManage) - Power supply input voltage monitoring"/>
+    </Graph>
+    <Graph graphName="prolCPUUtilization">
+        <Property name="description" value="HP ProLiant server - CPU utilization percentage via Insight Management MIB"/>
+    </Graph>
+    <Graph graphName="prtMarkerSuppliesLevel1">
+        <Property name="description" value="HP Printer - Current black toner supply level (standard Printer MIB marker supplies)"/>
+    </Graph>
+    <Graph graphName="prtMarkerSuppliesLevel2">
+        <Property name="description" value="HP Printer - Current cyan toner supply level (standard Printer MIB marker supplies)"/>
+    </Graph>
+    <Graph graphName="prtMarkerSuppliesLevel3">
+        <Property name="description" value="HP Printer - Current magenta toner supply level (standard Printer MIB marker supplies)"/>
+    </Graph>
+    <Graph graphName="prtMarkerSuppliesLevel4">
+        <Property name="description" value="HP Printer - Current yellow toner supply level (standard Printer MIB marker supplies)"/>
+    </Graph>
+    <Graph graphName="PT6608OpZoonCPUUtilization">
+        <Property name="description" value="OpZoon PT6608 - CPU utilization percentage for the PT6608 switch"/>
+    </Graph>
+    <Graph graphName="PTCPUUtilization">
+        <Property name="description" value="OpZoon PT series - CPU utilization percentage for OpZoon PT switches"/>
+    </Graph>
+    <Graph graphName="PTMemoryUtilization">
+        <Property name="description" value="OpZoon PT Series Switch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="radwareSysMemoryUtilization">
+        <Property name="description" value="Radware Alteon Load Balancer - Memory utilization calculated from total and free memory"/>
+    </Graph>
+    <Graph graphName="raisecomTemperature">
+        <Property name="oid" value=".1.3.6.1.4.1.8886.1.13.1.1.0"/>
+    </Graph>
+    <Graph graphName="RielloBatteryHealth">
+        <Property name="description" value="Riello UPS (standard UPS MIB) - Battery health status indicator"/>
+    </Graph>
+    <Graph graphName="riverbedSF5MinCPUUtilization">
+        <Property name="description" value="Riverbed SteelFusion - CPU utilization averaged over 5 minutes"/>
+    </Graph>
+    <Graph graphName="riverbedSFdsAveDiskUtilization">
+        <Property name="description" value="Riverbed SteelFusion - Average disk utilization percentage"/>
+    </Graph>
+    <Graph graphName="riverbedSFSystemStatus">
+        <Property name="description" value="Riverbed SteelFusion - Overall system health status of the appliance"/>
+    </Graph>
+    <Graph graphName="riverbedshAvgDiskUtilization">
+        <Property name="description" value="Riverbed SteelHead - Average disk utilization percentage"/>
+    </Graph>
+    <Graph graphName="riverbedshCPUUtilization5MinAvg">
+        <Property name="description" value="Riverbed SteelHead - CPU utilization averaged over 5 minutes"/>
+    </Graph>
+    <Graph graphName="riverbedshoptServiceStatus">
+        <Property name="description" value="Riverbed Steelhead - Optimization service operational status"/>
+    </Graph>
+    <Graph graphName="riverbedshSystemHealthStatus">
+        <Property name="description" value="Riverbed SteelHead - Overall system health status of the WAN optimization appliance"/>
+    </Graph>
+    <Graph graphName="RouterCPUUtilization">
+        <Property name="description" value="Cisco IOS - Five-minute exponentially-decayed moving average of CPU busy percentage (OLD-CISCO-CPU-MIB), used across multiple Cisco router/switch models"/>
+    </Graph>
+    <Graph graphName="rtyrhInboxTemperature">
+        <Property name="description" value="Yamaha router (RTY/RH series) - Internal chassis temperature reading"/>
+    </Graph>
+    <Graph graphName="rtyrhMemoryUtilization">
+        <Property name="description" value="YAMAHA router (RT series) - Main memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="ruckusSystemCPUUtilization">
+        <Property name="description" value="Ruckus - System CPU utilization percentage for Ruckus wireless devices"/>
+    </Graph>
+    <Graph graphName="ruckusSystemMemoryUtilization">
+        <Property name="description" value="Ruckus - System memory utilization percentage (generic across Ruckus devices)"/>
+    </Graph>
+    <Graph graphName="ruckusSZCPUPerc">
+        <Property name="description" value="Ruckus SmartZone - CPU usage percentage for the SmartZone controller"/>
+    </Graph>
+    <Graph graphName="ruckusSZMemoryPerc">
+        <Property name="description" value="Ruckus SmartZone Controller - Memory usage percentage"/>
+    </Graph>
+    <Graph graphName="RuckusSZNoOfClientsConnected">
+        <Property name="description" value="Ruckus SmartZone - Total number of wireless clients currently connected"/>
+    </Graph>
+    <Graph graphName="RuckusZDNoOfClientsConnected">
+        <Property name="description" value="Ruckus ZoneDirector - Total number of wireless clients currently connected"/>
+    </Graph>
+    <Graph graphName="RuiJieMemoryUtilization">
+        <Property name="description" value="Ruijie Networks - Memory utilization percentage (generic across Ruijie devices, index 0)"/>
+    </Graph>
+    <Graph graphName="RuiJie-MemoryUtilization">
+        <Property name="description" value="Ruijie Networks - Memory utilization percentage (index 1)"/>
+    </Graph>
+    <Graph graphName="RuiJieMemoryUtilization1">
+        <Property name="description" value="Ruijie Networks - Memory utilization percentage (alternate MIB tree)"/>
+    </Graph>
+    <Graph graphName="RuiJieWLCCPUUtilization">
+        <Property name="description" value="RuiJie - CPU utilization percentage for RuiJie wireless LAN controllers"/>
+    </Graph>
+    <Graph graphName="rupsBatteryStatus">
+        <Property name="description" value="Riello UPS (proprietary MIB) - Battery health status indicator"/>
+    </Graph>
+    <Graph graphName="s5ChasUtilTable">
+        <Property name="description" value="Avaya/Nortel ERS Switch - CPU busy percentage over the last 10 minutes"/>
+    </Graph>
+    <Graph graphName="SangforMemoryUtilization">
+        <Property name="description" value="Sangfor - Memory utilization percentage (generic across Sangfor devices)"/>
+    </Graph>
+    <Graph graphName="SFOSCPUUtilization">
+        <Property name="description" value="Sophos SFOS - CPU utilization percentage for Sophos XG/SFOS firewalls"/>
+    </Graph>
+    <Graph graphName="SFOSDiskPercentUsage">
+        <Property name="description" value="Sophos SFOS (next-gen firewall) - Disk usage percentage"/>
+    </Graph>
+    <Graph graphName="SFOSImapHits">
+        <Property name="description" value="Sophos SFOS Firewall - Number of IMAP protocol proxy hits"/>
+    </Graph>
+    <Graph graphName="SFOSLiveUsersCount">
+        <Property name="description" value="Sophos SFOS Firewall - Number of currently active (live) users"/>
+    </Graph>
+    <Graph graphName="SFOSMemoryUtilization">
+        <Property name="description" value="Sophos SFOS Firewall - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="SFOSPop3Hits">
+        <Property name="description" value="Sophos SFOS Firewall - Number of POP3 protocol hits processed"/>
+    </Graph>
+    <Graph graphName="SFOSSmtpHits">
+        <Property name="description" value="Sophos SFOS Firewall - Count of SMTP protocol hits processed by the device"/>
+    </Graph>
+    <Graph graphName="sgiCPUUtilization">
+        <Property name="description" value="Alcatel-Lucent (Nokia) SR series - Current system-level CPU utilization"/>
+    </Graph>
+    <Graph graphName="sgiKbMemoryUsed">
+        <Property name="description" value="Alcatel-Lucent (Nokia) SR OS - Total pre-allocated pool memory currently in use in kilobytes"/>
+    </Graph>
+    <Graph graphName="sgiMemoryUsed">
+        <Property name="description" value="Alcatel-Lucent (Nokia) SR OS - Total pre-allocated pool memory currently in use (bytes, 32-bit counter)"/>
+    </Graph>
+    <Graph graphName="sgiMemoryUtilization">
+        <Property name="description" value="Alcatel-Lucent (Nokia) SR/SAR series - System memory utilization"/>
+    </Graph>
+    <Graph graphName="smtpHits">
+        <Property name="description" value="Cyberoam UTM Firewall - Count of SMTP protocol hits processed by the device"/>
+    </Graph>
+    <Graph graphName="snAgentBrdMemoryUtil100thPercent">
+        <Property name="description" value="Brocade devices - Dynamic memory utilization per module in hundredths of a percent"/>
+    </Graph>
+    <Graph graphName="snAgGblDynMemoryUtilization">
+        <Property name="description" value="Brocade (Foundry) - Dynamic memory utilization across the device"/>
+    </Graph>
+    <Graph graphName="snChasActualTemperature">
+        <Property name="description" value="Brocade (Foundry) - Actual chassis temperature reading in degrees Celsius"/>
+    </Graph>
+    <Graph graphName="snChasUnitActualTemperature">
+        <Property name="description" value="Brocade (Foundry) stackable - Per-unit chassis temperature (0.5 degree C resolution)"/>
+    </Graph>
+    <Graph graphName="SonicCPUUtilization">
+        <Property name="description" value="SonicWall Firewall - System CPU usage percentage"/>
+    </Graph>
+    <Graph graphName="SonicMemoryUtilization">
+        <Property name="description" value="SonicWall Firewall - System memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="sonicwallWAFMemoryUtilization">
+        <Property name="description" value="SonicWall Web Application Firewall (WAF) - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="SteelheadOptimizationServiceStatus">
+        <Property name="description" value="Riverbed Steelhead - Current status of the WAN optimization service"/>
+    </Graph>
+    <Graph graphName="SwitchMemoryUtilization">
+        <Property name="description" value="Hewlett-Packard switches - Memory utilization percentage (generic HP switch MIB)"/>
+        <Property name="vendorName" value="Hewlett-Packard"/>
+    </Graph>
+    <Graph graphName="temperatureProbeStatus">
+        <Property name="description" value="Dell iDRAC7/8 (12G/13G servers) - Temperature probe status indicating thermal health"/>
+    </Graph>
+    <Graph graphName="tempReadingLenovo">
+        <Property name="description" value="Lenovo IMM (Integrated Management Module) - Temperature sensor reading in the server chassis"/>
+    </Graph>
+    <Graph graphName="tempReadingLenovoXcc">
+        <Property name="description" value="Lenovo XClarity Controller (XCC) - Temperature sensor reading in the server chassis"/>
+        <Property name="oid" value="StringToNumeric[.1.3.6.1.4.1.19046.11.1.1.1.2.1.3]"/>
+    </Graph>
+    <Graph graphName="timeNxStorageUsage">
+        <Property name="oid" value="(.1.3.6.1.4.1.20191.2.2.2.2.4.0*100)/.1.3.6.1.4.1.20191.2.2.2.2.5.0"/>
+    </Graph>
+    <Graph graphName="tmnxHwTemperature">
+        <Property name="description" value="Alcatel-Lucent (Nokia) SR series - Hardware component temperature reading in degrees Celsius"/>
+    </Graph>
+    <Graph graphName="TotalPrints">
+        <Property name="description" value="Konica-Minolta printer - Total lifetime page count via standard Printer MIB"/>
+    </Graph>
+    <Graph graphName="tpSysMonitorCpu5Minutes">
+        <Property name="description" value="TP-Link managed switch/router - Five-minute CPU utilization percentage (table-level OID), used across multiple TP-Link models"/>
+    </Graph>
+    <Graph graphName="tpSysMonitorCpu5Minutes.1">
+        <Property name="description" value="TP-Link managed switch/router - Five-minute CPU utilization percentage for CPU instance 1, used across multiple TP-Link models"/>
+    </Graph>
+    <Graph graphName="tpSysMonitorMemoryUtilization">
+        <Property name="description" value="TP-Link - Memory utilization percentage (generic, table-based)"/>
+    </Graph>
+    <Graph graphName="tpSysMonitorMemoryUtilization.1">
+        <Property name="description" value="TP-Link - Memory utilization percentage (unit 1)"/>
+    </Graph>
+    <Graph graphName="TrippupsBatteryTemperature">
+        <Property name="description" value="Tripp Lite UPS (proprietary MIB) - Battery temperature reading"/>
+    </Graph>
+    <Graph graphName="TrippupsBatteryVoltage">
+        <Property name="description" value="Tripp Lite UPS (proprietary MIB) - Battery voltage reading"/>
+    </Graph>
+    <Graph graphName="TrippUPSInputVoltage">
+        <Property name="description" value="Tripp Lite UPS - Input line voltage"/>
+    </Graph>
+    <Graph graphName="upsAdvInputLineVoltage">
+        <Property name="description" value="APC Smart-UPS - Current utility input line voltage in VAC"/>
+    </Graph>
+    <Graph graphName="upsAdvOutputCurrent">
+        <Property name="description" value="APC UPS - Output current in amperes drawn by the connected load"/>
+    </Graph>
+    <Graph graphName="upsBatteryTemperature">
+        <Property name="description" value="Tripp Lite UPS (standard UPS MIB) - Ambient temperature at or near the battery casing"/>
+    </Graph>
+    <Graph graphName="upsBatteryVoltage">
+        <Property name="description" value="Tripp Lite UPS (standard UPS MIB) - Present battery voltage magnitude"/>
+    </Graph>
+    <Graph graphName="UPSCharging">
+        <Property name="description" value="Riello UPS - Battery charging status indicator"/>
+    </Graph>
+    <Graph graphName="UPSOutputPower">
+        <Property name="description" value="Generic UPS (RFC 1628 standard MIB) - Output power per output line in watts"/>
+    </Graph>
+    <Graph graphName="UPSV4BatCapacity">
+        <Property name="description" value="SOCOMEC UPS (V4 MIB) - Estimated battery charge remaining as a percentage of full charge"/>
+    </Graph>
+    <Graph graphName="UPSV4BatVoltage">
+        <Property name="description" value="SOCOMEC UPS (V4 MIB) - Battery voltage in volts"/>
+    </Graph>
+    <Graph graphName="UPSV4LoadPhase1">
+        <Property name="description" value="SOCOMEC UPS (v4 MIB) - Output load rate for Phase 1 expressed in percent"/>
+    </Graph>
+    <Graph graphName="VENUS_FW_Connections">
+        <Property name="description" value="Venus VSOS Firewall - Monitors the number of active connections on the Venus FW firewall appliance"/>
+    </Graph>
+    <Graph graphName="VENUS-VSOS-V2.6-Connections">
+        <Property name="description" value="Venus VSOS V2.6 Firewall - Monitors the number of active connections on the Venus VSOS V2.6 firewall appliance"/>
+    </Graph>
+    <Graph graphName="Win-CPUUtilization">
+        <Property name="description" value="Windows Server - CPU utilization percentage based on HOST-RESOURCES-MIB"/>
+    </Graph>
+    <Graph graphName="Win-MemoryUtilization">
+        <Property name="description" value="Windows Server - Memory utilization monitored via HOST-RESOURCES-MIB"/>
+    </Graph>
+    <Graph graphName="xgCPUUtilization">
+        <Property name="description" value="Sophos XG - CPU utilization percentage for Sophos XG series firewalls"/>
+    </Graph>
+    <Graph graphName="xgdiskPercentUsage">
+        <Property name="description" value="Sophos XG Firewall - Disk usage percentage"/>
+    </Graph>
+    <Graph graphName="xgImapHits">
+        <Property name="description" value="Sophos XG Firewall - Number of IMAP protocol proxy hits"/>
+    </Graph>
+    <Graph graphName="xgliveUsers">
+        <Property name="description" value="Sophos XG Firewall - Number of currently active (live) users"/>
+    </Graph>
+    <Graph graphName="xgMemoryUtilization">
+        <Property name="description" value="Sophos XG Firewall - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="xgPop3Hits">
+        <Property name="description" value="Sophos XG Firewall - Number of POP3 protocol hits processed"/>
+    </Graph>
+    <Graph graphName="xgSmtpHits">
+        <Property name="description" value="Sophos XG Firewall - Count of SMTP protocol hits processed by the device"/>
+    </Graph>
+    <Graph graphName="YellowDeveloperCartridgeRemaining">
+        <Property name="description" value="Konica-Minolta printer - Remaining level of yellow developer cartridge via standard Printer MIB"/>
+    </Graph>
+    <Graph graphName="yshInboxTemperature">
+        <Property name="description" value="Yamaha router (SH series) - Internal chassis temperature reading"/>
+    </Graph>
+    <Graph graphName="yshMemoryUtilization">
+        <Property name="description" value="YAMAHA router (SH series) - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZhongXingCPUUtilization">
+        <Property name="description" value="ZTE/ZhongXing - CPU utilization percentage for ZhongXing network devices"/>
+    </Graph>
+    <Graph graphName="ZhongXing-CPUUtilization">
+        <Property name="description" value="ZXR10 Series - CPU utilization percentage for ZhongXing network devices (index 9)"/>
+    </Graph>
+    <Graph graphName="ZhongXingMemoryUtilization">
+        <Property name="description" value="ZTE (ZhongXing) - Memory utilization percentage (alternate MIB)"/>
+    </Graph>
+    <Graph graphName="ZhongXing-ZXR10-CPUUtilization">
+        <Property name="description" value="ZTE ZXR10 - CPU utilization percentage for the ZhongXing ZXR10 series router"/>
+    </Graph>
+    <Graph graphName="ZhongXing-ZXR10-MemoryUtilization">
+        <Property name="description" value="ZTE ZXR10 series - Memory utilization percentage (index 9)"/>
+    </Graph>
+    <Graph graphName="ZTE-CPUUtilization">
+        <Property name="description" value="ZTE - Generic CPU utilization percentage for ZTE/ZhongXing network devices"/>
+    </Graph>
+    <Graph graphName="ZTE-MemoryUtilization">
+        <Property name="description" value="ZTE - Memory utilization percentage (index 0, generic ZTE devices)"/>
+    </Graph>
+    <Graph graphName="ZXR10-5200-MemoryUtilization">
+        <Property name="description" value="ZTE ZXR10 5200 series - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZXR10-PS-CPUUtilization">
+        <Property name="description" value="ZTE ZXR10 PS series - CPU utilization percentage for ZXR10 PS devices"/>
+    </Graph>
+    <Graph graphName="ZXR10-PS-MemoryUtilization">
+        <Property name="description" value="ZTE ZXR10 Power Series - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="zxr10SystemMemoryUtilization">
+        <Property name="description" value="ZTE ZXR10 series - System memory utilization percentage (generic across ZXR10 devices)"/>
+    </Graph>
+    <Graph graphName="ZyXEL2200.24.CPUUtilization">
+        <Property name="description" value="ZyXEL GS2200-24 switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZyXEL2200.24.MemoryUtilization">
+        <Property name="description" value="ZyXEL GS2200-24 switch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZyXEL2200.24.Temperature">
+        <Property name="description" value="ZyXEL GS2200-24 - Temperature sensor reading"/>
+    </Graph>
+    <Graph graphName="ZyXEL2200.24.Voltage">
+        <Property name="description" value="ZyXEL GS2200-24 switch - Power supply voltage reading"/>
+    </Graph>
+    <Graph graphName="ZyXEL2200.8.CPUUtilization">
+        <Property name="description" value="ZyXEL GS2200-8 switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZyXEL2200.8.MemoryUtilization">
+        <Property name="description" value="ZyXEL GS2200-8 switch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZyXEL2200.8.Temperature">
+        <Property name="description" value="ZyXEL GS2200-8 - Temperature sensor reading"/>
+    </Graph>
+    <Graph graphName="ZyXEL2200.8.Voltage">
+        <Property name="description" value="ZyXEL GS2200-8 switch - Power supply voltage reading"/>
+    </Graph>
+    <Graph graphName="ZyXEL4728F.CPUUtilization">
+        <Property name="description" value="ZyXEL XGS4728F switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZyXEL4728F.MemoryUtilization">
+        <Property name="description" value="ZyXEL GS4728F - Memory utilization percentage for the GS4728F managed switch"/>
+    </Graph>
+    <Graph graphName="ZyXEL4728F.Temperature">
+        <Property name="description" value="ZyXEL XGS4728F - Temperature sensor reading"/>
+    </Graph>
+    <Graph graphName="ZyXEL4728F.Voltage">
+        <Property name="description" value="ZyXEL XGS4728F switch - Power supply voltage reading"/>
+    </Graph>
+    <Graph graphName="ZyXELESHWVoltage">
+        <Property name="description" value="ZyXEL ES/GS series switch - Hardware PSU voltage reading"/>
+    </Graph>
+    <Graph graphName="ZyXELESSysCPUUtilization">
+        <Property name="description" value="ZyXEL ES series switch - CPU utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZyXELESSysMemoryUtilization">
+        <Property name="description" value="ZyXEL ES series switch - Memory utilization percentage"/>
+    </Graph>
+    <Graph graphName="ZyXELHWTemperature">
+        <Property name="description" value="ZyXEL managed switch - Hardware temperature sensor reading"/>
+    </Graph>
+    <Graph graphName="zyxelsysCPUUtilization">
+        <Property name="description" value="ZyXEL generic device - CPU utilization percentage (enterprise OID .1.3.6.1.4.1.890.1.6.22)"/>
+    </Graph>
+    <Graph graphName="zyxelsysMemoryUtilization">
+        <Property name="description" value="ZyXEL - System memory utilization percentage (generic across ZyXEL devices)"/>
+    </Graph>
+    <Graph graphName="fgAvVirusDetected">
+        <Property name="saveAbsolutes" value="true"/>
+    </Graph>
+    <Graph graphName="fgIpsIntrusionsDetected">
+        <Property name="saveAbsolutes" value="true"/>
+    </Graph>
+    <Graph graphName="h3cEntityExtTemperature">
+        <Property name="graphType" value="multiple"/>
+    </Graph>
+    <Graph graphName="BesMessageSentPerMin">
+        <Property name="oid" value=".1.3.6.1.4.1.3530.5.7.0"/>
+    </Graph>
+    <Graph graphName="memBuffer">
+        <Property name="description" value="Total amount of buffer memory derived from UCD-SNMP-MIB."/>
+    </Graph>
+</Graphs>
+

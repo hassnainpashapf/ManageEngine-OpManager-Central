@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdxrouter" templatename="DaxDx800" displayname="Dax DX-800 Series Router" ostype="MyPower" description="Dax DX-800 Series Router">
+        <NCMVendorDevice vendorid="Dax" />
+        <NCMDevicePersonality personalityid="DaxRouter" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdxrouter_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdxrouter" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		       <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxdx_cli_show_startup_config_backup" taskhandling="true"/>
+		       <NCMReadFromResponse operationid="BackupStartupConfig" recordid="DaxDx_cli_show_startup_config_rec"/>
+		       <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxdx_cli_show_running_config_backup" taskhandling="true"/>
+		       <NCMReadFromResponse operationid="BackupRunningConfig" recordid="DaxDx_cli_show_running_config_rec"/>
+               <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+
+                 <!-- Change Tracking thru Syslog -->
+               <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx_Enable_Change_Tracking_Syslog" />
+               <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx_Disable_Change_Tracking_Syslog" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+     <!-- for Telnet -->
+     
+     <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdxrouter_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdxrouter" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+
+         <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+              <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxdx_cli_show_startup_config_backup" taskhandling="true"/>
+		       <NCMReadFromResponse operationid="BackupStartupConfig" recordid="DaxDx_cli_show_startup_config_rec"/>
+		       <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxdx_cli_show_running_config_backup" taskhandling="true"/>
+		       <NCMReadFromResponse operationid="BackupRunningConfig" recordid="DaxDx_cli_show_running_config_rec"/>
+               <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />             
+
+             <!-- Change Tracking thru Syslog -->
+             <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx_Enable_Change_Tracking_Syslog" />
+             <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx_Disable_Change_Tracking_Syslog" />
+                
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+    
+    
+    <!-- for Telnet - TFTP-->
+    
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdx_router_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdxrouter" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+    
+                <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+             
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxdxrouter_cli_startup_config_backup"/>
+	     	    <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="daxdxrouter_cli_startup_config_upload" />
+	     	    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxdxrouter_cli_running_config_backup" />
+	     	    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+	
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx_Disable_Change_Tracking_Syslog" />
+                    
+             </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+        
+        <!-- for SSH - TFTP-->
+        
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdxrouter_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdxrouter" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+	    
+	      <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+	             
+	            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxdxrouter_cli_startup_config_backup"/>
+	     	    <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="daxdxrouter_cli_startup_config_upload" />
+	     	    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxdxrouter_cli_running_config_backup" />
+	     	    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+		
+	      <!-- Change Tracking thru Syslog -->
+	      <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx_Enable_Change_Tracking_Syslog" />
+	      <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx_Disable_Change_Tracking_Syslog" />
+	    
+	                    
+	      </NCMDeviceCriteria>
+        </NCMProtocolCombination>   
+        
+    
+ </NCMDeviceTemplate>
+
+
+<!-- ############################################## DAXBTI #################################################-->
+
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxbti" templatename="DaxBTI" displayname="Dax Standalone Layer 3 Switch" ostype="BATM" description="Dax BTI Series - Dax Standalone Layer 3 Switch">
+        <NCMVendorDevice vendorid="Dax" />
+        <NCMDevicePersonality personalityid="DaxSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="TFTP"/>
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxbti_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxbti" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        	<NCMDeviceCriteria commandmapid="SSH_Command">
+
+		    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxbti_cli_show_startup_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="DaxDx_cli_show_startup_config_rec"/>
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxbti_cli_show_running_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="DaxDx_cli_show_running_config_rec"/>
+            <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+
+             <!-- Change Tracking thru Syslog -->
+             <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxBTI_Enable_Change_Tracking_Syslog" />
+             <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxBTI_Disable_Change_Tracking_Syslog" />
+              
+             </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for Telnet -->
+
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxbti_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxbti" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+              
+            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxbti_cli_show_startup_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="DaxDx_cli_show_startup_config_rec"/>
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxbti_cli_show_running_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="DaxDx_cli_show_running_config_rec"/>
+            <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />          
+
+
+             <!-- Change Tracking thru Syslog -->
+             <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxBTI_Enable_Change_Tracking_Syslog" />
+             <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxBTI_Disable_Change_Tracking_Syslog" />
+              
+            </NCMDeviceCriteria>
+    
+        </NCMProtocolCombination>
+        
+        
+        
+         <!-- for SSH-TFTP-->
+	 <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxbti_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxbti" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+	
+	            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+	            
+		            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxbti_cli_startup_config_backup"/>
+	                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="daxbti_cli_startup_config_upload" />
+	                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxbti_cli_running_config_backup" />
+	                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="daxbti_cli_running_config_upload" />
+	                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+	
+	
+	                <!-- Change Tracking thru Syslog -->
+			        <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxBTI_Enable_Change_Tracking_Syslog" />
+               		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxBTI_Disable_Change_Tracking_Syslog" />
+               		
+	           </NCMDeviceCriteria>
+         </NCMProtocolCombination>
+         
+         
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxbti_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxbti" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+	 	
+	 	     <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+	 	            
+	 	            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxbti_cli_startup_config_backup"/>
+	                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="daxbti_cli_startup_config_upload" />
+	                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxbti_cli_running_config_backup" />
+	                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="daxbti_cli_running_config_upload" />
+	                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+	 	
+	 	
+	 	        <!-- Change Tracking thru Syslog -->
+	 		        <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxBTI_Enable_Change_Tracking_Syslog" />
+	                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxBTI_Disable_Change_Tracking_Syslog" />
+	                		
+	 	     </NCMDeviceCriteria>
+	 	     
+	 </NCMProtocolCombination>
+         
+    </NCMDeviceTemplate>
+
+    <!-- ************************************************************daxdx5026mgv**************************************** -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdx5026mgv" templatename="DaxDx5026mgv" displayname="Dax DX-5026MGV" ostype="DAX" description="Dax DX-5026MGV -  Layer2+ Fast Ethernet Standalone Switch">
+        <NCMVendorDevice vendorid="Dax" />
+        <NCMDevicePersonality personalityid="DaxSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdx5026mgv_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdx5026mgv" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        	<NCMDeviceCriteria commandmapid="SSH_Command">
+
+	        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxbti_cli_show_startup_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="DaxDx_cli_show_startup_config_rec"/>
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxbti_cli_show_running_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="DaxDx_cli_show_running_config_rec"/>
+            <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />	
+
+              <!-- Change Tracking thru Syslog -->
+              <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDX-5026MGV_Enable_Change_Tracking_Syslog" />
+              <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDX-5026MGV_Disable_Change_Tracking_Syslog" />
+             
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for Telnet -->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdx5026mgv_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdx5026mgv" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		  <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxbti_cli_show_startup_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="DaxDx_cli_show_startup_config_rec"/>
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxbti_cli_show_running_config_backup" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="DaxDx_cli_show_running_config_rec"/>
+            <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+
+               <!-- Change Tracking thru Syslog -->
+               <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDX-5026MGV_Enable_Change_Tracking_Syslog" />
+               <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDX-5026MGV_Disable_Change_Tracking_Syslog" />
+              
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+    
+    
+    
+    
+    <!-- ##########################################DAX0830PC############################################# -->
+    
+    
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdx0830pc" templatename="DaxDx0830PC" displayname="Dax Chassis Based Layer 3 Switch" ostype="RGNOS" description="Dax 0830 Series - Dax Chassis Based Layer 3 Switch">
+            <NCMVendorDevice vendorid="Dax" />
+            <NCMDevicePersonality personalityid="DaxSwitch" />
+    
+            <NCMSupportedProtocol protocolid="TELNET">
+                <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+            </NCMSupportedProtocol>
+    
+            <NCMSupportedProtocol protocolid="SSH">
+                <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+            </NCMSupportedProtocol>
+            
+            <NCMSupportedProtocol protocolid="TFTP"/>
+    
+            <!-- for SSH -->
+            <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdx0830pc_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdx0830pc" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+            
+                    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxbti_cli_show_startup_config_backup" taskhandling="true"/>
+		            <NCMReadFromResponse operationid="BackupStartupConfig" recordid="DaxDx_cli_show_startup_config_rec"/>
+		            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxbti_cli_show_running_config_backup" taskhandling="true"/>
+		            <NCMReadFromResponse operationid="BackupRunningConfig" recordid="DaxDx_cli_show_running_config_rec"/>
+                    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+    
+                   <!-- Change Tracking thru Syslog -->
+                   <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx0830PC_Enable_Change_Tracking_Syslog" />
+                   <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx0830PC_Disable_Change_Tracking_Syslog" />
+                 
+                </NCMDeviceCriteria>
+            </NCMProtocolCombination>
+    
+            <!-- for Telnet -->
+    
+             <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdx0830pc_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdx0830pc" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            
+            	<NCMDeviceCriteria commandmapid="TELNET_Command">
+    
+    		        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxdx_cli_show_startup_config_backup" taskhandling="true"/>
+		            <NCMReadFromResponse operationid="BackupStartupConfig" recordid="DaxDx_cli_show_startup_config_rec"/>
+		            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxdx_cli_show_running_config_backup" taskhandling="true"/>
+		            <NCMReadFromResponse operationid="BackupRunningConfig" recordid="DaxDx_cli_show_running_config_rec"/>
+                    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+    
+                        <!-- Change Tracking thru Syslog -->
+		            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx0830PC_Enable_Change_Tracking_Syslog" />
+		            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx0830PC_Disable_Change_Tracking_Syslog" />               
+                  
+             	</NCMDeviceCriteria>
+            </NCMProtocolCombination>
+            
+           
+           <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdx08030pc_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdx0830pc" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+	   	
+	   	    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+	   	            
+	   	    	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxdx0830pc_cli_startup_config_backup"/>	   			
+	   	    	<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="daxdx0830pc_cli_startup_config_upload" />	   	        
+	   	    	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxdx0830pc_cli_running_config_backup" />	   	                
+	   	    	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+	   	
+	   	
+	   	    	<!-- Change Tracking thru Syslog -->
+		    	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx0830PC_Enable_Change_Tracking_Syslog" />
+		    	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx0830PC_Disable_Change_Tracking_Syslog" />
+                 
+	                  		
+	   	    </NCMDeviceCriteria>
+	   	    
+         </NCMProtocolCombination>
+         
+         
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:daxdx08030pc_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:daxdx0830pc" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+	 	   	
+             <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="daxdx0830pc_cli_startup_config_backup"/>	   			
+	   	    	<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="daxdx0830pc_cli_startup_config_upload" />	   	        
+	   	    	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="daxdx0830pc_cli_running_config_backup" />	   	                
+	   	    	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="daxdx_cli_running_startup_config_sync" />
+	 	   	
+	 	     	<!-- Change Tracking thru Syslog -->
+		     	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx0830PC_Enable_Change_Tracking_Syslog" />
+		     	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="DaxDx0830PC_Disable_Change_Tracking_Syslog" />
+                 
+	 	     </NCMDeviceCriteria>
+         </NCMProtocolCombination> 
+         
+        </NCMDeviceTemplate>
+   
+</DeviceConfiguration>

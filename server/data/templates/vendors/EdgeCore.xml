@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+       <!-- For EdgeCore Switch -->
+	   
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:edgecore_switch" templatename="EdgeCore_Switch" displayname="EdgeCore Metro Access Switch" ostype="na" description="For all ES3528M-SFP / L2/L4 SFP EdgeCore Metro Access Switch">
+        <NCMVendorDevice vendorid="EdgeCore" />
+        <NCMDevicePersonality personalityid="EdgeCoreSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:edgecore_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:edgecore_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="edgecore_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="edgecore_switch_cli_running_config_backup" />
+                <!-- NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="edgecore_switch_cli_copy_running_to_startup" / -->
+								
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+		
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:edgecore_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:edgecore_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="edgecore_switch_cli_startup_config_backup" />             
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="edgecore_switch_cli_running_config_backup" />
+                <!-- NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="edgecore_switch_cli_copy_running_to_startup" / -->
+				
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:edgecore_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:edgecore_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="edgecore_switch_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="edgecore_switch_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="edgecore_switch_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="edgecore_switch_cli_show_running_config_rec"/>
+		
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:edgecore_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:edgecore_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="edgecore_switch_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="edgecore_switch_cli_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="edgecore_switch_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="edgecore_switch_cli_show_running_config_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+    </NCMDeviceTemplate>
+
+
+	 <!-- For EdgeCore ECS5510-48S / 10Gb Ethernet L2 Switch -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:EdgeCore_L2_Switch" templatename="EdgeCore_L2_Switch"  displayname="EdgeCore L2 Switch" ostype="NA"  description="For EdgeCore ECS5510-48S / 10Gb Ethernet L2 Switch">
+        <NCMVendorDevice vendorid="EdgeCore"/>
+
+        <NCMDevicePersonality personalityid="EdgeCoreL2Switch"/>
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+
+<!-- For Telnet -->
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:EdgeCore_L2_Switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:EdgeCore_L2_Switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="EdgeCore_L2_Switch_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="EdgeCore_L2_Switch_show_startup_config_rec"/>	
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="EdgeCore_L2_Switch_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="EdgeCore_L2_Switch_show_running_config_rec"/>
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="EdgeCore_L2_Switch_sync_config_write_mem" />	
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+<!-- For SSH -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:EdgeCore_L2_Switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:EdgeCore_L2_Switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="EdgeCore_L2_Switch_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="EdgeCore_L2_Switch_show_startup_config_rec"/>	
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="EdgeCore_L2_Switch_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="EdgeCore_L2_Switch_show_running_config_rec"/>
+			<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="EdgeCore_L2_Switch_sync_config_write_mem" />				
+       		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

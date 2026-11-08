@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="trapeze_hardware_prop_parser" promptactionid="yesActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="trapeze_show_version_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_trapeze_wlan_controller" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="trapeze_wlan_controller_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show system">
+<CLIInputRecord parsercommandname="hardware_prop_trapeze_wlan_controller" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="trapeze_wlan_controller_hardware_prop1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+
+
+<!-- For command "set length 100" - This is to avoid the -More- in the output -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="trapeze_set_length_100_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="set length 100">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="trapeze_set_length_100_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+
+<!--Show Running Config -->
+ 
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="trapeze_cli_show_running_config_irec" />
+</CLIInteractionSpec>
+
+
+<CLICommand command="show configuration all">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="trapeze_wlan_controller_cli_fetch_running_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

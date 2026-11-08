@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Fortinet Access Point such as 231F" displayName="Fortinet AccessPoint" osType="FortiAP" templateName="Fortinet_AccessPoint" multiConfigTemplate="false" category="Access Point">
+	<Vendor displayName="Fortinet" vendorName="Fortinet">
+		<Commands>
+			<Command commandstr="fap-get-status"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="information" number="0" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="cfg -s" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="FortiAP Device" personalityName="FortiAPDevice">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BIOSVERSION" size="20" desc="Bios Version" displayname="BIOS Version" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="HARDWAREREVISION" size="20" desc="Hardware Revision" displayname="Hardware Revision" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="FIPSMODE" size="20" desc="FIPS MODE" displayname="FIPS Mode" defaultvalue="Not Available" sequenceid="15"/>
+				<Column name="PARTNUMBER" size="20" desc="System Part Number" displayname="Part Number" defaultvalue="Not Available" sequenceid="20"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>set\s*status\s*enable</Regex>
+					<Regex>set\s*server\s*"$SYSLOG_SERVER_IP"</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="FortiAPDevPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="fortiAP_getStatusCmd_hardware_prop">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MODEL" EXPRESSION=".*Version:\s*((Forti\w+)-(\S+))\s*(\S+),build.*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="OSTYPE" TOKENNO="2"/>
+											<PARAM NAME="SERIES" TOKENNO="3"/>
+											<PARAM NAME="OSVERSION" TOKENNO="4"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*[Ss]erial[\s|-][Nn]umber\s*:\s*(\S*).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BIOSVERSION" EXPRESSION=".*(?i)BIOS\s*version\s*:\s*(\S*).*">
+											<PARAM NAME="BIOSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HARDWAREREVISION" EXPRESSION=".*(?i)Hardware\s*Revision.*:\s*(\S*).*">
+											<PARAM NAME="HARDWAREREVISION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*(?i)Base\s*MAC\s*:\s*(\S*).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="FIPSMODE" EXPRESSION=".*FIPS-CC\s*mode:\s*(\S*).*">
+											<PARAM NAME="FIPSMODE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PARTNUMBER" EXPRESSION=".*(?i)Part[\s-]Number\s*:\s*(\S*).*">
+											<PARAM NAME="PARTNUMBER" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>	
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="fap-get-status" parsercommandname="fortiAP_getStatusCmd_hardware_prop" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="FortiAP-231F" ostype="" series="231F" sysoid=".1.3.6.1.4.1.12356.120.10.23112"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt=">" commandecho="false" promptecho="true" promptactionid11111="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="ruggedcom_switch_cli_ispec"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid11111="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="ruggedcom_switch_cli_enableprompt"/>
+</CLIInteractionSpec>
+
+
+<!-- show config -->
+
+
+<CLICommand command="${ControlChar:19}">
+   <CLIInputRecord messagesuffix="" inputsourcetype="1">
+     <Record type="CLI" recordid="ruggedcom_switch_enter_into_shell" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="type config.csv">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="ruggedcom_switch_cli_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="type config.bak">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="ruggedcom_switch_cli_startup_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="ruggedcom_switch_cli_enter_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt=">" commandecho="false" promptecho="true" responseparserid="ruggedcom_switch_hardware_prop_parser" promptactionid111111="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="ruggedcom_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="Version">
+	<CLIInputRecord parsercommandname="hardware_prop_ruggedcom_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="ruggedcom_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

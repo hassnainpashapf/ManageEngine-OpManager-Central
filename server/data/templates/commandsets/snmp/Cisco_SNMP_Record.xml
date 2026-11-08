@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<RecordConf>
+
+<!-- ************************************************************-->
+<!--                     OLD-CISCO-SYS-MIB                       -->
+<!-- ************************************************************-->
+
+<!-- Example for giving UserInput is ${UserInput:running_filename} -->
+
+<!-- Upload Running Configuration -->
+<Record recordid="cisco_router_snmp_fetch_running_old_sys_mib_rec" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.2.1.55" instance="${UserInput:tftp_server_address}" value="${UserInput:file_name}" paramindex="0" label="writeNet"/>
+        </SnmpSetParamList>
+    </SnmpSetRecord>
+</Record>
+
+<Record recordid="record1" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.2.1.55" instance="192.168.111.129" value="a.txt" paramindex="0" label="writeNet"/>
+        </SnmpSetParamList>
+    </SnmpSetRecord>
+</Record>
+
+
+<!-- Download Running Configuration -->
+<Record recordid="cisco_router_snmp_push_running_old_sys_mib_rec" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.2.1.53" instance="${UserInput:tftp_server_address}" value="${UserInput:file_name}" paramindex="0" label="hostConfigSet"/>
+        </SnmpSetParamList>
+    </SnmpSetRecord>
+</Record>
+
+<!-- Saving Current Running Configuration as Startup Config-->
+<Record recordid="cisco_router_save_run_as_startup_old_sys_mib" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.2.1.54.0" value="1" paramindex="0" label="writeMem"/>
+        </SnmpSetParamList>
+    </SnmpSetRecord>
+</Record>
+
+<!-- ************************************************************-->
+<!--                   CISCO-CONFIG-COPY-MIB                     -->
+<!-- ************************************************************-->
+
+<!-- Upload Startup Configuration -->
+<Record recordid="cisco_router_snmp_config_get_startup_copy_mib_rec" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+		<SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.2" value="1" paramindex="0" label="ccCopyProtocol"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.3" value="3" paramindex="1" label="ccCopySourceFileType"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.4" value="1" paramindex="2" label="ccCopyDestFileType"/>
+            <SnmpSetParam type="IPADDRESS" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.5" value="${UserInput:tftp_server_address}" paramindex="3" label="ccCopyServerAddress"/>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.6" value="${UserInput:file_name}" paramindex="4" label="ccCopyFileName"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.14" value="4" paramindex="5" label="ccCopyEntryRowStatus"/>
+        </SnmpSetParamList>
+
+	<SetCommonIndexOIDParamList>
+     		<SetCommonIndexOIDParam indexname="ccCopyIndex" indexvalue="${UserInput:RndNo}"/>
+	</SetCommonIndexOIDParamList>
+
+
+    </SnmpSetRecord>
+</Record>
+
+
+
+<Record recordid="test_record_1" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+		<SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.2" value="1" paramindex="0" label="ccCopyProtocol"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.3" value="3" paramindex="1" label="ccCopySourceFileType"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.4" value="1" paramindex="2" label="ccCopyDestFileType"/>
+            <SnmpSetParam type="IPADDRESS" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.5" value="${UserInput:tftp_server_address}" paramindex="3" label="ccCopyServerAddress"/>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.6" value="${UserInput:file_name}" paramindex="4" label="ccCopyFileName"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.14" value="4" paramindex="5" label="ccCopyEntryRowStatus"/>
+        </SnmpSetParamList>
+
+	<SetCommonIndexOIDParamList>
+     		<SetCommonIndexOIDParam indexname="ccCopyIndex" indexvalue="${UserInput:RndNo}"/>
+	</SetCommonIndexOIDParamList>
+
+    </SnmpSetRecord>
+</Record>
+
+
+
+<!-- Upload Running Configuration -->
+<Record recordid="cisco_router_snmp_config_get_running_copy_mib_rec" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.2" value="1" paramindex="0" label="ccCopyProtocol"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.3" value="4" paramindex="1" label="ccCopySourceFileType"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.4" value="1" paramindex="2" label="ccCopyDestFileType"/>
+            <SnmpSetParam type="IPADDRESS" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.5" value="${UserInput:tftp_server_address}" paramindex="3" label="ccCopyServerAddress"/>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.6" value="${UserInput:file_name}" paramindex="4" label="ccCopyFileName"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.14" value="4" paramindex="5" label="ccCopyEntryRowStatus"/>
+         </SnmpSetParamList>
+	<SetCommonIndexOIDParamList>
+     		<SetCommonIndexOIDParam indexname="ccCopyIndex" indexvalue="${UserInput:RndNo}"/>
+	</SetCommonIndexOIDParamList>
+    </SnmpSetRecord>
+</Record>
+
+<!-- Download Startup Configuration -->
+<Record recordid="cisco_router_snmp_push_startup_copy_mib_rec" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.2" value="1" paramindex="0" label="ccCopyProtocol"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.3" value="1" paramindex="1" label="ccCopySourceFileType"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.4" value="3" paramindex="2" label="ccCopyDestFileType"/>
+            <SnmpSetParam type="IPADDRESS" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.5" value="${UserInput:tftp_server_address}" paramindex="3" label="ccCopyServerAddress"/>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.6" value="${UserInput:file_name}" paramindex="4" label="ccCopyFileName"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.14" value="4" paramindex="5" label="ccCopyEntryRowStatus"/>
+        </SnmpSetParamList>
+	<SetCommonIndexOIDParamList>
+     		<SetCommonIndexOIDParam indexname="ccCopyIndex" indexvalue="${UserInput:RndNo}"/>
+	</SetCommonIndexOIDParamList>
+    </SnmpSetRecord>
+</Record>
+
+<!-- Download Running Configuration -->
+<Record recordid="cisco_router_snmp_push_running_copy_mib_rec" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.2" value="1" paramindex="0" label="ccCopyProtocol"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.3" value="1" paramindex="1" label="ccCopySourceFileType"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.4" value="4" paramindex="2" label="ccCopyDestFileType"/>
+            <SnmpSetParam type="IPADDRESS" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.5" value="${UserInput:tftp_server_address}" paramindex="3" label="ccCopyServerAddress"/>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.6" value="${UserInput:file_name}" paramindex="4" label="ccCopyFileName"/>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.14" value="4" paramindex="5" label="ccCopyEntryRowStatus"/>
+        </SnmpSetParamList>
+	<SetCommonIndexOIDParamList>
+     		<SetCommonIndexOIDParam indexname="ccCopyIndex" indexvalue="${UserInput:RndNo}"/>
+	</SetCommonIndexOIDParamList>
+    </SnmpSetRecord>
+</Record>
+
+<!-- Download Running Configuration -->
+<!--Record recordid="remove_temp_row_cisco_copy_mib_rec" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="INTEGER" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.14" value="6" paramindex="0" label="ccCopyEntryRowStatus"/>
+        </SnmpSetParamList>
+	<SetCommonIndexOIDParamList>
+     		<SetCommonIndexOIDParam indexname="ccCopyIndex" indexvalue="${UserInput:RndNo}"/>
+	</SetCommonIndexOIDParamList>
+    </SnmpSetRecord>
+</Record-->
+
+</RecordConf>

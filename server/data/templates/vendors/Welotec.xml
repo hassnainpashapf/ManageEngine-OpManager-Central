@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Welotec Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:welotec_router" templatename="Welotec_Router" displayname="Welotec TK 7 Series" ostype="TK 7 Series" description="For all Welotec TK 7 Series Router">
+        <NCMVendorDevice vendorid="Welotec"/>
+        <NCMDevicePersonality personalityid="WelotecRouter"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:welotec_router_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:welotec_router"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="welotec_router_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="welotec_router_cli_show_config_rec"/>
+         
+		 </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:welotec_router_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:welotec_router"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="welotec_router_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="welotec_router_cli_show_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

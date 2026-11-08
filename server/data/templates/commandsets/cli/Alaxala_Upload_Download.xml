@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="AlaxalaActionId">
+	  <InteractionSpec timeout="120000" protocol="CLI" interactionid="alaxala_switch_cli_ispec"/>
+	</CLIInteractionSpec>
+
+	<!-- ################################# For Alaxala Routers ################################-->
+	<!-- Backup Startup -->
+	<CLICommand command="copy startup-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="alaxala_switch_cli_backup_startup_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<!-- Backup Running -->
+	<CLICommand command="copy running-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="alaxala_switch_cli_backup_running_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<!-- Push Startup -->
+	<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} startup-config">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="alaxala_switch_cli_push_startup_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<!-- Push Running -->
+	<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} running-config">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="alaxala_switch_cli_push_running_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<!-- Config Sync Operation -->
+	<CLICommand command="copy running-config startup-config">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="alaxala_switch_sync_config_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+	<!--For Specific Alaxala 1230-->
+	<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="Alaxala1230ActionId">
+		<InteractionSpec timeout="120000" protocol="CLI" interactionid="alaxala1230_switch_cli_ispec"/>
+	</CLIInteractionSpec>
+	
+	<CLICommand command="configure terminal">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230_configure_terminal_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<CLICommand command="end">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230_configure_terminal_end_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	
+	<!-- Config Sync Operation -->
+	<CLICommand command="copy running-config startup-config">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230_switch_sync_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	
+	<!--Show Startup-Config-->
+	
+	<CLICommand command="show startup-config">
+		<CLIInputRecord  messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230_switch_show_startup_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	<!--Show Running-config-->
+	
+	<CLICommand command="show running-config">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230_switch_show_running_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<!-- For command  "set terminal pager disable" -to avoid paging(byte)(press any key to continue) in output-->
+	<CLICommand command="set terminal pager disable">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230switch_set_terminal_pager_disable_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<!--For other Alaxala devices other than 1230 -->
+	
+	<!--Show Running-config-->
+	
+	<CLICommand command="show running-config">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala_switch_show_running_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<!--Show Startup-Config-->
+	
+	<CLICommand command="show startup-config">
+		<CLIInputRecord  messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala_switch_show_startup_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<!-- For command  "set terminal pager disable" -to avoid paging(byte)(press any key to continue) in output-->
+	<CLICommand command="set terminal pager disable">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxalaswitch_set_terminal_pager_disable_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<!--Commands to upload configuration using telnet for Alaxala 2400 n 3600-->
+	<CLICommand command="configure terminal">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxalaswitch_configure_terminal_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	
+	<CLICommand command="${UserInput:FileContents}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxalaswitch_file_content_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	
+	<CLICommand command="exit">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxalaswitch_configure_terminal_exit_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+
+
+</CLICommandList>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<cliconfiguration>
+
+<!-- for Netscreen Firewall -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="60000" protocol="CLI" interactionid="netscreen_firewall_cli_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand 
+        command="save config to tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="netscreen_firewall_cli_fetch_running_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand 
+        command="save config from tftp ${UserInput:tftp_server_address} ${UserInput:file_name} append">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="netscreen_firewall_cli_push_running_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+<!-- for Telnet based config retrieval without TFTP -->    
+    
+    <CLICommand 
+        command="set console page 0">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="netscreen_firewall_cli_set_page_length_0_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    
+    <CLICommand 
+        command="get config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="netscreen_firewall_cli_get_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+</cliconfiguration>

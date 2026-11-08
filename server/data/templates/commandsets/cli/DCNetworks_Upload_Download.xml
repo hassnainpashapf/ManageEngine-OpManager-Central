@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="dcn_switch_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="terminal length 0">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="dcn_switch_cli_paging_disable_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show startup-config">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="dcn_switch_cli_show_startup_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="show running-config">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="dcn_switch_cli_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy running-config startup-config">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="dcn_switch_sync_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+<!-- Hardware Properties -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="dcn_switch_hardware_prop_parser" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="dcn_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_dcn_switch" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="dcn_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand> 
+
+</CLICommandList>
+

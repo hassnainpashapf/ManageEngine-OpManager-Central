@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?><GRAPHDETAIL>
+    <Graph YAXISTEXT="%" description="The remaining battery capacity expressed in percent of full capacity." displayName="Battery capacity" failureThreshold="1" graphName="upsAdvBatteryCapacity" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.2.2.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The current internal UPS temperature expressed in Celsius." displayName="Battery temperature" failureThreshold="1" graphName="upsAdvBatteryTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.2.2.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="CentiSecond" description="The UPS battery run time remaining before battery exhaustion" displayName="Battery runtime remain" failureThreshold="1" graphName="upsAdvBatteryRunTimeRemaining" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.2.2.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="Indicates whether the UPS batteries need replacing." displayName="Battery replace" failureThreshold="1" graphName="upsAdvBatteryReplaceIndicator" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.2.2.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="APC Smart-UPS - Current utility input line voltage in VAC" displayName="Input voltage" failureThreshold="1" graphName="upsAdvInputLineVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.3.2.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Hz" description="The current input frequency to the UPS system in Hz." displayName="Input frequency" failureThreshold="1" graphName="upsAdvInputFrequency" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.3.2.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The reason for the occurrence of the last transfer to UPSbattery power. The variable is set to:- noTransfer(1) -- if there is no transfer yet.- highLineVoltage(2) -- if the transfer to battery is causedby an over voltage greater than the high transfer voltage.- brownout(3) -- if the duration of the outage is greater thanfive seconds and the line voltage is between 40% of therated output voltage and the low transfer voltage.- blackout(4) -- if the duration of the outage is greater than fiveseconds and the line voltage is between 40% of the ratedoutput voltage and ground.- smallMomentarySag(5) -- if the duration of the outage is lessthan five seconds and the line voltage is between 40% of therated output voltage and the low transfer voltage.- deepMomentarySag(6) -- if the duration of the outage is lessthan five seconds and the line voltage is between 40% of therated output voltage and ground. The variable is set to- smallMomentarySpike(7) -- if the line failure is caused by arate of change of input voltage less than ten volts per cycle.- largeMomentarySpike(8) -- if the line failure is caused bya rate of change of input voltage greater than ten volts per cycle.- selfTest(9) -- if the UPS was commanded to do a self test.- rateOfVoltageChange(10) -- if the failure is due to the rate of change ofthe line voltage." displayName="Reason for last transfer" failureThreshold="1" graphName="upsAdvInputLineFailCause" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.3.2.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The output voltage of the UPS system in VAC" displayName="Output voltage" failureThreshold="1" graphName="upsAdvOutputVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.4.2.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Hz" description="The current output frequency of the UPS system in Hz." displayName="Output frequency" failureThreshold="1" graphName="upsAdvOutputFrequency" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.4.2.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The current UPS load expressed in percent of rated capacity." displayName="Output load" failureThreshold="1" graphName="upsAdvOutputLoad" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.4.2.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Amps" description="APC UPS - Output current in amperes drawn by the connected load" displayName="Output current" failureThreshold="1" graphName="upsAdvOutputCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.4.2.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The status of agent's communication with UPS." displayName="Comms" failureThreshold="1" graphName="upsCommStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.8.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The results of the last UPS diagnostics test performed. ok (1), fail (2). invalidTest (3), testInProgress (3)." displayName="Last Self Test result" failureThreshold="1" graphName="upsAdvTestDiagnosticsResults" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.7.2.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The date the last UPS diagnostics test was performed in mm/dd/yy format." displayName="Last Self Test date" failureThreshold="1" graphName="upsAdvTestLastDiagnosticsDate" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.318.1.1.1.7.2.4.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="APC" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current state of the UPS. If the UPS is unable to determine the state of the UPS this variable is set to unknown(1). unKnown (1),onLine (2), onBattery (3), onSmartBoost (4), timedSleeping (5), softwareBypass (6), off (7), rebooting (8), switchedBypass (9), hardwareFailureBypass (10), sleepingUntilPowerReturn (11), onSmartTrim (12)" displayName="UPS Output status" failureThreshold="1" graphName="upsBasicOutputStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The elapsed time since the UPS has switched to battery &amp;#xD;&amp;#xA; power." displayName="upsBasicBatteryTimeOnBattery" failureThreshold="1" graphName="upsBasicBatteryTimeOnBattery" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.2.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="The status of the UPS batteries. A batteryLow(3) value indicates the UPS will be unable to sustain the current load, and its services will be lost if power is not restored. The amount of run time in reserve at the time of low battery can be configured by the upsAdvConfigLowBatteryRunTime. unknown(1), batteryNormal (2), batteryLow (3)" displayName="UPS Battery status" failureThreshold="1" graphName="upsBasicBatteryStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.2.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The date when the UPS system's batteries were last replaced &amp;#xD;&amp;#xA; in mm/dd/yy format. For Smart-UPS models , this value &amp;#xD;&amp;#xA; is originally set in the factory. When the UPS batteries &amp;#xD;&amp;#xA; are replaced , this value should be reset by the administrator." displayName="Battery last replace date" failureThreshold="1" graphName="upsBasicBatteryLastReplaceDate" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.318.1.1.1.2.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="APC" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="VAC" description="The minimum utility line voltage in VAC over the &amp;#xD;&amp;#xA; previous 1 minute period." displayName="UPS Input Voltage (minimum)" failureThreshold="1" graphName="upsAdvInputMinLineVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.3.2.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="VAC" description="The maximum utility line voltage in VAC over the &amp;#xD;&amp;#xA; previous 1 minute period." displayName="UPS Input Voltage (maximum)" failureThreshold="1" graphName="upsAdvInputMaxLineVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.3.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of external battery packs connected to the UPS. Ifthe UPS does not use smart cells then the agent reportsERROR_NO_SUCH_NAME." displayName="External Batteries count" failureThreshold="1" graphName="upsAdvBatteryNumOfBattPacks" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.2.2.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of external battery packs connected to the UPS thatare defective. If the UPS does not use smart cells then theagent reports ERROR_NO_SUCH_NAME." displayName="External Batteries Infected" failureThreshold="1" graphName="upsAdvBatteryNumOfBadBattPacks" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.2.2.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="The indication of the capacity remaining in the UPS system's batteries. A value of batteryNormal indicates that the remaining run-time is greater than upsConfigLowBattTime. A value of batteryLow indicates that the remaining battery run-time is less than or equal to upsConfigLowBattTime. A value of batteryDepleted indicates that the UPS will be unable to sustain the present load when and if the utility power is lost (including the possibility that the utility power is currently absent and the UPS is unable to sustain the output). unknown(1), batteryNormal(2), batteryLow(3), batteryDepleted(4)" displayName="Battery Remaining" failureThreshold="1" graphName="upsBatteryStatus" graphType="node" isNumeric="true" oid="1.3.6.1.2.1.33.1.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Compaq">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The magnitude of the present input voltage." displayName="Input Voltage" failureThreshold="1" graphName="TLUPSInputVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.3.3.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The percentage of the UPS power capacity presently  being used on this output line , i.e. , the greater of  the percent load of true power capacity and the  percent load of VA. OID=1.3.6.1.2.1.33.1.4.4.1.5 MIB=UPS-MIB:upsOutputPercentLoad" displayName="Output Load %" failureThreshold="1" graphName="TLUPSOutputPercentLoad" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.5.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="The indication of the capacity remaining in the UPS  system's batteries. A value of batteryNormal  indicates that the remaining run-time is greater than  upsConfigLowBattTime. A value of batteryLow indicates  that the remaining battery run-time is less than or  equal to upsConfigLowBattTime. A value of  batteryDepleted indicates that the UPS will be unable  to sustain the present load when and if the utility  power is lost (including the possibility that the  utility power is currently absent and the UPS is  unable to sustain the output). Unkwown(1), Normal (2), Low (3)" displayName="Battery status" failureThreshold="1" graphName="TLUPSBatteryStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The date on which the battery was last replaced , in the format  YYYYMMDD." displayName="Battery replaced date" failureThreshold="1" graphName="TLUPSConfigBattReplDate" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.850.100.1.9.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="TrippLite" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The present output voltage." displayName="Output Voltage" failureThreshold="1" graphName="TLUPSOutputVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="Tripp Lite UPS (standard UPS MIB) - Ambient temperature at or near the battery casing" displayName="Battery Temperature" failureThreshold="1" graphName="upsBatteryTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.2.7" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="Tripp Lite UPS (standard UPS MIB) - Present battery voltage magnitude" displayName="Battery Voltage" failureThreshold="1" graphName="upsBatteryVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.2.5" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Amps" description="The present output current." displayName="Output Current" failureThreshold="1" graphName="upsOutputCurrent1" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.3.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Hz" description="The present output frequency." displayName="Output Frequency" failureThreshold="1" graphName="upsOutputFrequency" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Watts" description="The present output true power." displayName="Output Power" failureThreshold="1" graphName="upsOutputPower1" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.4.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="secs" description="If the unit is on battery power, the elapsed time since the UPS last switched to battery power, or the time since the network management subsystem was last restarted, whichever is less. Zero shall be returned if the unit is not on battery power." displayName="Elapsed time on battery power" failureThreshold="1" graphName="upsSecondsOnBattery" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="TrippLite">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The actual battery voltage." displayName="Battery Voltage" failureThreshold="1" graphName="upsmgBatteryVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.705.1.5.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Schneider">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="A" description="The actual battery current." displayName="Battery Current" failureThreshold="1" graphName="upsmgBatteryCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.705.1.5.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Schneider">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The battery temperature." displayName="Temperature" failureThreshold="1" graphName="upsmgBatteryTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.705.1.5.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Schneider">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The UPS Battery to be replaced status. yes (1), no (2)" displayName="Battery replacement status" failureThreshold="1" graphName="upsmgBatteryReplacement" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.705.1.5.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Schneider">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The UPS Battery is not charging status. yes (1), no (2)" displayName="Battery Charger Fault status" failureThreshold="1" graphName="upsmgBatteryChargerFault" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.705.1.5.15" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Schneider">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The output load per phase." displayName="Output Load per phase" failureThreshold="1" graphName="mgoutputLoadPerPhase" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.705.1.7.2.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Schneider">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The UPS on battery / on main status. yes(1), no(2)" displayName="UPS On battery" failureThreshold="1" graphName="upsmgOutputOnBattery" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.705.1.7.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Schneider">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The UPS is at low condition status. yes (1), no (2)" displayName="Low battery status" failureThreshold="1" graphName="upsmgBatteryLowCondition" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.705.1.5.16" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Schneider">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Indicates that the UPS is currently on bypass. unknown(1), yes(2), no(3), maintenance(4)" displayName="UPS Bypass state" failureThreshold="1" graphName="lcUpsOnBypass" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.13.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="mins" description="The estimated time to depletion of battery charge. (Unit of measure: Minute) (0 to 65535)" displayName="Battery Time remaining" failureThreshold="1" graphName="lcUpsBatTimeRemaining" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KWH" description="The number of Kilowatt-hours withdrawn from battery." displayName="Battery Power consumed" failureThreshold="1" graphName="lcUpsBatKWhours" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.2.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The battery temperature. (Unit of measure: Degree, Centigrade) Range : -32768..32767" displayName="Battery Temperature" failureThreshold="1" graphName="lcUpsBatTemperature" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The current battery voltage. (Unit of measure: volt)" displayName="Battery Voltage" failureThreshold="1" graphName="lcUpsBatVoltage" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.2.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Amps" description="The current battery discharging/charging current. (Unit of measure: Amp)" displayName="Battery Current" failureThreshold="1" graphName="lcUpsBatCurrent" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.2.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of discharges the UPS has experienced." displayName="Total Discarge counts" failureThreshold="1" graphName="lcUpsBatTotalDischCounts" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.2.7" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="secs" description="The total accumulated discharge time in seconds." displayName="Total discharge time (in secs)" failureThreshold="1" graphName="lcUpsBatCycleDurationInSeconds" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.2.8" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of surges" description="The number of transient (surge and spike) conditions the UPS has experienced." displayName="Number of Transients/surge" failureThreshold="1" graphName="lcUpsInputTransients" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.3.4" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The input line voltage. (Unit of measure: Volt)" displayName="Input Voltage" failureThreshold="1" graphName="lcUpsInputVoltage" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.3.6.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Hz" description="The current output frequency. (Unit of measure: Hertz) Range : 0 to 65536" displayName="Ouput Frequency" failureThreshold="1" graphName="lcUpsOutputFrequency" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.4.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The current output load percentage." displayName="Output Load" failureThreshold="1" graphName="lcUpsOutputLoad" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.4.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The output voltage. (Unit of measure: Volt)" displayName="Output Voltage" failureThreshold="1" graphName="lcUpsOutputVoltage" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.4.4.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Amps" description="The output current. (Unit of measure: Amp) Range : 0..65536" displayName="Output Current" failureThreshold="1" graphName="lcUpsOutputCurrent" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.4.4.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="VA" description="The output volt-amps. 0..2147483647" displayName="Output VoltAmps (VA)" failureThreshold="1" graphName="lcUpsOutputVA" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.4.4.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Watts" description="The output power in watts. 0..2147483647" displayName="Output Power" failureThreshold="1" graphName="lcUpsOutputWatts" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.4.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The state of the inverter. Unknown is returned if the state can not be determined. unknown(1), on(2), off(3)" displayName="Inverter State" failureThreshold="1" graphName="lcUpsInverterStatus" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.5.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Centigrade" description="The temperature of the inverter. -32768..32767" displayName="Inverter Temperature" failureThreshold="1" graphName="lcUpsInverterTemp" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.476.1.1.1.1.5.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="C" description="The reading of the ambient temperature in the vicinity of the UPS or SNMP agent. (-100 to 200)" displayName="UPS Temp" failureThreshold="1" graphName="xupsEnvAmbientTemp" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.534.1.6.1.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Eaton">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The magnitude of the present input voltage." displayName="Voltage" failureThreshold="1" graphName="upsInputVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.3.3.1.3.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Eaton">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The percentage of the UPS power capacity presently being used on this output line, i.e., the greater of the percent load of true power capacity and the percent load of VA." displayName="Load" failureThreshold="1" graphName="upsOutputPercentLoad" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.5.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Eaton">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="mins" description="An estimate of the time to battery charge depletion under the present load conditions if the utility power is off and remains off, or if it were to be lost and remain off." displayName="Backup Time Remaining" failureThreshold="1" graphName="upsEstimatedMinutesRemaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.2.3.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Eaton">
+        <UserProps/>
+    </Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="Status" description="The alarm status of the sensor" displayName="Sensor status (Alarm)" failureThreshold="1" graphName="apcmemSensorsAlarmStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.10.4.2.3.1.8" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="APC">
+	<UserProps/>
+	</Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="Status" description="The communications status of the sensor 1,2,3 ( not installed, ok, Lost)" displayName="Sensor communications status" failureThreshold="1"  graphName="apcmemSensorsCommStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.10.4.2.3.1.7" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="APC">
+	<UserProps/>
+	</Graph>
+	<Graph SaveAbsolutes="false" YAXISTEXT="Celsius" description="The current temperature of the switch in degrees centigrade" displayName="Sensor Temperature" failureThreshold="1"  graphName="apcmemSensorsTemperatureCelcius" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.10.4.2.3.1.5" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="APC">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Status" description="Battery Status" displayName="Battery Status" failureThreshold="1" graphName="ppcupsBaseBatteryStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.935.1.1.1.2.1.1.0" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Phoenixtec">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Battery Remaining" displayName="Battery Remaining" failureThreshold="1" graphName="ppcupsSmartBatteryCapacity" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.935.1.1.1.2.2.1.0" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Phoenixtec">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="C" description="Temperature" displayName="Temperature" failureThreshold="1" graphName="ppcupsSmartBatteryTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.935.1.1.1.2.2.3.0/10" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Phoenixtec">
+	<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Volts" description="Battery Voltage" displayName="Battery Voltage" failureThreshold="1" graphName="ppcupsSmartBatteryVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.935.1.1.1.2.2.2.0" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Phoenixtec">
+	<UserProps/>
+	</Graph>	
+   <!-- New Graph addition for M7 changes starts -->
+    <Graph YAXISTEXT="%" description="Description" displayName="UPS Output Load Rate in percentage" graphName="UPSOutputLoadRate" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.5" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="V" description="Description" displayName="UPS Output Voltage" graphName="UPSOutputVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.2" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="I" description="Description" displayName="UPS Output Current" graphName="UPSOutputCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.3" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="Hz" description="Description" displayName="UPS Output Frequency" graphName="UPSOutputFrequency" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.2.0" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="W" description="Generic UPS (RFC 1628 standard MIB) - Output power per output line in watts" displayName="UPS Output Power" graphName="UPSOutputPower" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.33.1.4.4.1.4" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+   <!-- New Graph addition for M7 changes ends -->
+
+    <!-- Geist PDU Monitors (GEIST-V5-MIB) -->
+    <Graph YAXISTEXT="Amps" description="The RMS current of the PDU input feed in deciamps (divided by 10)." displayName="Input Current" failureThreshold="1" graphName="geistPduInputCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21239.5.2.3.5.1.4.1/10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Geist">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The RMS voltage of the PDU input feed." displayName="Input Voltage" failureThreshold="1" graphName="geistPduInputVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21239.5.2.3.5.1.6.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Geist">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Watts" description="The total real power consumption of the PDU." displayName="Total Power" failureThreshold="1" graphName="geistPduTotalPower" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21239.5.2.3.5.1.8.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Geist">
+        <UserProps/>
+    </Graph>
+
+    <!-- Raritan iPDU Monitors (PDU2-MIB) -->
+    <Graph YAXISTEXT="Amps" description="The measured inlet current in milliamps (divided by 10)." displayName="Inlet Current" failureThreshold="1" graphName="raritanInletCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.13742.6.5.2.3.1.4.1.1.1/10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Raritan">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The measured inlet voltage in millivolts (divided by 1000)." displayName="Inlet Voltage" failureThreshold="1" graphName="raritanInletVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.13742.6.5.2.3.1.4.1.1.4/1000" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Raritan">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Watts" description="The measured inlet active power." displayName="Inlet Active Power" failureThreshold="1" graphName="raritanInletActivePower" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.13742.6.5.2.3.1.4.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Raritan">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="VA" description="The measured inlet apparent power." displayName="Inlet Apparent Power" failureThreshold="1" graphName="raritanInletApparentPower" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.13742.6.5.2.3.1.4.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Raritan">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="kWh" description="The accumulated energy consumption in watt-hours." displayName="Energy Consumption" failureThreshold="1" graphName="raritanInletEnergy" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.13742.6.5.2.3.1.4.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Raritan">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="The efficiency of the UPS." displayName="UPS Efficiency" failureThreshold="1" graphName="apcUPSEfficiency" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.4.1.318.1.1.1.9.3.3.1.13/.1.3.6.1.4.1.318.1.1.1.9.2.3.1.9)*100" period="3600" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+ 
+    <Graph YAXISTEXT="%" description="The Power loss percentage in the UPS (1-outputPower/inputPower)*100." displayName="UPS Power Loss" failureThreshold="1" graphName="apcPowerLoss" graphType="multiple" isNumeric="true" oid="(1-.1.3.6.1.4.1.318.1.1.1.9.3.3.1.13/.1.3.6.1.4.1.318.1.1.1.9.2.3.1.9)*100" period="3600" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="W" description="The Output Power in the UPS." displayName="UPS Output Power" failureThreshold="1" graphName="apcOutputPower" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.9.3.3.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="W" description="The input power to the UPS per phase." displayName="UPS Input Power" failureThreshold="1" graphName="apcInputPower" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.1.9.2.3.1.9" period="300" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="The efficiency of the UPS." displayName="UPS Efficiency" failureThreshold="1" graphName="UPSEfficiency" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.2.1.33.1.4.4.1.4/(.1.3.6.1.2.1.33.1.3.3.1.4*.1.3.6.1.2.1.33.1.3.3.1.3))*100" period="3600" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="The Power loss percentage in the UPS (1-outputPower/inputPower)*100." displayName="UPS Power Loss" failureThreshold="1" graphName="PowerLoss" graphType="multiple" isNumeric="true" oid="(1-.1.3.6.1.2.1.33.1.4.4.1.4/(.1.3.6.1.2.1.33.1.3.3.1.4*.1.3.6.1.2.1.33.1.3.3.1.3))*100" period="3600" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="W" description="The input apparent power to the UPS (upsInputCurrent x upsInputVoltage)." displayName="UPS Input Power" failureThreshold="1" graphName="UPSInputPower" graphType="multiple" isNumeric="true" oid=".1.3.6.1.2.1.33.1.3.3.1.4*.1.3.6.1.2.1.33.1.3.3.1.3" period="300" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="The efficiency of the Powerware UPS." displayName="UPS Efficiency" failureThreshold="1" graphName="PWUPSEfficiency" graphType="multiple" isNumeric="true" oid="((.1.3.6.1.4.1.534.1.4.4.1.2*.1.3.6.1.4.1.534.1.4.4.1.3)/(.1.3.6.1.4.1.534.1.3.4.1.2*.1.3.6.1.4.1.534.1.3.4.1.3))*100" period="3600" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Eaton">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="The Powerware UPS power loss percentage (1-outputPower/inputPower)*100." displayName="UPS Power Loss" failureThreshold="1" graphName="PWUPSPowerLoss" graphType="multiple" isNumeric="true" oid="(1-(.1.3.6.1.4.1.534.1.4.4.1.2*.1.3.6.1.4.1.534.1.4.4.1.3)/(.1.3.6.1.4.1.534.1.3.4.1.2*.1.3.6.1.4.1.534.1.3.4.1.3))*100" period="3600" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Eaton">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="W" description="The input apparent power to the Powerware UPS (inputVoltage x inputCurrent)." displayName="UPS Input Power" failureThreshold="1" graphName="PWUPSInputPower" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.534.1.3.4.1.2*.1.3.6.1.4.1.534.1.3.4.1.3" period="300" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Eaton">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="The efficiency of the UPS." displayName="UPS Efficiency" failureThreshold="1" graphName="emersonUPSEfficiency" graphType="node" isNumeric="true" oid="((.1.3.6.1.4.1.476.1.1.1.1.4.4.1.2*.1.3.6.1.4.1.476.1.1.1.1.4.4.1.3)/(.1.3.6.1.4.1.476.1.1.1.1.3.6.1.3*.1.3.6.1.4.1.476.1.1.1.1.3.6.1.2))*100" period="3600" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="The Power loss percentage in the UPS (1-outputPower/inputPower)*100." displayName="UPS Power Loss" failureThreshold="1" graphName="emersonPowerLoss" graphType="node" isNumeric="true" oid="(1-(.1.3.6.1.4.1.476.1.1.1.1.4.4.1.2*.1.3.6.1.4.1.476.1.1.1.1.4.4.1.3)/(.1.3.6.1.4.1.476.1.1.1.1.3.6.1.3*.1.3.6.1.4.1.476.1.1.1.1.3.6.1.2))*100" period="3600" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="W" description="The input apparent power to the UPS (inputVoltage x inputCurrent)." displayName="UPS Input Power" failureThreshold="1" graphName="emersonInputPower" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.476.1.1.1.1.3.6.1.3*.1.3.6.1.4.1.476.1.1.1.1.3.6.1.2" period="300" pollDataType="3" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Emerson">
+        <UserProps/>
+    </Graph>
+
+    <!-- Device-to-Graph mappings for new vendors -->
+    <DevicePackageToGraph deviceType="Huawei UPS" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Minuteman UPS" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Delta UPS" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Geist RCM-O rPDU" graphName="geistPduInputCurrent|geistPduInputVoltage|geistPduTotalPower"/>
+    <DevicePackageToGraph deviceType="Geist IO3 PDU" graphName="geistPduInputCurrent|geistPduInputVoltage|geistPduTotalPower"/>
+    <DevicePackageToGraph deviceType="Raritan iPDU" graphName="raritanInletCurrent|raritanInletVoltage|raritanInletActivePower|raritanInletApparentPower|raritanInletEnergy"/>
+    <DevicePackageToGraph deviceType="APC AP88XX PDU" graphName="APCPDUPhases|APCPDUPowerLoad|APCPDUPhaseLoad|APCPDUVoltage|APCPDUPhaseLoadstatus"/>
+    <DevicePackageToGraph deviceType="APC Smart UPS 3 Phase" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 1250" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 1400" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 2000" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 250" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 400" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 600" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 700" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 900" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS RT 10000 XL" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS RT 3000 XL" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS RT 5000 XL" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS RT 6000 RM XL" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS RT 7500 RM XL" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS RT 8000 XL" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS VT 30 kVA" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS VT 40 kVA" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="Emerson Libert UPS" graphName="lcUpsBatKWhours|lcUpsOutputCurrent|lcUpsInputTransients|lcUpsBatTemperature|lcUpsOutputVA|lcUpsInputVoltage|lcUpsBatVoltage|lcUpsOutputFrequency|lcUpsInverterStatus|lcUpsBatCurrent|lcUpsOutputWatts|lcUpsOnBypass|lcUpsBatTimeRemaining|lcUpsOutputLoad|lcUpsOutputVoltage|lcUpsInverterTemp|emersonUPSEfficiency|emersonPowerLoss|emersonInputPower"/>
+    <DevicePackageToGraph deviceType="TrippLite UPS" graphName="upsSecondsOnBattery|TLUPSBatteryStatus|TLUPSOutputPercentLoad|upsBatteryTemperature|TLUPSInputVoltage|upsOutputCurrent1|TLUPSOutputVoltage|upsBatteryVoltage|upsOutputFrequency|upsOutputPower1|TLUPSConfigBattReplDate|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Eaton Powerware UPS" graphName="upsEstimatedMinutesRemaining|PWUPSEfficiency|PWUPSPowerLoss|PWUPSInputPower"/>
+    <DevicePackageToGraph deviceType="Compaq" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="HP Compaq UPS" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Mitsubishi UPS" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS SRC 6000" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC HW_NB_NBRK0200" graphName="apcmemSensorsAlarmStatus|apcmemSensorsCommStatus|apcmemSensorsTemperatureCelcius|upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Liebert Emerson UPS" graphName="lcUpsBatKWhours|lcUpsOutputCurrent|lcUpsInputTransients|lcUpsBatTemperature|lcUpsOutputVA|lcUpsInputVoltage|lcUpsBatVoltage|lcUpsOutputFrequency|lcUpsInverterStatus|lcUpsBatCurrent|lcUpsOutputWatts|lcUpsOnBypass|lcUpsBatTimeRemaining|lcUpsOutputLoad|lcUpsOutputVoltage|lcUpsInverterTemp|emersonUPSEfficiency|emersonPowerLoss|emersonInputPower"/>
+    <!-- 1947 dt start-->
+    <DevicePackageToGraph deviceType="Phoenixtec UPS" graphName="ppcupsSmartBatteryCapacity|ppcupsSmartBatteryVoltage|ppcupsSmartBatteryTemperature|ppcupsBaseBatteryStatus|upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <!-- 1947 dt end-->
+    <!-- New Graph addition for M7 changes starts -->
+    <DevicePackageToGraph deviceType="Mitsubishi 9900AEGIS UPS" graphName="UPSOutputLoadRate|UPSOutputVoltage|UPSOutputCurrent|UPSOutputFrequency|UPSOutputPower|upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <!-- New Graph addition for M7 changes ends -->
+
+    <!-- RFC 1628 vendor-neutral monitors for non-vendor-specific UPS types -->
+    <DevicePackageToGraph deviceType="ADICOM UPS" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="AEG UPS" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="CyberPower UPS" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Toshiba-UPS" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="UPSV4" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Emerson Libert Power" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Liebert 10 KVA" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="MGE UPS" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Schneider Electric MGE Galaxy 5000 80 kVA" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Eaton 9SX 5000" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Powerware 9390" graphName="upsEstimatedMinutesRemaining|PWUPSEfficiency|PWUPSPowerLoss|PWUPSInputPower"/>
+    <DevicePackageToGraph deviceType="Powerware UPS" graphName="PWUPSEfficiency|PWUPSPowerLoss|PWUPSInputPower"/>
+    <DevicePackageToGraph deviceType="TrippLite SU6000RT4UHVPM" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Socomec UPS" graphName="upsEstimatedMinutesRemaining|UPSEfficiency|PowerLoss|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="NET VISION" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="LAN MASTERYS" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+
+    <!-- APC PowerNet MIB monitors for unmapped APC UPS types -->
+    <DevicePackageToGraph deviceType="APC AIS 5000 UPS" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC dp100E" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC matrix UPS 5000" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Matrix-UPS 3000" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart UPS 1000" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart UPS 3000" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 2200" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Smart-UPS 750" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBattPacks|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra 100K" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra 20K" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra 40K" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra 48K" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra 80K" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra UPS 3 Phase" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra UPS 4kVA" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra-UPS 12kVA" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Symmetra-UPS 8kVA" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC UPS" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC UPS 9605" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC UPS Network Management Card (AP9617) (AP9617)" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    <DevicePackageToGraph deviceType="APC Web/SNMP Management Card" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|apcUPSEfficiency|apcPowerLoss|apcOutputPower|apcInputPower"/>
+    
+    <!-- 12 Missing UPS Device Types - 9 APC with PowerNet MIB, 3 Non-APC with RFC 1628 -->
+    <DevicePackageToGraph deviceType="APC InRow RP (100 Series) (ACRP) (ACRP)" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="APC Environmental Monitoring Unit (AP9319) (AP9319)" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="APC InRow ACRC301S (0N-9580) (0N-9580)" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="APC InRow RC (ACRP) (ACRP)" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="APC NetBotz 320E" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="APC NetBotz Rack Monitor 450" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="APC NetBotz Rack Monitor 550" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="APC Netbotz Wall Monitor 455" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="APC EMS" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause"/>
+    <DevicePackageToGraph deviceType="Arris D5" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Cayman Gator" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+    <DevicePackageToGraph deviceType="Valere DC Power Plant" graphName="upsEstimatedMinutesRemaining|UPSInputPower"/>
+</GRAPHDETAIL>

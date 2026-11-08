@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CustomDevicePackage>
+	<CustomDevicePackage deviceType="LSI" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#LSI"/>
+		</SysOIDs>
+		<Vendor name="LSI"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Accordance" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Accordance"/>
+		</SysOIDs>
+		<Vendor name="Accordance"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Hitachi Thunder" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Hitachi Thunder"/>
+		</SysOIDs>
+		<Vendor name="Hitachi"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="NetApp Storage" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Netapp Storage"/>
+		</SysOIDs>
+		<Vendor name="NetApp"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Infortrend" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN Infortrend"/>
+		</SysOIDs>
+		<Vendor name="Infortrend"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC Clariion" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC Clariion"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Areca" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Areca"/>
+		</SysOIDs>
+		<Vendor name="Areca"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="HP EVA(SSSU)" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#HP EVA(SSSU)"/>
+		</SysOIDs>
+		<Vendor name="HP"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC Centera" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC Centera"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="IBM ESS" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#IBM ESS"/>
+		</SysOIDs>
+		<Vendor name="IBM"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Hitachi Lightning" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Hitachi Lightning"/>
+		</SysOIDs>
+		<Vendor name="Hitachi"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="HP EVA(SMI-S)" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#HP EVA(SMI-S)"/>
+		</SysOIDs>
+		<Vendor name="HP"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="SUN StorEdge6920" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#SUN StorEdge6920"/>
+		</SysOIDs>
+		<Vendor name="SUN"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC Symmetrix" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC Symmetrix"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EqualLogic" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EqualLogic"/>
+		</SysOIDs>
+		<Vendor name="EqualLogic"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="IBM DS8000" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#IBM DS8000"/>
+		</SysOIDs>
+		<Vendor name="IBM"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Promise VTrak" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Promise VTrak"/>
+		</SysOIDs>
+		<Vendor name="Promise"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="HP MSAP2000" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#HP MSAP2000"/>
+		</SysOIDs>
+		<Vendor name="HP"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Fibrenetix" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Fibrenetix"/>
+		</SysOIDs>
+		<Vendor name="Fibrenetix"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="HP 3PAR" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#HP 3PAR"/>
+		</SysOIDs>
+		<Vendor name="HP"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC VNX-FILE" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC VNX-FILE"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC Celerra" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC Celerra"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC VNX-BLOCK" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC VNX-BLOCK"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="PureStorage" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#PureStorage"/>
+		</SysOIDs>
+		<Vendor name="PureStorage"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC Isilon" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC Isilon"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Huawei" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Huawei"/>
+		</SysOIDs>
+		<Vendor name="Huawei"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco MDS" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Cisco MDS"/>
+		</SysOIDs>
+		<Vendor name="Cisco"/>
+		<Category name="FCSwitch"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="SNIA FCMGMT" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.3.94.1.6.1.3"/>
+		</SysOIDs>
+		<Vendor name="SNIA FCMGMT"/>
+		<Category name="FCSwitch"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="ADIC 100" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#ADIC 100"/>
+		</SysOIDs>
+		<Vendor name="ADIC"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="ADIC i2000" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#ADIC i2000"/>
+		</SysOIDs>
+		<Vendor name="ADIC"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="ATL Quantum" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#ATL Quantum"/>
+		</SysOIDs>
+		<Vendor name="ATL"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="StorageTek TapeLibrary" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#StorageTek TapeLibrary"/>
+		</SysOIDs>
+		<Vendor name="StorageTek"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Overland TapeLibrary" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Overland TapeLibrary"/>
+		</SysOIDs>
+		<Vendor name="Overland"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="HP EML/ESL" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#HP EML/ESL"/>
+		</SysOIDs>
+		<Vendor name="HP"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="Qualstar TapeLibrary" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#Qualstar TapeLibrary"/>
+		</SysOIDs>
+		<Vendor name="Qualstar"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="IBM 3584" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#IBM 3584"/>
+		</SysOIDs>
+		<Vendor name="IBM"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="ADIC i500" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#ADIC i500"/>
+		</SysOIDs>
+		<Vendor name="ADIC"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="IBM TS3100" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#IBM TS3100"/>
+		</SysOIDs>
+		<Vendor name="IBM"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="SpectraLogic T120" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#SpectraLogic T120"/>
+		</SysOIDs>
+		<Vendor name="SpectraLogic"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="SpectraLogic T950" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#SpectraLogic T950"/>
+		</SysOIDs>
+		<Vendor name="SpectraLogic"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="IBM TS3200" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#IBM TS3200"/>
+		</SysOIDs>
+		<Vendor name="IBM"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="SUN SL8500" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#SUN SL8500"/>
+		</SysOIDs>
+		<Vendor name="SUN"/>
+		<Category name="TapeLibrary"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC UNITY SERIES" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC UNITY SERIES"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC VNXe 3 Series" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC VNXe"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="EMC VNXe 3200" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#EMC VNXe"/>
+		</SysOIDs>
+		<Vendor name="EMC"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="IBM V3X00/V5000/V7000" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#IBM"/>
+		</SysOIDs>
+		<Vendor name="IBM"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+	<CustomDevicePackage deviceType="NetApp E2X00/E5X00/EF5X0" iconName="router.png" pingInterval="900">
+		<SysOIDs>
+			<SysOID oid="SAN#NetAppE"/>
+		</SysOIDs>
+		<Vendor name="NetApp"/>
+		<Category name="RAID"/>
+	</CustomDevicePackage>
+</CustomDevicePackage>

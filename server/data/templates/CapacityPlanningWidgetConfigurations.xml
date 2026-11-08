@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Capacity_Planning>
+    <CPReportToRule WIDGETNAME="widget.name.cpw.overutilized" RULENAME="webclient.reports.cpr.overutilized.rule" />
+    <CPReportToRule WIDGETNAME="widget.name.cpw.underutilized" RULENAME="webclient.reports.cpr.underutilized.rule" />
+    <CPReportToRule WIDGETNAME="widget.name.cpw.idle" RULENAME="webclient.reports.cpr.idle.rule" />
+	<CPReportToRule WIDGETNAME="widget.name.cpw.interface.overutilized" RULENAME="opm.reports.interface.cpr.overutilized.rule" />
+    <CPReportToRule WIDGETNAME="widget.name.cpw.interface.underutilized" RULENAME="opm.reports.interface.cpr.underutilized.rule" />
+    <CPReportToRule WIDGETNAME="widget.name.cpw.interface.idle" RULENAME="opm.reports.interface.cpr.idle.rule" />
+	<CPReportToRule WIDGETNAME="widget.name.cpw.trend.device" RULENAME="webclient.reports.cpr.overutilized.rule" />
+	<CPReportToRule WIDGETNAME="widget.name.cpw.trend.interface" RULENAME="opm.reports.interface.cpr.overutilized.rule" />
+
+</Capacity_Planning>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Adtran LAN Switch -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_lan_switch" templatename="Adtran_LANSwitch" displayname="Adtran LAN Switch" ostype="AOS" description="For all Adtran LAN Switches">
+        <NCMVendorDevice vendorid="Adtran" />
+        <NCMDevicePersonality personalityid="AdtranLANSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:adtran_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_lan_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+		
+
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:adtran_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_lan_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+		
+		
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_disable_syslog_change_tracking" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+    
+    <!-- For Adtran Netvanta Router -->
+    
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_netvanta_router" templatename="Adtran_NetvantaRouter"  displayname="Adtran Netvanta Router" ostype="AOS" description="For all Adtran Netvanta Router 3200 and 3400 series">
+	    <NCMVendorDevice vendorid="Adtran" />
+	    <NCMDevicePersonality personalityid="AdtranNetvantaRouter" />
+	    
+	    <NCMSupportedProtocol protocolid="TELNET">
+		    <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	    </NCMSupportedProtocol>
+	    
+	    <NCMSupportedProtocol protocolid="SSH">
+		    <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	    </NCMSupportedProtocol>
+	    
+	    <NCMSupportedProtocol protocolid="TFTP"/>
+	    
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:adtran_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_netvanta_router" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		    <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			    
+			    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+			    <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+			    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+			    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+			    
+			    <!-- Hardware Prop Retrieval -->
+			    <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+			    
+			    <!-- Change Tracking thru Syslog -->
+			    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_enable_syslog_change_tracking" />
+			    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_disable_syslog_change_tracking" />
+			    
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+	    
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:adtran_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_netvanta_router" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_cli_startup_config_backup" />
+			    <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="ciscorouter_cli_startup_config_upload_nohost" />
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_cli_running_config_backup" />
+			    <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="ciscorouter_cli_running_config_upload_nohost" />
+			    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_cli_copy_running_to_startup" />
+			    
+			    <!-- Hardware Prop Retrieval -->
+			    <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+			    
+			    <!-- Change Tracking thru Syslog -->
+			    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_enable_syslog_change_tracking" />
+			    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_disable_syslog_change_tracking" />
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+	    <!--Telnet SSH-->
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:adtran_router_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_netvanta_router" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		    <NCMDeviceCriteria commandmapid="TELNET_Command">
+			    
+			    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+			    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+			    
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+			    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+			    
+			    
+			    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+			    
+			    <!-- Hardware Prop Retrieval -->
+			    <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+			    
+			    <!-- Change Tracking thru Syslog -->
+			
+			    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_enable_syslog_change_tracking" />
+			    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_disable_syslog_change_tracking" />
+			    
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+	    
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:adtran_router_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_netvanta_router" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		    <NCMDeviceCriteria commandmapid="SSH_Command">
+			    
+			    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ciscorouter_telnet_startup_config_fetch" taskhandling="true"/>
+			    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="cisco_cli_show_startup_config_rec"/>
+			    
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ciscorouter_telnet_running_config_fetch" taskhandling="true"/>
+			    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="cisco_cli_show_running_config_rec"/>
+			    
+			    
+			    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="cisco_sync_config_write_mem" />
+			    
+			    <!-- Hardware Prop Retrieval -->
+			    <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+			    
+			    <!-- Change Tracking thru Syslog -->
+			    <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_enable_syslog_change_tracking" />
+			    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="adtranlanswitch_cli_disable_syslog_change_tracking" />
+			    
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+	    <!-- For Adtran Routers -->
+		
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_router" templatename="Adtran_Router" displayname="Adtran 800 Series Netvanta Router" ostype="NA" description="For all Adtran router 873 and 818">
+        <NCMVendorDevice vendorid="Adtran"/>
+        <NCMDevicePersonality personalityid="AdtranRouter"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:adtran_router_cli_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_router"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+			
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="adtran_router_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="adtran_router_cli_backup_show_running"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:adtran_router_cli_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:adtran_router"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="adtran_router_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="adtran_router_cli_backup_show_running"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+	
+</DeviceConfiguration>

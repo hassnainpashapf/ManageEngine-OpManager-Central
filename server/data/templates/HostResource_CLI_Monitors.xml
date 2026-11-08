@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OpmCLICommands>
+
+<!-- Performance Monitor Commands Starts -->
+
+    <OpmCLICommand CLICommand="vmstat 1 3 | awk '{for (i=0;i&lt;=NF;i++) if ($i == &quot;id&quot;) cmd=i;} {print 100-$cmd}'|tail -1" CommandID="1" CommandMappingID="netsnmp.CPU Utilization" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-CPUUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="1" EntityName="CPUUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="1" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/free -b | awk '/Mem:|cache:/ {print $2,$3}' | sed 'N;s/\n/ /' | awk '{if($4!=&quot;&quot;){print ($4*100)/$1}else{print ($2*100)/$1}}'" CommandID="2" CommandMappingID="netsnmp.Memory Utilization" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-MemoryUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="2" EntityName="PhysicalMemUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="2" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF |awk 'NR&gt;1'|awk '{x+=$2}{y+=$3}END{print y*100/x}'" CommandID="3" CommandMappingID="netsnmp.Disk Utilization" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-DiskUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="3" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="3" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$4}'" CommandID="4" CommandMappingID="netsnmp.Free Disk Space in MB" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-FreeDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="4" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="4" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="5" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$4/1024}'" CommandID="5" CommandMappingID="netsnmp.Free Disk Space in GB" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-FreeDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="5" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="6" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="7" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$3}'" CommandID="6" CommandMappingID="netsnmp.Used Disk Space in MB" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-UsedDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="6" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="8" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="9" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$3/1024}'" CommandID="7" CommandMappingID="netsnmp.Used Disk Space in GB" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-UsedDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="7" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="10" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="11" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$5}'" CommandID="8" CommandMappingID="netsnmp.Partition Details of the Device" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-PartitionDetails">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="8" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="12" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="13" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pi | awk 'NR&gt;1' | awk '{print $6,$5}'" CommandID="9" CommandMappingID="netsnmp.Inode Utilization" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-InodeUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="9" EntityName="UsedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="14" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="15" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="free -b | grep -i 'Swap' |  awk '{if($2&gt;0){print ($3/$2)*100}else{print 0}}'" CommandID="10" CommandMappingID="netsnmp.Linux-Swap Memory Utilization" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Linux-SwapMemoryUtilization">
+        <OpmCLIEntity EntityExpression="id" EntityId="10" EntityName="SwapMemoryUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="16" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="free -g | awk '{if (NR==2)print ($3)}'" CommandID="11" CommandMappingID="netsnmp.Linux-Memory Utilization-GB" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Linux-Memory_Utilization-GB">
+        <OpmCLIEntity EntityExpression="id" EntityId="11" EntityName="MemoryUtilizationGB" EntityUnits="GB">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="17" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/cat /proc/uptime | cut -d &quot;.&quot; -f1 | awk '{print $1/60}'" CommandID="12" CommandMappingID="netsnmp.Linux-SystemReboot" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Linux-SystemReboot">
+        <OpmCLIEntity EntityExpression="rebootTime" EntityId="12" EntityName="RebootTime" EntityUnits="Minutes">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="18" SubEntityName="rebootTime"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat -wt 1 1| tail -1 |awk '{print $1}'" CommandID="13" CommandMappingID="netsnmp.Run Queue" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-RunQueue">
+        <OpmCLIEntity EntityExpression="id" EntityId="13" EntityName="RunQueue" EntityUnits="No of process">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="19" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 1 | awk '{for (i=0;i&lt;=NF;i++){if($i == &quot;id&quot;) {cmd=i;break;}}} {print $cmd}'|tail -1" CommandID="14" CommandMappingID="netsnmp.CPU Idle" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-CPUIdle">
+        <OpmCLIEntity EntityExpression="id" EntityId="14" EntityName="CPU Idle" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="20" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="cat /proc/loadavg | awk '{print &quot;OneMinuteLoadAverage &quot;$1&quot;\nFiveMinutesLoadAverage &quot;$2&quot;\nFifteenMinutesLoadAverage &quot;$3}'" CommandID="15" CommandMappingID="netsnmp.Load Average" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-LoadAverage">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="15" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="21" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="22" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="loadAvg=`cat /proc/loadavg`;CPUCount=`lscpu | grep ^CPU\(s\): | awk '{print $2}'`;echo $CPUCount $loadAvg | awk '{print &quot;OneMinuteValue &quot;$2/$1*100&quot;\nFiveMinutesValue &quot;$3/$1*100&quot;\nFifteenMinutesValue &quot;$4/$1*100}'" CommandID="16" CommandMappingID="netsnmp.Load Average Per Processor" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-LoadAveragePerProcessor">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="16" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="23" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="24" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$2/1024}'" CommandID="17" CommandMappingID="netsnmp.Linux-TotalDiskSpaceInGB" DeviceTypeName="Linux" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Linux-TotalDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="17" EntityName="DiskUtilization" EntityUnits="GB">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="25" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="26" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/free | awk '/Mem:/ {print $2}'" CommandID="18" CommandMappingID="netsnmp.Total Memory" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Total Memory">
+        <OpmCLIEntity EntityExpression="maxValue" EntityId="18" EntityName="Total Memory" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="27" SubEntityName="maxValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 3 | awk '{for (i=0;i&lt;=NF;i++) if ($i == &quot;id&quot;) cmd=i;} {print 100-$cmd}'|tail -1" CommandID="19" CommandMappingID="solaris.CPU Utilization" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Telnet-CPUUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="19" EntityName="CPUUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="28" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="Total=`/usr/sbin/prtconf | awk '/Memory size:/ {print $3}'`;Free=`/usr/bin/vmstat 1 3 | awk '{for (i=0;i&lt;=NF;i++) if ($i == &quot;free&quot;) cmd=i;} {print $cmd}'| tail -1`; echo &quot;scale=3; ($Total-($Free/1024))*100/$Total&quot; | bc" CommandID="20" CommandMappingID="solaris.Memory Utilization" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Telnet-MemoryUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="20" EntityName="MemUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="29" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/df -k  | awk 'NR&gt;1' | awk '(NF&lt;5){f=1;s=2; next} (NF&gt;5){f=2;s=3} {print  $f,$s}' | awk '{total+=$1} {used+=$2} END {print used*100/total}'" CommandID="21" CommandMappingID="solaris.Disk Utilization" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Telnet-DiskUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="21" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="30" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/df -k | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=3; next} (NF&gt;5){f=6;s=4} {print  $f,$s/1024}'" CommandID="22" CommandMappingID="solaris.Free Disk Space in MB" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Telnet-FreeDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="22" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="31" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="32" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/df -k | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=3; next} (NF&gt;5){f=6;s=4} {print  $f,$s/(1024*1024)}'" CommandID="23" CommandMappingID="solaris.Free Disk Space in GB" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Telnet-FreeDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="23" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="33" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="34" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/df -k | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=2; next} (NF&gt;5){f=6;s=3} {print  $f,$s/1024}'" CommandID="24" CommandMappingID="solaris.Used Disk Space in MB" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Telnet-UsedDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="24" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="35" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="36" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/df -k | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=2; next} (NF&gt;5){f=6;s=3} {print  $f,$s/(1024*1024)}'" CommandID="25" CommandMappingID="solaris.Used Disk Space in GB" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Telnet-UsedDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="25" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="37" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="38" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/df -k  | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=4; next} (NF&gt;5){f=6;s=5} {print  $f,$s}'" CommandID="26" CommandMappingID="solaris.Partition Details of the Device" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-PartitionDetails">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="26" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="39" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="40" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="uptime | awk '{print &quot;OneMinuteLoadAverage &quot;$10&quot;\nFiveMinutesLoadAverage &quot;$11&quot;\nFifteenMinutesLoadAverage &quot;$12}'" CommandID="27" CommandMappingID="solaris.Load Average" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-LoadAverage">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="27" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="41" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="42" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="loadAvg=`uptime | awk '{print $10&quot; &quot;$11&quot; &quot;$12}'`;CPUCount=`/usr/sbin/psrinfo | wc -l`;echo $CPUCount $loadAvg | awk '{print &quot;OneMinuteValue &quot;$2/$1*100&quot;\nFiveMinutesValue &quot;$3/$1*100&quot;\nFifteenMinutesValue &quot;$4/$1*100}'" CommandID="28" CommandMappingID="solaris.Load Average Per Processor" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-LoadAveragePerProcessor">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="28" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="43" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="44" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/iostat -En | egrep 'Soft Errors|Hard Errors' | wc -l | awk '{print $1}'" CommandID="29" CommandMappingID="Solaris Total Disk" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-TotalDisk">
+        <OpmCLIEntity EntityExpression="id" EntityId="29" EntityName="TotalDisk" EntityUnits="disks">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="45" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="df -h  | grep -v 'Filesystem'  | awk '{ print $6,$5 }'" CommandID="30" CommandMappingID="Solaris FileSystem Utilization" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-FileSystemUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="30" EntityName="UsedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="46" SubEntityName="filesystemName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="47" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="sar -u 1 | awk '{print $5}' | tail -1" CommandID="31" CommandMappingID="solaris.CPU Idle" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-CPUIdle">
+        <OpmCLIEntity EntityExpression="id" EntityId="31" EntityName="CPU Idle" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="48" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 1| tail -1 |awk '{print $1}'" CommandID="32" CommandMappingID="solaris.Run Queue" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-RunQueue">
+        <OpmCLIEntity EntityExpression="id" EntityId="32" EntityName="RunQueue" EntityUnits="No of process">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="49" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="kstat -p unix:0:system_misc:boot_time | nawk '{printf &quot;%d\n&quot;, (srand()-$2)/60}'" CommandID="33" CommandMappingID="Solaris SystemReboot" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-SystemReboot">
+        <OpmCLIEntity EntityExpression="rebootTime" EntityId="33" EntityName="RebootTime" EntityUnits="Minutes">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="50" SubEntityName="rebootTime"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="df -F ufs -o i | awk 'NR&gt;1' | awk '{print $5,$4}'" CommandID="34" CommandMappingID="solaris.Inode Utilization" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CLI-InodeUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="34" EntityName="UsedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="51" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="52" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ipadm show-addr | awk 'NR&gt;1' | awk '{print $4&quot; &quot;$3}'" CommandID="35" CommandMappingID="Solaris Network Configuration" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-NetworkConfiguration">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="35" EntityName="UsedPercent" EntityUnits="Network Configuration">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="53" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="54" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/iostat -En | egrep 'Soft Errors|Hard Errors' | wc -l | awk '{print $1}';" CommandID="36" CommandMappingID="Solaris Current Disk Count" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-CurrentDiskCount">
+        <OpmCLIEntity EntityExpression="id" EntityId="36" EntityName="Current Disk Count" EntityUnits="Count">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="55" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="a=$(/usr/sbin/prtconf | /usr/bin/awk '/Memory/ {print $3*1024}'); vmstat 1 1 | tail -1 | awk &quot;{print 100-(\$5/$a)*100}&quot; | cut -d'.' -f1" CommandID="37" CommandMappingID="Solaris Free Memory" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-FreeMemory">
+        <OpmCLIEntity EntityExpression="id" EntityId="37" EntityName="Free Memory" EntityUnits="Percentage">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="56" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/iostat -en | awk 'NR&gt;2' | awk '{print $5 &quot; &quot;$4}'" CommandID="38" CommandMappingID="Solaris Disk Error Status" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-DiskErrorStatus">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="38" EntityName="UsedPercent" EntityUnits="Count">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="57" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="58" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/sbin/zpool list | awk 'NR&gt;1' | awk '{print $1&quot; &quot;$7}'" CommandID="39" CommandMappingID="Solaris Zpool Status" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-ZpoolStatus">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="39" EntityName="Zpool Status" EntityUnits="Status">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="59" SubEntityName="zpoolStatus"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="60" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/sbin/zpool list | grep -v NAME | awk '{print $1&quot; &quot;$5}'" CommandID="40" CommandMappingID="Solaris Zpool Utilization" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-ZpoolUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="40" EntityName="Zpool Utilization" EntityUnits="Percentage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="61" SubEntityName="zpoolName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="62" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="mpathadm list lu | grep -i 'dev/rdsk' &gt; raw_dev; mpathadm list lu | grep -i 'Total Path Count' | cut -d':' -f2 &gt; Tot_path ;  mpathadm list lu | grep -i 'Operational Path Count' | cut -d':' -f2 &gt; Ops_path; paste raw_dev Tot_path Ops_path | awk '{print $1&quot; &quot;$2-$3}'" CommandID="41" CommandMappingID="Solaris Multipathing Status" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-MultipathingStatus">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="41" EntityName="UsedPercent" EntityUnits="Unavailable Paths Count">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="63" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="64" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/svcs -xv |egrep -i &quot;offline|disabled|maintenance&quot;" CommandID="42" CommandMappingID="Solaris Service Fault Status" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-ServiceFaultStatus">
+        <OpmCLIEntity EntityExpression="id" EntityId="42" EntityName="Service Fault Status" EntityUnits="Status">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="1" SubEntityId="65" SubEntityName="Service Fault Status"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/df -k | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=1; next} (NF&gt;5){f=6;s=2} {print $f,$s/(1024*1024)}'" CommandID="43" CommandMappingID="Solaris-TotalDiskSpaceInGB" DeviceTypeName="Solaris" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Solaris-TotalDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="43" EntityName="DiskUtilization" EntityUnits="GB">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="66" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="67" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/sbin/prtconf | awk '/Memory size:/ {print $3}'" CommandID="44" CommandMappingID="solaris.Total Memory" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Total Memory">
+        <OpmCLIEntity EntityExpression="maxValue" EntityId="44" EntityName="Total Memory" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="68" SubEntityName="maxValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 3 |awk -v cmd=0 '{for (i=0;i&lt;=NF;i++) if ($i == &quot;id&quot;) cmd=i;}{print 100-$cmd}'|tail -1" CommandID="45" CommandMappingID="hpux.CPU Utilization" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Telnet-CPUUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="45" EntityName="CPUUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="69" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="Total=`cat /var/adm/syslog/syslog.log | awk '/Physical/ {print $7}'`;Free=`/usr/bin/vmstat 1 3 | awk -v cmd=0 '{for (i=0;i&lt;=NF;i++) if ($i == &quot;free&quot;) cmd=i;} {print $cmd}'| tail -1`;echo &quot;scale=3; ((($Total-($Free*4))/$Total)*100)&quot; | bc" CommandID="46" CommandMappingID="hpux.Memory Utilization" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Telnet-MemoryUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="46" EntityName="PhysicalMemUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="70" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/bdf | awk '(NF&lt;5){f=1;s=2; next} (NF&gt;5){f=2;s=3} {print  $f,$s}' | awk '{total+=$1} {used+=$2} END {print used*100/total}'" CommandID="47" CommandMappingID="hpux.Disk Utilization" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Telnet-DiskUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="47" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="71" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/bdf | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=3; next} (NF&gt;5){f=6;s=4} {print  $f,$s/(1024*1024)}'" CommandID="48" CommandMappingID="hpux.Free Disk Space in GB" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Telnet-FreeDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="free" EntityId="48" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="72" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="73" SubEntityName="free"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/bdf | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=3; next} (NF&gt;5){f=6;s=4} {print  $f,$s/(1024)}'" CommandID="49" CommandMappingID="hpux.Free Disk Space in MB" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Telnet-FreeDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="free" EntityId="49" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="74" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="75" SubEntityName="free"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/bdf | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=2; next} (NF&gt;5){f=6;s=3} {print  $f,$s/(1024*1024)}'" CommandID="50" CommandMappingID="hpux.Used Disk Space in GB" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Telnet-UsedDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="total" EntityId="50" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="76" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="77" SubEntityName="total"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/bdf | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=2; next} (NF&gt;5){f=6;s=3} {print  $f,$s/(1024)}'" CommandID="51" CommandMappingID="hpux.Used Disk Space in MB" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Telnet-UsedDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="total" EntityId="51" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="78" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="79" SubEntityName="total"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/bdf | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=4; next} (NF&gt;5){f=6;s=5} {print  $f,$s}'" CommandID="52" CommandMappingID="hpux.Partition Details of the Device" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-PartitionDetails">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="52" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="80" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="81" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="loadAvg=`uptime | awk '{print $10&quot; &quot;$11&quot; &quot;$12}'`;CPUCount=`/usr/sbin/ioscan -kf|grep processor|wc -l`;echo $CPUCount $loadAvg | awk '{print &quot;OneMinuteValue &quot;$2/$1*100&quot;\nFiveMinutesValue &quot;$3/$1*100&quot;\nFifteenMinutesValue &quot;$4/$1*100}'" CommandID="53" CommandMappingID="hpux.Load Average Per Processor" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-LoadAveragePerProcessor">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="53" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="82" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="83" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 1 |awk -v cmd=0 '{for (i=0;i&lt;=NF;i++){ if ($i == &quot;id&quot;){ cmd=i;break;}}}{print $cmd}'|tail -1" CommandID="54" CommandMappingID="hpux.CPU Idle" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-CPUIdle">
+        <OpmCLIEntity EntityExpression="id" EntityId="54" EntityName="CPU Idle" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="84" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 1 |awk -v cmd=0 '{for (i=0;i&lt;=NF;i++){ if ($i == &quot;r&quot;){ cmd=i;break;}}}{print $cmd}'|tail -1" CommandID="55" CommandMappingID="hpux.Run Queue" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-RunQueue">
+        <OpmCLIEntity EntityExpression="id" EntityId="55" EntityName="RunQueue" EntityUnits="No of process">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="85" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="bdf -i | awk 'NR&gt;1' | awk '{print $9,$8}'" CommandID="56" CommandMappingID="hpux.Inode Utilization" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-InodeUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="56" EntityName="UsedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="86" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="87" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="uptime | awk -F 'up ' '{print $2}' | awk -F ',' '{print $1}' | awk '{if ($2 ~ /days/) {print $1*24*60}else{print $1}}' | awk -F ':' '{if ($2!=&quot;&quot;) {print $1*60+$2}else{print $1}}'" CommandID="57" CommandMappingID="HP-UX-SystemReboot" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="HP-UX-SystemReboot">
+        <OpmCLIEntity EntityExpression="rebootTime" EntityId="57" EntityName="RebootTime" EntityUnits="Minutes">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="88" SubEntityName="rebootTime"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="uptime | awk '{print &quot;OneMinuteLoadAverage &quot;$10&quot;\nFiveMinutesLoadAverage &quot;$11&quot;\nFifteenMinutesLoadAverage &quot;$12}'" CommandID="58" CommandMappingID="hpux.Load Average" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CLI-LoadAverage">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="58" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="89" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="90" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/bdf | awk 'NR&gt;1' | awk '(NF&lt;5){f=5;s=1; next} (NF&gt;5){f=6;s=2} {print $f,$s/(1024*1024)}'" CommandID="59" CommandMappingID="HP-UX-TotalDiskSpaceInGB" DeviceTypeName="HP-UX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="HP-UX-TotalDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="59" EntityName="DiskUtilization" EntityUnits="GB">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="91" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="92" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="cat /var/adm/syslog/syslog.log | awk '/Physical/ {print $7/1024}'" CommandID="60" CommandMappingID="hpux.Total Memory" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Total Memory">
+        <OpmCLIEntity EntityExpression="maxValue" EntityId="60" EntityName="Total Memory" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="93" SubEntityName="maxValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 3 | awk -v cmd=0 '{for (i=0;i&lt;=NF;i++) if ($i == &quot;id&quot;) cmd=i;} {print 100-$cmd}' | tail -1" CommandID="61" CommandMappingID="ibmaix.CPU Utilization" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Telnet-CPUUtilization">
+        <OpmCLIEntity EntityExpression="id" EntityId="61" EntityName="CPUUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="94" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="Total=`lsattr -El mem0 | awk '/Total/ {print $2*1024}'`;Free=`vmstat 1 3 | awk -v cmd=0 '{for (i=0;i&lt;=NF;i++) if ($i == &quot;fre&quot;) cmd=i;}{print $cmd}' | tail -1`;echo &quot;scale=3; ($Total-($Free*4))*100/$Total&quot; | bc" CommandID="62" CommandMappingID="ibmaix.Memory Utilization" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Telnet-MemoryUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="62" EntityName="PhysicalMemUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="95" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF |awk 'NR&gt;1'|awk '{x+=$2}{y+=$3}END{print (y*100)/x}'" CommandID="63" CommandMappingID="ibmaix.Disk Utilization" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Telnet-DiskUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="63" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="96" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF | awk 'NR&gt;1' | awk '{print $6,$4/(1024*1024)}'" CommandID="64" CommandMappingID="ibmaix.Free Disk Space in GB" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="Telnet-FreeDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="free" EntityId="64" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="97" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="98" SubEntityName="free"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF | awk 'NR&gt;1' | awk '{print $6,$4/1024}'" CommandID="65" CommandMappingID="ibmaix.Free Disk Space in MB" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="Telnet-FreeDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="free" EntityId="65" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="99" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="100" SubEntityName="free"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF | awk 'NR&gt;1' | awk '{print $6,$3/(1024*1024)}'" CommandID="66" CommandMappingID="ibmaix.Used Disk Space in GB" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="Telnet-UsedDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="total" EntityId="66" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="101" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="102" SubEntityName="total"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF | awk 'NR&gt;1' | awk '{print $6,$3/1024}'" CommandID="67" CommandMappingID="ibmaix.Used Disk Space in MB" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="Telnet-UsedDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="total" EntityId="67" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="103" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="104" SubEntityName="total"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/bin/df -Pk |awk NF | awk 'NR&gt;1'| awk '{print $6,$5}'" CommandID="68" CommandMappingID="ibmaix.Partition Details of the Device" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-PartitionDetails">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="68" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="105" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="106" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="lsps -s | awk 'NR&gt;1' | awk '{print $2+0}'" CommandID="69" CommandMappingID="AIX Swap Memory Utilization" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-SwapMemoryUtilization">
+        <OpmCLIEntity EntityExpression="id" EntityId="69" EntityName="SwapMemoryUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="107" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/usr/sysv/bin/df -i | awk 'NR&gt;1' | awk '{print $1,$6}'" CommandID="70" CommandMappingID="ibmaix.Inode Utilization" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-InodeUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="70" EntityName="UsedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="108" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="109" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 1 |awk -v cmd=0 '{for (i=0;i&lt;=NF;i++){ if ($i == &quot;r&quot;){ cmd=i;break;}}}{print $cmd}'|tail -1" CommandID="71" CommandMappingID="ibmaix.Run Queue" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-RunQueue">
+        <OpmCLIEntity EntityExpression="id" EntityId="71" EntityName="RunQueue" EntityUnits="No of process">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="110" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="lsps -a |awk 'NR==2' |awk '{print $5}'" CommandID="72" CommandMappingID="AIX Paging Utilization" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-PagingUtilization">
+        <OpmCLIEntity EntityExpression="id" EntityId="72" EntityName="PagingUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="111" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 1 |awk -v cmd=0 '{for (i=0;i&lt;=NF;i++){ if ($i == &quot;id&quot;){ cmd=i;break;}}}{print $cmd}'|tail -1" CommandID="73" CommandMappingID="ibmaix.CPU Idle" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-CPUIdle">
+        <OpmCLIEntity EntityExpression="id" EntityId="73" EntityName="CPU Idle" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="112" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="iostat 1 1 | grep -i hdisk | awk '{print $1 &quot; &quot; $5}'" CommandID="74" CommandMappingID="AIX Disk Read Rate" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-DiskReadRate">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="74" EntityName="UsedAmount" EntityUnits="kb/s">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="113" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="114" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="iostat 1 1 | grep -i hdisk | awk '{print $1 &quot; &quot; $6}'" CommandID="75" CommandMappingID="AIX Disk Write Rate" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-DiskWriteRate">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="75" EntityName="UsedAmount" EntityUnits="kb/s">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="115" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="116" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="iostat -Dl -a -T -s -R 1 1 |grep -i hdisk |awk '{print $1 &quot; &quot; $24}'" CommandID="76" CommandMappingID="AIX Disk Service Queue Full" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-DiskServiceQueueFull">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="76" EntityName="UsedAmount" EntityUnits="Count/s">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="117" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="118" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="uptime | awk '{print &quot;OneMinuteLoadAverage &quot;$10&quot;\nFiveMinutesLoadAverage &quot;$11&quot;\nFifteenMinutesLoadAverage &quot;$12}'" CommandID="77" CommandMappingID="ibmaix.Load Average" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-LoadAverage">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="77" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="119" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="120" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="loadAvg=`uptime | awk '{print $10&quot; &quot;$11&quot; &quot;$12}'`;CPUCount=`lparstat | grep lcpu | awk '{print substr($6,6)}'`;echo $CPUCount $loadAvg | awk '{print &quot;OneMinuteValue &quot;$2/$1*100&quot;\nFiveMinutesValue &quot;$3/$1*100&quot;\nFifteenMinutesValue &quot;$4/$1*100}'" CommandID="78" CommandMappingID="ibmaix.Load Average Per Processor" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="CLI-LoadAveragePerProcessor">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="78" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="121" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="122" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="value=$(/usr/sbin/perf/diag_tool/uptime_);echo $(($value/60));" CommandID="79" CommandMappingID="AIX-SystemReboot" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-SystemReboot">
+        <OpmCLIEntity EntityExpression="rebootTime" EntityId="79" EntityName="RebootTime" EntityUnits="Minutes">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="123" SubEntityName="rebootTime"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="iostat -Dl  -a -T -s -R 1 1 | grep  fcs | awk '{print $1&quot; &quot;$2}'" CommandID="80" CommandMappingID="AIX Fibre Cards Utilization" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-FibreCardsUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="80" EntityName="UsedAmount" EntityUnits="Bytes Per Second">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="124" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="125" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="for adapter in `ifconfig -a | grep BROADCAST | awk -F: '{print $1}' | grep -v lo`; do printf &quot;$adapter &quot;; netstat -v $adapter | egrep -i &quot;CRC Errors:&quot; | grep -v Number | awk '{print $NF}' | head -1; done" CommandID="81" CommandMappingID="AIX Network CRC errors" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-NetworkCRCerrors">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="81" EntityName="UsedAmount" EntityUnits="Count">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="126" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="127" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="for adapter in `ifconfig -a | grep BROADCAST | awk -F: '{print $1}' | grep -v lo`; do printf &quot;$adapter &quot;; netstat -v $adapter | egrep -i &quot;DMA Overrun:&quot; | grep -v Number | awk '{print $NF}' | head -1; done" CommandID="82" CommandMappingID="AIX Network DMA Overrun" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-NetworkDMAOverrun">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="82" EntityName="UsedAmount" EntityUnits="Count">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="128" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="129" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="for adapter in `ifconfig -a | grep BROADCAST | awk -F: '{print $1}' | grep -v lo`; do printf &quot;$adapter &quot;; netstat -v $adapter | egrep -i &quot;Alignment Errors:&quot; | grep -v Number | awk '{print $NF}' | head -1; done" CommandID="83" CommandMappingID="AIX Network Alignment Errors" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-NetworkAlignmentErrors">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="83" EntityName="UsedAmount" EntityUnits="Count">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="130" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="131" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="for i in `lsdev -Cc adapter |grep -i fcs |awk '{print $1}'`; do echo $i $(lsattr -El fscsi0 |head -1 |awk '{print &quot; &quot; $2}'); done" CommandID="84" CommandMappingID="AIX Link Status Of Network and Fibre Cards" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-LinkStatusOfNetworkandFibreCards">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="84" EntityName="UsedAmount" EntityUnits="Status">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="132" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="133" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="iostat -Dl  -a -T -s -R 1 1 | grep  fcs | awk '{print $1&quot; &quot;$3}'" CommandID="85" CommandMappingID="AIX IOPS Of Fibre Cards" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-IOPSOfFibreCards">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="85" EntityName="UsedAmount" EntityUnits="Transactions Per Second">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="134" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="135" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="for i in `lsdev -C |grep fcs |awk '{print $1}'`;do echo $i $(lscfg -vpl $i |grep -i net|tr -s ' '|tr ' ' '_');done" CommandID="86" CommandMappingID="AIX WWN Of Fibre Cards" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-WWNOfFibreCards">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="86" EntityName="WWNOfFibreCards" EntityUnits="WWN">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="136" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="137" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat -v | grep computational | awk '{print $1}'" CommandID="87" CommandMappingID="AIX Computational Memory Utilization" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-ComputationalMemoryUtilization">
+        <OpmCLIEntity EntityExpression="ComputationalMemory" EntityId="87" EntityName="ComputationalMemory" EntityUnits="Percentage">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="138" SubEntityName="ComputationalMemory"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF | awk 'NR&gt;1' | awk '{print $6,$2/(1024*1024)}'" CommandID="88" CommandMappingID="AIX-TotalDiskSpaceInGB" DeviceTypeName="IBM AIX" ParseAllLines="true" SupportMultipleEntity="false" Vendor="IBM" GraphName="AIX-TotalDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="88" EntityName="DiskUtilization" EntityUnits="GB">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="139" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="140" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="lsattr -El mem0 | awk '/Total/ {print $2}'" CommandID="89" CommandMappingID="ibmaix.Total Memory" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Total Memory">
+        <OpmCLIEntity EntityExpression="maxValue" EntityId="89" EntityName="Total Memory" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="141" SubEntityName="maxValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 3 | awk '{print 100-$19}'|tail -1" CommandID="90" CommandMappingID="linuxfreebsd.CPU Utilization" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-CPUUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="90" EntityName="CPUUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="142" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="top -d 1 -n 2 | grep Mem: | awk '$2 ~ /K/ {active=$2*1024};$2 ~ /M/ {active=$2*1024*1024};$2 ~ /G/ {active=$2*1024*1024*1024}; $4 ~ /K/ {inact=$4*1024};$4 ~ /M/ {inact=$4*1024*1024};$4 ~ /G/ {inact=$4*1024*1024*1024}; $6 ~ /K/ {wired=$6*1024};$6 ~ /M/ {wired=$6*1024*1024};$6 ~ /G/ {wired=$6*1024*1024*1024}; {used=active+inact+wired}; $8 ~ /K/ {free=$8*1024};$8 ~ /M/ {free=$8*1024*1024};$8 ~ /G/ {free=$8*1024*1024*1024}; {free=wired+free}; {print used/(active+inactive+free)*100}'" CommandID="91" CommandMappingID="linuxfreebsd.Memory Utilization" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-MemoryUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="91" EntityName="PhysicalMemUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="143" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF |awk 'NR&gt;1'|awk '{x+=$2}{y+=$3}END{print y*100/x}'" CommandID="92" CommandMappingID="linuxfreebsd.Disk Utilization" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-DiskUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="92" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="144" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$4}'" CommandID="93" CommandMappingID="linuxfreebsd.Free Disk Space in MB" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-FreeDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="93" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="145" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="146" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$4/1024}'" CommandID="94" CommandMappingID="linuxfreebsd.Free Disk Space in GB" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-FreeDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="94" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="147" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="148" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$3}'" CommandID="95" CommandMappingID="linuxfreebsd.Used Disk Space in MB" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-UsedDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="95" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="149" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="150" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$3/1024}'" CommandID="96" CommandMappingID="linuxfreebsd.Used Disk Space in GB" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Telnet-UsedDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="96" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="151" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="152" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$5}'" CommandID="97" CommandMappingID="linuxfreebsd.Partition Details of the Device" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-PartitionDetails">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="97" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="153" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="154" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pi | awk 'NR&gt;1' | awk '{print $9,$8}'" CommandID="98" CommandMappingID="linuxfreebsd.Inode Utilization" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-InodeUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="98" EntityName="UsedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="155" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="156" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat -wt 1 1| tail -1 |awk '{print $1}'" CommandID="99" CommandMappingID="linuxfreebsd.Run Queue" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-RunQueue">
+        <OpmCLIEntity EntityExpression="id" EntityId="99" EntityName="RunQueue" EntityUnits="No of process">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="157" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat 1 1 | awk '{print $19}'|tail -1" CommandID="100" CommandMappingID="linuxfreebsd.CPU Idle" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-CPUIdle">
+        <OpmCLIEntity EntityExpression="id" EntityId="100" EntityName="CPU Idle" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="158" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="uptime | awk '{print &quot;OneMinuteLoadAverage &quot;$10&quot;\nFiveMinutesLoadAverage &quot;$11&quot;\nFifteenMinutesLoadAverage &quot;$12}'" CommandID="101" CommandMappingID="linuxfreebsd.Load Average" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-LoadAverage">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="101" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="159" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="160" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand=" loadAvg=`uptime | awk '{print $10&quot; &quot;$11&quot; &quot;$12}'`;CPUCount=`sysctl hw.ncpu | awk '{print $2}'`;echo $CPUCount $loadAvg | awk '{print &quot;OneMinuteValue &quot;$2/$1*100&quot;\nFiveMinutesValue &quot;$3/$1*100&quot;\nFifteenMinutesValue &quot;$4/$1*100}' " CommandID="102" CommandMappingID="linuxfreebsd.Load Average Per Processor" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CLI-LoadAveragePerProcessor">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="102" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="161" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="162" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="startTime=$(sysctl -n kern.boottime | awk '{print $4}' | awk -F ',' '{print $1}');curTime=$(date &quot;+%s&quot;);echo $((($curTime-$startTime)/60))" CommandID="103" CommandMappingID="linuxfreebsd.Linux-SystemReboot" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Linux-SystemReboot">
+        <OpmCLIEntity EntityExpression="rebootTime" EntityId="103" EntityName="RebootTime" EntityUnits="Minutes">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="163" SubEntityName="rebootTime"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$2/1024}'" CommandID="104" CommandMappingID="linuxfreebsd.Linux-TotalDiskSpaceInGB" DeviceTypeName="Linux FreeBSD" ParseAllLines="true" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Linux-TotalDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="104" EntityName="DiskUtilization" EntityUnits="GB">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="164" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="165" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95;top -d 1 -n 2 | grep Mem: | awk '$2 ~ /K/ {active=$2*1024};$2 ~ /M/ {active=$2*1024*1024};$2 ~ /G/ {active=$2*1024*1024*1024}; $4 ~ /K/ {inact=$4*1024};$4 ~ /M/ {inact=$4*1024*1024};$4 ~ /G/ {inact=$4*1024*1024*1024}; {used=active+inact}; $6 ~ /K/ {wired=$6*1024};$6 ~ /M/ {wired=$6*1024*1024};$6 ~ /G/ {wired=$6*1024*1024*1024}; $8 ~ /K/ {free=$8*1024};$8 ~ /M/ {free=$8*1024*1024};$8 ~ /G/ {free=$8*1024*1024*1024}; {free=wired+free}; {print (used+free)/1024/1024}'" CommandID="105" CommandMappingID="linuxfreebsd.Total Memory" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Total Memory">
+        <OpmCLIEntity EntityExpression="maxValue" EntityId="105" EntityName="Total Memory" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="166" SubEntityName="maxValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95;top -l 3 -n 1|grep 'CPU usage:' | awk '{print 100-$7}' | tail -1" CommandID="106" CommandMappingID="macos.CPU Utilization" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Telnet-CPUUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="106" EntityName="CPUUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="167" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95;top -l 1 -n 2 | grep PhysMem: | awk '{used=$2};$2 ~ /K/ {used=$2*1024};$2 ~ /M/ {used=$2*1024*1024};$2 ~ /G/ {used=$2*1024*1024*1024};{unused=$6};$6 ~ /K/ {unused=$6*1024};$6 ~ /M/ {unused=$6*1024*1024};$6 ~ /G/ {unused=$6*1024*1024*1024};{if(used+unused!=0) {print used*100/(used+unused)}else{print 0}}'" CommandID="107" CommandMappingID="macos.Memory Utilization" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Telnet-MemoryUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="107" EntityName="PhysicalMemUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="168" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pk |awk NF |awk 'NR&gt;1'|awk '{x+=$2}{y+=$3}END{print y*100/x}'" CommandID="108" CommandMappingID="macos.Disk Utilization" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Telnet-DiskUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="108" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="169" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$4}'" CommandID="109" CommandMappingID="macos.Free Disk Space in MB" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="Telnet-FreeDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="109" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="170" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="171" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$4/1024}'" CommandID="110" CommandMappingID="macos.Free Disk Space in GB" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="Telnet-FreeDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="110" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="172" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="173" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$3}'" CommandID="111" CommandMappingID="macos.Used Disk Space in MB" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="Telnet-UsedDiskSpaceInMB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="111" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="174" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="175" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$3/1024}'" CommandID="112" CommandMappingID="macos.Used Disk Space in GB" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="Telnet-UsedDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="112" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="176" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="177" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$5}'" CommandID="113" CommandMappingID="macos.Partition Details of the Device" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-PartitionDetails">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="113" EntityName="DiskUtilization" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="178" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="179" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pi | awk 'NR&gt;1' | awk '{print $9,$8}'" CommandID="114" CommandMappingID="macos.Inode Utilization" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-InodeUtilization">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="114" EntityName="UsedPercent" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="180" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="181" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat -wt 1 1| tail -1 |awk '{print $1}'" CommandID="115" CommandMappingID="macos.Run Queue" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-RunQueue">
+        <OpmCLIEntity EntityExpression="id" EntityId="115" EntityName="RunQueue" EntityUnits="No of process">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="182" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95;top -l 3 -n 1|grep 'CPU usage:' | awk '{print $7}' | tail -1" CommandID="116" CommandMappingID="macos.CPU Idle" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-CPUIdle">
+        <OpmCLIEntity EntityExpression="id" EntityId="116" EntityName="CPU Idle" EntityUnits="%">
+            <OpmCLISubEntity IgnoreCharsFrom="%" IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="183" SubEntityName="id"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="uptime | awk '{print &quot;OneMinuteLoadAverage &quot;$10&quot;\nFiveMinutesLoadAverage &quot;$11&quot;\nFifteenMinutesLoadAverage &quot;$12}'" CommandID="117" CommandMappingID="macos.Load Average" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-LoadAverage">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="117" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="184" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="185" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand=" loadAvg=`uptime | awk '{print $10&quot; &quot;$11&quot; &quot;$12}'`;CPUCount=`sysctl hw.ncpu | awk '{print $2}'`;echo $CPUCount $loadAvg | awk '{print &quot;OneMinuteValue &quot;$2/$1*100&quot;\nFiveMinutesValue &quot;$3/$1*100&quot;\nFifteenMinutesValue &quot;$4/$1*100}' " CommandID="118" CommandMappingID="macos.Load Average Per Processor" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="CLI-LoadAveragePerProcessor">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="118" EntityName="LoadAverage">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="186" SubEntityName="timePeriod"/>
+            <OpmCLISubEntity IgnoreCharsFrom="," IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="187" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="startTime=$(sysctl -n kern.boottime | awk '{print $4}' | awk -F ',' '{print $1}');curTime=$(date &quot;+%s&quot;);echo $((($curTime-$startTime)/60))" CommandID="119" CommandMappingID="Mac-SystemReboot" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Mac-SystemReboot">
+        <OpmCLIEntity EntityExpression="rebootTime" EntityId="119" EntityName="RebootTime" EntityUnits="Minutes">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="188" SubEntityName="rebootTime"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/df -Pm | awk 'NR&gt;1' | awk '{print $6,$2/1024}'" CommandID="120" CommandMappingID="Mac-TotalDiskSpaceInGB" DeviceTypeName="Mac OS" ParseAllLines="true" SupportMultipleEntity="false" Vendor="Apple" GraphName="Mac-TotalDiskSpaceInGB">
+        <OpmCLIEntity EntityExpression="curValue" EntityId="120" EntityName="DiskUtilization" EntityUnits="GB">
+            <OpmCLISubEntity IsEntityName="true" ParseLine="-1" ParseToken="1" SubEntityId="189" SubEntityName="partitionName"/>
+            <OpmCLISubEntity IsEntityName="false" ParseLine="-1" ParseToken="2" SubEntityId="190" SubEntityName="curValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95;top -l 1 -n 2 | grep PhysMem: | awk '{used=$2};$2 ~ /K/ {used=$2*1024};$2 ~ /M/ {used=$2*1024*1024};$2 ~ /G/ {used=$2*1024*1024*1024};{unused=$6};$6 ~ /K/ {unused=$6*1024};$6 ~ /M/ {unused=$6*1024*1024};$6 ~ /G/ {unused=$6*1024*1024*1024};{print (used+unused)/1024/1024}'" CommandID="121" CommandMappingID="macos.Total Memory" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Total Memory">
+        <OpmCLIEntity EntityExpression="maxValue" EntityId="121" EntityName="Total Memory" EntityUnits="%">
+            <OpmCLISubEntity IsEntityName="false" ParseLine="1" ParseToken="1" SubEntityId="191" SubEntityName="maxValue"/>
+        </OpmCLIEntity>
+    </OpmCLICommand>
+
+<!-- Performance Monitor Commands Ends -->
+
+<!-- Active Process Commands Starts -->
+
+    <OpmCLICommand CLICommand="export UNIX95=1;ps -eo pid,comm,ppid,pgid,args | grep -v 'defunct' | awk 'BEGIN {arr[0] = 0;arr[1] = 1;arr[2] = 2;} {if (($3 == $4) || ($1 == $4) || ($3 in arr)) {print $0}}' | cat;" CommandID="3000" CommandMappingID="netsnmp.Active Process" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Active Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,fname,rss,args | grep -v 'PID' | grep -v 'defunct'" CommandID="3001" CommandMappingID="solaris.Active Process" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Active Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95=1;ps -eo pid,comm,ppid,pgid,args | grep -v 'defunct' | awk 'BEGIN {arr[0] = 0;arr[1] = 1;arr[2] = 2;} {if (($3 == $4) || ($1 == $4) || ($3 in arr)) {print $0}}' | cat;" CommandID="3002" CommandMappingID="hpux.Active Process" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Active Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/ps -eo pid,comm,rssize,args | grep -v 'PID' | grep -v 'defunct'" CommandID="3003" CommandMappingID="ibmaix.Active Process" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Active Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95=1;ps -eo pid,comm,ppid,pgid,args | grep -v 'defunct' | awk 'BEGIN {arr[0] = 0;arr[1] = 1;arr[2] = 2;} {if (($3 == $4) || ($1 == $4) || ($3 in arr)) {print $0}}' | cat;" CommandID="3004" CommandMappingID="linuxfreebsd.Active Process" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Active Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,ppid,pgid,args | grep -v 'defunct' | awk 'BEGIN {arr[0] = 0;arr[1] = 1;arr[2] = 2;} {if (($3 == $4) || ($1 == $4) || ($3 in arr)) {print $0}}' | cat;" CommandID="3005" CommandMappingID="macos.Active Process" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Active Process">
+    </OpmCLICommand>
+
+<!-- Active Process Commands Ends -->
+
+<!-- Poll Process Commands Starts -->
+
+    <OpmCLICommand CLICommand="export UNIX95=1;ps -eo pid,comm,pcpu,pmem,ppid,pgid,rss,args | grep -v 'defunct' | awk 'BEGIN {arr[0] = 0;arr[1] = 1;arr[2] = 2;} {if (($5 == $6) || ($1 == $6) || ($5 in arr)) {print $0}}' | cat;" CommandID="3150" CommandMappingID="netsnmp.Poll Process" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Poll Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,fname,pcpu,pmem,rss,args | grep -v 'PID' | grep -v 'defunct'" CommandID="3151" CommandMappingID="solaris.Poll Process" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Poll Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95=1;ps -eo pid,comm,pcpu,vsz,ppid,pgid,args | grep -v 'defunct' | awk 'BEGIN {arr[0] = 0;arr[1] = 1;arr[2] = 2;} {if (($5 == $6) || ($1 == $6) || ($5 in arr)) {print $0}}' | cat;" CommandID="3152" CommandMappingID="hpux.Poll Process" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Poll Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/ps -eo pid,comm,pcpu,pmem,rssize,args | grep -v 'PID' | grep -v 'defunct'" CommandID="3153" CommandMappingID="ibmaix.Poll Process" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Poll Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95=1;ps -eo pid,comm,pcpu,pmem,ppid,pgid,rss,args | grep -v 'defunct' | awk 'BEGIN {arr[0] = 0;arr[1] = 1;arr[2] = 2;} {if (($5 == $6) || ($1 == $6) || ($5 in arr)) {print $0}}' | cat;" CommandID="3154" CommandMappingID="linuxfreebsd.Poll Process" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Poll Process">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,pcpu,pmem,ppid,pgid,rss,args | grep -v 'defunct' | awk 'BEGIN {arr[0] = 0;arr[1] = 1;arr[2] = 2;} {if (($5 == $6) || ($1 == $6) || ($5 in arr)) {print $0}}' | cat;" CommandID="3155" CommandMappingID="macos.Poll Process" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Poll Process">
+    </OpmCLICommand>
+
+<!-- Poll Process Commands Ends -->
+
+<!-- Installed Software Commands Starts -->
+
+    <OpmCLICommand CLICommand="rpm -qa --queryformat &apos;%{NAME}==%{INSTALLTIME:date}==%{VERSION}\n&apos;" CommandID="3300" CommandMappingID="netsnmp.Installed Software" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Installed Software">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="grep install /var/log/dpkg.log.* | egrep &apos;installed&apos; | awk &apos;!/half-installed/ {split($1, dateArr, &quot;:&quot;); install_date=dateArr[2]; split($5, arr, &quot;:&quot;); name=arr[1]; if(!seen[name]++) print name, install_date, $2, $6}&apos; | while read -r package install_date time version; do echo &quot;$package == $install_date $time == $version&quot;; done" CommandID="3301" CommandMappingID="ubuntu.Installed Software" DeviceTypeName="Ubuntu" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Installed Software">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="pkginfo -l | egrep &apos;(NAME|INSTDATE|VERSION)&apos; | awk &apos;$1==&quot;NAME:&quot;{name=substr($0,index($0,$2))} $1==&quot;VERSION:&quot;{ver=substr($0,index($0,$2))} $1==&quot;INSTDATE:&quot;{date=substr($0,index($0,$2)); print name &quot;==&quot; date &quot;==&quot; ver}&apos;" CommandID="3302" CommandMappingID="solaris.Installed Software" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Installed Software">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="lslpp -qch | awk -F: &apos;{print $2,&quot;==&quot;,$7,$8,&quot;==&quot;,$3}&apos; | awk &apos;!a[$1]++&apos;" CommandID="3303" CommandMappingID="ibmaix.Installed Software" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Installed Software">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="for package in $(pkg info | awk &apos;{print $1}&apos;); do pkg_info=$(pkg info &quot;$package&quot;); name=$(echo &quot;$pkg_info&quot; | awk -F&apos;: &apos; &apos;/^Name/ {print $2}&apos;); version=$(echo &quot;$pkg_info&quot; | awk -F&apos;: &apos; &apos;/^Version/ {print $2}&apos;); installed_on=$(echo &quot;$pkg_info&quot; | awk -F&apos;: &apos; &apos;/^Installed on/ {print $2}&apos;); echo &quot;$name==$installed_on==$version&quot;; done" CommandID="3304" CommandMappingID="linuxfreebsd.Installed Software" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Installed Software">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="for package in $(pkgutil --pkgs); do package_name=&quot;$package&quot;; timestamp=$(pkgutil --pkg-info $package | grep install-time | awk &apos;{print $2}&apos;); install_date=$(date -r $timestamp &apos;+%m/%d/%Y:%H:%M:%S&apos;); version=$(pkgutil --pkg-info $package | grep version | awk &apos;{print $2}&apos;); echo -n &quot; $package_name == $install_date == $version \n&quot;; done" CommandID="3305" CommandMappingID="macos.Installed Software" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Installed Software">
+    </OpmCLICommand>
+
+<!-- Installed Software Commands Ends -->
+
+<!-- OpManager Diagnostics Commands Starts -->
+
+<!-- CPU Diagnostics -->
+    <OpmCLICommand CLICommand="ps -eo pid,fname,pcpu,ppid,pgid | awk '{if (($4 == $5) || ($1 == $5)) {print $0}}' | sort -k 3nr | head -n" CommandID="3450" CommandMappingID="netsnmp.CPU Diagnostics" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CPU Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,pcpu | grep -v 'PID' | sort +2nr | head -n" CommandID="3451" CommandMappingID="solaris.CPU Diagnostics" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="CPU Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95=1;ps -ef -o pid,comm,pcpu,ppid,pgid | awk '{if (($4 == $5) || ($1 == $5)) {print $0}}' | sort +2nr | head -n" CommandID="3452" CommandMappingID="hpux.CPU Diagnostics" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="CPU Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="/bin/ps -eo pid,comm,pcpu | grep -v 'PID' | grep -v 'defunct' | sort +2nr | head -n" CommandID="3453" CommandMappingID="ibmaix.CPU Diagnostics" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CPU Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,pcpu,ppid,pgid | awk '{if (($4 == $5) || ($1 == $5)) {print $0}}' | sort -k 3nr | head -n" CommandID="3454" CommandMappingID="linuxfreebsd.CPU Diagnostics" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="CPU Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,pcpu,ppid,pgid | awk '{if (($4 == $5) || ($1 == $5)) {print $0}}' | sort -k 3nr | head -n" CommandID="3455" CommandMappingID="macos.CPU Diagnostics" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="CPU Diagnostics">
+    </OpmCLICommand>
+    
+    <OpmCLICommand CLICommand="vmstat 1 1 | awk -v user=0 -v kernel=0 '{for (i=0;i&lt;=NF;i++) if ($i == &quot;us&quot;) user=i; else if ($i == &quot;sy&quot;) kernel=i;} {print &quot;UserCPU &quot; $user &quot;\nKernelCPU &quot; $kernel}' | tail -2" CommandID="3456" CommandMappingID="ibmaix.CPU UserKernel" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="CPU UserKernel">
+    </OpmCLICommand>
+
+<!-- Memory Diagnostics -->
+    <OpmCLICommand CLICommand="ps -eo pid,fname,pmem,ppid,pgid | awk '{if (($4 == $5) || ($1 == $5)) {print $0}}' | sort -k 3nr | head -n" CommandID="3600" CommandMappingID="netsnmp.Memory Diagnostics" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Memory Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,pmem | grep -v 'PID' | sort +2nr | head -n" CommandID="3601" CommandMappingID="solaris.Memory Diagnostics" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="Memory Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="export UNIX95=1;ps -ef -o pid,comm,vsz,ppid,pgid | awk '{if (($4 == $5) || ($1 == $5)) {print $0}}' | sort +2nr | head -n" CommandID="3602" CommandMappingID="hpux.Memory Diagnostics" DeviceTypeName="HP-UX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Hewlett-Packard" GraphName="Memory Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,pmem | grep -v 'PID' | sort +2nr | head -n" CommandID="3603" CommandMappingID="ibmaix.Memory Diagnostics" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Memory Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,pmem,ppid,pgid | awk '{if (($4 == $5) || ($1 == $5)) {print $0}}' | sort -k 3nr | head -n" CommandID="3604" CommandMappingID="linuxfreebsd.Memory Diagnostics" DeviceTypeName="Linux FreeBSD" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Memory Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="ps -eo pid,comm,pmem,ppid,pgid | awk '{if (($4 == $5) || ($1 == $5)) {print $0}}' | sort -k 3nr | head -n" CommandID="3605" CommandMappingID="macos.Memory Diagnostics" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="Memory Diagnostics">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="vmstat -v | grep -E 'computational|numclient' | awk '{ if($2==&quot;numclient&quot;) print &quot;NonCompMemory &quot; $1; else print &quot;CompMemory &quot; $1}'" CommandID="3457" CommandMappingID="ibmaix.Memory CompMem" DeviceTypeName="IBM AIX" ParseAllLines="false" SupportMultipleEntity="false" Vendor="IBM" GraphName="Memory CompMem">
+    </OpmCLICommand>
+
+<!-- OpManager Diagnostics Commands Ends -->
+
+<!-- Script File Hash Commands Starts-->
+    <OpmCLICommand CLICommand="sha256sum ${FileName} | awk '{print $1}'" CommandID="3701" CommandMappingID="netsnmp.File Hash" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="File Hash">
+    </OpmCLICommand>
+    <OpmCLICommand CLICommand="shasum -a 256 ${FileName} | awk '{print $1}'" CommandID="3702" CommandMappingID="macos.File Hash" DeviceTypeName="Mac OS" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Apple" GraphName="File Hash">
+    </OpmCLICommand>
+    <OpmCLICommand CLICommand="digest -a sha256 ${FileName} | awk '{print $1}'" CommandID="3703" CommandMappingID="solaris.File Hash" DeviceTypeName="Solaris" ParseAllLines="false" SupportMultipleEntity="false" Vendor="Sun Microsystems" GraphName="File Hash">
+    </OpmCLICommand>
+<!-- Script File Hash Commands Ends-->
+
+</OpmCLICommands>

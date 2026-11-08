@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="90000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="necActionId">
+  <InteractionSpec timeout="60000" protocol="CLI" interactionid="nec_ix2025_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- ################################# Commands for FSM7328PS ################################-->
+<!-- Backup Running -->
+
+
+<CLICommand command="svintr-config">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025_cli_config_mode" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="erase default-config">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025_cli_erase_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy running-config default-config">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025_cli_copy_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="tftp put startup-config ${UserInput:tftp_server_address}:${UserInput:file_name}">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025_cli_startup_backup_command" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="tftp put default-config ${UserInput:tftp_server_address}:${UserInput:file_name}">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025r_cli_running_backup_command" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="write memory">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025r_cli_sync_command" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="exit">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025_cli_exit_mode" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="en">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025r_cli_enable_command" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="terminal length 0">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025r_cli_paging_disable_command" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show running-config">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025r_cli_show_running_command" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show startup-config">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025r_cli_show_startup_command" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- hardware commands -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="nec_ix2025_hardware_prop_parser" promptactionid="necActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="nec_ix2025_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_nec_ix2025" messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025_hardware_prop_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show hardware">
+	<CLIInputRecord parsercommandname="hardware_prop_nec_ix2025" messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nec_ix2025_hardware_prop_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+</CLICommandList>

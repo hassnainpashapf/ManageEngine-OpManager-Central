@@ -95,6 +95,7 @@ if (fs.existsSync(productHomePath)) {
 const clientPath = path.join(__dirname, '../client');
 app.use(express.static(clientPath, staticOptions));
 app.use('/agents', express.static(path.join(__dirname, '../client/downloads'), staticOptions));
+app.use('/downloads', express.static(path.join(__dirname, '../client/downloads'), staticOptions));
 
 // Mount API routes
 app.use(authRoute);
@@ -270,6 +271,9 @@ poller.start(4000);
 
 // Fallback route
 app.get('*', (req, res) => {
+  if (req.path.match(/\.(png|jpe?g|gif|svg|ico|css|js|woff2?|ttf|eot|map|wav|mp3|zip|tar\.gz|msi|exe)$/i)) {
+    return res.status(404).send('Resource Not Found');
+  }
   const fallbackHtml = path.join(__dirname, '../client/itom.html');
   res.sendFile(fallbackHtml);
 });

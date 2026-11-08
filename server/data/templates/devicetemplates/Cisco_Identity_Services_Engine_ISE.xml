@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Cisco Identity Services Engine ISE" osType="ADE-OS" templateName="Cisco_Identity_Services_Engine_ISE" category="General">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show inventory"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">		
+		    <OperationGroup type="backup">            			
+            	<Operation name="Running">				
+                	<Command commandecho="" commandstr="screen-length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="3" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="true" sequenceid="4" timeout="120000"/>
+            	</Operation>
+           	</OperationGroup>
+			<OperationGroup type="Others">
+			   	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            </OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cisco ISE" personalityName="CiscoISE">	
+		<Login enablecommand="enable" preloginprompt="Ctrl-Y to begin." prelogincommand="CTRL-Y" postloginprompt="Ctrl-Y to begin." postlogincommand="CTRL-Y" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Build Version" displayname="Build Version" name="BUILD_VER" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="System Architecture" displayname="System Architecture" name="SYS_ARC" sequenceid="2" size="100"/>
+			
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoISEPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_cisco_ise">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">										
+									    <REGEX NAME="OSVERSION" EXPRESSION=".*OS\s*Release:\s*(\S*).*">
+												<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL1" EXPRESSION=".*PID\s*:\s*(\S+).*SN\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*SN:\s*(\S*).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>											
+										<REGEX NAME="BUILD_VER" EXPRESSION=".*Build\s*Version:\s*(\S*).*">
+											<PARAM NAME="BUILD_VER" TOKENNO="1"/>
+										</REGEX>																									
+										<REGEX NAME="SYS_ARC" EXPRESSION=".*System\s*Architecture:\s*(\S*).*">
+											<PARAM NAME="SYS_ARC" TOKENNO="1"/>
+										</REGEX>													
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_cisco_ise" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" responseparserid="cisco_ise_hardware_prop_parser" timeout="20000"/>
+						<Command commandstr="show inventory" messagesuffix="${LF}" parsercommandname="hardware_prop_cisco_ise" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" responseparserid="cisco_ise_hardware_prop_parser" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

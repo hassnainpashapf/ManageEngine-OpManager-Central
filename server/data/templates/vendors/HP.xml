@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For HP Procurve Switches -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_switch_procurve2524" templatename="HP_Procurve_Switch" displayname="HP Procurve Switch" description="For all HP Procurve Switches with cli command prompt interaction" IS_DEPRICATED="true">
+        <NCMVendorDevice vendorid="HP" />
+        <NCMDevicePersonality personalityid="HPSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_switch_procurve2524_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_switch_procurve2524"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hpswitch_procurve_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="hpswitch_procurve_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hpswitch_procurve_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hpswitch_procurve_cli_running_config_upload" taskhandling="true"/>
+
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+ 
+                 <!-- Change Tracking thru Syslog -->
+				 
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="hpswitch_procurve_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="hpswitch_procurve_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_switch_procurve2524_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_switch_procurve2524"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hpswitch_procurve_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="hpswitch_procurve_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hpswitch_procurve_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hpswitch_procurve_cli_running_config_upload" taskhandling="true"/>
+
+                <NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+                 <!-- Change Tracking thru Syslog -->
+				 
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="hpswitch_procurve_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="hpswitch_procurve_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_switch_procurve2524"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+		
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hp_switch_cli_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_hp_switch_startup"/>
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hp_switch_cli_running_config_backup" taskhandling="true"/>
+        <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_hp_switch_running"/>
+
+                 <!-- Change Tracking thru Syslog -->
+				 
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="hpswitch_procurve_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="hpswitch_procurve_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_switch_procurve2524"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="hp_switch_cli_startup_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupStartupConfig" recordid="show_hp_switch_startup"/>
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hp_switch_cli_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_hp_switch_running"/>
+
+                 <!-- Change Tracking thru Syslog -->
+				 
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="hpswitch_procurve_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="hpswitch_procurve_disable_syslog_change_tracking" />
+
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+    </NCMDeviceTemplate>
+
+
+    <!-- For HP Procurve Menu based Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_switch_procurve4000M" templatename="HP_Procurve_MenuBased_Switch" displayname="HP Procurve Menu Based Switch" description="For all HP Procurve menu based switches">
+        <NCMVendorDevice vendorid="HP"/>
+        <NCMDevicePersonality personalityid="HPSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_switch_procurve4000M_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_switch_procurve4000M" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hpswitch_procurve_cli_running_config_backup_4000M" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hpswitch_procurve_4000m_cli_running_config_upload" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_switch_procurve4000M_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_switch_procurve4000M" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hpswitch_procurve_cli_running_config_backup_4000M" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hpswitch_procurve_4000m_cli_running_config_upload" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+    <!-- For HP Procurve AccessPoint -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_ap_procurve_420" templatename="HP_Procurve_AccessPoint" displayname="HP Procurve AccessPoint" description="For all HP Procurve AccessPoints">
+        <NCMVendorDevice vendorid="HP"/>
+        <NCMDevicePersonality personalityid="HPAccessPoint"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_ap_procurve_420_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_ap_procurve_420" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hpaccesspoint_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hpaccesspoint_cli_running_config_upload"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_ap_procurve_420_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_ap_procurve_420" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hpaccesspoint_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="hpaccesspoint_cli_running_config_upload"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+<!-- For HP P series Switches -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_p_series_switch" templatename="HP_P_Series_Switch" displayname="HP ProLiant Switch" description="For all HP P Series menu based switches">
+        <NCMVendorDevice vendorid="HP"/>
+        <NCMDevicePersonality personalityid="HPPSeriesSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_p_series_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_p_series_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hpswitch_p_series_cli_running_config_backup" />
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_p_series_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_p_series_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hpswitch_p_series_cli_running_config_backup" />
+           
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+<!-- For HP v1910 series Switches -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_ethernet_switch" templatename="HP_Ethernet_Switch" displayname="HP 1910 Series Switch" description="For all HP version 1910 Switches">
+        <NCMVendorDevice vendorid="HP"/>
+        <NCMDevicePersonality personalityid="HPEthernetSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_ethernet_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_ethernet_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hp_ethernet_switch_cli_running_config_backup" />
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_ethernet_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_ethernet_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="hp_ethernet_switch_cli_running_config_backup" />
+           
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_5500_switch" templatename="HP_5500_Switch" displayname="HP 5500 Series Switch" ostype="NA" description="For all HP 10400, 5900 and 5500 Series Switches">
+        <NCMVendorDevice vendorid="HP"/>
+        <NCMDevicePersonality personalityid="HP5500Switch"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_5500_switch_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_5500_switch"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3com_5500_switch_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="3com_5500_switch_cli_current_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_5500_switch_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:hp_5500_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3com_5500_switch_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="3com_5500_switch_cli_current_config_rec"/>
+			 
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+	
+</DeviceConfiguration>

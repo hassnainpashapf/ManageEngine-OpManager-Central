@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="Cristie Data Products T650" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX1000" graphName="F5CPUTemperature"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX1000" graphName="F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX1000" graphName="F5MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX1000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX1500" graphName="F5CPUTemperature"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX1500" graphName="F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX1500" graphName="F5MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX1500" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX2000" graphName="F5CPUTemperature"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX2000" graphName="F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX2000" graphName="F5MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX2000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX2500" graphName="F5CPUTemperature"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX2500" graphName="F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX2500" graphName="F5MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX2500" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX4000" graphName="F5CPUTemperature"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX4000" graphName="F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX4000" graphName="F5MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX4000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX500" graphName="F5CPUTemperature"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX500" graphName="F5CPUUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX500" graphName="F5MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="F5 Networks ARX500" graphName="SysUpTime"/>
+    <!--  Rev II -->
+    <DevicePackageToGraph deviceType="Hitachi VSP G SERIES (VSP G130 GF350 GF370 GF700 GF900)" graphName="HitachiThunder_ReadCommandNumber"/>
+    <DevicePackageToGraph deviceType="Hitachi VSP G SERIES (VSP G130 GF350 GF370 GF700 GF900)" graphName="HitachiThunder_ReadHitNumber"/>
+    <DevicePackageToGraph deviceType="Hitachi VSP G SERIES (VSP G130 GF350 GF370 GF700 GF900)" graphName="HitachiThunder_WriteCommandNumber"/>
+
+</GRAPHDETAIL>

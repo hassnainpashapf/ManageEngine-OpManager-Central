@@ -1,0 +1,1174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+<!-- Wireless-->
+<DevicePackageToGraph deviceType="Huawei ac6605" graphName="hwEntityMemoryUtilization|Huawei-AR1220-CPUUtilization|hwEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FAP 431F" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Aruba CP-HW-5K" graphName="arubaCPUCDCPUUtilization|arubaCPUCDMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Meraki MR56" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Teltonika Wireless Device" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Aruba AP 505" graphName="SysUpTime"/>
+<!-- Switch-->
+<DevicePackageToGraph deviceType="Redline switched device DMR" graphName="rdlBwiNoiseFloorLevel1|rdlBwiNoiseFloorLevel2|rdlBwiCurrFrequency|rdlBwiRegisteredStations|rdlBwiRadioTemperature|rdlBwiActiveRFLinks|rdlBwiRegisteredConnections|rdlBwiTxPowerMean|rdlBwiSmartAntennaBeamStatus|SysUpTime|rdlBwiCurrTxPower"/>
+<DevicePackageToGraph deviceType="BUFFALO BS GS 2016P Series" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiSwitch 124F" graphName="fsSys_CPUUtilization|fsMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Allied Telesis CentreCOM FS917M" graphName="atSysMemoryUtilization|atCPUUtilizationAvgLast5Minutes|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S6720-32C-PWH-SI" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720S-28P-LI-AC" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="D-Link DGS-3100-24" graphName="dlinkrlStatisticsPortTx|dlinkrlStatisticsPortRx|dlinkrlStatisticsPortUtilization|dlinkrlSBCPUUtilization5Min|dlinrlSBCPUUtilization1min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiSwitch 424E" graphName="fsSys_CPUUtilization|fsMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5700-52P-PWR-LI-AC" graphName="Huawei-S3700-CPUUtilization|Huawei-S3700-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst 2960L 48PQ LL" graphName="CiscoMemoryUtilization|CiscoCPUUtilization5minavg|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet Fortiswitch 448D-FPOE" graphName="fsSys_CPUUtilization|fnfsDiskUtilization|fsMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell EMC MX5108N ON" graphName="DellChassisMemoryUtilization|DellChassisFlashUtil|DellChassis5MinCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C1000 Switch Stack" graphName="CiscoMemoryUtilization|CiscoCPUUtilization5minavg|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Networks Summit X440 Series" graphName="extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|extremeNetSysCPUUtilization|SysUpTime|Extreme Temperature"/>
+<DevicePackageToGraph deviceType="HP Aruba 6200F Series" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S6720 30C EI 24S AC" graphName="Huawei-S3700-CPUUtilization|SysUpTime|Huawei-S3700-MemoryUtilization"/>
+<DevicePackageToGraph deviceType="ALAXALA AX2130" graphName="ax2130sMemoryUtilization|ax2130sPowerSupplyStatus|ax2130sFanStatus|ax2130Temperature|SysUpTime|ax2130sLast1MinCPUUtilization"/>
+<DevicePackageToGraph deviceType="Dell Networking X1018" graphName="DellNX.rlCPUUtilization5Min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell EMC S5248F-ON" graphName="DellChassisMemoryUtilization|DellChassisFlashUtil|DellChassis5MinCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG250 26" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Networks Summit X440-G2 Series" graphName="extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|extremeNetSysCPUUtilization|SysUpTime|Extreme Temperature"/>
+<DevicePackageToGraph deviceType="Cisco IE 1000 Series" graphName="cpm5minTotal_CPUUtilization|CiscoMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Networks Summit X430-48T" graphName="extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|extremeNetSysCPUUtilization|SysUpTime|Extreme Temperature"/>
+<DevicePackageToGraph deviceType="NEC QX-S4148GT-4G" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720 12TP PWR LI AC" graphName="Huawei-S3700-CPUUtilization|SysUpTime|Huawei-S3700-MemoryUtilization|HuaweiEntityTemperature"/>
+<DevicePackageToGraph deviceType="Dell EMC S3124" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SX550X-24FT" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Arista DCS-7508" graphName="Win-CPUUtilization|Win-MemoryUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 3132Q" graphName="cisco-cpmCPUMemoryUtilization|CiscoNexusCPUUtilization|cefcFRUCurrent|CiscoNexusMemoryUtilization|cefcFRUPowerOperStatus|cpmCPUMemoryUsed"/>
+<DevicePackageToGraph deviceType="Juniper SRX 4100" graphName="JuniperTemperature|JuniperMemoryutilization|SysUpTime|jnxOperatingCPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 31108TCV" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720 28P PWR LI AC" graphName="Huawei-S3700-CPUUtilization|SysUpTime|Huawei-S3700-MemoryUtilization|HuaweiEntityTemperature"/>
+<DevicePackageToGraph deviceType="Mellanox SN2100" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell EMC N2248X-ON" graphName="DNOS.PowerSupplyStatus|DNOS.MemoryUtilization|DNOS.CPUUtilization5Min|SysUpTime|DNOS.FanStatus"/>
+<DevicePackageToGraph deviceType="Cisco ONS 15454 M6" graphName="ciscocerentEnvMonVoltage|ciscoCerentEnvMonTemperature"/>
+<DevicePackageToGraph deviceType="Juniper EX4300-48MP" graphName="JuniperTemperature|JuniperMemoryutilization|SysUpTime|jnxOperatingCPUUtilization"/>
+<DevicePackageToGraph deviceType="Huawei S5720 28X PWR SI AC" graphName="SysUpTime|hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Huawei S5720 28X PWR LI AC" graphName="SysUpTime|hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Fiberstore FS S3260 8T2FP" graphName="fsnmsCPUUtilizationLast5Min|fsnmsMemoryPoolUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5730 60C PWH HI" graphName="Huawei-S3700-CPUUtilization|SysUpTime|Huawei-S3700-MemoryUtilization|HuaweiEntityTemperature"/>
+<DevicePackageToGraph deviceType="Juniper EX2300 48T" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+<DevicePackageToGraph deviceType="Arista DCS-7260CX3-64" graphName="Win-CPUUtilization|Win-MemoryUtilization|Number of Network Interfaces|Win-UsedDiskSpaceInMB|Win-FreeDiskSpaceInGB|Win-UsedDiskSpaceInGB|AristaMemoryUsage|Win-FreeDiskSpaceInMB|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell EMC S5224F-ON" graphName="DellChassisMemoryUtilization|DellChassisFlashUtil|DellChassis5MinCPUUtilization|Lin-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 3548-XL" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper EX2300 24T" graphName="JuniperTemperature|JuniperMemoryutilization|SysUpTime|jnxOperatingCPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco IE-4010-16S12P" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper EX2300 48P" graphName="JuniperMemoryutilization|jnxOperatingCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper SRX 4600" graphName="JuniperTemperature|JuniperMemoryutilization|SysUpTime|jnxOperatingCPUUtilization"/>
+<DevicePackageToGraph deviceType="Gigamon GVS-HC Series" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5735 S24P4X" graphName="SysUpTime|hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Allied Telesis CentreCOM FS926M PS" graphName="atSysMemoryUtilization|atCPUUtilizationAvgLast5Minutes|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper EX4650 48Y-8C" graphName="JuniperTemperature|JuniperMemoryutilization|SysUpTime|jnxOperatingCPUUtilization"/>
+<DevicePackageToGraph deviceType="Fortinet Fortiswitch 248E-FPOE" graphName="fsSys_CPUUtilization|fnfsDiskUtilization|fsMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HPE OfficeConnect 1820 48G PoE J9984A" graphName="ProCurveCPUUtilization|ProCurveMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="NEC QX-S4124GT-4G" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 93360YC FX2" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper SRX 4200" graphName="JuniperTemperature|JuniperMemoryutilization|SysUpTime|jnxOperatingCPUUtilization"/>
+<DevicePackageToGraph deviceType="Arista DCS-7010T-48" graphName="Win-CPUUtilization|Win-MemoryUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell EMC N1124P ON" graphName="DNOS.PowerSupplyStatus|DNOS.MemoryUtilization|DNOS.CPUUtilization5Min|DNOS.FanStatus|SysUpTime|Dell_TemperatureStatus"/>
+<DevicePackageToGraph deviceType="Cisco IE-4010-4S24P" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE6820 48S6CQ" graphName="Huawei-S3700-CPUUtilization|Huawei-S3700-MemoryUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OAW-4450" graphName="healthDeviceRxLatest|MemoryUtilizationUsedPercent|healthDeviceTxLatest|CPUUtilizationPercent"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 92348GC-X" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization"/>
+<DevicePackageToGraph deviceType="Arista DCS-7280CR3-32P4" graphName="Win-CPUUtilization|Win-MemoryUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX7250-48-HPOE" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|snChasActualTemperature|SysUpTime|FoundryPowerSupply"/>
+<DevicePackageToGraph deviceType="HP Aruba 2930F 48G PoE JL558A" graphName="ProCurveMemoryUtilization|ProCurveCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell EMC S5148F-ON" graphName="Lin-MemoryUtilization|SangforUCD5MinAgvCPUUtilization"/>
+<DevicePackageToGraph deviceType="Dell EMC S4148T-ON" graphName="Lin-MemoryUtilization|SangforUCD5MinAgvCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Network Enterasys S-Series S3" graphName="etsysResourceCPUUtilization1min|etsysResourceStorageAvailable|etsysEntityTempSensorState|etsysResourceStorageUtilization|etsysResourceCPUUtilization5min|etsysEntitySfpSensorState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS752TPv2" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco IE 2000 Series" graphName="cpm5minTotal_CPUUtilization|CiscoMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Allied Telesis CentreCOM GS908M" graphName="totalBuffers|CPUUtilizationMaxLast5Minutes|CPUUtilizationAvg|CPUUtilizationMax|freeMemory"/>
+<DevicePackageToGraph deviceType="Arista DCS-7280CR2A-60" graphName="Win-CPUUtilization|Win-MemoryUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5730 36C PWH HI" graphName="Huawei-S3700-CPUUtilization|SysUpTime|Huawei-S3700-MemoryUtilization|HuaweiEntityTemperature"/>
+<DevicePackageToGraph deviceType="HPE 5710 Series" graphName="SysUpTime|H3c.MemoryUtilization|hh3cEntityExtCPUUtilization"/>
+<DevicePackageToGraph deviceType="Extreme Network Enterasys S-Series S8" graphName="etsysResourceCPUUtilization1min|etsysResourceStorageAvailable|etsysEntityTempSensorState|etsysResourceStorageUtilization|etsysResourceCPUUtilization5min|etsysEntitySfpSensorState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720 52X PWR SI AC" graphName="SysUpTime|hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista DCS-7304" graphName="Win-CPUUtilization|Win-MemoryUtilization|Number of Network Interfaces|Win-UsedDiskSpaceInMB|Win-FreeDiskSpaceInGB|Win-UsedDiskSpaceInGB|AristaMemoryUsage|Win-FreeDiskSpaceInMB|SysUpTime"/>
+<DevicePackageToGraph deviceType="HPE 5140 EI" graphName="SysUpTime|H3c.MemoryUtilization|hh3cEntityExtCPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco SG350-10SFP" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell EMC N2248PX-ON" graphName="DNOS.PowerSupplyStatus|DNOS.MemoryUtilization|DNOS.CPUUtilization5Min|SysUpTime|DNOS.FanStatus"/>
+<DevicePackageToGraph deviceType="Arista DCS-7280TRA-48C6" graphName="Win-CPUUtilization|Win-MemoryUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fiberstore FS S3400 48T4SP" graphName="fsnmsCPUUtilizationLast5Min|fsnmsMemoryPoolUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S6720 32X SI 32S AC" graphName="Huawei-S3700-CPUUtilization|SysUpTime|Huawei-S3700-MemoryUtilization|HuaweiEntityTemperature"/>
+<DevicePackageToGraph deviceType="Alcatel OAW-4030" graphName="healthDeviceRxLatest|MemoryUtilizationUsedPercent|healthDeviceTxLatest|CPUUtilizationPercent"/>
+<DevicePackageToGraph deviceType="HP Aruba 6300M Series" graphName="Win-CPUUtilization|hp6300MMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 9336C-FX2" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization"/>
+<DevicePackageToGraph deviceType="Mellanox SN2010" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS724TV4" graphName="NGAgentSWMemoryUtilization|NGAgentSWFreeMemory|NGAgentSWCpuTotalUtilization"/>
+<DevicePackageToGraph deviceType="Juniper EX4300-24t" graphName="JuniperTemperature|JuniperMemoryutilization|jnxOperatingCPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco ONS 15454" graphName="Number of Network Interfaces|ciscocerentEnvMonVoltage|ciscoCerentEnvMonTemperature"/>
+<DevicePackageToGraph deviceType="Cisco ONS 15454 M6" graphName="ciscocerentEnvMonVoltage|ciscoCerentEnvMonTemperature"/>
+<DevicePackageToGraph deviceType="HP 1820 24G-POE" graphName="ProCurveCPUUtilization|ProCurveMemoryUtilization"/>
+<!-- Server-->
+<DevicePackageToGraph deviceType="Cisco Umbrella VA" graphName="CiscoUVASSCPUUtilization|CiscoUMVADiskUtilization|SysUpTime|CiscoUMVAMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Symantec Blue Coat SG-VA Series" graphName="Win-CPUUtilization|Win-MemoryUtilization|Lin-CPUUtilization|Lin-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HPE OpenVMS" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Oracle Sparc ILOM" graphName="ilomCtrlRedundancyStatus|ilomsunPlatAlarmState|sunPlatNumericSensorCurrent|ilomsunHwCtrlPowerMgmtActualPower|ilomsunPlatBatteryStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ISE 3315 K9" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco ISE3395" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Isevmk9" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="InfoBlox IB 1425" graphName="ibDHCPDDNSAvgLatency5|ibDhcpDeferredQueueSize|ibDhcpTotalNoOfDeclines|ibBindZoneFailure|ibServiceStatus|ibBindZoneSuccess|ibDHCPDDNSTimeoutCount5|ibDhcpTotalNoOfRequests|SysUpTime|ibBindZoneNxDomain|IBCPUUtilization|IBMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Entrust RFS" graphName="netHsmFan3Speed|netHSMVoltage3p3V|rfsModuleLoadPercentage|netHSMCurrent12V|netHSMCurrent3p3V|netHSMCurrentTemp|netHSMPSUFailure|netHSMKernelMem|nethsmFan4Speed|netHSMCurrent5V|netHSMUptime|netHsmFan2Speed|rfsmoduleSWState|rfsModuleSPTemp|rfsModulecurrentCPUTemp1|netHSMCPUUsage|netHsmFan1Speed|SysUpTime|rfsModulecurrentCPUTemp2"/>
+<DevicePackageToGraph deviceType="Broadpeak Bks350" graphName="bks350phpfpmModuleStatus|bks350postgresModuleStatus|bks350httpPackagerModuleStatus|bks350recorderModuleStatus|bks350statsModuleStatus|bks350httpServerModuleStatus|bks350livenumberLive|bks350livenumberLiveKO|bks350ProftpdModuleStatus|bks350mainModuleStatus|bks350provisionerModuleStatus|bks350multiTSModuleStatus|bks350liveStatus|bks350SystemStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Affirmed AN3000" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet Fortimail VM" graphName="fmlSysCPUUtilization|fmlMailQueueMailSize|fmlSysMemoryUtilization|fmlSysMailDiskUsage|fmlSysLogDiskUsage|fmlMailQueueMailCount|SysUpTime"/>
+
+<!-- Router-->
+<DevicePackageToGraph deviceType="Cisco 900 Series ISR" graphName="CiscoMemoryUtilization|RouterCPUUtilization|SysUpTime|CiscoTemperature"/>
+<DevicePackageToGraph deviceType="Cisco ASR 9904" graphName="cpm5minTotal_CPUUtilization|ciscocempMemoryUtilization|SysUpTime|ciscocempHCMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco ASR 9906" graphName="cpm5minTotal_CPUUtilization|ciscocempMemoryUtilization|SysUpTime|ciscocempHCMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco 9314PK9" graphName="CiscoMemoryUtilization|CiscoCPUUtilization5minavg|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C1121-4P" graphName="CiscoMemoryUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco IR1101 K9" graphName="cpm5minTotal_CPUUtilization|CiscoMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei AR6120" graphName="hwEntityTemperature|SysUpTime|hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco C921-4PLTEGB" graphName="cpm5minTotal_CPUUtilization|CiscoMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst 8200 Series" graphName="CiscoMemoryUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco NCS 55A1-36H-S" graphName="CiscoMemoryUtilization|RouterCPUUtilization|SysUpTime|CiscoTemperature"/>
+
+<!-- LoadBalancer-->
+<DevicePackageToGraph deviceType="Citrix NetScaler Virtual" graphName="citrixNSHAMode|NSDiskUtilization|NSMemoryUtilization|NSCPUUtilization|citrixNShaErrTotNodeDown|citrixNSHACurState"/>
+<DevicePackageToGraph deviceType="Radware Alteon Application 5208" graphName="slbStatMaintCurBindings64|slbStatSpMaintCurBindings|systemMemStatsInitFreeRam|radwareslbStatEnhRServerCurrSessions|radwareSysMemoryUtilization|spMemUsageStatsCurrentMemory|RadwareDiskUtilization|curApmCapUsage|sslSlbStatUniqCurSessions|slbRealServerInfoState|haSwitchInfoState|slbStatSpMainCurBindings|slbStatEnhVServerCurrSessions|spStatsCPUUtilization1Second|slbEnhStatVirtServiceRealStatus|radwarespStatsCPUUtilization4Second|sslOffReusedHandShake|radwarespStatsCPUUtilization64Second|RadwareFanStatus|CurComprsnCapUsage|MeanThroughputUsage|CurSslCapUsageCPS|rwspMemUseStatsMemUseFrom1stMargin|sslOffNewHandShake|mpCPUUtilization1Second|slbStatSpMaintCurAxBindings"/>
+<DevicePackageToGraph deviceType="F5 Networks BIG-IP i5600" graphName="f5LBCPUUtilization5MinAvg|F5-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="SEIKO Netwiser SX 3845" graphName="snMemoryUtilization|snCPUUtilization|snVirtualTotalConnections|SysUpTime"/>
+
+<!-- UPS-->
+<DevicePackageToGraph deviceType="Salicru CS121 Series UPS" graphName="CSUPSOutputVoltage|CSupsOutputCurrent|CSupsSecondsOnBattery|SCUPSBatteryStatus|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputPercentLoad|TLUPSEstimatedChargeRemaining|CSupsOutputFrequency|CSupsOutputPower1|SysUpTime|CSupsBatteryVoltage"/>
+<DevicePackageToGraph deviceType="Riello UPS" graphName="rupsEstimatedMinutesRemaining|rupsBatteryStatus|rupsOutputPercentLoad2|rupsOutputPercentLoad3|rupsOutputPercentLoad1|rupsIsCharging|rupsBatteryVoltage|UPSCharging|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsSecondsOnBattery|SysUpTime"/>
+
+<!-- WirelessAccessPoint-->
+<DevicePackageToGraph deviceType="Cambium ePMP Force 200" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="BUFFALO AirStationPro WAPM" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Cambium ePMP Force 180" graphName="SysUpTime"/>
+
+<!-- Printer-->
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C759" graphName="totalprinterscan|tonerLevelBlack|kmbizhubtotalColorCopies|totalColorPrints|totalprinterduplex|totalFaxRx|kmbizhubtotalBlackPrintsLarge|totalFaxTx|kmbizhubtotalBlackCopies|kmbizhubtotalColorPrintsLarge|TotalPrints|kmbizhubtotalBlackPrints"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C360i" graphName="totalprinterscan|tonerLevelBlack|kmbizhubtotalColorCopies|totalColorPrints|totalprinterduplex|totalFaxRx|kmbizhubtotalBlackPrintsLarge|totalFaxTx|kmbizhubtotalBlackCopies|kmbizhubtotalColorPrintsLarge|TotalPrints|kmbizhubtotalBlackPrints"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C4050i" graphName="totalprinterscan|tonerLevelBlack|kmbizhubtotalColorCopies|totalColorPrints|totalprinterduplex|totalFaxRx|kmbizhubtotalBlackPrintsLarge|totalFaxTx|kmbizhubtotalBlackCopies|kmbizhubtotalColorPrintsLarge|TotalPrints|kmbizhubtotalBlackPrints"/>
+<DevicePackageToGraph deviceType="Konica-Minolta DEVELOP Ineo Plus 258" graphName="totalprinterscan|tonerLevelBlack|kmbizhubtotalColorCopies|totalColorPrints|totalprinterduplex|totalFaxRx|kmbizhubtotalBlackPrintsLarge|totalFaxTx|kmbizhubtotalBlackCopies|kmbizhubtotalColorPrintsLarge|TotalPrints|kmbizhubtotalBlackPrints"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C250i" graphName="totalprinterscan|tonerLevelBlack|kmbizhubtotalColorCopies|totalColorPrints|totalprinterduplex|totalFaxRx|kmbizhubtotalBlackPrintsLarge|totalFaxTx|kmbizhubtotalBlackCopies|kmbizhubtotalColorPrintsLarge|TotalPrints|kmbizhubtotalBlackPrints"/>
+<DevicePackageToGraph deviceType="HP-Printer" graphName="hpprtColorPagePrtCount|hpPrintedSimplexPageCount|hpScannedDuplexPageCount|hpprtBWPagePrtCount|hpPrintedDuplexPageCount|hpScannedSimplexPageCount|prtMarkerSuppliesLevel3|prtMarkerSuppliesLevel4|prtMarkerSuppliesLevel|prtMarkerSuppliesLevel2"/>
+
+<!-- WANAccelerator-->
+<DevicePackageToGraph deviceType="Silver EdgeConnect XS" graphName="SysUpTime"/>
+
+<!-- Firewall-->
+<DevicePackageToGraph deviceType="CheckPoint 5900" graphName="checkpointSVNCPUUtilization|CheckPointMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="AudioCode Mediant 1000 ESBC" graphName="acPMModulePacketJitterVal.1|acPMSIPAttemptedCallsValIP2TEL|acPMDSPUtilVal.1|acSysStateVoIpCPUUtilization|acSysStateVoIPMemoryUtilization|acPMRobustDiscardVal.1|acSysCountChannels|acPMSIPEstablishedCallsValTEL2IP|acPMTrunkUtilizationVal|acPMNFSRequestsVal|acSysPowerSupplySeverity|acSysFanTrayFansStatus|acSysStateTemperature|acPMPSTNNumOfChannelsInServiceVal|acPMChannelsPerCoderVal.G711|acSysStateDataMemoryUtilization|acPMRtcpXrVal.1|acPMSIPAttemptedCallsValTEL2IP|acPMChannelsPerCoderVal.G729e|acPMSIPNoMatchCallsValTEL2IP|acPMChannelsPerCoderVal.AMR|acSysStateOperationalStatus|acPMOffHookChannelsVal|acPMChannelsPerCoderVal.G729a|acPMModulePacketDelayVal.1|acPMSIPEstablishedCallsValIP2TEL|acPMSIPNoAnswerCallsValIP2TEL|acPMChannelsPerCoderVal.G728|acSysStateDataCPUUtilization|acPMSIPNoMatchCallsValIP2TEL|acPMPSTNNumOfChannelsOutOfServiceVal|acPMPSTNNumOfChannelsInMaintenanceVal|acPMChannelsPerCoderVal.G723|SysUpTime|acPMSIPNoAnswerCallsValTEL2IP"/>
+<DevicePackageToGraph deviceType="AudioCode Mediant 2600 ESBC" graphName="acPMModulePacketJitterVal.1|acPMSIPAttemptedCallsValIP2TEL|acPMDSPUtilVal.1|acSysStateVoIpCPUUtilization|acSysStateVoIPMemoryUtilization|acPMRobustDiscardVal.1|acSysCountChannels|acPMSIPEstablishedCallsValTEL2IP|acPMTrunkUtilizationVal|acPMNFSRequestsVal|acSysPowerSupplySeverity|acSysFanTrayFansStatus|acSysStateTemperature|acPMPSTNNumOfChannelsInServiceVal|acPMChannelsPerCoderVal.G711|acSysStateDataMemoryUtilization|acPMRtcpXrVal.1|acPMSIPAttemptedCallsValTEL2IP|acPMChannelsPerCoderVal.G729e|acPMSIPNoMatchCallsValTEL2IP|acPMChannelsPerCoderVal.AMR|acSysStateOperationalStatus|acPMOffHookChannelsVal|acPMChannelsPerCoderVal.G729a|acPMModulePacketDelayVal.1|acPMSIPEstablishedCallsValIP2TEL|acPMSIPNoAnswerCallsValIP2TEL|acPMChannelsPerCoderVal.G728|acSysStateDataCPUUtilization|acPMSIPNoMatchCallsValIP2TEL|acPMPSTNNumOfChannelsOutOfServiceVal|acPMPSTNNumOfChannelsInMaintenanceVal|acPMChannelsPerCoderVal.G723|SysUpTime|acPMSIPNoAnswerCallsValTEL2IP"/>
+<DevicePackageToGraph deviceType="AudioCode Mediant 4000 ESBC" graphName="acPMModulePacketJitterVal.1|acPMSIPAttemptedCallsValIP2TEL|acPMDSPUtilVal.1|acSysStateVoIpCPUUtilization|acSysStateVoIPMemoryUtilization|acPMRobustDiscardVal.1|acSysCountChannels|acPMSIPEstablishedCallsValTEL2IP|acPMTrunkUtilizationVal|acPMNFSRequestsVal|acSysPowerSupplySeverity|acSysFanTrayFansStatus|acSysStateTemperature|acPMPSTNNumOfChannelsInServiceVal|acPMChannelsPerCoderVal.G711|acSysStateDataMemoryUtilization|acPMRtcpXrVal.1|acPMSIPAttemptedCallsValTEL2IP|acPMChannelsPerCoderVal.G729e|acPMSIPNoMatchCallsValTEL2IP|acPMChannelsPerCoderVal.AMR|acSysStateOperationalStatus|acPMOffHookChannelsVal|acPMChannelsPerCoderVal.G729a|acPMModulePacketDelayVal.1|acPMSIPEstablishedCallsValIP2TEL|acPMSIPNoAnswerCallsValIP2TEL|acPMChannelsPerCoderVal.G728|acSysStateDataCPUUtilization|acPMSIPNoMatchCallsValIP2TEL|acPMPSTNNumOfChannelsOutOfServiceVal|acPMPSTNNumOfChannelsInMaintenanceVal|acPMChannelsPerCoderVal.G723|SysUpTime|acPMSIPNoAnswerCallsValTEL2IP"/>
+<DevicePackageToGraph deviceType="Fortinet fgt501E" graphName="diskUsageCurrent"/>
+<DevicePackageToGraph deviceType="Fortinet faz200F" graphName="fmSys_CPUUtilization|diskUsageCurrent|fnfmMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fujitsu IPCOM VE2 220 LS" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco FPR 9300 K9" graphName="Lin-MemoryUtilization|crasNumUsers|cfwConnectionStatValueCurrentInUse|SysUpTime|SangforUCD5MinAgvCPUUtilization"/>
+<DevicePackageToGraph deviceType="CheckPoint Smart-1 225" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiwebVM" graphName="fnfwProxyConcurrentSessions|fnfwSysDiskUsage|SysUpTime|fnFwSysMemoryUtilization|fnFwSysCPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco FPR9K-SM-48" graphName="Lin-MemoryUtilization|crasNumUsers|cfwConnectionStatValueCurrentInUse|SysUpTime|SangforUCD5MinAgvCPUUtilization"/>
+<DevicePackageToGraph deviceType="Fortinet fgt200F" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Juniper SRX 1500" graphName="JuniperRECPUUtilization|JuniperREMemoryUtilization|Juniper-SPUMemoryUtilization|JuniperFPCCPUUtilization|JuniperSPUCPUUtilization|JuniperFPCMemoryUtilization|BGPPEERSTATE"/>
+<DevicePackageToGraph deviceType="Fortinet fgt100" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|diskUsageCurrent|fgsys_MemoryUtilization|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Check Point IPS Software Blade" graphName="cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point 3600" graphName="checkpointSVNCPUUtilization|cpMemActiveRealMemoryUtilization|fwNumConn|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgt401E" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|diskUsageCurrent|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt400E" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|diskUsageCurrent|fgsys_MemoryUtilization|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Huawei USG6000E Series" graphName="SysUpTime|hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature"/>
+<DevicePackageToGraph deviceType="Fortinet SandBox VM" graphName="fsaDiskUtilization|fsaSysMemoryUtilization|SysUpTime|fsaSysCPUUtilization"/>
+<DevicePackageToGraph deviceType="Sophos XGS Series" graphName="SFOSCPUUtilization|SFOSImapHits|SFOSPop3Hits|SFOSIPSecVpnActiveTunnel|SysUpTime|SFOSDiskPercentUsage|SFOSLiveUsersCount|SFOSMemoryUtilization|SFOSSmtpHits"/>
+<DevicePackageToGraph deviceType="Fortinet fgt40F" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Symantec Blue Coat SSLV2800" graphName="Win-CPUUtilization|Win-MemoryUtilization|Lin-CPUUtilization|Lin-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="CheckPoint 6800" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Fortinet fgt81E" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|diskUsageCurrent|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt301E" graphName="diskUsageCurrent"/>
+<!-- IoT-->
+<DevicePackageToGraph deviceType="AKCP SensorProb2" graphName="akcpsensorProbeTempStatus|akcpsensorProbeSwitchStatus|akcpsensorProbeSwitchOnline|akcpspStatus|akcpsensorProbeTempOnline|akcpsensorProbeHumidityStatus|SysUpTime|akcpsensorProbeHumidityOnline|AKCPSensorHumidity|AKCPSensorTemperature"/>
+<DevicePackageToGraph deviceType="ServersCheck Temperature Sensor Gateway" graphName="serverChecksensor2Value|serverChecksensor1Value|SysUpTime"/>
+<DevicePackageToGraph deviceType="AVTECH RoomAlert 12E" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="AVTECH RA 32E" graphName="SysUpTime|avtecREInternalTemperature|avtecREInternalHumidity|avtecREIntPowerSupplyStatus"/>
+
+<!-- Topo 3596 -->
+<!-- Wireless-->
+<DevicePackageToGraph deviceType="Mimosa B24 Bridge Antenna" graphName="SysUpTime|MimosaRFChainSNR|MimosaRFChainNoiseLevel|MimosaRFChainRxPower|MimosaWANStatus|MimosaRFChainTxPower|MimosaTemperature"/>
+<!-- WirelessAccessPoint-->
+<DevicePackageToGraph deviceType="Aruba AP 535" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Aruba AP 515" graphName="SysUpTime"/>
+<!-- Switch-->
+<DevicePackageToGraph deviceType="Allied Telesis CentreCOM GS916M V2" graphName="atSysMemoryUtilization|atCPUUtilizationAvgLast5Minutes|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba CX 6100 Series" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hitachi Apresia XGMC-2016" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Lenovo RackSwitch G8272" graphName="SysUpTime|Win-CPUUtilization|Win-MemoryUtilization|LenovEnvPowerSupplyStatus|LenovEnvFanStatus|LenovEnvTempSensorStatus|LenovEnvSensorTemperatureCelcius"/>
+<DevicePackageToGraph deviceType="Lenovo Rackswitch G8296" graphName="SysUpTime|Win-CPUUtilization|Win-MemoryUtilization|LenovEnvPowerSupplyStatus|LenovEnvFanStatus|LenovEnvTempSensorStatus|LenovEnvSensorTemperatureCelcius"/>
+<DevicePackageToGraph deviceType="Lenovo Rackswitch G8332" graphName="SysUpTime|Win-CPUUtilization|Win-MemoryUtilization|LenovEnvPowerSupplyStatus|LenovEnvFanStatus|LenovEnvTempSensorStatus|LenovEnvSensorTemperatureCelcius"/>
+<!-- Router-->
+<DevicePackageToGraph deviceType="Ubiquiti EdgeRouter" graphName="SangforUCD5MinAgvCPUUtilization|Lin-MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst 8300 Series" graphName="RouterLarBuffHits|RouterBigBuffHits|RouterMedBuffMisses|BufferFailures|RouterHugeBuffHits|RouterCPUUtilization|RouterBigBuffMisses|RouterLarBuffMisses|CiscoTemperature|RouterHugeBuffMisses|RouterSmallBuffMisses|RouterMedBuffHits|CiscoMemoryUtilization|RouterBufferFailures"/>
+<DevicePackageToGraph deviceType="Cisco 4461 ISR" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization|SysUpTime"/>
+<!-- LoadBalancer-->
+<DevicePackageToGraph deviceType="Sangfor NAC6100" graphName="Lin-MemoryUtilization|SangforUCD5MinAgvCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="F5 BIG-IP VIRTUAL EDITION" graphName="F5SysGTMMMemoryUtilization|F5SysGSwapMemoryUsage|F5SysGOthersMemoryUtilization"/>
+<!-- UPS-->
+<DevicePackageToGraph deviceType="UPS Solution" graphName="jemaUpsBatteryVoltage|JemaUpsBatteryTemperature|jemaUpsBatteryCurrent|jemaUpsOutputCurrent|jemaUpsOutputSource|jemaUpsBatteryStatus|jemaUpsTestResultsSummary|jemaUpsOutputVoltage|jemaUpsBatteryLastReplaceDate|jemaUpsBatteryReplaceIndicator|jemaUpsEstimatedMinutesRemaining|SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|upsEstimatedMinutesRemaining|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Allied Telesis AT TQ5403" graphName="SysUpTime"/>
+<!-- Printer-->
+<DevicePackageToGraph deviceType="Xerox Phaser 6022" graphName="SysUpTime"/>
+<!-- WANAccelerator-->
+<DevicePackageToGraph deviceType="VMware VeloCloud Edge Series" graphName="VMWarevceCpuUtilPct5min|SysUpTime"/>
+<!-- Firewall-->
+<DevicePackageToGraph deviceType="Fortinet FortiSandbox 1000D" graphName="fsaDiskUtilization|fsaSysMemoryUtilization|SysUpTime|fsaSysCPUUtilization"/>
+<DevicePackageToGraph deviceType="Fortinet fg61F" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Ribbon G9 Media Gateway" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-440" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panSessionActiveICMP|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy|HRStorageRAMUtilization"/>
+<DevicePackageToGraph deviceType="Fortinet fgt3601E" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWeb 1000E" graphName="fnfwProxyConcurrentSessions|fnfwSysDiskUsage|SysUpTime|fnFwSysMemoryUtilization|fnFwSysCPUUtilization"/>
+<DevicePackageToGraph deviceType="Check Point 6200P" graphName="checkpointSVNCPUUtilization|cpMemActiveRealMemoryUtilization|fwNumConn|SysUpTime"/>
+
+<!-- 3811 Starts -->
+<DevicePackageToGraph deviceType="ZyXEL ZyWALL 35" graphName="vpnTunnelTxPktSize|sysSessionNum|zyxelsysMemoryUtilization|vpnTunnelRxPktSize|vpnBandlwidth|CPUUtilization"/>
+<!-- Firewall-->
+<DevicePackageToGraph deviceType="Cisco SA540K9" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco FPR9000 S40" graphName="SangforUCD5MinAgvCPUUtilization|Lin-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ASA 5506W" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco FirePower TD" graphName="SangforUCD5MinAgvCPUUtilization|Lin-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco FPR TD-V-K9" graphName="SangforUCD5MinAgvCPUUtilization|Lin-MemoryUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Fortinet fgt70D" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FWB-600D" graphName="fnFwSysMemoryUtilization|fnFwSysCPUUtilization|fnfwSysDiskUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgt201F" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiDDoS" graphName="fnfddSysMemoryUtilization|fnfddSysCPUUtilization|fnfddSysDiskUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgt51E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FWB-1000D" graphName="fnFwSysMemoryUtilization|fnFwSysCPUUtilization|fnfwSysDiskUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FAC VM Base" graphName="fnfacSysCPUUtilization|fnfacSysMemoryUtilization|fnfacSysLogDiskUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fwb400D" graphName="fnFwSysMemoryUtilization|fnFwSysCPUUtilization|fnfwSysDiskUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FGT-VM64-ALI" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt90E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fwf61E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt91E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt92D" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet faz100C" graphName="fmSys_CPUUtilization|fnfmMemoryUtilization|diskUsageCurrent|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgt2201E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt3401E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt2200E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt101F" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWeb 3000E" graphName="fnFwSysMemoryUtilization|fnFwSysCPUUtilization|fnfwSysDiskUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiGate 80F" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet 40F" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWiFi 30D" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt30D POE" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWiFi 50E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortWiFi 30E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiAnalyzer 1000F" graphName="fmSys_CPUUtilization|fnfmMemoryUtilization|diskUsageCurrent|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgt3800D" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FWF51E" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWeb 100D" graphName="fnFwSysMemoryUtilization|fnFwSysCPUUtilization|fnfwSysDiskUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgt100EF" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWeb KVM" graphName="fnFwSysMemoryUtilization|fnFwSysCPUUtilization|fnfwSysDiskUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgt3100D" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgtVM64HV" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet Fortigate 3300" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt1500DT" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt140EP" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fgt30D" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWiFi 92D" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+
+<DevicePackageToGraph deviceType="Symantec ASG S400" graphName="symantecSGCPUUtilization|symantecSGMemoryUtilization|symantecSGDiskUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Symantec ASG S200" graphName="symantecSGCPUUtilization|symantecSGMemoryUtilization|symantecSGDiskUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Symantec CAS S200" graphName="symantecSGCPUUtilization|symantecSGMemoryUtilization|symantecSGDiskUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Hillstone SG-6000-E3965" graphName="Hillstone-SG-6000-G5150-MemoryUtilization|Hillstone-SG-6000-G5150-CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hillstone SG-6000-E3960" graphName="Hillstone-SG-6000-G5150-MemoryUtilization|Hillstone-SG-6000-G5150-CPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Check Point UTM-1 270" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point TE100X" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point 6600" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point TE1000X" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point Smart-1 525" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point TE2000X" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point Smart-1 25" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point 26000" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point 6400" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point IP390" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point 44000" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point TE250X" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point Smart-5050" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point Smart-1 410" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point Smart-1 405" graphName="checkpointSVNCPUUtilization|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+
+<DevicePackageToGraph deviceType="Juniper IVE VASPE" graphName="iveMemoryUtilization|iveCPUUtilization|iveVPNTunnels|iveSSLConnections|iveTemperature|diskFullPercent|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper IVE PSA 300" graphName="iveMemoryUtilization|iveCPUUtilization|iveVPNTunnels|iveSSLConnections|iveTemperature|diskFullPercent|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="AudioCodes MediaPack MP-114" graphName="acPMModulePacketJitterVal.1|acPMSIPAttemptedCallsValIP2TEL|acPMDSPUtilVal.1|acSysStateVoIpCPUUtilization|acSysStateVoIPMemoryUtilization|acPMRobustDiscardVal.1|acSysCountChannels|acPMSIPEstablishedCallsValTEL2IP|acPMTrunkUtilizationVal|acPMNFSRequestsVal|acSysPowerSupplySeverity|acSysFanTrayFansStatus|acSysStateTemperature|acPMPSTNNumOfChannelsInServiceVal|acPMChannelsPerCoderVal.G711|acSysStateDataMemoryUtilization|acPMRtcpXrVal.1|acPMSIPAttemptedCallsValTEL2IP|acPMChannelsPerCoderVal.G729e|acPMSIPNoMatchCallsValTEL2IP|acPMChannelsPerCoderVal.AMR|acSysStateOperationalStatus|acPMOffHookChannelsVal|acPMChannelsPerCoderVal.G729a|acPMModulePacketDelayVal.1|acPMSIPEstablishedCallsValIP2TEL|acPMSIPNoAnswerCallsValIP2TEL|acPMChannelsPerCoderVal.G728|acSysStateDataCPUUtilization|acPMSIPNoMatchCallsValIP2TEL|acPMPSTNNumOfChannelsOutOfServiceVal|acPMPSTNNumOfChannelsInMaintenanceVal|acPMChannelsPerCoderVal.G723|SysUpTime|acPMSIPNoAnswerCallsValTEL2IP"/>
+<DevicePackageToGraph deviceType="AudioCodes Mediant 1000" graphName="acPMModulePacketJitterVal.1|acPMSIPAttemptedCallsValIP2TEL|acPMDSPUtilVal.1|acSysStateVoIpCPUUtilization|acSysStateVoIPMemoryUtilization|acPMRobustDiscardVal.1|acSysCountChannels|acPMSIPEstablishedCallsValTEL2IP|acPMTrunkUtilizationVal|acPMNFSRequestsVal|acSysPowerSupplySeverity|acSysFanTrayFansStatus|acSysStateTemperature|acPMPSTNNumOfChannelsInServiceVal|acPMChannelsPerCoderVal.G711|acSysStateDataMemoryUtilization|acPMRtcpXrVal.1|acPMSIPAttemptedCallsValTEL2IP|acPMChannelsPerCoderVal.G729e|acPMSIPNoMatchCallsValTEL2IP|acPMChannelsPerCoderVal.AMR|acSysStateOperationalStatus|acPMOffHookChannelsVal|acPMChannelsPerCoderVal.G729a|acPMModulePacketDelayVal.1|acPMSIPEstablishedCallsValIP2TEL|acPMSIPNoAnswerCallsValIP2TEL|acPMChannelsPerCoderVal.G728|acSysStateDataCPUUtilization|acPMSIPNoMatchCallsValIP2TEL|acPMPSTNNumOfChannelsOutOfServiceVal|acPMPSTNNumOfChannelsInMaintenanceVal|acPMChannelsPerCoderVal.G723|SysUpTime|acPMSIPNoAnswerCallsValTEL2IP"/>
+<DevicePackageToGraph deviceType="AudioCodes Mediant 1000 MSBG" graphName="acPMModulePacketJitterVal.1|acPMSIPAttemptedCallsValIP2TEL|acPMDSPUtilVal.1|acSysStateVoIpCPUUtilization|acSysStateVoIPMemoryUtilization|acPMRobustDiscardVal.1|acSysCountChannels|acPMSIPEstablishedCallsValTEL2IP|acPMTrunkUtilizationVal|acPMNFSRequestsVal|acSysPowerSupplySeverity|acSysFanTrayFansStatus|acSysStateTemperature|acPMPSTNNumOfChannelsInServiceVal|acPMChannelsPerCoderVal.G711|acSysStateDataMemoryUtilization|acPMRtcpXrVal.1|acPMSIPAttemptedCallsValTEL2IP|acPMChannelsPerCoderVal.G729e|acPMSIPNoMatchCallsValTEL2IP|acPMChannelsPerCoderVal.AMR|acSysStateOperationalStatus|acPMOffHookChannelsVal|acPMChannelsPerCoderVal.G729a|acPMModulePacketDelayVal.1|acPMSIPEstablishedCallsValIP2TEL|acPMSIPNoAnswerCallsValIP2TEL|acPMChannelsPerCoderVal.G728|acSysStateDataCPUUtilization|acPMSIPNoMatchCallsValIP2TEL|acPMPSTNNumOfChannelsOutOfServiceVal|acPMPSTNNumOfChannelsInMaintenanceVal|acPMChannelsPerCoderVal.G723|SysUpTime|acPMSIPNoAnswerCallsValTEL2IP"/>
+<DevicePackageToGraph deviceType="AudioCodes Mediant-VE-SBC" graphName="acPMModulePacketJitterVal.1|acPMSIPAttemptedCallsValIP2TEL|acPMDSPUtilVal.1|acSysStateVoIpCPUUtilization|acSysStateVoIPMemoryUtilization|acPMRobustDiscardVal.1|acSysCountChannels|acPMSIPEstablishedCallsValTEL2IP|acPMTrunkUtilizationVal|acPMNFSRequestsVal|acSysPowerSupplySeverity|acSysFanTrayFansStatus|acSysStateTemperature|acPMPSTNNumOfChannelsInServiceVal|acPMChannelsPerCoderVal.G711|acSysStateDataMemoryUtilization|acPMRtcpXrVal.1|acPMSIPAttemptedCallsValTEL2IP|acPMChannelsPerCoderVal.G729e|acPMSIPNoMatchCallsValTEL2IP|acPMChannelsPerCoderVal.AMR|acSysStateOperationalStatus|acPMOffHookChannelsVal|acPMChannelsPerCoderVal.G729a|acPMModulePacketDelayVal.1|acPMSIPEstablishedCallsValIP2TEL|acPMSIPNoAnswerCallsValIP2TEL|acPMChannelsPerCoderVal.G728|acSysStateDataCPUUtilization|acPMSIPNoMatchCallsValIP2TEL|acPMPSTNNumOfChannelsOutOfServiceVal|acPMPSTNNumOfChannelsInMaintenanceVal|acPMChannelsPerCoderVal.G723|SysUpTime|acPMSIPNoAnswerCallsValTEL2IP"/>
+<DevicePackageToGraph deviceType="AudioCodes Mediant 600" graphName="acPMModulePacketJitterVal.1|acPMSIPAttemptedCallsValIP2TEL|acPMDSPUtilVal.1|acSysStateVoIpCPUUtilization|acSysStateVoIPMemoryUtilization|acPMRobustDiscardVal.1|acSysCountChannels|acPMSIPEstablishedCallsValTEL2IP|acPMTrunkUtilizationVal|acPMNFSRequestsVal|acSysPowerSupplySeverity|acSysFanTrayFansStatus|acSysStateTemperature|acPMPSTNNumOfChannelsInServiceVal|acPMChannelsPerCoderVal.G711|acSysStateDataMemoryUtilization|acPMRtcpXrVal.1|acPMSIPAttemptedCallsValTEL2IP|acPMChannelsPerCoderVal.G729e|acPMSIPNoMatchCallsValTEL2IP|acPMChannelsPerCoderVal.AMR|acSysStateOperationalStatus|acPMOffHookChannelsVal|acPMChannelsPerCoderVal.G729a|acPMModulePacketDelayVal.1|acPMSIPEstablishedCallsValIP2TEL|acPMSIPNoAnswerCallsValIP2TEL|acPMChannelsPerCoderVal.G728|acSysStateDataCPUUtilization|acPMSIPNoMatchCallsValIP2TEL|acPMPSTNNumOfChannelsOutOfServiceVal|acPMPSTNNumOfChannelsInMaintenanceVal|acPMChannelsPerCoderVal.G723|SysUpTime|acPMSIPNoAnswerCallsValTEL2IP"/>
+
+<DevicePackageToGraph deviceType="Huawei USG6630E-AC" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei AntiDDoS8030" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+
+<!-- Router-->
+<DevicePackageToGraph deviceType="Adtran NetVanta 7100" graphName="adtrannvAOSDeviceHealth|adtran5minCPUUtilization|adtrannvAOSFileSystemUtilization|adtrannvAOSHeapMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Adtran NetVanta 1335 PoE" graphName="adtrannvAOSDeviceHealth|adtran5minCPUUtilization|adtrannvAOSFileSystemUtilization|adtrannvAOSHeapMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Adtran NetVanta 4430" graphName="adtrannvAOSDeviceHealth|adtran5minCPUUtilization|adtrannvAOSFileSystemUtilization|adtrannvAOSHeapMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Adtran NetVanta 1335" graphName="adtrannvAOSDeviceHealth|adtran5minCPUUtilization|adtrannvAOSFileSystemUtilization|adtrannvAOSHeapMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Adtran NetVanta 3430" graphName="adtrannvAOSDeviceHealth|adtran5minCPUUtilization|adtrannvAOSFileSystemUtilization|adtrannvAOSHeapMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Adtran NetVanta 2100" graphName="adtrannvAOSDeviceHealth|adtran5minCPUUtilization|adtrannvAOSFileSystemUtilization|adtrannvAOSHeapMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Adtran Atlast 550" graphName="adtrannvAOSDeviceHealth|adtran5minCPUUtilization|adtrannvAOSFileSystemUtilization|adtrannvAOSHeapMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Adtran NetVanta 1224R" graphName="adtrannvAOSDeviceHealth|adtrannvAOSFileSystemUtilization|adtrannvAOSHeapMemoryUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Patton SN4970 1E30V EUI" graphName="pattonSNCPUUtilization|pattonSNMemoryUtilization|pattonSNTemperature|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Cisco NCS-55A1-36H-SE" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ISR C1111-8PWA" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco NCS 5504" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco NCS 5501 HD" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C1111-4PLTELA" graphName="CiscoMemoryUtilization|RouterCPUUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|ciscocwceLteCurrRsrp|Ciscoc3gCurrentGsmRssi|CiscocwceLteCurrSnr|SysUpTime|ciscocwceLteCurrRsrq"/>
+<DevicePackageToGraph deviceType="Cisco IR829M-2LTE-EA-AK9" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ASR 9903" graphName="ciscocempMemoryUtilization|cpm5minTotal_CPUUtilization|ciscocempHCMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco IR809G-LTE-NA-K9" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ASR 902" graphName="ciscocempMemoryUtilization|cpm5minTotal_CPUUtilization|ciscocempHCMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ASR-920-12SZ-A" graphName="ciscocempMemoryUtilization|cpm5minTotal_CPUUtilization|ciscocempHCMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ASR-920-12SZ-D" graphName="ciscocempMemoryUtilization|cpm5minTotal_CPUUtilization|ciscocempHCMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C1111-8PLTELA" graphName="CiscoMemoryUtilization|RouterCPUUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|ciscocwceLteCurrRsrp|Ciscoc3gCurrentGsmRssi|CiscocwceLteCurrSnr|SysUpTime|ciscocwceLteCurrRsrq"/>
+<DevicePackageToGraph deviceType="Cisco C8300-1N1S-6T" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C1117-4PLTELA" graphName="CiscoMemoryUtilization|RouterCPUUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|ciscocwceLteCurrRsrp|Ciscoc3gCurrentGsmRssi|CiscocwceLteCurrSnr|SysUpTime|ciscocwceLteCurrRsrq"/>
+<DevicePackageToGraph deviceType="Cisco NCS 5002" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco IR829GW-LTE-VZ-AK9" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst C8300-1N1S-4T2X" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C1113-8P" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco NCS 540-12Z20G-SYS-A" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ISR C1161X-8P" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco NCS 55A1-24H" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco NCS 5011" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ISR C1117-4PLTEEA" graphName="CiscoMemoryUtilization|RouterCPUUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|ciscocwceLteCurrRsrp|Ciscoc3gCurrentGsmRssi|CiscocwceLteCurrSnr|SysUpTime|ciscocwceLteCurrRsrq"/>
+<DevicePackageToGraph deviceType="Cisco ISRV" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C819G-4G-NA-K9" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C899G-LTE-LA-K9" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C6816XLE" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C1121X 8P" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Brocade Brocade MLXe-16" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6450-48 Rt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FCX624S-HPOERt" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX 6610 24FR" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX645024-HPOEBaseRt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FastIronStack ICX6450R" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-48-HPOE PR" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6450-24Rt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FCX 624SRt" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-24BaseL3R" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6450-48PRt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6450-48-POE Rt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FastIronStack ICX7750Rt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FCX624SAdvRt" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FastIronStack ICX6450PR" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-48P Rt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-48-HPOERt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6450-48-HPOERt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FastIronStack ICX6610Rt" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FCX624SFRt" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-24PR" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-48-HPOE AR" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Waystream DRG100" graphName="Win-CPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Hewlett-Packard AMSR900" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Huawei AR6300" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei AR611W" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei Quidway AR 19-10" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei NE40E-M2K" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei AR169FGW-L" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei NE8000 M1A" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei AR6121E" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei AR6280" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei NE40E-X2-M16A" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei NE8000 F1A-8H20Q" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei AR161F" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei NE8000 M8" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Juniper vSRX" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper VRR" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper VMX" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="LANCOM 1722" graphName="lancom1722CPUUtilization|lancom1722MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="LANCOM 1711" graphName="lancom1711CPUUtilization|lancom1711MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="LANCOM LC1781VA-4G" graphName="lancomSysCPUUtilization|lancomSysMemoryUtilization|lancomSys1MinCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="OneAccess One200" graphName="OneAccessMemoryUtilization|OneAccessCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="OneAccess One20D" graphName="OneAccessMemoryUtilization|OneAccessCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="OneAccess One425" graphName="OneAccessMemoryUtilization|OneAccessCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="OneAccess One420" graphName="OneAccessMemoryUtilization|OneAccessCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="OneAccess One540" graphName="OneAccessMemoryUtilization|OneAccessCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="OneAccess ONE421" graphName="OneAccessMemoryUtilization|OneAccessCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Palo Alto Prisma ION 1000" graphName="hrProcessorLoad.2|HRStorageRAMUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Palo Alto Prisma ION 2000" graphName="hrProcessorLoad.2|HRStorageRAMUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Palo Alto Prisma ION 3000" graphName="hrProcessorLoad.2|HRStorageRAMUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Palo Alto Prisma ION 7000" graphName="hrProcessorLoad.2|HRStorageRAMUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Palo Alto Prisma ION 9000" graphName="hrProcessorLoad.2|HRStorageRAMUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Fortinet fgr60D" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+
+<DevicePackageToGraph deviceType="Arista Networks vEOS" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+
+<!-- Switch-->
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 9900" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6450U24X" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6865-U12X" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6850EP48X" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6850EP24X" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6860E-48" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6860E-24" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel ESS 7540" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6450C24X" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6350P24" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6900-X48C6" graphName="aosCPUUtilization1MinAvg|aosMemoryUtilization1MinAvg|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6350P10" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6900-C32" graphName="aosCPUUtilization1MinAvg|aosMemoryUtilization1MinAvg|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 625024M" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6900X72" graphName="aosCPUUtilization1MinAvg|aosMemoryUtilization1MinAvg|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6860E-P24" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6860E-P48" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6850EP48" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6850EP24" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6865-U28X" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6560-48X4" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6560-24X4" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 62508M" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6465-P28" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6860-P48" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6865-P16X" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6860-P24" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcael OmniSwitch 6350C48" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Alcatel OmniSwitch 6560-P48X4" graphName="MemoryUtilizationUsedPercent|CPUUtilizationPercent|Temperature|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Fortinet FortiSwitch 5003B" graphName="fsSys_CPUUtilization|fsMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiSwitch 108E-POE" graphName="fsSys_CPUUtilization|fsMemoryUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Cisco SF500-24" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst IE-3300-8P2S" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SM-X-ES3D-48-P" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 93180YC-FX3" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350-52" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst 2960L-16TS-LL" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350XG-2F10" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst C2975 Stack" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG220-26P" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C2960L-24TQ-LL" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 93180YC-FX3S" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG250-26P" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst C1000FE 4G-L" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 92300YC" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 31108PC-V" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 31128PQ" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 3172TQ" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C8500L-8S4X" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350-10" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco MDS 9706" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus C3132Q 40GX" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SM" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG300-52MP" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus C36180YC-R" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco MDS 9132T" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG300-28MP" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco ME 2600X" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Hewlett-Packard FF5940 48XGT 6QSFP28" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hewlett-Packard FF12908E" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP 5510 24G 4SFP Plus HI 1-Slot" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 8400 JL375A" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba S2500-24P" graphName="hpearubaWlsxMemoryUtilization|hpAruabawlsxsysXCPUUtilization|hpeArubasysXStorageUsed|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba S2500-48P" graphName="hpearubaWlsxMemoryUtilization|hpAruabawlsxsysXCPUUtilization|hpeArubasysXStorageUsed|SysUpTime"/>
+<DevicePackageToGraph deviceType="HPE FlexFabric 5940 48SFP+ 6QSFP28" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hewlett-Packard 5510-24G" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba S3500-24P" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hewlett-Packard 1820-8G" graphName="ProCurveCPUUtilization|ProCurveMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HPE FlexFabric 5940 2-slot" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP FF 5950 32Q28" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP JL070A 2530-8-PoEP" graphName="ProCurveCPUUtilization|ProCurveMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba S1500-48P" graphName="hpearubaWlsxMemoryUtilization|hpAruabawlsxsysXCPUUtilization|hpeArubasysXStorageUsed|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba S1500-24P" graphName="hpearubaWlsxMemoryUtilization|hpAruabawlsxsysXCPUUtilization|hpeArubasysXStorageUsed|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP ARUBA 2540 24G 4SFP" graphName="ProCurveCPUUtilization|ProCurveMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hewlett-Packard 5510 48G PoE 4SFP" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hewlett-Packard 3600-48-PoE+ v2 SI" graphName="hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="H3C S5130S-52S-HI" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S12500X-AF" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S6800-54QF-H3" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S6850-56HF" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S5130S-28S-PWR-HI" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S5560X-54C-PWR-EI" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S6520X-54QC-EI" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S5560X-54C-EI" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Netgear GS724T" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear M4300-8X8F" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS716Tv2" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS418TPP" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear FS726TP" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS108T" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear XS716T" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear FS726T" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear M4300-24X24F" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear S3300-52X" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear XS712T" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear FS750T" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GSM7224I" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear XS712Tv2" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS510TPP" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear S3300-28x" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS724TP" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS510TLP" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear FS728TP" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear XS708T" graphName="NGAgentSWMemoryUtilization|NGAgentSWCpuTotalUtilization|NGAgentSWFreeMemory|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="APC ATS Series" graphName="apcATSSwitchStatus|apcATSCurrentPowerSrc|apcATSSWOutputCurrent|apcATSInputVoltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC Rack ATS Switch" graphName="apcATSSwitchStatus|apcATSCurrentPowerSrc|apcATSSWOutputCurrent|apcATSInputVoltage|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Brocade ICX6450-48-HPOESw" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade NetIron CES 2048CX" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6450-24SW" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-24-HPOE" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade VDX6746" graphName="swMemCPUUtilization|brocade-SysMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade VDX6730-32" graphName="swMemCPUUtilization|brocade-SysMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade SW 3850" graphName="swMemCPUUtilization|brocade-SysMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade 6910" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-48-HPOESw" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade CER 2024F" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade SW3800" graphName="swMemCPUUtilization|brocade-SysMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade 5000" graphName="swMemCPUUtilization|brocade-SysMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade NetIron CES 2048F" graphName="snAgGblDynMemoryUtilization|snAgGblCPUUtilization1MinAvg|snChasFanOperStatus|FoundryPowerSupply|snChasActualTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX7450-48-HPOE" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FastIronStack ICX6430Sw" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-24SW" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-24FSw" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6430-48-HPOESw" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6430-24-HPOE" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6450-24-HPOE" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6450-48" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX6610-48Sw" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade FastIronStack ICX6610Sw" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Brocade ICX7750-48F" graphName="snAgGblCPUUtilization1MinAvg|snAgGblDynMemoryUtilization|snChasActualTemperature|FoundryPowerSupply|snChasFanOperStatus|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Siemens RUGGEDCOM RX1512" graphName="siemensrcDeviceStsPowerSupply2|siemensrcDeviceStsTemperature|siemensrcDeviceStsCPUUtilization|SysUpTime|simensrcDeviceStsPowerSupply1"/>
+<DevicePackageToGraph deviceType="Siemens RUGGEDCOM RX1511" graphName="siemensrcDeviceStsPowerSupply2|siemensrcDeviceStsTemperature|siemensrcDeviceStsCPUUtilization|SysUpTime|simensrcDeviceStsPowerSupply1"/>
+<DevicePackageToGraph deviceType="Siemens RUGGEDCOM RX15XX Series" graphName="siemensrcDeviceStsPowerSupply2|siemensrcDeviceStsTemperature|siemensrcDeviceStsCPUUtilization|SysUpTime|simensrcDeviceStsPowerSupply1"/>
+<DevicePackageToGraph deviceType="Siemens RUGGEDCOM RSG2100" graphName="siemensrcDeviceStsPowerSupply2|siemensrcDeviceStsTemperature|siemensrcDeviceStsCPUUtilization|SysUpTime|simensrcDeviceStsPowerSupply1"/>
+
+<DevicePackageToGraph deviceType="Huawei S5735" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5732-H24UM2CC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5735-L48T4S-A" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720-52X-PWR-LI-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5731-S24T4X" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5731-S48T4X" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720-32X-EI-DC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE6856-48T6Q-HI" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5731-S24P4X" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720-52X-SI-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5735S-L48P4S-A" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei NE40E-X2-M8A" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei NE40E-M2K-B" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S1720-28GWR-PWR-4P" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720-28X-LI-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE6881-48S6CQ" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5735-L24T4X" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S2008TP-EA" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE6855-48T6Q-HI" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE6865-48S8CQ-EI" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S12700E-4" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CX110" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720S-28P-PWR-LI-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5735-L12T4S-A" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE16808" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S6730-H24X6C" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE16804" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S6730-H48X6C" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE8850" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei Quidway S2016TP-EA" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE6856-48S6Q-HI" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720-52X-PWR-SI-ACF" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S6720-26Q-SI-24S-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S1720-52GWR-4P" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE6863-48S6CQ" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720-28P-SI-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CE6881-48T6CQ" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5700-10P-PWR-LI-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei CloudEngine 8861-4C-EI" graphName="hwCESWMemoryUtilization|hwCESWCPUUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5731-H48P4XC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S2720-52TP-EI" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Extreme X465-48T" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X440-24P" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X430-8p" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X460-G2-24x-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X440-48t" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X440G2-24t-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X690-48t-2q-4c" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Entraysys C5G124-24" graphName="etsysResourceCPUUtilization5min|etsysResourceStorageUtilization|etsysEntityTempSensorState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X460-G2-48p-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X480-24x" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant"/>
+<DevicePackageToGraph deviceType="Extreme Summit X460-G2-24t-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X870-32c" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X440G2-24p-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme X460G2-48t-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X670V-48t" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Entraysys SecureStack A2H124-24P" graphName="etsysResourceCPUUtilization5min|etsysResourceStorageUtilization|etsysEntityTempSensorState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X440G2-12p-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme VSP-7400-48Y-8C" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Entraysys SSA-T4068-0252" graphName="etsysResourceCPUUtilization5min|etsysResourceStorageUtilization|etsysEntityTempSensorState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme ExtremeSwitching X695-48Y-8C" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Entrasys G3G124x24" graphName="etsysResourceCPUUtilization5min|etsysResourceStorageUtilization|etsysEntityTempSensorState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X450G2-24p-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X620-10X" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Enterasys SecureStack C3G124-48P" graphName="etsysResourceCPUUtilization5min|etsysResourceStorageUtilization|etsysEntityTempSensorState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X440-G2-48t-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Summit X440-G2-12t-10G4" graphName="extremeNetSysCPUUtilization|extremeNetSystemPowerUsage|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="AcmePacket Net-Net OSVM SBC" graphName="acmePacketCPUUtilization|acmePacketMemoryUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="ZyXEL GS1910 Series" graphName="zyxelsysMemoryUtilization|zyxelsysCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Arista Networks 720XP-48Y6" graphName="Win-CPUUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7280SRAM-48C6" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7280QRA-C36S" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7280QR-C36M" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7308" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7280SR2-48YC6" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7280SR2-48YC6M" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7050TX-128" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks DCS-7050SX3-48YC12" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7050TX-48" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7280CR2A-30" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7050SX2-128" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7020SR-24C2" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 7280CR3K-32P4" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks 720XP-48ZC2" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Arista Networks DCS-7050CX3-32S" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime|AristaSWEOS4.22.MemoryUtilization"/>
+
+<DevicePackageToGraph deviceType="ZTE ZXR10 5960" graphName="ZTE-ZXR10-MemoryUtilization|ZTE-ZX-CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZTE ZXR10 9900" graphName="ZTE-ZXR10-MemoryUtilization|ZTE-ZX-CPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Avaya ERS 5928GTS-PWR-PLUS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 5928MTS-UPWR" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 59100GTS-PWR-PLUS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 5952GTS-PWR-PLUS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 5952GTS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 4926GTS-PWR-PLUS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 3650GTS-PWR-PLUS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 59100GTS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 4926GTS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 5928GTS-UPWR" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS -4550T-PWR-PLUS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 3626GTS-PWR-PLUS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Avaya ERS 5928GTS" graphName="avayaERSMemoryUtilization|avayaERSCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Radware Alteon 6024S" graphName="radmpCPUUtilization4Second|radwareSysMemoryUtilization|RadwareFanStatus|radwarehwPowerSupplyStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Radware Alteon 6024XL" graphName="radmpCPUUtilization4Second|radwareSysMemoryUtilization|RadwareFanStatus|radwarehwPowerSupplyStatus|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Dell Networking S6010-ON" graphName="DellChassisMemoryUtilization|DellChassis5MinCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell S-IOA" graphName="DellChassisMemoryUtilization|DellChassis5MinCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell S3048-ON" graphName="DellChassisMemoryUtilization|DellChassis5MinCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell S3124F" graphName="DellChassisMemoryUtilization|DellChassis5MinCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell PowerConnect M8024-k" graphName="DNOS.CPUUtilization5Min|DNOS.CpuUtilization1Min|DNOS.MemoryUtilization|DNOS.PowerSupplyStatus|DNOS.FanStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell PowerConnect 2824" graphName="DNOS.CPUUtilization5Min|DNOS.CpuUtilization1Min|DNOS.MemoryUtilization|DNOS.PowerSupplyStatus|DNOS.FanStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell Networking X1026" graphName="DNOS.CPUUtilization5Min|DNOS.CpuUtilization1Min|DNOS.MemoryUtilization|DNOS.PowerSupplyStatus|DNOS.FanStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell Networking X1052" graphName="DNOS.CPUUtilization5Min|DNOS.CpuUtilization1Min|DNOS.MemoryUtilization|DNOS.PowerSupplyStatus|DNOS.FanStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell S5048F" graphName="DellChassisMemoryUtilization|DellChassis5MinCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="TP-Link T1500-28PCT" graphName="tpSysMonitorCpu5Minutes|tpSysMonitorMemoryUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Hirschmann RSP Series" graphName="rhmCPUUtilization|rhmMemoryUtilization|rhmTemperrature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hirschmann MACH1000 GE" graphName="rhmCPUUtilization|rhmMemoryUtilization|rhmTemperrature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hirschmann MACH100" graphName="rhmCPUUtilization|rhmMemoryUtilization|rhmTemperrature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hirschmann MACH100 GE" graphName="rhmCPUUtilization|rhmMemoryUtilization|rhmTemperrature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hirschmann Rugged Switch" graphName="rhmCPUUtilization|rhmMemoryUtilization|rhmTemperrature|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="OneAccess Lbb130" graphName="OneAccessMemoryUtilization|OneAccessCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Raisecom ISCOM2948GF-4C" graphName="raisecomTotalCPUUtilization|raisecomMemoryUtilization|raisecomTemperature|raisecomVoltage|raisecomFanState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Raisecom SCOM2924GF-4C" graphName="raisecomTotalCPUUtilization|raisecomMemoryUtilization|raisecomTemperature|raisecomVoltage|raisecomFanState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Raisecom ISCOM RAX711-B" graphName="raisecomTotalCPUUtilization|raisecomMemoryUtilization|raisecomTemperature|raisecomVoltage|raisecomFanState|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Juniper QFX5120-48T" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper EX4300-48T" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Hirschmann MSP Series" graphName="rhmCPUUtilization|rhmMemoryUtilization|rhmTemperrature|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Allied Telesis AT-9000-28" graphName="atCPUUtilizationAvgLast5Minutes|atSysMemoryUtilization|atTemperatureThrldStatus|SysUpTime"/>
+
+<!-- Wireless-->
+<DevicePackageToGraph deviceType="Ruckus ZF7782" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus ZF7321" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T710" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus R300" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus R750" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus ZF7352" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus R730" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus R710" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus R720" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus P300" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus R700" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus ZF7731" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus ZF7782S" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T310S" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T310N" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T310C" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T310D" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus ZF7762S" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus H320" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T610" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus H500" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus H510" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus R610" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus R600" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T610S" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus ZF7762-AC" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus ZF7055" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T301N" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T301S" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T300" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+<DevicePackageToGraph deviceType="Ruckus T750" graphName="ruckusSystemMemoryUtilization|ruckusSystemCPUUtilization|ruckusRadioStatsNumSta|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Cisco C819HG-LTE-MNA-K9" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+
+<!-- Printer-->
+<DevicePackageToGraph deviceType="Epson TM-T88VI" graphName="LifetimePageCount|BlackTonerPercentage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Epson LQ-2090" graphName="LifetimePageCount|BlackTonerPercentage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Epson UB-E04" graphName="LifetimePageCount|BlackTonerPercentage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Epson TM-m30" graphName="LifetimePageCount|BlackTonerPercentage|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Konica-Minolta Sindoh N501" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C360i" graphName="tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|kmbizhubtotalColorPrinted|kmbizhubtotalBlackPrinted"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C3850" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C250i" graphName="tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|kmbizhubtotalColorPrinted|kmbizhubtotalBlackPrinted"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 3602P" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub PRO 1100" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C364e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 36" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C368" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C364" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C360" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C353" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C450i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta 250" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 284e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C454e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C300i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 423" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 654e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C654e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C558" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C308" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 308e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C308e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 4000i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 454e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 368e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 458e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 458" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C3350i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 227" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C284e" graphName="tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 3622" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 4702P" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C3300i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 4020i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 4750" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C220" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C550i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub PRO 1051" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C458" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C452" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C287" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C280" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C3351" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C3350" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C3110" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C224e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C554e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C258" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C253" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C750i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta C MF335-1" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 558e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C754e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 3301P" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub C658" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 4052" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 36C" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 363" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Aurora ADC 367" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 4422" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|SysUpTime|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 554e" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+
+<DevicePackageToGraph deviceType="Xerox VersaLink C405" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox 3330" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox WorkCentre 6515" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox AltaLink B8155" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox Versalink B7030" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox VersaLink B405" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox VersaLink C505" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox AltaLink C8035" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox WorkCentre 3345" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox AltaLink C8045" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox VersaLink C7030" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox AltaLink C8055" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox WorkCentre 3550" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox B600" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox AltaLink B8055" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox VersaLink C7020 MFP" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<DevicePackageToGraph deviceType="Xerox AltaLink C8070" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+
+<!-- IoT-->
+<DevicePackageToGraph deviceType="APC ACSC101" graphName="apcmemSensorsAlarmStatus|apcmemSensorsTemperatureCelcius|apcmemSensorsCommStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC HW_NB_NBRK0200" graphName="Number of Network Interfaces|SysUpTime|SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery"/>
+<DevicePackageToGraph deviceType="APC NetBotz5" graphName="apcATSSwitchStatus|apcATSCurrentPowerSrc|apcATSSWOutputCurrent|apcATSInputVoltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC NetBotz 570" graphName="apcmemSensorsAlarmStatus|apcmemSensorsTemperatureCelcius|apcmemSensorsCommStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC NetBotz WM 355" graphName="apcmemSensorsAlarmStatus|apcmemSensorsTemperatureCelcius|apcmemSensorsCommStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC NBRK0250" graphName="apcmemSensorsAlarmStatus|apcmemSensorsTemperatureCelcius|apcmemSensorsCommStatus"/>
+<DevicePackageToGraph deviceType="APC NetBotz Rack Access PX" graphName="apcmemSensorsAlarmStatus|apcmemSensorsTemperatureCelcius|apcmemSensorsCommStatus|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Rittal CIII CMC" graphName="rittalCIIISysStatus|SysUpTime"/>
+
+<!-- UPS -->
+<DevicePackageToGraph deviceType="Huawei UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Minuteman UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Delta UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell Rack PDU" graphName="CSUPSInputVoltage|CSupsOutputCurrent|CSUPSOutputPercentLoad|CSUPSOutputVoltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Chatsworth PDU" graphName="CSUPSInputVoltage|CSupsOutputCurrent|CSUPSOutputPercentLoad|CSUPSOutputVoltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="TrippLite UPS" graphName="TLUPSEstimatedChargeRemaining|SysUpTime"/>
+<DevicePackageToGraph deviceType="Eaton Powerware UPS" graphName="SCUPSBatteryStatus|CSupsBatteryTemperature|CSupsOutputFrequency|CSupsOutputPower1|SysUpTime"/>
+<DevicePackageToGraph deviceType="Compaq" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Compaq UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Mitsubishi UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Phoenixtec UPS" graphName="SysUpTime|SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery"/>
+<DevicePackageToGraph deviceType="Mitsubishi 9900AEGIS UPS" graphName="SysUpTime|SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSupsBatteryVoltage|CSupsSecondsOnBattery"/>
+<DevicePackageToGraph deviceType="ADICOM UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="AEG UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="CyberPower UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Toshiba-UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="UPSV4" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Emerson Libert Power" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Liebert 10 KVA" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="MGE UPS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Schneider Electric MGE Galaxy 5000 80 kVA" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Eaton 9SX 5000" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Powerware 9390" graphName="SCUPSBatteryStatus|CSupsBatteryTemperature|CSupsOutputFrequency|CSupsOutputPower1|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Powerware UPS" graphName="SCUPSBatteryStatus|CSupsBatteryTemperature|CSupsOutputFrequency|CSupsOutputPower1|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="TrippLite SU6000RT4UHVPM" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="NET VISION" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="LAN MASTERYS" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Arris D5" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cayman Gator" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Valere DC Power Plant" graphName="SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|CSUPSInputVoltage|CSUPSOutputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+
+<!-- WirelessAccessPoint-->
+<DevicePackageToGraph deviceType="HP Colubris MAP-625" graphName="hpColubrisCurrCPUUtilization|hpColubrisCurrMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Colubris MSM410" graphName="hpColubrisCurrCPUUtilization|hpColubrisCurrMemoryUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Aruba AP-577" graphName="aosMemoryUtilization|aos.CPUUtilization|aossysTotalUsers|SysUpTime"/>
+<DevicePackageToGraph deviceType="Aruba AP-365" graphName="aosMemoryUtilization|aos.CPUUtilization|aossysTotalUsers|SysUpTime"/>
+<DevicePackageToGraph deviceType="Aruba AP-93" graphName="aosMemoryUtilization|aos.CPUUtilization|aossysTotalUsers|SysUpTime"/>
+
+<!-- Server-->
+<DevicePackageToGraph deviceType="Infoblox VNIOS" graphName="IBMemoryUtilization|IBCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Infoblox ND-1405" graphName="IBMemoryUtilization|IBCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Infoblox 1405" graphName="IBMemoryUtilization|IBCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Infoblox IB-1415" graphName="IBMemoryUtilization|IBCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Cisco MCS7828I" graphName="ssCpuSystem|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco QvPC-DI" graphName="CiscoMemoryUtilization|CiscoFirewallCPUUtilization|cpm5minTotal_CPUUtilization|RouterCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Fortinet FortiGate FOSVM64" graphName="fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsActiveTunnels|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiManager 1000F" graphName="fmSys_CPUUtilization|fnfmMemoryUtilization|diskUsageCurrent|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiManager VM" graphName="diskUsageCurrent"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWeb-HyperV" graphName="fnFwSysMemoryUtilization|fnFwSysCPUUtilization|fnfwSysDiskUsage|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="LANCOM LC1783VAW" graphName="lancomSysCPUUtilization|lancomSysMemoryUtilization|lancomSys1MinCPUUtilization|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Huawei iBMC" graphName="hwibmcCPUStatus|hwibmcMemoryStatus|hwibmchardDiskStatus|hwibmcFanStatus|hwibmcPowerSupplyStatus|hwibmcFanSpeed|hwibmcpowerSupplyWorkMode|hwEntityFanSpeed|SysUpTime"/>
+
+<!-- LoadBalancer-->
+<DevicePackageToGraph deviceType="Fortinet FortiADC 1500D" graphName="fnADCC5MinCPUUtilization|fnadcMemoryUtilization|fnadcPowerSupplyVoltage|fnadcDiskState|fnadcFanState|fnADCCCurrHaMode|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiADC VM" graphName="fnADCC5MinCPUUtilization|fnadcMemoryUtilization|fnadcPowerSupplyVoltage|fnadcDiskState|fnadcFanState|fnADCCCurrHaMode|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiADC 300D" graphName="fnADCC5MinCPUUtilization|fnadcMemoryUtilization|fnadcPowerSupplyVoltage|fnadcDiskState|fnadcFanState|fnADCCCurrHaMode|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiADC 100F" graphName="fnADCC5MinCPUUtilization|fnadcMemoryUtilization|fnadcPowerSupplyVoltage|fnadcDiskState|fnadcFanState|fnADCCCurrHaMode|SysUpTime"/>
+
+<!-- PDU-->
+<DevicePackageToGraph deviceType="APC RPDU" graphName="APCPDUPhases|APCPDUPowerLoad|APCPDUPhaseLoad|APCPDUVoltage|APCPDUPhaseLoadstatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC MasterSwitch Rack PDU" graphName="APCPDUPhases|APCPDUPowerLoad|APCPDUPhaseLoad|APCPDUVoltage|APCPDUPhaseLoadstatus|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Eaton PDU" graphName="eatonPDUInputCurrent|eatonPDUInputVoltage|eatonPDUOutputCurrent|eatonPDUOutputVoltage|eatonPDUTemperature|eatonPDUHumidity|SysUpTime"/>
+
+<DevicePackageToGraph deviceType="Server Technology Sentry PRO2 PDU" graphName="serverTechst4LineCurrent|serverTechst4PhaseCurrent|serverTechst4InputCordFrequency|serverTechst4PhaseActivePower|serverTechst4PhaseVoltage|serverTechst4UnitStatus|SysUpTime"/>
+
+<!-- UPS-->
+<DevicePackageToGraph deviceType="APC MGE Galaxy 5500 Series" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC Smart-UPS 1500" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC MGE Galaxy 7000 Series" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC Smart-UPS VT 20 kVA" graphName="upsBasicBatteryLastReplaceDate|upsAdvOutputCurrent|upsAdvInputLineVoltage|upsAdvTestLastDiagnosticsDate|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvBatteryRunTimeRemaining|upsAdvBatteryReplaceIndicator|upsAdvInputMaxLineVoltage|upsAdvBatteryNumOfBadBattPacks|upsCommStatus|upsAdvOutputLoad|upsAdvInputMinLineVoltage|upsAdvTestDiagnosticsResults|upsAdvOutputVoltage|upsAdvBatteryCapacity|upsBasicOutputStatus|upsBasicBatteryTimeOnBattery|upsAdvInputFrequency|upsAdvOutputFrequency|upsAdvInputLineFailCause|SysUpTime"/>
+
+<!-- WANAccelerator-->
+<DevicePackageToGraph deviceType="RiverBed SF2000" graphName="riverbedSF5MinCPUUtilization|riverbedSFSystemStatus|riverbedSFSystemTemperature|riverbedSFactiveConnections|riverbedSFdsAveDiskUtilization|SysUpTime"/>
+
+<!-- 3811 Ends -->
+
+<!-- 3859 Starts-->
+<!-- Switch -->
+<DevicePackageToGraph deviceType="H3C S5130S-28S-EI" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 6000 12G R8N89A" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 6000 24G 4SFP" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba Instant On 1930 24G" graphName="ProCurveMemoryUtilization|ProCurveCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba Instant On 1930 48G 4SFP SFP+" graphName="ProCurveMemoryUtilization|ProCurveCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hewlett-Packard 7506" graphName="HPH3CEntityExtTemperature|hh3cEntityExtMemoryUtilization|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 6000 48G 4SFP" graphName="Win-CPUUtilization|Win-MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Arista CCS-720XP-24Y6" graphName="AristaSWEOS4.22.MemoryUtilization|Win-CPUUtilization|Win-UsedDiskSpaceInMB|Win-FreeDiskSpaceInGB|Win-UsedDiskSpaceInGB|AristaMemoryUsage|Win-FreeDiskSpaceInMB|SysUpTime"/>
+<DevicePackageToGraph deviceType="Arista DCS-7050SX3-48YC8" graphName="AristaSWEOS4.22.MemoryUtilization|Win-CPUUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Extreme Networks ONIE Stack" graphName="extremeNetSystemPowerUsage|ExtremeStackingPortLinkStatus|extremeNetSystemMemoryUsage|extremeNetPowerSupplyStatusPrimary|extremeNetPowerSupplyStatusredundant|extremeCurrentTemperature|extremeSWStackRole|extremeNetSysCPUUtilization|ExtremeStackSWOprStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco IE-2000U-16TC-G" graphName="cpm5minTotal_CPUUtilization|CiscoMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG550XG-8F8T" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZyXEL GS2200-8" graphName="ZyXEL2200.8.CPUUtilization|ZyXEL2200.8.MemoryUtilization|ZyXEL2200.8.Voltage|ZyXEL2200.8.Temperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZyXEL GS2200-24" graphName="ZyXEL2200.24.Temperature|ZyXEL2200.24.CPUUtilization|ZyXEL2200.24.MemoryUtilization|ZyXEL2200.24.Voltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZyXEL XS3800-28" graphName="ZyXELESSysMemoryUtilization|ZyXELHWTemperature|ZyXELESHWVoltage|ZyXELESSysCPUUtilization|ZyXELESHWFanSpeed|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZyXEL GS2210-24" graphName="ZyXELESSysMemoryUtilization|ZyXELHWTemperature|ZyXELESHWVoltage|ZyXELESSysCPUUtilization|ZyXELESHWFanSpeed|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZyXEL GS1900-8" graphName="ZyXELESSysMemoryUtilization|ZyXELHWTemperature|ZyXELESHWVoltage|ZyXELESSysCPUUtilization|ZyXELESHWFanSpeed|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell Networking N4064F" graphName="DNOS.PowerSupplyStatus|DNOS.MemoryUtilization|DNOS.CPUUtilization5Min|DNOS.FanStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell PowerConnect 5548" graphName="DNOS.CPUUtilization5Min|DNOS.CpuUtilization1Min|DNOS.MemoryUtilization|DNOS.PowerSupplyStatus|DNOS.FanStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="EDGECORE ECS4620-28F-2AC Switch Stack" graphName="EdgeCoreSwPowerStatus|EdgeCoreSWFanStatus|EdgeCoresStackSwitchRole|EdgeCoreSW1MinAvgCPUUtilization|EdgeCoreSWMemoryUtilization|EdgeCoreSWTemperature|EdgeCoreswitchOperState|EdgeCoreSWFanSpeed|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720-28TP-PWR-LI-AC" graphName="Huawei-S3700-CPUUtilization|Huawei-S3700-MemoryUtilization|HuaweiEntityTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5730S-48C-EI-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<!-- Router -->
+<DevicePackageToGraph deviceType="H3C MSR2630" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="YAMAHA RTX1220" graphName="rtyrhMemoryUtilization|rtyrhCPUUtilization5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco C1117-4P" graphName="CiscoMemoryUtilization|RouterCPUUtilization|CiscoTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="PepLink MediaFast" graphName="PepLinkCPUUtilization|PepLinkMemoryUtilization|SysUpTime"/>
+<!-- Printer-->
+<DevicePackageToGraph deviceType="Xerox VersaLink B400" graphName="SysUpTime|Pagesprinted-black|Pagesprinted-color|Pagesprinted-total"/>
+<!-- WANAccelerator-->
+<DevicePackageToGraph deviceType="Ixia NTO 5260" graphName="IxiaNTO-CPUUtilization|IxiaNTO-MemoryUtilization|SysUpTime"/>
+<!--Firewall-->
+<DevicePackageToGraph deviceType="Fortinet FortiGate 60F" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-410" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panSessionActiveICMP|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy|HRStorageRAMUtilization|SysUpTime"/>
+<!-- Default Template Enhancement -->
+<DevicePackageToGraph deviceType="Cisco Catalyst 2960C-12PC-L" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst 2960CX-8TC-L" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst 3560C 8TC" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst 45xx VSS" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 93108TC-EX" graphName="cisco-cpmCPUMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 9372TX" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 6001" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 9396PX" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco catalyst3560v224ts" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco catalyst296024PC" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 7700" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst 3560C 8PC" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 9504" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization"/>
+<DevicePackageToGraph deviceType="Sonic Firewall" graphName="sonicCurrentConnCacheEntries|SonicCPUUtilization|sonicCurrMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Sonic Pro200/300/VX Firewall" graphName="sonicCurrentConnCacheEntries|SonicCPUUtilization|sonicCurrMemoryUtilization"/>
+<!-- 3859 Ends -->
+<!-- 4014 Starts -->
+<!-- Switch -->
+<DevicePackageToGraph deviceType="Cisco IE-4000-8GS4G-E" graphName="cpm5minTotal_CPUUtilization|CiscoMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S5130S-28P-EI" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco CBS350-8T-E-2G" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst C9500-32QC" graphName="RouterLarBuffHits|RouterBigBuffHits|RouterMedBuffMisses|BufferFailures|RouterHugeBuffHits|RouterCPUUtilization|RouterBigBuffMisses|RouterLarBuffMisses|RouterHugeBuffMisses|RouterSmallBuffMisses|RouterMedBuffHits|SysUpTime|RouterBufferFailures"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst C9500-16X" graphName="RouterLarBuffHits|RouterBigBuffHits|RouterMedBuffMisses|BufferFailures|RouterHugeBuffHits|RouterCPUUtilization|RouterBigBuffMisses|RouterLarBuffMisses|RouterHugeBuffMisses|RouterSmallBuffMisses|RouterMedBuffHits|SysUpTime|RouterBufferFailures"/>
+<DevicePackageToGraph deviceType="Cisco CBS350-24T-4G" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Catalyst C9500-32C" graphName="RouterLarBuffHits|RouterBigBuffHits|RouterMedBuffMisses|BufferFailures|RouterHugeBuffHits|RouterCPUUtilization|RouterBigBuffMisses|RouterLarBuffMisses|RouterHugeBuffMisses|RouterSmallBuffMisses|RouterMedBuffHits|SysUpTime|RouterBufferFailures"/>
+<DevicePackageToGraph deviceType="Fortinet FortiSwitch 424E-Fiber" graphName="fsSys_CPUUtilization|fnfsDiskUtilization|fsMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="GCOM OLT" graphName="GBNPFOAM.CPUUtilization|GBNPFOAM.Memoryutilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Allied Telesis CentreCOM GS980MX" graphName="atSysMemoryUtilization|atCPUUtilizationAvgLast5Minutes|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS728TPv2" graphName="NGAgentSWMemoryUtilization|NGAgentSWFreeMemory|SysUpTime|NGAgentSWCpuTotalUtilization"/>
+<DevicePackageToGraph deviceType="Hitachi Apresia NP2100-24T4X" graphName="hitachiNPCPUUtilization|hitachiNPPowerStatus|hitachiNPCurrentTemperature|hitachiNPPowerUsage|hitachiNPTemperatureStatus|SysUpTime|hitachiNPFanStatus"/>
+<DevicePackageToGraph deviceType="Juniper EX9204" graphName="JuniperREMemoryUtilization|Juniper-SPUMemoryUtilization|JuniperFPCCPUUtilization|JuniperSPUCPUUtilization|jnxJsSPUCPUUtilization|jnxOperatingCPUUtilizationRE0|JuniperMemoryutilization|jnxOperatingCPUUtilizationRE1|JuniperFPCMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="SIAE AGS20" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell S3148P" graphName="DellChassisMemoryUtilization|DellChassis5MinCPUUtilization|SysUpTime"/>
+<!-- Server-->
+<DevicePackageToGraph deviceType="Genetec IP VMS" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Libraesva ESG" graphName="LibraesvaESGClusterStatus|LibraesvaESGMailInput|LibraesvaESGMailOutput|LibraesvaESGMailSent|LibraesvaESGMailReceived|Lin-MemoryUtilization|SangforUCD5MinAgvCPUUtilization|SysUpTime|LibraesvaESGMailRejected"/>
+<!-- Load Balancer -->
+<DevicePackageToGraph deviceType="F5 BIG-IP VIRTUAL EDITION" graphName="f5LBCPUUtilization5MinAvg"/>
+<DevicePackageToGraph deviceType="Citrix SD-WAN VA Series" graphName="citrixSDWANStatsVPathPacketsSent|citrixSDWANStatsVPathPacketsRec|citrixSDWANStatsRxBytes|citrixSDWANStatsTxBytes|citrixSDWANStatsWANLinkState|citrixSDWANStatsCPUUtilization|citrixSDWANStatsTxPackets|citrixSDWANStatsVPathReceiveJitterms|citrixSDWANStatsWANLinkBytesRx|citrixSDWANStatsWANLinkPacketsSent|citrixSDWANStatsWANLinkBytesTx|citrixSDWANStatsVPathBytesRec|citrixsdWANStatsApplianceHAState|citrixSDWANStatsVPathBytesSent|SysUpTime|citrixSDWANStatsMemoryUtilization|citrixsdWANStatsApplianceState|citrixSDWANStatsRxPackets|citrixSDWANStatsVPathState|citrixSDWANStatsVPathSendJitterms|citrixSDWANStatsWANLinkPacketsRx"/>
+<!-- UPS -->
+<DevicePackageToGraph deviceType="Riello UPS" graphName="rupsOutputSource|rupsPowerTemperature2|rupsPowerTemperature1|rupsSystemTemperature|rupsInputVoltage|rupsBatteryTemperature|rupsAlarmsPresent"/>
+<!-- WAN Accelerator -->
+<DevicePackageToGraph deviceType="Silver Peak EdgeConnect US" graphName="spsActiveAlarmCount|spsActiveAlarmActiveState|spsOperStatus"/>
+<!-- Firewall -->
+<DevicePackageToGraph deviceType="Check Point 7000" graphName="cpSensorTempReading|checkpointSVNCPUUtilization|fwNumConn|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Check Point Smart-1 600-M" graphName="cpSensorTempReading|checkpointSVNCPUUtilization|fwNumConn|SysUpTime|cpMemActiveRealMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Fortinet fgt1801F" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet FortiWeb OCI" graphName="fnfwSysDiskUsage|fnFwSysMemoryUtilization|fnFwSysCPUUtilization|SysUpTime"/>
+<!-- IoT -->
+<DevicePackageToGraph deviceType="Procom AMF Controller" graphName="MicroChipRunHour|MicroFuelStatus|MicroChipTotalPowerFactorM|MicroChipBatteryVoltAlarmStatus|MicroChipDGEngineRunStatus|MicroChipTotalPowerFactorG|MicroFuelAlarmStatus|MicroChipPowerFactorMR|MicroChipTotalPowerM|MicroChipTotalAppPowerM|MicroChipPowerMR|MicroChipAppPowerMR|MicroChipVolMR|MicroChipCurrentR|MicroChipBatteryVoltage"/>
+
+<!-- Topo-4112 Starts-->
+<!-- Wireless-->
+<DevicePackageToGraph deviceType="Cambium MAXrP 19R" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Cambium ePMP MP 3000" graphName="SysUpTime"/>
+<!-- Switch -->
+<DevicePackageToGraph deviceType="H3C S7503X" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C xe7305" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C xe7300" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C MSA7302" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C MSA7306" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S7502EXS" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S7503E-M" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="H3C S10506" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco 9500 Fixed Switch Stack" graphName="RouterLarBuffHits|RouterBigBuffHits|RouterMedBuffMisses|BufferFailures|RouterHugeBuffHits|RouterCPUUtilization|RouterBigBuffMisses|RouterLarBuffMisses|RouterHugeBuffMisses|RouterSmallBuffMisses|RouterMedBuffHits|SysUpTime|RouterBufferFailures"/>
+<DevicePackageToGraph deviceType="H3C S7506E-X" graphName="h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization|h3cEntityExtTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350X-48" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350X-24MP" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG550XG-24T" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 9332C" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Nexus 93108TC-FX" graphName="cisco-cpmCPUMemoryUtilization|cpm5minTotal_CPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper EX2300-C-12T" graphName="JuniperREMemoryUtilization|Juniper-SPUMemoryUtilization|JuniperFPCCPUUtilization|JuniperSPUCPUUtilization|jnxJsSPUCPUUtilization|jnxOperatingCPUUtilizationRE0|JuniperMemoryutilization|jnxOperatingCPUUtilizationRE1|JuniperFPCMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell S3148" graphName="DellChassisMemoryUtilization|DellChassis5MinCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 6000 24G Class4 PoE 4SFP 370W" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 8360-24XF2C" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP 5510 48G 4SFP" graphName="hh3cEntityExtMemoryUtilization|HPH3CEntityExtTemperature|hh3cEntityExtCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 8325-48Y8C" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 8325-32C" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hewlett-Packard 10508" graphName="hh3cEntityExtMemoryUtilization|HPH3CEntityExtTemperature|hh3cEntityExtCPUUtilization"/>
+<DevicePackageToGraph deviceType="EDGECORE ECS5520 Series" graphName="EdgeCoreSW51FanSpeed|EdgeCoreSW511MinAvgCPUUtilization|EdgeCoreSW51FanStatus|EdgeCoreSW51Temperature|SysUpTime|EdgeCoreSw51PowerStatus|EdgeCoreSW51MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Netgear GS752TPS" graphName="NGAgentSWMemoryUtilization|NGAgentSWFreeMemory|SysUpTime|NGAgentSWCpuTotalUtilization"/>
+<!-- Server -->
+<DevicePackageToGraph deviceType="Cisco ISE SNS-3615-K9" graphName="ciscoSWDiskUtilization|SangforUCD5MinAgvCPUUtilization|SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Fortinet FortiProxy 400E" graphName="SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell PowerEdge CMC" graphName="drsPSUAmpsReading|drsGlobalSystemStatus|drsWattsReading|drsPSUWattsReading|drsPSUVoltsReading|drsFanCurrStatus|drsCMCCurrStatus|drsCMCProcessorTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell PowerEdge iDRAC" graphName="tempSensorReading|syshw_physicalDiskStatus|temperatureProbeStatus|processorDeviceStatus|powerSupplyCurrentInputVoltage|coolingDeviceStatus|coolingDeviceSpeed|dellRacCMOSBatteryStatus|globalSystemStatus|systemPowerState|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Identity Services Engine" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Secure Network Server 3655" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<DevicePackageToGraph deviceType="Cisco Secure Network Server 3695" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization"/>
+<!-- UPS -->
+<DevicePackageToGraph deviceType="APC Symmetra-UPS 16kVA" graphName="APCupsAdvBatteryRunTimeRemInSecs|APCupsAdvBatteryRunTimeInMins|APCupsBasicOutputStatus|upsAdvOutputCurrent|upsAdvBatteryReplaceIndicator|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvInputFrequency|upsAdvOutputLoad|upsAdvOutputVoltage|upsAdvOutputFrequency|SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|upsEstimatedMinutesRemaining|CSUPSInputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="APC Smart-UPS 5000 DSP" graphName="APCupsAdvBatteryRunTimeRemInSecs|APCupsAdvBatteryRunTimeInMins|APCupsBasicOutputStatus|upsAdvOutputCurrent|upsAdvBatteryReplaceIndicator|upsBasicBatteryStatus|upsAdvBatteryTemperature|upsAdvInputFrequency|upsAdvOutputLoad|upsAdvOutputVoltage|upsAdvOutputFrequency|SCUPSBatteryStatus|TLUPSEstimatedChargeRemaining|CSupsBatteryTemperature|upsEstimatedMinutesRemaining|CSUPSInputVoltage|CSUPSOutputPercentLoad|CSupsOutputFrequency|CSupsOutputCurrent|CSupsOutputPower1|CSupsBatteryVoltage|CSupsSecondsOnBattery|SysUpTime"/>
+<DevicePackageToGraph deviceType="Liebert UPS" graphName="CSupsOutputFrequency|CSupsOutputCurrent|CSUPSOutputVoltage|CSupsBatteryTemperature|SCUPSBatteryStatus|CSupsSecondsOnBattery|upsEstimatedMinutesRemaining|CSupsBatteryVoltage|CSupsOutputPower1|CSUPSOutputPercentLoad|CSUPSInputVoltage|UPSBatteryCurrent|TLUPSEstimatedChargeRemaining|SysUpTime"/>
+<DevicePackageToGraph deviceType="IMV Victron UPS" graphName="CSupsOutputFrequency|CSupsOutputCurrent|CSUPSOutputVoltage|CSupsBatteryTemperature|SCUPSBatteryStatus|CSupsSecondsOnBattery|upsEstimatedMinutesRemaining|CSupsBatteryVoltage|CSupsOutputPower1|CSUPSOutputPercentLoad|CSUPSInputVoltage|UPSBatteryCurrent|TLUPSEstimatedChargeRemaining|SysUpTime"/>
+<DevicePackageToGraph deviceType="CyberPower System UPS" graphName="cpsUpsBatTimeRemaining|cpsupsAdvanceOutputLoad|cpsupsAdvanceOutputCurrent|cpsupsAdvanceOutputVoltage|cpsBatteryStatus|cpsUpsBatTemperature|cpsupsAdvanceBatteryLife|cpsupsBaseOutputStatus|cpsupsAdvanceBatteryVoltage|cpsupsAdvanceOutputFrequency|cpsupsAdvanceOutputPower|cpsupsAdvanceBatteryCapacity|cpsUpsBatCurrent|cpsupsAdvanceInputLineVoltage|SysUpTime"/>
+<!-- Load Balancer -->
+<DevicePackageToGraph deviceType="Fortinet FortiADC 1000F" graphName="fnadcMemoryUtilization|fnADCC5MinCPUUtilization|fnadcFanState|fnadcDiskState|fnADCCCurrHaMode|fnadcPowerSupplyVoltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiADC 2200F" graphName="fnadcMemoryUtilization|fnADCC5MinCPUUtilization|fnadcFanState|fnadcDiskState|fnADCCCurrHaMode|fnadcPowerSupplyVoltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiADC 1200F" graphName="fnadcMemoryUtilization|fnADCC5MinCPUUtilization|fnadcFanState|fnadcDiskState|fnADCCCurrHaMode|fnadcPowerSupplyVoltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet FortiADC 2000D" graphName="fnadcMemoryUtilization|fnADCC5MinCPUUtilization|fnadcFanState|fnadcDiskState|fnADCCCurrHaMode|fnadcPowerSupplyVoltage|SysUpTime"/>
+<!-- Printer -->
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 205i" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<DevicePackageToGraph deviceType="Konica-Minolta Bizhub 206" graphName="tonerLevelBlack|tonerLevelCyan|tonerLevelMagenta|tonerLevelYellow|kmbizhubSysTotalPagePrint|totalprinterscan|kmbizhubtotalColorPrinted|kmbizhubtotalColorCopies|kmbizhubtotalBlackPrinted|kmbizhubtotalBlackCopies"/>
+<!-- WANAccelerator -->
+<DevicePackageToGraph deviceType="Silver Peak Unity EdgeConnect" graphName="spsActiveAlarmCount|spsActiveAlarmActiveState|spsOperStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Silver Peak EC-V" graphName="spsActiveAlarmCount|spsActiveAlarmActiveState|spsOperStatus|SysUpTime"/>
+<!-- Router -->
+<DevicePackageToGraph deviceType="Juniper MX10003" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+<!-- Firewall -->
+<DevicePackageToGraph deviceType="Fortinet fg60EC" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fg60EI" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Fortinet fcr3600E" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|fgsys_MemoryUtilization|SysUpTime|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Barracuda Email Security Gateway" graphName="Lin-MemoryUtilization|SangforUCD5MinAgvCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="WatchGuard M290" graphName="WatchGuardSystemCPUUtilization1Min|wgSystemCurrActiveConns|WatchGuardSystemCPUUtilization5Min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgtVM64AWS" graphName="fortinetCurrentCPUUtilization|fgsys_MemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Check Point 6900" graphName="cpSensorTempReading|checkpointSVNCPUUtilization|fwNumConn|CheckPointMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="WatchGuard T40" graphName="WatchGuardSystemCPUUtilization1Min|wgSystemCurrActiveConns|WatchGuardSystemCPUUtilization5Min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-3260" graphName="paloaltopanVsysActiveUdpCps|paloaltopanVsysActiveOtherIpCps|panSysHAState|panSessionUtilization|paloaltopanVsysActiveTcpCps|panGPGWUtilizationPct|hrProcessorLoad.2|panVsysActiveSessions|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|SysUpTime|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Sangfor AF" graphName="Lin-MemoryUtilization|SangforUCD5MinAgvCPUUtilization|SysUpTime"/>
+<!-- IoT -->
+<DevicePackageToGraph deviceType="Vertiv Geist WATCHDOG 15-P NPS" graphName="VerticBBInternalHumidity|VerticBBInternalTempReading|VerticBBairFlowSensorTemp|VerticBBdewPointSensorTemp|VerticBBInternalDewPoint|VerticBBRTTempSensorTemp|VerticBBairFlowSensorHumidity|VerticBBdewPointSensorHumidity|SysUpTime"/>
+<DevicePackageToGraph deviceType="Hikvision AIoT" graphName="HIKMemoryUtilization|HIKSysOnlineStatus|HIKDiskstatus|SysUpTime"/>
+
+<!-- Topo_4200-->
+<!-- Router -->
+<DevicePackageToGraph deviceType="Cisco NCS-55A2-MOD-S" graphName="CiscoMemoryUtilization|RouterCPUUtilization|SysUpTime|CiscoTemperature"/>
+<DevicePackageToGraph deviceType="Fujitsu SI-R G210" graphName="FujitsuNOSSysPowerConsumption|SysUpTime"/>
+
+<!-- Firewall -->
+<DevicePackageToGraph deviceType="Fortinet fgt50E" graphName="SysUpTime|fgSysSesCount|fgVpnSslStatsActiveTunnels|httpSessionsCount|fgVpnSslStatsLoginUsers|fortinetCurrentCPUUtilization|fgsys_MemoryUtilization"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-3410" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-1410" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-1420" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-220-ZTP" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-220R-ZTP" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-3220-ZTP" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-3250-ZTP" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-3260-ZTP" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-3420" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-3430" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-3440" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-415" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-445" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-450" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-460" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-5410" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-5420" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-5430" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-5440" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-5450" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-820-ZTP" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto PA-850-ZTP" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto WF-500-B" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Palo Alto WF-600" graphName="panSysHAState|panSessionUtilization|panVsysActiveSessions|hrProcessorLoad.2|panGPGWUtilizationPct|panmgmpCPUUtilization|panSessionActiveICMP|panAllStorageUtilization|panSessionActiveUdp|panSessionActiveTcp|panSessionActive|panSessionActiveSslProxy"/>
+<DevicePackageToGraph deviceType="Trend Micro TippingPoint 2200T-IPS" graphName="resourceHPCPUUtilization|resourceHPMemoryUtilization|TrendMicroTP.Temperature|TrendMicroTP.TemperatureStatus|TrendMicroTP.FanStatus|TrendMicroTP.Voltage|TrendMicroTP.VoltageStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Trend Micro TippingPoint 8200TX-IPS" graphName="resourceHPCPUUtilization|resourceHPMemoryUtilization|TrendMicroTP.Temperature|TrendMicroTP.TemperatureStatus|TrendMicroTP.FanStatus|TrendMicroTP.Voltage|TrendMicroTP.VoltageStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Trend Micro TippingPoint 8400TX-IPS" graphName="resourceHPCPUUtilization|resourceHPMemoryUtilization|TrendMicroTP.Temperature|TrendMicroTP.TemperatureStatus|TrendMicroTP.FanStatus|TrendMicroTP.Voltage|TrendMicroTP.VoltageStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Trend Micro TippingPoint SMS H3" graphName="resourceHPCPUUtilization|resourceHPMemoryUtilization|TrendMicroTP.Temperature|TrendMicroTP.TemperatureStatus|TrendMicroTP.FanStatus|TrendMicroTP.Voltage|TrendMicroTP.VoltageStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Trend Micro TippingPoint T200" graphName="resourceHPCPUUtilization|resourceHPMemoryUtilization|TrendMicroTP.Temperature|TrendMicroTP.TemperatureStatus|TrendMicroTP.FanStatus|TrendMicroTP.Voltage|TrendMicroTP.VoltageStatus|SysUpTime"/>
+<!-- Switch -->
+<DevicePackageToGraph deviceType="MiKroTik Switch" graphName="Mikrotik.UsedMemoryinMB|Mikrotik.FreeHDDSpaceinMB|MiKroTik.CPU.frequency|MiKroTik.Voltage|MiKroTik.FreeMemoryinMB|MiKroTik.CPUtemperature|MiKroTik.Systemtemperature|MiKroTik.UsedHDDSpaceinMB|TxRate|SysUpTime|MiKroTik.MemoryUtilization|MiKroTik.HDDSpace.Utilization|Win-CPUUtilization"/>
+<DevicePackageToGraph deviceType="Fortinet FortiSwitch 448E-FPOE" NEWDT="true" graphName="fsSys_CPUUtilization|fsMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco CBS250-48P-4X" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350X-24P" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell Networking N4064" graphName="DNOS.PowerSupplyStatus|DNOS.MemoryUtilization|DNOS.CPUUtilization5Min|DNOS.FanStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco CBS350 Series" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco CBS350-24T-4X" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco Cisco ESW2 Series" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SF220 Series" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SF200-24FP" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SF550X Series" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG200 Series" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG220 Series" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG300-10SFP" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG300-28SFP" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350XG-24F" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350XG-24T" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG350XG-48T" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG550XG-24F" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SG550XG-48T" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="Cisco SX350X-08" graphName="rlCPUUtilization_Last5min|SysUpTime"/>
+<DevicePackageToGraph deviceType="D-Link DGS 1510 52" graphName="SysUpTime|CPUUtilization_5mins|CPUUtilization_1min|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+<DevicePackageToGraph deviceType="D-Link DGS-1210 Series" graphName="SysUpTime|CPUUtilization_5mins|CPUUtilization_1min|dlinkTotalMemory|dlinkUsedMemory|sysTemperature"/>
+<DevicePackageToGraph deviceType="Dell N1148T-ON" graphName="DNOS.CPUUtilization5Min|DNOS.CpuUtilization1Min|DNOS.MemoryUtilization|DNOS.PowerSupplyStatus|DNOS.FanStatus|SysUpTime"/>
+<DevicePackageToGraph deviceType="Dell Networking S3124P" graphName="DellChassisMemoryUtilization|DellChassis5MinCPUUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 6100 48G Class4 PoE 4SFP 370W" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba 6405 Chassis" graphName="Win-CPUUtilization|hp6300MMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="HP Aruba Instant On 1930 24G JL683A" graphName="ProCurveCPUUtilization|ProCurveMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Huawei S5720-28X-LI-24S-AC" graphName="hwAvgDuty5minCPUUtilization|hwDevMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper QFX5100-96S-8Q" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper QFX5200 Series" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Juniper QFX5120-48Y" graphName="jnxOperatingCPUUtilization|JuniperMemoryutilization|JuniperTemperature|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear GS324T" graphName="NGAgentSWMemoryUtilization|NGAgentSWFreeMemory|NGAgentSWCpuTotalUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear M4300-28G-PoE" graphName="NGAgentSWMemoryUtilization|NGAgentSWFreeMemory|NGAgentSWCpuTotalUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Netgear MS510TX" graphName="NGAgentSWMemoryUtilization|NGAgentSWFreeMemory|NGAgentSWCpuTotalUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZyXEL XGS-4728F" graphName="ZyXEL4728F.CPUUtilization|ZyXEL4728F.MemoryUtilization|ZyXEL4728F.Temperature|ZyXEL4728F.Voltage|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZyXEL ZyWALL ZLD" graphName="ZyXELZLDCPUUtilization1MinAvg|zyxelsysMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="ZyXEL MES3500-24S" graphName="ZyXELESSysCPUUtilization|ZyXELESSysMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Check Point 3200" graphName="cpSensorTempReading|checkpointSVNCPUUtilization|fwNumConn|CheckPointMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Check Point 6500" graphName="cpSensorTempReading|checkpointSVNCPUUtilization|fwNumConn|CheckPointMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet Fortiswitch 224E" graphName="fsSys_CPUUtilization|fsMemoryUtilization|SysUpTime"/>
+<DevicePackageToGraph deviceType="Fortinet fgt80F" graphName="fgVpnSslStatsActiveTunnels|fortinetCurrentCPUUtilization|fgSysSesCount|diskUsageCurrent|fgsys_MemoryUtilization|fgVpnSslStatsLoginUsers|httpSessionsCount"/>
+<DevicePackageToGraph deviceType="Arista DCS-7050CX3-32S" graphName="Win-CPUUtilization|Win-MemoryUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Arista DCS-7160-48TC6" graphName="Win-CPUUtilization|Win-MemoryUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="Arista DCS-7280SRA-48C6-M-F" graphName="Win-CPUUtilization|Win-MemoryUtilization|AristaMemoryUsage|SysUpTime"/>
+<DevicePackageToGraph deviceType="TP-Link T2600G-52TS" graphName="tpSysMonitorCpu5Minutes|tpSysMonitorMemoryUtilization|SysUpTime"/>
+<!-- LoadBalancer-->
+<DevicePackageToGraph deviceType="F5 Networks BIG-IP i15600" graphName="f5LBCPUUtilization5MinAvg|F5-MemoryUtilization|SysUpTime"/>
+<!-- WANAccelerator-->
+<DevicePackageToGraph deviceType="Riverbed Steelhead WAN Accelerator" graphName="riverbedshCPUUtilization5MinAvg|riverbedshAvgDiskUtilization|riverbedshSystemHealthStatus|riverbedshoptServiceStatus|SteelheadSystemTemperature|SteelheadActiveConnections|SteelheadTotalConnections|SysUpTime"/>
+<!-- Cisco FPR FTD Firewall -->
+<DevicePackageToGraph deviceType="Cisco FPR-2130TD" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco Firepower NGFW FPR-2110" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco FirePOWER FPR-2120" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco FPR-2140TD" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco FPR-1010 TD" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco FPR-1140 TD" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco FPR4115 SM24" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco FPR-1140 TD" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco FPR1120 TD" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+<DevicePackageToGraph deviceType="Cisco FPR-1150 TD" graphName="CiscoFPRHCMemoryUtilization|CiscoFPRFTDCPUUtiliztion1MinAvg|SysUpTime"/>
+</GRAPHDETAIL>

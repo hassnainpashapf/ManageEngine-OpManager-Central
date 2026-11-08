@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+  <!-- Vertiv / Liebert Cooling Units (Enterprise OID 476) -->
+  <CustomDevicePackageSet Category="CoolingUnit" Vendor="Vertiv" iconName="events_cooling.png" pingInterval="900">
+    <CustomDevicePackage deviceType="Vertiv Liebert CRV">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.476.1.42"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Vertiv Liebert PDX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.476.1.42.4.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Vertiv Liebert PCW">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.476.1.42.4.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Vertiv Liebert DSE">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.476.1.42.4.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Vertiv Liebert Cooling">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.476.1.42.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <!-- APC InRow Cooling Units (Enterprise OID 318) -->
+  <CustomDevicePackageSet Category="CoolingUnit" Vendor="APC" iconName="events_cooling.png" pingInterval="900">
+    <CustomDevicePackage deviceType="APC InRow ACRC">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.14.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC InRow ACRP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.14.6"/>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.14.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC InRow ACRD">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.3.14.8"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="APC InRow Cooling">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.318.1.1.13"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <!-- Stulz Cooling Units (Enterprise OID 29462) -->
+  <CustomDevicePackageSet Category="CoolingUnit" Vendor="Stulz" iconName="events_cooling.png" pingInterval="900">
+    <CustomDevicePackage deviceType="Stulz CyberAir 3">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29462.10.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Stulz CyberAir 2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29462.10.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Stulz Cooling">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29462.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <!-- Rittal CMC III Cooling Units (Enterprise OID 2606) -->
+  <CustomDevicePackageSet Category="CoolingUnit" Vendor="Rittal" iconName="events_cooling.png" pingInterval="900">
+    <CustomDevicePackage deviceType="Rittal CMC III LCP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2606.7.4.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Rittal CMC III Cooling">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2606.7"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+</CustomDevicePackage>

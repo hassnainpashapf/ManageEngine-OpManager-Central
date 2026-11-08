@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Array Networks devices" displayName="Array Networks Devices" osType="ArrayOS" templateName="Array Networks Devices">
+	<RestTemplate name=""/>
+	<Vendor displayName="Array" vendorName="Array">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="debugging" number="5" sequenceid="0"/>
+			<Level name="information" number="6" sequenceid="1"/>
+			<Level name="notification" number="7" sequenceid="2"/>
+			<Level name="warning" number="8" sequenceid="3"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="no pager" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="60000"/>
+                	<Command commandecho="" commandstr="show running" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="240000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="no pager" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="60000"/>
+                	<Command commandecho="" commandstr="show startup" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="240000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="config t" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="write memory" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout="60000"/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="4" timeout=""/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Array Network Devices" personalityName="ArrayNetworkDevices">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="CPU" displayname="CPU" name="CPU" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="RAM" displayname="RAM" name="RAM" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="SSL HW" displayname="SSL HW" name="SSL_HW" sequenceid="3" size="100"/>
+				<Column defaultvalue="Not Available" desc="Network Interface" displayname="Network Interface" name="NETWORK_INTERFACE" sequenceid="4" size="100"/>
+				<Column defaultvalue="Not Available" desc="Power Supply" displayname="Power Supply" name="POWER_SUPPLY" sequenceid="5" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging on</Regex>
+					<Regex>logging trap (emergencies|alerts|critical|errors|warnings)</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="ArrayNetworkHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_array_networks">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">		
+										<REGEX EXPRESSION=".*ArrayOS\s*Rel\.([^\.]*)\.(\S*)\s*build.*" NAME="SERIES">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Serial Number\s*:\s*(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Model\s*:\s*(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*System\s*CPU\s*:\s*(.*)" NAME="CPU">
+											<PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*System\s*RAM\s*:\s*(.*)" NAME="RAM">
+											<PARAM NAME="RAM" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*SSL\s*HW\s*:\s*(.*)" NAME="SSL_HW">
+											<PARAM NAME="SSL_HW" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Network\s*Interface\s*:\s*(.*)" NAME="NETWORK_INTERFACE">
+											<PARAM NAME="NETWORK_INTERFACE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Power\s*supply\s*:\s*(.*)" NAME="POWER_SUPPLY">
+											<PARAM NAME="POWER_SUPPLY" TOKENNO="1"/>
+										</REGEX>					
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>   
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_array_networks" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="Array AG1100" ostype="" series="AG" sysoid=".1.3.6.1.4.1.7564"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

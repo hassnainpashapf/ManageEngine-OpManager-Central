@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For CheckPoint Gaia Firewall R80.X devices" displayName="CheckPoint Gaia Firewall R80.X" osType="GAIA" templateName="CheckPoint_Gaia_Firewall_R80.X">
+	<RestTemplate name="Checkpoint"/>
+	<Vendor displayName="CheckPoint" vendorName="CheckPoint">
+		<Commands>
+			<Command commandstr="info device"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="set clienv rows 0" messagesuffix="${LF}" prompt=">" sequenceid="10" timeout="90000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show configuration" messagesuffix="${LF}" prompt=">" sequenceid="20" timeout="90000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="add syslog log-remote-address ${UserInput:HostIpAddress} level info" messagesuffix="${LF}" prompt=">" sequenceid="1" timeout="90000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="delete syslog log-remote-address ${UserInput:HostIpAddress} level info" messagesuffix="${LF}" prompt=">" sequenceid="1" timeout="90000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="CheckPointGaiaFirewallR80_X" personalityName="CheckPointGaiaFirewallR80_X">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="KERNEL_VERSION" size="150" desc="kernel version" displayname="Kernel Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="OSBUILD" size="150" desc="OS Build" displayname="OS Build" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>add\s*syslog\s*log-remote-address\s*$SYSLOG_SERVER_IP.*</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CheckPointGaiaFirewallR80_XParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_checkpoint_gaia_firewall_r80_x">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="KERNEL_VERSION" EXPRESSION=".*OS\s*kernel\s*version\s*(\S*).*">
+										  <PARAM NAME="KERNEL_VERSION" TOKENNO="1"/>
+									  </REGEX>
+										<REGEX EXPRESSION=".*[Pp]roduct\s*[Vv]ersion\s*[Cc]heck\s*[Pp]oint\s*(\S*)\s*(\S*).*" NAME="OSTYPE">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*OS\s*[Bb]uild\s*(\S*).*" NAME="OSBUILD">
+											<PARAM NAME="OSBUILD" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*(?i)Model\s*:\s*(Check\s*Point\s*(\S+)).*" NAME="MODEL">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Serial\s*Number\s*:\s*(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>  
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version all" parsercommandname="hardware_prop_checkpoint_gaia_firewall_r80_x" messagesuffix="${LF}" prompt=">" timeout="120000" promptactionid="yesActionId"/>
+						<Command commandstr="show asset all" parsercommandname="hardware_prop_checkpoint_gaia_firewall_r80_x" messagesuffix="${LF}" prompt=">" timeout="120000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

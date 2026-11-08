@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- ************* For BayStack 380 *************** -->
+
+<!-- Upload Running -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="#" commandecho="false" promptecho="true" responseparserid="nortel_hardware_prop_parser" promptactionid="nortelPPActionId">
+    <InteractionSpec timeout="120000" protocol="CLI" interactionid="nortel_baystackswitch_cli_command_exec_irec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="c">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_baystackswitch_cli_climode_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy running-config tftp address ${UserInput:tftp_server_address} filename ${UserInput:file_name}">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_baystackswitch_cli_fetch_running_rec2" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<!-- For Business Policy Switch -->
+<CLICommand command="copy running-config tftp address ${UserInput:tftp_server_address} filename ${UserInput:file_name}">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_baystack_bps_cli_fetch_running_rec2" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Running via conf t -->
+<CLICommand command="configure terminal">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_baystack_enter_config_mode_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:FileContents}">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_baystack_push_config_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<!--CLICommand command="copy tftp config address ${UserInput:tftp_server_address} filename ${UserInput:file_name}">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_baystackswitch_cli_download_running_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand-->
+
+<!-- exit commands and ispec -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="nortelPPActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="nortel_baystackswitch_cli_mainmenu_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="exit">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_baystackswitch_cli_exit_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

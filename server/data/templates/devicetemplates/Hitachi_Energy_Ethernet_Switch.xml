@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Hitachi Energy Ethernet Switch" displayName="Hitachi Energy Ethernet Switch" osType="SWOPS" templateName="Hitachi Energy Ethernet Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Hitachi Energy" vendorName="HitachiEnergy">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="info" number="5" sequenceid="1"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="120000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="120000"/>
+                	<Command commandecho="" commandstr="show startup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write memory" delay="" messagesuffix="${LF}" prompt="" promptactionid="hitachiActionId" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="copy running-config tftp: //${UserInput:tftp_server_address}/${UserInput:file_name}" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="copy startup-config tftp: //${UserInput:tftp_server_address}/${UserInput:file_name}" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Upload">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="copy tftp: //${UserInput:tftp_server_address}/${UserInput:file_name} running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="copy tftp: //${UserInput:tftp_server_address}/${UserInput:file_name} startup-config" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write memory" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="hitachiActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Hitachi Ethernet Switch" personalityName="HitachiEthernetSwitch">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Bootloader Version" displayname="Bootloader Version" name="BOOTLOADER_VERSION" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Hardware Revision" displayname="Hardware Revision" name="HARDWARE_REVISION" sequenceid="2" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>				
+				<Criteria type="deleteLine">
+					<Regex>.*running-config.*\n\n\n^Configuration.*Checksum.*\n</Regex>
+					<Regex>.*startup-config.*\n\n\n^Reading config.*\n\n^Configuration.*Checksum.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HitachiEhSwitchHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_hitachi_ethernet_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSTYPE" EXPRESSION=".*HITACHI.*Operating\s*System\s*\((\S*)\)\s*(\S*).*">
+										  <PARAM NAME="OSTYPE" TOKENNO="1"/>
+										  <PARAM NAME="OSVERSION" TOKENNO="2"/>
+									  </REGEX>
+										<REGEX NAME="BOOTLOADER_VERSION" EXPRESSION=".*Bootloader\s*(\S*),.*">
+											<PARAM NAME="BOOTLOADER_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HARDWARE_REVISION" EXPRESSION=".*Hardware\s*Revision\s*(\S*).*">
+											<PARAM NAME="HARDWARE_REVISION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*Device\s*type\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial\s*number\s*(.*)">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*Main\s*board.*,\s*(\S*).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>							
+										<REGEX NAME="MACADDRESS2" EXPRESSION=".*System\s*MAC\s*Address:\s*(.*)">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>				        
+										</REGEX>
+										<REGEX NAME="MODEL2" EXPRESSION=".*Apresia(\S*)\s*H\/W\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="HW_VERSION" TOKENNO="2"/>
+										</REGEX>              
+										<REGEX NAME="BOOTLOADER_VERSION2" EXPRESSION=".*Boot\s*loader\s*:\s*(.*)">
+											<PARAM NAME="BOOTLOADER_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIES" EXPRESSION=".*Device\s*series\s*(\S*).*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_hitachi_ethernet_switch" prompt="${UserInput:EnablePrompt}" promptactionid="hitachiActionId" responseparserid="hitachi_ethernet_switch_hardware_prop_parser" timeout="20000"/>
+						<Command commandstr="show hardware" messagesuffix="${LF}" parsercommandname="hardware_prop_hitachi_ethernet_switch" prompt="${UserInput:EnablePrompt}" promptactionid="hitachiActionId" responseparserid="hitachi_ethernet_switch_hardware_prop_parser" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="500NMD01" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.1"/>
+        <NCMDeviceSysOID model="500NMD02" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.2"/>
+        <NCMDeviceSysOID model="500NMD11" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.11"/>
+        <NCMDeviceSysOID model="500NMD20" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.20"/>
+        <NCMDeviceSysOID model="500NMD30" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.30"/>
+        <NCMDeviceSysOID model="500NMD40" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.40"/>
+        <NCMDeviceSysOID model="500NMD41" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.41"/>
+        <NCMDeviceSysOID model="500NMD42" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.42"/>
+        <NCMDeviceSysOID model="500NMD43" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.43"/>
+        <NCMDeviceSysOID model="500NMD44" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.44"/>
+        <NCMDeviceSysOID model="500NMD50" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.50"/>
+        <NCMDeviceSysOID model="500NMD51" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.51"/>
+        <NCMDeviceSysOID model="500NMD52" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.52"/>
+        <NCMDeviceSysOID model="500NMD53" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.53"/>
+        <NCMDeviceSysOID model="500NMD54" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.54"/>
+        <NCMDeviceSysOID model="500NMD55" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.55"/>
+        <NCMDeviceSysOID model="500NMD56" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.56"/>
+        <NCMDeviceSysOID model="500NMD57" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.57"/>
+        <NCMDeviceSysOID model="500NMD58" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.58"/>
+        <NCMDeviceSysOID model="500NMD59" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.59"/>
+        <NCMDeviceSysOID model="500NMD60" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.60"/>
+        <NCMDeviceSysOID model="500NMD61" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.61"/>
+        <NCMDeviceSysOID model="500NMD62" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.62"/>
+        <NCMDeviceSysOID model="500NMD63" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.63"/>
+        <NCMDeviceSysOID model="500NMD64" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.64"/>
+        <NCMDeviceSysOID model="500NMD65" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.65"/>
+        <NCMDeviceSysOID model="500NMD66" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.66"/>
+        <NCMDeviceSysOID model="500NMD67" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.67"/>
+        <NCMDeviceSysOID model="500NMD68" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.68"/>
+        <NCMDeviceSysOID model="500NMD69" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.69"/>
+        <NCMDeviceSysOID model="500NMD50 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.150"/>
+        <NCMDeviceSysOID model="500NMD51 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.151"/>
+        <NCMDeviceSysOID model="500NMD52 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.152"/>
+        <NCMDeviceSysOID model="500NMD53 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.153"/>
+        <NCMDeviceSysOID model="500NMD54 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.154"/>
+        <NCMDeviceSysOID model="500NMD55 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.155"/>
+        <NCMDeviceSysOID model="500NMD56 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.156"/>
+        <NCMDeviceSysOID model="500NMD57 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.157"/>
+        <NCMDeviceSysOID model="500NMD58 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.158"/>
+        <NCMDeviceSysOID model="500NMD59 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.159"/>
+        <NCMDeviceSysOID model="500NMD60 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.160"/>
+        <NCMDeviceSysOID model="500NMD61 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.161"/>
+        <NCMDeviceSysOID model="500NMD62 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.162"/>
+        <NCMDeviceSysOID model="500NMD63 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.163"/>
+        <NCMDeviceSysOID model="500NMD64 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.164"/>
+        <NCMDeviceSysOID model="500NMD65 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.165"/>
+        <NCMDeviceSysOID model="500NMD66 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.166"/>
+        <NCMDeviceSysOID model="500NMD67 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.167"/>
+        <NCMDeviceSysOID model="500NMD68 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.168"/>
+        <NCMDeviceSysOID model="500NMD69 (PoE)" ostype="" series="EDS500" sysoid=".1.3.6.1.4.1.21939.1.5.169"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

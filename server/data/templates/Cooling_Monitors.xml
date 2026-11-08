@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><GRAPHDETAIL>
+<!-- Vertiv / Liebert Cooling Monitors (LIEBERT-GP-ENVIRONMENTAL-MIB, Enterprise OID 476) -->
+    <Graph YAXISTEXT="Celsius" description="The current supply (discharge) air temperature of the cooling unit." displayName="Supply Air Temperature" failureThreshold="1" graphName="liebertSupplyAirTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.476.1.42.3.4.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Vertiv">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The current return (inlet) air temperature of the cooling unit." displayName="Return Air Temperature" failureThreshold="1" graphName="liebertReturnAirTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.476.1.42.3.4.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Vertiv">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The current relative humidity reading from the cooling unit." displayName="Humidity" failureThreshold="1" graphName="liebertHumidity" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.476.1.42.3.4.2.2.3.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Vertiv">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The temperature setpoint configured on the cooling unit." displayName="Setpoint Temperature" failureThreshold="1" graphName="liebertSetpointTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.476.1.42.3.4.1.3.3.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Vertiv">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The current cooling capacity of the unit expressed as a percentage." displayName="Cooling Capacity" failureThreshold="1" graphName="liebertCoolingCapacity" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.476.1.42.3.4.3.9.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Vertiv">
+        <UserProps/>
+    </Graph>
+
+    <!-- APC InRow Cooling Monitors (PowerNet-MIB, Enterprise OID 318) -->
+    <Graph YAXISTEXT="Celsius" description="The current supply (discharge) air temperature of the APC InRow cooling unit." displayName="Supply Air Temperature" failureThreshold="1" graphName="apcInRowSupplyAirTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.31.3.2.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The current return (inlet) air temperature of the APC InRow cooling unit." displayName="Return Air Temperature" failureThreshold="1" graphName="apcInRowReturnAirTemp" graphType="multiple" isNumeric="true" oid="	.1.3.6.1.4.1.318.1.1.31.3.2.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The temperature setpoint configured on the APC InRow cooling unit." displayName="Setpoint Temperature" failureThreshold="1" graphName="apcInRowSetpointTemp" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.13.1.4.5.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="W" description="The current cooling capacity of the APC InRow unit expressed as a percentage." displayName="Cooling Capacity" failureThreshold="1" graphName="apcInRowCoolingCapacity" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.13.3.2.2.2.2.0*1000" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="CFM" description="The current airflow rate of the APC InRow cooling unit." displayName="Airflow Rate" failureThreshold="1" graphName="apcInRowAirflowRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.318.1.1.13.3.2.2.2.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="The current operating status of the APC InRow cooling unit. unknown(1), off(2), onOk(3), onDegraded(4), offFailed(5)" displayName="Unit Status" failureThreshold="1" graphName="apcInRowUnitStatus" graphType="multiple" isNumeric="true" lookupEntries="1=unknown|2=off|3=onOk|4=onDegraded|5=offFailed" lookupType="1" oid=".1.3.6.1.4.1.318.1.1.14.4.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="The current alarm status of the APC InRow cooling unit" displayName="Alarm Status" failureThreshold="1" graphName="apcInRowAlarmStatus" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.318.1.1.13.3.3.1.2.2.45.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="The current compressor operational status of the APC InRow cooling unit. statusON(1), statusON(2)" displayName="Compressor Status" failureThreshold="1" graphName="apcInRowCompressorStatus" graphType="node" isNumeric="true" lookupEntries="1=statusON|2=statusON" lookupType="1" oid=".1.3.6.1.4.1.318.1.1.13.2.2.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="APC">
+        <UserProps/>
+    </Graph>
+
+    <!-- Stulz Cooling Monitors (Stulz MIB, Enterprise OID 29462) -->
+    <Graph YAXISTEXT="Celsius" description="The current supply air temperature of the Stulz CyberAir cooling unit." displayName="Supply Air Temperature" failureThreshold="1" graphName="stulzSupplyAirTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.29462.10.2.1.1.1.1.1.1.1.1193" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stulz">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The current return air temperature of the Stulz CyberAir cooling unit." displayName="Return Air Temperature" failureThreshold="1" graphName="stulzReturnAirTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.29462.10.2.1.1.1.1.1.1.1.1192" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stulz">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The current relative humidity reading from the Stulz CyberAir cooling unit." displayName="Humidity" failureThreshold="1" graphName="stulzHumidity" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.29462.10.2.1.1.1.1.2.1.1.1171" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stulz">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="The temperature setpoint configured on the Stulz CyberAir cooling unit." displayName="Setpoint Temperature" failureThreshold="1" graphName="stulzSetpointTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.29462.10.2.1.1.1.1.1.1.1.1175" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Stulz">
+        <UserProps/>
+    </Graph>
+
+    <!-- Rittal CMC III Cooling Monitors (RITTAL-CMC-III-MIB, Enterprise OID 2606) -->
+    <Graph YAXISTEXT="Celsius" description="The current air temperature from the Rittal CMC III sensor." displayName="Air Temperature" failureThreshold="1" graphName="rittalSupplyAirTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2606.7.7.4.768" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Rittal">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The current relative humidity reading from the Rittal CMC III sensor." displayName="Humidity" failureThreshold="1" graphName="rittalHumidity" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2606.7.7.4.1024" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Rittal">
+        <UserProps/>
+    </Graph>
+
+
+
+    <!-- Device-to-Graph mappings for Cooling device templates -->
+    <DevicePackageToGraph deviceType="Vertiv Liebert CRV" graphName="liebertSupplyAirTemp|liebertReturnAirTemp|liebertHumidity|liebertSetpointTemp|liebertCoolingCapacity|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Vertiv Liebert PDX" graphName="liebertSupplyAirTemp|liebertReturnAirTemp|liebertHumidity|liebertSetpointTemp|liebertCoolingCapacity|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Vertiv Liebert PCW" graphName="liebertSupplyAirTemp|liebertReturnAirTemp|liebertHumidity|liebertSetpointTemp|liebertCoolingCapacity|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Vertiv Liebert DSE" graphName="liebertSupplyAirTemp|liebertReturnAirTemp|liebertHumidity|liebertSetpointTemp|liebertCoolingCapacity|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Vertiv Liebert Cooling" graphName="liebertSupplyAirTemp|liebertReturnAirTemp|liebertHumidity|liebertSetpointTemp|liebertCoolingCapacity|SysUpTime"/>
+    <DevicePackageToGraph deviceType="APC InRow ACRC" graphName="apcInRowSupplyAirTemp|apcInRowReturnAirTemp|apcInRowSetpointTemp|apcInRowCoolingCapacity|apcInRowAirflowRate|apcInRowUnitStatus|apcInRowAlarmStatus|apcInRowCompressorStatus|SysUpTime"/>
+    <DevicePackageToGraph deviceType="APC InRow ACRP" graphName="apcInRowSupplyAirTemp|apcInRowReturnAirTemp|apcInRowSetpointTemp|apcInRowCoolingCapacity|apcInRowAirflowRate|apcInRowUnitStatus|apcInRowAlarmStatus|apcInRowCompressorStatus|SysUpTime"/>
+    <DevicePackageToGraph deviceType="APC InRow ACRD" graphName="apcInRowSupplyAirTemp|apcInRowReturnAirTemp|apcInRowSetpointTemp|apcInRowCoolingCapacity|apcInRowAirflowRate|apcInRowUnitStatus|apcInRowAlarmStatus|apcInRowCompressorStatus|SysUpTime"/>
+    <DevicePackageToGraph deviceType="APC InRow Cooling" graphName="apcInRowSupplyAirTemp|apcInRowReturnAirTemp|apcInRowSetpointTemp|apcInRowCoolingCapacity|apcInRowAirflowRate|apcInRowUnitStatus|apcInRowAlarmStatus|apcInRowCompressorStatus|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Stulz CyberAir 3" graphName="stulzSupplyAirTemp|stulzReturnAirTemp|stulzHumidity|stulzSetpointTemp|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Stulz CyberAir 2" graphName="stulzSupplyAirTemp|stulzReturnAirTemp|stulzHumidity|stulzSetpointTemp|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Stulz Cooling" graphName="stulzSupplyAirTemp|stulzReturnAirTemp|stulzHumidity|stulzSetpointTemp|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Rittal CMC III LCP" graphName="rittalSupplyAirTemp|rittalHumidity|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Rittal CMC III Cooling" graphName="rittalSupplyAirTemp|rittalHumidity|SysUpTime"/>
+</GRAPHDETAIL>

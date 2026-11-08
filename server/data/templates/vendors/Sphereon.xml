@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Sphereon 4500 Fibre Channel Switch  -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:sphereon_4500_fibre_switch" templatename="sphereon_4500_fibre_switch" displayname="Sphereon 4500 Fibre Channel Switch" ostype="" description="Sphereon 4500 Fibre Switch">
+        <NCMVendorDevice vendorid="Sphereon"/>
+        <NCMDevicePersonality personalityid="SphereonSwitch"/>	
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:sphereon_4500_fibre_switch_ssh"
+                                devicetemplateid="NCMDeviceTemplate:devicetemplateid:sphereon_4500_fibre_switch"
+                                managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="sphereon_4500_fibre_switch_cli_telnet_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="sphereon_4500_fibre_switch_cli_show_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:sphereon_4500_fibre_switch_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:sphereon_4500_fibre_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="sphereon_4500_fibre_switch_cli_telnet_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="sphereon_4500_fibre_switch_cli_show_config_rec"/>
+                          
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Anritsu PureFlow" osType="" templateName="Anritsu_PureFlow">
+	<RestTemplate name=""/>
+	<Vendor displayName="Anritsu" vendorName="Anritsu">
+		<Commands>
+			<Command commandstr="show module"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="debug" number="5" sequenceid="1"/>
+			<Level name="info" number="6" sequenceid="2"/>
+			<Level name="all" number="7" sequenceid="3"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="set pager disable" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show config startup" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="set pager disable" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show config running" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="save config" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Anritsu PureFlow" personalityName="AnritsuPureFlow">	
+		<Login enablecommand="admin" suffix="${CRLF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SOFTWARE_VERSION" size="100" desc="Software Version" displayname="Software Version" defaultvalue="Not Available" sequenceid="1"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="AnritsuPureFlowHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_Anritsu_PureFlow">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Anritsu PureFlow\s*(\S*)\s*Software\s*Version\s*(\S*).*">
+										  <PARAM NAME="MODEL" TOKENNO="1"/>
+										  <PARAM NAME="OSVERSION" TOKENNO="2"/>
+										  <PARAM NAME="SOFTWARE_VERSION" TOKENNO="2"/>
+									  </REGEX>
+										<REGEX EXPRESSION=".*Software\s*Version\s*:\s*(\S*).*" NAME="SOFTWARE_VERSION">
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Model\s*Name\s*:\s*(.*)" NAME="SERIES">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Serial\s*Number\s*:\s*(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*MAC\s*Addres.*:\s*(\S*).*" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show module" parsercommandname="hardware_prop_Anritsu_PureFlow" responseparserid="Anritsu_PureFlow_hardware_prop_parser" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" timeout="30000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

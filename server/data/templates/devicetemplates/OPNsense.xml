@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="OPNsense" osType="[NA]" templateName="OPNsense">
+	<RestTemplate name=""/>
+	<Vendor displayName="OPNSense" vendorName="OPNSense">
+		<Commands/>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="cat /conf/config.xml" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="2" timeout="300000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="cd /conf" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="2" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tftp ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt=">" sequenceid="3" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="get ${UserInput:file_name} config.xml" messagesuffix="${LF}" prompt=">" sequenceid="4" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="5" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="cd /conf" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="2" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tftp ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt=">" sequenceid="3" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="put config.xml ${UserInput:file_name}" messagesuffix="${LF}" prompt=">" sequenceid="4" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="5" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="scp /conf/config.xml ${UserInput:scp_username}@${UserInput:scp_server_address}:${UserInput:file_name}" messagesuffix="${LF}" prompt="word:" sequenceid="2" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="3" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="scp -r ${UserInput:scp_username}@${UserInput:scp_server_address}:${UserInput:file_name} /conf/config.xml" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="2" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="3" timeout="300000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="OPNSense Firewall" personalityName="OPNSenseFirewallDevice">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="option:" postlogincommand="8" preloginprompt="option:" prelogincommand="8"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="FREEBSD_VERSION" size="30" desc="FreeBSD Version" displayname="FreeBSD Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="OPENSSL_VERSION" size="30" desc="OpenSSL Version" displayname="OpenSSL Version" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">			
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="OPNSenseFirewallDeviceHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+					<!-- To parse the output of show hardware inventory command and get the hardware properties for Cisco SD WAN -->
+						<COMMAND NAME="hardware_prop_opnsense_osVer">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*OPNsense (\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>						
+						<COMMAND NAME="hardware_prop_opnsense_freeBSDVer">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="(.*\-RELEASE\-.*)" NAME="FREEBSD_VERSION">
+											<PARAM NAME="FREEBSD_VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>						
+						<COMMAND NAME="hardware_prop_opnsense_openSSLVer">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*OpenSSL (.*)" NAME="OPENSSL_VERSION">
+											<PARAM NAME="OPENSSL_VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="opnsense-version" parsercommandname="hardware_prop_opnsense_osVer" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="300000" promptactionid="yesActionId"/>
+						<Command commandstr="freebsd-version" parsercommandname="hardware_prop_opnsense_freeBSDVer" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="300000" promptactionid="yesActionId"/>
+						<Command commandstr="/usr/local/bin/openssl version" parsercommandname="hardware_prop_opnsense_openSSLVer" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="300000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

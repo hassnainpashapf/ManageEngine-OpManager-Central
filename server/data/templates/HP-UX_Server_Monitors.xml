@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <Graph YAXISTEXT="Minutes" description="Monitors the System reboot time using CLI" displayName="System Reboot time" failureThreshold="1" graphName="HP-UX-SystemReboot" graphType="multiple" isNumeric="true" oid="HP-UX-SystemReboot" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" >
+        <UserProps propName="GROUPNAME" propValue="CLI"/>
+    </Graph>
+</GRAPHDETAIL>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CSpec>
+    <IPParameters
+        transportparamsid="$nediscovery"
+        localport="0"
+        remotehost="$REMOTE_HOST"
+        remoteport="161"
+        subnetmask="255.255.255.0">
+        <TransportParams
+            transportprotocol="UDP"
+            transportparamsid="$nediscovery"/>
+    </IPParameters>
+    <SnmpConnectionSpec
+        connectionid="$nediscovery"
+        snmpversion="1"
+        transportparamsid="$nediscovery"
+        dedicatedconnection="false"
+        community="public"
+        interpacketdelay="0"
+        protocol="SNMP">
+        <ConnectionSpec
+            protocol="SNMP"
+            connectionid="$nediscovery"
+            dedicatedconnection="false"/>
+    </SnmpConnectionSpec>
+    
+    <IPParameters
+        transportparamsid="$nediscovery_v1"
+        localport="0"
+        remotehost="$REMOTE_HOST"
+        remoteport="161"
+        subnetmask="255.255.255.0">
+        <TransportParams
+            transportprotocol="UDP"
+            transportparamsid="$nediscovery_v1"/>
+    </IPParameters>
+    <SnmpConnectionSpec
+        connectionid="$nediscovery_v1"
+        snmpversion="0"
+        transportparamsid="$nediscovery_v1"
+        dedicatedconnection="false"
+        community="public"
+        interpacketdelay="0"
+        protocol="SNMP">
+        <ConnectionSpec
+            protocol="SNMP"
+            connectionid="$nediscovery_v1"
+            dedicatedconnection="false"/>
+    </SnmpConnectionSpec>    
+    
+    <!-- Used for Discovery -->
+    <IPParameters
+        transportparamsid="$nediscovery_custom1"
+        localport="0"
+        remotehost="$REMOTE_HOST"
+        remoteport="161"
+        subnetmask="255.255.255.0">
+        <TransportParams
+            transportprotocol="UDP"
+            transportparamsid="$nediscovery_custom1"/>
+    </IPParameters>
+    <SnmpConnectionSpec
+        connectionid="$nediscovery_custom1"
+        snmpversion="1"
+        transportparamsid="$nediscovery_custom1"
+        dedicatedconnection="false"
+        community="public"
+        interpacketdelay="0"
+        protocol="SNMP">
+        <ConnectionSpec
+            protocol="SNMP"
+            connectionid="$nediscovery_custom1"
+            dedicatedconnection="false"/>
+    </SnmpConnectionSpec>
+    
+</CSpec>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- execute copy startup config tftp command mode -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="Password:" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_router_scp_fetch_startup_irec_1" />
+</CLIInteractionSpec>
+
+<CLICommand command="copy startup-config scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name}">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_router_scp_get_startup_rec_1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_router_scp_fetch_startup_irec_2" />
+</CLIInteractionSpec>
+
+<!-- not used .. should remove after 5110 -->
+<CLICommand command="${UserInput:scp_password}">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_router_scp_get_startup_rec_2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="Password:" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_router_scp_fetch_running_irec_1" />
+</CLIInteractionSpec>
+
+<CLICommand command="copy running-config scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name}">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_router_scp_get_running_rec_1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_router_scp_fetch_running_irec_2" />
+</CLIInteractionSpec>
+
+<!-- not used .. should remove after 5110 -->
+<CLICommand command="${UserInput:scp_password}">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_router_scp_get_running_rec_2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- push config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="Password:" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_router_scp_push_config_ispec_1" />
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_router_scp_push_config_ispec_2" />
+</CLIInteractionSpec>
+
+
+<CLICommand command="copy scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name} startup-config">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_router_scp_push_startup_rec_1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+<CLICommand command="${UserInput:scp_password}">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_router_scp_password_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="copy scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name} running-config">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_router_scp_push_running_rec_1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!--
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_fetch_startup_ios_10_3_irec_1"/>
+    </CLIInteractionSpec>
+
+<CLICommand command="copy startup-config tftp">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_cli_config_get_startup_ios_10_3_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_fetch_startup_ios_10_3_irec_2" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:scp_server_address}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">fg
+	
+<Record type="CLI" recordid="cisco_router_cli_config_get_startup_ios_10_3_rec_2" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_router_cli_fetch_startup_ios_10_3_irec_3" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_cli_config_get_startup_ios_10_3_rec_3" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+-->
+
+</CLICommandList>

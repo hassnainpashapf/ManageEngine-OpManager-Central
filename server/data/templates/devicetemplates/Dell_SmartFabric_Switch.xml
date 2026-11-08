@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Dell SmartFabric Switch" osType="OS10" templateName="Dell_SmartFabric_Switch" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Dell" vendorName="Dell">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="debugging" number="8" sequenceid="3"/>
+			<Level name="information" number="7" sequenceid="2"/>
+			<Level name="notification" number="6" sequenceid="1"/>
+			<Level name="warning" number="5" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">		
+		    <OperationGroup type="backup">            			
+            	<Operation name="Running">				
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="3" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="true" sequenceid="4" timeout="120000"/>
+            	</Operation>
+           	</OperationGroup>
+			<OperationGroup type="Others">
+			   	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            </OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Dell SmartFabric Switch" personalityName="DellSmartFabricSwitch">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="Ctrl-Y to begin." prelogincommand="CTRL-Y" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Build Version" displayname="Build Version" name="BUILD_VER" sequenceid="1" size="100"/>
+			
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="DellSmartFabricPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_dell_smart_fabric">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="SERIES" EXPRESSION=".*System\s*Type:\s*(\S*).*">								
+											<PARAM NAME="SERIES" TOKENNO="1"/>	
+											<PARAM NAME="MODEL" TOKENNO="1"/>											
+										</REGEX>	
+										
+									    <REGEX NAME="OSVERSION" EXPRESSION=".*OS\s*Version:\s*(\S*).*">
+												<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											</REGEX>		
+																			
+										<REGEX NAME="BUILD_VER" EXPRESSION=".*Build\s*Version:\s*(\S*).*">
+											<PARAM NAME="BUILD_VER" TOKENNO="1"/>
+										</REGEX>					
+										
+										
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_dell_smart_fabric" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" responseparserid="dell_smart_fabric_hardware_prop_parser" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

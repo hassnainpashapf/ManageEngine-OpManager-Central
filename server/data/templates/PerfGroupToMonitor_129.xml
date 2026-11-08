@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	<PERFGROUP PERFGROUPNAME="Maximum Power (PoE)"/>
+    <PERFGROUP PERFGROUPNAME="Consumed Power (PoE)"/>
+    <PERFGROUP PERFGROUPNAME="Available Power (PoE)"/>
+
+	<!-- Maximum power of Switch PerfGroup Association Start-->
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="neutralMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="ciscoMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="juniperMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="huaweiMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="hpMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="netgearMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="dellMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="aristaMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="extremeMaxSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Maximum Power (PoE)" POLICYNAME="ubiquitiMaxSwitchPowerStats"/>
+
+    <!-- Consumed power of Switch PerfGroup Association Start-->
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="neutralConsumedSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="ciscoConsumedSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="juniperConsumedSwitchStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="huaweiConsumedSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="hpConsumedSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="netgearConsumedSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="dellConsumedSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="aristaConsumedSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="extremeConsumedSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Consumed Power (PoE)" POLICYNAME="ubiquitiConsumedSwitchPowerStats"/>
+
+    <!-- Available power of Switch PerfGroup Association Start-->
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="neutralAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="ciscoAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="juniperAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="huaweiAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="hpAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="netgearAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="dellAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="aristaAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="extremeAvailableSwitchPowerStats"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Available Power (PoE)" POLICYNAME="ubiquitiAvailableSwitchPowerStats"/>
+</GRAPHDETAIL>

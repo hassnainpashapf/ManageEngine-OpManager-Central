@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+	<!-- this configuration file contains all the common configurations that can be used in configuration operation -->
+
+<NCMUserInputConfigurations>
+        <NCMUserInput propertyname="ftp_server_address" propertyvalue="localhost" userinputid="NCMUserInput:userinputid:UVH@402254"/>
+	<NCMUserInput propertyname="tftp_server_address" propertyvalue="localhost" userinputid="NCMUserInput:userinputid:UVH@393325"/>
+        <NCMUserInput propertyname="tftp_server_status" propertyvalue="starttftp" userinputid="NCMUserInput:userinputid:UVH@1111111"/>
+        <NCMUserInput propertyname="tftp_server_detail" propertyvalue="allip" userinputid="NCMUserInput:userinputid:UVH@2222"/>
+	<NCMUserInput propertyname="scp_server_address" propertyvalue="localhost" userinputid="NCMUserInput:userinputid:scp_server_address"/>
+        <NCMUserInput propertyname="scp_server_status" propertyvalue="startscp" userinputid="NCMUserInput:userinputid:UVH@scp_server_status"/>
+        <NCMUserInput propertyname="scp_server_detail" propertyvalue="allip" userinputid="NCMUserInput:userinputid:UVH@scp_server_detail"/>
+	<NCMUserInput propertyname="scp_username" propertyvalue="deviceexpert" userinputid="NCMUserInput:userinputid:scp_username"/>
+	<NCMUserInput propertyname="scp_password" propertyvalue="SCPDeviceExpert" userinputid="NCMUserInput:userinputid:scp_password"/>
+        <NCMUserInput propertyname="syslog_server_address" propertyvalue="localhost" userinputid="NCMUserInput:userinputid:syslog"/>
+        <NCMUserInput propertyname="syslog_server_status" propertyvalue="startsyslog" userinputid="NCMUserInput:userinputid:UVH@syslog_server_status"/>
+        <NCMUserInput propertyname="syslog_server_detail" propertyvalue="allip" userinputid="NCMUserInput:userinputid:UVH@syslog_server_detail"/>
+	<NCMUserInput propertyname="UploadAudit" propertyvalue="true" userinputid="NCMUserInput:userinputid:UVH@UsageStats"/>
+	<NCMUserInput propertyname="LogLevel" propertyvalue="INFO" userinputid="NCMUserInput:userinputid:UVH@Loglevel"/>
+        <NCMUserInput propertyname="PMP_EnableSync" propertyvalue="off" userinputid="NCMUserInput:userinputid:UVH@PMP_EnableSync"/>
+        <NCMUserInput propertyname="PMP_ServerName" propertyvalue="" userinputid="NCMUserInput:userinputid:UVH@PMP_ServerName"/>
+        <NCMUserInput propertyname="PMP_ServerPort" propertyvalue="80" userinputid="NCMUserInput:userinputid:UVH@PMP_ServerPort"/>
+        <NCMUserInput propertyname="PMP_AuthToken" propertyvalue="" userinputid="NCMUserInput:userinputid:UVH@PMP_AuthToken"/>
+<!--        <NCMUserInput propertyname="Approval_Ticket" propertyvalue="true" userinputid="NCMUserInput:userinputid:UVH@Approval_Ticket"/>-->
+<!--        <NCMUserInput propertyname="Backup_Alert" propertyvalue="false" userinputid="NCMUserInput:userinputid:UVH@Backup_Alert"/>-->
+
+        <NCMTftpScpSyslogIpAddress propertyname="product_startup_type" propertyvalue="coldstart" userinputid="NCMTftpScpSyslogIpAddress:userinputid:UVH@product_startup_type"/>
+        <NCMTftpScpSyslogIpAddress propertyname="tftp_server_address" propertyvalue="localhost" userinputid="NCMTftpScpSyslogIpAddress:userinputid:UVH@tftp_server_address"/>
+        <NCMTftpScpSyslogIpAddress propertyname="tftp_server_detail" propertyvalue="allip" userinputid="NCMTftpScpSyslogIpAddress:userinputid:UVH@tftp_server_detail"/>
+        <NCMTftpScpSyslogIpAddress propertyname="scp_server_address" propertyvalue="localhost" userinputid="NCMTftpScpSyslogIpAddress:userinputid:UVH@scp_server_address"/>
+        <NCMTftpScpSyslogIpAddress propertyname="scp_server_detail" propertyvalue="allip" userinputid="NCMTftpScpSyslogIpAddress:userinputid:UVH@scp_server_detail"/>
+        <NCMTftpScpSyslogIpAddress propertyname="syslog_server_address" propertyvalue="localhost" userinputid="NCMTftpScpSyslogIpAddress:userinputid:UVH@syslog_server_address"/>
+        <NCMTftpScpSyslogIpAddress propertyname="syslog_server_detail" propertyvalue="allip" userinputid="NCMTftpScpSyslogIpAddress:userinputid:UVH@syslog_server_detail"/>
+
+</NCMUserInputConfigurations>

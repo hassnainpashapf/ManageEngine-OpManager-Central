@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<ExecutionGroup_Change_Tracking_Syslog>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:UVH@7371466" executiongroupname="cisco_cli_enable_syslog_change_tracking">
+	<!--
+<NCMExecutionGroupInfo interactionspecid="enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/>
+-->
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_enable_logging_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_enable_syslog_for_host_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_syslog_logging_level_rec" sequenceid="6"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="7"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="8" closeconnection="true"/>
+-->
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:UVH@9278255" executiongroupname="cisco_cli_disable_syslog_change_tracking">
+	<!--
+<NCMExecutionGroupInfo interactionspecid="enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/>
+-->
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_disable_syslog_for_host_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="5"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="6" closeconnection="true"/>
+-->
+</NCMExecutionGroup>
+
+<!-- CatOS -->
+<!--NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:CiscoCatOSEnable" executiongroupname="Cisco_CatOS_Enable_Change_Tracking_Syslog">
+<NCMExecutionGroupInfo interactionspecid="catos_enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_catos_enable_syslog_host_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_catos_enable_logging_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_catos_syslog_logging_severity_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="6" closeconnection="true"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:CiscoCatOSDisable" executiongroupname="Cisco_CatOS_Disable_Change_Tracking_Syslog">
+<NCMExecutionGroupInfo interactionspecid="catos_enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_catos_disable_syslog_host_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="4" closeconnection="true"/>
+</NCMExecutionGroup-->
+
+<!-- PIX -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:UVH@12198433" executiongroupname="ciscofirewall_enable_syslog_change_tracking">
+	<!--
+<NCMExecutionGroupInfo interactionspecid="enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/>
+-->
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_enable_logging_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="ciscopix_enable_syslog_for_host_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_syslog_logging_level_rec" sequenceid="6"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_exit_from_any_mode_rec" sequenceid="7"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="8" closeconnection="true"/>
+-->
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:UVH@1494773" executiongroupname="ciscofirewall_disable_syslog_change_tracking">
+	<!--
+<NCMExecutionGroupInfo interactionspecid="enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/>
+-->
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="ciscopix_disable_syslog_for_host_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_exit_from_any_mode_rec" sequenceid="5"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="6" closeconnection="true"/>
+-->
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:UVH@23942302" executiongroupname="foundryswitch_cli_enable_syslog_change_tracking">
+	<!--
+<NCMExecutionGroupInfo interactionspecid="foundry_enable_ispec" recordid="foundry_enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_privilege_ispec" recordid="foundry_password_rec" sequenceid="2"/>
+-->
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_cli_enable_logging_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_cli_enable_syslog_for_host_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_cli_syslog_logging_level_rec" sequenceid="6"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_configure_terminal_end_rec" sequenceid="7"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="foundry_enableprompt_exit_ispec" recordid="foundry_enableprompt_exit_rec" sequenceid="8"/>
+-->
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:UVH@13527397" executiongroupname="foundryswitch_cli_disable_syslog_change_tracking">
+	<!--
+<NCMExecutionGroupInfo interactionspecid="foundry_enable_ispec" recordid="foundry_enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_privilege_ispec" recordid="foundry_password_rec" sequenceid="2"/>
+-->
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_cli_disable_syslog_for_host_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_configure_terminal_end_rec" sequenceid="5"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="foundry_enableprompt_exit_ispec" recordid="foundry_enableprompt_exit_rec" sequenceid="6"/>
+-->
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:UVH@23691250" executiongroupname="foundryswitch_ssh_enable_syslog_change_tracking">
+	<!--
+<NCMExecutionGroupInfo interactionspecid="enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/>
+-->
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_ssh_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_ssh_enable_logging_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_ssh_enable_syslog_for_host_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_ssh_syslog_logging_level_rec" sequenceid="6"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_ssh_configure_terminal_end_rec" sequenceid="7"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="foundry_ssh_enableprompt_exit_ispec" recordid="foundry_ssh_enableprompt_exit_rec" sequenceid="8"/>
+-->
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:UVH@21950399" executiongroupname="foundryswitch_ssh_disable_syslog_change_tracking">
+	<!--
+<NCMExecutionGroupInfo interactionspecid="enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/>
+-->
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_ssh_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_ssh_disable_syslog_for_host_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="foundry_change_tracking_syslog_ipsec" recordid="foundry_ssh_configure_terminal_end_rec" sequenceid="5"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="foundry_ssh_enableprompt_exit_ispec" recordid="foundry_ssh_enableprompt_exit_rec" sequenceid="6"/>
+-->
+</NCMExecutionGroup>
+
+
+<!-- Netscreen -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:NetscreenFirewallEnableSyslog" executiongroupname="netscreenfirewall_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="netscreen_change_tracking_syslog_ipsec" recordid="netscreen_firewall_enable_syslog_for_host_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="netscreen_change_tracking_syslog_ipsec" recordid="netscreen_firewall_enable_syslog_for_host_rec1" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="netscreen_change_tracking_syslog_ipsec" recordid="netscreen_firewall_enable_syslog_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="netscreen_change_tracking_syslog_ipsec" recordid="netscreen_firewall_syslog_logging_level_rec" sequenceid="4"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:NetscreenFirewallDisableSyslog" executiongroupname="netscreenfirewall_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="netscreen_change_tracking_syslog_ipsec" recordid="netscreen_firewall_disable_syslog_for_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+
+<!-- Adtran -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:AdtranCLIEnableSyslog" executiongroupname="adtranlanswitch_cli_enable_syslog_change_tracking">
+<!--NCMExecutionGroupInfo interactionspecid="enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/-->
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="adtran_cli_enable_logging_forwarding_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="adtran_cli_enable_logging_facility_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="adtran_cli_enable_syslog_for_host_rec" sequenceid="6"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="adtran_cli_syslog_logging_level_rec" sequenceid="7"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="8"/>
+<!--NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="9" closeconnection="true"/-->
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:AdtranCLIDisableSyslog" executiongroupname="adtranlanswitch_cli_disable_syslog_change_tracking">
+<!--NCMExecutionGroupInfo interactionspecid="enable_ispec" recordid="enable_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="privilege_ispec" recordid="password_rec" sequenceid="2"/-->
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="adtran_cli_disable_syslog_for_host_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="5"/>
+<!--NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="6" closeconnection="true"/-->
+</NCMExecutionGroup>
+
+
+<!-- Nortel BayStack -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:NortelBaystackEnableSyslog" executiongroupname="nortelbaystackswitch_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="nortel_baystackswitch_cli_command_exec_irec" recordid="nortel_baystackswitch_cli_climode_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="cisco_configure_terminal_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_enable_logging_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_enable_syslog_host_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_logging_level_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_enable_remote_logging_rec" sequenceid="6"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="7"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystackswitch_cli_mainmenu_irec" recordid="nortel_baystackswitch_cli_exit_rec" sequenceid="8"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:NortelBaystackDisableSyslog" executiongroupname="nortelbaystackswitch_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="nortel_baystackswitch_cli_command_exec_irec" recordid="nortel_baystackswitch_cli_climode_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="cisco_configure_terminal_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_disable_syslog_host_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystackswitch_cli_mainmenu_irec" recordid="nortel_baystackswitch_cli_exit_rec" sequenceid="5"/>
+</NCMExecutionGroup>
+
+
+<!-- Nortel BayStack Switches directly logged into commandline mode -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:NortelBaystackCLMEnableSyslog" executiongroupname="nortelbaystackswitch_clm_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_enable_logging_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_enable_syslog_host_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_logging_level_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_enable_remote_logging_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="6"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:NortelBaystackCLMDisableSyslog" executiongroupname="nortelbaystackswitch_clm_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="nortel_baystack_disable_syslog_host_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="nortel_baystack_change_tracking_syslog_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- Fortigate Firewall -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:FortigateFWEnableSyslog" executiongroupname="fortigatefirewall_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_enter_syslogd_filter_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_enable_event_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_enable_admin_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_logging_level_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_exit_config_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_enter_syslogd_setting_rec" sequenceid="6"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_enable_host_rec" sequenceid="7"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_set_port_rec" sequenceid="8"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_enable_status_rec" sequenceid="9"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_exit_config_rec" sequenceid="10"/>
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:FortigateFWDisableSyslog" executiongroupname="fortigatefirewall_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_enter_syslogd_setting_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_disable_host_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_syslog_ispec" recordid="fortigate_firewall_exit_config_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- Force10 E Switch -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:Force10ESwitchEnableSyslog" executiongroupname="force10switch_e_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="force10_eswitch_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="force10_eswitch_change_tracking_syslog_ipsec" recordid="force10_eswitch_enable_logging_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="force10_eswitch_change_tracking_syslog_ipsec" recordid="force10_eswitch_enable_syslog_for_host_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="force10_eswitch_change_tracking_syslog_ipsec" recordid="force10_eswitch_syslog_logging_level_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="force10_eswitch_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="5"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:Force10ESwitchDisableSyslog" executiongroupname="force10switch_e_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="force10_eswitch_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="force10_eswitch_change_tracking_syslog_ipsec" recordid="force10_eswitch_disable_syslog_for_host_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="force10_eswitch_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- Enterasys Switch -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:EnterasysSwitchEnableSyslog" executiongroupname="enterasysswitch_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="enterasys_switch_change_tracking_syslog_ipsec" recordid="enterasys_switch_enable_syslog_for_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:EnterasysSwitchDisableSyslog" executiongroupname="enterasysswitch_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="enterasys_switch_change_tracking_syslog_ipsec" recordid="enterasys_switch_disable_syslog_for_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+
+<!-- Extreme Switch -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:ExtremeSwitchEnableSyslog" executiongroupname="Extreme_Switch_Enable_Change_Tracking_Syslog">
+<NCMExecutionGroupInfo interactionspecid="extreme_switch_change_tracking_syslog_ipsec" recordid="extreme_switch_enable_syslog_for_host_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="extreme_switch_change_tracking_syslog_ipsec" recordid="extreme_switch_enable_syslog_rec" sequenceid="2"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:ExtremeSwitchDisableSyslog" executiongroupname="Extreme_Switch_Disable_Change_Tracking_Syslog">
+<NCMExecutionGroupInfo interactionspecid="extreme_switch_change_tracking_syslog_ipsec" recordid="extreme_switch_disable_syslog_for_host_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="extreme_switch_change_tracking_syslog_ipsec" recordid="extreme_switch_disable_syslog_rec" sequenceid="2"/>
+</NCMExecutionGroup>
+
+
+<!-- Alaxala Switch -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:AlaxalaSwitchEnableSyslog" executiongroupname="Alaxala_Switch_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="alaxala_switch_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala_switch_cli_ispec" recordid="alaxala_switch_enable_syslog_for_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala_switch_cli_ispec" recordid="alaxala_switch_syslog_logging_level_rec" sequenceid="3"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala_switch_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="4"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:AlaxalaSwitchDisableSyslog" executiongroupname="Alaxala_Switch_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="alaxala_switch_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala_switch_cli_ispec" recordid="alaxala_switch_disable_syslog_for_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala_switch_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+<!--Alaxala 1230 Switch-->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:Alaxala1230SwitchEnableSyslog" executiongroupname="Alaxala1230_Switch_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="alaxala1230_switch_cli_ispec" recordid="alaxala1230_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala1230_switch_cli_ispec" recordid="alaxala1230_switch_enable_syslog_for_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala1230_switch_cli_ispec" recordid="alaxala1230_switch_syslog_logging_level_rec" sequenceid="3"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala1230_switch_cli_ispec" recordid="alaxala1230_configure_terminal_end_rec" sequenceid="4"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:Alaxala1230SwitchDisableSyslog" executiongroupname="Alaxala1230_Switch_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="alaxala1230_switch_cli_ispec" recordid="alaxala1230_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="alaxala1230_switch_cli_ispec" recordid="alaxala1230_switch_disable_syslog_for_host_rec" sequenceid="2"/> <NCMExecutionGroupInfo interactionspecid="alaxala1230_switch_cli_ispec" recordid="alaxala1230_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- AvayaGateway -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:avayamediagatewayenablesyslog" executiongroupname="Avaya_Media_Gateway_Enable_Change_Tracking_Syslog">
+<NCMExecutionGroupInfo interactionspecid="avaya_media_gateway_ispec" recordid="avaya_media_gateway_enable_syslog_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:avayamediagatewaydisablesyslog" executiongroupname="Avaya_Media_Gateway_Disable_Change_Tracking_Syslog">
+<NCMExecutionGroupInfo interactionspecid="avaya_media_gateway_ispec" recordid="avaya_media_gateway_disable_syslog_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+<!-- LambdaDriver -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:LambdaDriverEnableSyslog" executiongroupname="Lambda_Driver_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="lambda_driver_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="lambda_driver_ispec" recordid="lambda_driver_enable_syslog_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="lambda_driver_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:LambdaDriverDisableSyslog" executiongroupname="Lambda_Driver_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="lambda_driver_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="lambda_driver_ispec" recordid="lambda_driver_disable_syslog_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="lambda_driver_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- Dax -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DaxDxEnableSyslog" executiongroupname="DaxDx_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+    <NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxdx_cli_enable_syslog_for_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DaxDxDisableSyslog" executiongroupname="DaxDx_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+    <NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxdx_cli_disable_syslog_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- DaxBTI -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DaxBTIEnableSyslog" executiongroupname="DaxBTI_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxbti_cli_enable_syslog_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DaxBTIDisableSyslog" executiongroupname="DaxBTI_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxbti_cli_disable_syslog_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- Dax DX-5026MGV -->
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DaxDX-5026MGVEnableSyslog" executiongroupname="DaxDX-5026MGV_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+    <NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxdx5026mgv_cli_enable_syslog_host_rec" sequenceid="2"/>
+    <NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxdx5026mgv_cli_syslog_logging_level_rec" sequenceid="3"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="4"/>
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DaxDX-5026MGVDisableSyslog" executiongroupname="DaxDX-5026MGV_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxdx5026mgv_cli_disable_syslog_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- DaxDx0830pc -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DaxDx0830PC_EnableSyslog" executiongroupname="DaxDx0830PC_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+    <NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxdx0830pc_cli_enable_syslog_for_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DaxDx0830PC_DisableSyslog" executiongroupname="DaxDx0830PC_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+    <NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="daxdx0830pc_cli_disable_syslog_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="dax_cli_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+<!--Cisco WAAS-->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:CiscoWAASEnableSyslog" executiongroupname="ciscowaas_cli_enable_syslog_change_tracking">
+	
+	<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="3"/>
+	<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="ciscowaas_enable_syslog_for_host_rec" sequenceid="4"/>
+	<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="ciscowaas_cli_enable_logging_facility_rec" sequenceid="5"/>
+	<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="6"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:CiscoWAASDisableSyslog" executiongroupname="ciscowaas_cli_disable_syslog_change_tracking">
+	
+	<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="3"/>
+	<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="ciscowaas_disable_syslog_for_host_rec" sequenceid="4"/>
+	<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="5"/>
+</NCMExecutionGroup>
+
+<!-- H3C switches -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:H3C_Switch_EnableSyslog" executiongroupname="H3C_Switch_Enable_Change_Tracking_Syslog">
+
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="h3c_system_view_rec" sequenceid="10"/> 
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="h3c_switch_enable_syslog_host_rec" sequenceid="20"/> 
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="h3c_switch_enable_syslog_loghost_rec" sequenceid="30"/> 
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec"   recordid="h3c_switch_return_rec" sequenceid="40"/>
+
+	    	    
+ </NCMExecutionGroup>
+
+
+ <NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:H3C_Switch_DisableSyslog" executiongroupname="H3C_Switch_Disable_Change_Tracking_Syslog">
+
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="h3c_system_view_rec" sequenceid="10"/>
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="h3c_switch_disable_syslog_host_rec" sequenceid="20"/>
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec" recordid="h3c_switch_return_rec" sequenceid="30"/>
+    
+</NCMExecutionGroup>
+
+
+<!-- Blue Coat -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:BlueCoat_Enable_Syslog" executiongroupname="bluecoat_enable_cli_syslog_change_tracking">
+	<!-- into conf t mode -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_proxySG_cli_fetch_config_ispec"
+		recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<!-- Enable Config event-log prompt -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_cli_eventlog_promt_enable_ipsec"
+		recordid="bluecoat_cli_eventlog_syslog_rec" sequenceid="2"/>
+	<!-- enabling host -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_cli_eventlog_promt_enable_ipsec"
+		recordid="bluecoat_cli_enable_syslog_host_rec" sequenceid="3"/>
+	<!-- Command syslog enable -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_cli_eventlog_promt_enable_ipsec"
+		recordid="bluecoat_cli_enable_syslog_rec" sequenceid="4"/>
+	<!-- Setting log level to informational -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_cli_eventlog_promt_enable_ipsec"
+		recordid="bluecoat_cli_log_level_syslog_rec" sequenceid="5"/>
+	<!-- Exit from event-log prompt -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_proxySG_cli_fetch_config_ispec"
+		recordid="bluecoat_cli_exit_eventlog_rec" sequenceid="6"/>
+	<!-- Defaulting user prompt  -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_cli_prompt_ispec" recordid="bluecoat_cli_exit_eventlog_rec" sequenceid="7"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:BlueCoat_Disable_Syslog" executiongroupname="bluecoat_disable_cli_syslog_change_tracking">
+	<!-- into conf t mode -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_proxySG_cli_fetch_config_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<!-- Command syslog enable -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_proxySG_cli_fetch_config_ispec" recordid="bluecoat_cli_disable_syslog_rec" sequenceid="2"/>
+	<!-- Defaulting to user prompt -->
+	<NCMExecutionGroupInfo interactionspecid="bluecoat_cli_prompt_ispec" recordid="bluecoat_cli_exit_eventlog_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+<!-- Yamaha -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:Yamaha_Router_EnableSyslog" executiongroupname="Yamaha_Router_Enable_Change_Tracking_Syslog">
+
+     <NCMExecutionGroupInfo interactionspecid="yamaha_router_cli_ispec" recordid="yamaha_router_enable_syslog_host_rec" sequenceid="1"/>
+     <NCMExecutionGroupInfo interactionspecid="yamaha_router_cli_ispec" recordid="yamaha_router_syslog_level_enable_rec" sequenceid="2"/>
+
+ </NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:Yamaha_Router_DisableSyslog" executiongroupname="Yamaha_Router_Disable_Change_Tracking_Syslog">
+    <NCMExecutionGroupInfo interactionspecid="yamaha_router_cli_ispec" recordid="yamaha_router_disable_syslog_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+<!--F5 Bigip-->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:F5_Bigip_EnableSyslog" executiongroupname="F5_Bigip_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="f5_bigip_enable_syslog_for_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+	
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:F5_Bigip_DisableSyslog" executiongroupname="F5_Bigip_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="f5_bigip_disable_syslog_for_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>
+</NCMExecutionGroup>
+
+<!-- DLink Syslog Starts here -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DLink_EnableSysLog" executiongroupname="DLinkSwitch_3052_TELNET_enable_change_detection">
+
+<NCMExecutionGroupInfo interactionspecid="dlink_switch_irec" recordid="dlink_switch_type3_cli_enable_changedetection10" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="dlink_switch_irec" recordid="dlink_switch_type3_cli_enable_changedetection20" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="dlink_switch_irec" recordid="dlink_switch_type3_cli_enable_changedetection30" sequenceid="30"/>
+<NCMExecutionGroupInfo interactionspecid="dlink_switch_irec" recordid="dlink_switch_type3_cli_enable_changedetection40" sequenceid="40"/>
+<NCMExecutionGroupInfo interactionspecid="dlink_switch_irec" recordid="dlink_switch_type3_cli_enable_changedetection50" sequenceid="50"/>
+
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:DLink_DisableSyslog" executiongroupname="DLinkSwitch_3052_TELNET_disable_change_detection">
+
+        <NCMExecutionGroupInfo interactionspecid="dlink_switch_irec" recordid="dlink_switch_type3_cli_disable_changedetection" sequenceid="10"/>
+
+</NCMExecutionGroup>
+<!-- DLink Syslog Ends here -->
+
+<!-- CitrixNetScaler -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:citrix_EnableSyslog" executiongroupname="Citrix_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="citrix_cli_ispec" recordid="citrix_enable_syslog_for_host_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="citrix_cli_ispec" recordid="citrix_enable_syslog_for_host_rec_1" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="citrix_cli_ispec" recordid="citrix_enable_syslog_for_host_rec_2" sequenceid="3"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:citrix_DisableSyslog" executiongroupname="Citrix_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="citrix_cli_ispec" recordid="citrix_disable_syslog_for_host_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="citrix_cli_ispec" recordid="citrix_disable_syslog_for_host_rec_1" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="citrix_cli_ispec" recordid="citrix_disable_syslog_for_host_rec_2" sequenceid="3"/>
+</NCMExecutionGroup>
+
+
+<!-- Hitachi -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:hitachi_EnableSyslog" executiongroupname="Hitachi_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="hitachi_switch_ispec" recordid="hitachi_switch_cli_enable_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="hitachi_switch_ispec" recordid="hitachi_switch_cli_configure_terminal_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="hitachi_switch_ispec" recordid="hitachi_switch_enable_syslog_host_rec" sequenceid="3"/>
+	<NCMExecutionGroupInfo interactionspecid="hitachi_switch_ispec" recordid="hitachi_switch_cli_exit_rec" sequenceid="4"/>
+
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:hitachi_DisableSyslog" executiongroupname="Hitachi_Disable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="hitachi_switch_ispec" recordid="hitachi_switch_cli_enable_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="hitachi_switch_ispec" recordid="hitachi_switch_cli_configure_terminal_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="hitachi_switch_ispec" recordid="hitachi_switch_disable_syslog_host_rec" sequenceid="3"/>
+	<NCMExecutionGroupInfo interactionspecid="hitachi_switch_ispec" recordid="hitachi_switch_cli_exit_rec" sequenceid="4"/>
+</NCMExecutionGroup>
+
+<!-- Dell Switch -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:dell_EnableSyslog" executiongroupname="dell_cli_enable_syslog_change_tracking">
+	
+<NCMExecutionGroupInfo interactionspecid="dell_switch_cli_ispec" recordid="dell_configure_terminal_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="dell_switch_cli_ispec" recordid="cisco_enable_logging_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="dell_switch_cli_ispec" recordid="dell_enable_syslog_for_host_rec" sequenceid="30"/>
+<NCMExecutionGroupInfo interactionspecid="dell_switch_cli_ispec" recordid="cisco_exit_from_any_mode_rec" sequenceid="40"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:dell_DisableSyslog" executiongroupname="dell_cli_disable_syslog_change_tracking">
+	
+<NCMExecutionGroupInfo interactionspecid="dell_switch_cli_ispec" recordid="dell_configure_terminal_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="dell_switch_cli_ispec" recordid="dell_disable_syslog_host_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="dell_switch_cli_ispec" recordid="cisco_exit_from_any_mode_rec" sequenceid="30"/>
+<!--
+<NCMExecutionGroupInfo interactionspecid="disable_ispec" recordid="disable_rec" sequenceid="6" closeconnection="true"/>
+-->
+</NCMExecutionGroup>
+
+
+<!-- Cisco Nexus -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:cisconexus_EnableSyslog" executiongroupname="cisconexus_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisconexus_switch_enable_syslog_host_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:cisconexus_DisableSyslog" executiongroupname="cisconexus_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisconexus_switch_disable_syslog_host_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+<!-- Cisco MDS -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:ciscomds_EnableSyslog" executiongroupname="cisco_mds_cli_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_mds_switch_enable_syslog_host_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:ciscomds_DisableSyslog" executiongroupname="cisco_mds_cli_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_mds_switch_disable_syslog_host_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+<!-- Meru Wlan Controller -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:meru_EnableSyslog" executiongroupname="meru_wlan_controller_Enable_Change_Tracking_Syslog">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="meru_wlan_controller_enable_syslog_host_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:meru_DisableSyslog" executiongroupname="meru_wlan_controller_Disable_Change_Tracking_Syslog">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="meru_wlan_controller_disable_syslog_host_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="cisco_configure_terminal_end_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+
+<!-- Allied Telesis CenterCOM GS900M V2 series Switches -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:alliedtelesis_gs900m_EnableSyslog"  executiongroupname="alliedtelesis_gs900m_switch_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_gs900m_enable_syslog_host_rec1" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_gs900m_enable_syslog_host_rec2" sequenceid="20"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:alliedtelesis_gs900m_DisableSyslog"   executiongroupname="alliedtelesis_gs900m_switch_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_gs900m_disable_syslog_host_rec" sequenceid="10"/>
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:brocade_fastiron_switch_EnableSyslog" executiongroupname="brocade_fastiron_switch_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="brocade_fastiron_switch_config_mode_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="brocade_fastiron_switch_enable_logging_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="brocade_fastiron_switch_enable_syslog_for_host_rec" sequenceid="30"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="brocade_fastiron_switch_exit_rec" sequenceid="40"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:brocade_fastiron_switch_DisableSyslog" executiongroupname="brocade_fastiron_switch_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="brocade_fastiron_switch_config_mode_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="brocade_fastiron_switch_enable_logging_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="brocade_fastiron_switch_disable_syslog_for_host_rec" sequenceid="30"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="brocade_fastiron_switch_exit_rec" sequenceid="40"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:a10_networks_EnableSyslog" executiongroupname="a10_networks_cli_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="a10_networks_switch_config_mode_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="a10_networks_switch_logging_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="a10_networks_switch_syslog_rec" sequenceid="30"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="a10_networks_switch_exit_rec" sequenceid="40"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:a10_networks_DisableSyslog" executiongroupname="a10_networks_cli_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="a10_networks_switch_config_mode_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="a10_networks_switch_disable_syslog_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="a10_networks_switch_exit_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:alliedtelesis_ethernet_switch_EnableSyslog" executiongroupname="alliedtelesis_ethernet_switch_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_ethernet_switch_config_mode_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_ethernet_switch_logging_rec1" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_ethernet_switch_logging_rec2" sequenceid="30"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_ethernet_switch_exit_rec" sequenceid="40"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:alliedtelesis_ethernet_switch_DisableSyslog" executiongroupname="alliedtelesis_ethernet_switch_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_ethernet_switch_config_mode_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_ethernet_switch_disable_syslog_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="cisco_change_tracking_syslog_ipsec" recordid="alliedtelesis_ethernet_switch_exit_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+
+<!--F5 Version 10X Bigip-->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:F510x_Bigip_EnableSyslog" executiongroupname="F5_Bigip_10x_Enable_Change_Tracking_Syslog">
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="cisco_configure_terminal_rec" sequenceid="1"/>
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="f510x_bigip_enable_syslog_for_host_rec" sequenceid="2"/>
+	<NCMExecutionGroupInfo interactionspecid="F5_bigip_config_ispec" recordid="cisco_configure_terminal_end_rec" sequenceid="3"/>	
+</NCMExecutionGroup>
+
+
+<!-- NEC device -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:nec_ix2025_EnableSyslog" executiongroupname="nec_ix2025_cli_enable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_config_syslog_rec1" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_enable_syslog_rec1" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_enable_syslog_rec2" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_enable_syslog_rec3" sequenceid="40"/>	
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_write_mem_rec1" sequenceid="50"/>
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_exit_syslog_rec1" sequenceid="60"/>	
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:nec_ix2025_disableSyslog" executiongroupname="nec_ix2025_cli_disable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_config_syslog_rec1" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_disable_syslog_rec" sequenceid="20"/>	
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_write_mem_rec1" sequenceid="30"/>
+	<NCMExecutionGroupInfo interactionspecid="nec_ix2025_cli_ispec" recordid="nec_ix2025_exit_syslog_rec1" sequenceid="40"/>	
+</NCMExecutionGroup>
+
+
+<!-- Fortigate Firewall -->
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:FortigateFWv4EnableSyslog" executiongroupname="fortigatefirewall_v4_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_enter_syslogd_filter_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_logging_level_rec" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_set_port_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_exit_config_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_enter_syslogd_setting_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_enable_status_rec" sequenceid="6"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_enable_host_rec" sequenceid="7"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_set_facility_rec" sequenceid="8"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_exit_config_rec" sequenceid="9"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:FortigateFWv4DisableSyslog" executiongroupname="fortigatefirewall_v4_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_enter_syslogd_setting_rec" sequenceid="1"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_disable_host_rec1" sequenceid="2"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_exit_config_rec" sequenceid="3"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_enter_syslogd_filter_rec" sequenceid="4"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_disable_host_rec" sequenceid="5"/>
+<NCMExecutionGroupInfo interactionspecid="fortigate_firewall_v4_syslog_ispec" recordid="fortigate_firewall_v4_exit_config_rec" sequenceid="6"/>
+</NCMExecutionGroup>
+
+<!-- Fiberhome switch -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:fiberhome_switch_EnableSyslog" executiongroupname="fiberhome_switch_enable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="fiberhome_switch_syslog_ispec" recordid="fiberhome_switch_config_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="fiberhome_switch_syslog_ispec" recordid="fiberhome_switch_logging_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="fiberhome_switch_syslog_ispec" recordid="fiberhome_switch_set_facility_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="fiberhome_switch_syslog_ispec" recordid="fiberhome_switch_set_syslog_ip_rec" sequenceid="40"/>	
+	<NCMExecutionGroupInfo interactionspecid="fiberhome_switch_syslog_ispec" recordid="fiberhome_switch_exit_rec" sequenceid="50"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:fiberhome_switch_disableSyslog" executiongroupname="fiberhome_switch_disable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="fiberhome_switch_syslog_ispec" recordid="fiberhome_switch_config_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="fiberhome_switch_syslog_ispec" recordid="fiberhome_switch_disable_syslog_ip_rec" sequenceid="20"/>	
+	<NCMExecutionGroupInfo interactionspecid="fiberhome_switch_syslog_ispec" recordid="fiberhome_switch_exit_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+<!-- ZXR Router-->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:zxr_router_zsr_EnableSyslog" executiongroupname="zxr_router_zsr_enable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="zxr_router_zsr_syslog_ispec" recordid="zxr_router_zsr_config_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="zxr_router_zsr_syslog_ispec" recordid="zxr_router_zsr_logging_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="zxr_router_zsr_syslog_ispec" recordid="zxr_router_zsr_set_facility_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="zxr_router_zsr_syslog_ispec" recordid="zxr_router_zsr_set_syslog_ip_rec" sequenceid="40"/>	
+	<NCMExecutionGroupInfo interactionspecid="zxr_router_zsr_syslog_ispec" recordid="zxr_router_zsr_exit_rec" sequenceid="50"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:zxr_router_zsr_disableSyslog" executiongroupname="zxr_router_zsr_disable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="zxr_router_zsr_syslog_ispec" recordid="zxr_router_zsr_config_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="zxr_router_zsr_syslog_ispec" recordid="zxr_router_zsr_disable_syslog_ip_rec" sequenceid="20"/>	
+	<NCMExecutionGroupInfo interactionspecid="zxr_router_zsr_syslog_ispec" recordid="zxr_router_zsr_exit_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:juniper_ex4200_switch_EnableSyslog" executiongroupname="juniper_ex4200_switch_enable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="juniper_ex4200_switch_syslog_ispec" recordid="juniper_ex4200_switch_configure_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_ex4200_switch_syslog_ispec" recordid="juniper_ex4200_switch_enable_command_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_ex4200_switch_syslog_ispec" recordid="juniper_ex4200_switch_commit_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="juniper_ex4200_switch_syslog_ispec1" recordid="juniper_ex4200_switch_exit_rec" sequenceid="40"/>	
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:juniper_ex4200_switch_DisableSyslog" executiongroupname="juniper_ex4200_switch_disable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="juniper_ex4200_switch_syslog_ispec" recordid="juniper_ex4200_switch_configure_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_ex4200_switch_syslog_ispec" recordid="juniper_ex4200_switch_disable_command_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_ex4200_switch_syslog_ispec" recordid="juniper_ex4200_switch_commit_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="juniper_ex4200_switch_syslog_ispec1" recordid="juniper_ex4200_switch_exit_rec" sequenceid="40"/>	
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:juniper_router_EnableSyslog" executiongroupname="juniper_router_enable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="juniper_router_syslog_ispec" recordid="juniper_router_configure_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_router_syslog_ispec" recordid="juniper_router_enable_command_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_router_syslog_ispec" recordid="juniper_router_commit_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="juniper_router_syslog_ispec1" recordid="juniper_router_exit_rec" sequenceid="40"/>	
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:juniper_router_DisableSyslog" executiongroupname="juniper_router_disable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="juniper_router_syslog_ispec" recordid="juniper_router_configure_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_router_syslog_ispec" recordid="juniper_router_disable_command_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_router_syslog_ispec" recordid="juniper_router_commit_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="juniper_router_syslog_ispec1" recordid="juniper_router_exit_rec" sequenceid="40"/>	
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:fujitsu_firewall_EnableSyslog" executiongroupname="fujitsu_firewall_enable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_configure_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_load_running_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_logging_rule_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_syslog_rec" sequenceid="40"/>		
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_commit_rec" sequenceid="50"/>		
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_quit_rec" sequenceid="60"/>	
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:fujitsu_firewall_DisableSyslog" executiongroupname="fujitsu_firewall_disable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_configure_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_load_running_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_disable_logging_rule_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_commit_rec" sequenceid="40"/>			
+	<NCMExecutionGroupInfo interactionspecid="fujitsu_firewall_syslog_ispec" recordid="fujitsu_firewall_quit_rec" sequenceid="50"/>	
+</NCMExecutionGroup>
+
+<!-- huawei s Switch -->
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:huawei_Switch_EnableSyslog" executiongroupname="huawei_Switch_Enable_Change_Tracking_Syslog">
+
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="h3c_system_view_rec" sequenceid="10"/> 
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="huawei_switch_enable_syslog_host_rec" sequenceid="20"/> 
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="huawei_switch_enable_syslog_loghost_rec" sequenceid="30"/> 
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec"   recordid="h3c_switch_return_rec" sequenceid="40"/>	    	    
+ </NCMExecutionGroup>
+
+
+ <NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:huawei_Switch_DisableSyslog" executiongroupname="huawei_Switch_Disable_Change_Tracking_Syslog">
+
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="h3c_system_view_rec" sequenceid="10"/>
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec_1" recordid="huawei_switch_disable_syslog_host_rec" sequenceid="20"/>
+    <NCMExecutionGroupInfo interactionspecid="h3c_switch_ispec" recordid="h3c_switch_return_rec" sequenceid="30"/>
+    
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:juniper_srx_switch_EnableSyslog" executiongroupname="juniper_srx_enable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="juniper_srx_switch_syslog_ispec" recordid="juniper_srx_switch_configure_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_srx_switch_syslog_ispec" recordid="juniper_srx_switch_enable_command_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_srx_switch_syslog_ispec" recordid="juniper_srx_switch_commit_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="juniper_srx_switch_syslog_ispec1" recordid="juniper_srx_switch_exit_rec" sequenceid="40"/>	
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:juniper_srx_switch_DisableSyslog" executiongroupname="juniper_srx_disable_syslog_change_tracking">
+	<NCMExecutionGroupInfo interactionspecid="juniper_srx_switch_syslog_ispec" recordid="juniper_srx_switch_configure_rec" sequenceid="10"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_srx_switch_syslog_ispec" recordid="juniper_srx_switch_disable_command_rec" sequenceid="20"/>
+	<NCMExecutionGroupInfo interactionspecid="juniper_srx_switch_syslog_ispec" recordid="juniper_srx_switch_commit_rec" sequenceid="30"/>		
+	<NCMExecutionGroupInfo interactionspecid="juniper_srx_switch_syslog_ispec1" recordid="juniper_srx_switch_exit_rec" sequenceid="40"/>	
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:hpswitch_procurve_EnableSyslog" executiongroupname="hpswitch_procurve_enable_syslog_change_tracking">
+
+    <NCMExecutionGroupInfo interactionspecid="hp_switch_syslog_ispec" recordid="hp_switch_config_mode_rec" sequenceid="10"/> 
+    <NCMExecutionGroupInfo interactionspecid="hp_switch_syslog_ispec" recordid="hp_switch_enable_syslog_loghost_rec" sequenceid="20"/> 
+    <NCMExecutionGroupInfo interactionspecid="hp_switch_syslog_ispec" recordid="hp_switch_enable_syslog_log_level_rec" sequenceid="30"/> 
+    <NCMExecutionGroupInfo interactionspecid="hp_switch_syslog_ispec"   recordid="hp_switch_config_syslog_exit_rec" sequenceid="40"/>	    	    
+ </NCMExecutionGroup>
+
+ <NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:hpswitch_procurve_DisableSyslog" executiongroupname="hpswitch_procurve_disable_syslog_change_tracking">
+
+    <NCMExecutionGroupInfo interactionspecid="hp_switch_syslog_ispec" recordid="hp_switch_config_mode_rec" sequenceid="10"/>
+    <NCMExecutionGroupInfo interactionspecid="hp_switch_syslog_ispec" recordid="hp_switch_disable_syslog_host_rec" sequenceid="20"/>
+    <NCMExecutionGroupInfo interactionspecid="hp_switch_syslog_ispec"   recordid="hp_switch_config_syslog_exit_rec" sequenceid="30"/>	    
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:huawei_ne_Router_EnableSyslog" executiongroupname="huawei_ne_router_Enable_Change_Tracking_Syslog">
+    <NCMExecutionGroupInfo interactionspecid="huawei_ne_router_syslog_ispec" recordid="huawei_ne_router_enable_syslog_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:huawei_ne_Router_DisableSyslog" executiongroupname="huawei_ne_router_Disable_Change_Tracking_Syslog">
+    <NCMExecutionGroupInfo interactionspecid="huawei_ne_router_syslog_ispec" recordid="huawei_ne_router_disable_syslog_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:huawei_s_5300_switch_EnableSyslog" executiongroupname="huawei_s_5300_switch_Enable_Change_Tracking_Syslog">
+    <NCMExecutionGroupInfo interactionspecid="huawei_s_5300_switch_syslog_ispec" recordid="huawei_s_5300_switch_enable_syslog_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:huawei_s_5300_switch_DisableSyslog" executiongroupname="huawei_s_5300_switch_Disable_Change_Tracking_Syslog">
+    <NCMExecutionGroupInfo interactionspecid="huawei_s_5300_switch_syslog_ispec" recordid="huawei_s_5300_switch_disable_syslog_host_rec" sequenceid="1"/>
+</NCMExecutionGroup>
+
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:brocade_router_EnableSyslog" executiongroupname="brocade_router_enable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="brocade_router_syslog_ispec" recordid="brocade_router_config_mode_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="brocade_router_syslog_ispec" recordid="brocade_router_enable_logging_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="brocade_router_syslog_ispec" recordid="brocade_router_enable_syslog_for_host_rec" sequenceid="30"/>
+<NCMExecutionGroupInfo interactionspecid="brocade_router_syslog_ispec" recordid="brocade_router_exit_rec" sequenceid="40"/>
+</NCMExecutionGroup>
+
+<NCMExecutionGroup description="No Description" executiongroupid="NCMExecutionGroup:executiongroupid:brocade_router_DisableSyslog" executiongroupname="brocade_router_disable_syslog_change_tracking">
+<NCMExecutionGroupInfo interactionspecid="brocade_router_syslog_ispec" recordid="brocade_router_config_mode_rec" sequenceid="10"/>
+<NCMExecutionGroupInfo interactionspecid="brocade_router_syslog_ispec" recordid="brocade_router_disable_syslog_for_host_rec" sequenceid="20"/>
+<NCMExecutionGroupInfo interactionspecid="brocade_router_syslog_ispec" recordid="brocade_router_exit_rec" sequenceid="30"/>
+</NCMExecutionGroup>
+
+</ExecutionGroup_Change_Tracking_Syslog>
+

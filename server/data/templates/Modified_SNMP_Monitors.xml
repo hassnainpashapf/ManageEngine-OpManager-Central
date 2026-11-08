@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	<!-- DevicePackage Graph update Starts-->
+	<Graph YAXISTEXT="%" description="Maximum CPU utilisation over the last 5 minutes. Expressed as a percentage." displayName="CPU Utilization 5 min" failureThreshold="1" oldGraphName="cpuUtilisationMaxLast5Minutes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.207.8.4.4.3.3.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Allied Telesis"  graphName="CPUUtilizationMaxLast5Minutes">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Maximum CPU utilisation since the router was last restarted. Expressed as a percentage." displayName="CPU Utilization Max" failureThreshold="1" oldGraphName="cpuUtilisationMax" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.207.8.4.4.3.3.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Allied Telesis" graphName="CPUUtilizationMax">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Average CPU utilisation since the router was last restarted. Expressed as a percentage." displayName="Average CPU Utilization" failureThreshold="1" oldGraphName="cpuUtilisationAvg" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.207.8.4.4.3.3.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Allied Telesis" graphName="CPUUtilizationAvg">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="This object returns the percentage of time the CPU has been busy over the last 1 minute." displayName="CPU Utilization 1 min" failureThreshold="1" oldGraphName="s5ChasUtilCPUUsageLast1Minute" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.5.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya ERS Switch" graphName="s5ChasCPUUtilizationLast1Minute">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="This object returns the percentage of time the CPU has been busy over the last 10 seconds." displayName="CPU Utilization 10 sec" failureThreshold="1" oldGraphName="s5ChasUtilCPUUsageLast10Seconds" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.11.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya ERS Switch" graphName="s5ChasCPUUtilizationLast10Seconds">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="This object returns the percentage of time the CPU has beenbusy since system initialization." displayName="Total CPU Utilization" failureThreshold="1" oldGraphName="s5ChasUtilTotalCPUUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.4.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya ERS Switch" graphName="s5ChasTotalCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization 60 seconds average" displayName="CPU Utilization" failureThreshold="1" oldGraphName="swCpuOrMemoryUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1588.2.1.1.1.26.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade" graphName="swMemCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization" displayName="CPU Utilization" failureThreshold="1" oldGraphName="swCpuUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.3709.3.5.201.1.1.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="DataCom" graphName="swCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization (5 secs)" displayName="CPU Utilization (5 secs)" failureThreshold="1" oldGraphName="cpuLoad5secs" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.171.14.5.1.7.1.3.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="D-Link" graphName="CPUUtilization_5secs">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization (1 min)" displayName="CPU Utilization (1 min)" failureThreshold="1" oldGraphName="cpuLoad1min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.171.14.5.1.7.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="D-Link" graphName="CPUUtilization_1min">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization (5 mins)" displayName="CPU Utilization (5 mins)" failureThreshold="1" oldGraphName="cpuLoad5mins" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.171.14.5.1.7.1.5.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="D-Link" graphName="CPUUtilization_5mins">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="KB" description="The total memory free for utilization in KBytes." displayName="Total Memory Free" failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell Inc." graphName="agentSwitchCpuProcessMemFree">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Dell PowerConnect/Networking Switch - Total CPU utilization over 5, 60, and 300 second intervals with configurable rising threshold" displayName="CPU Utilization" failureThreshold="1" oldGraphName="agentSwitchCpuProcessTotalUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell Inc." graphName="agentSwitchProcessTotalCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU utilization in percentage for last 5 minutes." displayName="CPU Utilization (5 Min)" failureThreshold="1" oldGraphName="chStackUnitCpuUtil5Min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6027.3.10.1.2.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell Inc." graphName="chStackUnitCPUUtilization5Min">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The CPU utilization by set of system resources. This is the utilization of the process in the last 5 seconds." displayName="CPU Utilization 5 sec" failureThreshold="1" oldGraphName="extremeCpuMonitorSystemUtilization5secs" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.32.1.4.1.5.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks" graphName="extremeCPUUtilization5secs">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The CPU utilization by system resources. This is the utilization of the system resourcesin the last 5 minutes." displayName="CPU Utilization (5min)" failureThreshold="1" oldGraphName="extremeCpuMonitorSystemUtilization5mins" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.32.1.4.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks" graphName="extremeCPUUtilization5mins">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Extreme Networks Switch - Maximum CPU utilization by a process since process start" displayName="CPU Utilization" failureThreshold="1" oldGraphName="extremeCpuMonitorSystemMaxUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.32.1.4.1.12.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks" graphName="extremeCPUUtilizationMax">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Total amount of memory used by applications in Kbytes in the system." displayName="Total Memory Utilization (User)" failureThreshold="1" oldGraphName="extremeMemoryMonitorUserUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.32.2.2.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks" graphName="extremeMemoryUtilizationUser">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Total amount of memory used by system services in Kbytes in the system." displayName="Total Memory Utilization (system)" failureThreshold="1" oldGraphName="extremeMemoryMonitorSystemUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.32.2.2.1.4" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Extreme Networks" graphName="extremeMemoryUtilizationSystem">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Juniper devices - Generic operating CPU utilization percentage (used across multiple models)" displayName="CPU Utilization" failureThreshold="1" oldGraphName="jnxOperatingCPU" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.8.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="jnxOperatingCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Percentage of time the CPU processed traffic data (as opposed performing diagnositic tests or processing node control data) to in the last 64 seconds. Applicable to 6500 platforms." displayName="CPU Utilization (64 secs)" failureThreshold="1" oldGraphName="cdx6500NMNPSstatscpuUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.1.2.3.43.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola" graphName="cdxSstatsCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Peak CPU Utilization since last node or statistics reset. Applicable to 6500 platforms" displayName="Max CPU Utilization" failureThreshold="1" oldGraphName="cdx6500NMNPSstatsMaxcpuUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.1.2.3.43.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola" graphName="cdxstatsMaxCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization Threshold (%). If the CPU is not processing data, it is running diagnostic checks. It is never idle. This parameter specifies the amount of time spent performing non-diagnostic functions as a percentage of the total time. If this percentage exceeds the threshold, an alarm is generated" displayName="CPU Utilization" failureThreshold="1" oldGraphName="cdx6500NMNPCcpuUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.1.2.1.9.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola" graphName="cdxCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Manage Pro (MP) CPU utilization over 1 sec" displayName="CPU Utilization (ManagePro 1 sec)" failureThreshold="1" oldGraphName="mpCpuStatsUtil1Second" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.2.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware" graphName="mpCPUUtilization1Second">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Manage Pro (MP) CPU utilization over 64 sec" displayName="CPU Utilization (ManagePro 64 secs)" failureThreshold="1" oldGraphName="mpCpuStatsUtil64Seconds" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.2.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware" graphName="mpCPUUtilization64Seconds">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The utilization of this SP over 1 second. It shows the percentage." displayName="CPU Utilization (SP 1 sec)" failureThreshold="1" oldGraphName="spStatsCpuUtil1Second" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.4.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware" graphName="spStatsCPUUtilization1Second">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The average data CPU usage in last 5 seconds." displayName="CPU Utilization (Data)" failureThreshold="1" oldGraphName="axSysAverageDataCpuUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.22610.2.4.1.3.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="A10 Networks" graphName="axSysAverageDataCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Percentage of the device CPU utilization during the last 5 minutes. The value 101 is a dummy value, indicating that the CPU utilization was not measured (since measurement is disabled or was disabled during last 5 minutes)." displayName="CPU utilization (5 mins)" failureThreshold="1" oldGraphName="rlCpuUtilDuringLast5Minutes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.6.1.101.1.9.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco" graphName="rlCPUUtilization_Last5min">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Cisco generic (CISCO-PROCESS-MIB) - Overall CPU busy percentage in the last 5 seconds (revised, range 0-100, used across multiple models)" displayName="CPU Utilization (5 secs)" failureThreshold="1" oldGraphName="cpmCPUTotal5secRev" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.6" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco" graphName="cpmTotal5secRev_CPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The statistics collection of 1 minute CPU utilization." displayName="CPU Utilization (1 min)" failureThreshold="1" oldGraphName="snAgGblCpuUtil1MinAvg" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1991.1.1.2.1.52.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade" graphName="snAgGblCPUUtilization1MinAvg">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Percentage of CPU utilization" displayName="CPU Utilization" failureThreshold="1" oldGraphName="rcSysCpuUtil" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.2272.1.1.20.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RapidCity Communication" graphName="rcSysCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="YAMAHA router (SH series) - Memory utilization percentage" displayName="Memory utilization" failureThreshold="1" oldGraphName="yshMemoryUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1182.3.1.4.0" period="300" protocol="SNMP" timeAvg="false" vendorName="YAMAHA" graphName="yshMemoryUtilization">
+	<UserProps/>
+    </Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="CPU Utilization (5 Min Avg)" displayName="CPU Utilization (5 Min Avg)" failureThreshold="1" oldGraphName="yshCPUUtil5Mins" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1182.3.1.7.0" period="300" protocol="SNMP" timeAvg="false" vendorName="YAMAHA" graphName="yshCPUUtilization5Mins">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="dgs 6600 SysCpuUtil 1 min" displayName="CPU Utilization 1 Min" failureThreshold="1" oldGraphName="dgs6600SysCpuUtil1min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.171.10.120.100.1.1.1.1.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="D-Link" graphName="dgs6600SysCPUUtilization1min">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="dgs 6600 SysCpuUtil 5 min" displayName="CPU Utilization 5 Min" failureThreshold="1" oldGraphName="dgs6600SysCpuUtil5min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.171.10.120.100.1.1.1.1.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="D-Link" graphName="dgs6600SysCPUUtilization5min">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Alcatel-Lucent OmniSwitch (AOS) - 1-minute average CPU utilization percentage" vendorName="Alcatel" oldGraphName="aosCpuUtil1MinAvg" oid=".1.3.6.1.4.1.6486.801.1.2.1.16.1.1.1.1.1.11.0" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" graphName="aosCPUUtilization1MinAvg">
+      <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Alcatel-Lucent OmniSwitch (AOS) - 1-minute average memory utilization" vendorName="Alcatel" oldGraphName="aosMemoryUtil1MinAvg" oid=".1.3.6.1.4.1.6486.801.1.2.1.16.1.1.1.1.1.8.0" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" graphName="aosMemoryUtilization1MinAvg">
+      <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="ZTE/ZhongXing - CPU utilization percentage for ZhongXing network devices" vendorName="ZhongXing" oldGraphName="ZhongXingCPUUtil" oid=".1.3.6.1.4.1.3902.15.2.30.1.1.0" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" graphName="ZhongXingCPUUtilization">
+      <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="ZTE (ZhongXing) - Memory utilization percentage (alternate MIB)" vendorName="ZhongXing" oldGraphName="ZhongXingMemoryUtil" oid=".1.3.6.1.4.1.3902.15.2.30.1.2.0" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" graphName="ZhongXingMemoryUtilization">
+      <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The system CPU average busy percentage in the last 5 minutes period." displayName="CPUUtilization (5 min)" failureThreshold="1" oldGraphName="hwCpuCostRatePer5Minute" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.2.2.4.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei" graphName="hwCPUUtilizationPer5Minute">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="H3C/HP Comware devices - CPU utilization percentage via legacy Huawei-H3C MIB (instance determined by entPhysicalDescr)" displayName="CPU Utilization" failureThreshold="1" oldGraphName="h3cEntityExtCpuUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2011.10.2.6.1.1.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C" graphName="h3cEntityExtCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The system CPU average busy percentage in the last 5 minutes period." displayName="CPU Utilization (5 min)" failureThreshold="1" oldGraphName="CpuCostRatePer5Minute" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.2.2.4.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C" graphName="CPUUtilizationPer5Minute">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The overall CPU busy percentage in the last 1 minute period. This object deprecates the object cpmCPUTotal1min and increases the value range to (0..100)." displayName="CPU Utilization (1 min)" failureThreshold="1" oldGraphName=" cpmCPUTotal1minRev " graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" graphName="cpmTotal1minRevCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Cisco generic (CISCO-PROCESS-MIB) - Overall CPU busy percentage in the last 5 seconds (deprecated by cpmTotal5secRev, used across multiple models)" displayName="CPU Utilization (5 secs)" failureThreshold="1" oldGraphName="cpmCPUTotal5sec" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" graphName="cpmTotal5sec_CPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Routing Engine 1 - The CPU utilization in percentage of thissubject. Zero if unavailable or inapplicable" displayName="CPU Utilization (RE 1)" failureThreshold="1" oldGraphName="jnxOperatingCPURE0" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.8.9.1.0.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="jnxOperatingCPUUtilizationRE0">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Routing Engine 2 - The CPU utilization in percentage of thissubject. Zero if unavailable or inapplicable" displayName="CPU Utilization (RE 2)" failureThreshold="1" oldGraphName="jnxOperatingCPURE1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.8.9.2.0.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="jnxOperatingCPUUtilizationRE1">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization of slave unit" displayName="CPU Utilization (Slave)" failureThreshold="1" oldGraphName="CPUSlave" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.3902.3.3.1.1.6.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ZhongXing" graphName="SlaveCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Alcatel-Lucent (Nokia) SR series - Current system-level CPU utilization" displayName="CPU Utilization" failureThreshold="1" oldGraphName="sgiCpuUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6527.3.1.2.1.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel" graphName="sgiCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Average CPU utilization over the last 5 minutes." displayName="CPU Utilization (5 min)" failureThreshold="1" oldGraphName="adtranCpuUsed5m" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.664.5.53.1.4.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Adtran" graphName="adtran5minCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="This object returns the percentage of time the CPU has been busy over the last 1 minute." displayName="CPU Utilization (1 min)" failureThreshold="1" oldGraphName="cpuLast1Minute" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.5.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nortel Networks" graphName="CPUUtilization_Last1Minute">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Load average during last 1 minutes." displayName="CPU Utilization (1 min)" failureThreshold="1" oldGraphName="deviceCpuLoadAvg1min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks" graphName="deviceCPUUtilizationAvg1min">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Load average during last 5 minutes." displayName="CPU Utilization (5 min)" failureThreshold="1" oldGraphName="deviceCpuLoadAvg5min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks" graphName="deviceCPUUtilizationAvg5min">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Percentage of physical memory used" displayName="Memory Utilization (Physical)" failureThreshold="1" oldGraphName="devicePhysicalMemoryUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.7.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks" graphName="devicePhysicalMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The device's current CPU utilization, measured as thepercentage of time the device has been non-idle duringthe most recent one-second interval." displayName="CPU Utilization (1 min)" failureThreshold="1" oldGraphName="currentCpuUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.304.1.3.1.3.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netopia" graphName="currentCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The device's average CPU utilization, measured as thepercentage of time the device has been non-idle duringthe most recent one-minute interval." displayName="CPU Utilization (Avg.1 min)" failureThreshold="1" oldGraphName="netopiaAverageCpuUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.304.1.3.1.3.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netopia" graphName="netopiaAverageCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="The CPU Load Average." displayName="CPU utilization (%)" failureThreshold="1" oldGraphName="csXRSystemCpuLoadAverage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20376.2.1.1.1.2.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Century Systems" graphName="csXRSystemCPUUtilization">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="CPU Load Average" displayName="CPU Utilization" failureThreshold="1" oldGraphName="csNXRSystemCpuLoadAverage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20376.9.1.1.1.2.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Century Systems" graphName="csNXRSystemCPUUtilization">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="Average utilization of CPU in 5 minutes." displayName="CPU Utilization" failureThreshold="1" oldGraphName="yrhMultiCpuUtil5Min" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1182.2.1.18.1.5" period="300" protocol="SNMP" timeAvg="false" vendorName="YAMAHA" graphName="yrhMultiCPUUtilization5Min">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="YAMAHA router (RT series) - Main memory utilization percentage" displayName="Memory utilization" failureThreshold="1" oldGraphName="rtyrhMemoryUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1182.2.1.4.0" period="300" protocol="SNMP" timeAvg="false" vendorName="YAMAHA" graphName="rtyrhMemoryUtilization">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Cisco IOS/IOS-XE devices - 5-minute CPU utilization percentage (index 2), used across multiple models" vendorName="Cisco" oldGraphName="Cisco-CPUUtil" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.7.2" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" graphName="Cisco-CPUUtilization">
+      <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Aruba Wireless Controller (ArubaOS) - Per-processor 1-minute average CPU utilization percentage" displayName="CPU Utilization" failureThreshold="1" oldGraphName="aos.cpuUtil" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14823.2.2.1.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba" graphName="aos.CPUUtilization">
+       <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU load for last 5 minutes." displayName="CPU Utilization (5 min)" failureThreshold="1" oldGraphName="cpuWLC" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14525.4.8.1.1.11.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="CPUUtilizationWLC">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Extreme Networks Switch - Total CPU utilization percentage as of last sampling" displayName="CPU Utilization" failureThreshold="1" oldGraphName="extremeCpuMonitorTotalUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.32.1.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks" graphName="extremeTotalCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization" displayName="CPU Utilization (ZD)" failureThreshold="1" oldGraphName="ruckusZDSystemCPUUTIL" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.1.1.1.5.58.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade" graphName="ruckusZDSystemCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The CPU Utilization of the IVE system" displayName="CPU Utilization (ive node)" failureThreshold="1" oldGraphName="iveCpuUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="iveCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Juniper IVE (Pulse Secure/SA Series) - Memory utilization percentage of the Instant Virtual Extranet system" displayName="Memory Utilization" failureThreshold="1" oldGraphName="iveMemoryUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12532.11.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="iveMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Fortinet FortiGate firewall - Current RAM utilization percentage" displayName="Memory Utilization" failureThreshold="1" oldGraphName="fgSysMemUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.4.1.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" graphName="fgsys_MemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The overall CPU busy percentage in the last 5 minute period. This object deprecates the object cpmCPUTotal5min and increases the value range to (0..100)." displayName="CPU Utilization (5 min)" failureThreshold="1" oldGraphName="cpmCPUTotal5minRev" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" graphName="cpm5minTotal_CPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU utilization of the system in the last 1 minute. The value is measured in 0.01%. For example, if the value is 234, then CPU utilization is 2.34%." displayName="CPU Utilization (1 min)" failureThreshold="1" oldGraphName="wgSystemCpuUtil1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.3097.6.3.77" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="WatchGuard" graphName="wgSystemCPUUtilization1">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU utilization of the system in the last 5 minutes. The value is measured in 0.01%. For example, if the value is 234, then CPU utilization is 2.34%." displayName="CPU Utilization (5 min)" failureThreshold="1" oldGraphName="wgSystemCpuUtil5" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.3097.6.3.78" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="WatchGuard" graphName="wgSystemCPUUtilization5">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="H3C - Generic memory utilization percentage for H3C Comware devices using HH3C enterprise MIB" displayName="Memory Utilization" failureThreshold="1" oldGraphName="Memory Utilization" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.6.1.1.1.1.8" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C" graphName="H3c.MemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Juniper SRX series - Current Security Processing Unit (SPU) CPU utilization percentage (scalar instance)" displayName="CPU Utilization (SP)" failureThreshold="1" oldGraphName="jnxJsSPUMonitoringCPUUsage" graphType="multiple" isNumeric="" oid=".1.3.6.1.4.1.2636.3.39.1.12.1.1.1.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="jnxJsSPUCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Current memory usage of SPU(CPU) in percentage." displayName="JuniperSRX_Memory Utilization" failureThreshold="1" oldGraphName="jnxJsSPUMonitoringMemoryUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.39.1.12.1.1.1.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="jnxJsSPUMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Last one minute CPU utilization in percentage" displayName="JunipeSOS_nsResCpuLast1Min" failureThreshold="1" oldGraphName="nsResCpuLast1Min" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.3224.16.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" graphName="nsResCPUUtilizationLast1Min">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Cyberoam (Sophos) UTM Firewall - CPU usage percentage (generic instance)" displayName="CPU Utilization" failureThreshold="1" oldGraphName="cpuPercentUsage" graphType="multiplenode" isNumeric="true" oid=".1.3.6.1.4.1.21067.2.1.2.3.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cyberoam" graphName="CPUUtilization_percentusage">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Cyberoam UTM appliance - Percentage of main memory utilization" displayName="Memory Utilization" failureThreshold="1" oldGraphName="memoryPercentUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21067.2.1.2.5.2" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cyberoam" graphName="MemoryUtilizationPercent">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The percentage of host processorCPU that is currently busy." displayName="CPU Utilization" failureThreshold="1" oldGraphName="resourceHPCPUBusyPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.5.4.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Trend Micro" graphName="resourceHPCPUUtilization">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The percentage of host processor memory in use." displayName="Memory Utilization" failureThreshold="1" oldGraphName="resourceHPMemoryInUsePercent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10734.3.3.2.5.3.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Trend Micro" graphName="resourceHPMemoryUtilization">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Alcatel-Lucent OmniSwitch (legacy AOS) - Average device-level CPU utilization over the latest sample period in percent" displayName="CPU Utilization" failureThreshold="1" oldGraphName="CPUUsagePercent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6486.800.1.2.1.16.1.1.1.13.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel" graphName="CPUUtilizationPercent">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Alcatel-Lucent OmniSwitch (legacy AOS) - Average device-level memory utilization percentage" displayName="Memory Utilization" failureThreshold="1" oldGraphName="memoryUsedPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6486.800.1.2.1.16.1.1.1.9.0" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel" graphName="MemoryUtilizationUsedPercent">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization in last 10 secs" displayName="CPU Utilization (10 secs)" failureThreshold="1" oldGraphName="dpStatusCPUUsagetenSeconds" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.14685.3.1.14.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="IBM" graphName="dpStatusCPUUtilizationtenSeconds">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Memory Utilization" displayName="Memory Utilization" failureThreshold="1" oldGraphName="dpStatusMemoryStatusUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14685.3.1.5.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="IBM" graphName="dpStatusMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="CPU Utilization 5 Mins Avg" displayName="CPU Utilization 5 Mins Avg" failureThreshold="1" oldGraphName="DellChassisCPU5MinUtil" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.6027.3.26.1.4.4.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell" pollDataType="1" graphName="DellChassis5MinCPUUtilization">
+    <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Memory Utilization" displayName="Memory Utilization" failureThreshold="1" oldGraphName="MiKroTik.Memory.Utilization" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.25.2.3.1.6.65536*100)/.1.3.6.1.2.1.25.2.3.1.5.65536" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="MiKroTik" pollDataType="1" graphName="MiKroTik.MemoryUtilization">
+    <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="HP ProLiant server - CPU utilization percentage via Insight Management MIB" displayName="CPU Utilization" failureThreshold="1" oldGraphName="prolCpuUtilzation" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.232.3.2.7.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1" graphName="prolCPUUtilization">
+    <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Sophos XG - CPU utilization percentage for Sophos XG series firewalls" displayName="CPU Utilization" failureThreshold="1" oldGraphName="xgcpuPercentUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21067.2.1.2.2.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sophos" pollDataType="1" graphName="xgCPUUtilization">
+    <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Sophos XG Firewall - Memory utilization percentage" displayName="Memory Utilization" failureThreshold="1" oldGraphName="xgmemoryPercentUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21067.2.1.2.4.2.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Sophos" pollDataType="1" graphName="xgMemoryUtilization">
+    <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Memory utilization" displayName="Memory utilization" failureThreshold="1" oldGraphName="DellChassisMemUtil" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.6027.3.26.1.4.4.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell" pollDataType="1" graphName="DellChassisMemoryUtilization">
+    <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Fortinet FortiManager - System CPU utilization percentage" displayName="CPU Utilization" failureThreshold="1" oldGraphName="fmSysCpuUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.103.2.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1" graphName="fmSys_CPUUtilization">
+    <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Fortinet FortiSwitch - System CPU utilization percentage" displayName="CPU Utilization" failureThreshold="1" oldGraphName="fsSysCpuUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.106.4.1.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1" graphName="fsSys_CPUUtilization">
+    <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Fortinet FortiGate Firewall - Current CPU utilization percentage (FortiOS MIB)" displayName="CPU Utilization" failureThreshold="1" oldGraphName="fortinetCurrentCPUUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.4.1.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" graphName="fortinetCurrentCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Current lowmem utilization (percentage). Lowmem is memory available for the kernel's own data structures and kernel specific tables. The system can get into a bad state if it runs out of lowmem." displayName="Low Memory Usage" failureThreshold="1" oldGraphName="fgSysLowMemUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.4.1.9" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" graphName="fgSys_LowMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="The overall CPU busy percentage in the last 1 min period. This object obsoletes the busyPer object from the OLD-CISCO-SYSTEM-MIB. This object is deprecated  by cpmTotal5secRev_CPUUtilization which has the changed range of value (0..100)." displayName="CPU Usage (1 min)" failureThreshold="1" oldGraphName="cpmCPUTotal1min" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" graphName="cpm1minTotal_CPUUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Huawei networking devices - Entity memory utilization percentage (generic hwEntity MIB, used across multiple models)" displayName="Memory Utilization" failureThreshold="1" oldGraphName="hwEntityMemUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei" graphName="hwEntityMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="H3C - Memory utilization percentage for HP/H3C Comware devices, identified via entPhysicalDescr" displayName="Memory Utilization" failureThreshold="1" oldGraphName="h3cEntityExtMemUsagePercentage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2011.10.2.6.1.1.1.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C" graphName="h3cEntityExtMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Alcatel-Lucent (Nokia) SR/SAR series - System memory utilization" displayName="Memory Utilization" failureThreshold="1" oldGraphName="sgiMemUsage" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.6527.3.1.2.1.1.9.0) / ((.1.3.6.1.4.1.6527.3.1.2.1.1.9.0) + (.1.3.6.1.4.1.6527.3.1.2.1.1.10.0) * 100)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel" graphName="sgiMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Total memory usage in percentage." displayName="Force10 Memory Utilization" failureThreshold="1" oldGraphName="chStackUnitMemUsageUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6027.3.10.1.2.9.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell Inc." graphName="chStackUnitMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Aruba AOS Wireless Controller - Memory utilization percentage" displayName="Memory Utilization" failureThreshold="1" oldGraphName="aosmemUsedPer" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.14823.2.2.1.1.1.11.1.3.1) * 100 / (.1.3.6.1.4.1.14823.2.2.1.1.1.11.1.2.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Aruba" graphName="aosMemoryUtilization">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Memory utilization" displayName="Memory Utilization (ZD)" failureThreshold="1" oldGraphName="ruckusZDSystemMemUTIL" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.1.2.1.1.1.5.59.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade" graphName="ruckusZDSystemMemoryUtilization"> 
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU Utilization" displayName="CPU Utilization" failureThreshold="1" oldGraphName="jnxJsSPUMonitoringCPUUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.8.9.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" pollDataType="1" graphName="jnxJsSPUCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<!-- DevicePackage Graph update Ends-->
+	<!-- GraphInfoData Graph update Starts -->
+	<Graph YAXISTEXT="%" description="Monitors the percent of time that the CPU has been doing useful work since the last time a client requested the cpuBusyTimePerCent." displayName="CPU Utilization" failureThreshold="1" oldGraphName="NetAppCPUBusyTime" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.789.1.2.1.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="NetApp, Inc." graphName="NetAppCPUUtilization">
+        <UserProps/>
+    </Graph>
+	<!-- GraphInfoData Graph update Ends -->
+</GRAPHDETAIL>

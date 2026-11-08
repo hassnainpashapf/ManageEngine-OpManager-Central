@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+<!-- For Vanguard Router  -->
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:vanguard_router" templatename="Vanguard_Router" displayname="Vanguard Router" ostype="6455" description="For all Vanguard Routers">
+	<NCMVendorDevice vendorid="Vanguard"/>
+	<NCMDevicePersonality personalityid="VanguardRouter"/>
+
+	<NCMSupportedProtocol protocolid="TELNET">                                                     <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>                          </NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="TFTP"/>
+
+	<!--NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol-->
+
+	<!-- Telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:vanguard_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:vanguard_router" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="vanguard_router_cli_fetch_running_config" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="vanguard_router_cli_push_running_config"/>
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	<!-- SSH 
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:vanguard_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:vanguard_router" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="vanguard_router_cli_fetch_running_config" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="vanguard_router_cli_push_running_config"/>
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	-->
+</NCMDeviceTemplate>
+</DeviceConfiguration>

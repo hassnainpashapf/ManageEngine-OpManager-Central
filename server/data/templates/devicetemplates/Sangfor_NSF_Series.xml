@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Sangfor NSF series" displayName="Sangfor NSF Series" osType="Sangfor" templateName="Sangfor NSF Series" category="Firewall">
+	<RestTemplate name=""/>
+	<Vendor displayName="Sangfor" vendorName="Sangfor">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">           	
+                	<Command commandstr="show configuration running" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="90000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="startup">            	
+                	<Command commandstr="show configuration save" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="90000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Sangfor NSF Series" personalityName="SangforNSFSeries">	
+		<Login enablecommand="" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Build Date" displayname="Build" name="BUILD" sequenceid="1" size="50"/>
+				<Column defaultvalue="Not Available" desc="CPU Type" displayname="CPU Type" name="CPUTYPE" sequenceid="1" size="50"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="SangforHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_sangfor_nsf_series">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Sangfor.*OS\s*Version\s*(\S*).*">					
+											<PARAM NAME="OSVERSION" TOKENNO="3"/>
+										</REGEX>	
+										<REGEX NAME="MODEL" EXPRESSION=".*Name:\s*(\S*)\s*S\/N:\s*(\S*).*">					
+											<PARAM NAME="MODEL" TOKENNO="1"/>				
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+										</REGEX>	
+									    <REGEX NAME="CPUTYPE" EXPRESSION=".*CPU\s*Type:\s*(.*)">
+											<PARAM NAME="CPUTYPE" TOKENNO="1"/>
+										</REGEX>
+									
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_sangfor_nsf_series" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

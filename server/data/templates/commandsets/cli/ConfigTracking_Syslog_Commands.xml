@@ -1,0 +1,1404 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+	<!-- Cisco -->
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+		<InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_change_tracking_syslog_ipsec" />
+	</CLIInteractionSpec>
+	
+
+
+	<CLICommand command="logging on">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_enable_logging_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging trap ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_syslog_logging_level_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="no logging ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<!-- CiscoPIX -->
+
+	<CLICommand command="logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="ciscopix_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="no logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="ciscopix_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<!-- Cisco WAAS-->
+	
+	<CLICommand command="logging host ${UserInput:HostIpAddress} priority ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="ciscowaas_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<CLICommand command="logging facility syslog">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="ciscowaas_cli_enable_logging_facility_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<CLICommand command="no logging host ${UserInput:HostIpAddress} priority ${UserInput:LoggingLevel} ">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="ciscowaas_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<!-- Cisco CatOS -->
+
+	<!--CLICommand command="set logging server enable">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_catos_enable_logging_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="set logging server ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_catos_enable_syslog_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="set logging server severity ${UserInput:LoggingLevelNumber}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_catos_syslog_logging_severity_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="clear logging server ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_catos_disable_syslog_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand-->
+
+
+	<!-- Foundry -->
+
+	<!-- CLI -->
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="foundryActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_change_tracking_syslog_ipsec"/>
+	</CLIInteractionSpec>
+
+	<CLICommand command="logging on">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="foundry_cli_enable_logging_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="foundry_cli_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="no logging ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="foundry_cli_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging buffered ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="foundry_cli_syslog_logging_level_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<!-- SSH -->
+	<CLICommand command="logging on">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="foundry_ssh_enable_logging_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="foundry_ssh_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="no logging ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="foundry_ssh_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging buffered ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="foundry_ssh_syslog_logging_level_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+	<!-- Netscreen Firewall -->
+
+    	<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+        	<InteractionSpec timeout="60000" protocol="CLI" interactionid="netscreen_change_tracking_syslog_ipsec"/>
+    	</CLIInteractionSpec>
+
+    	<CLICommand command="set syslog config ${UserInput:HostIpAddress} log event">
+    	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    	        <Record type="CLI" recordid="netscreen_firewall_enable_syslog_for_host_rec" protocol="CLI"/>
+    	    </CLIInputRecord>
+    	</CLICommand>
+
+    	<CLICommand command="set syslog config ${UserInput:HostIpAddress} port 514">
+    	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    	        <Record type="CLI" recordid="netscreen_firewall_enable_syslog_for_host_rec1" protocol="CLI"/>
+    	    </CLIInputRecord>
+    	</CLICommand>
+
+    	<CLICommand command="set syslog enable">
+    	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    	        <Record type="CLI" recordid="netscreen_firewall_enable_syslog_rec" protocol="CLI"/>
+    	    </CLIInputRecord>
+    	</CLICommand>
+
+    	<CLICommand command="set log module system level ${UserInput:LoggingLevel} destination syslog">
+    	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    	        <Record type="CLI" recordid="netscreen_firewall_syslog_logging_level_rec" protocol="CLI"/>
+    	    </CLIInputRecord>
+    	</CLICommand>
+
+    	<CLICommand command="unset syslog config ${UserInput:HostIpAddress}">
+    	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    	        <Record type="CLI" recordid="netscreen_firewall_disable_syslog_for_host_rec" protocol="CLI"/>
+    	    </CLIInputRecord>
+    	</CLICommand>
+
+    <!-- Adtran Devices -->
+
+	<CLICommand command="logging forwarding on">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="adtran_cli_enable_logging_forwarding_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging facility syslog">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="adtran_cli_enable_logging_facility_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging forwarding priority-level ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="adtran_cli_syslog_logging_level_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging forwarding receiver-ip ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="adtran_cli_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="no logging forwarding receiver-ip ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="adtran_cli_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+   <!-- Nortel BayStack -->
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="nortel_baystack_change_tracking_syslog_ispec"/>
+	</CLIInteractionSpec>
+
+	<CLICommand command="logging enable">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_baystack_enable_logging_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging remote address ${UserInput:HostIpAddress}">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_baystack_enable_syslog_host_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging remote level ${UserInput:LoggingLevel}">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_baystack_logging_level_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging remote enable">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_baystack_enable_remote_logging_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="no logging remote address">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="nortel_baystack_disable_syslog_host_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+	</CLICommand>
+
+
+   <!-- Fortigate -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="fortigate_firewall_syslog_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="config log syslogd filter">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_enter_syslogd_filter_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set event enable">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_enable_event_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set admin enable">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_enable_admin_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set severity ${UserInput:LoggingLevel}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_logging_level_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="end">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_exit_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="config log syslogd setting">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_enter_syslogd_setting_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set server ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_enable_host_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set port 514">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_set_port_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set status enable">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_enable_status_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="unset server">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_disable_host_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+	<!-- Force10 -->
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+		<InteractionSpec timeout="20000" protocol="CLI" interactionid="force10_eswitch_change_tracking_syslog_ipsec"/>
+	</CLIInteractionSpec>
+
+	<CLICommand command="logging on">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="force10_eswitch_enable_logging_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="force10_eswitch_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging trap ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="force10_eswitch_syslog_logging_level_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="no logging ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="force10_eswitch_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+	<!-- Enterasys -->
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+		<InteractionSpec timeout="20000" protocol="CLI" interactionid="enterasys_switch_change_tracking_syslog_ipsec"/>
+	</CLIInteractionSpec>
+
+	<CLICommand command="set logging server 8 ip-addr ${UserInput:HostIpAddress} severity ${UserInput:LoggingLevelNumber} descr DeviceExpert port 514 state enable">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="enterasys_switch_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="clear logging server 8">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="enterasys_switch_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+	<!-- Extreme -->
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+		<InteractionSpec timeout="20000" protocol="CLI" interactionid="extreme_switch_change_tracking_syslog_ipsec"/>
+	</CLIInteractionSpec>
+
+	<CLICommand command="configure syslog ${UserInput:HostIpAddress} local0 ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="extreme_switch_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="enable syslog">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="extreme_switch_enable_syslog_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="configure syslog 0.0.0.0 local0 info">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="extreme_switch_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="disable syslog">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="extreme_switch_disable_syslog_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+	<!-- Alaxala Switch -->
+	<CLICommand command="logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala_switch_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="logging trap ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala_switch_syslog_logging_level_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="no logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala_switch_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<!-- Alaxala 1230  Switch -->
+	<CLICommand command="logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230_switch_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	<CLICommand command="logging trap ${UserInput:LoggingLevel}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230_switch_syslog_logging_level_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	<CLICommand command="no logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="alaxala1230_switch_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+    <!-- Avaya gateway -->
+
+	<CLICommand command="set logging server condition all ${UserInput:LoggingLevelNumber} ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="avaya_media_gateway_enable_syslog_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="clear logging server ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="avaya_media_gateway_disable_syslog_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+    </CLICommand>
+
+    <!-- LambdaDriver -->
+
+    <CLICommand command="rsyslog ${UserInput:HostIpAddress} secure">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="lambda_driver_enable_syslog_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="no log syslog">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="lambda_driver_disable_syslog_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+    </CLICommand>
+    
+    
+ <!-- DaxDx -->
+    
+    <CLICommand command="logging ${UserInput:HostIpAddress}">
+    		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+    			<Record type="CLI" recordid="daxdx_cli_enable_syslog_for_host_rec" protocol="CLI"/>
+    		</CLIInputRecord>
+    </CLICommand>
+    
+    
+    <CLICommand command="no logging ${UserInput:HostIpAddress}">
+    		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+    			<Record type="CLI" recordid="daxdx_cli_disable_syslog_host_rec" protocol="CLI"/>
+    		</CLIInputRecord>
+    </CLICommand>
+    
+  
+  <!-- Dax BTI-->
+  
+    <CLICommand command="log server ${UserInput:HostIpAddress} syslog-facility syslog trap debugging">
+    		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+      			<Record type="CLI" recordid="daxbti_cli_enable_syslog_host_rec" protocol="CLI"/>
+      		</CLIInputRecord>
+    </CLICommand>
+      
+      
+    <CLICommand command="no log server ${UserInput:HostIpAddress}">
+      		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+      			<Record type="CLI" recordid="daxbti_cli_disable_syslog_host_rec" protocol="CLI"/>
+      		</CLIInputRecord>
+    </CLICommand>
+    
+    
+<!-- DaxDX-5026MGV -->
+    
+    <CLICommand command="logging host ${UserInput:HostIpAddress}">
+ 	        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	    <Record type="CLI" recordid="daxdx5026mgv_cli_enable_syslog_host_rec" protocol="CLI"/>
+            </CLIInputRecord>
+    </CLICommand>
+
+
+    <CLICommand command="logging trap ${UserInput:LoggingLevel}">
+ 	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="daxdx5026mgv_cli_syslog_logging_level_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+          
+          
+    <CLICommand command="no logging host ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+          	<Record type="CLI" recordid="daxdx5026mgv_cli_disable_syslog_host_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+    
+    <!-- DaxDX 0830 PC -->
+    
+    <CLICommand command="logging server ${UserInput:HostIpAddress}">
+        		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        			<Record type="CLI" recordid="daxdx0830pc_cli_enable_syslog_for_host_rec" protocol="CLI"/>
+        		</CLIInputRecord>
+        </CLICommand>
+        
+        
+        <CLICommand command="no logging server ${UserInput:HostIpAddress}">
+        		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        			<Record type="CLI" recordid="daxdx0830pc_cli_disable_syslog_host_rec" protocol="CLI"/>
+        		</CLIInputRecord>
+    </CLICommand>
+    
+
+    <!-- h3c -->
+     <CLICommand command="info-center loghost ${UserInput:HostIpAddress}">
+     	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            	    <Record type="CLI" recordid="h3c_switch_enable_syslog_host_rec" protocol="CLI"/>
+                </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="info-center source default channel loghost log level ${UserInput:LoggingLevel}">
+       <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+          <Record type="CLI" recordid="h3c_switch_enable_syslog_loghost_rec" protocol="CLI"/>
+       </CLIInputRecord>
+    </CLICommand>
+
+    
+    
+    <CLICommand command="undo info-center loghost ${UserInput:HostIpAddress}">
+         	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                	    <Record type="CLI" recordid="h3c_switch_disable_syslog_host_rec" protocol="CLI"/>
+                    </CLIInputRecord>
+    </CLICommand>
+
+
+    <!-- Blue Coat -->
+
+    <CLICommand command="syslog loghost ${UserInput:HostIpAddress}">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	    <Record type="CLI" recordid="bluecoat_cli_enable_syslog_host_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="syslog enable">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	    <Record type="CLI" recordid="bluecoat_cli_enable_syslog_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="syslog disable">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	    <Record type="CLI" recordid="bluecoat_cli_disable_syslog_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="event-log">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	    <Record type="CLI" recordid="bluecoat_cli_eventlog_syslog_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+
+    </CLICommand>
+
+    <CLICommand command="level informational">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	    <Record type="CLI" recordid="bluecoat_cli_log_level_syslog_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+	    </CLICommand>
+
+	    <CLICommand command="exit">
+	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	    <Record type="CLI" recordid="bluecoat_cli_exit_eventlog_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+	    </CLICommand>
+
+	    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="event-log)" commandecho="false" promptecho="true">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="bluecoat_cli_eventlog_promt_enable_ipsec" />
+	    </CLIInteractionSpec>
+
+	    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+            <InteractionSpec timeout="120000" protocol="CLI" interactionid="bluecoat_cli_prompt_ispec"/>
+	    </CLIInteractionSpec>
+
+
+    <!-- Yamaha -->
+
+     <CLICommand command="syslog host ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="yamaha_router_enable_syslog_host_rec" protocol="CLI"/>
+        </CLIInputRecord>
+     </CLICommand>
+  
+     <CLICommand command="syslog info on">
+         <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+             <Record type="CLI" recordid="yamaha_router_syslog_level_enable_rec" protocol="CLI"/>                                                       
+         </CLIInputRecord>
+     </CLICommand>
+     
+     <CLICommand command="no syslog host ${UserInput:HostIpAddress}">
+         <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+              <Record type="CLI" recordid="yamaha_router_disable_syslog_host_rec" protocol="CLI"/>
+         </CLIInputRecord>
+     </CLICommand>
+     
+     <!--F5 Big-Ip-->
+     
+     <CLICommand command="bigpipe syslog remote server ${UserInput:HostIpAddress}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="f5_bigip_enable_syslog_for_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+     
+     <CLICommand command="bigpipe syslog remote server none">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="f5_bigip_disable_syslog_for_host_rec" protocol="CLI"/>                                             
+	     </CLIInputRecord>
+     </CLICommand>
+
+
+  <!-- CitrixNetScaler -->
+
+       <CLICommand command="add audit syslogAction 'deviceexpert' ${UserInput:HostIpAddress} -logLevel  ${UserInput:LoggingLevel}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="citrix_enable_syslog_for_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+   <CLICommand command="add audit syslogPolicy 'deviceexpert' ns_true 'deviceexpert'">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="citrix_enable_syslog_for_host_rec_1" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+      <CLICommand command="bind  system global 'deviceexpert'   -priority  27">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="citrix_enable_syslog_for_host_rec_2" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand> 
+
+     <CLICommand command="unbind system global 'deviceexpert'">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="citrix_disable_syslog_for_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand> 
+
+      <CLICommand command="rm  audit syslogpolicy 'deviceexpert'">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="citrix_disable_syslog_for_host_rec_1" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+     <CLICommand command="rm audit syslogaction 'deviceexpert'">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="citrix_disable_syslog_for_host_rec_2" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+    	<!--Hitachi Switch -->
+	<CLICommand command="logging ip ${UserInput:HostIpAddress} local0 ${UserInput:LoggingLevel}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="hitachi_switch_enable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+	<CLICommand command="no logging ip ${UserInput:HostIpAddress}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="hitachi_switch_disable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+<!-- Dell Switch -->
+
+     <CLICommand command="config">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="dell_configure_terminal_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+	 
+	 <CLICommand command="logging ${UserInput:HostIpAddress} severity ${UserInput:LoggingLevel}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="dell_enable_syslog_for_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>	 
+	 
+	<CLICommand command="no logging ${UserInput:HostIpAddress}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="dell_disable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>  
+         
+    
+
+<!-- Cisco Nexus Switch -->
+
+	<CLICommand command="logging server ${UserInput:HostIpAddress} ${UserInput:LoggingLevel} use-vrf default facility local2">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="cisconexus_switch_enable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+	<CLICommand command="no logging server ${UserInput:HostIpAddress}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="cisconexus_switch_disable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+	 
+	  <!-- Cisco MDS Switch -->
+
+	<CLICommand command="logging server ${UserInput:HostIpAddress} ${UserInput:LoggingLevel}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="cisco_mds_switch_enable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+	<CLICommand command="no logging server ${UserInput:HostIpAddress}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="cisco_mds_switch_disable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+	 
+	  
+	 <!-- Meru WLAN Controller -->
+	 
+	<CLICommand command="syslog-host ${UserInput:HostIpAddress}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="meru_wlan_controller_enable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+
+	<CLICommand command="no syslog-host ${UserInput:HostIpAddress}">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="meru_wlan_controller_disable_syslog_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+	 	 
+<!-- Allied Telesis CenterCOM GS900M V2  -->
+
+<CLICommand command="enable log output=syslog">
+             <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                     <Record type="CLI" recordid="alliedtelesis_gs900m_enable_syslog_host_rec1" protocol="CLI"/>
+             </CLIInputRecord>
+     </CLICommand>
+
+        <CLICommand command="set log output=syslog server=${UserInput:HostIpAddress} severity=${UserInput:LoggingLevel}">
+             <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                     <Record type="CLI" recordid="alliedtelesis_gs900m_enable_syslog_host_rec2" protocol="CLI"/>
+             </CLIInputRecord>
+     </CLICommand>
+
+        <CLICommand command="disable log output=syslog">
+             <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+  <Record type="CLI" recordid="alliedtelesis_gs900m_disable_syslog_host_rec" protocol="CLI"/>
+             </CLIInputRecord>
+     </CLICommand>
+	 
+	 	 
+	 <CLICommand command="logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="brocade_fastiron_switch_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+
+	</CLICommand>
+
+   <CLICommand command="config t">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="brocade_fastiron_switch_config_mode_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+	
+   <CLICommand command="logging on">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="brocade_fastiron_switch_enable_logging_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+   <CLICommand command="exit">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="brocade_fastiron_switch_exit_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+	<CLICommand command="no logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="brocade_fastiron_switch_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	 <!-- A10Networks -->
+	 
+   <CLICommand command="config t">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="a10_networks_switch_config_mode_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+  
+   <CLICommand command="exit">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="a10_networks_switch_exit_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+  
+   <CLICommand command="logging host ${UserInput:HostIpAddress}">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="a10_networks_switch_logging_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+   <CLICommand command="logging syslog ${UserInput:LoggingLevel}">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="a10_networks_switch_syslog_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+  
+   <CLICommand command="no logging host">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="a10_networks_switch_disable_syslog_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+  
+  	 <!-- Allied Telesis Ethernet Switch-->
+	 
+   <CLICommand command="config t">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="alliedtelesis_ethernet_switch_config_mode_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+  
+   <CLICommand command="exit">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="alliedtelesis_ethernet_switch_exit_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+  
+   <CLICommand command="log host ${UserInput:HostIpAddress}">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="alliedtelesis_ethernet_switch_logging_rec1" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+  
+  
+   <CLICommand command="log host ${UserInput:HostIpAddress} level ${UserInput:LoggingLevel}">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="alliedtelesis_ethernet_switch_logging_rec2" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+ 
+  
+   <CLICommand command="no log host ${UserInput:HostIpAddress}">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="alliedtelesis_ethernet_switch_disable_syslog_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand> 
+      
+     
+     <CLICommand command="bigpipe syslog remote server {deserver {host ${UserInput:HostIpAddress}}} add">
+	     <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		     <Record type="CLI" recordid="f510x_bigip_enable_syslog_for_host_rec" protocol="CLI"/>
+	     </CLIInputRecord>
+     </CLICommand>
+	 
+	  <!-- NEC devices -->
+	 
+	    <CLICommand command="svintr-config">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="nec_ix2025_config_syslog_rec1" protocol="CLI"/>
+          </CLIInputRecord>
+		   </CLICommand> 
+		  
+		  	    <CLICommand command="exit">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="nec_ix2025_exit_syslog_rec1" protocol="CLI"/>
+          </CLIInputRecord>
+		   </CLICommand> 
+      
+      
+   <CLICommand command="syslog ip host ${UserInput:HostIpAddress}">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="nec_ix2025_enable_syslog_rec1" protocol="CLI"/>
+          </CLIInputRecord>
+		   </CLICommand> 
+		  
+		        
+   <CLICommand command="logging subsystem cnfg info">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="nec_ix2025_enable_syslog_rec2" protocol="CLI"/>
+    </CLIInputRecord>
+	 </CLICommand> 
+	
+	   <CLICommand command="write memory">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="nec_ix2025_write_mem_rec1" protocol="CLI"/>
+    </CLIInputRecord>
+	 </CLICommand> 
+			        
+			        
+   <CLICommand command="logging subsystem tels info">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="nec_ix2025_enable_syslog_rec3" protocol="CLI"/>
+    </CLIInputRecord>
+	 </CLICommand> 
+		  	  
+	   <CLICommand command="no syslog ip host ${UserInput:HostIpAddress}">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="nec_ix2025_disable_syslog_rec" protocol="CLI"/>
+       </CLIInputRecord>			  
+  </CLICommand> 
+      
+    
+   <!-- Fortigate firewall V4 and V5 -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="fortigate_firewall_v4_syslog_ispec"/>
+    </CLIInteractionSpec>
+
+	
+    <CLICommand command="config log syslogd setting">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_enter_syslogd_setting_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+
+    <CLICommand command="set status enable">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_enable_status_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set server ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_enable_host_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="set facility local7">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_set_facility_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+
+    <CLICommand command="end">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_exit_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="config log syslogd filter">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_enter_syslogd_filter_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="set severity ${UserInput:LoggingLevel}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_logging_level_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="set port 514">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_set_port_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+
+    <CLICommand command="unset server">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_disable_host_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="set status disable ">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fortigate_firewall_v4_disable_host_rec1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+ 
+  
+   <!-- Fiberhome Switch  -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="fiberhome_switch_syslog_ispec"/>
+    </CLIInteractionSpec>
+
+	
+    <CLICommand command="configure">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fiberhome_switch_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+
+    <CLICommand command="logging on">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fiberhome_switch_logging_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="logging syslog ${UserInput:LoggingLevel}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fiberhome_switch_set_facility_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="syslog server ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fiberhome_switch_set_syslog_ip_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+	    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fiberhome_switch_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	 	
+	 	
+    <CLICommand command="no syslog server ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fiberhome_switch_disable_syslog_ip_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+	  
+   <!-- ZXR Router  -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="zxr_router_zsr_syslog_ispec"/>
+    </CLIInteractionSpec>
+
+	
+    <CLICommand command="config t">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="zxr_router_zsr_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+
+    <CLICommand command="logging on">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="zxr_router_zsr_logging_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="logging trap ${UserInput:LoggingLevel}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="zxr_router_zsr_set_facility_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="syslog-server host ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="zxr_router_zsr_set_syslog_ip_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+	    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="zxr_router_zsr_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	 	
+	 	
+    <CLICommand command="no syslog-server host ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="zxr_router_zsr_disable_syslog_ip_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+
+	<!-- Juniper Ex4200 Syslog commands -->
+	
+	  
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_ex4200_switch_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=">" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_ex4200_switch_syslog_ispec1"/>
+    </CLIInteractionSpec>
+
+	
+    <CLICommand command="configure">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_ex4200_switch_configure_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+    <CLICommand command="set system syslog host ${UserInput:HostIpAddress} any any">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_ex4200_switch_enable_command_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	<CLICommand command="delete system syslog host ${UserInput:HostIpAddress} any any">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_ex4200_switch_disable_command_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="commit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_ex4200_switch_commit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_ex4200_switch_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	 
+	 
+	  
+   <!-- Juniper router -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_router_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=">" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_router_syslog_ispec1"/>
+    </CLIInteractionSpec>
+
+	
+    <CLICommand command="configure">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_router_configure_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+    <CLICommand command="set system syslog host ${UserInput:HostIpAddress} any any">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_router_enable_command_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	<CLICommand command="delete system syslog host ${UserInput:HostIpAddress} any any">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_router_disable_command_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="commit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_router_commit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_router_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	 
+	 
+	 	  
+   <!-- Fujitsu Firewall -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="#" commandecho="false" promptecho="true" promptactionid="fujitsuActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="fujitsu_firewall_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+	
+    <CLICommand command="config t">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fujitsu_firewall_configure_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+    <CLICommand command="load running-config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fujitsu_firewall_load_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	<CLICommand command="rule logging de">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fujitsu_firewall_logging_rule_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="syslog ${UserInput:HostIpAddress}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fujitsu_firewall_syslog_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="commit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fujitsu_firewall_commit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="quit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fujitsu_firewall_quit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	<CLICommand command="no rule logging de">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="fujitsu_firewall_disable_logging_rule_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <!-- huawei -->
+     <CLICommand command="info-center loghost ${UserInput:HostIpAddress}">
+     	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            	    <Record type="CLI" recordid="huawei_switch_enable_syslog_host_rec" protocol="CLI"/>
+                </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="info-center source default channel loghost log level ${UserInput:LoggingLevel}">
+       <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+          <Record type="CLI" recordid="huawei_switch_enable_syslog_loghost_rec" protocol="CLI"/>
+       </CLIInputRecord>
+    </CLICommand>    
+    
+    <CLICommand command="undo info-center loghost ${UserInput:HostIpAddress}">
+         	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                	    <Record type="CLI" recordid="huawei_switch_disable_syslog_host_rec" protocol="CLI"/>
+                    </CLIInputRecord>
+    </CLICommand>
+
+	
+	
+	<!-- Juniper SRX commands -->
+	
+	  
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true" promptactionid="JuniperActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_srx_switch_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=">" commandecho="false" promptecho="true" promptactionid="JuniperActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_srx_switch_syslog_ispec1"/>
+    </CLIInteractionSpec>
+
+	
+    <CLICommand command="configure">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_srx_switch_configure_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>	
+	
+    <CLICommand command="set system syslog host ${UserInput:HostIpAddress} any any">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_srx_switch_enable_command_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	<CLICommand command="delete system syslog host ${UserInput:HostIpAddress} any any">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_srx_switch_disable_command_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="commit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_srx_switch_commit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_srx_switch_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	 
+   <!-- HP switch -->
+	
+	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="hpActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_switch_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+	
+     <CLICommand command="config t">
+     	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            	    <Record type="CLI" recordid="hp_switch_config_mode_rec" protocol="CLI"/>
+                </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="logging ${UserInput:HostIpAddress}">
+       <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+          <Record type="CLI" recordid="hp_switch_enable_syslog_loghost_rec" protocol="CLI"/>
+       </CLIInputRecord>
+    </CLICommand>    
+
+    <CLICommand command="logging severity ${UserInput:LoggingLevel}">
+       <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+          <Record type="CLI" recordid="hp_switch_enable_syslog_log_level_rec" protocol="CLI"/>
+       </CLIInputRecord>
+    </CLICommand>    
+
+    <CLICommand command="exit">
+       <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+          <Record type="CLI" recordid="hp_switch_config_syslog_exit_rec" protocol="CLI"/>
+       </CLIInputRecord>
+    </CLICommand>    
+    
+    <CLICommand command="no logging ${UserInput:HostIpAddress}">
+         	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                	    <Record type="CLI" recordid="hp_switch_disable_syslog_host_rec" protocol="CLI"/>
+                    </CLIInputRecord>
+    </CLICommand>
+	
+	
+	 <!-- huawei -->
+	 
+	 
+	  <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="hpActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="huawei_s_5300_switch_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+     <CLICommand command="info-center loghost ${UserInput:HostIpAddress} facility local5">
+     	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            	    <Record type="CLI" recordid="huawei_s_5300_switch_enable_syslog_host_rec" protocol="CLI"/>
+                </CLIInputRecord>
+    </CLICommand>
+    
+        <CLICommand command="undo info-center loghost ${UserInput:HostIpAddress} facility local5">
+         	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                	    <Record type="CLI" recordid="huawei_s_5300_switch_disable_syslog_host_rec" protocol="CLI"/>
+                    </CLIInputRecord>
+    </CLICommand>
+    	
+	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="hpActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="huawei_ne_router_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+     <CLICommand command="info-center loghost ${UserInput:HostIpAddress} facility local5">
+     	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            	    <Record type="CLI" recordid="huawei_ne_router_enable_syslog_host_rec" protocol="CLI"/>
+                </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="undo info-center loghost ${UserInput:HostIpAddress} facility local5">
+         	        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                	    <Record type="CLI" recordid="huawei_ne_router_disable_syslog_host_rec" protocol="CLI"/>
+                    </CLIInputRecord>
+    </CLICommand>
+
+	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="hpActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="brocade_router_syslog_ispec"/>
+    </CLIInteractionSpec>
+	
+	 	 
+	 <CLICommand command="logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="brocade_router_enable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+
+	</CLICommand>
+
+   <CLICommand command="config t">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="brocade_router_config_mode_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+	
+   <CLICommand command="logging on">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="brocade_router_enable_logging_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+  
+   <CLICommand command="exit">
+          <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+                  <Record type="CLI" recordid="brocade_router_exit_rec" protocol="CLI"/>
+          </CLIInputRecord>
+  </CLICommand>
+	<CLICommand command="no logging host ${UserInput:HostIpAddress}">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="brocade_router_disable_syslog_for_host_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+</CLICommandList>
+

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="3Com SuperStack TR Adv RMON Agent Ver F3.10.0" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="APC AP9619" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Acgate Octel-200 Voice Mail System" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Adva FSP 2000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Alcatel Voice Device" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Allen-Bradley 1756-ENET" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Alpha AlphaServer 4100" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya Security Gateway 203 3DES Encryption" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya IP Office 401" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya IP Office 403" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya IP Phone 4610" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya IP Phone 4612" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya IP Phone 4624" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya IP600" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya SG200 Security Gateway" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya SG5X Security Gateway" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya VPNet Service 100 3DES Encryption" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya VPNet Service 10000 3DES Encryption" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya VPNet Service 208 3DES Encryption" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya VSU-2000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya VSU-5000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya s8500" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avocent DSR2020" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avocent DSR4020" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Blue Coat Director" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="BlueCat Adonis Server" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="BlueCat Proteus" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="CanogaPerkins 8835 Fiber Optic Repeater" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cisco CDM-4630" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco CDM-4650" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco CE-2636" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco DPA 7610" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco DPA 7630" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ICM" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco MCS-7815I" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco MCS-7825H" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco MCS-7835H" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco MCS-7845I" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco MeetingPlace Express" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco NAMApp2220" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco NM-CUE" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco UCS C220 M4S" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco Pwr C2935Poe DC" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco TerminalServer" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco WLSE 1130" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco WLSE1133" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco-NmWae" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cyclades AlterPath ACS48" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cylink Frame Encryptor" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cylink SNMP Agent" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="DEC DECserver700-08" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="DEC DECserver700-16" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="DEC DECserver716" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="DEC DECserver900TM" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="DEC DECserver90M" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="EMC Celerra" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="EMC Clarion IP4700 File Server" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="EMC EDL710R0275" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks FirePass 1200" graphName="F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks FirePass 4100" graphName="F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="F5 Networks FirePass 4300" graphName="F5CPUTemperature|F5CPUUtilization|F5MemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="FW FW Rev 1.97" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="General DataComm SNMP553SD-3/IFP" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C H3C4GbVCFCModule" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard H3CJ2603A" graphName="SysUpTime|resourceHPCPUUtilization|resourceHPMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="HP Onboard-Administrator" graphName="SysUpTime|resourceHPCPUUtilization|resourceHPMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="HP-UX" graphName="SysUpTime|resourceHPCPUUtilization|resourceHPMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="HP BladeSystem-SMC" graphName="SysUpTime|resourceHPCPUUtilization|resourceHPMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Hitachi 9900 Raid Array" graphName="HitachiThunder_ReadCommandNumber|HitachiThunder_ReadHitNumber|HitachiThunder_WriteCommandNumber|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Hubbell-Pulsecom DSLAM" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Hughes DNCC" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Hughes webACS" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="IBM BladeCenter Management Module" graphName="IBMInterfaceInUtilized|IBMInterfaceOutUtilized|SysUpTime|dpStatusCPUUtilizationtenSeconds|dpStatusMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="IBM Oce digital copier" graphName="IBMInterfaceInUtilized|IBMInterfaceOutUtilized|SysUpTime|dpStatusCPUUtilizationtenSeconds|dpStatusMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="IBM zSeries" graphName="IBMInterfaceInUtilized|IBMInterfaceOutUtilized|SysUpTime|dpStatusCPUUtilizationtenSeconds|dpStatusMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="IMC Networks AccessEtherLinX" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="ION Networks 3100" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="IQinVision IQeye1" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="ITWatchDogs SuperGoose" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Lantronix ETS16PR" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Liebert UPS AP311/312" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Linux host" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP BSD" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP H3CUX10" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP H3CUX11" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP H3CUX9" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP IRIX" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP NETBSD" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP OPENBSD" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP OSF" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP SUNOS4" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP ULTRIX" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP Unknown" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux Net-SNMP WIN32" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux NetBotz" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Linux linuxEMANATEMasterAgent" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="MGE UPS" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Micromuse Generic Agent" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Mirapoint M300" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NCR MP-RAS" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NEC NC Series" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NetBotz RackBotz 303 Appliance" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NetBotz WallBotz 310 Appliance" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NetScout 9981PET" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NetScout NetScout 6910" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NetScout 4910" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NetScout 9320" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NetScout 9903RET" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NetApp Release 5.3.4R392" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Net Sniffer Pro 3.0" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Niksun NetCVR RMON Device" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Nokia WAP Server" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Nortel DMSSupernode" graphName="SysUpTime|CPUUtilization_Last1Minute|criticalTemperature"/>
+    <DevicePackageToGraph deviceType="Nortel ITG" graphName="SysUpTime|CPUUtilization_Last1Minute|criticalTemperature"/>
+    <DevicePackageToGraph deviceType="Nortel Voice Gateway Media Card" graphName="SysUpTime|CPUUtilization_Last1Minute|criticalTemperature"/>
+    <DevicePackageToGraph deviceType="Nuera F200" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Omnitron Media Converter" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Omnitronix SL10" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Paradyne T1 CSU/DSU" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Paradyne T1 DSU/CSU" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Paradyne T3 DSU/CSU Model 9580" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Peribit SM-500" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Peribit SR-100" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Perle Iolan rack Terminal Server" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="PowerDsine PoE PD-6506" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="PowerDsine PoE PD-6512" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="PowerDsine PoE PD-6524" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Powerware ConnectUPS Adapter" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Precidia Ether3201-202" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="QMS 3225 Print System" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Quantum 140-NOE-771-00" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Quick Eagle DL3800" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Radware CT100" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="SUN ss73vnvnc02" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="SUN ss73vnvsm01" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="ServerTech MSSLite" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="SilverPeak MX960" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Sitara QoS Works" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Specialix JETSTREAM 8500" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Spectracom GPS NTP Server" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="StBernard iPrism" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Sun SunFire" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Sun T300" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Tandem NonStop NonStop Kernel System Version: G6" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Transition Networks E-MCC-1600 Media Converter" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="UB NIU" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="USHApro Card v4.3" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Unisys ClearPath HMP NX" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="UnixSystem Unix System V Release 4.2" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Vegastream 400" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Visual Networks T1 CSU ASE" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="WavePOINT-II SN-00UT01200771 V3.20" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xyplex CSERV-20" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xyplex IN-Reach Manager-Soft-V3.1" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xyplex UNIX" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="eComServer NetWatch" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="SEL-3610" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="APEM-5900" graphName="APEM-5900-Temperature|APEM-5900-Humidity"/>
+    <DevicePackageToGraph deviceType="Digi PortServer" graphName="ipRoutingDiscards|Number of Network Interfaces|lnMemPhysicalRam|ProcessCount|Win-MemoryUtilization|Win-CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Moxa NP 5000" graphName="Number of Network Interfaces|SysUpTime|ProcessCount|Win-MemoryUtilization|Win-CPUUtilization"/>
+    <DevicePackageToGraph deviceType="HP Proliant iLO 4" graphName="HPMemory|HPFanSpeed|HPCPUTemperature|HPCPUSpeed"/>
+    <DevicePackageToGraph deviceType="Lenovo XCC Server" graphName="systemStateLenovo|fuelGaugePowerConsumptionCpuXcc|fuelGaugeTotalPowerInUseXcc|currentSysPowerStatus|fuelGaugePowerConsumptionMemoryXcc|raidDriveHealthStatausXcc|diskHealthStatusXcc|raidDriveCurTempXcc|tempReadingLenovoXcc|voltReadingLenovoXcc|memoryHealthStatusXcc|powerOnHoursLenovo|cpuVpdVoltageXcc|cpuVpdHealthStatusXcc|powerHealthStatusxcc|systemHealthStatXcc"/>
+    <DevicePackageToGraph deviceType="ELTEK SmartPack Sys" graphName="rectifierUtilizationV7|batteryTempV7|rectifierTotalCurrentAmp|batteryVoltageV7|SysUpTime|systemNumOfControlUnitsV7"/>
+    <DevicePackageToGraph deviceType="ELTEK SmartPack2 and Compack eNexus" graphName="sp2mainsMainsFailureValue|SysUpTime|sp2PowerSystemStatus"/>
+    <DevicePackageToGraph deviceType="MODDT_HP cpqSm2ProdRILO4" graphName="HPMemory|cpqPowerSupplyStatus|hpHDDTemps|prolCPUUtilization|cpqDaPhyDrvStatus|CpqHeTemperatureCelsius|cpqHeThermalFanStatus"/>
+    <DevicePackageToGraph deviceType="Cisco SNS 3415 K9" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization|ssCpuSystem|memAvailReal"/>
+    <DevicePackageToGraph deviceType="Cisco ISE SNS-3515-K9" graphName="SysUpTime|cpm5minTotal_CPUUtilization|CiscoMemoryUtilization|ssCpuSystem|memAvailReal"/>
+    <!-- 1947 dt start-->
+    <DevicePackageToGraph deviceType="HP cpqSm2ProdRILO4" graphName="HPMemory|cpqPowerSupplyStatus|hpHDDTemps|prolCPUUtilization|cpqDaPhyDrvStatus|CpqHeTemperatureCelsius|cpqHeThermalFanStatus"/>
+    <DevicePackageToGraph deviceType="Lenovo XCC Server" graphName="voltReadingLenovoXcc|tempReadingLenovo"/>
+    <!--DevicePackageToGraph deviceType="Dell r720 idrac" graphName="SysUpTime|tempSensorReading|syshw_physicalDiskStatus|temperatureProbeStatus|processorDeviceStatus|powerSupplyCurrentInputVoltage|coolingDeviceStatus|coolingDeviceSpeed|dellRacCMOSBatteryStatus|globalSystemStatus|systemPowerState"/-->
+    <!--DevicePackageToGraph deviceType="Dell PowerEdge M1000e" graphName="SysUpTime|drsPSUVoltsReading|drsPSUAmpsReading|drsPSUWattsReading|drsFanCurrStatus|drsGlobalSystemStatus|drsCMCCurrStatus|drsCMCProcessorTemperature|drsWattsReading"/-->
+    <!-- 1947 dt end-->
+    <!-- 2481 dt starts -->
+    <DevicePackageToGraph deviceType="Dell PowerEdge MX7000" graphName="DelldmmTempCurrStatus|DelldmmFanCurrStatus|DelldmmPowerCurrStatus|DelldmmIOMCurrStatus|DellChassisFrontPanelTemperature|DelldmmRedCurrStatus|DelldmmPSUVoltage|DelldmmPSUCurrStatus|SysUpTime|SangforUCD5MinAgvCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Dell PowerEdge MX7000" graphName="Lin-MemoryUtilization"/>
+    <!-- 2481 dt ends -->
+    <!--  2788 Starts -->
+    <DevicePackageToGraph deviceType="HP iLO5 5 1.20" graphName="HPMemory|cpqPowerSupplyStatus|hpHDDTemps|prolCPUUtilization|cpqDaPhyDrvStatus|CpqHeTemperatureCelsius|cpqHeThermalFanStatus|hpiloSystemStatus|cpqDaPhyDrvCondition|cpqDaLogDrvStatus|cpqHeResilientMemCondition"/>
+	<DevicePackageToGraph deviceType="Fortinet FortiAnalyzer VM" graphName="fnFMSysDiskUsage|SysUpTime|fmSys_CPUUtilization|fnfmMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Fortinet FortiManager VM" graphName="fnFMSysDiskUsage|SysUpTime|fmSys_CPUUtilization|fnfmMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Polycom View Station" graphName="SysUpTime|polycomVSJitter|polycomVsPacketLossPercent"/>
+	<DevicePackageToGraph deviceType="Fujitsu iRMC" graphName="SysUpTime|sc2PowerSupplyStatus|sc2tempCurrTemperature|sc2csSystemStatus|sc2pmCurrentPowerConsumption|sc2cpuStatus|sc2memModuleStatus|sc2csStatusFans|sc2csStatusVoltages"/>
+	<!--  2788 Ends -->
+	<DevicePackageToGraph deviceType="HP ProLiant Server" graphName="HPCPUSpeed"/>
+</GRAPHDETAIL>

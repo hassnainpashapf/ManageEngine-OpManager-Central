@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Huawei Quidway Router -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:R2621" templatename="Huawei_AR_Router" displayname="Huawei AR Router" description="For all Huawei AR Routers" IS_DEPRICATED="true">
+        <NCMVendorDevice vendorid="Huawei"/>
+        <NCMDevicePersonality personalityid="HuaweiARRouter"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:R2621_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:R2621"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="huaweiarrouter_cli_running_config_backup"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:R2621_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:R2621"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="huaweiarrouter_cli_running_config_backup"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+	<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:AR1831" templatename="Huawei_Quidway_18xx" displayname="Huawei Quidway 18xx series" description="For all Huawei Quidway 18xx models">
+	    <NCMVendorDevice vendorid="Huawei" />
+	    <NCMDevicePersonality personalityid="HuaweiARRouter" />
+
+	    <NCMSupportedProtocol protocolid="TELNET">
+	        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	    </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+	    <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- Telnet -->
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:AR1831_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:AR1831"
+        managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+	        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+	            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Huawei_AR1831_TELNET_Config_upload"/>
+	        </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+
+		<!-- SSH -->
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:AR1831_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:AR1831"
+        managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+	        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+	            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Huawei_AR1831_TELNET_Config_upload"/>
+	        </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+
+	</NCMDeviceTemplate>
+	
+	 <!-- Huawei Switch Without "Super" Command  -->
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_switch" templatename="HuaweiSwitch" displayname="Huawei Switch" ostype="Comware Software" description="For all Huawei S3352 Switch">
+        <NCMVendorDevice vendorid="Huawei" />
+        <NCMDevicePersonality personalityid="HuaweiSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_s7_switch_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+        
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+                
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+                <!-- Enable change Tracking Thru Syslog -->
+                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                
+                	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_s7_switch_config_backup" />
+                
+                	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+                
+                	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+                	<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+
+                	<!-- Enable change Tracking Thru Syslog -->
+                
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+        
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+
+             	<!-- Enable change Tracking Thru Syslog -->	                     
+			 
+        	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+             
+		<!-- Enable change Tracking Thru Syslog -->
+	                     
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+ <!-- Huawei Switch With "Super" Command  -->
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_s_switch" templatename="HuaweiSSwitch" displayname="Huawei S Series Switch" ostype="Comware Software" description="For all Huawei S3352 Switch">
+        <NCMVendorDevice vendorid="Huawei" />
+        <NCMDevicePersonality personalityid="HuaweiSSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_s_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_s_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_s7_switch_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+        
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+                
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+                <!-- Enable change Tracking Thru Syslog -->
+                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_s_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_s_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                
+                	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_s7_switch_config_backup" />
+                
+                	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+                
+                	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+                	<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+
+                	<!-- Enable change Tracking Thru Syslog -->
+                
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_s_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_s_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+        
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+
+             	<!-- Enable change Tracking Thru Syslog -->	                     
+			 
+        	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_s_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_s_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+             
+		<!-- Enable change Tracking Thru Syslog -->
+	                     
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+ <!-- For Huawei NE40E-X3 Router -->
+ 
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_ne_router" templatename="Huawei_NE_Router" displayname="Huawei NE series Router" ostype="NA" description="For all Huawei NE40E-X3 Routers">
+        <NCMVendorDevice vendorid="Huawei"/>
+        <NCMDevicePersonality personalityid="HuaweiNERouter"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_ne_router_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_ne_router"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="huawei_ne_router_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="huawei_ne_router_cli_show_startup_config_rec"/>
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="huawei_ne_router_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="huawei_ne_router_cli_show_running_config_rec"/>
+			 
+			 <!-- Enable change Tracking Thru Syslog -->	                     
+			 
+        	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_ne_router_Enable_Change_Tracking_Syslog" />	
+		    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_ne_router_Disable_Change_Tracking_Syslog" />
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_ne_router_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_ne_router"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="huawei_ne_router_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="huawei_ne_router_cli_show_startup_config_rec"/>			 
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="huawei_ne_router_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="huawei_ne_router_cli_show_running_config_rec"/>
+			    
+				<!-- Enable change Tracking Thru Syslog -->	                     
+			 
+        	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_ne_router_Enable_Change_Tracking_Syslog" />	
+		    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_ne_router_Disable_Change_Tracking_Syslog" />
+                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+    
+    <!-- For Huawei S5300 Switch -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_s_5300_switch" templatename="Huawei_S_5300_Switch" displayname="Huawei S 5300 Switch" ostype="NA" description="For all Huawei S 5300 Switch">
+	<NCMVendorDevice vendorid="Huawei"/>
+	<NCMDevicePersonality personalityid="HuaweiS5300Switch"/>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_s_5300_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_s_5300_switch"   managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="huawei_s_5300_switch_cli_startup_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="huawei_s_5300_switch_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="huawei_s_5300_switch_cli_running_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="huawei_s_5300_switch_cli_show_running_config_rec"/>
+
+		<!-- Enable change Tracking Thru Syslog -->	                     
+
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_s_5300_switch_Enable_Change_Tracking_Syslog" />	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_s_5300_switch_Disable_Change_Tracking_Syslog" />
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+	<!-- TELNET -->	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:huawei_s_5300_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:huawei_s_5300_switch"
+managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="huawei_s_5300_switch_cli_startup_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="huawei_s_5300_switch_cli_show_startup_config_rec"/>			 
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="huawei_s_5300_switch_cli_running_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="huawei_s_5300_switch_cli_show_running_config_rec"/>
+
+		<!-- Enable change Tracking Thru Syslog -->	                     
+
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_s_5300_switch_Enable_Change_Tracking_Syslog" />	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_s_5300_switch_Disable_Change_Tracking_Syslog" />
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+	
+</DeviceConfiguration>

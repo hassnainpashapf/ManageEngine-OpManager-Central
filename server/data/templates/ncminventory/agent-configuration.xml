@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<agent-configuration>
+    <Conversion 
+        personalityname="IPInterface" 
+        conversionid="IPInterface_conversion"/>
+    <ConversionList 
+        conversionid="IPInterface_conversion" 
+        classname="com.adventnet.nms.topo.discovery.internal.InterfaceDataTypeConverter" 
+        conversionsequence="2"
+        conversiontype="InterfaceConversion"/>
+    <ConversionList 
+        conversionid="IPInterface_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversionsequence="3"
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="IPInterface_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+    <ConversionList 
+        conversionid="IPInterface_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversionsequence="1"
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="IPInterface_conversion"
+        columnname="ADDRESS"
+        mappedtable="NEInterface"
+        mappedcolumn="INTERFACENAME" />
+    <ColumnConversion
+	conversionid="IPInterface_conversion"
+	columnname="DHCPENABLED"
+	nullcheck="false"
+	mappedtable="IPInterface"
+	mappedcolumn="DHCPENABLED" />
+    <ColumnConversion
+        conversionid="IPInterface_conversion"
+        columnname="NETWORKELEMENTID"
+        mappedtable="NEComponent"
+        mappedcolumn="NETWORKELEMENTID" />
+    <ColumnConversion
+        conversionid="IPInterface_conversion"
+        columnname="NETWORKID"
+        mappedtable="IPInterfaceNetwork"
+        mappedcolumn="NETWORKID" />
+
+    <Conversion 
+        conversionid="IPInterface_ip-net-get"/>
+    <ConversionList 
+        conversionid="IPInterface_ip-net-get" 
+        classname="com.adventnet.nms.topo.discovery.internal.NetTopoDataTypeConverter" 
+        conversiontype="InterfaceConversion"/>
+    <Conversion 
+        personalityname="NetworkElement" 
+        conversionid="NetworkElement_conversion"/>
+    <ConversionList 
+        conversionid="NetworkElement_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ConversionList 
+        conversionid="NetworkElement_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="NetworkElement_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+    <ColumnConversion
+        conversionid="NetworkElement_conversion"
+        columnname="DNSNAME"
+        mappedtable="NetworkElement"
+        mappedcolumn="NETWORKELEMENTNAME" />
+    <ColumnConversion
+        conversionid="NetworkElement_conversion"
+        columnname="DISCOVERYSTATE"
+	nullcheck="false"
+        mappedtable="NetworkElement"
+        mappedcolumn="DISCOVERYSTATE" />
+    <ColumnConversion
+        conversionid="NetworkElement_conversion"
+        columnname="NETWORKID"
+        mappedtable="NENetwork"
+        mappedcolumn="NETWORKID" />
+    <ColumnConversion
+        conversionid="NetworkElement_conversion"
+        columnname="TYPE"
+	nullvalue="NetworkElement"
+        rowname="CURRENTCONFIGURATION"
+        mappedtable="NCMDevices"
+        mappedcolumn="DISPLAYTYPE" />
+
+    <Conversion 
+        personalityname="Printer" 
+        conversionid="Printer_conversion"/>
+    <ConversionList 
+        conversionid="Printer_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="Printer_conversion"
+        columnname="TYPE"
+	nullvalue="NetworkElement"
+        rowname="CURRENTCONFIGURATION"
+        mappedtable="NCMDevices"
+        mappedcolumn="DISPLAYTYPE" />
+
+    <Conversion 
+        personalityname="NEService" 
+        conversionid="NEService_conversion"/>
+    <ConversionList 
+        conversionid="NEService_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversionsequence="3"
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="NEService_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+    <ConversionList 
+        conversionid="NEService_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="NEService_conversion"
+        columnname="NETWORKELEMENTID"
+        mappedtable="NEComponent"
+        mappedcolumn="NETWORKELEMENTID" />
+    <ColumnConversion
+        conversionid="NEService_conversion"
+        columnname="SERVICENAME"
+        rowname="CURRENTCONFIGURATION"
+        mappedtable="NEService"
+        mappedcolumn="SERVICENAME" />
+
+    <Conversion 
+        personalityname="InetService" 
+        conversionid="InetService_conversion"/>
+    <ConversionList 
+        conversionid="InetService_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversionsequence="3"
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="InetService_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+    <ConversionList 
+        conversionid="InetService_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="InetService_conversion"
+        columnname="NETWORKELEMENTID"
+        mappedtable="NEComponent"
+        mappedcolumn="NETWORKELEMENTID" />
+    <ColumnConversion
+        conversionid="InetService_conversion"
+        columnname="SERVICENAME"
+        rowname="CURRENTCONFIGURATION"
+        mappedtable="NEService"
+        mappedcolumn="SERVICENAME" />
+    <Conversion 
+        personalityname="PrinterInputUnit" 
+        conversionid="PrinterInputUnit_conversion"/>
+    <ConversionList
+        conversionid="PrinterInputUnit_conversion"
+        classname="com.adventnet.nms.topo.discovery.wf.ne.task.SubComponentDiscovery"
+        conversiontype="SubComponentDiscovery"/>
+    <ConversionList 
+        conversionid="PrinterInputUnit_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversionsequence="3"
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="PrinterInputUnit_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+    <ConversionList 
+        conversionid="PrinterInputUnit_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="PrinterInputUnit_conversion"
+        columnname="NETWORKELEMENTID"
+        mappedtable="NEComponent"
+        mappedcolumn="NETWORKELEMENTID" />
+    <Conversion 
+        personalityname="PrinterOutputUnit" 
+        conversionid="PrinterOutputUnit_conversion"/>
+    <ConversionList 
+        conversionid="PrinterOutputUnit_conversion" 
+	classname="com.adventnet.nms.topo.discovery.wf.ne.task.SubComponentDiscovery"
+        conversiontype="SubComponentDiscovery"/>
+    <ConversionList 
+        conversionid="PrinterOutputUnit_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversionsequence="3"
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="PrinterOutputUnit_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+
+    <ConversionList 
+        conversionid="PrinterOutputUnit_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="PrinterOutputUnit_conversion"
+        columnname="NETWORKELEMENTID"
+        mappedtable="NEComponent"
+        mappedcolumn="NETWORKELEMENTID" />
+    <Conversion 
+        personalityname="PrinterMarker" 
+        conversionid="PrinterMarker_conversion"/>
+    <ConversionList 
+        conversionid="PrinterMarker_conversion" 
+	classname="com.adventnet.nms.topo.discovery.wf.ne.task.SubComponentDiscovery"
+        conversiontype="SubComponentDiscovery"/>
+    <ConversionList 
+        conversionid="PrinterMarker_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversionsequence="3"
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="PrinterMarker_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+    <ConversionList 
+        conversionid="PrinterMarker_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="PrinterMarker_conversion"
+        columnname="NETWORKELEMENTID"
+        mappedtable="NEComponent"
+        mappedcolumn="NETWORKELEMENTID" />
+    <Conversion 
+        personalityname="PrinterMarkerSupplier" 
+        conversionid="PrinterMarkerSupplier_conversion"/>
+    <ConversionList 
+        conversionid="PrinterMarkerSupplier_conversion" 
+	classname="com.adventnet.nms.topo.discovery.wf.ne.task.SubComponentDiscovery"
+        conversiontype="SubComponentDiscovery"/>
+    <ConversionList 
+        conversionid="PrinterMarkerSupplier_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversionsequence="3"
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="PrinterMarkerSupplier_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+    <ConversionList 
+        conversionid="PrinterMarkerSupplier_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="PrinterMarkerSupplier_conversion"
+        columnname="NETWORKELEMENTID"
+        mappedtable="NEComponent"
+        mappedcolumn="NETWORKELEMENTID" />
+    <Conversion 
+        personalityname="NEPort" 
+        conversionid="NEPort_conversion"/>
+    <ConversionList 
+        conversionid="NEPort_conversion" 
+	classname="com.adventnet.nms.topo.discovery.wf.ne.task.SubComponentDiscovery"
+        conversiontype="SubComponentDiscovery"/>
+    <ConversionList 
+        conversionid="NEPort_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ListConverter" 
+        conversionsequence="3"
+        conversiontype="ListConversion"/>
+    <ListConversion
+        conversionid="NEPort_conversion"
+        columnname="CONNECTIONLIST"
+        mappedtable="ResourceConnection"
+        mappedcolumn="CONNECTIONSPECID" />
+    <ConversionList 
+        conversionid="NEPort_conversion" 
+        classname="com.adventnet.nms.topo.mapper.internal.ColumnConverter" 
+        conversiontype="ColumnConversion"/>
+    <ColumnConversion
+        conversionid="NEPort_conversion"
+        columnname="NETWORKELEMENTID"
+        mappedtable="NEComponent"
+        mappedcolumn="NETWORKELEMENTID" />
+
+   <AgentRelation 
+        relationshipfield="NetworkElement" 
+        personalityname="NetworkElement" 
+        relationtype="PK_RELATION" 
+        queryname="NetworkElementPKQuery"/>
+    <AgentRelation 
+        relationshipfield="StorageDetails" 
+        tablename="StorageDetails" 
+        personalityname="NetworkElement" 
+        relationtype="ROW_PK_RELATION" 
+        queryname="StoragePKQuery"/>
+    <AgentRelation 
+        relationshipfield="IPInterface" 
+        personalityname="IPInterface" 
+        relationtype="PK_RELATION" 
+        queryname="IPInterfacePKQuery"/>
+    <RecordConversion 
+        recordid="ip-net-get" 
+        personalityname="IPInterface" 
+        conversionid="IPInterface_ip-net-get"/>
+    <AgentRelation
+        relationshipfield="InetService"
+        personalityname="InetService"
+        relationtype="PK_RELATION"
+        queryname="DBInetServicePKQuery"/>
+    <AgentRelation
+        relationshipfield="NEService"
+        personalityname="NEService"
+        relationtype="PK_RELATION"
+        queryname="HostResourceServicePKQuery"/>
+    <AgentRelation
+        relationshipfield="NEPort"
+        personalityname="NEPort"
+        relationtype="PK_RELATION"
+        queryname="NEPortPKQuery"/>
+    <AgentRelation
+	relationshipfield="PrinterInputUnit"
+	tablename="PrinterInputUnit"
+	personalityname="PrinterInputUnit"
+	relationtype="PK_RELATION"
+	queryname="PrinterPKQuery"/>
+    <AgentRelation
+        relationshipfield="ResourceContainee_FK2"
+        personalityname="PrinterInputUnit"
+        relationtype="CONTAINER"
+        queryname="NetworkElementContQuery"/>
+    <AgentRelation
+	relationshipfield="PrinterOutputUnit"
+	tablename="PrinterOutputUnit"
+	personalityname="PrinterOutputUnit"
+	relationtype="PK_RELATION"
+	queryname="PrinterOutputPKQuery"/>
+    <AgentRelation
+        relationshipfield="ResourceContainee_FK2"
+        personalityname="PrinterOutputUnit"
+        relationtype="CONTAINER"
+        queryname="NetworkElementContQuery"/>
+    <AgentRelation
+	relationshipfield="PrinterMarker"
+	tablename="PrinterMarker"
+	personalityname="PrinterMarker"
+	relationtype="PK_RELATION"
+	queryname="PrinterMarkerPKQuery"/>
+    <AgentRelation
+       relationshipfield="ResourceContainee_FK2"
+        personalityname="PrinterMarker"
+        relationtype="CONTAINER"
+        queryname="NetworkElementContQuery"/>
+    <AgentRelation
+	relationshipfield="PrinterMarkerSupplier"
+	tablename="PrinterMarkerSupplier"
+	personalityname="PrinterMarkerSupplier"
+	relationtype="PK_RELATION"
+	queryname="PrinterMarkerSuppliesPKQuery"/>
+    <AgentRelation
+        relationshipfield="ResourceContainee_FK2"
+        personalityname="PrinterMarkerSupplier"
+        relationtype="CONTAINER"
+        queryname="NetworkElementContQuery"/>
+</agent-configuration>

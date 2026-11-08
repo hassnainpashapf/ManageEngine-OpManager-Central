@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<NCMOperationTimeoutList>
+<NCMOperationTimeout operationid="BackupStartupConfig" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupRunningConfig" timeout="20000"/>
+
+<NCMOperationTimeout operationid="UploadStartupConfig" timeout="20000"/>
+
+<NCMOperationTimeout operationid="UploadRunningConfig" timeout="20000"/>
+
+<NCMOperationTimeout operationid="CopyRunningToStartup" timeout="20000"/>
+
+<NCMOperationTimeout operationid="EnableConfigChangeTrackingThruSyslog" timeout="20000"/>
+
+<NCMOperationTimeout operationid="DisableConfigChangeTrackingThruSyslog" timeout="20000"/>
+
+<NCMOperationTimeout operationid="ScriptExecution" timeout="60000"/>
+
+<!--NCMOperationTimeout operationid="FetchHardwareProperties" timeout="20000"/-->
+<NCMOperationTimeout operationid="PasswordRetrieveFromPMP" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupVlan" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupInterface" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupInventory" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupVtp" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupFlash" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupIp route" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupIp bgp summary" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupIp ospf neighbor" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupDhcp" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupHealthd" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupContext 1" timeout="20000"/>
+
+<NCMOperationTimeout operationid="BackupContext 2" timeout="20000"/>
+
+</NCMOperationTimeoutList>

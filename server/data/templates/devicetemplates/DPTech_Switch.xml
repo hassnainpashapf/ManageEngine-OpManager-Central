@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For DPTech Switches" displayName="DPTech Switch" osType="" templateName="DPTech Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="DPtech" vendorName="DPtech">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="EMERGENCY" number="0" sequenceid="1"/>
+			<Level name="ALERT" number="1" sequenceid="2"/>
+			<Level name="CRITICAL" number="2" sequenceid="3"/>
+			<Level name="ERROR" number="3" sequenceid="4"/>
+			<Level name="WARNING" number="4" sequenceid="5"/>
+			<Level name="NOTICE" number="5" sequenceid="6"/>
+			<Level name="INFORMATIONAL" number="6" sequenceid="7"/>
+			<Level name="DEBUG" number="7" sequenceid="8"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="terminal line 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Changedetection">
+            	<Operation name="Enable">
+                	<Command commandecho="" commandstr="logging syslog host ${UserInput:HostIpAddress} severity ${UserInput:LoggingLevel}" delay="" messagesuffix="${LF}" prompt="]" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout="20000"/>
+            	</Operation>
+            	<Operation name="Disable">
+                	<Command commandecho="" commandstr="no logging syslog host ${UserInput:HostIpAddress}" delay="" messagesuffix="${LF}" prompt="]" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="DPTech Switch" personalityName="DPTechSwitch">	
+		<Login enablecommand="conf-mode" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Software Version" displayname="Software Version" name="SOFTWAREVERSION" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Smartplat Version" displayname="Smartplat Version" name="SMARTPLATVERSION" sequenceid="2" size="100"/>
+				<Column defaultvalue="Not Available" desc="CPU Type" displayname="CPU Type" name="CPUTYPE" sequenceid="3" size="100"/>
+				<Column defaultvalue="Not Available" desc="CONBOOT version" displayname="CONBOOT version" name="CONBOOTVERSION" sequenceid="4" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>.*show running-config.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>logging syslog host $SYSLOG_SERVER_IP.*</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="DPTechHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_dptech_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Software Release (\S*).*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											<PARAM NAME="SOFTWAREVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SMARTPLATVERSION" EXPRESSION=".*Smartplat Version is (\S*).*">
+											<PARAM NAME="SMARTPLATVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION="(\S*) Uptime.*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial Number\s*:\s*(\S*).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="CPUTYPE" EXPRESSION=".*CPU type\s*:\s*(.*)">
+											<PARAM NAME="CPUTYPE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="CONBOOTVERSION" EXPRESSION=".*CONBOOT version\s*:\s*(\S*).*">
+											<PARAM NAME="CONBOOTVERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>  
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_dptech_switch" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For ZyXEL devices" displayName="ZyXEL Device" osType="ZyNOS" templateName="ZyXEL_Device">
+	<RestTemplate name=""/>
+	<Vendor displayName="ZyXEL" vendorName="ZyXEL">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system-information"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notification" number="5" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="copy running-config tftp ${UserInput:tftp_server_address}:${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="ZyXEL Device" personalityName="ZyXELDevice">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="FIRMWARE_VERSION" size="100" desc="Firmware Version" displayname="Firmware Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="BOOTBASE_VERSION" size="100" desc="Bootbase Version" displayname="Bootbase Version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="BUILDDATE" size="100" desc="Build Date" displayname="Build Date" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="BM_VERSION" size="100" desc="BM Version" displayname="BM Version" defaultvalue="Not Available" sequenceid="4"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="ZyXELDeviceHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_ZyXEL_Device">
+							 <VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Current\s*ZyNOS\s*version\s*:\s*(\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Product\s*Model\s*:\s*(.*)" NAME="MODEL1">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Ethernet\s*Address\s*:\s*(.*)" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Bootbase\s*Version\s*:\s*(\S*).*" NAME="BOOTBASE_VERSION">
+											<PARAM NAME="BOOTBASE_VERSION" TOKENNO="1"/>
+										</REGEX>										
+										<REGEX EXPRESSION=".*ZyNOS\s*F\/W\s*Version\s*:\s*(\S*).*" NAME="FIRMWARE_VERSION1">
+											<PARAM NAME="FIRMWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*build date\s*:\s*(.*)" NAME="BUILDDATE">
+											<PARAM NAME="BUILDDATE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*firmware version\s*:\s*(.*)" NAME="FIRMWARE_VERSION2">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											<PARAM NAME="FIRMWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*BM version\s*:\s*(.*)" NAME="BM_VERSION">
+											<PARAM NAME="BM_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*model\s*:\s*(.*)" NAME="MODEL2">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							 </VALID-RULE>
+						 <ERROR-RULE>
+							<METADATA>
+								<SCALAR>
+								  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+									 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+								  </REGEX>
+								</SCALAR>
+							</METADATA>
+						 </ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_ZyXEL_Device" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show system-information" parsercommandname="hardware_prop_ZyXEL_Device" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

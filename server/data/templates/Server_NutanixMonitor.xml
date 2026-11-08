@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAILS>
+	<Graph YAXISTEXT="bytes" description="Number of bytes of storage used on the cluster." displayName="Cluster Used Storage Capacity" failureThreshold="1" graphName="clusterUsedStorageCapacity" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41263.504.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total storage capacity of the cluster in bytes." displayName="Cluster Total Storage Capacity" failureThreshold="1" graphName="clusterTotalStorageCapacity" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41263.504.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="IOPS" description="Cluster wide average IO operations per second" displayName="Cluster wide average IOPS" failureThreshold="1" graphName="clusterIops" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41263.506.0" period="900" protocol="SNMP"  saveAbsolutes="true" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph  YAXISTEXT="Latency" description="Cluster wide average latency" displayName="Cluster wide average latency" failureThreshold="1" graphName="clusterLatency" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41263.507.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Cluster wide IO bandwidth in KBps." displayName="Cluster wide IO bandwidth in KBps" failureThreshold="1" graphName="clusterIOBandwidth" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41263.508.0" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="noOfCPU" description="Total number of CPUs allocated to the VM" displayName="VM CPU Count" failureThreshold="1" graphName="vmCpuCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.41263.10.1.6" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="CPU usage percentage of the VM" displayName="VM CPU Usage" failureThreshold="1" graphName="vmCpuUsagePercent" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.41263.10.1.7" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Memory usage percentage of the VM" displayName="VM Memory Usage" failureThreshold="1" graphName="vmMemoryUsagePercent" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.41263.10.1.9" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Number of read IO operations served per second on this VM." displayName="VM Read IO Per second" failureThreshold="1" graphName="vmReadIOPerSecond" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.41263.10.1.10" period="900" protocol="SNMP" aveAbsolutes="false" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Number of write IO operations served per second on this VM." displayName="VM Write IO Per Second" failureThreshold="1" graphName="vmWriteIOPerSecond" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.41263.10.1.11" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="IOLPS" description="Average IO latency per micro seconds of the VM." displayName="IO Latency" failureThreshold="1" graphName="vmAverageLatency" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.41263.10.1.12" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="IO bandwidth in KBps of the VM" displayName="IO Bandwidth" failureThreshold="1" graphName="vmIOBandwidth" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.41263.10.1.13" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix">
+		<UserProps/>
+	</Graph>
+
+
+	
+
+	<!-- Cluster Graphs -->
+	<Graph YAXISTEXT="KBps" description="Data transferred per second in KB/second from Cluster" displayName="IO Bandwidth" failureThreshold="1" graphName="Nutanix-clusterIOBandwidth" graphType="node" isNumeric="true" oid="io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="CPU Usage(%) of cluster as reported by Hypervisor" displayName="CPU Utilization" failureThreshold="1" graphName="Nutanix-clusterCPUUtilization" graphType="node" isNumeric="true" oid="hypervisor_cpu_usage_ppm/10000" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Memory Usage(%) of cluster as reported by Hypervisor" displayName="Memory Utilization" failureThreshold="1" graphName="Nutanix-clusterMemoryUtilization" graphType="node" isNumeric="true" oid="hypervisor_memory_usage_ppm/10000" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Read data transferred per second in KB/second from Cluster. (Supported only for Cluster-based monitoring)" displayName="Read IO Bandwidth" failureThreshold="1" graphName="Nutanix-clusterReadIO" graphType="node" isNumeric="true" oid="read_io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Write data transferred per second in KB/second from Cluster. (Supported only for Cluster-based monitoring)" displayName="Write IO Bandwidth" failureThreshold="1" graphName="Nutanix-clusterWriteIO" graphType="node" isNumeric="true" oid="write_io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Number of IO operations per second from Cluster. (Supported only for Cluster-based monitoring)" displayName="Number Of IOPS" failureThreshold="1" graphName="Nutanix-clusterNumIOPS" graphType="node" isNumeric="true" oid="num_iops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="Microseconds" description="Average latency of Cluster in terms of micro seconds. (Supported only for Cluster-based monitoring)" displayName="IO Latency" failureThreshold="1" graphName="Nutanix-clusterAvgLatency" graphType="node" isNumeric="true" oid="avg_io_latency_usecs" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="MB" description="Real memory (in Megabytes) used to cache data by the content cache for Cluster. (Supported only for Cluster-based monitoring)" displayName="Content cache physical memory usage" failureThreshold="1" graphName="Nutanix-clusterCachePhyUsage" graphType="node" isNumeric="true" oid="content_cache_physical_memory_usage_bytes/1048576" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="MB" description="Logical memory (in Megabytes) used to cache data without deduplication by the Cluster. (Supported only for Cluster-based monitoring)" displayName="Content cache logical memory usage" failureThreshold="1" graphName="Nutanix-clusterCacheLogUsage" graphType="node" isNumeric="true" oid="content_cache_logical_memory_usage_bytes/1048576" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Percent of Storage used by the Cluster" displayName="Storage Usage" failureThreshold="1" graphName="Nutanix-clusterStorageUsage" graphType="node" isNumeric="true" oid="storage.usage_bytes*100/storage.capacity_bytes" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Read data transferred per second in KB/second from Cluster reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Read IO Bandwidth" failureThreshold="1" graphName="Nutanix-clusterControllerReadIO" graphType="node" isNumeric="true" oid="controllerReadIoBandwidthKbps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Write data transferred per second in KB/second from Cluster reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Write IO Bandwidth" failureThreshold="1" graphName="Nutanix-clusterControllerWriteIO" graphType="node" isNumeric="true" oid="controllerWriteIoBandwidthKbps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Number of IO operations per second from Cluster reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Number Of IOPS" failureThreshold="1" graphName="Nutanix-clusterControllerNumIOPS" graphType="node" isNumeric="true" oid="controllerNumIops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+	<Graph YAXISTEXT="Microseconds" description="Average latency of Cluster in terms of micro seconds reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller IO Latency" failureThreshold="1" graphName="Nutanix-clusterControllerAvgLatency" graphType="node" isNumeric="true" oid="controllerAvgIoLatencyUsecs" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Cluster Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Cluster"/>
+	</Graph>
+
+	<!-- Host Monitors -->
+	<Graph YAXISTEXT="KBps" description="Data transferred per second in KB/second from Hypervisor" displayName="IO Bandwidth" failureThreshold="1" graphName="Nutanix-hostIOBandwidth" graphType="node" isNumeric="true" oid="io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Percent of CPU used by the hypervisor" displayName="CPU Utilization" failureThreshold="1" graphName="Nutanix-hostCPUUtilization" graphType="node" isNumeric="true" oid="hypervisor_cpu_usage_ppm/10000" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Percent of memory used by the hypervisor" displayName="Memory Utilization" failureThreshold="1" graphName="Nutanix-hostMemoryUtilization" graphType="node" isNumeric="true" oid="hypervisor_memory_usage_ppm/10000" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="MB" description="Real memory (in Megabytes) used to cache data by the content cache for Hypervisor. (Supported only for Cluster-based monitoring)" displayName="Content cache physical memory usage" failureThreshold="1" graphName="Nutanix-hostCachePhyUsage" graphType="node" isNumeric="true" oid="content_cache_physical_memory_usage_bytes/1048576" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="MB" description="Logical memory (in Megabytes) used to cache data without deduplication by the Hypervisor. (Supported only for Cluster-based monitoring)" displayName="Content cache logical memory usage" failureThreshold="1" graphName="Nutanix-hostCacheLogUsage" graphType="node" isNumeric="true" oid="content_cache_logical_memory_usage_bytes/1048576" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+	<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Write data transferred per second in KB/second from Hypervisor. (Supported only for Cluster-based monitoring)" displayName="Write IO Bandwidth" failureThreshold="1" graphName="Nutanix-hostWriteIO" graphType="node" isNumeric="true" oid="write_io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Read data transferred per second in KB/second from Hypervisor. (Supported only for Cluster-based monitoring)" displayName="Read IO Bandwidth" failureThreshold="1" graphName="Nutanix-hostReadIO" graphType="node" isNumeric="true" oid="read_io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Percent of Storage used by the hypervisor" displayName="Storage Used" failureThreshold="1" graphName="Nutanix-hostStorageUsed" graphType="node" isNumeric="true" oid="storage.usage_bytes*100/storage.capacity_bytes" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Input/Output read operations per second from Hypervisor. (Supported only for Cluster-based monitoring)" displayName="Read IOPS" failureThreshold="1" graphName="Nutanix-hostreadIOPS" graphType="node" isNumeric="true" oid="num_read_iops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Input/Output write operations per second from Hypervisor. (Supported only for Cluster-based monitoring)" displayName="Write IOPS" failureThreshold="1" graphName="Nutanix-hostwriteIOPS" graphType="node" isNumeric="true" oid="num_write_iops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Input/Output operations per second from Hypervisor. (Supported only for Cluster-based monitoring)" displayName="Number Of IOPS" failureThreshold="1" graphName="Nutanix-hostNumIOPS" graphType="node" isNumeric="true" oid="num_iops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="Microseconds" description="Average latency of host in terms of micro seconds. (Supported only for Cluster-based monitoring)" displayName="Average IO Latency" failureThreshold="1" graphName="Nutanix-hostAvgIOLatency" graphType="node" isNumeric="true" oid="avg_io_latency_usecs" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Write data transferred per second in KB/second from Hypervisor reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Write IO Bandwidth" failureThreshold="1" graphName="Nutanix-hostControllerWriteIO" graphType="node" isNumeric="true" oid="controllerWriteIoBandwidthKbps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Read data transferred per second in KB/second from Hypervisor reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Read IO Bandwidth" failureThreshold="1" graphName="Nutanix-hostControllerReadIO" graphType="node" isNumeric="true" oid="controllerReadIoBandwidthKbps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Input/Output read operations per second from Hypervisor reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Read IOPS" failureThreshold="1" graphName="Nutanix-hostControllerReadIOPS" graphType="node" isNumeric="true" oid="controllerNumReadIops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Input/Output write operations per second from Hypervisor reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Write IOPS" failureThreshold="1" graphName="Nutanix-hostControllerWriteIOPS" graphType="node" isNumeric="true" oid="controllerNumWriteIops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Input/Output operations per second from Hypervisor reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Number Of IOPS" failureThreshold="1" graphName="Nutanix-hostControllerNumIOPS" graphType="node" isNumeric="true" oid="controllerNumIops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	<Graph YAXISTEXT="Microseconds" description="Average latency of host in terms of micro seconds reported by the controller. (Supported only for Prism Central-based monitoring)" displayName="Controller Average IO Latency" failureThreshold="1" graphName="Nutanix-hostControllerAvgIOLatency" graphType="node" isNumeric="true" oid="controllerAvgIoLatencyUsecs" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-Host Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="Host"/>
+	</Graph>
+	
+
+	<!-- VM Graphs -->
+	<Graph YAXISTEXT="KBps" description="I/O bandwidth in KBps used by Controller VM" displayName="IO Bandwidth" failureThreshold="1" graphName="Nutanix-vmIOBandwidth" graphType="node" isNumeric="true" oid="controller_io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Percent of allocated CPU capacity currently being used by VM" displayName="CPU Utilization" failureThreshold="1" graphName="Nutanix-vmCPUUtilization" graphType="node" isNumeric="true" oid="hypervisor_cpu_usage_ppm/10000" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Percent of allocated Memory capacity currently being used by VM" displayName="Memory Utilization" failureThreshold="1" graphName="Nutanix-vmMemoryUtilization" graphType="node" isNumeric="true" oid="guest.memory_usage_ppm/10000" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+    <Graph YAXISTEXT="%" description="Percent of memory used by the hypervisor" displayName="Hypervisor Memory Utilization" failureThreshold="1" graphName="Nutanix-vmHypervisorMemUtilization" graphType="node" isNumeric="true" oid="memory_usage_ppm/10000" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors" showDial="true">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+    <Graph YAXISTEXT="%" description="Percent of storage space currently being used by the VM." displayName="Storage Utilization" failureThreshold="1" graphName="Nutanix-vmStorageUtilization" graphType="node" isNumeric="true" oid="(controller_user_bytes*100)/diskCapacityInBytes" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors">
+        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+    </Graph>
+	<Graph YAXISTEXT="KBps" description="Read IO speed in terms of KBps" displayName="Read IO Bandwidth" failureThreshold="1" graphName="Nutanix-vmReadIO" graphType="node" isNumeric="true" oid="controller_read_io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+	<Graph YAXISTEXT="KBps" description="Write IO speed in terms of KBps" displayName="Write IO Bandwidth" failureThreshold="1" graphName="Nutanix-vmWriteIO" graphType="node" isNumeric="true" oid="controller_write_io_bandwidth_kBps" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Number of Read IO Operations per second for Controller VM" displayName="Read IOPS" failureThreshold="1" graphName="Nutanix-vmreadIOPS" graphType="node" isNumeric="true" oid="controller_num_read_iops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+	<Graph YAXISTEXT="IOPS" description="Number of Write IO Operations per second for Controller VM" displayName="Write IOPS" failureThreshold="1" graphName="Nutanix-vmwriteIOPS" graphType="node" isNumeric="true" oid="controller_num_write_iops" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+	<Graph YAXISTEXT="Microseconds" description="Average I/O latency of Controller VM in terms of micro seconds" displayName="Average Controller IO Latency" failureThreshold="1" graphName="Nutanix-vmCtrlAvgIOLatency" graphType="node" isNumeric="true" oid="controller_avg_io_latency_usecs" period="900" protocol="PrismAPI" saveAbsolutes="true" timeAvg="false" vendorName="Nutanix" vendorSubCategory="Nutanix-VM Monitors">
+		<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	</Graph>
+
+
+	<DevicePackageToGraph deviceType="Nutanix" graphName="clusterUsedStorageCapacity"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="clusterTotalStorageCapacity"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="clusterIops"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="clusterLatency"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="clusterIOBandwidth"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="vmCpuCount"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="vmCpuUsagePercent"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="vmMemoryUsagePercent"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="vmReadIOPerSecond"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="vmWriteIOPerSecond"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="vmAverageLatency"/>
+	<DevicePackageToGraph deviceType="Nutanix" graphName="vmIOBandwidth"/>
+
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterIOBandwidth" dialtype="number" unit="KBps"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterMemoryUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterStorageUsage" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterReadIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterWriteIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterNumIOPS"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterAvgLatency" dialtype="number" unit="Microseconds"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterCachePhyUsage"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterCacheLogUsage"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterControllerReadIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterControllerWriteIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterControllerNumIOPS"/>
+	<DevicePackageToGraph deviceType="Nutanix Cluster" graphName="Nutanix-clusterControllerAvgLatency" dialtype="number" unit="Microseconds"/>
+
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostIOBandwidth" dialtype="number" unit="KBps"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostMemoryUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostCachePhyUsage"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostCacheLogUsage"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostWriteIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostReadIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostNumIOPS"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostAvgIOLatency" dialtype="number" unit="Microseconds"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostStorageUsed"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostControllerReadIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostControllerWriteIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostControllerReadIOPS"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostControllerWriteIOPS"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostControllerNumIOPS"/>
+	<DevicePackageToGraph deviceType="Nutanix Host" graphName="Nutanix-hostControllerAvgIOLatency" dialtype="number" unit="Microseconds"/>
+
+	<DevicePackageToGraph deviceType="Nutanix Virtual Machine" graphName="Nutanix-vmIOBandwidth" dialtype="number" unit="KBps"/>
+	<DevicePackageToGraph deviceType="Nutanix Virtual Machine" graphName="Nutanix-vmCPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Virtual Machine" graphName="Nutanix-vmMemoryUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Virtual Machine" graphName="Nutanix-vmReadIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Virtual Machine" graphName="Nutanix-vmWriteIO"/>
+	<DevicePackageToGraph deviceType="Nutanix Virtual Machine" graphName="Nutanix-vmreadIOPS"/>
+	<DevicePackageToGraph deviceType="Nutanix Virtual Machine" graphName="Nutanix-vmwriteIOPS"/>
+	<DevicePackageToGraph deviceType="Nutanix Virtual Machine" graphName="Nutanix-vmCtrlAvgIOLatency"/>
+
+	<!-- Nutanix Prism Central -->
+	<DevicePackageToGraph deviceType="Nutanix Prism Central" graphName="Win-CPUUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Prism Central" graphName="Win-MemoryUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Prism Central" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+	<DevicePackageToGraph deviceType="Nutanix Prism Central" graphName="PartitionWiseDiskDetails"/>
+	<DevicePackageToGraph deviceType="Nutanix Prism Central" graphName="ProcessCount"/>
+
+</GRAPHDETAILS>

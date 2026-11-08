@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="F5 UCS" osType="BIG-IP" templateName="F5_UCS">
+	<RestTemplate name=""/>
+	<Vendor displayName="F5" vendorName="F5">
+		<Commands>
+			<Command commandstr="bigpipe version"/>
+			<Command commandstr="bigpipe platform"/>
+			<Command commandstr="show /sys version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="tmsh save /sys ucs /var/tmp/backup.ucs" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="cd /var/tmp" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="scp -p backup.ucs ${UserInput:scp_username}@${UserInput:scp_server_address}:/${UserInput:file_name}" messagesuffix="${LF}" prompt="word:" sequenceid="30" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="running">
+                	<Command commandstr="cd /var/tmp" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="scp -p ${UserInput:scp_username}@${UserInput:scp_server_address}:/${UserInput:file_name} upload.ucs" messagesuffix="${LF}" prompt="word:" sequenceid="20" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            		<Command commandstr="tmsh load /sys ucs /var/tmp/upload.ucs" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="280000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="F5 UCS" personalityName="F5UCS">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BUILD" size="25" desc="Build" displayname="Build" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="BIOS_REVISION" size="150" desc="BIOS Revision" displayname="BIOS Revision" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="BIOS" size="100" desc="BIOS" displayname="BIOS" defaultvalue="Not Available" sequenceid="3"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="ucs">
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="F5UcsHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+		            <PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_f5_bigip">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Appliance\s*Serial\s*(\S*).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*BIOS\s*Revision\s*(\S*)\s*BIOS:\s*(\S*).*" NAME="BIOS_REVISION">
+											<PARAM NAME="BIOS_REVISION" TOKENNO="1"/>
+											<PARAM NAME="BIOS" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Version\s*(\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Build\s*(\S*).*" NAME="BUILD">
+											<PARAM NAME="BUILD" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Base\s*MAC\s*(.*)" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Name\s*BIG-IP\s*(\S*).*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="2"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+		            </PARSER>
+		        </MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show sys version" parsercommandname="hardware_prop_f5_bigip" responseparserid="f5ucs_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show sys hardware" parsercommandname="hardware_prop_f5_bigip" responseparserid="f5ucs_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

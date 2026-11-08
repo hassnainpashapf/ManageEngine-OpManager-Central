@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<seed>
+	<DiscoverySchedules
+		name="IPNetworkConfiguration"
+		schedulename="DeepDiscoverySchedule"
+		scheduletype="DeepDiscoverySchedule"/>
+
+	<TypeGroup typegroupname="TypeGroup0"/>
+    
+	<InterfaceGroup interfacegroupid="InterfaceGroup:interfacegroupid:0">
+		<InterfaceRelation interfaceidentifier="IPInterface" />
+	</InterfaceGroup>
+
+    <TCPPortListConfig>
+        <TCPPortList portid="TCPPortList:portid:23" port="23"/>
+	</TCPPortListConfig>
+
+
+	<DiscoveryConfiguration name="IPNetTopo">
+    	<NetTopoConfiguration />
+	</DiscoveryConfiguration>
+
+
+    <!-- DEFAULT CONFIG FOR NETWORK DISOVERY -->
+    <DiscoveryConfiguration name="IPNetworkConfiguration">
+        <NetworkConfiguration typegroupname="TypeGroup0" workflowname="IPNetworkDiscovery" 
+                              neworkflowname="DeepNetworkElementDiscovery" 
+                              discoveryschedulename="IPNetworkConfiguration" 
+                              nettopoidentifier="IPNetTopo"/>
+    </DiscoveryConfiguration>
+    
+    <!-- DEFAULT CONFIG FOR DEVICE DISCOVERY -->
+    <DiscoveryConfiguration name="IPNetworkElementConfiguration">
+        <NetworkElementConfiguration typegroupname="TypeGroup0" workflowname="IPNetworkDiscovery" 
+                                     neworkflowname="DeepNetworkElementDiscovery" 
+                                     discoveryschedulename="IPNetworkConfiguration" 
+                                     nettopoidentifier="IPNetTopo"/>
+    </DiscoveryConfiguration>
+
+</seed>

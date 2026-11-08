@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="insys_hardware_prop_parser" promptactionid="yesActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="insys_show_version_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="cli.info">
+<CLIInputRecord parsercommandname="hardware_prop_insys_moros" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="insys_moros_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cli.system">
+<CLIInputRecord parsercommandname="hardware_prop_insys_moros" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="insys_moros_hardware_prop1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!--Show Running Config -->
+ 
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="insys_cli_show_running_config_irec" />
+</CLIInteractionSpec>
+
+
+<CLICommand command="cli.print /active">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="insys_moros_cli_fetch_running_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

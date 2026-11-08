@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Huawei Eudemon Firewall devices" displayName="Huawei Eudemon Firewall" osType="VRP" templateName="Huawei Eudemon Firewall">
+	<RestTemplate name=""/>
+	<Vendor displayName="Huawei" vendorName="Huawei">
+		<Commands>
+			<Command commandstr="display version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="warnings" number="5" sequenceid="1"/>
+			<Level name="notifications" number="6" sequenceid="2"/>
+			<Level name="informational" number="7" sequenceid="3"/>
+			<Level name="debugging" number="8" sequenceid="4"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="system-view" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="120000"/>
+                	<Command commandecho="" commandstr="user-interface vty 0" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="3" timeout="120000"/>
+                	<Command commandecho="" commandstr="user-interface current" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="4" timeout="120000"/>
+                	<Command commandecho="" commandstr="screen-length 0" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="5" timeout="120000"/>
+                	<Command commandecho="" commandstr="quit" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="6" timeout="120000"/>
+                	<Command commandecho="" commandstr="quit" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="7" timeout="120000"/>
+                	<Command commandecho="" commandstr="display current-configuration" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="true" sequenceid="8" timeout="120000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="system-view" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="120000"/>
+                	<Command commandecho="" commandstr="user-interface vty 0" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="3" timeout="120000"/>
+                	<Command commandecho="" commandstr="user-interface current" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="4" timeout="120000"/>
+                	<Command commandecho="" commandstr="screen-length 0" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="5" timeout="120000"/>
+                	<Command commandecho="" commandstr="quit" delay="" messagesuffix="${LF}" prompt="]" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="6" timeout="120000"/>
+                	<Command commandecho="" commandstr="quit" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="false" sequenceid="7" timeout="120000"/>
+                	<Command commandecho="" commandstr="display saved-configuration" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="true" sequenceid="8" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="save" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Huawei Eudemon Firewall" personalityName="HuaweiEudemonFirewall">	
+		<Login enablecommand="" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Stores the software version" displayname="Software Version" name="SOFTWARE_VERSION" sequenceid="1" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HuaweiHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_huawei_eudemon_firewall">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">	
+										<REGEX EXPRESSION='.*Software\s*Version\s*:\s*(Eudemon[^E]*E)\S(\S*)\s*(\S*).*Version\s*(\S*)\).*' NAME="OSVERSION">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="2"/>
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="3"/>
+											<PARAM NAME="OSVERSION" TOKENNO="4"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*HUAWEI\s*(\S*)\s*uptime.*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>	
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>   
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" messagesuffix="${LF}" parsercommandname="hardware_prop_huawei_eudemon_firewall" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" timeout="120000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="200" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.50"/>
+        <NCMDeviceSysOID model="1000" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.51"/>
+        <NCMDeviceSysOID model="2100" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.65"/>
+        <NCMDeviceSysOID model="2200" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.66"/>
+        <NCMDeviceSysOID model="500" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.77"/>
+        <NCMDeviceSysOID model="2300" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.84"/>
+        <NCMDeviceSysOID model="300" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.113"/>
+        <NCMDeviceSysOID model="VPN3900" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.114"/>
+        <NCMDeviceSysOID model="EVPN5900" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.115"/>
+        <NCMDeviceSysOID model="100E" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.116"/>
+        <NCMDeviceSysOID model="200E" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.117"/>
+        <NCMDeviceSysOID model="200S" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.118"/>
+        <NCMDeviceSysOID model="200S" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.127"/>
+        <NCMDeviceSysOID model="8160E" ostype="[NA]" series="[NA]" sysoid=".1.3.6.1.4.1.2011.2.138"/>
+        <NCMDeviceSysOID model="200E-G8-AC" ostype="[NA]" series="200E" sysoid=".1.3.6.1.4.1.2011.2.321.1.58"/>
+        <NCMDeviceSysOID model="200E-G8-DC" ostype="[NA]" series="200E" sysoid=".1.3.6.1.4.1.2011.2.321.1.59"/>
+        <NCMDeviceSysOID model="1000E-G3-AC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.60"/>
+        <NCMDeviceSysOID model="1000E-G3-DC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.61"/>
+        <NCMDeviceSysOID model="1000E-G5-AC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.62"/>
+        <NCMDeviceSysOID model="1000E-G5-DC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.63"/>
+        <NCMDeviceSysOID model="1000E-G8-AC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.64"/>
+        <NCMDeviceSysOID model="1000E-G8-DC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.65"/>
+        <NCMDeviceSysOID model="1000E-G12-AC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.66"/>
+        <NCMDeviceSysOID model="1000E-G12-DC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.67"/>
+        <NCMDeviceSysOID model="1000E-G16-AC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.68"/>
+        <NCMDeviceSysOID model="1000E-G16-DC" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.1.69"/>
+        <NCMDeviceSysOID model="1000E-V1" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.2.9"/>
+        <NCMDeviceSysOID model="1000E-V2" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.2.10"/>
+        <NCMDeviceSysOID model="1000E-V4" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.2.11"/>
+        <NCMDeviceSysOID model="1000E-V8" ostype="[NA]" series="1000E" sysoid=".1.3.6.1.4.1.2011.2.321.2.12"/>
+        <NCMDeviceSysOID model="8000E-V" ostype="[NA]" series="8000E" sysoid=".1.3.6.1.4.1.2011.2.321.2.2"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

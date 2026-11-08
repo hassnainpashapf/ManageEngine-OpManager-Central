@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For HPE MSR Series Router devices" displayName="HPE MSR Series Router" osType="Comware Software" templateName="HPE MSR Series Router">
+	<RestTemplate name=""/>
+	<Vendor displayName="HPE" vendorName="HP">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="info" number="7" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="screen-length disable" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="display current-configuration" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="screen-length disable" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="display saved-configuration" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="save" delay="" messagesuffix="${LF}" prompt="" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="HPE MSR Series Router" personalityName="HPEMSRSeriesRouter">	
+		<Login enablecommand="super" postlogincommand="" postloginprompt="continue" prelogincommand="" preloginprompt="continue" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="HARDWARE_VER" size="100" desc="Hardware Version" displayname="Hardware Version" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="BOOTROM_VER" size="100" desc="Bootrom Version" displayname="Bootrom Version" defaultvalue="Not Available" sequenceid="20"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex operation="upload">^password.*</Regex>				
+					<Regex>.*Startup\s*configuration.*</Regex>
+					<Regex>.*Running\s*configuration.*</Regex>
+					<Regex>.*Current\s*configuration.*</Regex>
+					<Regex>.*length disable.*</Regex>
+					<Regex>.*display saved-configuration.*</Regex>
+					<Regex>.*display current-configuration.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>logging\s*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HPEMSRSeriesHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_hp_msr_series_router">
+						 <VALID-RULE>
+							<METADATA>
+								<SCALAR REFERENCEREQ="false">
+									<REGEX NAME="BOOTROM_VER" EXPRESSION=".*BootROM\s*Version\s*:\s*(\S*).*">
+										<PARAM NAME="BOOTROM_VER" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="OSVERSION2" EXPRESSION=".*Software.*Version\s*(\S+,\s*Release\s*\S+).*">
+										<PARAM NAME="OSVERSION" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="OSVERSION1" EXPRESSION=".*Software.*Version\s*(\S*),\s*Release.*">
+										<PARAM NAME="OSVERSION" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="SERIES1" EXPRESSION=".*(?i)(?:HPE|HP|H3C)\s*(\S+)\s*uptime.*">
+										<PARAM NAME="SERIES" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="MODEL1" EXPRESSION=".*(?i)PRODUCT\s*_*NUMBER\s*:\s*(\S+).*">
+										<PARAM NAME="MODEL" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="MODEL2" EXPRESSION=".*(?i)DEVICE\s*_*NAME\s*:\s*.*(J\S+).*">
+										<PARAM NAME="MODEL" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="MODEL3" EXPRESSION=".*(?i)DEVICE\s*_*NAME\s*:\s*.*\s(R\S+).*">
+										<PARAM NAME="MODEL" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="MODEL4" EXPRESSION=".*(?i)DEVICE\s*_*NAME\s*:\s*\s*(?:HPE|HP)\s*(\S+).*">
+										<PARAM NAME="MODEL" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="MODEL5" EXPRESSION=".*(?i)DEVICE\s*_*NAME\s*:\s*(.*)">
+										<PARAM NAME="MODEL" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="SERIALNUMBER" EXPRESSION=".*(?i)SERIAL\s*_*NUMBER\s*:\s*(\S+).*">
+										<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="MACADDRESS" EXPRESSION=".*(?i)MAC\s*_*ADDRESS\s*:\s*(\S+).*">
+										<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+									</REGEX>
+								</SCALAR>
+							</METADATA>
+						 </VALID-RULE>
+						 <ERROR-RULE>
+						 <!-- Error rule specific to the command -->
+							<METADATA>
+								<SCALAR>
+								  <!-- error message for command  -->
+								  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+									 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+								  </REGEX>
+								</SCALAR>
+							</METADATA>
+						 </ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" messagesuffix="${LF}" parsercommandname="hardware_prop_hp_msr_series_router" prompt="${UserInput:EnablePrompt}" promptactionid="hpActionId" timeout="20000"/>
+						<Command commandstr="display device manuinfo" messagesuffix="${LF}" parsercommandname="hardware_prop_hp_msr_series_router" prompt="${UserInput:EnablePrompt}" promptactionid="hpActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

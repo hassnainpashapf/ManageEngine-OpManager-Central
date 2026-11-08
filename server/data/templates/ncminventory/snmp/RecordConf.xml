@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<RecordConf>
+    <SnmpGetRecord recordid="systemdetails-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+        <Record type="GET" recordid="systemdetails-get" protocol="SNMP"/>
+        <SnmpGetParamList>
+            <SnmpGetParam paramindex="0" oidname="1.1.0" label="NEDetails.SYSTEMDESCRIPTION"/>
+            <SnmpGetParam paramindex="1" oidname="1.2.0" label="NEDetails.SYSTEMOBJECTID"/>
+            <SnmpGetParam paramindex="2" oidname="1.4.0" label="NEDetails.SYSTEMCONTACT"/>
+            <SnmpGetParam paramindex="3" oidname="1.5.0" label="NEDetails.SYSTEMNAME"/>
+            <SnmpGetParam paramindex="4" oidname="1.6.0" label="NEDetails.SYSTEMLOCATION"/>
+        </SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="systeminfo-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="systeminfo-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.25.1.1.0" label="SystemDetails.SYSTEMUPTIME"/>
+	    <SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.25.1.5.0" label="SystemDetails.NUMUSERS"/>
+	    <SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.25.1.6.0" label="SystemDetails.NUMPROCESSES"/>
+	    <SnmpGetParam paramindex="3" oidname=".1.3.6.1.2.1.25.1.7.0" label="SystemDetails.MAXPROCESSES"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="bridgemib-get-disc" type="GET" maxrepetitions="0" nonrepeaters="0">
+        <Record type="GET" recordid="bridgemib-get-disc" protocol="SNMP"/>
+        <SnmpGetParamList>
+            <SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.17.1.1.0" label="Switch.BRIDGEMACADDRESS"/>
+            <SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.17.1.2.0" label="Switch.PORTSCOUNT"/>
+        </SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="storageinfo-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="storageinfo-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.25.2.3.1.1" label="StorageDetails.STORAGEINDEX"/>
+	    <SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.25.2.3.1.2" label="StorageDetails.STORAGETYPE"/>
+	    <SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.25.2.3.1.3" label="StorageDetails.STORAGEDESC"/>
+	    <SnmpGetParam paramindex="3" oidname=".1.3.6.1.2.1.25.2.3.1.4" label="StorageDetails.ALLOCATIONUNITS"/>
+	    <SnmpGetParam paramindex="4" oidname=".1.3.6.1.2.1.25.2.3.1.5" label="StorageDetails.STORAGESIZE"/>
+	    <SnmpGetParam paramindex="5" oidname=".1.3.6.1.2.1.25.2.3.1.6" label="StorageDetails.STORAGEUSED"/>
+	    <SnmpGetParam paramindex="6" oidname=".1.3.6.1.2.1.25.2.3.1.7" label="StorageDetails.ALLOCATIONFAILURES"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="hrservice-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="hrservice-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.25.5.1.1.1" label="NEServiceDetails.SERVICEINDEX"/>
+	    <SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.25.5.1.1.2" label="NEServiceDetails.CPUUSAGE"/>
+	    <SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.25.4.2.1.1" label="NEServiceDetails.MEMORYUSAGE"/>
+	    <SnmpGetParam paramindex="3" oidname=".1.3.6.1.2.1.25.4.2.1.2" label="NEService.SERVICENAME"/>
+	    <SnmpGetParam paramindex="4" oidname=".1.3.6.1.2.1.25.4.2.1.3" label="NEServiceDetails.PROCESSID"/>
+	    <SnmpGetParam paramindex="5" oidname=".1.3.6.1.2.1.25.4.2.1.4" label="NEServiceDetails.RUNPATH"/>
+	    <SnmpGetParam paramindex="6" oidname=".1.3.6.1.2.1.25.4.2.1.6" label="NEServiceDetails.RUNTYPE"/>
+	    <SnmpGetParam paramindex="7" oidname=".1.3.6.1.2.1.25.4.2.1.7" label="NEServiceDetails.RUNSTATUS"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="bridgemib-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="bridgemib-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.17.1.1.0" label="BRIDGEADDRESS"/>
+	    <SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.17.1.2.0" label="NUMPORTS"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="net-topo-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="net-topo-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.17.4.3.1.1" label="NetFDBTable.MACADDRESS"/>
+	    <SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.17.4.3.1.2" label="NetFDBTable.PORT"/>
+	    <SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.17.4.3.1.3" label="NetFDBTable.STATUS"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="switchport-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="switchport-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.17.1.4.1.1" label="NEPort.PORTINDEX"/>
+	<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.17.1.4.1.2" label="INTERFACEINDEX"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="ne-snmp-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="ne-snmp-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname="1.2.0" label="SYSOID"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="snmpserv-snmp-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="snmpserv-snmp-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname="1.1.0" label="SYSDESCR"/>
+	<SnmpGetParam paramindex="1" oidname="1.2.0" label="SYSOID"/>
+	<SnmpGetParam paramindex="2" oidname="1.3.0" label="SYSUPTIME"/>
+	<SnmpGetParam paramindex="3" oidname="1.4.0" label="SYSCONTACT"/>
+	<SnmpGetParam paramindex="4" oidname="1.5.0" label="SYSNAME"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="ip-snmp-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="ip-snmp-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.4.20.1.2" label="NEInterfaceDetails.INTERFACEINDEX"/>
+	<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.4.20.1.1" label="ADDRESS"/>
+	<SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.4.20.1.3" label="NETMASK"/>
+	<SnmpGetParam paramindex="3" oidname="ifDescr" label="NEInterfaceDetails.INTERFACEDESCRIPTOR">
+	    <IndexOIDParamList>
+		<IndexOIDParam indexname="ifIndex" indexvalue="ipAdEntIfIndex"/>
+	    </IndexOIDParamList>
+	</SnmpGetParam>
+	<SnmpGetParam paramindex="4" oidname="ifSpeed" label="NEInterfaceDetails.INTERFACESPEED">
+	    <IndexOIDParamList>
+		<IndexOIDParam indexname="ifIndex" indexvalue="ipAdEntIfIndex"/>
+	    </IndexOIDParamList>
+	</SnmpGetParam>
+	<SnmpGetParam paramindex="5" oidname="ifType" label="NEInterfaceDetails.INTERFACETYPE">
+	    <IndexOIDParamList>
+		<IndexOIDParam indexname="ifIndex" indexvalue="ipAdEntIfIndex"/>
+	    </IndexOIDParamList>
+	</SnmpGetParam>
+	<SnmpGetParam paramindex="6" oidname="ifAdminStatus" label="ManagedResource.ADMINISTRATIVESTATUS">
+	    <IndexOIDParamList>
+		<IndexOIDParam indexname="ifIndex" indexvalue="ipAdEntIfIndex"/>
+	    </IndexOIDParamList>
+	</SnmpGetParam>
+	<SnmpGetParam paramindex="7" oidname="ifOperStatus" label="ManagedResource.OPERATIONALSTATUS">
+	    <IndexOIDParamList>
+		<IndexOIDParam indexname="ifIndex" indexvalue="ipAdEntIfIndex"/>
+	    </IndexOIDParamList>
+	</SnmpGetParam>
+	<SnmpGetParam paramindex="8" oidname="ifPhysAddress" label="NEInterfaceDetails.PHYSICALADDRESS">
+	    <IndexOIDParamList>
+		<IndexOIDParam indexname="ifIndex" indexvalue="ipAdEntIfIndex"/>
+	    </IndexOIDParamList>
+	</SnmpGetParam>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+    <SnmpGetRecord recordid="ip-net-get" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="ip-net-get" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname="ipNetToMediaIfIndex" label="INTERFACEINDEX"/>
+	<SnmpGetParam paramindex="1" oidname="ipNetToMediaPhysAddress" label="MacIpMapping.MACADDRESS"/>
+	<SnmpGetParam paramindex="2" oidname="ipNetToMediaNetAddress" label="MacIpMapping.IPADDRESS"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+	
+    <SnmpGetRecord recordid="printer_test" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="printer_test" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.17.4.3.1.1" label="NetFDBTable.ADDRESS"/>
+	<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.17.4.3.1.2" label="NetFDBTable.PORT"/>
+	<SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.17.4.3.1.3" label="NetFDBTable.STATUS"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+
+    <SnmpGetRecord recordid="printer-get2" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="printer-get2" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.43.5.1.1.2" label="Printer.CONSOLELOCALIZATION"/>
+	<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.43.5.1.1.11" label="Printer.NOOFDISPLAYLINESINCONSOLE"/>
+	<SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.43.5.1.1.12" label="Printer.NOOFDISPLAYCHARSINCONSOLE"/>
+	<SnmpGetParam paramindex="3" oidname=".1.3.6.1.2.1.43.5.1.1.13" label="Printer.CONSOLEDISABLED"/>
+	<SnmpGetParam paramindex="4" oidname=".1.3.6.1.2.1.43.5.1.1.3" label="Printer.GENERALRESET"/>
+	<SnmpGetParam paramindex="5" oidname=".1.3.6.1.2.1.43.5.1.1.4" label="Printer.CURRENTOPERATOR"/>
+	<SnmpGetParam paramindex="6" oidname=".1.3.6.1.2.1.43.5.1.1.5" label="Printer.SERVICEPERSON"/>
+	<SnmpGetParam paramindex="7" oidname=".1.3.6.1.2.1.25.3.2.1.1" label="Printer.DEVICEINDEX"/>
+	<SnmpGetParam paramindex="8" oidname=".1.3.6.1.2.1.25.3.2.1.5" label="ManagedResource.OPERATIONALSTATUS"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+	
+    <SnmpGetRecord recordid="printer-Inputget" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="printer-Inputget" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.43.8.2.1.2" label="PrinterInputUnit.INPUTTYPE"/>
+	<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.43.8.2.1.3" label="PrinterInputUnit.INPUTDIMENSIONUNIT"/>
+	<SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.43.8.2.1.4" label="PrinterInputUnit.INPUTMEDIADIMFEEDDIRDECLARED"/>
+	<SnmpGetParam paramindex="3" oidname=".1.3.6.1.2.1.43.8.2.1.5" label="PrinterInputUnit.INPUTMEDIADIMXfEEDDIRDECLARED"/>
+	<SnmpGetParam paramindex="4" oidname=".1.3.6.1.2.1.43.8.2.1.6" label="PrinterInputUnit.INPUTMEDIADIMFEEDDIRCHOSEN"/>
+	<SnmpGetParam paramindex="5" oidname=".1.3.6.1.2.1.43.8.2.1.7" label="PrinterInputUnit.INPUTMEDIADIMXFEEDDIRCHOSEN"/>
+	<SnmpGetParam paramindex="6" oidname=".1.3.6.1.2.1.43.8.2.1.8" label="PrinterInputUnit.INPUTCAPACITYUNIT"/>
+	<SnmpGetParam paramindex="7" oidname=".1.3.6.1.2.1.43.8.2.1.9" label="PrinterInputUnit.INPUTMAXCAPACITY"/>
+	<SnmpGetParam paramindex="8" oidname=".1.3.6.1.2.1.43.8.2.1.10" label="PrinterInputUnit.INPUTCURRENTLEVEL"/>
+	<SnmpGetParam paramindex="9" oidname=".1.3.6.1.2.1.43.8.2.1.12" label="PrinterInputUnit.INPUTMEDIANAME"/>
+	<SnmpGetParam paramindex="10" oidname=".1.3.6.1.2.1.43.8.2.1.13" label="PrinterInputUnit.INPUTNAME"/>
+	<SnmpGetParam paramindex="11" oidname=".1.3.6.1.2.1.43.8.2.1.14" label="PrinterInputUnit.INPUTVENDORNAME"/>
+	<SnmpGetParam paramindex="12" oidname=".1.3.6.1.2.1.43.8.2.1.18" label="PrinterInputUnit.INPUTDESCRIPTION"/>
+	<SnmpGetParam paramindex="13" oidname=".1.3.6.1.2.1.43.8.2.1.1" label="PrinterInputUnit.INPUTINDEX"/>
+	<SnmpGetParam paramindex="14" oidname=".1.3.6.1.2.1.25.3.2.1.1" label="PrinterInputUnit.DEVICEINDEX"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+	
+    <SnmpGetRecord recordid="printer-Outputget" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="printer-Outputget" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.43.9.2.1.2" label="PrinterOutputUnit.OUTPUTTYPE"/>
+	<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.43.9.2.1.3" label="PrinterOutputUnit.OUTPUTCAPACITYUNIT"/>
+	<SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.43.9.2.1.4" label="PrinterOutputUnit.OUTPUTMAXCAPACITY"/>
+	<SnmpGetParam paramindex="3" oidname=".1.3.6.1.2.1.43.9.2.1.5" label="PrinterOutputUnit.OUTPUTREMAININGCAPACITY"/>
+	<SnmpGetParam paramindex="4" oidname=".1.3.6.1.2.1.43.9.2.1.7" label="PrinterOutputUnit.OUTPUTNAME"/>
+	<SnmpGetParam paramindex="5" oidname=".1.3.6.1.2.1.43.9.2.1.8" label="PrinterOutputUnit.OUTPUTVENDORNAME"/>
+	<SnmpGetParam paramindex="6" oidname=".1.3.6.1.2.1.43.9.2.1.12" label="PrinterOutputUnit.OUTPUTDESCRIPTION"/>
+	<SnmpGetParam paramindex="7" oidname=".1.3.6.1.2.1.43.9.2.1.14" label="PrinterOutputUnit.OUTPUTDIMUNIT"/>
+	<SnmpGetParam paramindex="8" oidname=".1.3.6.1.2.1.43.9.2.1.15" label="PrinterOutputUnit.OUTPUTMAXDIMFEEDDIR"/>
+	<SnmpGetParam paramindex="9" oidname=".1.3.6.1.2.1.43.9.2.1.16" label="PrinterOutputUnit.OUTPUTMAXDIMXFEEDDIR"/>
+	<SnmpGetParam paramindex="10" oidname=".1.3.6.1.2.1.43.9.2.1.17" label="PrinterOutputUnit.OUTPUTMINDIMFEEDDIR"/>
+	<SnmpGetParam paramindex="11" oidname=".1.3.6.1.2.1.43.9.2.1.18" label="PrinterOutputUnit.OUTPUTMINDIMXFEEDDIR"/>
+	<SnmpGetParam paramindex="12" oidname=".1.3.6.1.2.1.43.9.2.1.20" label="PrinterOutputUnit.OUTPUTPAGEDELIVERYORIENTATION"/>
+	<SnmpGetParam paramindex="13" oidname=".1.3.6.1.2.1.43.9.2.1.1" label="PrinterOutputUnit.OUTPUTINDEX"/>
+	<SnmpGetParam paramindex="14" oidname=".1.3.6.1.2.1.25.3.2.1.1" label="PrinterOutputUnit.DEVICEINDEX"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+	
+    <SnmpGetRecord recordid="printer-Markerget" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="printer-Markerget" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.43.10.2.1.2" label="PrinterMarker.MARKERMARKTECH"/>
+	<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.43.10.2.1.3" label="PrinterMarker.MARKERCOUNTERUNIT"/>
+	<SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.43.10.2.1.4" label="PrinterMarker.MARKERLIFECOUNT"/>
+	<SnmpGetParam paramindex="3" oidname=".1.3.6.1.2.1.43.10.2.1.1" label="PrinterMarker.MARKERINDEX"/>
+	<SnmpGetParam paramindex="4" oidname=".1.3.6.1.2.1.25.3.2.1.1" label="PrinterMarker.DEVICEINDEX"/>
+	</SnmpGetParamList>
+	</SnmpGetRecord>
+	
+	<SnmpGetRecord recordid="printer-MarkerSuppliesget" type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="printer-MarkerSuppliesget" protocol="SNMP"/>
+	<SnmpGetParamList>
+	<SnmpGetParam paramindex="0" oidname=".1.3.6.1.2.1.43.11.1.1.2" label="PrinterMarkerSupplier.MARKERSUPPLIESMARKERINDEX"/>
+	<SnmpGetParam paramindex="1" oidname=".1.3.6.1.2.1.43.11.1.1.5" label="PrinterMarkerSupplier.MARKERSUPPLIESTYPE"/>
+	<SnmpGetParam paramindex="2" oidname=".1.3.6.1.2.1.43.11.1.1.6" label="PrinterMarkerSupplier.MARKERSUPPLIESDESCRIPTION"/>
+	<SnmpGetParam paramindex="3" oidname=".1.3.6.1.2.1.43.11.1.1.4" label="PrinterMarkerSupplier.MARKERSUPPLIESCLASS"/>
+	<SnmpGetParam paramindex="4" oidname=".1.3.6.1.2.1.43.11.1.1.7" label="PrinterMarkerSupplier.MARKERSUPPLIESSUPPLYUNIT"/>
+	<SnmpGetParam paramindex="5" oidname=".1.3.6.1.2.1.43.11.1.1.8" label="PrinterMarkerSupplier.MARKERSUPPLIESMACCAPACITY"/>
+	<SnmpGetParam paramindex="6" oidname=".1.3.6.1.2.1.43.11.1.1.1" label="PrinterMarkerSupplier.MARKERSUPPLIESINDEX"/>
+	<SnmpGetParam paramindex="7" oidname=".1.3.6.1.2.1.25.3.2.1.1" label="PrinterMarkerSupplier.DEVICEINDEX"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+</RecordConf>

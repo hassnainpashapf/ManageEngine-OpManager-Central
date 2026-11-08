@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Download Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="radware_switch_cli_fetch_running_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="manage tftp config-file put ${UserInput:file_name} ${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_switch_cli_fetch_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Upload Config -->
+<CLICommand command="manage tftp config-file get ${UserInput:file_name} ${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_switch_cli_push_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="radware_switch_hardware_prop_parser" promptactionid="yesActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="radware_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="system device-info">
+	<CLIInputRecord parsercommandname="hardware_prop_radware_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="radware_switch_cli_hardware_deviceinfo_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- added by prabhat -->
+<!-- Upload config -->
+<CLICommand command="system config upload replace ${UserInput:file_name} ${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_switch_cli_push_running_rec1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Download/Backup Config -->
+<CLICommand command="system config download ${UserInput:file_name} ${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_switch_cli_fetch_running_rec1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Hardware Properties -->
+<CLICommand command="system device-info">
+	<CLIInputRecord parsercommandname="hardware_prop_radware_switch1" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="radware_switch_cli_hardware_deviceinfo_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- ends here -->
+
+<!-- Radware Link Proof Switch -->
+
+<!-- Download Config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="radware_link_proof_switch_cli_fetch_running_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="manage tftp file-type set 1">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_link_proof_switch_cli_fetch_running_rec1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="manage tftp config-file put ${UserInput:file_name} ${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_link_proof_switch_cli_fetch_running_rec2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="manage tftp file-type set 2">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_link_proof_switch_cli_fetch_running_rec3" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Upload Config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="radware_link_proof_switch_cli_push_running_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="manage tftp file-type set 1">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_link_proof_switch_cli_push_running_rec1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="manage tftp config-file get ${UserInput:file_name} ${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_link_proof_switch_cli_push_running_rec2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="manage tftp file-type set 2">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="radware_link_proof_switch_cli_push_running_rec3" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="radware_link_proof_switch_hardware_prop_parser" promptactionid="yesActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="radware_link_proof_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="system device-info">
+	<CLIInputRecord parsercommandname="hardware_prop_radware_link_proof_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="radware_link_proof_switch_cli_hardware_link_proof_deviceinfo_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="system mib2-location">
+	<CLIInputRecord parsercommandname="hardware_prop_radware_link_proof_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="system license">
+	<CLIInputRecord parsercommandname="hardware_prop_radware_link_proof_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec3" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="system file-system config show">
+	<CLIInputRecord parsercommandname="hardware_prop_radware_link_proof_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec4" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- *************  For Radware Alteon Switches *************** -->
+
+<!-- Upload Running -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="RadwareActionId">
+    <InteractionSpec timeout="120000" protocol="CLI" interactionid="radware_alteon_switch_cli_ispec1"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt=":" commandecho="false" promptecho="true" promptactionid="RadwareActionId">
+    <InteractionSpec timeout="120000" protocol="CLI" interactionid="radware_alteon_switch_cli_ispec2"/>
+</CLIInteractionSpec>
+
+<CLICommand command="cfg">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="radware_alteon_switch_configmode_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="ptcfg">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="radware_alteon_switch_backup_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="radware_alteon_switch_tftpaddress_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="radware_alteon_switch_filename_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="radware_alteon_switch_empty_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<!-- Telnet, SSH Backup command -->
+
+<CLICommand command="/cfg/dump">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="radware_alteon_switch_show_startup_config_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="radware_alteon_switch_hardware_prop_parser" promptactionid="RadwareActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="radware_alteon_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="/info/sys/general">
+	<CLIInputRecord parsercommandname="hardware_prop_radware_alteon_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="radware_alteon_switch_hardware_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+	
+</CLICommand>
+
+</CLICommandList>

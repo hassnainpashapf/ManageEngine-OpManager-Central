@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+  <CustomDevicePackageSet Category="WANAccelerator" Vendor="F5 Networks" iconName="wanaccelerator.png" pingInterval="15">
+    <CustomDevicePackage deviceType="F5 SWAN-WJ200">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.3375.2.1.3.4.40"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="WANAccelerator" Vendor="VMware" iconName="wanaccelerator.png" pingInterval="15">
+    <CustomDevicePackage deviceType="VMware VeloCloud Edge Series">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.45346.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  
+  <CustomDevicePackageSet Category="WANAccelerator" Vendor="Silver Peak" iconName="wanaccelerator.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Silver Peak EC-V">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.23867.1.2.46"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Silver Peak Unity EdgeConnect">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.23867.1.2.0"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Silver EdgeConnect XS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.23867.1.2.47"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="WANAccelerator" Vendor="Symantec" iconName="wanaccelerator.png" pingInterval="15">
+	<CustomDevicePackage deviceType="Symantec PacketShaper">
+		<SysOIDs>
+			<SysOID oid=".1.3.6.1.4.1.14501.11.1.1" />
+		</SysOIDs>
+	</CustomDevicePackage>
+   </CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="WANAccelerator" Vendor="Silver Peak" iconName="wanaccelerator.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Silver Peak NX7700">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.23867.1.2.17" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="Silver Peak EdgeConnect US">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.23867.1.2.52" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+	<CustomDevicePackageSet Category="WANAccelerator" Vendor="Riverbed Technology, Inc." iconName="wanaccelerator.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Riverbed Steelhead WAN Accelerator">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.17163.1.1" />
+			</SysOIDs>
+		</CustomDevicePackage>
+		<CustomDevicePackage deviceType="RiverBed SF2000">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.17163.1.52" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+
+	<CustomDevicePackageSet Category="WANAccelerator" Vendor="Arbor Networks" iconName="wanaccelerator.png" pingInterval="15">
+		<CustomDevicePackage deviceType="Arbor APS 2600">
+			<SysOIDs>
+				<SysOID oid=".1.3.6.1.4.1.9694.1.13" />
+			</SysOIDs>
+		</CustomDevicePackage>
+	</CustomDevicePackageSet>
+</CustomDevicePackage>

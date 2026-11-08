@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For all FireEye EX Series modules" displayName="FireEye EX Series Module" osType="FEOS" templateName="FireEye EX Series Module">
+	<RestTemplate name=""/>
+	<Vendor displayName="FireEye" vendorName="FireEye">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="conf t c" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="1" timeout="20000"/>
+                	<Command commandecho="" commandstr="no cli default paging enable" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config full" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout="20000"/>	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="4" timeout="20000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="FireEye EX Series" personalityName="FireEyeEXSeries">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${CRLF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Product Name" displayname="Product Name" name="PRODUCTNAME" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Build ID" displayname="Build ID" name="BUILDID" sequenceid="2" size="50"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging on</Regex>
+					<Regex>logging trap (emergencies|alerts|critical|errors|warnings)</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="FireEyeEXSeriesHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_fireeye_ex_series">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*model:\s*(\S*).*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*serial num:\s*(\S*).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>										
+										<REGEX EXPRESSION=".*Version summary:.*\)\s*(\S*).*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>									
+										<REGEX EXPRESSION=".*Product name:\s*(.*)" NAME="PRODUCTNAME">
+											<PARAM NAME="PRODUCTNAME" TOKENNO="1"/>
+										</REGEX>									
+										<REGEX EXPRESSION=".*Build ID:\s*(.*)" NAME="BUILDID">
+											<PARAM NAME="BUILDID" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${CRLF}" parsercommandname="hardware_prop_fireeye_ex_series" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>	
+					</Commands>					
+					<Commands operation="enterAdvancedMode">
+						<Command commandstr="conf t c" parsercommandname="" messagesuffix="${CRLF}" prompt="#" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+					<Commands operation="exitAdvancedMode">
+						<Command commandstr="exit" parsercommandname="" responseparserid="" messagesuffix="${CRLF}" prompt="#" timeout="60000" promptactionid=""/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

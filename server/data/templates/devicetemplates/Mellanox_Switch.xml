@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Mellanox Switch" osType="MLNX-OS" templateName="Mellanox_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Mellanox" vendorName="Mellanox">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system type"/>
+			<Command commandstr="show inventory"/>
+			<Command commandstr="show system mac"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="debug" number="5" sequenceid="1"/>
+			<Level name="info" number="6" sequenceid="2"/>
+			<Level name="notice" number="7" sequenceid="3"/>
+			<Level name="warning" number="8" sequenceid="4"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal length 999" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="terminal length 999" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+            		<Command commandstr="configure" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Mellanox Switch" personalityName="MellanoxSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SOFTWARE_VERSION" size="150" desc="Software Version" displayname="Software Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="TARGET_ARCH" size="150" desc="Target Architecture" displayname="Target Arch" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="TARGET_HW" size="150" desc="Target Hardware" displayname="Target Hw" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="SYSTEM_MEMORY" size="150" desc="System Memory" displayname="System Memory" defaultvalue="Not Available" sequenceid="4"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>logging $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+				<SyslogState state="disable">
+					<Regex>no logging $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="MellanoxSwitchHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_mellanox_version">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Product\s*release:\s*(.*)" NAME="SOFTWARE_VERSION">
+										  <PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>
+										  <PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+
+										<REGEX EXPRESSION=".*Target\s*arch:\s*(.*)" NAME="TARGET_ARCH">
+											<PARAM NAME="TARGET_ARCH" TOKENNO="1"/>
+										</REGEX>
+										
+										<REGEX EXPRESSION=".*Target\s*hw:\s*(.*)" NAME="TARGET_HW">
+											<PARAM NAME="TARGET_HW" TOKENNO="1"/>
+										</REGEX>
+										
+										<REGEX EXPRESSION=".*System\s*memory:\s*(.*)" NAME="SYSTEM_MEMORY">
+											<PARAM NAME="SYSTEM_MEMORY" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*[Cc][Hh][Aa][Ss][Ss][Ii][Ss]\s*(\S+)\s*(\S+)\s*\S+\s*\S+\s*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*[Cc][Hh][Aa][Ss][Ss][Ii][Ss]\s*(\S+)\s*(\S+)\s*(\S+)\s*\S+\s*\S+\s*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="2"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="3"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						
+						<COMMAND NAME="hardware_prop_mellanox_type">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										
+										<REGEX EXPRESSION="(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						
+						<COMMAND NAME="hardware_prop_mellanox_mac">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="(.*)" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_mellanox_version" responseparserid="mlnx_os_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000" promptactionid=""/>
+						<Command commandstr="show system type" parsercommandname="hardware_prop_mellanox_type" responseparserid="mlnx_os_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000" promptactionid=""/>
+						<Command commandstr="show system mac" parsercommandname="hardware_prop_mellanox_mac" responseparserid="mlnx_os_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000" promptactionid=""/>
+						<Command commandstr="show inventory" parsercommandname="hardware_prop_mellanox_version" responseparserid="mlnx_os_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000" promptactionid=""/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

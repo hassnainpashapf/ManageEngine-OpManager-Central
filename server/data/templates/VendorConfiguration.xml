@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<VendorConfiguration>
+	
+    <NCMVendor vendorid="NCMVendor:vendorid:UVH@2021571" vendorname="Cisco" displayname="Cisco"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:UVH@19469395" vendorname="Nortel" displayname="Nortel"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:UVH@32868878" vendorname="HP" displayname="HPE"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:UVH@20626140" vendorname="Foundry" displayname="Foundry"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:UVH@12703139" vendorname="3Com" displayname="HPE (3Com)"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:UVH@12703145" vendorname="Fortinet" displayname="Fortinet"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Netscreen" vendorname="Netscreen" displayname="Juniper (NetScreen)"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Enterasys" vendorname="Enterasys" displayname="Extreme (Enterasys)"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Adtran" vendorname="Adtran" displayname="Adtran"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:DLink" vendorname="DLink" displayname="DLink"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:BlueCoat" vendorname="BlueCoat" displayname="Symantec (Blue Coat)"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Huawei" vendorname="Huawei" displayname="Huawei"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Aruba" vendorname="Aruba" displayname="Aruba"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Proxim" vendorname="Proxim" displayname="Proxim"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Extreme" vendorname="Extreme" displayname="Extreme"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Force10" vendorname="Force10" displayname="Dell Force10"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Netgear" vendorname="Netgear" displayname="Netgear"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Juniper" vendorname="Juniper" displayname="Juniper"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Dell" vendorname="Dell" displayname="Dell"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Mistletoe" vendorname="Mistletoe" displayname="Mistletoe"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Riverbed" vendorname="Riverbed" displayname="Riverbed"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Alcatel" vendorname="Alcatel" displayname="Alcatel"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Alaxala" vendorname="Alaxala" displayname="Alaxala"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Radware" vendorname="Radware" displayname="Radware"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Brocade" vendorname="Brocade" displayname="Brocade"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:CheckPoint" vendorname="CheckPoint" displayname="CheckPoint"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Avaya" vendorname="Avaya" displayname="Avaya"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:MRV" vendorname="MRV" displayname="ADVA (MRV)"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Dax" vendorname="Dax" displayname="Dax"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:H3C" vendorname="H3C" displayname="H3C"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Yamaha" vendorname="Yamaha" displayname="Yamaha"/> 
+    <NCMVendor vendorid="NCMVendor:vendorid:Vanguard" vendorname="Vanguard" displayname="Vanguard"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:AlliedTelesis" vendorname="AlliedTelesis" displayname="Allied Telesis"/> 
+    <NCMVendor vendorid="NCMVendor:vendorid:F5" vendorname="F5" displayname="F5"/> 
+    <NCMVendor vendorid="NCMVendor:vendorid:Citrix" vendorname="Citrix" displayname="Citrix"/> 
+    <NCMVendor vendorid="NCMVendor:vendorid:Hitachi" vendorname="Hitachi Cable" displayname="Hitachi Cable"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Motorola" vendorname="Motorola" displayname="Motorola"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Fujitsu" vendorname="Fujitsu" displayname="Fujitsu"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Sphereon" vendorname="Sphereon" displayname="Sphereon"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:CanogaPerkins" vendorname="Canoga Perkins" displayname="Canoga Perkins"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:WatchGuard" vendorname="WatchGuard" displayname="WatchGuard"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:AcmePacket" vendorname="AcmePacket" displayname="Acme Packet"/>
+    <NCMVendor vendorid="NCMVendor:vendorid:Ciena" vendorname="Ciena" displayname="Ciena"/>	
+	<NCMVendor vendorid="NCMVendor:vendorid:PaloAlto" vendorname="PaloAlto" displayname="PaloAlto"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:ADVA" vendorname="ADVA" displayname="ADVA"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Meru" vendorname="Meru" displayname="Fortinet (Meru)"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Hirschmann" vendorname="Hirschmann" displayname="Hirschmann"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Digi" vendorname="Digi" displayname="Digi"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:EricssonRedback" vendorname="EricssonRedback" displayname="EricssonRedback"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:IBM" vendorname="IBM" displayname="IBM"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Arista" vendorname="Arista" displayname="Arista"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:DCNetworks" vendorname="DCNetworks" displayname="DCNetworks"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:A10Networks" vendorname="A10Networks" displayname="A10Networks"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:ZTE" vendorname="ZTE" displayname="ZTE"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Vyatta" vendorname="Vyatta" displayname="Vyatta"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:NEC" vendorname="NEC" displayname="NEC"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Mikrotik" vendorname="Mikrotik" displayname="Mikrotik"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Welotec" vendorname="Welotec" displayname="Welotec"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:RuggedCom" vendorname="RuggedCom" displayname="Siemens (RuggedCom)"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Ruijie" vendorname="Ruijie" displayname="Ruijie"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:EdgeCore" vendorname="EdgeCore" displayname="Edge-Core"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Telco" vendorname="Telco" displayname="Telco"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Calix" vendorname="Calix" displayname="Calix"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Nokia" vendorname="Nokia" displayname="Nokia"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:FiberHome" vendorname="FiberHome" displayname="FiberHome"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Tippingpoint" vendorname="Tippingpoint" displayname="Trend Micro (TippingPoint)"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:MobileIron" vendorname="MobileIron" displayname="MobileIron"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Avocent" vendorname="Avocent" displayname="Emerson (Avocent)"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Arbornetworks" vendorname="Arbornetworks" displayname="NetScout (Arbornetworks)"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:INSYS" vendorname="INSYS" displayname="INSYS"/>
+
+	<NCMVendor vendorid="NCMVendor:vendorid:Trapeze" vendorname="Trapeze" displayname="Belden (Trapeze)"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Ubiquiti" vendorname="Ubiquiti" displayname="Ubiquiti"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Garderos" vendorname="Garderos" displayname="Siemens (Garderos)"/>
+        <NCMVendor vendorid="NCMVendor:vendorid:MimoMax" vendorname="MimoMax" displayname="MimoMax"/>
+	<NCMVendor vendorid="NCMVendor:vendorid:Sonic" vendorname="Sonic" displayname="Sonic"/>
+
+</VendorConfiguration>

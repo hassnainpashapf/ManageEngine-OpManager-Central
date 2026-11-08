@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <Graph saveAbsolutes="false" YAXISTEXT="Volts" description="Maximum input voltage of the power supply (in Volts)" displayName="Power supply Max Input Voltage" failureThreshold="1" graphID="3318" graphName="dellRACpowerSupplyMaxInputVoltage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.674.10892.5.4.600.12.1.9" period="900" protocol="SNMP" timeAvg="false" vendorName="Dell Inc.">
+        <UserProps/>
+    </Graph>
+        <Graph saveAbsolutes="false" YAXISTEXT="Status" description="Dell iDRAC (PowerEdge server) - Power supply unit operational status" displayName="Power supply Status" failureThreshold="1" graphID="3317" graphName="dellRACpowerSupplyStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.674.10892.5.4.600.12.1.5" period="900" protocol="SNMP" showDial="false" timeAvg="false" vendorName="Dell Inc.">
+    	<UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="Hours" description="Number of hours the system has been powered on." displayName="System Up Time (Hours)" failureThreshold="1" graphName="powerOnHoursLenovo" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.19046.11.1.5.1.2.0" period="900" protocol="SNMP" showDial="true" timeAvg="false" vendorName="Lenovo">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="State" description="the current operational state of the system. (0,1,2,3,4,5,6)" displayName="System current operational state" failureThreshold="1" graphName="systemStateLenovo" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.19046.11.1.5.1.4.0" period="900" protocol="SNMP" showDial="false" timeAvg="false" vendorName="Lenovo">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="Status" description="Indicates if the system is currently powered on, off, or in sleep state. (0 off, 1 Sleep,  on 255." displayName="Power Status" failureThreshold="1" graphName="currentSysPowerStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.19046.11.1.5.1.1.0" period="300" protocol="SNMP" showDial="false" timeAvg="false" vendorName="Lenovo">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="Celsius" description="Lenovo IMM (Integrated Management Module) - Temperature sensor reading in the server chassis" displayName="Temparature" failureThreshold="1" graphName="tempReadingLenovo" graphType="multiple" isNumeric="true" oid="StringToNumeric[.1.3.6.1.4.1.19046.11.1.1.1.2.1.3]" period="300" protocol="SNMP" showDial="false" timeAvg="false" vendorName="Lenovo">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="DegC" isNumeric="false" graphType="node" description="Temperature" vendorName="MicroAqua Network system" graphName="APEM-5900-Temperature" oid=".1.3.6.1.4.1.34672.20.1.3.1.1.1.0" displayName="Temperature" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="%" isNumeric="false" graphType="node" description="Humility" vendorName="MicroAqua Network system" graphName="APEM-5900-Humidity" oid=".1.3.6.1.4.1.34672.20.1.3.1.3.1.0" displayName="Humility" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>    
+  <Graph SaveAbsolutes="false" YAXISTEXT="KB" description="Memory Size" displayName="Memory Size" failureThreshold="1" graphName="HPMemory" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.232.6.2.14.13.1.6" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="Hewlett-Packard">
+<UserProps/>
+</Graph>
+<Graph SaveAbsolutes="false" YAXISTEXT="rpm" description="Monitors the fan speed" displayName="Fan speed" failureThreshold="1" graphName="HPFanSpeed" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.232.6.2.6.7.1.6.0" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="Hewlett-Packard">
+<UserProps/>
+</Graph>
+<Graph SaveAbsolutes="false" YAXISTEXT="Celsius" description="Monitors the CPU temprature" displayName="CPU Temperature" failureThreshold="1" graphName="HPCPUTemperature" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.232.6.2.6.8.1.4.0" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="Hewlett-Packard">
+<UserProps/>
+</Graph>
+<Graph SaveAbsolutes="false" YAXISTEXT="MHz" description="CPU Speed" displayName="CPU Speed" failureThreshold="1" graphName="HPCPUSpeed" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.232.1.2.2.1.1.4" period="900" protocol="SNMP" sSave="true" timeAvg="false" vendorName="Hewlett-Packard">
+<UserProps/>
+</Graph>
+
+</GRAPHDETAIL>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="avaya_media_gateway_ispec"/>
+    </CLIInteractionSpec>
+
+ <!-- backup running-config -->
+    <CLICommand command="copy running-config tftp ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="avaya_media_gateway_backup_running_rec" protocol="CLI"/>
+         </CLIInputRecord>
+    </CLICommand>
+
+ <!-- backup startup-config -->
+
+ <CLICommand command="copy startup-config tftp ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="avaya_media_gateway_backup_startup_rec" protocol="CLI"/>
+     </CLIInputRecord>
+ </CLICommand>
+
+ <!-- upload startup-config -->
+
+ <CLICommand command="copy tftp startup-config ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="avaya_media_gateway_upload_startup_rec" protocol="CLI"/>
+     </CLIInputRecord>
+ </CLICommand>
+
+ <!-- upload running-config -->
+ <CLICommand command="copy tftp running-config ${UserInput:file_name} ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="avaya_media_gateway_upload_running_rec" protocol="CLI"/>
+     </CLIInputRecord>
+ </CLICommand>
+
+ <!-- Config Sync Operation -->
+<CLICommand command="copy running-config startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="avaya_media_gateway_sync_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- show startupconfig -->
+<CLICommand command="show startup-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="avaya_cli_show_startup_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- show running-config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="avaya_cli_terminal_length_0_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="show running-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="avaya_cli_show_running_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="terminal length 0">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="avaya_cli_terminal_length_0_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Hardware Properties -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="avaya_media_gateway_hardware_prop_parser" promptactionid="yesActionId">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="avaya_media_gateway_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show system">
+    <CLIInputRecord parsercommandname="hardware_prop_avaya_media_gateway" messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="avaya_media_gateway_hardware_prop_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

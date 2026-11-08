@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DeviceRESTDTMapping>
+    <devicerestdtmapping resttemplate="FortiOS" devicetemplate="FortiGate Firewall - version 2.8" />
+    <devicerestdtmapping resttemplate="FortiOS" devicetemplate="FortiGate Firewall - version 3.0" />
+    <devicerestdtmapping resttemplate="FortiOS" devicetemplate="FortiGate Firewall VDOM - version 3.0" />
+    <devicerestdtmapping resttemplate="FortiOS" devicetemplate="FortiGate Firewall - version 4.0 and 5.0" />
+    <devicerestdtmapping resttemplate="FortiOS" devicetemplate="FortiGate Firewall" />
+    <devicerestdtmapping resttemplate="PanOS" devicetemplate="PaloAlto Firewall PA-4000" />
+    <devicerestdtmapping resttemplate="PanOS" devicetemplate="PaloAlto Panorama Firewall" />
+    <devicerestdtmapping resttemplate="PanOS" devicetemplate="PaloAlto Panorama Firewall(Ssh/Telnet)" />
+    <devicerestdtmapping resttemplate="PanOS" devicetemplate="PaloAlto Firewall" />
+    <devicerestdtmapping resttemplate="AristaDCS" devicetemplate="Arista Data Center Switch" />
+    <devicerestdtmapping resttemplate="AristaDCS" devicetemplate="Arista Networks Switch" />
+    <devicerestdtmapping resttemplate="HPEArubaOS" devicetemplate="HPE ArubaOS Switch" />
+    <devicerestdtmapping resttemplate="HPEArubaOS" devicetemplate="HPE Procurve Switch" />
+    <devicerestdtmapping resttemplate="HPEArubaOS" devicetemplate="HP Procurve Switch" />
+    <devicerestdtmapping resttemplate="PFSense" devicetemplate="PFSense Firewall" />
+    <devicerestdtmapping resttemplate="PFSense" devicetemplate="PFSense" />
+    <devicerestdtmapping resttemplate="PFSense" devicetemplate="PFSense Firewall 2.x" />
+	<devicerestdtmapping resttemplate="CiscoAPIC" devicetemplate="Cisco APIC Fabric Controller" />
+    <devicerestdtmapping resttemplate="Checkpoint" devicetemplate="CheckPoint Firewall" />
+    <devicerestdtmapping resttemplate="Checkpoint" devicetemplate="CheckPoint Gaia Firewall" />
+    <devicerestdtmapping resttemplate="HPEArubaOSCX" devicetemplate="ArubaOS-CX Switch" />
+    <devicerestdtmapping resttemplate="JunOS" devicetemplate="Juniper EX-Series Switch" />
+    <devicerestdtmapping resttemplate="JunOS" devicetemplate="Juniper EX4200 Switch" />
+    <!--devicerestdtmapping resttemplate="Cisco Meraki" devicetemplate="Cisco Meraki" /-->
+    <devicerestdtmapping resttemplate="Nvidia" devicetemplate="Cumulus Linux" />
+    <devicerestdtmapping resttemplate="Nvidia" devicetemplate="Cumulus Linux Nvidia" />
+    <devicerestdtmapping resttemplate="FortiSwitchOS" devicetemplate="FortiSwitch" />
+    <devicerestdtmapping resttemplate="Comware" devicetemplate="3Com 5500 Series Switch" />
+    <devicerestdtmapping resttemplate="Comware" devicetemplate="3Com Menu Based Switches" />
+    <devicerestdtmapping resttemplate="Comware" devicetemplate="3Com 4500 Series Switch" />
+    <devicerestdtmapping resttemplate="Comware" devicetemplate="3Com 4200G Series Switch" />
+    <devicerestdtmapping resttemplate="SonicSwitch" devicetemplate="Sonic DS2000 Switch" />
+    <devicerestdtmapping resttemplate="SonicSwitch" devicetemplate="Sonic DS2000 Switch With SONIC CLI" />
+</DeviceRESTDTMapping>

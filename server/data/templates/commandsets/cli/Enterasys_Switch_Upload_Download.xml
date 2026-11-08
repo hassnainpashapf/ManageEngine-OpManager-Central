@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Upload Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="EnterasysActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="enterasys_switch_cli_fetch_running_irec_1"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show config outfile slot1/deviceexpert.cfg">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_switch_cli_fetch_running_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy slot1/deviceexpert.cfg tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_switch_cli_fetch_running_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="delete slot1/deviceexpert.cfg">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_switch_cli_cfg_del_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Download Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="EnterasysActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="enterasys_switch_cli_push_running_irec_1"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} slot1/deviceexpert.cfg">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_switch_cli_push_running_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="configure slot1/deviceexpert.cfg append">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_switch_cli_push_running_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- Upload Config for Enterasys SecureStack C2 Series Switches -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="EnterasysActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="enterasys_c2_switch_cli_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show config outfile configs/deviceexpert.cfg">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_c2_switch_cli_fetch_running_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy configs/deviceexpert.cfg tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_c2_switch_cli_fetch_running_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="delete configs/deviceexpert.cfg">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_c2_switch_cli_cfg_del_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Download Config for Enterasys SecureStack C2 Series Switches -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} configs/deviceexpert.cfg">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_c2_switch_cli_push_running_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="configure configs/deviceexpert.cfg append">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_c2_switch_cli_push_running_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- Upload Config for Enterasys Matrix E1 Series Switches -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="EnterasysActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="enterasys_matrix_e1_switch_cli_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy device-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_matrix_e1_switch_cli_fetch_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Config for Enterasys Matrix E1 Series Switches -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} device-config">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_matrix_e1_switch_cli_push_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Upload Config for Enterasys X-Pedition Series Switches -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="enterasys_xpedition_switch_cli_ispec1"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="enterasys_xpedition_switch_cli_ispec2"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy active to tftp-server">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_xpedition_switch_cli_fetch_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy startup to tftp-server">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_xpedition_switch_cli_fetch_startup_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_xpedition_switch_cli_tftp_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_xpedition_switch_cli_filename_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="enable">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_xpedition_switch_cli_enable_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Config for Enterasys X-Pedition Series Switches -->
+<CLICommand command="copy tftp-server to active">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_xpedition_switch_cli_push_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy tftp-server to startup">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_xpedition_switch_cli_push_startup_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="300000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="enterasys_hardware_prop_parser" promptactionid="EnterasysActionId">
+   <InteractionSpec timeout="300000" protocol="CLI" interactionid="enterasys_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show system hardware">
+	<CLIInputRecord parsercommandname="hardware_prop_enterasys_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="enterasys_switch_cli_hardware_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_enterasys_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="enterasys_switch_cli_hardware_showversion_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="system show hardware">
+	<CLIInputRecord parsercommandname="hardware_prop_enterasys_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="enterasys_switch_cli_hardware_xpedition_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="system show version">
+	<CLIInputRecord parsercommandname="hardware_prop_enterasys_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="enterasys_switch_cli_hardware_xpedition_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Enterasys Router Commands -->
+
+<!-- Fetch Running Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="enterasys_router_cli_term_length_irec"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="EnterasysActionId">
+   <InteractionSpec timeout="120000" protocol="CLI" interactionid="enterasys_router_cli_fetch_running_irec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="terminal length 0">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_router_cli_term_length_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show running-config">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="enterasys_router_cli_fetch_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="enterasys_hardware_prop_parser" promptactionid="EnterasysActionId">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="enterasys_router_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_enterasys_router" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="enterasys_router_cli_hardware_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<agent-configuration>
+
+    <Conversion
+        personalityname="NCMResource"
+        conversionid="ncm_resource_conversion"/>
+    <RecordConversion
+        recordid="general-discovery-get"
+        personalityname="NCMResource"
+        conversionid="ncm_resource_conversion"/>
+    <ConversionList
+        conversionid="ncm_resource_conversion"
+        classname="com.adventnet.ncm.deviceconfig.discovery.CiscoRecordConverter"
+        conversionsequence="1"
+        conversiontype="RecordConversion"/>
+
+</agent-configuration>

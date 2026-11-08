@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Hp Firewall" osType="NA" templateName="Hp_Firewall">
+	<RestTemplate name=""/>
+	<Vendor displayName="HPE" vendorName="HP">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="info" number="7" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="undo terminal logging" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="user-interface vty 0 4" messagesuffix="${LF}" prompt="]" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="screen-length disable" messagesuffix="${LF}" prompt="]" sequenceid="5" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display saved-configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="undo terminal logging" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="user-interface vty 0 4" messagesuffix="${LF}" prompt="]" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="screen-length disable" messagesuffix="${LF}" prompt="]" sequenceid="5" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display current-configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="save main" messagesuffix="${LF}" prompt="enter key):" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center source default channel loghost log level ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="]" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="undo info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="backup startup-configuration to ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="240000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="save de_running.cfg" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tftp ${UserInput:tftp_server_address} put flash:/de_running.cfg ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="240000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="startup">
+                	<Command commandstr="tftp ${UserInput:tftp_server_address} get ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="copy ${UserInput:file_name} deviceexpert.cfg" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="startup saved-configuration deviceexpert.cfg" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="save main" messagesuffix="${LF}" prompt="enter key):" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center source default channel loghost log level ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="]" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="2" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="undo info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="3" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="120000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="HP Firewall" personalityName="HPFirewall">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BOOTROMVERSION" size="15" desc="Stores the BOOT ROM version" displayname="Boot ROM Version" defaultvalue="Not Available" sequenceid="10"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HPFirewallPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_hp_firewall">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*(HP|HPE)\s(\S*).*[Uu]ptime.*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*MAC\saddress:\s(\S*).*" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BOOTROMVERSION" EXPRESSION=".*BOOTROM  Version :  (.*) Compiled.*">
+											<PARAM NAME="BOOTROMVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*(DEVICE_SERIAL_NUMBER|Product serial number)\s*:\s*(\S*)">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+										 </REGEX>	
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Version\s+(\S+).*">                            
+											<PARAM NAME="OSVERSION" TOKENNO="3"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" parsercommandname="hardware_prop_hp_firewall" responseparserid="hp_firewall_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="H3CSwitchActionId"/>
+						<Command commandstr="display device manuinfo" parsercommandname="hardware_prop_hp_firewall" responseparserid="hp_firewall_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="H3CSwitchActionId"/>
+						<Command commandstr="display boot-loader" parsercommandname="hardware_prop_hp_firewall" responseparserid="hp_firewall_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="H3CSwitchActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

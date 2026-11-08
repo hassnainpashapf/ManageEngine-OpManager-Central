@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <Graph saveAbsolutes="false" YAXISTEXT="%" customGraph="true" description="CPU Utilization 5 Min Avg" displayName="CPU Utilization 5 Min Avg" failureThreshold="1" graphID="3320" graphName="f5LBCPUUtilization5MinAvg" graphType="node" isNumeric="true" oid="100-(.1.3.6.1.4.1.3375.2.1.1.2.20.33.0)" period="900" protocol="SNMP" timeAvg="false" vendorName="F5 Networks">
+        <UserProps/>
+    </Graph>
+	 <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Monitors the Memory Utilization" vendorName="Alteon" graphName="MpMemStatsTotalMemoryUtilization" oid="(.1.3.6.1.4.1.1872.2.5.1.2.8.1.0-.1.3.6.1.4.1.1872.2.5.1.2.8.3.0)*100/.1.3.6.1.4.1.1872.2.5.1.2.8.1.0" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <!-- New Graph addition for M7 changes starts -->
+  <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Controller 1 CPU 1min avg" graphName="F5_VELOS_Controller_1_CPU1minavg" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.1.2.1.4.12.99.111.110.116.114.111.108.108.101.114.45.49" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Controller 2 CPU 1min avg" graphName="F5_VELOS_Controller_2_CPU1minavg" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.1.2.1.4.12.99.111.110.116.114.111.108.108.101.114.45.50" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Controller 1 CPU current" graphName="F5_VELOS_Controller_1_current" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.1.2.1.2.12.99.111.110.116.114.111.108.108.101.114.45.49" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Controller 2 CPU current" graphName="F5_VELOS_Controller_2_current" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.1.2.1.2.12.99.111.110.116.114.111.108.108.101.114.45.50" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Controller 1 Memory" graphName="F5_VELOS_Controller_1_Memory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.4.1.1.4.12.99.111.110.116.114.111.108.108.101.114.45.49" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Controller 2 Memory" graphName="F5_VELOS_Controller_2_Memory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.4.1.1.4.12.99.111.110.116.114.111.108.108.101.114.45.50" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+   <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Blade 1 CPU 1min avg" graphName="F5_VELOS_Blade_1_CPU1minavg" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.1.2.1.4.7.98.108.97.100.101.45.49" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Blade 2 CPU 1min avg" graphName="F5_VELOS_Blade_2_CPU1minavg" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.1.2.1.4.7.98.108.97.100.101.45.50" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Blade 1 CPU current" graphName="F5_VELOS_Blade_1_CPUCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.1.2.1.2.7.98.108.97.100.101.45.49" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="F5 VELOS CX410 Blade 2 CPU current" graphName="F5_VELOS_Blade_2_CPUcurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12276.1.2.1.1.2.1.2.7.98.108.97.100.101.45.50" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+   <!-- New Graph addition for M7 changes ends -->
+</GRAPHDETAIL>

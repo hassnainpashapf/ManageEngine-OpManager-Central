@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Dont know where it is used now -->
+<!--
+    <CLIMultiplePromptAction promptactionid="confirm" prompt="[confirm]" command="13"/>
+-->
+
+<!-- login to privilege mode -->
+
+<!--
+<CLIInteractionSpec interactionid="enable_ispec" interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePasswordPrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="enable_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLIInteractionSpec interactionid="catos_enable_ispec" interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePasswordPrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="catos_enable_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="enable">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="enable_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLIInteractionSpec interactionid="privilege_ispec" interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="privilege_ispec"/>
+    </CLIInteractionSpec>
+    <CLICommand command="${UserInput:EnablePassword}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="password_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    -->
+
+
+
+<!-- comeout of privilege mode -->
+<!-- TODO ################### PROMPT has been changed from greater than symbol to hash  need to check ####### -->
+<!--
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="&gt;" commandecho="false" promptecho="true">
+<InteractionSpec timeout="20000" protocol="CLI" interactionid="disable_ispec" />
+</CLIInteractionSpec>
+-->
+
+<!-- Interaction for devices having prompt "#" -->
+<!--
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+<InteractionSpec timeout="20000" protocol="CLI" interactionid="disable_ispec" />
+</CLIInteractionSpec>
+
+
+<CLICommand command="disable">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="disable_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+<InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_configure_terminal_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="configure terminal">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_configure_terminal_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="end">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_configure_terminal_end_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Commands to enter and exit line config mode -->
+<CLICommand command="line vty 0 4">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_configure_line_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="end">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_configure_line_end_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Exit from any mode -->
+<CLICommand command="exit">
+    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+      <Record type="CLI" recordid="cisco_exit_from_any_mode_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+<!-- Interaction for Devices having prompt ">" -->
+<!--
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=">" commandecho="false" promptecho="true">
+<InteractionSpec timeout="20000" protocol="CLI" interactionid="disable_ispec_greater" />
+</CLIInteractionSpec>
+-->
+</CLICommandList>

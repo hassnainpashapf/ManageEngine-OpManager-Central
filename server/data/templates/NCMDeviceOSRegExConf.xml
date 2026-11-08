@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<NCMDeviceOSRegExConf>
+	<!-- Cisco Router -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:1" personality_name="CiscoRouter" regex="IOS|Internetwork Operating System" os_type="IOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:1" personality_name="CiscoRouter" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+    <!-- Cisco IDS -->
+    <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ciscoids" personality_name="CiscoIDS" regex="IOS|Internetwork Operating System" os_type="IOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscoids" personality_name="CiscoIDS" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Cisco Switch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:2" personality_name="CiscoSwitch" regex="IOS|Internetwork Operating System" os_type="IOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:2" personality_name="CiscoSwitch" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Cisco IAD -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:5" personality_name="CiscoIAD" regex="IOS|Internetwork Operating System" os_type="IOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:5" personality_name="CiscoIAD" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Cisco AccessServer -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ciscoaccessserver" personality_name="CiscoAccessServer" regex="IOS|Internetwork Operating System" os_type="IOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscoaccessserver" personality_name="CiscoAccessServer" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Cisco VoiceGateway -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ciscovoicegateway" personality_name="CiscoVoiceGateway" regex="IOS|Internetwork Operating System" os_type="IOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscovoicegateway1" personality_name="CiscoVoiceGateway" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Cisco ContentSwitch -->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscocontentswitch" personality_name="CiscoContentSwitch" regex="Version\s(\S+)" group_no="1" sequence_no="1000"/>
+
+   	<!-- Cisco AccessPoint -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ciscoaccesspoint" personality_name="CiscoAccessPoint" regex="IOS|Internetwork Operating System" os_type="IOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscoaccesspoint" personality_name="CiscoAccessPoint" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Cisco Firewall -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ciscofirewall" personality_name="CiscoFirewall" regex="PIX" os_type="PIX" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscofirewall" personality_name="CiscoFirewall" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Cisco CatOSSwitch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ciscocatosswitch" personality_name="CiscoCatOSSwitch" regex=".*" os_type="CatOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscocatosswitch1" personality_name="CiscoCatOSSwitch" regex="\s*NmpSW:\s(\S+)" group_no="1" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscocatosswitch2" personality_name="CiscoCatOSSwitch" regex="\s*Version\s(\S+)" group_no="1" sequence_no="2000"/>
+
+	<!-- Cisco ASA -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ciscoasa" personality_name="CiscoASA" regex=".*" os_type="ASA" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscoasa" personality_name="CiscoASA" regex="Version\s(\S+)" group_no="1" sequence_no="1000"/>
+
+   	<!-- Netscreen Firewall -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:netscreenfirewall" personality_name="NetscreenFirewall" regex=".*" os_type="ScreenOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:netscreenfirewall" personality_name="NetscreenFirewall" regex="version\s(\S+)" group_no="1" sequence_no="1000"/>
+
+   	<!-- FortiGate Firewall -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:fortigatefirewall" personality_name="FortiGateFirewall" regex=".*" os_type="FortiOS" sequence_no="1000"/>
+
+	<!-- HP -->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:3" personality_name="HPSwitch" regex="revision\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Foundry -->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:4" personality_name="FoundrySwitch" regex="Version\s(\S+)" group_no="1" sequence_no="1000"/>
+
+	<!-- Adtran Lan Switch-->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:AdtranLANSwitch" personality_name="AdtranLANSwitch" regex="\s*OS version\s(\S+)" group_no="1" sequence_no="1000"/>
+	
+
+	<!-- Nortel Passport Switch-->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:NortelPassportSwitch" personality_name="NortelPassportSwitch" regex="Passport.*\((\S+)\)" group_no="1" sequence_no="1000"/>
+
+	<!-- Aruba Wifi Switch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:arubawifiswitch1" personality_name="ArubaWifiSwitch" regex="ArubaOS" os_type="ArubaOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:arubawifiswitch2" personality_name="ArubaWifiSwitch" regex="Version\s(\S+)" group_no="1" sequence_no="1000"/>
+
+	<!-- Force10 Switch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:Force10Switch1" personality_name="Force10Switch" regex="Force10-S" os_type="SFTOS" sequence_no="1000"/>
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:Force10Switch2" personality_name="Force10Switch" regex=".*" os_type="FTOS" sequence_no="2000"/>
+
+
+	<!-- Cisco VPN Concentrator -->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscovpnconcentrator" personality_name="CiscoVPNConcentrator" regex="\s*Version\s(\S+)" group_no="1" sequence_no="1000"/>
+
+	<!-- Cisco MDS -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ciscomds" personality_name="CiscoMDS" regex=".*" os_type="SAN_OS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ciscomds" personality_name="CiscoMDS" regex="\s*Version\s(\S+)," group_no="1" sequence_no="1000"/>
+
+	<!-- Nortel Contivity VPNRouter-->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:NortelContivityVPNRouter" personality_name="NortelContivityVPNRouter" regex="CES.*(\S+)" group_no="1" sequence_no="1000"/>
+
+	<!-- Enterasys Router-->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:EnterasysRouter" personality_name="EnterasysRouter" regex=".* version (\S+)" group_no="1" sequence_no="1000"/>
+
+	<!-- 3Com 4500 * 4200G Switch -->
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:3ComSwitch1" personality_name="3ComSwitch" regex=".* 3Com OS (\S+)" group_no="1" sequence_no="1000"/>
+	
+	
+	
+	<!-- Juniper Router -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:JuniperMXRouter" personality_name="JuniperMXRouter" regex=".*" os_type="JunOS" sequence_no="1000"/>
+	
+		<!-- Juniper Router -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:juniperrouter1" personality_name="JuniperRouter" regex=".*" os_type="JunOS" sequence_no="1000"/>
+
+	<!--Alcatel-->
+		<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:alcatelswitch" personality_name="AlcatelSwitch" regex="\s*(\S+)\s*Service(.*)" group_no="1" sequence_no="1000"/>
+
+	<!-- AlaxalaSwitch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:AlaxalaSwitch" personality_name="AlaxalaSwitch" regex=".*" os_type="OS-L2" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:AlaxalaSwitch1" personality_name="AlaxalaSwitch" regex=".*S/W:\s*(\S+)\s*Ver.\s*(\S*).*" group_no="2" sequence_no="1000"/>
+	
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:AlaxalaSwitch1230" personality_name="AlaxalaSwitch" regex="\s*(--More--)*\s*(AX.*)\s*Ver\.\s*(\d.*)\(.*\)\s*" group_no="3" sequence_no="1000"/>
+	
+		<!-- Hitachi GR 2000 Router -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:HitachiGR2000Router" personality_name="HitachiGR2000Router" regex=".*" os_type="OS-L2" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:HitachiGR2000Router1" personality_name="HitachiGR2000Router" regex=".*S/W:\s*(\S+)\s*Ver.\s*(\S*).*" group_no="2" sequence_no="1000"/>
+	
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:HitachiGR2000Router2" personality_name="HitachiGR2000Router" regex="\s*(--More--)*\s*(AX.*)\s*Ver\.\s*(\d.*)\(.*\)\s*" group_no="3" sequence_no="1000"/>
+
+	<!-- Nortel Switch Module-->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:NortelSwitchModule" personality_name="NortelSwitchModule" regex=".*" os_type="Alteon OS" sequence_no="1000"/>
+
+	<!-- Enterasys Switch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:EnterasysSecureStackC2Switch" personality_name="EnterasysSwitch" regex=".*" os_type="EOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:EnterasysSecureStackC2Switch" personality_name="EnterasysSwitch" regex=".*Enterasys Networks, Inc.\s*(\S*)\s*Rev\s*(\S+).*" group_no="2" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:EnterasysXPeditionSwitch" personality_name="EnterasysSwitch" regex=".*Enterasys Networks Firmware Version:\s*(\S*).*" group_no="1" sequence_no="2000"/>
+
+	<!-- RadwareSwitch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:RadwareSwitch" personality_name="RadwareSwitch" regex=".*" os_type="APSolute OS" sequence_no="1000"/>
+
+	<!-- CiscoWLANController -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CiscoWLANController" personality_name="CiscoWLANController" regex=".*" os_type="Controller OS" sequence_no="1000"/>
+
+	<!-- BrocadeSwitch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:BrocadeSwitch" personality_name="BrocadeSwitch" regex=".*" os_type="Fabric OS" sequence_no="1000"/>
+	
+	<!--Cisco WAAS-->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CiscoWAAS" personality_name="CiscoWAAS" regex=".*" os_type="CiscoWAAS" sequence_no="1000"/>
+    <NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:CiscoWAAS" personality_name="CiscoWAAS" regex="\s*Cisco Wide Area Application Services Software Release\s(\S+)\(.*" group_no="1" sequence_no="1000"/>
+
+    <!-- CheckPoint Firewall -->
+        <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CheckPointFirewall" personality_name="CheckPointFirewall" regex=".*" os_type="Edge X" sequence_no="1000"/>
+
+    <!-- Cisco ACE Module -->
+        <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CiscoACEModule" personality_name="CiscoACEModule" regex=".*" os_type="ACSW" sequence_no="1000"/>
+          
+    <!-- AvayaGateway -->
+        <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:AvayaMediaGateway" personality_name="AvayaMediaGateway" regex=".*" os_type="Media Gateway" sequence_no="1000"/>
+
+    <!-- LambdaDriver -->
+        <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:LambdaDriver" personality_name="LambdaDriver" regex=".*" os_type="LambdaDriver" sequence_no="1000"/>
+        
+    <!-- Dax Devices -->
+    <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:DaxRouter" personality_name="DaxRouter" regex="MyPower" os_type="MyPower" sequence_no="1000"/>	
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:DaxSwitch1" personality_name="DaxSwitch" regex="RGNOS" os_type="RGNOS" sequence_no="1000"/>
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:DaxSwitch2" personality_name="DaxSwitch" regex="BATM" os_type="BATM" sequence_no="2000"/>
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:DaxSwitch3" personality_name="DaxSwitch" regex=".*" os_type="DAX" sequence_no="3000"/>	
+	
+
+	<!-- Cisco IOS XR -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CiscoIOSXR" personality_name="CiscoIOSXR" regex=".*" os_type="IOS XR" sequence_no="1000"/>
+    <NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:CiscoIOSXR" personality_name="CiscoIOSXR" regex="Cisco\sIOS\sXR\sSoftware,\sVersion\s(\S+)\[.*" group_no="1" sequence_no="1000"/>
+
+     <!--H3C Switches-->
+    <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:h3cswitch" personality_name="H3CSwitch" regex=".*" os_type="Comware Software" sequence_no="1000"/>
+    <NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:h3cswitch" personality_name="H3CSwitch" regex=".*Comware Software,\s*Version\s*(\S+),.*" group_no="1" sequence_no="1000"/>
+
+    <!-- Yamaha Router -->
+    <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:yamaharouter" personality_name="YamahaRouter" regex=".*" os_type="Yamaha" sequence_no="1000"/>
+    <NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:yamaharouter" personality_name="YamahaRouter" regex=".*\s*(Rev.*)\s\(.*\)" group_no="1" sequence_no="1000"/>
+    
+    <!-- AlliedTelesisSwitch -->
+    <NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:alliedtelesisswitch" personality_name="AlliedTelesisSwitch" regex="\s*Allied\sTelesyn.*\sversion\s(\d.*)\s\d.*" group_no="1" sequence_no="1000"/>
+    
+   <!--Adtran Netvanta Router-->
+    
+    <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:adtrannetvantarouter" personality_name="AdtranNetvantaRouter" regex=".*" os_type="AOS"  sequence_no="1000"/>
+    
+    <!--F5 Bigip-->
+    
+    <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:f5bigip" personality_name="F5Bigip" regex=".*" os_type="BIG-IP" sequence_no="1000"/>
+
+<!-- Citrix NetScaler -->
+    <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:citrixnetscaler" personality_name="CitrixNetScaler" regex=".*" os_type="CitrixOS" sequence_no="1000"/>
+
+ <!-- Hitachi Switch -->
+     <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:hitachiswitch" personality_name="HitachiCableSwitch" regex=".*" os_type="AEOS" sequence_no="1000"/>
+ <!--Canoga Perkins-->     
+     <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:canogaperkins" personality_name="CanogaPerkins" regex=".*" os_type="CanogaOS" sequence_no="1000"/>
+	 
+ <!-- ####################### Acme Packet NET-NET SD 3800 ########################### -->
+    
+     <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:netsd3800" personality_name="NetSD3800" regex=".*Firmware\s(.*)" group_no="1" os_type="NA" sequence_no="1000"/>
+    
+     <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:cienaleosswitch" personality_name="CienaLEOSSwitch" regex=".*" os_type="NA" sequence_no="1000"/>
+     <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:cienasaosswitch" personality_name="CienaSAOSSwitch" regex=".*" os_type="NA" sequence_no="1000"/>
+	 
+	<!-- Brocade Fiber Switch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:BrocadeFiberSwitch" personality_name="BrocadeFiberSwitch" regex=".*" os_type="Fabric OS" sequence_no="1000"/>
+
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:BrocadeFastIronSwitch" personality_name="BrocadeFastIronSwitch" regex=".*" os_type="IronWare" sequence_no="1000"/>
+ <NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ZXRRouter" personality_name="ZXRRouter" regex=".*" os_type="NA" sequence_no="1000"/> 
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CiscoASRRouter" personality_name="CiscoASRRouter" regex=".*" os_type="IOS XR" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:BrocadeSilkWormFiberSwitch" personality_name="BrocadeSilkWormFiberSwitch" regex=".*" os_type="Fabric OS" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:F5Bigip10X" personality_name="F5Bigip10X" regex=".*" os_type="BIG-IP" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ADVAFSP" personality_name="ADVAFSP" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:MikrotikRouter" personality_name="MikrotikRouter" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:WelotecRouter" personality_name="WelotecRouter" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CrescendoLoadBalancer" personality_name="CrescendoLoadBalancer" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:RuggedComSwitch" personality_name="RuggedComSwitch" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:RuijieSwitch" personality_name="RuijieSwitch" regex=".*" os_type="RGOS" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:FujitsuFirewall" personality_name="FujitsuFirewall" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:F5Bigip11X" personality_name="F5Bigip11X" regex=".*" os_type="BIG-IP" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:EdgeCoreSwitch" personality_name="EdgeCoreSwitch" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:TelcoSwitch" personality_name="TelcoSwitch" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:OccamSwitch" personality_name="OccamSwitch" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:AdtranRouter" personality_name="AdtranRouter" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CiscoSBSwitch" personality_name="CiscoSBSwitch" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:NokiaIPSO" personality_name="NokiaIPSO" regex=".*" os_type="NA" sequence_no="1000"/>
+<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:HPEthernetSwitch" personality_name="HPEthernetSwitch" regex=".*" os_type="NA" sequence_no="1000"/>
+
+
+	<!-- INSYS MoRoS -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:insysmoros" personality_name="INSYSMoRoS" regex=".*" os_type="NA" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:insysmoros" personality_name="INSYSMoRoS" regex=".*" group_no="1" sequence_no="1000"/>
+	<!-- SonicWALL Sonic Os -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:sonicwallfirewall" personality_name="SonicWALLFirewall" regex=".*" os_type="Sonic OS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:sonicwallfirewall" personality_name="SonicWALLFirewall" regex=".*" group_no="1" sequence_no="1000"/>
+
+	<!-- Trapeze WLAN Controller -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:trapezewlancontroller" personality_name="TrapezeWLANController" regex=".*" os_type="NA" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:trapezewlancontroller" personality_name="TrapezeWLANController" regex=".*" group_no="1" sequence_no="1000"/>
+
+	<!-- Ubiquiti Air Os -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:ubiquitiairos" personality_name="UbiquitiAirOs" regex=".*" os_type="AIR OS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:ubiquitiairos" personality_name="UbiquitiAirOs" regex=".*" group_no="1" sequence_no="1000"/>
+
+	<!-- Garderos Router -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:garderosrouter" personality_name="GarderosRouter" regex=".*" os_type="IOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:garderosrouter" personality_name="GarderosRouter" regex=".*" group_no="1" sequence_no="1000"/>
+
+	<!-- Juniper Fabric QFX 3000G Switch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:juniperfabricswitch" personality_name="JuniperFabricSwitch" regex=".*" os_type="JunOS" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:juniperfabricswitch" personality_name="JuniperFabricSwitch" regex=".*" group_no="1" sequence_no="1000"/>
+	<!-- F5 Netcon -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:F5Netcon" personality_name="F5Netcon" regex=".*" os_type="NA" sequence_no="1000"/>
+
+	<!-- F5 Big Ip 11.4 -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:F5Bigip114" personality_name="F5Bigip114" regex=".*" os_type="BIG-IP" sequence_no="1000"/>
+
+	 <!-- For EdgeCore ECS5510-48S / 10Gb Ethernet L2 Switch -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:EdgeCoreL2Switch" personality_name="EdgeCoreL2Switch" regex=".*" os_type="NA" sequence_no="1000"/>
+	
+	
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CiscoNexus" personality_name="CiscoNexusSwitch" regex=".*" os_type="Nexus" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSTypeRegEx:regexid:CiscoNexus" personality_name="CiscoNexusSwitch" regex=".*Cisco IOS Software,\s*(\S*)\s*Software.*,\s*Version\s*(\S*),\s*RELEASE.*" group_no="2" sequence_no="1000"/>
+		<!-- MiMOMax GPS Tornado -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:mimomax_gps_tornado" personality_name="MiMOMaxGPSTornado" regex=".*" os_type="NA" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:mimomax_gps_tornado" personality_name="MiMOMaxGPSTornado" regex=".*" group_no="1" sequence_no="1000"/>
+
+	<!-- MiMOMax GPS Pyxis -->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:mimomax_gps_pyxis" personality_name="MiMOMaxGPSPyxis" regex=".*" os_type="NA" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:mimomax_gps_pyxis" personality_name="MiMOMaxGPSPyxis" regex=".*" group_no="1" sequence_no="1000"/>
+	
+	
+		<!-- Huawei S 5300 Switch-->
+	<NCMDeviceOSTypeRegEx regexid="NCMDeviceOSTypeRegEx:regexid:huawei_S_5300_switch" personality_name="HuaweiS5300Switch" regex=".*" os_type="NA" sequence_no="1000"/>
+	<NCMDeviceOSVerRegEx regexid="NCMDeviceOSVerRegEx:regexid:huawei_S_5300_switch" personality_name="HuaweiS5300Switch" regex=".*" group_no="1" sequence_no="1000"/>
+	
+</NCMDeviceOSRegExConf>

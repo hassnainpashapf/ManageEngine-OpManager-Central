@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- $Id$ -->
+
+<CLICommandList>
+
+     <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="hitachiActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="hitachi_switch_ispec1"/>
+      </CLIInteractionSpec>
+
+	 <CLIInteractionSpec interactionverb="1" requesttimeout="900000" prompt="#" commandecho="false" promptecho="true" promptactionid="hitachiActionId"> 
+          <InteractionSpec timeout="900000" protocol="CLI" interactionid="hitachi_switch_ispec"/>
+      </CLIInteractionSpec>
+
+
+      <!-- backup running-config startup-config  -->
+
+       <CLICommand command="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_fetch_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+     <CLICommand command="copy flash-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_fetch_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <!-- upload running-config startup-config -->
+
+     <CLICommand command="copy tftp ${UserInput:tftp_server_address} ${UserInput:file_name} flash-config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_push_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+     <CLICommand command="copy tftp ${UserInput:tftp_server_address} ${UserInput:file_name} running-config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_push_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand> 
+
+     <CLICommand command="copy running-config flash-config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_sync_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+     <!-- Hardware Properties -->
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="hitachi_switch_hardware_prop_parser" promptactionid="hitachiActionId">
+            <InteractionSpec timeout="20000" protocol="CLI" interactionid="hitachi_switch_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+
+<CLICommand command="show system">
+        <CLIInputRecord parsercommandname="hardware_prop_hitachi_switch" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_hardware_prop_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="show version">
+        <CLIInputRecord parsercommandname="hardware_prop_hitachi_switch" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_hardware_prop_rec_1" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+  <CLICommand command="configure terminal">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_configure_terminal_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+<CLICommand command="terminal length 0">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_terminal_mute_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+<CLICommand command="show running-config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_show_run_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+<CLICommand command="show flash-config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_show_flash_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+<CLICommand command="enable">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_enable_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+<CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hitachi_switch_cli_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+
+<!-- Hitachi GR 2000 Router -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="scriptExecutionActionId">
+	<InteractionSpec timeout="60000" protocol="CLI" interactionid="show_command_hitachi_gr_2000_router_ispec"/>
+</CLIInteractionSpec>
+
+
+
+
+<CLICommand command="${UserInput:CommandToExecute}">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="show_command_hitachi_gr_2000_router_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="hitachi_gr_2000_router_hardware_prop_parser" promptactionid="hitachiActionId">
+		<InteractionSpec timeout="20000" protocol="CLI" interactionid="hitachi_gr_2000_router_hardware_prop_ispec"/>
+	</CLIInteractionSpec>
+
+
+	<CLICommand command="show version">
+		<CLIInputRecord parsercommandname="hardware_prop_hitachi_gr_2000_router" messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_hardware_prop_rec1" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<CLICommand command="show system">
+		<CLIInputRecord parsercommandname="hardware_prop_hitachi_gr_2000_router" messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_hardware_prop_rec2" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="hitachiActionId">
+	  <InteractionSpec timeout="120000" protocol="CLI" interactionid="hitachi_gr_2000_router_cli_ispec"/>
+	</CLIInteractionSpec>
+
+	<CLICommand command="copy startup-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="hitachi_gr_2000_router_cli_backup_startup_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="copy running-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="hitachi_gr_2000_router_cli_backup_running_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} startup-config">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="hitachi_gr_2000_router_cli_push_startup_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="configure terminal">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_configure_terminal_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="${UserInput:FileContents}">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_file_content_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="show running-config">
+		<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_show_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="set terminal pager disable">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_set_terminal_pager_disable_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="copy running-config startup-config">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="hitachi_gr_2000_router_sync_config_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} running-config">
+	  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="hitachi_gr_2000_router_cli_push_running_rec" protocol="CLI"/>
+	  </CLIInputRecord>
+	</CLICommand>
+
+	<CLICommand command="exit">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_configure_terminal_exit_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+	<CLICommand command="show running-config">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_show_running_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+	<CLICommand command="show startup-config">
+		<CLIInputRecord  messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hitachi_gr_2000_router_show_startup_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+</CLICommandList>

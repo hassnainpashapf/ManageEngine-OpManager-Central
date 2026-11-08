@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- execute copy running config tftp command mode -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="vyatta_cli_irec_1"/>
+    </CLIInteractionSpec>
+
+<CLICommand command="configure">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="vyatta_cli_config_mode_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="save tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="vyatta_cli_config_backup_running_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="commit">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="vyatta_cli_config_commit_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="exit">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="vyatta_cli_exit_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+  
+<CLICommand command="load tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="vyatta_cli_config_upload_running_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="30000" protocol="CLI" interactionid="vyatta_cli_fetch_irec" />
+    </CLIInteractionSpec>
+
+
+
+<!-- show config -->
+
+<CLICommand command="set terminal length 0">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="vyatta_cli_paging_disable_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show configuration">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="vyatta_cli_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- Hardware Properties -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="vyatta_cli_hardware_prop_parser" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="vyatta_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_vyatta_rec" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="vyatta_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand> 
+
+<CLICommand command="show hardware dmi">
+	<CLIInputRecord parsercommandname="hardware_prop_vyatta_rec" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="vyatta_cli_hardware_version_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

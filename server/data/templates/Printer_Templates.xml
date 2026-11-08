@@ -1,0 +1,3677 @@
+<?xml version="1.0" encoding="UTF-8"?><CustomDevicePackage>
+    <CustomDevicePackage deviceType="Brother Print Server" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2435.2.3.9.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Brother"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="CANON Inc. LBP5360" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1602.4.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="CANON Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell 2135cn Multifunction Color Laser Printer" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.2.100.10.52.1094473225"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell 2330dn Laser" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.100.1.1094472241"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell 2350dn Laser" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.1.1.1094472485"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell 3100cn Laser" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.10.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell 3130cn Color Laser" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.2.100.10.51.1094473219"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell 3335dn Laser MFP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.1.2.1094472473"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell 7130cdn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.8.62.1.19.5.5.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell B3465dnf Laser MFP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.2.100.100.52.1094473286"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell C3765dnf" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.2.100.10.52.1094473280"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell Laser 1720dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.100.1.1094472232"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Dell MFP Laser 3115cn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.674.10898.10.52.1094473223"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Dell Inc."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Develop Ineo 350" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1602.4.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Develop"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Epson AL-C4200" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.8.65.76.45.67.52.50.48.48"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Epson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Epson EPL-N2550" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.9.69.80.76.45.78.50.53.53.48"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Epson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Epson EPL-N3000" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.9.69.80.76.45.78.51.48.48.48"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Epson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Epson GP-C830" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.7.71.80.45.67.56.51.48"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Epson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Epson SC-T7200" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.15.83.67.45.84.55.50.48.48.32.83.101.114.105.101.115"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Epson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Epson Stylus Photo R2000" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.5.69.69.80.83.50"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Epson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Epson Stylus Pro 4900" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.21.69.112.115.111.110.32.83.116.121.108.117.115.32.80.114.111.32.52.57.48.48"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Epson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Epson TM-C3400" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.8.84.77.45.67.51.52.48.48"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Epson"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP DesignJet 500 (C7770B)" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.9.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="HP"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Designjet 4500ps" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.9.134"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="HP"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Digital Sender Print Server" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.9.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="HP"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Jet-Direct Print Server" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.9.0"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="HP"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard HP 2840" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.2.1.25.3.5.1.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard HP P4015" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.2.1.43.11"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard Jet-Direct Print Server JD86" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.2.3.9.6"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Hewlett-Packard Officejet Pro 8600" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.29999.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Hewlett-Packard"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM 6400LineMatrix" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.38"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM ImpactWriter" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM InfoPrint 20" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.25"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM InfoPrint 32" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.34"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM InfoPrint 40" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.48"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM Network Printer 17" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.4"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="IBM Network Printer 24" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2.3.6"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="IBM"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Intermec Technologies EasyCoder PM4i" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1963.1.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Intermec Technologies"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta 350" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.6.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta 362" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.54.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta B362" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.54.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 20" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10002.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 223" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.66.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 25e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10008.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 283" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.65.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 283 laser MFP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.65.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 3300P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.28.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 3320" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10010.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 363" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.64.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 364e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.110.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4000P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.29.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4020" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10009.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 40P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.17.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 42" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.86.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 421" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.40.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 423" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.63.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4700P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.30.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4750" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.115.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 501" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.39.4.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 552" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.72.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 554e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.108.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 601" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.38.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 652" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.70.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 654e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.102.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub 754" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.101.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C20" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.43.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C200" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.33.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C20P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.15.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C220" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.57.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C224" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.85.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C224e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.107.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C25" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.78.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C252" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.26.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C253" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.30.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C280" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.50.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C284" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.84.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C284e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.106.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C308" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.130.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3100P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.31.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3350" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.114.2.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3351" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.151.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C35" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.58.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C353" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.29.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C353P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.29.6.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C35P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.26.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C360" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.49.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C364" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.83.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C368" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.2.6"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3850" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.113.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C451" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.28.3.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C452" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.48.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C454" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.82.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C454e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.104.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C458" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.144.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C550" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.25.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C552" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.45.3.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C554e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.103.3.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C650" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.27.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C652" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.44.3.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C652DS" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.51.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C654e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.80.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C754" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.79.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C754e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.79.2.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub PRESS C1070" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.94.4.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub PRO 951" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.90.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta IP Controller" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2364"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta 200" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.8.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta 211 PCL" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2590.1.1.1.2.1.240"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta 222" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.56.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta 240f PCL" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10001.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta 250" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.7.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta 350" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.6.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Magicolor 1650" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.22.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Magicolor 1690MF" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.23.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Pagepro 5650" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.16.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Konica-Minolta"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Kyocera FS series" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1347.43.5.1.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Kyocera"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Kyocera FS-C5150DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1347.41"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Kyocera"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Kyocera 6.xx" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.961.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Kyocera"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Kyocera 7.xx" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1750.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Kyocera"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lantronix EPS2" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.244.20"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lantronix"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C4150" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.51.71107174"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C522" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106741"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C524" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106736"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C530" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106810"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C532" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106811"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C534" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106812"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C540" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106873"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C543" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106847"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C544" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106846"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C546" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107008"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C734" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106868"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C736" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106869"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C748" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107106"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C772" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106791"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C782" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106823"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C792" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107012"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C920" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106743"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C925" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107025"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C935" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106837"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International C950" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107014"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International CS310n" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107118"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International CS410dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107122"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International CS510de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107123"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International CS725" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.51.71107157"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International CX410de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107124"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International CX510de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107125"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International CX725" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.52.71107158"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International CX825" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.52.71107162"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International E250dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106802"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International E260dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106851"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International E352dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106800"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International E360dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106853"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International E450dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106798"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International E460dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106854"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International Forms Printer 2580" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.3.952056622"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MS310dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107110"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MS410dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107116"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MS510dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107117"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MS610de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107126"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MS811" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107113"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MX310dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107111"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MX410de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107120"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MX511dhe" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107121"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MX611de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107112"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MX710" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107114"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MX811" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107115"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International MX911" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International Optra T612" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International Pro5500 Series" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71107031"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International T640" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106749"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International T642" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106750"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International T644" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106751"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International T650" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106859"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International T652" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106860"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International T654" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106861"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International T656" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107004"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International W840" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106740"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International W850" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106975"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X264dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106856"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X342n" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.3.672622"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X363dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106857"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X364dn" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106923"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X463de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106920"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X464de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106921"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X466de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106998"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X544" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106848"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X546" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107011"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X548" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107061"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X560n" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.11152"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X642e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106792"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X644e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106757"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X646e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106758"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X652de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106971"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X654de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106893"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X656de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106972"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X658de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106894"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X734de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106890"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X738de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106891"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X748" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107107"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X792" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107013"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X852e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106755"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X854e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106756"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X860de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106977"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X862de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106978"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X864de" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106979"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X925" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107024"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X945e" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106836"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International X950" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107023"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International XC4150" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.52.71107159"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International XM1145" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107142"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark International XM3150" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71107143"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Lexmark International"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="MiLAN Technology MIL-P3840" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.835.1.1.21"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="MiLAN Technology"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="OKI LP-1030" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.263.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="OKI"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="OKI OkiLAN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2001.1.1.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="OKI"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Oce ColorWave300" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1552.20.20.3.2300"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Oce"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Oce ColorWave600" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1552.20.10.3.3600"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Oce"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Oce ColorWave650" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1552.20.14.3.3650"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Oce"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Oce PlotWave 900" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1552.20.14.3.4900"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Oce"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Oce VarioLink 3622c" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.2.1.2.1.49.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Oce"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Panasonic KX-MB2030" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.258.406.2.2.2.1.23"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Panasonic"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="RICOH" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.367.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="RICOH"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Samsung Electronics Co., LTD. SCX-483x 5x3x Series" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.236.11.5.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Samsung Electronics Co., LTD."/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp AR-275" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.4.1.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp AR-505/S505" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.1.1.12"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp AR-M350" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.3.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp AR-M351U" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.26.1.11"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp AR-M455N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.26.1.16"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp AR-M550N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.11.1.8"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp Imagistics 4511" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.29.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-2300N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.32.1.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-2600N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.63.1.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-2614N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.94.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-3100N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.63.1.6"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-3110N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.83.1.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-3501N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.33.1.4"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-3610N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.83.1.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-4100N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.64.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-4112N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.85.1.9"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-4501N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.33.1.8"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-5001N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.64.1.8"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-M283N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.71.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-M450N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.52.1.6"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-M453N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.71.1.7"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sharp MX-M623N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.81.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Sharp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="TSC ME240" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.51966.2.6"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="TSC"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Toshiba Corporation e-Studio167" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1129.2.3.24.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Toshiba Corporation"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Toshiba Corporation e-Studio2050C" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1129.2.3.44.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Toshiba Corporation"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Toshiba Corporation e-Studio2555c" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1129.2.3.45.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Toshiba Corporation"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Toshiba Corporation e-Studio4520c" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1129.2.3.29.7"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Toshiba Corporation"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox 4110 EPS" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.5.20.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox 4112 EPS" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.5.22.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox 4127 Enterprise Printing System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.5.22.4.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-III C4400" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.30.32.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-IV 3070" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.19.5.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-IV C3370" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.8.6.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-IV C3373" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-IV C3375" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.5.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-IV C4475" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.6.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-IV C5570" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.8.8.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-IV C5575" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.9.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-V C2276" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.31.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-V C4475" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.22.7.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-V C4475 T2" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.24.7.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-V C4476" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.31.7.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-V C5575 T2" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.24.9.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ApeosPort-V C6675 T2" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.24.18.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Color 550" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.5.21.5.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Color 560" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.1.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Color 800 Press" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.17.17.1.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Color C60" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.7.24.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Color C70" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.7.25.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Color C75" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.31.1.2.4.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 8570DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.2.1.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 8870" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.2.2.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 8900X" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.3.2.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9201" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.1.1.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9202" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.1.2.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9203" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.1.3.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9301" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.4.1.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9302" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.4.2.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox D110" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.5.22.6.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DOCUMENT CENTER 230LPv1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DOCUMENT CENTER 230LPv2" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DOCUMENT CENTER 230LPv3" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DOCUMENT CENTER 230LPv4" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.2.4"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DOCUMENT CENTER 230LPv5" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.2.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DOCUMENT CENTER DC460V3" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DOCUMENT CENTER DC470V3" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.4.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre S2010" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.42.8.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre a285" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.28.2.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-II 4000" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.28.34.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-II C4300" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.28.32.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV 3060" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.2.4.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV 4070" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.1.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV 6080" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.3.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV C2260" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.34.40.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV C2263" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.5.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV C2265" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.5.3.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV C2275" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.4.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV C3370" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.34.39.6.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV C3375" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.4.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV C4470" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.34.39.7.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-IV C5575" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.4.7.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-V C3375 T2" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.8.5.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuCentre-V C4475" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.6.7.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuColor" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2136.2.11.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuColor 242" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.17.7.17.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.22.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint 3100" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.38.8.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint C1100" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.27.37.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint C2255" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.27.42.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint C2428" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.27.3.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint C250" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.28.9.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint C3350" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.38.6.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint C5005" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.38.7.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint CM305 df" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.32.4.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint CP405" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.36.17.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint M355 df" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.32.8.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint M455 DF" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.32.8.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N17" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.2.2.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N2025" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.17.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N2125" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.18.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N24" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N24/N32" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N2825" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.20.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N3225" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.21.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N40" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N4025" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.22.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N4525" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.36.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint NC1235" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.3.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint NC60" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.2.3.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuTech 6180" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.5.1.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Center 230ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.1.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Center 240ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.5.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Center 265LP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.4.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Center 265ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.4.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Center 265St" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.4.1.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.19.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 220/230ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.8.1.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 230ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.22.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 255LP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.7.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 255ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.7.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 332/340 ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.6.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 332/340ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.9.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 332LP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.9.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 332ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.9.1.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 340LP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.6.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 340ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.6.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 420ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.19.1.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 425ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.24.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 432ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.20.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 440ST" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.21.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 450" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 460" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 465" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 470" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.4.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 475" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.5.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 480" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.23.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 485" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.23.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre 495" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.18.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre Centre 4110" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.18.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre ColorSeries 50" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.4.2.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Document Centre Multi-Function System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.27.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Docuprint 4512" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.2.1.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Nuvera 120" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.23.2.5.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Nuvera 288" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.23.7.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 140" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.2.1.41"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 2135" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.3.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 220" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.2.1.35"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 240" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.2.1.43"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 300" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.2.1.38"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 3320" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.6.29.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 3400" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.2.5.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 3428" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.1.4.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 350" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 3600" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.1.9.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 3610" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.1.30.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 3635MFP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.27.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4400B" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.2.1.4"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4400DT" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.2.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4400N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.2.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4500N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.2.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4510DT" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.2.3.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4510N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.2.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4600" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.1.24.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4620" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.1.25.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 5550DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.3.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 5550DT" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.3.2.4"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6100BD" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6100DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6110MFP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.20.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6130N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.23.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6180N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.9.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6200 DP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.1.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6200 DX" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.1.4"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6200B" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6200N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6201J Color Printer" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.25.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6250" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6250DP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.3.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6300DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.4.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6360DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.8.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6360DT" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.8.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6360N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.8.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6500DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.33.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 6600DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.37.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7300 DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.5.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7300B" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.5.1.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7300DT" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.5.1.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7300DX" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.5.1.4"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7300N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.5.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 740" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 740Plus" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 750" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.5.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7500DT" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.5.5.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 750DP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.5.4"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 750P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.5.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7700DX" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.5.5"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7750DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.5.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 7760DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.5.4.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 780" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.4.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 780GN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.4.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 780P" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.4.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8200DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.1.6.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8200DP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.10.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8200DX" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.10.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8200N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.10.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8400" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.6"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 840DP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.7.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 840N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.7.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 850DP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.8.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 850DX" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.8.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 850N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.8.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8560DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.6.9.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8560DT" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.6.9.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 860DP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.9.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 860DX" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.9.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 860N" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.9.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8850DT" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.6.3.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8860" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.6.17.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 8860 MFP" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.6.18.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Wide Format 6604" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.22.1.8.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Wide Format 6605" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.22.1.9.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.7"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 265" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.26.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 3220" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.23.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 3325" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.33.2.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 3615" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.35.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 3655X" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.7.2.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 4118" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.31.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 4250" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.34.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 4260" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.35.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5020" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.25.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5050" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.18.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5150" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.41.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5225" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.6.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5325" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.3.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5330" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.4.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5335" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.5.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5632 v1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.35.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5638 v1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.37.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5638 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.37.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5645 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.38.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5655" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.39.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5655 v1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.39.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5665 v1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.40.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5675 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.41.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5687 v1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.9.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5735" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.29.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5745" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.31.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5755 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.32.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5765" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.33.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5775" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.34.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5845 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.19.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5855 v1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.20.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5955 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.42.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 6400X" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.5.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 6505DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.34.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 6605DN" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.34.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 6655" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.7.4.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7120" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.36.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7125" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.6.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7132" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.8.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7228" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.9.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7232" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.22.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7235" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.17.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7328" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.19.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7335" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.40.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7345" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.21.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7346" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7425" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7428" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7435" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.4.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7525 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.37.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7535 v1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.39.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7545 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.40.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7556 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.41.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7665 v1" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.29.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7755" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.19.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7765 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.20.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7775" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.21.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7830 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.24.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7835" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.25.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7855" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.27.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7970" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.7.5.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre M118" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.21.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre M20i" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.7.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.20.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro 123" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.22.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro 238" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.31.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro 265" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.24.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro 65" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.6.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro C3545" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.21.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.19.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox XEROX 6204 Wide Format" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.22.1.3.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox 4112" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.30.2.3.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 8700X" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.3.1.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9201" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.1.1.1.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9303" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.4.3.1.2"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7845 v1 Multifunction System" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.6.26.1.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Xerox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Zebra Extend Net DX" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.683.1.1.3.2.9"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Zebra"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Zebra Extend Net MPX" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.683.1.1.3.2.3"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Zebra"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Zebra Pocket Print Server" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.683.1.1.3.2.1"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Zebra"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="ZebraNet PrintServer" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.683.6"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Zebra"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="ZebraNet Wired PrintServer" iconName="Printer.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.683.6.0"/>
+        </SysOIDs>
+        <Category name="Printer"/>
+        <Vendor name="Zebra"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

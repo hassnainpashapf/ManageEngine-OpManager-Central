@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For TP Link Gigabit Smart Switch" displayName="TP-Link Gigabit Switch" osType="" templateName="TPLink_Gigabit_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="TPLink" vendorName="TPLink">
+		<Commands/>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout=""/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="show startup-config" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="3" timeout=""/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="TPLink Gigabit Switch" personalityName="TPLinkGigabitSwitch">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${CRLF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Hardware Version" displayname="Hardware Version" name="HARDWARE_VERSION" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Software Version" displayname="Software Version" name="SOFTWARE_VERSION" sequenceid="2" size="100"/>				
+				<Column defaultvalue="Not Available" desc="Flash Version" displayname="Flash Version" name="FLASH_VERSION" sequenceid="3" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>.*Running\s*configuration.*</Regex>
+					<Regex>.*Current\s*configuration.*</Regex>
+					<Regex>.*Startup\s*configuration:.*</Regex>
+					<Regex>.*show\s*running-config.*</Regex>
+					<Regex>.*show\s*config.*</Regex>
+					<Regex operation="upload">^password.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>logging\s*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="TPLinkGigabitSwitchHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_tp_link_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MODEL" EXPRESSION=".*Hardware\s*Version\s*\S\s*(\S*)\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="HARDWARE_VERSION" TOKENNO="2"/>
+										</REGEX>									
+										<REGEX NAME="SOFTWARE_VERSION" EXPRESSION=".*Software\s*Version\s*\S\s*(\S*).*">
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>								
+										<REGEX NAME="FLASH_VERSION" EXPRESSION=".*Flash\s*Version\s*-\s*(.*)">
+											<PARAM NAME="FLASH_VERSION" TOKENNO="1"/>	  
+										</REGEX>	
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*Mac\s*Address\s*-\s*(\S*).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial\s*Number\s*-\s*(\S*).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX NAME="IMAGEFILENAME" EXPRESSION=".*Image\s*Name\s*-\s*(\S*).*">
+											<PARAM NAME="IMAGEFILENAME" TOKENNO="1"/>	  
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system-info" messagesuffix="${CRLF}" parsercommandname="hardware_prop_tp_link_switch" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="120000"/>
+						<Command commandstr="show image-info" messagesuffix="${CRLF}" parsercommandname="hardware_prop_tp_link_switch" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="120000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="JetStream 8-Port Gigabit Smart Switch" ostype="" series="" sysoid=".1.3.6.1.4.1.11863.5.76"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

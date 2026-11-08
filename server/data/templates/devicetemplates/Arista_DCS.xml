@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Arista Data Center Switch" osType="EOS" templateName="Arista_DCS_Switch">
+	<RestTemplate name="AristaDCS"/>
+	<Vendor displayName="Arista" vendorName="Arista">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="520000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="520000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging host ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging trap notifications" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="copy startup-config tftp:/${UserInput:tftp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy running-config tftp:/${UserInput:tftp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="startup">
+                	<Command commandstr="copy tftp:/${UserInput:tftp_server_address}/${UserInput:file_name} startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy tftp:/${UserInput:tftp_server_address}/${UserInput:file_name} running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="copy running-config startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging host ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging trap notifications" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="copy startup-config scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy running-config scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="startup">
+                	<Command commandstr="copy scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name} startup-config" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy scp://${UserInput:scp_username}@${UserInput:scp_server_address}/${UserInput:file_name} running-config" messagesuffix="${LF}" prompt="Password:" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="copy running-config startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging host ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging trap notifications" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Arista DCS Switch" personalityName="AristaDCSSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="HARDWARE_VERSION" size="50" desc="Hardware Version" displayname="Hardware Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="BUILD_ID" size="100" desc="Buils ID" displayname="Build ID" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="BUILD_VERSION" size="100" desc="Build Version" displayname="Build Version" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="TOTAL_MEMORY" size="50" desc="Total Memory" displayname="Total Memory" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="FREE_MEMORY" size="50" desc="Free Memory" displayname="Free Memory" defaultvalue="Not Available" sequenceid="5"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^.*Command: show startup-config.*</Regex>
+					<Regex>^.*Command: show running-config.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>(logging $SYSLOG_SERVER_IP)|(logging host $SYSLOG_SERVER_IP)</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="AristaDCSSwitchHwParser.xml"/>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_arista_dcs" responseparserid="arista_dcs_switch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show boot" parsercommandname="hardware_prop_arista_dcs" responseparserid="arista_dcs_switch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show lldp local-info management 1" parsercommandname="hardware_prop_arista_dcs" responseparserid="arista_dcs_switch_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="7010T-48" ostype="NA" series="Arista 7010" sysoid=".1.3.6.1.4.1.30065.1.3011.7010.427.48"/>
+        <NCMDeviceSysOID model="DCS-7050S-52" ostype="" series="Arista 7050" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3282.52"/>
+        <NCMDeviceSysOID model="DCS-7050S-64" ostype="" series="Arista 7050" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3282.64"/>
+        <NCMDeviceSysOID model="DCS-7124S" ostype="" series="Arista 7124S" sysoid=".1.3.6.1.4.1.30065.1.3011.7124.3282"/>
+        <NCMDeviceSysOID model="DCS-7048T-4S" ostype="" series="Arista 7048-A" sysoid=".1.3.6.1.4.1.30065.1.3011.7048.427.4.3282"/>
+        <NCMDeviceSysOID model="DCS-7048T-A" ostype="" series="Arista 7048-A" sysoid=".1.3.6.1.4.1.30065.1.3011.7048.427.3648"/>
+        <NCMDeviceSysOID model="DCS-7050T-36" ostype="NA" series="Arista 7050-T" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.427.36"/>
+        <NCMDeviceSysOID model="DCS-7050T-52" ostype="NA" series="Arista 7050-T" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.427.52"/>
+        <NCMDeviceSysOID model="DCS-7050T-64" ostype="NA" series="Arista 7050-T" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.427.64"/>
+        <NCMDeviceSysOID model="DCS-7050TX-64" ostype="NA" series="Arista 7050-TX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.1958.64"/>
+        <NCMDeviceSysOID model="DCS-7050TX-72Q" ostype="NA" series="Arista 7050-TX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.1958.72.2512"/>
+        <NCMDeviceSysOID model="DCS-7050TX-128-SSD" ostype="NA" series="Arista 7050-TX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.1958.128.761"/>
+        <NCMDeviceSysOID model="DCS-7050Q-16" ostype="NA" series="Arista 7050Q" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.2512.16"/>
+        <NCMDeviceSysOID model="DCS-7050QX2-32S" ostype="NA" series="Arista 7050QX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3095.2.32.3282"/>
+        <NCMDeviceSysOID model="DCS-7050QX-32-R" ostype="NA" series="Arista 7050QX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3095.32"/>
+        <NCMDeviceSysOID model="DCS-7050QX-32S" ostype="NA" series="Arista 7050QX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3095.32.3282"/>
+        <NCMDeviceSysOID model="DCS-7148S-F" ostype="NA" series="Arista 7100S" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3282"/>
+        <NCMDeviceSysOID model="DCS-7050S-64-SSD-F" ostype="NA" series="Arista 7050S" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3282.64.761"/>
+        <NCMDeviceSysOID model="DCS-7050SX-64" ostype="NA" series="Arista 7050SX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3741.64"/>
+        <NCMDeviceSysOID model="DCS-7050SX-72Q" ostype="NA" series="Arista 7050SX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3741.72.2512"/>
+        <NCMDeviceSysOID model="DCS-7050SX-128" ostype="NA" series="Arista 7050SX" sysoid=".1.3.6.1.4.1.30065.1.3011.7050.3741.128"/>
+        <NCMDeviceSysOID model="DCS-7060CX2-32S" ostype="NA" series="Arista 7060" sysoid=".1.3.6.1.4.1.30065.1.3011.7060.2733.2.32.3282"/>
+        <NCMDeviceSysOID model="DCS-7060CX-32S" ostype="NA" series="Arista 7060CX" sysoid=".1.3.6.1.4.1.30065.1.3011.7060.2733.32.3282"/>
+        <NCMDeviceSysOID model="DCS-7120T-4S" ostype="" series="Arista 7100T" sysoid=".1.3.6.1.4.1.30065.1.3011.7120.427.4.3282"/>
+        <NCMDeviceSysOID model="DCS-7124SX" ostype="" series="Arista 7124SX" sysoid=".1.3.6.1.4.1.30065.1.3011.7124.3741"/>
+        <NCMDeviceSysOID model="DCS-7140T-8S" ostype="" series="Arista 7100T" sysoid=".1.3.6.1.4.1.30065.1.3011.7140.427.8.3282"/>
+        <NCMDeviceSysOID model="DCS-7148S" ostype="NA" series="Arista 7100S" sysoid=".1.3.6.1.4.1.30065.1.3011.7148.3282"/>
+        <NCMDeviceSysOID model="DCS-7148-SX" ostype="" series="Arista 7148SX" sysoid=".1.3.6.1.4.1.30065.1.3011.7148.3741"/>
+        <NCMDeviceSysOID model="DCS-7150S-24" ostype="NA" series="Arista 7150" sysoid=".1.3.6.1.4.1.30065.1.3011.7150.3282.24"/>
+        <NCMDeviceSysOID model="DCS-7150S-52-CL" ostype="NA" series="Arista 7150" sysoid=".1.3.6.1.4.1.30065.1.3011.7150.3282.52.2745"/>
+        <NCMDeviceSysOID model="DCS-7150S-64-CL" ostype="NA" series="Arista 7150" sysoid=".1.3.6.1.4.1.30065.1.3011.7150.3282.64.2745"/>
+        <NCMDeviceSysOID model="DCS-7150S-64-CL-SSD" ostype="NA" series="Arista 7150" sysoid=".1.3.6.1.4.1.30065.1.3011.7150.3282.64.2745.761"/>
+        <NCMDeviceSysOID model="DCS-7160-32CQ" ostype="NA" series="Arista 7160" sysoid=".1.3.6.1.4.1.30065.1.3011.7160.32.2726"/>
+        <NCMDeviceSysOID model="DCS-7160-48YC6" ostype="NA" series="Arista 7160" sysoid=".1.3.6.1.4.1.30065.1.3011.7160.48.1654.6"/>
+        <NCMDeviceSysOID model="DCS-7160-48TC6" ostype="NA" series="Arista 7160" sysoid=".1.3.6.1.4.1.30065.1.3011.7160.48.1981.6"/>
+        <NCMDeviceSysOID model="DCS-7260CX-64" ostype="NA" series="Arista 7260" sysoid=".1.3.6.1.4.1.30065.1.3011.7260.2733.64"/>
+        <NCMDeviceSysOID model="DCS-7260QX-64" ostype="NA" series="Arista 7260" sysoid=".1.3.6.1.4.1.30065.1.3011.7260.3095.64"/>
+        <NCMDeviceSysOID model="DCS-7280SE-64" ostype="NA" series="Arista 7280SE" sysoid=".1.3.6.1.4.1.30065.1.3011.7280.3714.64"/>
+        <NCMDeviceSysOID model="DCS-7280SE-68" ostype="NA" series="Arista 7280SE" sysoid=".1.3.6.1.4.1.30065.1.3011.7280.3714.68"/>
+        <NCMDeviceSysOID model="DCS-7280SE-72" ostype="NA" series="Arista 7280SE" sysoid=".1.3.6.1.4.1.30065.1.3011.7280.3714.72"/>
+        <NCMDeviceSysOID model="DCS-7280SR-48C6" ostype="NA" series="Arsita 7280R" sysoid=".1.3.6.1.4.1.30065.1.3011.7280.3735.48.2878.6"/>
+        <NCMDeviceSysOID model="DCS-7280SR-48C6-M" ostype="NA" series="Arsita 7280R" sysoid=".1.3.6.1.4.1.30065.1.3011.7280.3735.48.2878.6.972"/>
+        <NCMDeviceSysOID model="DCS-7504" ostype="" series="Arista 7500" sysoid=".1.3.6.1.4.1.30065.1.3011.7504"/>
+        <NCMDeviceSysOID model="DCS-7504N" ostype="NA" series="Arista 7500-N" sysoid=".1.3.6.1.4.1.30065.1.3011.7504.1359"/>
+        <NCMDeviceSysOID model="DCS-7508" ostype="" series="Arista 7500" sysoid=".1.3.6.1.4.1.30065.1.3011.7508"/>
+        <NCMDeviceSysOID model="DCS-7508N" ostype="NA" series="Arista 7500-N" sysoid=".1.3.6.1.4.1.30065.1.3011.7508.1359"/>
+        <NCMDeviceSysOID model="DCS-7150S-24-CL-SSD" ostype="NA" series="Arista 7150S" sysoid=".1.3.6.1.4.1.30065.1.3011.7150.3282.24.2745.761"/>
+        <NCMDeviceSysOID model="DCS-7280TR-48C6" ostype="NA" series="Arista 7280R" sysoid=".1.3.6.1.4.1.30065.1.3011.7280.1964.48.2878.6"/>
+        <NCMDeviceSysOID model="DCS-7280CR-48" ostype="NA" series="Arista 7280R" sysoid=".1.3.6.1.4.1.30065.1.3011.7280.2727.48"/>
+        <NCMDeviceSysOID model="DCS-7280QR-C36" ostype="NA" series="Arista 7280R" sysoid=".1.3.6.1.4.1.30065.1.3011.7280.3101.2878.36"/>
+        <NCMDeviceSysOID model="DCS-7512N" ostype="NA" series="Arista 7500-N" sysoid=".1.3.6.1.4.1.30065.1.3011.7512.1359"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

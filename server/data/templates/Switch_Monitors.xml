@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?><GRAPHDETAIL>
+    <Graph YAXISTEXT="%" description="The overall CPU cost percentage in the last 5 minutes period." displayName="CPU Cost Rate (5 min)" failureThreshold="1" graphName="hwCpuCostRatePer5Min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.6.1.1.1.4.65536" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="Indicates the free size of the memory" displayName="Free Memory" failureThreshold="1" graphName="hwMemFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.6.1.2.1.1.3.65536" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Indicates the used size of the raw slice memory" displayName="Memory Raw slice used" failureThreshold="1" graphName="hwMemRawSliceUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.6.1.2.1.1.4.65536" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of used buffers" description="The number of used buffer currently." displayName="Currently used buffer" failureThreshold="1" graphName="hwBufCurrentUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.6.1.2.2.1.4.65536" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of buffers" description="The total number of buffer currently." displayName="Total current buffer" failureThreshold="1" graphName="hwBufCurrentTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.6.1.2.2.1.3.65536" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="byte" description="The size of buffer,unit is byte." displayName="Buffer size" failureThreshold="1" graphName="hwBufSize" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.6.1.2.2.1.2.65536" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="1 Minute CPU AVG" displayName="CPU Cost Rate (1 min)" failureThreshold="1" graphName="hwCpuCostRatePer1Min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.6.1.1.1.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The overall CPU busy percentage in the last 5 second period." displayName="CPU Cost Rate (5 sec)" failureThreshold="1" graphName="hwCpuCostRate5sec" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.6.1.1.1.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Average device-level input utilization over the latest sample period (percent)." displayName="Receive I/O Utilization" failureThreshold="1" graphName="healthDeviceRxLatest" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6486.800.1.2.1.16.1.1.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Average device-level i/o utilization over the latest sample period (percent)." displayName="Transmit I/O Utilization" failureThreshold="1" graphName="healthDeviceTxLatest" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6486.800.1.2.1.16.1.1.1.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Percentage of free memory still available on device" displayName="Free Memory" failureThreshold="1" graphName="freeMemory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.207.8.4.4.3.7.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Allied Telesis">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Total number of buffers available on device" displayName="Total number of Buffers" failureThreshold="1" graphName="totalBuffers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.207.8.4.4.3.7.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Allied Telesis">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="" displayName="CPU Temperature" failureThreshold="1" graphName="CPUTemperatureVal" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.99.1.1.1.4.100006001/10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arista Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="This object returns the available RAM of unit." displayName="Available Memory" failureThreshold="1" graphName="memAvail" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.13.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya ERS Switch">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="This object returns the percentage of dynamic memory that is currently free. This is measured as a percentage of the memory the was available immediately after system initialization." displayName="Currently available Free Memory" failureThreshold="1" graphName="s5ChasUtilMemoryAvailable" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya ERS Switch">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Beacon oper status" description="The current operational status of the switch beacon. When the beacon is on, the LEDs on the front panel of the switch run alternately from left to right and right to left. The color is yellow. When the beacon is off, each LED will be in their its regular status indicating color and state." displayName="Beacon operational status" failureThreshold="1" graphName="swBeaconOperStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1588.2.1.1.1.1.18.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Flash oper status" description="The operational status of the FLASH. The operational states are as follow: o swCurrent(1) indicates that the FLASH contains the current firmware image or config file; o swFwUpgraded(2) state indicates that it contains the image upgraded from the swFlashDLHost.0.; o swCfUploaded(3) state indicates that the switch configuration file has been uploaded to the host; and o swCfDownloaded(4) state indicates that the switch configuration file has been downloaded from the host. o swFwCorrupted (5) state indicates that the firmware in the FLASH of the switch is corrupted." displayName="Flash operational status" failureThreshold="1" graphName="swFlashDLOperStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1588.2.1.1.1.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="frames" description="Bad EOF delimited frames received on port" displayName="Bad EOF delimited frames received on port" failureThreshold="1" graphName="swFCPortRxBadEofs" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.1588.2.1.1.1.6.2.1.25" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="errors" description="Disparity errors received on port $1" displayName="Disparity errors received on port $1" failureThreshold="1" graphName="swFCPortRxEncOutFrs" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.1588.2.1.1.1.6.2.1.26" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="errors" description="Encoding or disparity errors in frames received on port 1" displayName="Encoding or disparity errors in frames received on port 1" failureThreshold="1" graphName="swFCPortRxEncInFrs" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.1588.2.1.1.1.6.2.1.21" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="frames" description="Truncated frames received on port" displayName="Truncated frames received on port" failureThreshold="1" graphName="swFCPortRxTruncs" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.1588.2.1.1.1.6.2.1.23" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Total memory" displayName="Total memory" failureThreshold="1" graphName="dlinkTotalMemory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.171.14.5.1.4.1.3.1.2" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="D-Link">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Used memory:" displayName="Used memory" failureThreshold="1" graphName="dlinkUsedMemory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.171.14.5.1.4.1.4.1.2" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="D-Link">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="System Temperature" displayName="System Temperature" failureThreshold="1" graphName="sysTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.171.14.5.1.1.1.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="D-Link">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="The total memory available in KBytes." displayName="Total Memory Available" failureThreshold="1" graphName="agentSwitchCpuProcessMemAvailable" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="Dell Force10 (S-series/Z-series) - Stack unit temperature reading" displayName="Temperature" failureThreshold="1" graphName="chStackUnitTemp" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6027.3.10.1.2.2.1.14.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The status of this stack unit. ok(1), unsupported(2), codeMismatch(3), configMismatch(4), unitDown(5), notPresent(6)" displayName="Stack Unit Status" failureThreshold="1" graphName="chStackUnitStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6027.3.10.1.2.2.1.8.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Dell Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Stations" description="The maximum number of stations this device can authenticate." displayName="Max number of stations authenticated" failureThreshold="1" graphName="etsysDow1xMaxCapableAuthStations" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.5624.1.2.18.1.2.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Enterasys">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Stations" description="The maximum number of stations that this device can gather statistics, diagnostics, and session statistics for." displayName="Max number of stations gathered" failureThreshold="1" graphName="etsysDow1xMaximumStationsStatsGathered" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.5624.1.2.18.1.2.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Enterasys">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Stations" description="The number of stations that this device is currently gathering statistics, diagnostics, and session statistics for." displayName="number of stations gathered" failureThreshold="1" graphName="etsysDotxCurrentStationsStatsGathered" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.5624.1.2.18.1.2.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Enterasys">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Total amount of free memory in Kbytes in the system." displayName="Free Memory" failureThreshold="1" graphName="extremeMemoryMonitorSystemFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1916.1.32.2.2.1.3.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks">
+        <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="deg C" description="The average system temperature" displayName="Average system temperature" failureThreshold="1" graphName="AverageSystemTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.1.2.8.1.1.9.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+	
+    <Graph YAXISTEXT="bytes" description="The number of available (unallocated) bytes." displayName="Total Free Memory" failureThreshold="1" graphName="hpGlobalMemFreeBytes" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.5.1.1.2.2.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="The number of currently allocated bytes." displayName="Total Used Memory" failureThreshold="1" graphName="hpGlobalMemAllocBytes" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.5.1.1.2.2.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Total memory used in bytes" displayName="Memory Used" failureThreshold="1" graphName="hpMemoryUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.7.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Actual status indicated by the sensor. unknown(1), bad(2), warning(3), good(4), notPresent(5)" displayName="PSU-1-status" failureThreshold="1" graphName="PSU 1 Status" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.1.2.6.1.4.2" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Actual status indicated by the sensor. unknown(1), bad(2), warning(3), good(4), notPresent(5)" displayName="PSU-2-Status" failureThreshold="1" graphName="PSU 2 Status" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.1.2.6.1.4.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="deg C" description="The current temperature of the optical module." displayName="Temperature of Optical Module" failureThreshold="1" graphName="hwEntityOpticalTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="mV" description="The current voltage of the optical module." displayName="Voltage of Optical Module" failureThreshold="1" graphName="hwEntityOpticalVoltage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.3.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="uA" description="The bias current of the optical module." displayName="Bias current of Optical Module" failureThreshold="1" graphName="hwEntityOpticalBiasCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.3.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="The receive power of the optical module. the value is expanded 100 times,so the real value should be reduced 100 times" displayName="Receive power of Optical Module" failureThreshold="1" graphName="hwEntityOpticalRxPower" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.3.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="The transmit power of the optical module. the value is expanded 100 times,so the real value should be reduced 100 times" displayName="Transmit power of Optical Module" failureThreshold="1" graphName="hwEntityOpticalTxPower" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.3.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The buffer pool utilization in percentage of this subject. Zero if unavailable or inapplicable." displayName="Buffer Pool Utilization" failureThreshold="1" graphName="jnxOperatingBuffer" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.11.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU Load for 1 minute average" displayName="1 min CPI Load" failureThreshold="1" graphName="jnxOperating1MinLoadAvg" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.20.9.1.0.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU Load for 5 minute average" displayName="5 min CPU Load" failureThreshold="1" graphName="jnxOperating5MinLoadAvg" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.21.9.1.0.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Amount of memory used for data buffers in bytes. Applicable to 6500 platforms." displayName="Memory usage for Data Buffers" failureThreshold="1" graphName="cdx6500NMNPSstatsmemDram" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.1.2.3.43.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of CRC" description="Number of CRC errors since the last node or statistics reset. CRC Errors: Cyclical Redundancy failure because of noise on the line." displayName="Number of CRC errors" failureThreshold="1" graphName="cdx6500allportsCRCErrors" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.18.1.23" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Parity" description="Number of Parity errors since the last reset" displayName="Number of Parity errors" failureThreshold="1" graphName="cdx6500allportsParityErrors" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.18.1.24" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of overrun" description="Number of Overrun errors since the last node or statistics reset. Overrun Errors: Received data was lost because it could not be processed by the CPU." displayName="Number of overrun errors" failureThreshold="1" graphName="cdx6500allportsOverrunErrors" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.18.1.21" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="calls/sec" description="Rate of X.25 calls. The number of calls/sec. currently in place." displayName="Calls per second" failureThreshold="1" graphName="cdx6500NMNPScallsPerSecCur" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.1.2.3.14.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="Summary of the packets being received over the port." displayName="RX Packets received" failureThreshold="1" graphName="cdx6500allportsPktsInPerSec" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.18.1.17" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Packets" description="Summary of the packets being sent over the port." displayName="TX Packets sent" failureThreshold="1" graphName="cdx6500allportsPktsOutPerSec" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.18.1.18" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="Operational status of the line cards." displayName="Line card status" failureThreshold="1" graphName="slotIfConfStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.119.2.3.14.9.2.1.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="NEC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="Indicate operational status of the FAN of the equipment." displayName="Fan operational status" failureThreshold="1" graphName="nodeStatusFan" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.119.2.3.14.9.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="NEC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="HA State" description="The HighAvailability (HA) service group state Init/Backup/Master/Holdoff" displayName="HA Switch State" failureThreshold="1" graphName="haSwitchInfoState" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.3.3.14.2.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="System Memory stats - Free" displayName="Free Memory Available" failureThreshold="1" graphName="MpMemStatsFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1872.2.5.1.2.8.3.0" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Radware">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The average control CPU usage in last 5 seconds." displayName="Control CPU Usage 5 sec" failureThreshold="1" graphName="axSysAverageControlCpuUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.22610.2.4.1.3.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="A10 Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="The usage memory(KB)." displayName="Used Memory" failureThreshold="1" graphName="axSysMemoryUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.22610.2.4.1.2.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="A10 Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of buffers" description="Cisco IOS devices - Number of small buffer pool misses (used across multiple models)" displayName="Small Buffer Misses" failureThreshold="1" graphName="CiscoBufferSmMiss" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.9.2.1.19.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of buffers" description="Cisco IOS devices - Number of medium buffer allocation misses (used across multiple models)" displayName="Medium Buffer Misses" failureThreshold="1" graphName="CiscoBufferMdMiss" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.9.2.1.27.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of buffers" description="Cisco IOS device - Number of big buffer pool allocation misses" displayName="Big Buffer Misses" failureThreshold="1" graphName="CiscoBufferBgMiss" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.9.2.1.35.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of buffers" description="Contains the number of large buffer misses." displayName="Large Buffer Misses" failureThreshold="1" graphName="  CiscoBufferLgMiss  " graphType="node" isNumeric="true" oid="1.3.6.1.4.1.9.2.1.43.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of buffers" description="Cisco IOS devices - Number of huge buffer allocation misses (used across multiple models)" displayName="Huge Buffer Misses" failureThreshold="1" graphName="  CiscoBufferHgMiss  " graphType="node" isNumeric="true" oid="1.3.6.1.4.1.9.2.1.67.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Cisco Wireless LAN Controller (Airespace) - Free RAM in kilobytes" displayName="Total Free Memory" failureThreshold="1" graphName="agentFreeMemory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14179.1.1.5.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Total RAM of the switch in Kbytes." displayName="Total Available Memory" failureThreshold="1" graphName="agentTotalMemory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.14179.1.1.5.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object indicates the current number of neighbors." displayName="Number of Neighbors" failureThreshold="1" graphName="NumberOfNeighbors" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.683.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="This object indicates the current usage for the Cisco EnergyWise entity. This should be less than or equal to the power that can be consumed at that specified level. 0..2147483647" displayName="Current Energy usage" failureThreshold="1" graphName="EnergyWiseCurrentEnergyUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.683.1.6.1.8" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object specifies the current power level for the Cisco EnergyWise entity. shut(1), hibernate(2), sleep(3), standby(4), ready(5), low(6), frugal(7), medium(8), reduced(9), high(10), full(11)" displayName="Current Power level" failureThreshold="1" graphName="EnergyWiseCurrentLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.683.1.6.1.10" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object indicates the maximum power a Cisco EnergyWise entity can draw at current level." displayName="Maximum Power drawn currently" failureThreshold="1" graphName="EnergyWiseMaximumPowerDraw" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.683.1.6.1.11" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="A control object to indicate the administratively desired state for the Cisco EnergyWise entity. up: enables Cisco EnergyWise protocol on the entity. down: disables Cisco EnergyWise protocol on the entity.  Up (1), down (2)" displayName="EnergyWise Admin Status" failureThreshold="1" graphName="EnergyWiseAdminStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.683.1.6.1.17" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object indicates the operational status for the Cisco EnergyWise entity. If the cewEntAdminStatus is down(2), then cewEntOperStatus should be down(2). If cewEntAdminStatus is changed to up(1), then cewEntOperStatus should change to up(1), unless some error has occurred, then it should be in error(3) state.  up(1), down(2), error(3)" displayName="  EnergyWise Operational Status" failureThreshold="1" graphName="EnergyWiseOperationalStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.683.1.6.1.18" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object indicates the value of sysUpTime the last time a heartbeat was received from the neighbor Cisco EnergyWise entity." displayName="Neighbor SysUptime" failureThreshold="1" graphName="NeighborSysUptime" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.683.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Indicates the number of bytes from the memory pool that are currently unused on the managed device. Note that the sum of ciscoMemoryPoolUsed and ciscoMemoryPoolFree is the total amount of memory in the pool" displayName="Memory Pool free (5 mins)" failureThreshold="1" graphName="mem_5min_free" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.48.1.1.1.6.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Cisco IOS devices - Bytes currently in use from the processor memory pool (CISCO-MEMORY-POOL-MIB)" displayName="Memory used" failureThreshold="1" graphName="mem_5min_used" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.48.1.1.1.5.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current state of the power supply being instrumented." displayName="PSU Status" failureThreshold="1" graphName="psu_status" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.13.1.5.1.3.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="Cisco - Environment monitor temperature sensor current reading (used across multiple models)" displayName="Temperature" failureThreshold="1" graphName="ciscoEnvMonTemperatureStatusValue" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.13.1.3.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The BGP peer connection state. idle(1), connect(2), active(3), opensent(4), openconfirm(5), established(6)" displayName="BGP Neighbour status" failureThreshold="1" graphName="bgpNeighbourStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.187.1.2.5.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The highest value that the associated instance of the object ciscoEnvMonVoltageStatusValue may obtain before an emergency shutdown of the managed device is initiated." displayName="High Threshold of Voltage" failureThreshold="1" graphName="ciscoEnvMonVoltageThresholdHigh" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.13.1.2.1.5" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Volts" description="The current measurement of the testpoint being instrumented." displayName="Voltage" failureThreshold="1" graphName="ciscoEnvMonVoltageStatusValue" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.13.1.2.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Operational FRU power state" displayName="Operational Status of Power Supply" failureThreshold="1" graphName="cefcFRUPowerOperStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.117.1.1.2.1.2" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Display environment monitoring chassis temperature status" displayName="Chassis Unit Temperature" failureThreshold="1" graphName="rlPhdUnitEnvParamMonitorTemperatureStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.6.1.101.53.15.1.13" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Cisco generic (multiple platforms) - Free memory bytes from the CPU memory pool, per processor index" displayName="Total Free Memory" failureThreshold="1" graphName="cpmCPUMemoryFree" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.13" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current supplied by the FRU (positive values) or current required to operate the FRU (negative values)" displayName="FRU Current" failureThreshold="1" graphName="cefcFRUCurrent" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.117.1.1.2.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="Remote Radio Chain 0 RX Power Level (dBm)" displayName="Rx Power (Remote Radio 0)" failureThreshold="1" graphName="airFiberRemoteChain0Signal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41112.1.3.2.1.19.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ubiquiti">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="Remote Radio Chain 1 RX Power Level (dBm)" displayName="Rx Power (Remote Radio 1)" failureThreshold="1" graphName="airFiberRemoteChain1Signal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41112.1.3.2.1.22.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ubiquiti">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="Remote Radio Transmit Power Level (dBm)" displayName="Remote Radio Transmit Power Level" failureThreshold="1" graphName="airFiberRemoteRatioRXPowerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41112.1.3.2.1.17.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ubiquiti">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Remote Transmit Modulation Rate. qPSK-SISO-1-4x(0), qPSK-SISO-1x(1), qPSK-MIMO-2x(2), qAM16-MIMO-4x(4), qAM64-MIMO-6x(6), qAM256-MIMO-8x(8)." displayName="Remote Transmit Modulation Rate" failureThreshold="1" graphName="airFiberRemoteModulationRate" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.41112.1.3.2.1.18.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ubiquiti">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total amount of system dynamic memory, in number of bytes. Deprecated: Refer to snAgSystemDRAMTotal. For NI platforms, refer to snAgentBrdMemoryTotal" displayName="Total Available Memory" failureThreshold="1" graphName="snAgGblDynMemTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1991.1.1.2.1.54.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="The free amount of system dynamic memory, in number of bytes. Deprecated: Refer to snAgSystemDRAMFree. For NI platforms, refer to snAgentBrdMemoryAvailable" displayName="Total Free Memory" failureThreshold="1" graphName="snAgGblDynMemFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1991.1.1.2.1.55.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="Dram size in mega-bytes" displayName="Total DRAM Memory" failureThreshold="1" graphName="rcSysDramSize" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2272.1.1.46.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Dram free size in kilo-bytes" displayName="Free DRAM Memory" failureThreshold="1" graphName="rcSysDramFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2272.1.1.48.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="%" description="The average utilization of Multi CPU in 5 minutes" displayName="Multi CPU Utilization (5 Min Avg)" failureThreshold="1" graphName="yshMultiCpuUtilization" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1182.3.1.18.1.5" period="300" protocol="SNMP" timeAvg="false" vendorName="YAMAHA">
+	<UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="C" description="Yamaha router (SH series) - Internal chassis temperature reading" displayName="Inbox Temperature" failureThreshold="1" graphName="yshInboxTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1182.3.1.15.0" period="300" protocol="SNMP" timeAvg="false" vendorName="YAMAHA">
+	<UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The percentage of used DRAM memory of the total DRAM memory available. The value will be between 0-100%" displayName="DRAM Utilization" failureThreshold="1" graphName="dgs6600DRAMUtilization" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.171.10.120.100.1.1.1.2.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="D-Link">
+        <UserProps/>
+    </Graph>
+    <Graph SaveAbsolutes="false" YAXISTEXT="%" description="Memory Utilization" dialType="meter" displayName="Memory Utilization" failureThreshold="1" graphName="VolktekMemoryUtilization" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12780.1.8.0" period="300" protocol="SNMP" sSave="true" timeAvg="false" unit="%" vendorName="Volktek">
+	<UserProps/>
+    </Graph>
+    <Graph SaveAbsolutes="false" YAXISTEXT="%" description="CPU Utilization" dialType="meter" displayName="CPU Utilization" failureThreshold="1" graphName="VolktekCPUUtilization" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12780.1.9.0" period="300" protocol="SNMP" sSave="true" timeAvg="false" unit="%" vendorName="Volktek">
+  	<UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" isNumeric="true" graphType="multiple" description="OpZoon PT6608 - CPU utilization percentage for the PT6608 switch" vendorName="OpZoon" graphName="PT6608OpZoonCPUUtilization" oid=".1.3.6.1.4.1.37449.9.109.1.1.1.1.3.1" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+    	<UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" isNumeric="true" graphType="node" description="Power supply status" vendorName="RuiJie" graphName="RuiJiePowerstate" oid=".1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3.0" displayName="Power supply status" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" isNumeric="true" graphType="node" description="Fan State" vendorName="RuiJie" graphName="RuiJieFanstate" oid=".1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.3.0" displayName="Fan State" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Ruijie Networks - Memory utilization percentage (generic across Ruijie devices, index 0)" vendorName="RuiJie" graphName="RuiJieMemoryUtilization" oid=".1.3.6.1.4.1.4881.1.1.10.2.35.1.1.1.3.0" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="OpZoon - Generic CPU utilization percentage for OpZoon network devices" vendorName="OpZoon" graphName="OpZoonCPUUtilization" oid=".1.3.6.1.4.1.37449.100.11.10.0" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="OpZoon Switch - Memory utilization percentage (generic)" vendorName="OpZoon" graphName="OpZoonMemoryUtilization" oid="(.1.3.6.1.4.1.37449.100.11.7.0)*100/(.1.3.6.1.4.1.37449.100.11.6.0)" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Monitors the Memory Utilization" vendorName="Nortel Networks" graphName="s5ChasUtilMemoryUtilization" oid="(.1.3.6.1.4.1.45.1.6.3.8.1.1.12.3.10.0-.1.3.6.1.4.1.45.1.6.3.8.1.1.13.3.10.0)*100/.1.3.6.1.4.1.45.1.6.3.8.1.1.12.3.10.0" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Netgear - Total CPU utilization percentage for Netgear managed switches" displayName="CPU Utilization" failureThreshold="1" graphName="ng_SwitchTotalCPUUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4526.10.1.1.4.9.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Netgear Switch - Memory utilization based on total free memory" displayName="Memory Utilization" failureThreshold="1" graphName="ng_SwitchCPUUtilization" graphType="multiplenode" isNumeric="true" oid=".1.3.6.1.4.1.4526.10.1.1.5.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="CPU Utilization" vendorName="Nortel Networks" graphName="nt_CPUUtilizationLast1Minute" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.5.3.10.0" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false">
+      <UserProps/>
+    </Graph>
+	
+	<Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="Extreme Networks switch - Memory utilization percentage" vendorName="Extreme Networks" graphName="extremeMemoryUtilization" oid="(.1.3.6.1.4.1.1916.1.32.2.2.1.4.0)*100/(.1.3.6.1.4.1.1916.1.32.2.2.1.2.0)" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="The value of sgiCpuUsage indicates the current CPU utilization for the system." displayName="CPU Utilization" failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6527.3.1.2.1.1.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nokia" graphName="nk_sgiCPUUtilization">
+        <UserProps/>
+    </Graph>
+
+    <Graph YAXISTEXT="%" description="Memory Utilization" displayName="Memory Utilization" failureThreshold="1" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.6527.3.1.2.1.1.9.0) / ((.1.3.6.1.4.1.6527.3.1.2.1.1.9.0) + (.1.3.6.1.4.1.6527.3.1.2.1.1.10.0) * 100)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nokia" graphName="nk_sgiMemoryUtilization">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Packets" description="CRC Errors" displayName="CRC Errors" failureThreshold="1" graphName="CRCErrors" graphType="multiplenode" isNumeric="true" oid=".1.3.6.1.2.1.10.7.2.1.3" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	<UserProps/>
+    </Graph>
+    <!-- New Graph addition for M7 changes Starts -->
+    <Graph YAXISTEXT="%" description="Description" displayName="Alaxala 3660s Memory Utilization" graphName="Alaxala3660MemoryUtilization" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.21839.2.2.24.2.1.2.1.8.0*100)/.1.3.6.1.4.1.21839.2.2.24.2.1.2.1.7.0" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="%" description="Description" displayName="Alaxala 3660s Cpu Utilization" graphName="Alaxala3660sCpuUtilization" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21839.2.2.24.2.1.2.1.11.0" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="Status" description="Description" displayName="Alaxala 3660s Fan status" graphName="AlaxalaA3660sFanstatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21839.2.2.24.2.1.5.1.2" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="Status" description="Description" displayName="Alaxala 3660s Power supply status" graphName="AlaxalaA3660sPowersupplyStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21839.2.2.24.2.1.4.1.3" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+    <Graph YAXISTEXT="Celcius" description="Description" displayName="Alaxala 3660s Temperature" graphName="AlaxalaA3660sTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.21839.2.2.24.2.1.3.1.3" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph> 
+   <Graph YAXISTEXT="m°C" description="Monitors sensor minimum temperature for particular instance" displayName="Sensor Minimum Temperature" graphName="arubaWiredTempSensorMinTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.47196.4.1.1.3.11.3.1.1.8.1.4.1.1" period="900" protocol="SNMP" saveAbsolutes="" sSave="true" timeAvg="false">
+        <UserProps/>
+   </Graph>
+   <!-- New Graph addition for M7 changes ends -->
+</GRAPHDETAIL>

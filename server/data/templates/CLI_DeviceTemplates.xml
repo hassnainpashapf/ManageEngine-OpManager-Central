@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+
+    <CustomDevicePackageSet Category="Server" Vendor="net-snmp" iconName="linux.png" pingInterval="5">
+        <CustomDevicePackage deviceType="Linux">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Linux" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="Linux" cliCommandMappingId="kernelName" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="Linux FreeBSD">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Linux FreeBSD" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="FreeBSD" cliCommandMappingId="kernelName" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <!-- Linux Distribution based Templates -->
+        <CustomDevicePackage deviceType="Ubuntu">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Ubuntu" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="Ubuntu" cliCommandMappingId="linuxDistribution" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="Debian">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Debian" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="Debian" cliCommandMappingId="linuxDistribution"/>
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="Fedora">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Fedora" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="Fedora" cliCommandMappingId="linuxDistribution" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="Red Hat Enterprise Linux">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Red Hat Enterprise Linux" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.regex" operatorID="13" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="RedHat|Red Hat" cliCommandMappingId="linuxDistribution" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="CentOS">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="CentOS" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.regex" operatorID="13" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="CentOS|CentOS Linux" cliCommandMappingId="linuxDistribution" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="openSUSE">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="openSUSE" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="openSUSE" cliCommandMappingId="linuxDistribution" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="Arch Linux">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Arch Linux" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.regex" operatorID="13" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="Arch|Arch Linux" cliCommandMappingId="linuxDistribution" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="Linux Mint">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Linux Mint" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.regex" operatorID="13" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="LinuxMint|Linux Mint" cliCommandMappingId="linuxDistribution"/>
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="Manjaro">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Manjaro" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="Manjaro" cliCommandMappingId="linuxDistribution" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+
+        <CustomDevicePackage deviceType="Kali Linux">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Kali Linux" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.regex" operatorID="13" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="Kali|Kali Linux" cliCommandMappingId="linuxDistribution" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Server" Vendor="Sun Microsystems" iconName="sun-workstation.png" pingInterval="5">
+        <CustomDevicePackage deviceType="Solaris">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Solaris" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="SunOS" cliCommandMappingId="kernelName" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Server" Vendor="IBM" iconName="ibmaix.png" pingInterval="5">
+        <CustomDevicePackage deviceType="IBM AIX">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="IBM AIX" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="AIX" cliCommandMappingId="kernelName" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Server" Vendor="Hewlett-Packard" iconName="hpux.png" pingInterval="5">
+        <CustomDevicePackage deviceType="HP-UX">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="HP-UX" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="HP-UX" cliCommandMappingId="kernelName" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Server" Vendor="Apple" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Mac OS">
+            <NonSnmpOids>
+                <NonSnmpOid nonSnmpOid="Mac OS" protocol="CLI">
+                    <RULES operatorDispName="webclient.admin.ruleaction.operator.contains" operatorID="9" ruleKeyID="701" ruleName="CLICOMMAND" ruleTypeID="4" ruleValue="Darwin" cliCommandMappingId="kernelName" />
+                </NonSnmpOid>
+            </NonSnmpOids>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+</CustomDevicePackage>

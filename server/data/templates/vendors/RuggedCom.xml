@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For RuggedCom Switch-->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:ruggedcom_switch" templatename="RuggedCom_Switch" displayname="RuggedCom Switch" ostype="Yamaha" description="For all RuggedCom Switch RSG2100">
+        <NCMVendorDevice vendorid="RuggedCom"/>
+        <NCMDevicePersonality personalityid="RuggedComSwitch"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ruggedcom_switch_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:ruggedcom_switch"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+			
+           		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ruggedcom_switch_cli_startup_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="ruggedcom_switch_cli_startup_config_rec"/>		        	
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ruggedcom_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="ruggedcom_switch_cli_running_config_rec"/>
+			 
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:ruggedcom_switch_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:ruggedcom_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+			
+           		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ruggedcom_switch_cli_startup_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="ruggedcom_switch_cli_startup_config_rec"/>			 
+        	
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ruggedcom_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="ruggedcom_switch_cli_running_config_rec"/>
+             
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

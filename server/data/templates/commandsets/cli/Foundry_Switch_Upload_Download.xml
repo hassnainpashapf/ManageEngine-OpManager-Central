@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- execute copy running config tftp command mode -->
+
+<!--
+    <CLIInteractionSpec interactionid="foundry_enable_ispec" interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePasswordPrompt}" 
+                        commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_enable_ispec"/>
+    </CLIInteractionSpec>
+    <CLICommand command="enable">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="foundry_enable_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLIInteractionSpec interactionid="foundry_privilege_ispec" interactionverb="1" requesttimeout="20000" 
+                        prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_privilege_ispec"/>
+    </CLIInteractionSpec>
+    <CLICommand command="${UserInput:EnablePassword}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="foundry_password_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    -->
+    <!-- 
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" 
+                        promptecho="true" promptactionid="foundryActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_enableprompt_exit_ispec"/>
+    </CLIInteractionSpec>
+    -->
+
+    <CLICommand command="configure terminal">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="foundry_configure_terminal_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="end">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="foundry_configure_terminal_end_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <!--
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="foundry_enableprompt_exit_rec" protocol="CLI"/>
+        </CLIInputRecord>
+</CLICommand>
+-->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" 
+                        promptecho="true" promptactionid="foundryActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_switch_cli_fetch_startup_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy startup-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="foundry_switch_cli_upload_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" 
+                        promptecho="true" promptactionid="foundryActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_switch_cli_fetch_running_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="foundry_switch_cli_fetch_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" 
+                        promptecho="true" promptactionid="foundryActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_switch_cli_push_startup_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy tftp startup-config ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="foundry_switch_cli_push_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" 
+                        promptecho="true" promptactionid="foundryActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_switch_cli_push_running_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy tftp running-config ${UserInput:tftp_server_address} ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="foundry_switch_cli_push_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+		<!-- Foundry FastIron Switch -->
+	
+	
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="foundryActionId">
+			<InteractionSpec timeout="20000" protocol="CLI" interactionid="foundry_fastiron_switch_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy startup-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="foundry_fastiron_switch_backup_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+        	<Record type="CLI" recordid="foundry_fastiron_switch_backup_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="copy tftp startup-config ${UserInput:tftp_server_address} ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="foundry_fastiron_switch_upload_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="copy tftp running-config ${UserInput:tftp_server_address} ${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="foundry_fastiron_switch_upload_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+
+</CLICommandList>

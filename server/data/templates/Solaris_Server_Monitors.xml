@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+
+	<Graph YAXISTEXT="Minutes" description="Monitors the System reboot time using CLI" displayName="System Reboot time" failureThreshold="1" graphName="Solaris-SystemReboot" graphType="multiple" isNumeric="true" oid="Solaris SystemReboot" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+	
+	<Graph YAXISTEXT="Disks" description="Monitors the Number of Disk using CLI" displayName="Total Disk" failureThreshold="1" graphName="Solaris-TotalDisk" graphType="multiple" isNumeric="true" oid="Solaris Total Disk" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitors the File System Utilization using CLI" displayName="File System utilization(%)" failureThreshold="1" graphName="Solaris-FileSystemUtilization" graphType="multiple" isNumeric="true" oid="Solaris FileSystem Utilization" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Network Configuration" description="Monitors the Network Configuration Details" displayName="Network Configuration" failureThreshold="1" graphName="Solaris-NetworkConfiguration" graphType="multiple" isNumeric="false" pollDataType="2" oid="Solairs Network Configuration" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Count" description="Monitors the Current Disk Count" displayName="Current Disk Count" failureThreshold="1" graphName="Solaris-CurrentDiskCount" graphType="multiple" isNumeric="true" oid="Solaris Current Disk Count" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Percentage" description="Monitors the Free Memory" displayName="Free Memory" failureThreshold="1" graphName="Solaris-FreeMemory" graphType="multiple" isNumeric="true" oid="Solaris Free Memory" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Count" description="Monitors the Disk Error Status Counts" displayName="Disk Error Status" failureThreshold="1" graphName="Solaris-DiskErrorStatus" graphType="multiple" isNumeric="true" oid="Solaris Disk Error Status" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Status" description="Monitors the Zpool Status" displayName="Zpool Status" failureThreshold="1" graphName="Solaris-ZpoolStatus" graphType="multiple" isNumeric="false" pollDataType="2" oid="Solaris Zpool Status" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Percentage" description="Monitors the Zpool Utilization" displayName="Zpool Utilization" failureThreshold="1" graphName="Solaris-ZpoolUtilization" graphType="multiple" isNumeric="true" oid="Solaris Zpool Utilization" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Unavailable Paths Count" description="Monitors the Multipathing Status for Unavailable Multipaths" displayName="Multipathing Status" failureThreshold="1" graphName="Solaris-MultipathingStatus" graphType="multiple" isNumeric="true" oid="Solaris Multipathing Status" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Status" description="Monitors the Service Fault Status" displayName="Service Fault Status" failureThreshold="1" graphName="Solaris-ServiceFaultStatus" graphType="multiple" isNumeric="false" pollDataType="2" oid="Solaris Service Fault Status" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false"  vendorName="Sun Microsystems" vendorSubCategory="Oracle Solaris Monitors">
+		<UserProps propName="GROUPNAME" propValue="CLI"/>
+	</Graph>
+		
+</GRAPHDETAIL>

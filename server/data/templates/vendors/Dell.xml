@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dell_powerconnect_switch" templatename="Dell_PowerConnect_Switch" displayname="Dell PowerConnect Switch" description="For all Dell Power Connect Switches">
+        <NCMVendorDevice vendorid="Dell" />
+        <NCMDevicePersonality personalityid="DellSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dell_powerconnect_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dell_powerconnect_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dell_switch_cli_startup_config_backup"/>
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="dell_switch_cli_startup_config_push" />
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dell_switch_cli_running_config_backup" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="dell_switch_cli_running_config_push" />
+		
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="dell_switch_cli_copy_running_to_startup" />
+
+		<!--
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+		-->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="dell_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="dell_cli_disable_syslog_change_tracking" />
+				
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dell_powerconnect_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dell_powerconnect_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dell_switch_cli_startup_config_backup"/>
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="dell_switch_cli_startup_config_push" />
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dell_switch_cli_running_config_backup" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="dell_switch_cli_running_config_push" />
+		
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="dell_switch_cli_copy_running_to_startup" />
+
+		<!--
+                <NCMDeviceOperation operationid="GetCiscoHardwareInterfaces" executiongroupid="cisco_cli_get_hardware_interface" />
+
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="cisco_cli_disable_syslog_change_tracking" />
+		-->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="dell_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="dell_cli_disable_syslog_change_tracking" />
+				
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dell_powerconnect_5224_switch" templatename="Dell_PowerConnect_5224_Switch" displayname="Dell PowerConnect 5224 Switch" description="For all Dell Power Connect 5224 Switches">
+        <NCMVendorDevice vendorid="Dell" />
+        <NCMDevicePersonality personalityid="DellPowerConnectSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dell_powerconnect_5224_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dell_powerconnect_5224_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dell_5224_switch_cli_startup_config_backup"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dell_5224_switch_cli_running_config_backup" />
+		
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dell_powerconnect_5224_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:dell_powerconnect_5224_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dell_5224_switch_cli_startup_config_backup"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dell_5224_switch_cli_running_config_backup" />
+				
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>		
+
+    </NCMDeviceTemplate>
+
+
+</DeviceConfiguration>

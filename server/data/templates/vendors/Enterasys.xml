@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Matrix N series - N7 -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_switch_matrixN7" templatename="Enterasys_MatrixNSeries_Switch" displayname="Enterasys Matrix N Switch" ostype="EOS" description="For all Enterasys Matrix N Series Switches">
+        <NCMVendorDevice vendorid="Enterasys"/>
+        <NCMDevicePersonality personalityid="EnterasysSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_switch_matrixN7_telnet"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_switch_matrixN7"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasysswitch_matrixn_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="enterasysswitch_matrixn_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_switch_matrixN7_ssh"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_switch_matrixN7"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasysswitch_matrixn_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="enterasysswitch_matrixn_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+    <!-- For Enterasys SecureStack C2 Series Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_c2_switch" templatename="Enterasys_SecureStack_C2_Switch" displayname="Enterasys SecureStack C2 Switch" ostype="EOS" description="For all Enterasys SecureStack C2 Series Switches">
+        <NCMVendorDevice vendorid="Enterasys"/>
+        <NCMDevicePersonality personalityid="EnterasysSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_c2_switch_telnet"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_c2_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasys_c2_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="enterasys_c2_switch_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_c2_switch_ssh"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_c2_switch"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasys_c2_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="enterasys_c2_switch_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+    <!-- For Enterasys Matrix E1 Series Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_matrix_e1_switch" templatename="Enterasys_Matrix_E1_Switch" displayname="Enterasys Matrix E1 Switch" ostype="EOS" description="For all Enterasys Matrix E1 Series Switches">
+        <NCMVendorDevice vendorid="Enterasys"/>
+        <NCMDevicePersonality personalityid="EnterasysSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_matrix_e1_switch_telnet"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_matrix_e1_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasys_matrix_e1_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="enterasys_matrix_e1_switch_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_matrix_e1_switch_ssh"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_matrix_e1_switch"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasys_matrix_e1_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="enterasys_matrix_e1_switch_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+
+    <!-- For Enterasys X-Pedition Series Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_xpedition_switch" templatename="Enterasys_X_Pedition_Switch" displayname="Enterasys X-Pedition Switch" ostype="EOS" description="For all Enterasys X-Pedition Series Switches">
+        <NCMVendorDevice vendorid="Enterasys"/>
+        <NCMDevicePersonality personalityid="EnterasysSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_xpedition_switch_telnet"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_xpedition_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasys_xpedition_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="enterasys_xpedition_switch_cli_startup_config_backup" />
+
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="enterasys_xpedition_switch_cli_running_config_upload" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="enterasys_xpedition_switch_cli_startup_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_xpedition_switch_ssh"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_xpedition_switch"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasys_xpedition_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="enterasys_xpedition_switch_cli_startup_config_backup" />
+
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="enterasys_xpedition_switch_cli_running_config_upload" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="enterasys_xpedition_switch_cli_startup_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="enterasysswitch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+
+    <!-- For Router XSR series -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_router" templatename="Enterasys_Router" displayname="Enterasys Router" ostype="EOS" description="For all Enterasys XSR series Routers">
+        <NCMVendorDevice vendorid="Enterasys"/>
+        <NCMDevicePersonality personalityid="EnterasysRouter"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_router" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasysrouter_xsr_cli_fetch_running_config" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="enterasys_router_cli_fetch_running_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:enterasys_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:enterasys_router" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="enterasysrouter_xsr_cli_fetch_running_config" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="enterasys_router_cli_fetch_running_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

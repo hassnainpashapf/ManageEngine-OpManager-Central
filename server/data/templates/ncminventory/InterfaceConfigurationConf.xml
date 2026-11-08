@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<InterfaceConfigurationConf>
+	<DiscoveryConfiguration name="IPInterface" dataretrievalgroupid="DataRetrievalGroup:dataretrievalgroupid:1">
+    	<InterfaceConfiguration 
+        	interfacepersonality="IPInterface"/>
+	</DiscoveryConfiguration>
+	<!--DiscoveryConfiguration name="CLIInterface" dataretrievalgroupid="DataRetrievalGroup:dataretrievalgroupid:2">
+    	<InterfaceConfiguration  
+        	interfacepersonality="IPInterface"/>
+	</DiscoveryConfiguration-->
+
+    <DataRetrievalGroup dataretrievalgroupid="DataRetrievalGroup:dataretrievalgroupid:1"> 
+        <DataRetrievalRelation 
+            dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1" 
+            notifyidentificationresponse="true" 
+            typeofrequest="INTERFACE_IDENTIFICATION"/>
+    </DataRetrievalGroup>
+    <DataRetrievalConfiguration 
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1" 
+        use_ne_connection="false"
+        interactionid="EnhancedAugmentGet" 
+        connectioncriteria="first"/>
+    <DataRetrievalConnectionSpec 
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1" 
+        connectionorder="1" 
+        connectionid="$nediscovery"/>
+    <!--DataRetrievalConnectionSpec 
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1" 
+        mapperid="DiscoveryMapperConfiguration:mapperid:3"
+        connectionorder="2" 
+        connectionid="$switchdiscovery"/-->
+    <DataRetrievalRecord 
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1" 
+        recordid="ip-snmp-get"/>
+  <!--DataRetrievalConfiguration
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:2"
+        interactionid="disc_interface_ispec"
+        use_ne_connection="false"
+        connectioncriteria="first"/>
+    <DataRetrievalConnectionSpec
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:2"
+        connectionorder="1"
+        connectionid="$CLIConnectionSpec"/>
+    <DataRetrievalRecord
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:2"
+        recordid="disc_interface_irec"/>
+    <DataRetrievalGroup dataretrievalgroupid="DataRetrievalGroup:dataretrievalgroupid:2">
+        <DataRetrievalRelation
+            dataretrievalid="DataRetrievalConfiguration:dataretrievalid:2"
+            notifyidentificationresponse="true"
+            typeofrequest="INTERFACE_IDENTIFICATION"/>
+    </DataRetrievalGroup-->
+</InterfaceConfigurationConf>

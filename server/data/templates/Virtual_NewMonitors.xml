@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<GRAPHDETAIL>
+	    <Graph YAXISTEXT="%" description="Actively used average CPU of the host, as a percentage of the total available CPU" displayName="Average CPU Utilization" failureThreshold="1" graphName="VMware-hostCPUAvgUtilization" graphType="node" isNumeric="true" oid="cpu.usage.average" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-Host Monitors" >
+			<UserProps propName="COMMUNITY" propValue="HostSystem"/>
+			<UserProps propName="GROUPNAME" propValue="default"/>
+			<UserProps propName="POLICYNAME" propValue="VMware-hostCPUAvgUtilization"/>
+		</Graph>
+		<Graph YAXISTEXT="MB" description="Monitors Memory Demand of HyperV Guest using VIWMI in MegaBytes (only if dynamic memory is enabled)" displayName="Memory Demand" failureThreshold="1" graphName="HyperV-vmMemoryDemand" graphType="node" isNumeric="true" oid="vm.mem.demand" period="300" protocol="VIWMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="HyperV-VM Monitors" >
+			<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+			<UserProps propName="GROUPNAME" propValue="default"/>
+			<UserProps propName="POLICYNAME" propValue="HyperV-vmMemoryDemand"/>
+		</Graph>
+		<Graph description="VMware Datastore Freespace Monitor in GB" displayName="Datastore Free Space in GB" graphName="VMware-datastoreSummaryFreeSpaceGB" YAXISTEXT="GB" failureThreshold="1" graphType="node" isNumeric="true" oid="datastore.summary.freeSpaceGB" period="900" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-Datastore Monitors">
+			<UserProps propName="COMMUNITY" propValue="Datastore"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-datastoreSummaryFreeSpaceGB"/>
+		</Graph>
+	    <Graph description="Sum of data transmitted and received across all physical NIC instances connected to the host in Gbps" displayName="Network Usage in Gbps" graphName="VMware-hostNetUsageAverageGbps" YAXISTEXT="Gbps" failureThreshold="1" graphType="multiple" isNumeric="true" oid="net.usage.average" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-Host Monitors">
+	        <UserProps propName="COMMUNITY" propValue="HostSystem"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-hostNetUsageAverageGbps"/>
+	    </Graph>
+	    <Graph description="Sum of data transmitted and received across all physical NIC instances connected to the host in Mbps" displayName="Network Usage in Mbps" graphName="VMware-hostNetUsageAverageMbps" YAXISTEXT="Mbps" failureThreshold="1" graphType="multiple" isNumeric="true" oid="net.usage.average" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-Host Monitors">
+	        <UserProps propName="COMMUNITY" propValue="HostSystem"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-hostNetUsageAverageMbps"/>
+	    </Graph>
+	    <Graph description="Total time elapsed in minutes since last system startup of host" displayName="System Uptime" graphName="VMware-hostSystemUptime" YAXISTEXT="Minutes" failureThreshold="1" graphType="node" isNumeric="true" oid="sys.uptime.latest" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-Host Monitors">
+	        <UserProps propName="COMMUNITY" propValue="HostSystem"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-hostSystemUptime"/>
+	    </Graph>
+	    <Graph description="Total time elapsed in minutes since last system startup of VM" displayName="System Uptime" graphName="VMware-vmSystemUptime" YAXISTEXT="Minutes" failureThreshold="1" graphType="node" isNumeric="true" oid="sys.uptime.latest" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-VM Monitors">
+	        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-vmSystemUptime"/>
+	    </Graph>
+	    <Graph description="Time that the virtual machine was ready, but could not get scheduled to run on the physical host CPU" displayName="CPU Ready" graphName="VMware-hostCpuReady" YAXISTEXT="Milliseconds" failureThreshold="1" graphType="node" isNumeric="true" oid="cpu.ready.summation" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-Host Monitors">
+	        <UserProps propName="COMMUNITY" propValue="HostSystem"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-hostCpuReady"/>
+	    </Graph>
+	    <Graph description="Time the virtual machine is ready to run, but is unable to run due to co-scheduling constraints in host" displayName="CPU Co-stop" graphName="VMware-hostCpuCostop" YAXISTEXT="Milliseconds" failureThreshold="1" graphType="node" isNumeric="true" oid="cpu.costop.summation" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-Host Monitors">
+	        <UserProps propName="COMMUNITY" propValue="HostSystem"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-hostCpuCostop"/>
+	    </Graph>
+	    <Graph description="Time the virtual machine is ready to run, but is unable to run due to co-scheduling constraints" displayName="CPU Co-stop" graphName="VMware-vmCpuCostop" YAXISTEXT="Milliseconds" failureThreshold="1" graphType="multiple" isNumeric="true" oid="cpu.costop.summation" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-VM Monitors">
+	        <UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-vmCpuCostop"/>
+	    </Graph>
+	    <Graph description="Overall data transmitted and received across all physical NIC instances connected to the host" displayName="Overall Network Usage" graphName="VMware-hostOverallNetUsage" YAXISTEXT="Mbps" failureThreshold="1" graphType="node" isNumeric="true" oid="net.usage.average" period="300" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-Host Monitors">
+	        <UserProps propName="COMMUNITY" propValue="HostSystem"/>
+	        <UserProps propName="GROUPNAME" propValue="default"/>
+	        <UserProps propName="POLICYNAME" propValue="VMware-hostOverallNetUsage"/>
+	    </Graph>
+	</GRAPHDETAIL>

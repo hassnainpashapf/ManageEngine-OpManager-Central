@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<CustomDevicePackage>
+    <CustomDevicePackageSet Category="NGFW" Vendor="Fortinet" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="FortiGate NGFW">
+            <SysOIDs>
+                <SysOID oid="FortigateNGFW"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+</CustomDevicePackage>

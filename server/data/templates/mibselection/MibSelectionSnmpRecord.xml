@@ -1,0 +1,27 @@
+<MibSelectionSnmpRecord>
+<!-- $Id$ -->
+<!-- Record to check support of config copy mib -->
+<!--Record recordid="for_cisco_config_copy_mib" type="SET" protocol="SNMP">
+    <SnmpSetRecord type="SET">
+        <SnmpSetParamList>
+            <SnmpSetParam type="STRING" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.2.66" value="TFTP" paramindex="0" label="writeNet"/>
+        </SnmpSetParamList>
+    </SnmpSetRecord>
+</Record-->
+
+    <SnmpGetRecord  type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="for_cisco_config_copy_mib" protocol="SNMP"/>
+	<SnmpGetParamList>
+	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.4.1.9.9.96.1.1.1.1.14.300" label="ccCopyEntryRowStatus"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+
+<!-- Record to check support of old cisco sys mib -->
+    <SnmpGetRecord  type="GET" maxrepetitions="0" nonrepeaters="0">
+	<Record type="GET" recordid="for_old_cisco_sys_mib" protocol="SNMP"/>
+	<SnmpGetParamList>
+	    <SnmpGetParam paramindex="0" oidname=".1.3.6.1.4.1.9.2.1.3.0" label="HostName"/>
+	</SnmpGetParamList>
+    </SnmpGetRecord>
+
+</MibSelectionSnmpRecord>

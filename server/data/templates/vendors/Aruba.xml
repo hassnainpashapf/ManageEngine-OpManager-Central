@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+<!-- For Aruba Wifi switches -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:aruba_wifi_switch" templatename="Aruba_WifiSwitch" displayname="Aruba Wifi Switch" ostype="ArubaOS" description="For all Aruba Wifi Switches">
+    <NCMVendorDevice vendorid="Aruba" />
+    <NCMDevicePersonality personalityid="ArubaWifiSwitch" />
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+        <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:aruba_wifi_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:aruba_wifi_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="aruba_wifiswitch_cli_startup_config_backup" taskhandling="true"/>
+            <NCMReadFromResponse operationid="BackupStartupConfig" recordid="aruba_wifiswitch_cli_backup_startup_rec"/>
+
+            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="aruba_wifiswitch_cli_running_config_backup" taskhandling="true"/>
+            <NCMReadFromResponse operationid="BackupRunningConfig" recordid="aruba_wifiswitch_cli_backup_running_rec"/>
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:aruba_wifi_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:aruba_wifi_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="aruba_wifiswitch_cli_startup_config_backup" taskhandling="true"/>
+            <NCMReadFromResponse operationid="BackupStartupConfig" recordid="aruba_wifiswitch_cli_backup_startup_rec"/>
+
+            <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="aruba_wifiswitch_cli_running_config_backup" taskhandling="true"/>
+            <NCMReadFromResponse operationid="BackupRunningConfig" recordid="aruba_wifiswitch_cli_backup_running_rec"/>
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:aruba_wifi_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:aruba_wifi_switch"
+                            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="arubawifiswitch_cli_running_config_backup" />
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="arubawifiswitch_cli_startup_config_backup" />
+        <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="arubawifiswitch_cli_running_config_upload" />
+        <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="arubawifiswitch_cli_startup_config_upload" />        
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <!-- for SSH-TFTP-->
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:aruba_wifi_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:aruba_wifi_switch"
+                            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="arubawifiswitch_cli_running_config_backup" />
+        <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="arubawifiswitch_cli_startup_config_backup" />
+        <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="arubawifiswitch_cli_running_config_upload" />
+        <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="arubawifiswitch_cli_startup_config_upload" />        
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+  <!-- For Aruba Controller -->
+  
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:aruba_controller" templatename="Aruba_Controller" displayname="Aruba Controller" ostype="ArubaOS" description="For all Welotec TK 7 Series Router">
+        <NCMVendorDevice vendorid="Aruba"/>
+        <NCMDevicePersonality personalityid="ArubaController"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:Aruba_Controller_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:aruba_controller" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Aruba_Controller_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="aruba_controller_cli_backup_running_rec"/>
+         
+		 </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:Aruba_Controller_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:aruba_controller" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Aruba_Controller_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="aruba_controller_cli_backup_running_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+</DeviceConfiguration>

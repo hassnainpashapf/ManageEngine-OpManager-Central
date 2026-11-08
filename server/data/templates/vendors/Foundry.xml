@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Foundry BigIron & FastIron Edge Series -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:foundry_switch_bigiron4000" templatename="Foundry_Edge_Switch" displayname="Foundry Switch" description="For all Foundry BigIron and FastIron Edge Switches">
+        <NCMVendorDevice vendorid="Foundry"/>
+        <NCMDevicePersonality personalityid="FoundrySwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:hp_switch_bigiron4000_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:foundry_switch_bigiron4000" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="foundryswitch_ssh_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="foundryswitch_ssh_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="foundryswitch_ssh_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="foundryswitch_ssh_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="foundryswitch_ssh_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="foundryswitch_ssh_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:foundry_switch_bigiron4000_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:foundry_switch_bigiron4000"                          managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="foundryswitch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="foundryswitch_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="foundryswitch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="foundryswitch_cli_running_config_upload" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="foundryswitch_cli_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="foundryswitch_cli_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:foundry_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:foundry_switch_bigiron4000" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+	    <NCMDeviceCriteria commandmapid="SSH_Command">
+
+	    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="foundry_ssh_startup_config_fetch" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="foundry_cli_show_startup_config_rec"/>
+
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="foundry_ssh_running_config_fetch" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="foundry_cli_show_running_config_rec"/>
+	    </NCMDeviceCriteria>
+    </NCMProtocolCombination>    
+</NCMDeviceTemplate>
+
+
+
+<!-- Foundry FastIron Switch Without carraige return -->
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:foundry_fastiron_switch" templatename="Foundry_FastIron_Switch" displayname="Foundry FastIron Switch" description="For all Foundry FastIron Edge Switches">
+        <NCMVendorDevice vendorid="Foundry"/>
+        <NCMDevicePersonality personalityid="FoundryFastIronSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        <NCMSupportedProtocol protocolid="TFTP"/>      
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:foundry_fastiron_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:foundry_fastiron_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="foundry_fastiron_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="foundry_fastiron_switch_cli_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="foundry_fastiron_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="foundry_fastiron_switch_cli_running_config_upload" />
+				
+            </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+ <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:foundry_fastiron_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:foundry_fastiron_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+	    <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+	    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="foundry_fastiron_switch_startup_config_fetch" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupStartupConfig" recordid="foundry_fastiron_switch_cli_show_startup_config_rec"/>
+		    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="foundry_fastiron_switch_running_config_fetch" taskhandling="true"/>
+		    <NCMReadFromResponse operationid="BackupRunningConfig" recordid="foundry_fastiron_switch_cli_show_running_config_rec"/>
+			
+	    </NCMDeviceCriteria>
+    </NCMProtocolCombination>    
+</NCMDeviceTemplate>
+
+
+</DeviceConfiguration>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Juniper EX4200 Switch Backup Config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="60000" protocol="CLI" interactionid="juniper_ex4200_switch_backup_config_ispec"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="60000" protocol="CLI" interactionid="juniper_ex4200_switch_backup_vlan_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show configuration | display set | no-more">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_ex4200_switch_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show vlans | no-more">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+      <Record type="CLI" recordid="juniper_ex4200_switch_backup_vlan_rec_0" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show | display set | save ${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_ex4200_switch_tftp_backup_config_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="run start shell">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_ex4200_switch_tftp_backup_config_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="%" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="60000" protocol="CLI" interactionid="juniper_ex4200_switch_backup_config_ispec1"/>
+</CLIInteractionSpec>
+
+<CLICommand command="tftp ${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_ex4200_switch_tftp_backup_config_rec_3" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="exit">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_ex4200_switch_tftp_backup_config_rec_6" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="tftp>" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_ex4200_switch_backup_config_ispec2"/>
+</CLIInteractionSpec>
+
+<CLICommand command="put ${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_ex4200_switch_tftp_backup_config_rec_4" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="quit">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_ex4200_switch_tftp_backup_config_rec_5" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="%" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_ex4200_switch_backup_config_ispec3"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="password:" commandecho="false" promptecho="true" promptactionid="yesActionId">
+	<InteractionSpec timeout="30000" protocol="CLI" interactionid="juniper_ex4200_switch_scp_backup_config_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="show | display set | save scp://${UserInput:scp_username}@${UserInput:tftp_server_address}/${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_ex4200_switch_scp_backup_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:scp_password}">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="juniper_ex4200_switch_scp_password_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="configure">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="juniper_ex4200_switch_enable_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt=">" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="60000" protocol="CLI" interactionid="juniper_ex4200_switch_ispec"/>
+</CLIInteractionSpec>
+ 
+
+    <!-- H/W population -->
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true" responseparserid="juniper_switch_hardware_prop_parser" promptactionid="yesActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_ex4200_switch_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="run show chassis hardware | display set | no-more">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_ex4200_switch" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_ex4200_switch_hardware_prop_rec1" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="run show version | no-more">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_ex4200_switch" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_ex4200_switch_hardware_prop_rec2" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+		<!-- Juniper SRX Backup Config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt=">" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="60000" protocol="CLI" interactionid="juniper_srx_backup_config_ispec"/>
+</CLIInteractionSpec>
+ 
+
+<CLICommand command="show configuration | display set | no-more">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_srx_cli_show_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cli">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_srx_cli_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+    <!-- H/W population -->
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=">" commandecho="false" promptecho="true" responseparserid="juniper_srx_hardware_prop_parser" promptactionid="yesActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_srx_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="show version">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_srx" messagesuffix="&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_srx_hardware_prop_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="show chassis hardware">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_srx" messagesuffix="&#10;" inputsourcetype="1">
+	    	<Record type="CLI" recordid="juniper_srx_hardware_prop_rec2" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="show chassis mac-addresses">
+        <CLIInputRecord parsercommandname="hardware_prop_juniper_srx_two" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_srx_hardware_prop_rec3" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="show system snapshot media internal">
+        <CLIInputRecord parsercommandname="hardware_prop_juniper_srx_two" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="juniper_srx_hardware_prop_rec4" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	
+<!-- Juniper LoadBalancer Backup Config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="160000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="160000" protocol="CLI" interactionid="juniper_load_balancer_backup_config_ispec"/>
+</CLIInteractionSpec>
+ 
+
+<CLICommand command="export config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_load_balancer_show_startup_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- H/W population -->
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="juniper_load_balancer_hardware_prop_parser" promptactionid="yesActionId">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_load_balancer_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="show version">
+	    <CLIInputRecord parsercommandname="hardware_prop_juniper_load_balancer" messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="juniper_load_balancer_hardware_prop_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+
+
+<!-- Juniper QFX3000-G Switch Backup Config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+    <InteractionSpec timeout="60000" protocol="CLI" interactionid="juniper_fabric_qfx3000g_switch_backup_config_ispec"/>
+</CLIInteractionSpec>
+ 
+
+
+<CLICommand command="show configuration | display set | no-more">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="juniper_fabric_qfx3000g_switch_show_startup_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true" responseparserid="juniper_fabric_switch_hardware_prop_parser" promptactionid="yesActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="juniper_fabric_qfx3000g_switch_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+    <CLIInputRecord parsercommandname="hardware_prop_juniper_fabric_qfx3000g_switch" messagesuffix="&#10;" inputsourcetype="1">
+	    <Record type="CLI" recordid="juniper_fabric_qfx3000g_switch_hardware_prop_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+		
+</CLICommandList>

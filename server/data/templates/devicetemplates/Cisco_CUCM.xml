@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Cisco CUCM" osType="UCOS" templateName="Cisco_CUCM" multiConfigTemplate="false" category="General">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show hardware"/>
+			<Command commandstr="show version active"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="show hardware" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="CiscoCUCM" personalityName="CiscoCUCM">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="CPU" size="100" desc="CPU" displayname="CPU" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="MEMORY" size="100" desc="Memory" displayname="Memory" defaultvalue="Not Available" sequenceid="10"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoCUCMHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_CiscoCUCM">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*(?i)Hw\s*Platform\s*:\s*(.*)" NAME="MODEL">
+										  <PARAM NAME="MODEL" TOKENNO="1"/>
+										  <PARAM NAME="SERIES" TOKENNO="1"/>
+									  	</REGEX>
+										<REGEX EXPRESSION=".*(?i)type\s*:\s*(.*)" NAME="CPU">
+										  <PARAM NAME="CPU" TOKENNO="1"/>
+									  	</REGEX>
+										<REGEX EXPRESSION=".*(?i)Memory\s*:\s*(.*)" NAME="MEMORY">
+										  <PARAM NAME="MEMORY" TOKENNO="1"/>
+									  	</REGEX>
+										<REGEX EXPRESSION=".*(?i)OS\sVersion\s*:\s*(\S+)\s(\S+).*" NAME="OSVERSION">
+										  <PARAM NAME="OSTYPE" TOKENNO="1"/>
+										  <PARAM NAME="OSVERSION" TOKENNO="2"/>
+									  	</REGEX>
+										<REGEX EXPRESSION=".*(?i)Serial\sNumber\s*:\s*(.*)" NAME="SERIALNUMBER">
+										  <PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+									  	</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show hardware" parsercommandname="hardware_prop_CiscoCUCM" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show version active" parsercommandname="hardware_prop_CiscoCUCM" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

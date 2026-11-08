@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?><GRAPHDETAIL>
+    <Graph YAXISTEXT="Bytes" description="The size of memory for the entity." displayName="Total Memory" failureThreshold="1" graphName="hwEntityMemSize" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.1.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The remained electricity quantity percent of lithium battery,unit in minute." displayName="Remining battery %" failureThreshold="1" graphName="hwBatteryRemainPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.15.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The use size of the memory. The unit is Byte." displayName="Used Memory" failureThreshold="1" graphName="UsedMemoryHuaweiH3c" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.2.2.5.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="The free size of the memory. The unit is Byte" displayName="Free Memory" failureThreshold="1" graphName="FreeMemoryHuawei" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.2.2.5.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="Temperature of system in Celsius. use the OID entPhysicalDescr (1.3.6.1.2.1.47.1.1.1.1.2) to identify the deviceModel instance for HP Comware devices .." displayName="Temperature" failureThreshold="1" graphName="h3cEntityExtTemperature" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.6.1.1.1.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Count of the number of buffer create failures due to no free memory" displayName="Buffer creation failures" failureThreshold="1" graphName="CiscoBufferNoMem" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.2.1.47.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of buffers" description="Contains the number of huge buffer misses" displayName="Huge Buffer Misses" failureThreshold="1" graphName="CiscoBufferHgMiss" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.2.1.67.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Monitors the number of bytes from the memory pool that are currently in use" displayName="Used Memory" failureThreshold="1" graphName="ciscoMemoryPoolUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.48.1.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Monitors the number of bytes from the memory pool that are currently unused" displayName="Free Memory" failureThreshold="1" graphName="ciscoMemoryPoolFree" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.48.1.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="State" description="The state of Open Shortest Path First  (OSPF) protocol based relationship with this neighbor. down(1), attempt(2), init(3), twoWay(4), exchangeStart(5), exchange(6), loading(7), full(8)" displayName="Cisco OSPF Neighbour state" failureThreshold="1" graphName="ospfNbrState" graphType="multiple" isNumeric="true" oid=".1.3.6.1.2.1.14.10.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="The total number of octets received by this IPsec Phase-2 Tunnel. This value is accumulated BEFORE determining whether or not the packet should be decompressed. See also cipSecTunInOctWraps for the number of times this counter has wrapped." displayName="VPN tunnel IN-Bytes Delta" failureThreshold="1" graphName="VPNTunnelInOctets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.171.1.3.2.1.26.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="The total number of octets sent by this IPsec Phase-2 Tunnel. This value is accumulated AFTER determining whether or not the packet should be compressed. See also cipSecTunOutOctWraps for the number of times this counter has wrapped." displayName="VPN tunnel OUT-Bytes Delta" failureThreshold="1" graphName="VPNTunnelOutOctets" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.171.1.3.2.1.39.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The status of the MIB table row. This object can be used to bring the tunnel down by setting value of this object to destroy(2). When the value is set to destroy(2), the SA bundle is destroyed and this row is deleted from this table. When this MIB value is queried, the value of active(1) is always returned, if the instance exists. This object cannot be used to create a MIB table row." displayName="VPN tunnel status" failureThreshold="1" graphName="VPNtunnelstatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.171.1.3.2.1.51.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Cisco IOS/IOS-XE devices - CPU-wide committed system memory in bytes (CISCO-PROCESS-MIB)" displayName="Memory Used" failureThreshold="1" graphName="cpmCPUMemoryCommitted" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.27" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The buffer pool utilization in percentage of this subject. Zero if unavailable or inapplicable." displayName="Buffer Memory Utilization" failureThreshold="1" graphName="jnxOperatingBufferRE0" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.11.9.2.0.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="The installed memory size in Megabytes of this subject. Zero if unavailable or inapplicable." displayName="Total Memory (RE 1)" failureThreshold="1" graphName="jnxOperatingMemoryRE0" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.15.9.1.0.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="The installed memory size in Megabytes of this subject. Zero if unavailable or inapplicable." displayName="Total Memory (RE 2)" failureThreshold="1" graphName="jnxOperatingMemoryRE1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.1.13.1.15.9.2.0.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="Dram size in mega-bytes" displayName="Total Memory (MB)" failureThreshold="1" graphName="rcSysDramSize" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.2272.1.1.46.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RapidCity Communication">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Dram free size in kilo-bytes" displayName="Total Memory (KB)" failureThreshold="1" graphName="rcSysDramFree" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.2272.1.1.48.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RapidCity Communication">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="Memory poller for RivelDelta devicesPoller utilizes GetSubTree to gather total memory" displayName="Total Memory" failureThreshold="1" graphName="rdnTotalAllocatableMem" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4981.1.20.1.1.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverDelta Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU Utilization last minute" displayName="CPU Utilization (1 min)" failureThreshold="1" graphName="rdnTotalCPUUtilization1Min" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.4981.1.20.1.1.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverDelta Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="CPU poller for RiverDelta devices (proprietary MIB)Poller utilizes GetSubTree to gather multi core CPU Load using OID" displayName="CPU Utilization (5 min)" failureThreshold="1" graphName="rdnTotalCPUUtilization5Min" graphType="node" isNumeric="true" oid="1.3.6.1.4.1.4981.1.20.1.1.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverDelta Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Total memory used" displayName="Total memory used" failureThreshold="1" graphName="rdnTotalMemAllocated" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4981.1.20.1.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverDelta Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Total Free Memory" displayName="Total Free Memory" failureThreshold="1" graphName="rdnTotalFreeMem" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4981.1.20.1.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverDelta Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Total Heap size left" displayName="Total Heap size left" failureThreshold="1" graphName="cadMeHeapRemaining" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4998.1.1.5.3.2.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RiverDelta Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="INTEGER" description="The desired status of the switch beacon. When the beacon is set to on, the LEDs on the front panel of the switch run alternately from left to right and right to left. The color is yellow. When the beacon is set to off, each LED will be in its regular status indicating color and state. { on ( 1 ) , off ( 2 ) }" displayName="Beacon Admin Status" failureThreshold="1" graphName="swBeaconAdmStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1588.2.1.1.1.1.19.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="INTEGER" description="The desired state of the FLASH. A management station may place the FLASH in a desired state by setting this object accordingly: o swCurrent(1) indicates that the FLASH contains the current firmware image or config file; o swFwUpgrade(2) means that the firmware in theFLASH is to be upgraded from the host specified; o swCfUpload(3) means that the switch config file is to be uploaded to the host specified; or o swCfDownload(4) means that the switch config file is to be downloaded from the host specified. o swFwCorrupted(5) state indicates that the firmware in the FLASH is corrupted. This value is for informational purpose only. However, set of swFlashDLAdmStatus to this value is not allowed. The host is specified in swFlashDLHost.0. In addition, user name is specified in swFlashDLUser.0, and the file name specified in swFlashDLFile.0. Reference the user manual on the following commands, o firmwareDownload, o configUpload, and o configDownload. Possible values :   { unknown ( 0 ) , swCurrent ( 1 ) , swFwUpgraded ( 2 ) , swCfUploaded ( 3 ) , swCfDownloaded ( 4 ) , swFwCorrupted ( 5 ) }" displayName="Flash Admin state" failureThreshold="1" graphName="swFlashDLAdmStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1588.2.1.1.1.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Actual status indicated by the Integrated Communication Facility (ICF) sensor. unknown(1), bad(2), warning(3), good(4), notPresent(5)" displayName="ICF (Integrated Communication Facility) Status" failureThreshold="1" graphName="hpicfSensorStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.1.2.6.1.4.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This gives the status of the switch in the stack. unusedId (0) - The member ID does not exist. missing (1) - A member switch in the stack when it becomes Non responsive, it is marked as the missing member. Either the stack link goes down or the stack member crashed. Note that it is possible to remove even the missing member from the stack. In this case, the missing members configuration is removed from the stack config file. provision (2) - A member switch whose config is provisioned and that does not exist physically. commander (3) - One physical switch whose master CPU takes up the role that the active management module in the 8200 switch would take. standby (4) - One physical switch whose master CPU takes up the role that the standby management module in the 8200 switch would take. member (5) - A switch that is part of the stack. shutdown (6) - The switch is in the shutdown state. booting (7) - The switch is in the booting state. communicationFailure (8) - This is an error condition. The switch cannot be reached. incompatibleOs (9) - This is an error condition. The member switch runs with a different OS image. unknownState (10) - The member switch's state cannot be determined. This is an error condition. standbyBooting (11) - The standby switch is currently booting up. When boot is completed, the state will be 'standby (4)'.unusedId(0), missing(1), provision(2), commander(3), standby(4), member(5), shutdown(6), booting(7), communicationFailure(8), incompatibleOs(9), unknownState(10), standbyBooting(11)" displayName="Stack Member state (Switch)" failureThreshold="1" graphName="hpStackMemberState" graphType="node" isNumeric="" oid=".1.3.6.1.4.1.11.2.14.11.5.1.69.1.3.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="The number of available (unallocated) bytes." displayName="Free Memory" failureThreshold="1" graphName="hpememFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.6.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The number of currently installed bytes." displayName="Memory Total" failureThreshold="1" graphName="hpememTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.5.1.1.2.2.1.1.5.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The value of sgiMemoryAvailable indicates the amount of free memory in the overall system that is not allocated to memory pools, but is available in case a memory pool needs to grow." displayName="Total Available Memory" failureThreshold="1" graphName="sgiMemoryAvailable" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6527.3.1.2.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="Alcatel-Lucent (Nokia) SR OS - Total pre-allocated pool memory currently in use (bytes, 32-bit counter)" displayName="Total Used Memory" failureThreshold="1" graphName="sgiMemoryUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6527.3.1.2.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Alcatel-Lucent (Nokia) SR OS - Total pre-allocated pool memory currently in use in kilobytes" displayName="Total Used Memory" failureThreshold="1" graphName="sgiKbMemoryUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6527.3.1.2.1.1.9.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="The value of sgiKbMemoryAvailable indicates the amount of free memory, in kilobytes, in the overall system that is not allocated to memory pools, but is available in case a memory pool needs to grow." displayName="Total Free Memory" failureThreshold="1" graphName="sgiKbMemoryAvailable" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6527.3.1.2.1.1.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Celsius" description="Alcatel-Lucent (Nokia) SR series - Hardware component temperature reading in degrees Celsius" displayName="Temperature" failureThreshold="1" graphName="tmnxHwTemperature" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.6527.3.1.2.2.1.8.1.18" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current status of the Fan tray." displayName="Fan Tray status" failureThreshold="1" graphName="tmnxChassisFanOperStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.6527.3.1.2.2.1.4.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alcatel">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current amount of heap available for use." displayName="Free Heap Memory" failureThreshold="1" graphName="adtranMemoryUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.664.5.53.1.4.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Adtran">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="This object returns the available RAM of unit." displayName="Available memory" failureThreshold="1" graphName="memAvail" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.13.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nortel Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="MB" description="This object returns the available RAM of unit." displayName="Available Memory" failureThreshold="1" graphName="s5ChasUtilMemoryAvailableMB" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Avaya/Nortel ERS Switch - CPU busy percentage over the last 10 minutes" displayName="CPU Utilization" failureThreshold="1" graphName="s5ChasUtilTable" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.6.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Avaya">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Accumulative flow count per Stack Package (SP) device" displayName="Accumulative flow count" failureThreshold="1" graphName="deviceTotalFlows" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.11.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Percentage of primary data partition used" displayName="Disk Utilization" failureThreshold="1" graphName="deviceDiskUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Total physical memeory installed (in KiB)" displayName="Total Physical Memory" failureThreshold="1" graphName="devicePhysicalMemory" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.5.0" period="3600" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Total swap space available (in KiB)" displayName="Total Swap Memory" failureThreshold="1" graphName="deviceSwapSpace" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.8.0" period="3600" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Physical memeory being used (in KiB)." displayName="Total Physical Memory Used" failureThreshold="1" graphName="devicePhysicalMemoryInUse" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Percentage of swap space used." displayName="Memory Utilization (Swap)" failureThreshold="1" graphName="deviceSwapSpaceUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="KB" description="Used swap space (in KiB)." displayName="Total Swap Space Used" failureThreshold="1" graphName="deviceSwapSpaceInUse" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9694.1.4.2.1.9.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arbor Networks">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="The baudrate of service port." displayName="Port Baudrate" failureThreshold="1" graphName="ibmServiceGenericBaurdrate" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2.6.72.3.1.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="IBM">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The total number of self test failures on this interface." displayName="Self Test Failures" failureThreshold="1" graphName="proXfaceGenericTestFails" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1.2.1.11" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="IBM">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The total number of self test successes on this interface. Values 0..4294967295" displayName="Self Test Successes" failureThreshold="1" graphName="proXfaceGenericTestPasses" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1.2.1.10" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="IBM">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The total number of maintenance failures on this interface." displayName="Total Failure Maintenances" failureThreshold="1" graphName="proXfaceGenericMaintFails" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1.2.1.9" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="IBM">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of seconds between maintenance checks." displayName="Time elapsed (since last Maintenance)" failureThreshold="1" graphName="proXfaceGenericNextMaint" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1.2.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="IBM">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of Tunnels" description="The number of currently active GTP tunnels on the Gateway GPRS Support Node (GGSN). Each primary Packet Data Protocol (PDP) context is counted twice for signaling tunnel and payload tunnel, and each secondary PDP context is counted once for payload tunnel only, as they share signaling tunnels with their primary PDP contexts" displayName="Active GTP tunnels (gtpu and gtpc)" failureThreshold="1" graphName="ggsnGtpNbrOfTunnels" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.6.23.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of active Packet Data Protocol (PDP) contexts on this GGSN. Incremented when a PDP context is activated and a GTP response has been sent to the SGSN. Decremented when a PDP context is deactivated." displayName="Active PDP contexts" failureThreshold="1" graphName="ggsnNbrOfActivePdpContexts" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="deltaA" description="The number of successfully completed PDP context activation procedures initiated by an MS. Incremented each time a Create PDP Context Response is sent back to an SGSN with cause value Request Accepted." displayName="PDP Context Activations completed" failureThreshold="1" graphName="ggsnCompletedActivation" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.4.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="deltaD" description="The number of successfully completed PDP context deactivation procedures initiated by an MS. Note: This counter can not be retrieved by CLI." displayName="PDP Context De-activations completed" failureThreshold="1" graphName="ggsnCompletedDeactivation" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.4.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="The total number of General Packet Radio Service (GPRS) Tunneling Protocol Control (GTP-C) control packets that have been dropped by the node." displayName="Number of GTP-C packets dropped" failureThreshold="1" graphName="ggsnGtpControlPacketDrops" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.6.5.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of Error Indications received by the node (aggregate of error indications received by the GTP-U)." displayName="Number of GTP-U Error indications received" failureThreshold="1" graphName="ggsnGtpErrorIndicationReceived" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.7.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of Error Indications sent by the node (aggregate of error indications sent by the GTP-U). The GGSN may send an Error Indication to the SGSN or RNC if no PDP context exists or the PDP context is inactive for a received GTP Packet Data Unit (G-PDU)." displayName="Number of GTP-U Error indications sent" failureThreshold="1" graphName="ggsnGtpErrorIndicationSent" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.7.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of errors" description="The number of GTP PDP address unknown errors sent by the GGSN." displayName="Number of GTP PDP Unknown errors sent" failureThreshold="1" graphName="ggsnGtpErrorPdpAddrUnknown" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.7.8.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of GTP resources unavailable errors sent by the GGSN." displayName="Number of GTP Resources unavailable errors sent" failureThreshold="1" graphName="ggsnGtpErrorResourcesUnavailable" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.10923.1.1.1.1.1.3.7.4.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="The size of the storage represented by this entry, in units of hrStorageAllocationUnits. This object is writable to allow remote configuration of the size of the storage area in those cases where such an operation makes sense and is possible on the underlying system. For example, the amount of main memory allocated to a buffer pool might be modified or the amount of disk space allocated to virtual memory might be modified." displayName="Total disk space" failureThreshold="1" graphName="hrStorageSize3" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.25.2.3.1.5.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="CRC Radio - For packet-oriented interfaces, the number of inbound packets that contained errors preventing them from being deliverable to a higher-layer protocol. For character- oriented or fixed-length interfaces, the number of inbound transmission units that contained errors preventing them from being deliverable to a higher-layer protocol. Discontinuities in the value of this counter can occur at re-initialization of the management system, and at other times as indicated by the value of ifCounterDiscontinuityTime." displayName="Inbound packets with errors (CRC)" failureThreshold="1" graphName="ifInErrors1" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.2.2.1.14.1" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="For packet-oriented interfaces, the number of inbound packets that contained errors preventing them from being deliverable to a higher-layer protocol. For character- oriented or fixed-length interfaces, the number of inbound transmission units that contained errors preventing them from being deliverable to a higher-layer protocol. Discontinuities in the value of this counter can occur at re-initialization of the management system, and at other times as indicated by the value of ifCounterDiscontinuityTime." displayName="FastEtehernet  Inbound packets with errors" failureThreshold="1" graphName="ifInErrors2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.2.2.1.14.2" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="The total number of octets received on the interface, including framing characters. Discontinuities in the value of this counter can occur at re-initialization of the management system, and at other times as indicated by the value of ifCounterDiscontinuityTime." displayName="FastEthernet  Bits received" failureThreshold="1" graphName="ifInOctets2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.2.2.1.10.2" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="The total number of octets transmitted out of the interface, including framing characters. Discontinuities in the value of this counter can occur at re-initialization of the management system, and at other times as indicated by the value of ifCounterDiscontinuityTime." displayName="FastEthernet Bits sent" failureThreshold="1" graphName="ifOutOctets2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.2.2.1.16.2" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of inbound packets which were chosen to be discarded even though no errors had been detected to prevent their being deliverable to a higher-layer protocol. One possible reason for discarding such a packet could be to free up buffer space. Discontinuities in the value of this counter can occur at re-initialization of the management system, and at other times as indicated by the value of ifCounterDiscontinuityTime." displayName="FastEtherenet  Inbound packets discarded" failureThreshold="1" graphName="ifInDiscards2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.2.2.1.13.2" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of outbound packets which were chosen to be discarded even though no errors had been detected to prevent their being transmitted. One possible reason for discarding such a packet could be to free up buffer space. Discontinuities in the value of this counter can occur at re-initialization of the management system, and at other times as indicated by the value of ifCounterDiscontinuityTime." displayName="FastEtehernet Outbound packets discarded" failureThreshold="1" graphName="ifOutDiscards2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.2.2.1.19.2" period="300" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="For packet-oriented interfaces, the number of outbound packets that could not be transmitted because of errors. For character-oriented or fixed-length interfaces, the number of outbound transmission units that could not be transmitted because of errors. Discontinuities in the value of this counter can occur at re-initialization of the management system, and at other times as indicated by the value of ifCounterDiscontinuityTime." displayName="FastEthernet Failed outbound packets" failureThreshold="1" graphName="ifOutErrors2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.2.2.1.20.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bps" description="An estimate of the interface's current bandwidth in bits per second.  For interfaces which do not vary in bandwidth or for those where no accurate  estimation can be made, this object should contain the nominal bandwidth." displayName="FastEthernet Current Bandwidth/Speed" failureThreshold="1" graphName="ifHighSpeed2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.2.2.1.5.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Applicable to SU/RB only. The average Received Signal Strength Indication of frames. This value is given in dBm units." displayName="Received Received signal strength indication (RSSI)" failureThreshold="1" graphName="brzaccVLAverageReceiveRSSI" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12394.1.1.11.10.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Applicable to SU/RB only. The average Signal to Noise Ratio of received frames." displayName="Received RSSI BU" failureThreshold="1" graphName="brzaccVLAdbRSSI" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12394.1.1.11.5.1.2.1.46.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Applicable to SU/RB only. The average Signal to Noise Ratio of received frames." displayName="Received SNR" failureThreshold="1" graphName="brzaccVLAverageReceiveSNR" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12394.1.1.11.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Alvarion">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Mbps" description="Forward Available BandWidth(Mbps)" displayName="Interface Bandwidth (forward)" failureThreshold="1" graphName="linfFwdAvailableBandWidth" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.119.2.3.14.9.3.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="NEC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Mbps" description="Backward Available BandWidth(Mbps)" displayName="Interface Bandwidth (backward)" failureThreshold="1" graphName="linfBkwdAvailableBandWidth" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.119.2.3.14.9.3.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="NEC">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of modems" description="Connected modems count" displayName="Connected modems" failureThreshold="1" graphName="dcxUsStatsRegComplete" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4115.1.4.3.1.1.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arris">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dB" description="Signal/Noise ratio as perceived for this channel. At the CM, this object describes the Signal/Noise of the downstream channel. At the CMTS, it describes the average Signal/Noise of the upstream channel." displayName="SignalNoise Ratio (Upstream)" failureThreshold="1" graphName="docsIfSigQSignalNoise" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.10.127.1.1.4.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Arris">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of packets" description="The number of times the packet buffer pool has beenexhausted since last reset. Applicable to all platformsexcept VG100." displayName="Buffer packets Exhausted" failureThreshold="1" graphName="cdx6500NMNPSbuffPacketExhaust" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.1.2.3.23.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This attribute indicates whether the IP target monitored by Broken Link Detection (BLD) is currently reachable." displayName="Broken Link Detection status" failureThreshold="1" graphName="artemBLDLinkState" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4280.6.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ComPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This attribute shows if the bridge link connection is currently operative." displayName="Bridge Link connection status" failureThreshold="1" graphName="artemBridgeLinkOperStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4280.5.1.3.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ComPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="dBm" description="This attribute shows the receive signal strength (RSS) for the signal received from the peer in dBm." displayName="Bridge Peer Received Signal Strength" failureThreshold="1" graphName="artemBridgePeerRSSI" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4280.5.1.6.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ComPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This attribute returns the current transmission speed for this link, or 0 if no connection can be established." displayName="Current Bridge Link Speed" failureThreshold="1" graphName="artemBridgeLinkCurrentSpeed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4280.5.1.3.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ComPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This attribute defines the current auto-configuration state. idle(0) - In this state, writing any value starts an auto-configuration scan for bridge link peers. State will change to scanning(1) while the scan is in progress. When the scan is finished, the results are available in the artemBidgePeersTable. scanning(1) - An auto-configuration scan for bridge link peers is currently in progress. When scanning has finished, the state will automatically change to idle(0). busy(2) - An auto-configuration setup is currently in progress on this radio module. Writing this attribute in any state other than idle(0) will return an error. idle(0), scanning(1), busy(2)" displayName="Bridge Link Config State" failureThreshold="1" graphName="artemBridgeLinkConfigScanState" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4280.5.1.5.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="ComPoint">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Bytes" description="The number of bytes of RAM in use at current time." displayName="Used Memory" failureThreshold="1" graphName="netopiaUsedRAM" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.304.1.3.1.3.6.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netopia ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of crashes" description="The number of times the router has crashed since the last reload. Only those crashes that caused the router to deliberately restart due to a software error are counted by this object." displayName="Number of Crashes" failureThreshold="1" graphName="proStatusCrashes" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1.1.2.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proteon">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of bytes of heap memory available for allocation." displayName="Available Heap Memory" failureThreshold="1" graphName="proResMemHeapTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1.6.1.1.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proteon">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The total number of bytes of buffer memory available for allocation." displayName="Available Buffer Memory" failureThreshold="1" graphName="proResMemBufTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1.6.1.1.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proteon">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="bytes" description="The size, in bytes, of each buffer allocated to this interface." displayName="Buffer Size" failureThreshold="1" graphName="proResInputBufsSize" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.1.6.1.2.2.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proteon">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of reboots" description="The number of times the router has started since the last reload." displayName="Number of reboots" failureThreshold="1" graphName="proStatusStarts" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1.1.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Proteon">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="frames per sec" description="This indicates the rate at which frames have been received by the port per second." displayName="Frames In per sec" failureThreshold="1" graphName="tnppPDSStatFramesInPerSec" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.33.2.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="frames per sec" description="This indicates the rate at which frames have been transmitted by the port per second." displayName="Frames Out per sec" failureThreshold="1" graphName="tnppPDSStatFramesOutPerSec" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.33.2.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of errors" description="This indicates the total number of TNPP frames received with Cyclic Redundancy Check errors ." displayName="CRC Errors" failureThreshold="1" graphName="tnppPFSStatCRCErrors" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.33.3.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of errors" description="This indicates the number of protocol errors due to unexpected events." displayName="Number of Protocol Errors" failureThreshold="1" graphName="tnppPFSStatProtocolErrors" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.33.3.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of frames" description="This indicates the total number of data frames received by the port and discarded." displayName="Discarded In Data Frames" failureThreshold="1" graphName="tnppPFSStatDataFramesInDiscarded" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.33.3.1.20" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of frames" description="This indicates the total number of data frames transmitted by the port and discarded." displayName="Discarded Out Data Frames" failureThreshold="1" graphName="tnppPFSStatDataFramesOutDiscarded" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.3.1.1.33.3.1.21" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of calls" description="Specifies the number of Autocall attempts. 0 - No Autocall retry limit." displayName="Auto call attempts" failureThreshold="1" graphName="tnppPCfgMaxAutocallAttempt" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.449.2.1.2.1.1.32.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Motorola">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The number of channels in use by the call as displayed on the third line of the call status menu for the indexed slot and port." displayName="Channels in use" failureThreshold="1" graphName="hostStatusChannels" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.529.7.1.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ascend">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Shows the current state of the current call for the indexed host slot and port. The returned value will indicates the same state displayed in a call status window for the port." displayName="Status of current call" failureThreshold="1" graphName="hostStatusCallState" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.529.7.1.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ascend">
+        <UserProps/>
+    </Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="KB" description="Century Systems XR series router - Buffered memory size in kilobytes" displayName="Buffered memory (KB)" failureThreshold="1" graphName="csXRSystemMemoryBuffers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20376.2.1.1.10.5.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Century Systems">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="KB" description="Century Systems XR series router - Free system memory in KB" displayName="Free memory (KB)" failureThreshold="1" graphName="csXRSystemMemoryFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20376.2.1.1.10.3.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Century Systems">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="KB" description="Century Systems XR series router - Used memory size in kilobytes" displayName="Total used memory (KB)" failureThreshold="1" graphName="csXRSystemMemoryUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20376.2.1.1.10.2.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Century Systems">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="KB" description="Century Systems NXR series router - Buffered memory size in kilobytes" displayName="Buffered memory (KB)" failureThreshold="1" graphName="csNXRSystemMemoryBuffers" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20376.9.1.1.10.5.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Century Systems">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="KB" description="Century Systems NXR series router - Free system memory in KB" displayName="Free memory (KB)" failureThreshold="1" graphName="csNXRSystemMemoryFree" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20376.9.1.1.10.3.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Century Systems">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="KB" description="Century Systems NXR series router - Used memory size in kilobytes" displayName="Total used memory (KB)" failureThreshold="1" graphName="csNXRSystemMemoryUsed" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.20376.9.1.1.10.2.0" period="300" protocol="SNMP" timeAvg="false" vendorName="Century Systems">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="C" description="Indicates the temperature of the equipment inside, in degree (Celsius)" displayName="Temparature" failureThreshold="1" graphName="picoCelsius" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.119.2.3.84.2.1.1.0" period="300" protocol="SNMP" timeAvg="false" vendorName="NEC">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="Status" description="Status of a Power Supply module (normal-1, failure-2, not installed 0)" displayName="Power Supply module status" failureThreshold="1" graphName="picoPowerSupplyStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.119.2.3.84.2.4.1.3" period="300" protocol="SNMP" timeAvg="false" vendorName="NEC">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="Indicates the observed current heap utilization in percent (%)" displayName="Current heap utilization (%)" failureThreshold="1" graphName="picoHeapUtil" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.119.2.3.84.2.6.2.0" period="300" protocol="SNMP" timeAvg="false" vendorName="NEC">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="Indicates the observed system utilization for last 1 minute, in percent (%)" displayName="CPU Utilization (Last 1 min)" failureThreshold="1" graphName="picoSchedRtUtl1Min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.119.2.3.84.2.5.3.0" period="300" protocol="SNMP" timeAvg="false" vendorName="NEC">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="C" description="Yamaha router (RTY/RH series) - Internal chassis temperature reading" displayName="Inbox Temperature" failureThreshold="1" graphName="rtyrhInboxTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1182.2.1.15.0" period="300" protocol="SNMP" timeAvg="false" vendorName="YAMAHA">
+		<UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="%" description="The average utilization of CPU in 5 minutes." displayName="CPU Utilization (Last 5 min)" failureThreshold="1" graphName="rtyrhCPUUtilization5min" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1182.2.1.7.0" period="300" protocol="SNMP" timeAvg="false" vendorName="YAMAHA">
+		<UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="DCN DCRS series switch - CPU utilization percentage" vendorName="DCN" graphName="DCN-DCRS-CPUUtilization" oid=".1.3.6.1.4.1.6339.100.2.2.1.11.0" displayName="CPU Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+  <Graph YAXISTEXT="%" isNumeric="true" graphType="node" description="DCN DCRS series switch - Memory utilization percentage" vendorName="DCN" graphName="DCN-DCRS-MemoryUtilization" oid=".1.3.6.1.4.1.6339.100.2.2.1.10.0" displayName="Memory Utilization" failureThreshold="1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" >
+      <UserProps/>
+  </Graph>
+</GRAPHDETAIL>

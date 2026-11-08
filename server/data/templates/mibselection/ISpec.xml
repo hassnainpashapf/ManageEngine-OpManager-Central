@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<ISpec>
+    <SnmpInteractionSpec
+        interactionverb="1"
+        functionname="GET"
+        requesttimeout="5000"
+        retries="0"
+        protocol="SNMP">
+        <InteractionSpec
+            timeout="5000"
+            protocol="SNMP"
+            interactionid="mib_selection_snmp_get"/>
+    </SnmpInteractionSpec>
+
+    <SnmpInteractionSpec
+        interactionverb="1"
+        functionname="SET"
+        requesttimeout="500"
+        retries="0"
+        protocol="SNMP">
+        <InteractionSpec
+            timeout="500"
+            protocol="SNMP"
+            interactionid="mib_selection_snmp_set"/>
+    </SnmpInteractionSpec>
+
+</ISpec>

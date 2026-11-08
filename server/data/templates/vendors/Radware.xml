@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Radware Web Server Director Pro AS -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_switch_wsd_pro_as" templatename="Radware_WSD_Pro_AS" displayname="Radware WSD Pro AS Switch" ostype="EOS" description="For all Radware Web Server Director Pro AS switches">
+        <NCMVendorDevice vendorid="Radware"/>
+        <NCMDevicePersonality personalityid="RadwareSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_switch_wsd_pro_as_telnet"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_switch_wsd_pro_as"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="radware_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="radware_switch_cli_running_config_push" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_switch_wsd_pro_as_ssh"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_switch_wsd_pro_as"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="radware_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="radware_switch_cli_running_config_push" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+<!-- added by prabhat for new device -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_switch_appdirector_cookie_persistency" templatename="AppDirector_Cookie_Persistency" displayname="AppDirector" ostype="EOS" description="For all Radware  AppDirector with Cookie Persistency switches">
+        <NCMVendorDevice vendorid="Radware"/>
+        <NCMDevicePersonality personalityid="RadwareSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+		<!-- Telnet -->
+
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_switch_appdirector_cookie_persistency_telnet"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_switch_appdirector_cookie_persistency"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="radware_switch_cli_running_config_backup1" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="radware_switch_cli_running_config_push1" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_switch_appdirector_cookie_persistency_ssh"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_switch_appdirector_cookie_persistency"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="radware_switch_cli_running_config_backup1" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="radware_switch_cli_running_config_push1" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+<!-- ends here -->
+
+
+<!-- For Radware Link proof switch(For Text format configuration file) -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_link_proof_switch" templatename="Radware_Link_Proof_Switch" displayname="Radware Link Proof Switch" ostype="EOS" description="For all Radware Web Server Director Pro AS switches">
+        <NCMVendorDevice vendorid="Radware"/>
+        <NCMDevicePersonality personalityid="RadwareLinkProofSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- Telnet -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_link_proof_switch_telnet"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_link_proof_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="radware_link_proof_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="radware_link_proof_switch_cli_running_config_push" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+		<!-- SSH -->
+        <NCMProtocolCombination
+            deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_link_proof_switch_ssh"
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_link_proof_switch"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="radware_link_proof_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="radware_link_proof_switch_cli_running_config_push" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+ <!-- For Radware Alteon Switches -->
+ 
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_alteon_switch" templatename="Radware_Alteon_Switch" displayname="Radware Alteon Application Switch" description="For all Radware Alteon Application Switch">
+        <NCMVendorDevice vendorid="Radware" />
+        <NCMDevicePersonality personalityid="RadwareAlteonSwitch" />
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>		      
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_alteon_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_alteon_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		 <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="radware_alteon_switch_show_startup_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupStartupConfig" recordid="radware_alteon_switch_show_startup_config_rec"/>
+			
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+               <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_alteon_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_alteon_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		 <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="radware_alteon_switch_show_startup_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupStartupConfig" recordid="radware_alteon_switch_show_startup_config_rec"/>
+		 
+          </NCMDeviceCriteria>
+		  
+        </NCMProtocolCombination>
+
+<!-- for TELNET-TFTP-->
+
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_alteon_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_alteon_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="radware_alteon_switch_startup_config_backup"/>                                        
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:radware_alteon_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:radware_alteon_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="radware_alteon_switch_startup_config_backup"/>                
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>	
+	
+</DeviceConfiguration>

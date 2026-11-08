@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="CiscoWLANControllerActionId">
+        <InteractionSpec timeout="120000" protocol="CLI" interactionid="cisco_wlan_controller_cli_ispec"/>
+    </CLIInteractionSpec>
+
+    <!-- Upload Config Commands -->
+    <CLICommand command="transfer upload datatype config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_fetch_running_config_rec_1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="transfer upload mode tftp">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_fetch_running_config_tftp_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="transfer upload serverip ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_fetch_running_config_rec_2" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="transfer upload path ./">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_fetch_running_config_rec_3" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="transfer upload filename ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_fetch_running_config_rec_4" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="transfer upload start">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_fetch_running_config_rec_5" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+   <!-- Download Config Commands -->
+    <CLICommand command="transfer download datatype config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_push_running_config_rec_1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+	
+    <CLICommand command="transfer download mode tftp">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_push_running_config_tftp_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="transfer download serverip ${UserInput:tftp_server_address}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_push_running_config_rec_2" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="transfer download path ./">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_push_running_config_rec_3" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="transfer download filename ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_push_running_config_rec_4" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="transfer download start">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_push_running_config_rec_5" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="show run-config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_cli_show_run_config_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+    <!-- Hardware Properties -->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="cisco_hardware_prop_parser" promptactionid="CiscoWLANControllerActionId">
+       <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_wlan_controller_hardware_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="show sysinfo">
+        <CLIInputRecord parsercommandname="hardware_prop_cisco_wlan_controller" messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_controller_hardware_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="show inventory">
+        <CLIInputRecord parsercommandname="hardware_prop_cisco_wlan_controller" messagesuffix="&#10;" inputsourcetype="1">
+           <Record type="CLI" recordid="cisco_wlan_controller_hardware_rec1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+</CLICommandList>

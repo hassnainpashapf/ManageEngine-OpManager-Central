@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<NCMShowCommExecGrpInfoData>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoRouter1" personalityid="CiscoRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoSwitch1" personalityid="CiscoSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoFirewall1" personalityid="CiscoFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoIAD1" personalityid="CiscoIAD" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoAccessPoint1" personalityid="CiscoAccessPoint" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoCatOSSwitch1" personalityid="CiscoCatOSSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoAccessServer1" personalityid="CiscoAccessServer" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoContentSwitch1" personalityid="CiscoContentSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoASA1" personalityid="CiscoASA" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:ArubaWifiSwitch1" personalityid="ArubaWifiSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HPSwitch1" personalityid="HPSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HPSwitch2" personalityid="HPSwitch" model="4000M" executiongroupid="HP_4000M_Switch_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HPSwitch3" personalityid="HPSwitch" model="8000M" executiongroupid="HP_4000M_Switch_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HPAccessPoint1" personalityid="HPAccessPoint" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:FoundrySwitch1" personalityid="FoundrySwitch" executiongroupid="Foundry_Switch_Show_Command_Execution" recordid="show_command_foundry_switch_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:3ComSwitch1" personalityid="3ComSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:FortiGateFirewall1" personalityid="FortiGateFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NetscreenFirewall1" personalityid="NetscreenFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:EnterasysSwitch1" personalityid="EnterasysSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:EnterasysRouter1" personalityid="EnterasysRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AdtranLANSwitch1" personalityid="AdtranLANSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AdtranNetvantaRouter1" personalityid="AdtranNetvantaRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NortelBayStackSwitch1" personalityid="NortelBayStackSwitch" executiongroupid="BayStack_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NortelPWRSwitch1" personalityid="NortelPWRSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NortelPassportSwitch1" personalityid="NortelPassportSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:DLinkSwitch1" personalityid="DLinkSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BlueCoatProxySG1" personalityid="BlueCoatProxySG" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HuaweiARRouter1" personalityid="HuaweiARRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:ProximAccessPoint1" personalityid="ProximAccessPoint" executiongroupid="Foundry_Switch_Show_Command_Execution" recordid="show_command_foundry_switch_rec"/>
+
+        <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:ExtremeSwitch1" personalityid="ExtremeSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+        <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoVoiceGateway1" personalityid="CiscoVoiceGateway" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+        <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:Force10E1" personalityid="Force10Switch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoMDS1" personalityid="CiscoMDS" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NetgearSwitch1" personalityid="NetgearSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:JuniperRouter1" personalityid="JuniperRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+		<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:JuniperMXRouter" personalityid="JuniperMXRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:DellSwitch1" personalityid="DellSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:SlimLine1" personalityid="SlimLine" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NortelContivityVPNRouter1" personalityid="NortelContivityVPNRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+
+	<!--River bed-->
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:RiverbedSteelhead1" personalityid="RiverbedSteelhead" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<!--Alcatel-->
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlcatelSwitch1" personalityid="AlcatelSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	
+	<!--Alaxala devices-->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlaxalaSwitch" personalityid="AlaxalaSwitch" executiongroupid="Alaxala_Switch_Show_Command_Execution" recordid="show_command_alaxala_switch_rec"/>
+
+	
+		<!--"Hitachi GR 2000 Router" devices-->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HitachiGR2000Router" personalityid="HitachiGR2000Router" executiongroupid="Hitachi_GR_2000_Router_Show_Command_Execution" recordid="show_command_hitachi_gr_2000_router_rec"/>
+	
+
+	<!--Nortel Networks Layer2-3 Gb Ethernet Switch Module-->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NortelSwitchModule" personalityid="NortelSwitchModule" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<!--RadwareSwitch-->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:RadwareSwitch" personalityid="RadwareSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<!--CiscoWLANController-->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoWLANController" personalityid="CiscoWLANController" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<!--BrocadeSwitch-->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BrocadeSwitch" personalityid="BrocadeSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<!--Cisco WAAS-->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoWAAS" personalityid="CiscoWAAS" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+     <!-- CheckPoint Firewall -->
+  	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CheckPoint" personalityid="CheckPointFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+  <!-- CiscoACEModule -->
+   	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoACEModule" personalityid="CiscoACEModule" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+   <!-- AvayaGateway -->
+   <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AvayaMediaGateway" personalityid="AvayaMediaGateway" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+   <!-- LambdaDriver -->
+   <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:LambdaDriver" personalityid="LambdaDriver" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+   
+    <!-- DaxDx -->
+   <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:DaxRouter" personalityid="DaxRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+   
+   <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:DaxSwitch" personalityid="DaxSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+      
+   <!--Cisco IOS XR-->
+   <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoIOSXR" personalityid="CiscoIOSXR" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+    <!-- H3C -->
+    <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:H3CSwitch" personalityid="H3CSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+     <!-- Yamaha -->
+    <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:YamahaRouter" personalityid="YamahaRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+    
+    <!-- AlliedTelesisSwitch -->
+    <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlliedTelesisSwitch" personalityid="AlliedTelesisSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+    
+    <!-- F5Bigip -->
+    <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:F5Bigip" personalityid="F5Bigip" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+
+	<!--Hitachi Switch -->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HitachiSwitch" personalityid="HitachiCableSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+    <!--Cisco Nexus SwitchSwitch -->
+	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoNexusSwitch" personalityid="CiscoNexusSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	   
+     <!--WatchGuard Firewall -->
+	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:WatchGuardFirewall" personalityid="WatchGuardFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	   
+    
+     <!--CanogaPerkins Switch -->
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CanogaPerkins" personalityid="CanogaPerkins" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+		
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NetSD3800" personalityid="NetSD3800" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+        <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CIENA_LEOS" personalityid="CienaLEOSSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="ciena_switch_mac_rec_leos"/>
+        <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CIENA_SAOS" personalityid="CienaSAOSSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="ciena_switch_mac_rec_saos"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:PaloAltoFirewall" personalityid="PaloAltoFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:ADVAOPTICALNETWORKING" personalityid="ADVAOPTICALNETWORKING" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+		
+		
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:MeruWLANController" personalityid="MeruWLANController" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	
+	<!--Alaxala 5400 devices-->
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlaxalaSwitch5400" personalityid="AlaxalaSwitch5400" executiongroupid="Alaxala_Switch_Show_Command_Execution" recordid="show_command_alaxala_switch_rec"/>
+		
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlliedTelesisGS900MSwitch" personalityid="AlliedTelesisGS900MSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:H3CSSeriesSwitch1" personalityid="H3CSSeriesSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HuaweiSwitch1" personalityid="HuaweiSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HuaweiSSwitch1" personalityid="HuaweiSSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HirschmannSwitch" personalityid="HirschmannSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BrocadeFastIronSwitch" personalityid="BrocadeFastIronSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:TransPortWirelessRouter" personalityid="TransPortWirelessRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BrocadeFiberSwitch" personalityid="BrocadeFiberSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:RedbackRouter" personalityid="RedbackRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>		
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BNTRackSwitch" personalityid="BNTRackSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AristaSwitch" personalityid="AristaSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:DCSSwitch" personalityid="DCSSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	 <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:F5ARX" personalityid="F5ARX" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AX2500LoadBalancers" personalityid="AX2500LoadBalancers" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>			
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlliedTelesisCenterComSwitch" personalityid="AlliedTelesisCenterComSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>			
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlliedTelesisEthernetSwitch" personalityid="AlliedTelesisEthernetSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>			
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:FoundryFastIronSwitch" personalityid="FoundryFastIronSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:ZXRRouter" personalityid="ZXRRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>			
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:DellPowerConnectSwitch" personalityid="DellPowerConnectSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>			
+	 <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoASRRouter" personalityid="CiscoASRRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>				
+	 <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BrocadeSilkWormFiberSwitch" personalityid="BrocadeSilkWormFiberSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>			
+	 <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:F5Bigip10X" personalityid="F5Bigip10X" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>			
+	 <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BlueCoatProxySGOS" personalityid="BlueCoatProxySGOS" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>			
+	 <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoIronport" personalityid="CiscoIronport" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:Vyatta" personalityid="Vyatta" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:RadwareAlteonSwitch" personalityid="RadwareAlteonSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	   <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BrocadeVDXSwitch" personalityid="BrocadeVDXSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	    <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:JuniperSRX" personalityid="JuniperSRX" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NECIX2025" personalityid="NECIX2025" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:ADVAFSP" personalityid="ADVAFSP" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:MikrotikRouter" personalityid="MikrotikRouter" executiongroupid="Alaxala_Switch_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	 <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:WelotecRouter" personalityid="WelotecRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CrescendoLoadBalancer" personalityid="CrescendoLoadBalancer" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 	 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:RuggedComSwitch" personalityid="RuggedComSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>		 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:RuijieSwitch" personalityid="RuijieSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 		 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:FujitsuFirewall" personalityid="FujitsuFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:F5Bigip11X" personalityid="F5Bigip11X" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:EdgeCoreSwitch" personalityid="EdgeCoreSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:TelcoSwitch" personalityid="TelcoSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:OccamSwitch" personalityid="OccamSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AdtranRouter" personalityid="AdtranRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 	 	 	  
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoSBSwitch" personalityid="CiscoSBSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>		
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:NokiaIPSO" personalityid="NokiaIPSO" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HPEthernetSwitch" personalityid="HPEthernetSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 
+	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CitrixNetScalerMPX" personalityid="CitrixNetScalerMPX" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:3Com5500Switch" personalityid="3Com5500Switch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:FortiGateFirewallVER4" personalityid="FortiGateFirewallVER4" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 
+    <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:FiberHomeSwitch" personalityid="FiberHomeSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 	
+	 <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:ZXRRouterZSR" personalityid="ZXRRouterZSR" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:JuniperSwitch" personalityid="JuniperSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:ArubaController" personalityid="ArubaController" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:TippingpointIPS" personalityid="TippingpointIPS" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:MobileIronSentry" personalityid="MobileIronSentry" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:JuniperLoadBalancer" personalityid="JuniperLoadBalancer" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CienaSwitch" personalityid="CienaSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 	 
+    <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:H3CDevice" personalityid="H3CDevice" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CheckPointGaiaFirewall" personalityid="CheckPointGaiaFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	  	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AvocentACS" personalityid="AvocentACS" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:JuniperWLAN" personalityid="JuniperWLAN" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	   	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:PravailAPS" personalityid="PravailAPS" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+      <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AvocentTerminal" personalityid="AvocentTerminal" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoASRMobileGateway" personalityid="CiscoASRMobileGateway" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HP5500Switch" personalityid="HP5500Switch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+          <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:PaloAltoPanoramaFirewall" personalityid="PaloAltoPanoramaFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>		 	 
+           
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HuaweiNERouter" personalityid="HuaweiNERouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	  	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HuaweiS5300Switch" personalityid="HuaweiS5300Switch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 	
+	  	 	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:DLinkDESSwitch" personalityid="DLinkDESSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>		 	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:BrocadeRouter" personalityid="BrocadeRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:INSYSMoRoS" personalityid="INSYSMoRoS" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:SonicWALLFirewall" personalityid="SonicWALLFirewall" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:TrapezeWLANController" personalityid="TrapezeWLANController" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:UbiquitiAirOs" personalityid="UbiquitiAirOs" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	 
+
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:GarderosRouter" personalityid="GarderosRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:JuniperFabricSwitch" personalityid="JuniperFabricSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:F5Netcon" personalityid="F5Netcon" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:F5Bigip114" personalityid="F5Bigip114" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:EdgeCoreL2Switch" personalityid="EdgeCoreL2Switch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+
+
+
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:MiMOMaxGPSTornado" personalityid="MiMOMaxGPSTornado" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>
+	  <NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:MiMOMaxGPSPyxis" personalityid="MiMOMaxGPSPyxis" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/>	
+	   
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CitrixNetScaler" personalityid="CitrixNetScaler" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:PacketShaper" personalityid="PacketShaper" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:HPPSeriesSwitch" personalityid="HPPSeriesSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoVPNConcentrator" personalityid="CiscoVPNConcentrator" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlcatelRouter" personalityid="AlcatelRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:AlliedTelesisAT8000S" personalityid="AlliedTelesisAT8000S" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:RadwareLinkProofSwitch" personalityid="RadwareLinkProofSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:VanguardRouter" personalityid="VanguardRouter" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:CiscoIDS" personalityid="CiscoIDS" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:FujitsuPYCBSwitch" personalityid="FujitsuPYCBSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:Motorola" personalityid="Motorola" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:SphereonSwitch" personalityid="SphereonSwitch" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	<NCMShowCommExecGrpInfo showcommexecgrpid="NCMShowCommExecGrpInfo:showcommexecgrpid:FortiGateFortiAnalyzer" personalityid="FortiGateFortiAnalyzer" executiongroupid="Generic_Show_Command_Execution" recordid="show_command_generic_rec"/> 
+	
+</NCMShowCommExecGrpInfoData>

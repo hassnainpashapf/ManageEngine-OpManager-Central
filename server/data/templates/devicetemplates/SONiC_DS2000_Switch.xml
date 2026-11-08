@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="Sonic DS2000 Switch" displayName="Sonic DS2000 Switch" osType="SONiC OS" templateName="Sonic_DS2000_Switch" category="Switch">
+	<RestTemplate name="SonicSwitch"/>
+	<Vendor displayName="Sonic" vendorName="Sonic">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                    <Command commandstr="show runningconfiguration all" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="60000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+                </Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Sonic DS2000 Switch" personalityName="SonicDS2000Switch">
+        <Login enablecommand="" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+                <Column name="SONIC_VERSION" size="150" desc="Sonic Version" displayname="Sonic Version" defaultvalue="Not Available" sequenceid="1"/>
+                <Column name="CONFIG_DB_VERSION" size="150" desc="Config DB Version" displayname="Config DB Version" defaultvalue="Not Available" sequenceid="2"/>
+                <Column name="PLATFORM" size="150" desc="Platform" displayname="Platform" defaultvalue="Not Available" sequenceid="3"/>
+                <Column name="HWSKU" size="150" desc="HwSKU" displayname="HwSKU" defaultvalue="Not Available" sequenceid="4"/>
+                <Column name="ASIC" size="150" desc="ASIC" displayname="ASIC" defaultvalue="Not Available" sequenceid="5"/>
+                <Column name="UPTIME" size="150" desc="Uptime" displayname="Uptime" defaultvalue="Not Available" sequenceid="6"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+            <HardwareParser parserFileName="SonicDS2000HardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_sonic_ds2000">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+                                        <REGEX NAME="OSVERSION" EXPRESSION=".*[Ss]oftware [Vv]ersion\s*:\s*((\S*)-\S*).*">
+                                            <PARAM NAME="SONIC_VERSION" TOKENNO="1"/>
+                                            <PARAM NAME="OSVERSION" TOKENNO="2"/>
+                                        </REGEX>
+                                        <REGEX NAME="SERIES" EXPRESSION=".*HwSKU\s*:\s*(\S*).*">
+                                            <PARAM NAME="MODEL" TOKENNO="1"/>
+                                            <PARAM NAME="SERIES" TOKENNO="1"/>
+                                            <PARAM NAME="HWSKU" TOKENNO="1"/>
+                                        </REGEX>
+                                        <REGEX NAME="CONFIG_DB_VERSION" EXPRESSION=".*DB [Vv]ersion\s*:.\s*version_(\S*).*">
+                                            <PARAM NAME="CONFIG_DB_VERSION" TOKENNO="1"/>
+                                        </REGEX>
+                                        <REGEX NAME="PLATFORM" EXPRESSION=".*Platform\s*:\s*(\S*).*">
+                                            <PARAM NAME="PLATFORM" TOKENNO="1"/>
+                                        </REGEX>
+                                        <REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial [Nn]umber\s*:\s*(\S*).*">
+                                            <PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+                                        </REGEX>
+                                        <REGEX NAME="ASIC" EXPRESSION=".*ASIC\s*:\s*(.*)">
+                                            <PARAM NAME="ASIC" TOKENNO="1"/>
+                                        </REGEX>
+                                        <REGEX NAME="UPTIME" EXPRESSION=".*Uptime\s*:.*up (\S*\s*days).*">
+                                            <PARAM NAME="UPTIME" TOKENNO="1"/>
+                                        </REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+            <Protocols>
+                <Protocol name="">
+                    <Commands operation="">
+                        <Command commandstr="show version" parsercommandname="hardware_prop_sonic_ds2000" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+                    </Commands>
+                </Protocol>
+            </Protocols>
+        </HardwareDetails>
+	</NCMPersonality>
+</NCMDeviceTemplate>
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+
+<data>
+	<NCMConfigFileParser personalityid="CiscoRouter" filetype="Startup" commandname="cisco_generic_startup" />
+	<NCMConfigFileParser personalityid="CiscoRouter" filetype="Running" commandname="cisco_generic_running" />
+	<NCMConfigFileParser personalityid="CiscoSwitch" filetype="Startup" commandname="cisco_generic_startup" />
+	<NCMConfigFileParser personalityid="CiscoSwitch" filetype="Running" commandname="cisco_generic_running" />
+	<!--NCMConfigFileParser personalityid="CiscoRouter" filetype="Startup" commandname="cisco_router_startup_1" devicetemplatename="Cisco_IOS_Router"/-->
+</data>		
+

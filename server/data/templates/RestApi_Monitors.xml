@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	
+	<!-- ACI Monitors-->
+	<Graph YAXISTEXT="Percentage" description="Monitor the health score of the ACI" displayName="Health score" failureThreshold="1" graphName="api-aciHealthScore" graphType="node" isNumeric="true" oid="api-aciHealthScore" period="300" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+    </Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-aciHealthScore" METHOD="GET" HEADERS="APIC-Cookie=${urlToken}, APIC-AUTH=${token}" APIURL="/api/node/mo/topology/HDfabricOverallHealth5min-0.json" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-aciHealthScore" APINAME="api-aciHealthScore"/>
+	
+	<Graph YAXISTEXT="Number(s)" description="Monitor the active users count" displayName="Active Users Count" failureThreshold="1" graphName="api-activeUsersCount" graphType="node" isNumeric="true" oid="api-activeUsersCount" period="300" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+    </Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-activeUsersCount" METHOD="GET" HEADERS="APIC-Cookie=${urlToken}, APIC-AUTH=${token}" APIURL="/api/node/class/aaaUser.json" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACI" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="query-target-filter" PARAMVALUE="not(wcard(aaaUser.dn,&quot;__ui_&quot;))" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-activeUsersCount" APINAME="api-activeUsersCount"/>
+	
+	<!-- APIC Monitors -->
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of APIC" displayName="CPU Utilization" failureThreshold="1" graphName="api-apicCPU" graphType="node" isNumeric="true" oid="api-apicCPU" period="300" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+    </Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-apicCPU" METHOD="GET" HEADERS="APIC-Cookie=${urlToken}, APIC-AUTH=${token}" APIURL="/api/node/mo/topology/$pod/$node/sys/proc.json" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-apicCPU" APINAME="api-apicCPU"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of APIC" displayName="Memory Utilization" failureThreshold="1" graphName="api-apicMemory" graphType="node" isNumeric="true" oid="api-apicMemory" period="300" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+    </Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-apicMemory" METHOD="GET" HEADERS="APIC-Cookie=${urlToken}, APIC-AUTH=${token}" APIURL="/api/node/mo/topology/$pod/$node/sys/proc.json" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-apicMemory" APINAME="api-apicMemory"/>
+	
+	<!-- Fabric Switch Monitors -->
+	<Graph YAXISTEXT="Percentage" description="Monitor the Health score of fabric switches" displayName="Health score" failureThreshold="1" graphName="api-fabricHealthScore" graphType="node" isNumeric="true" oid="api-fabricHealthScore" period="300" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+    </Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-fabricHealthScore" METHOD="GET" HEADERS="APIC-Cookie=${urlToken}, APIC-AUTH=${token}" APIURL="/api/node/class/topSystem.json" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACI" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="query-target-filter" PARAMVALUE="not(wcard(topSystem.dn,&quot;__ui_&quot;))" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="rsp-subtree-include" PARAMVALUE="health,required" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-fabricHealthScore" APINAME="api-fabricHealthScore"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of fabric switches" displayName="CPU Utilization" failureThreshold="1" graphName="api-fabricCPU" graphType="node" isNumeric="true" oid="api-fabricCPU" period="300" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+    </Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-fabricCPU" METHOD="GET" HEADERS="APIC-Cookie=${urlToken}, APIC-AUTH=${token}" APIURL="/api/node/mo/topology/$pod/$node/sys/procsys/HDprocSysCPU5min-0.json" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-fabricCPU" APINAME="api-fabricCPU"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of fabric switches" displayName="Memory Utilization" failureThreshold="1" graphName="api-fabricMemory" graphType="node" isNumeric="true" oid="api-fabricMemory" period="300" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+    </Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-fabricMemory" METHOD="GET" HEADERS="APIC-Cookie=${urlToken}, APIC-AUTH=${token}" APIURL="/api/node/mo/topology/$pod/$node/sys/procsys/HDprocSysMem5min-0.json" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-fabricMemory" APINAME="api-fabricMemory"/>
+
+	<DevicePackageToGraph deviceType="Cisco ACI" graphName="api-aciHealthScore" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="Cisco ACI" graphName="api-activeUsersCount"  dialtype="number" unit="Nos"/>
+	<DevicePackageToGraph deviceType="Cisco APIC" graphName="api-apicCPU|api-apicMemory"/>
+	<DevicePackageToGraph deviceType="Cisco ACI Nexus 9000" graphName="api-fabricHealthScore|api-fabricCPU|api-fabricMemory"/>
+
+	<Graph YAXISTEXT="." description="Meraki Network - Client Details" displayName="Meraki Network - Client Details" failureThreshold="1" graphName="MerakiNetworksPD" graphType="node" isNumeric="true" oid="MerakiNetwork" period="3600" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+
+	<RESTAPIGRAPHDETAILS APINAME="FETCH_NETWORK_CLIENTCOUNT" METHOD="GET" HEADERS="X-Cisco-Meraki-API-Key" APIURL="/api/v1/networks/{networkID}/wireless/clientCountHistory" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="MERAKI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiNetworksPD" APINAME="FETCH_NETWORK_CLIENTCOUNT"/>
+
+	<Graph YAXISTEXT="." description="Meraki Uplink Loss And Latency" displayName="Meraki Uplink Loss And Latency" failureThreshold="1" graphName="MerakiUplinkLossAndLatency" graphType="multiple" isNumeric="true" oid="MerakiUplinkLossAndLatency" period="1800" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FETCH_UPLINK_LOSS_LATENCY" METHOD="GET" HEADERS="X-Cisco-Meraki-API-Key" APIURL="/api/v1/organizations/{orgId}/devices/uplinksLossAndLatency" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="MERAKI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiUplinkLossAndLatency" APINAME="FETCH_UPLINK_LOSS_LATENCY"/>
+	<DevicePackageToGraph deviceType="Meraki Controller" graphName="MerakiUplinkLossAndLatency"/>
+
+	<Graph YAXISTEXT="bytes" description="Meraki Uplink Usage" displayName="Meraki Uplink Usage" failureThreshold="1" graphName="MerakiUplinkUsage" graphType="multiple" isNumeric="true" oid="MerakiUplinkUsage" period="1800" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FETCH_UPLINK_USAGE" METHOD="GET" HEADERS="X-Cisco-Meraki-API-Key" APIURL="/api/v1/organizations/{orgId}/appliance/uplinks/usage/byNetwork" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="MERAKI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiUplinkUsage" APINAME="FETCH_UPLINK_USAGE"/>
+	<DevicePackageToGraph deviceType="Meraki Controller" graphName="MerakiUplinkUsage"/>
+
+	<Graph YAXISTEXT="%" description="Meraki CPU Usage" displayName="CPU Utilization" failureThreshold="1" graphName="MerakiCPUUsage" graphType="node" isNumeric="true" oid="MerakiCPUUsage" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FETCH_DEVICE_CPU_USAGE" METHOD="GET" HEADERS="X-Cisco-Meraki-API-Key" APIURL="/api/v1/organizations/{orgId}/wireless/devices/system/cpu/load/history" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="MERAKI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiCPUUsage" APINAME="FETCH_DEVICE_CPU_USAGE"/>
+	<DevicePackageToGraph deviceType="Meraki Controller" graphName="MerakiCPUUsage"/>
+
+	<DevicePackageToGraph deviceType="Meraki MR Series" graphName="MerakiCPUUsage"/>
+	<DevicePackageToGraph deviceType="Meraki CW Series" graphName="MerakiCPUUsage"/>
+
+	<Graph YAXISTEXT="%" description="Meraki Memory Usage" displayName="Memory Utilization" failureThreshold="1" graphName="MerakiMemoryUsage" graphType="node" isNumeric="true" oid="MerakiMemoryUsage" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FETCH_DEVICE_MEMORY_USAGE" METHOD="GET" HEADERS="X-Cisco-Meraki-API-Key" APIURL="/api/v1/organizations/{orgId}/devices/system/memory/usage/history/byInterval" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="MERAKI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiMemoryUsage" APINAME="FETCH_DEVICE_MEMORY_USAGE"/>
+	<DevicePackageToGraph deviceType="Meraki Controller" graphName="MerakiMemoryUsage"/>
+
+	<DevicePackageToGraph deviceType="Meraki MR Series" graphName="MerakiMemoryUsage"/>
+	<DevicePackageToGraph deviceType="Meraki Z Series"  graphName="MerakiMemoryUsage"/>
+	<DevicePackageToGraph deviceType="Meraki CW Series" graphName="MerakiMemoryUsage"/>
+	<DevicePackageToGraph deviceType="Meraki MX Series" graphName="MerakiMemoryUsage"/>
+	<DevicePackageToGraph deviceType="Meraki MS Series" graphName="MerakiMemoryUsage"/>
+	<DevicePackageToGraph deviceType="Meraki MG Series" graphName="MerakiMemoryUsage"/>
+	<DevicePackageToGraph deviceType="Meraki MV Series" graphName="MerakiMemoryUsage"/>
+	
+	<Graph YAXISTEXT="Hours" description="Meraki SysUpTime" displayName="Meraki SysUp Time" failureThreshold="1" graphName="MerakiSysUPTime" graphType="node" isNumeric="true" oid="MerakiSysUPTime" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FETCH_DEVICE_UPTIME" METHOD="GET" HEADERS="X-Cisco-Meraki-API-Key" APIURL="/api/v1/organizations/{orgId}/devices/boots/history" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="MERAKI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSysUPTime" APINAME="FETCH_DEVICE_UPTIME"/>
+	
+	<DevicePackageToGraph deviceType="Meraki Controller" graphName="MerakiSysUPTime"/>
+	<DevicePackageToGraph deviceType="Meraki MS Series"  graphName="MerakiSysUPTime"/>
+
+
+	<RESTAPIGRAPHDETAILS APINAME="FETCH_ORG_SENSOR_READING" METHOD="GET" HEADERS="X-Cisco-Meraki-API-Key" APIURL="/api/v1/organizations/{orgId}/sensor/readings/latest" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="MERAKI" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+
+
+	<Graph YAXISTEXT="" description="Meraki Sensor Readings" displayName="Meraki Sensor Readings" failureThreshold="1" graphName="MerakiSensorReadings" graphType="node" isNumeric="true" oid="MerakiSensorReadings" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorReadings" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki Controller" graphName="MerakiSensorReadings"/>
+
+
+	<Graph YAXISTEXT="Celsius" description="Meraki Temperature Sensor" displayName="Sensor Temperature" failureThreshold="1" graphName="MerakiSensorTemperature" graphType="node" isNumeric="true" oid="MerakiSensorTemperature" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorTemperature" APINAME="FETCH_ORG_SENSOR_READING"/>
+
+	<DevicePackageToGraph deviceType="Meraki MT10" graphName="MerakiSensorTemperature"/>
+	<DevicePackageToGraph deviceType="Meraki MT11" graphName="MerakiSensorTemperature"/>
+	<DevicePackageToGraph deviceType="Meraki MT14" graphName="MerakiSensorTemperature"/>
+	<DevicePackageToGraph deviceType="Meraki MT15" graphName="MerakiSensorTemperature"/>
+
+	<Graph YAXISTEXT="%" description="Meraki Sensor Humidity" displayName="Sensor Humidity" failureThreshold="1" graphName="MerakiSensorHumidity" graphType="node" isNumeric="true" oid="MerakiSensorHumidity" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorHumidity" APINAME="FETCH_ORG_SENSOR_READING"/>
+	
+	<DevicePackageToGraph deviceType="Meraki MT10" graphName="MerakiSensorHumidity"/>
+	<DevicePackageToGraph deviceType="Meraki MT14" graphName="MerakiSensorHumidity"/>
+	<DevicePackageToGraph deviceType="Meraki MT15" graphName="MerakiSensorHumidity"/>
+
+	<Graph YAXISTEXT="" description="Detects the presence of water making contact with cable[present(1),Not Present(0)]." displayName="Sensor Water Present" failureThreshold="1" graphName="MerakiSensorWaterLeak" graphType="node" isNumeric="true" oid="MerakiSensorWaterLeak" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorWaterLeak" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT12" graphName="MerakiSensorWaterLeak"/>
+
+
+	<Graph YAXISTEXT="DBA" description="Meraki Sensor Noise" displayName="Sensor Noise" failureThreshold="1" graphName="MerakiSensorNoise" graphType="node" isNumeric="true" oid="MerakiSensorNoise" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorNoise" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT14" graphName="MerakiSensorNoise"/>
+	<DevicePackageToGraph deviceType="Meraki MT15" graphName="MerakiSensorNoise"/>
+
+
+	<Graph YAXISTEXT="Concentration" description="Meraki Sensor PM25" displayName="Sensor PM25" failureThreshold="1" graphName="MerakiSensorPM25" graphType="node" isNumeric="true" oid="MerakiSensorPM25" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorPM25" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT14" graphName="MerakiSensorPM25"/>
+	<DevicePackageToGraph deviceType="Meraki MT15" graphName="MerakiSensorPM25"/>
+
+
+	<Graph YAXISTEXT="Concentration" description="Meraki Sensor TVOC" displayName="Sensor TVOC" failureThreshold="1" graphName="MerakiSensorTVOC" graphType="node" isNumeric="true" oid="MerakiSensorTVOC" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorTVOC" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT14" graphName="MerakiSensorTVOC"/>
+	<DevicePackageToGraph deviceType="Meraki MT15" graphName="MerakiSensorTVOC"/>
+
+	<Graph YAXISTEXT="" description="Meraki Sensor CO2" displayName="Sensor CO2" failureThreshold="1" graphName="MerakiSensorCO2" graphType="node" isNumeric="true" oid="MerakiSensorCO2" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorCO2" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT15" graphName="MerakiSensorCO2"/>
+
+	<Graph YAXISTEXT="" description="Monitors the door state indicating whether the door is open or closed [open(1),closed(0)]." displayName="Sensor Door Open" failureThreshold="1" graphName="MerakiSensorDoor" graphType="node" isNumeric="false" oid="MerakiSensorDoor" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorDoor" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT20" graphName="MerakiSensorDoor"/>
+
+	<Graph YAXISTEXT="Volts" description="Meraki Sensor voltage" displayName="Sensor Voltage" failureThreshold="1" graphName="MerakiSensorvoltage" graphType="node" isNumeric="true" oid="MerakiSensorvoltage" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorvoltage" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT40" graphName="MerakiSensorvoltage"/>
+
+	<Graph YAXISTEXT="Amps" description="Meraki Sensor Current" displayName="Sensor Current" failureThreshold="1" graphName="MerakiSensorCurrent" graphType="node" isNumeric="true" oid="MerakiSensorCurrent" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorCurrent" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT40" graphName="MerakiSensorCurrent"/>
+
+	<Graph YAXISTEXT="Watts" description="Meraki Sensor realPower" displayName="Sensor Real Power" failureThreshold="1" graphName="MerakiSensorRealPower" graphType="node" isNumeric="true" oid="MerakiSensorRealPower" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorRealPower" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT40" graphName="MerakiSensorRealPower"/>
+
+	<Graph YAXISTEXT="VA" description="Meraki Sensor apparentPower" displayName="Sensor Apparent Power" failureThreshold="1" graphName="MerakiSensorApparentPower" graphType="node" isNumeric="true" oid="MerakiSensorApparentPower" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorApparentPower" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT40" graphName="MerakiSensorApparentPower"/>
+
+	<Graph YAXISTEXT="%" description="Meraki Sensor powerFactor" displayName="Sensor Power Factor" failureThreshold="1" graphName="MerakiSensorPowerFactor" graphType="node" isNumeric="true" oid="MerakiSensorPowerFactor" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorPowerFactor" APINAME="FETCH_ORG_SENSOR_READING"/>
+	<DevicePackageToGraph deviceType="Meraki MT40" graphName="MerakiSensorPowerFactor"/>
+
+	<Graph YAXISTEXT="%" description="Meraki Sensor Battery" displayName="Sensor Battery" failureThreshold="1" graphName="MerakiSensorBattery" graphType="node" isNumeric="true" oid="MerakiSensorBattery" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHMAP GRAPHNAME="MerakiSensorBattery" APINAME="FETCH_ORG_SENSOR_READING"/>
+	
+	<DevicePackageToGraph deviceType="Meraki MT10" graphName="MerakiSensorBattery"/>
+	<DevicePackageToGraph deviceType="Meraki MT11" graphName="MerakiSensorBattery"/>
+	<DevicePackageToGraph deviceType="Meraki MT14" graphName="MerakiSensorBattery"/>
+	<DevicePackageToGraph deviceType="Meraki MT15" graphName="MerakiSensorBattery"/>
+	<DevicePackageToGraph deviceType="Meraki MT12" graphName="MerakiSensorBattery"/>
+	<DevicePackageToGraph deviceType="Meraki MT20" graphName="MerakiSensorBattery"/>
+	<DevicePackageToGraph deviceType="Meraki MT30" graphName="MerakiSensorBattery"/>
+	<DevicePackageToGraph deviceType="Meraki MT40" graphName="MerakiSensorBattery"/>
+	
+	<!-- Arista RestAPI Access Point Monitors Starts -->
+
+
+
+	<Graph YAXISTEXT="Days" description="Arista Access point Sysup Time" displayName="Arista AP SysUp Time" failureThreshold="1" graphName="ARISTAAPSYSUPTIME" graphType="node" isNumeric="true" oid="AP" period="7200" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="ARISTAAPSYSUPTIME" METHOD="GET" HEADERS="X-Key" APIURL="/SysUpTime" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="ARISTAAPSYSUPTIME" APINAME="ARISTAAPSYSUPTIME"/>
+
+
+	<Graph YAXISTEXT="Percentage" description="Arista AVG CPU utilization" displayName="Arista AVG CPU Utilization" failureThreshold="1" graphName="ARISTAAVGCPU" graphType="node" isNumeric="true" oid="AP" period="7200" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="ARISTAAVGCPU" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="ARISTAAVGCPU" APINAME="ARISTAAVGCPU"/>
+
+
+	<Graph YAXISTEXT="Percentage" description="Arista AVG MEM utilization" displayName="Arista AVG MEM Utilization" failureThreshold="1" graphName="ARISTAAVGMEM" graphType="node" isNumeric="true" oid="AP" period="7200" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="ARISTAAVGMEM" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="ARISTAAVGMEM" APINAME="ARISTAAVGMEM"/>
+	
+	<Graph YAXISTEXT="Number(s)" description="APClientCount" displayName="APClientCount" failureThreshold="1" graphName="APClientCount" graphType="node" isNumeric="true" oid="AP" period="7200" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="APClientCount" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="APClientCount" APINAME="APClientCount"/>
+
+	<Graph YAXISTEXT="Number(s)" description="Arista Controller ClientCount" displayName="Controller ClientCount" failureThreshold="1" graphName="WLCClientCount" graphType="node" isNumeric="true" oid="AP" period="7200" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="WLCClientCount" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="WLCClientCount" APINAME="WLCClientCount"/>
+
+
+
+	<DevicePackageToGraph deviceType="Arista Cloud WirelessController" graphName="WLCClientCount"/>
+	<DevicePackageToGraph deviceType="Arista Thin AccessPoint" graphName="ARISTAAVGMEM|ARISTAAVGCPU|ARISTAAPSYSUPTIME|APClientCount"/>
+
+	<!-- Arista RestAPI Access Point Monitors Ends -->
+
+	<!--- Ruckus SZ Monitors starts -->
+
+	<Graph YAXISTEXT="seconds" description="Ruckus SZ Controller Sysup Time (RestAPI)" displayName="Ruckus SZ Controller Sysup Time" failureThreshold="1" graphName="RuckusControllerSysUpTime" graphType="node" isNumeric="true" oid="AP" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="RuckusControllerSysUpTime" METHOD="GET" HEADERS="X-Key" APIURL="/SysUpTime" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="RuckusControllerSysUpTime" APINAME="RuckusControllerSysUpTime"/>
+
+
+	<Graph YAXISTEXT="Number(s)" description="Ruckus SZ Controller Client count (RestAPI)" displayName="Ruckus SZ Controller client count" failureThreshold="1" graphName="RuckusControllerClientCount" graphType="node" isNumeric="true" oid="AP" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="RuckusControllerClientCount" METHOD="GET" HEADERS="X-Key" APIURL="/clientCount" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="RuckusControllerClientCount" APINAME="RuckusControllerClientCount"/>
+
+
+	<Graph YAXISTEXT="Percentage" description="Ruckus SZ - 15 mins CPU Avg" displayName="RUCKUS CPU Utilization (15 Mins AVG)" failureThreshold="1" graphName="RuckusCPUUtil15Avg" graphType="node" isNumeric="true" oid="AP" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="RuckusCPUUtil15Avg" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="RuckusCPUUtil15Avg" APINAME="RuckusCPUUtil15Avg"/>
+
+	<Graph YAXISTEXT="Percentage" description="Ruckus SZ - 15 mins Memory Avg" displayName="RUCKUS Memory Utilization (15 Mins AVG)" failureThreshold="1" graphName="RuckusMemUtil15Avg" graphType="node" isNumeric="true" oid="AP" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="RuckusMemUtil15Avg" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="RuckusMemUtil15Avg" APINAME="RuckusMemUtil15Avg"/>
+
+
+	<Graph YAXISTEXT="seconds" description="Ruckus SZ Access Point Sysup Time (RestAPI)" displayName="Ruckus SZ Access Point Sysup Time" failureThreshold="1" graphName="RuckusAPSysUpTime" graphType="node" isNumeric="true" oid="AP" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="RuckusAPSysUpTime" METHOD="GET" HEADERS="X-Key" APIURL="/SysUpTime" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="RuckusAPSysUpTime" APINAME="RuckusAPSysUpTime"/>
+
+
+	<Graph YAXISTEXT="Number(s)" description="Ruckus SZ Access Point Client count (RestAPI)" displayName="Ruckus SZ Access Point client count" failureThreshold="1" graphName="RuckusAPClientCount" graphType="node" isNumeric="true" oid="AP" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ruckus">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="RuckusAPClientCount" METHOD="GET" HEADERS="X-Key" APIURL="/clientcount" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="RuckusAPClientCount" APINAME="RuckusAPClientCount"/>
+
+
+	<DevicePackageToGraph deviceType="Ruckus SZ Controller" graphName="RuckusControllerSysUpTime|RuckusControllerClientCount|RuckusCPUUtil15Avg|RuckusMemUtil15Avg"/>
+	<DevicePackageToGraph deviceType="Ruckus SZ thin AP" graphName="RuckusAPClientCount|RuckusAPSysUpTime"/>
+
+	<!--- Ruckus SZ Monitors Ends -->
+
+	<Graph YAXISTEXT="Status" description="VPN Status of the tunnel" displayName="PaloAlto VPN Tunnel status" failureThreshold="1" graphName="paloalto-vpntunnelstatus" graphType="multiple" isNumeric="true" oid="paloalto-vpntunnelstatus" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="PaloAlto" pollDataType="1" vendorSubCategory="VPN Monitors">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="paloalto-vpntunnelstatus" METHOD="GET" HEADERS="" APIURL="/api" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PALOALTO" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="paloalto-vpntunnelstatus" APINAME="paloalto-vpntunnelstatus"/>
+
+	<Graph YAXISTEXT="seconds" description="The length of time the IPsec Phase-2 Tunnel has been active in hundredths of seconds." displayName="PaloAlto VPN Tunnel UpTime" failureThreshold="1" graphName="paloalto-vpntunneluptime" graphType="multiple" isNumeric="true" oid="paloalto-vpntunneluptime" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="PaloAlto" pollDataType="1" vendorSubCategory="VPN Monitors">
+	</Graph>	
+	<RESTAPIGRAPHDETAILS APINAME="paloalto-vpntunneluptime" METHOD="GET" HEADERS="" APIURL="/api" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PALOALTO" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>	
+	<RESTAPIGRAPHMAP GRAPHNAME="paloalto-vpntunneluptime" APINAME="paloalto-vpntunneluptime"/>
+	
+
+	<Graph YAXISTEXT="bytes" description="PaloAlto VPN Tunnel - Rx Bytes" displayName="PaloAlto VPN Tunnel Rx Bytes" failureThreshold="1" graphName="paloalto-vpntunnelrxtraffic" graphType="multiple" isNumeric="true" oid="paloalto-vpntunnelrxtraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="PaloAlto" pollDataType="1" vendorSubCategory="VPN Monitors">
+	</Graph>	
+	<RESTAPIGRAPHDETAILS APINAME="paloalto-vpntunnelrxtraffic" METHOD="GET" HEADERS="" APIURL="/api" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PALOALTO" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="paloalto-vpntunnelrxtraffic" APINAME="paloalto-vpntunnelrxtraffic"/>
+
+
+	<Graph YAXISTEXT="bytes" description="PaloAlto VPN Tunnel - Tx Bytes" displayName="PaloAlto VPN Tunnel Tx Bytes" failureThreshold="1" graphName="paloalto-vpntunneltxtraffic" graphType="multiple" isNumeric="true" oid="paloalto-vpntunneltxtraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="PaloAlto" pollDataType="1" vendorSubCategory="VPN Monitors">
+	</Graph>	
+	<RESTAPIGRAPHDETAILS APINAME="paloalto-vpntunneltxtraffic" METHOD="GET" HEADERS="" APIURL="/api" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PALOALTO" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>	
+	<RESTAPIGRAPHMAP GRAPHNAME="paloalto-vpntunneltxtraffic" APINAME="paloalto-vpntunneltxtraffic"/>
+
+
+	<!-- Cisco SDWAN Monitors Starts-->	
+	<Graph YAXISTEXT="Health" description="Monitor the Health of Cisco SDWAN devices" displayName="Health" failureThreshold="1" graphName="api-cSDHealth" graphType="node" isNumeric="false" oid="api-cSDHealth" period="900" protocol="RESTAPI" saveAbsolutes="true"  sSave="false" timeAvg="false" vendorName="Cisco">
+	</Graph>
+
+	<RESTAPIGRAPHDETAILS APINAME="api-cSDHealth" METHOD="GET" HEADERS="CiscoSDWAN-cookie=${Cookie}, CiscoSDWAN-XSRFToken=${X-XSRF-TOKEN}" APIURL="/dataservice/health/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CiscoSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-cSDHealth" APINAME="api-cSDHealth"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Cisco SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-cSDCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-cSDCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-cSDCPUUtilization" METHOD="GET" HEADERS="CiscoSDWAN-cookie=${Cookie}, CiscoSDWAN-XSRFToken=${X-XSRF-TOKEN}" APIURL="/dataservice/device/system/status" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CiscoSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="deviceId" PARAMVALUE="$deviceId" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-cSDCPUUtilization" APINAME="api-cSDCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of Cisco SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-cSDMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-cSDMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-cSDMemoryUtilization" METHOD="GET" HEADERS="CiscoSDWAN-cookie=${Cookie}, CiscoSDWAN-XSRFToken=${X-XSRF-TOKEN}" APIURL="/dataservice/device/system/status" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CiscoSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="deviceId" PARAMVALUE="$deviceId" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-cSDMemoryUtilization" APINAME="api-cSDMemoryUtilization"/>
+	<Graph YAXISTEXT="milliseconds" description="Monitor the Jitter of Cisco SDWAN Tunnel" displayName="Tunnel Jitter" failureThreshold="1" graphName="api-cSDTJitter" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-cSDTJitter" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-cSDTJitter" METHOD="GET" HEADERS="CiscoSDWAN-cookie=${Cookie}, CiscoSDWAN-XSRFToken=${X-XSRF-TOKEN}" APIURL="/dataservice/statistics/approute/tunnels/health/latency" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CiscoSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="limit" PARAMVALUE="10000" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-cSDTJitter" APINAME="api-cSDTJitter"/>
+
+	<Graph YAXISTEXT="milliseconds" description="Monitor the Latency of Cisco SDWAN Tunnel" displayName="Tunnel Latency" failureThreshold="1" graphName="api-cSDTLatency" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-cSDTLatency" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-cSDTLatency" METHOD="GET" HEADERS="CiscoSDWAN-cookie=${Cookie}, CiscoSDWAN-XSRFToken=${X-XSRF-TOKEN}" APIURL="/dataservice/statistics/approute/tunnels/health/latency" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CiscoSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="limit" PARAMVALUE="10000" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-cSDTLatency" APINAME="api-cSDTLatency"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Packet Loss of Cisco SDWAN Tunnel" displayName="Tunnel Packet Loss" failureThreshold="1" graphName="api-cSDTPacketLoss" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-cSDTPacketLoss" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-cSDTPacketLoss" METHOD="GET" HEADERS="CiscoSDWAN-cookie=${Cookie}, CiscoSDWAN-XSRFToken=${X-XSRF-TOKEN}" APIURL="/dataservice/statistics/approute/tunnels/health/latency" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CiscoSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="limit" PARAMVALUE="10000" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-cSDTPacketLoss" APINAME="api-cSDTPacketLoss"/>
+
+	<Graph YAXISTEXT="QoE Score" description="Monitor the QoE Score of Cisco SDWAN Tunnel" displayName="Tunnel QoE Score" failureThreshold="1" graphName="api-cSDTQoE" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-cSDTQoE" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-cSDTQoE" METHOD="GET" HEADERS="CiscoSDWAN-cookie=${Cookie}, CiscoSDWAN-XSRFToken=${X-XSRF-TOKEN}" APIURL="/dataservice/statistics/approute/tunnels/health/latency" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CiscoSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="limit" PARAMVALUE="10000" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-cSDTQoE" APINAME="api-cSDTQoE"/>
+
+	<DevicePackageToGraph deviceType="Cisco vManage" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vSmart" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vBond" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-C8500-12X" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-C8500-12X4QC" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-C8500L-8S4X" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-C8500-20X6C" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-CSR-1000v" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-C8000V" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-ISRv" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-100" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-100-B" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-100-M" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-100-WM" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-1000" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-2000" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-5000" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cisco vEdge-cloud" graphName="api-cSDHealth|api-cSDCPUUtilization|api-cSDMemoryUtilization"/>
+
+
+
+	<!-- Cisco SDWAN Monitors Ends-->
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Aruba SilverPeak SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-SPSDCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-SPSDCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-SPSDCPUUtilization" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/gms/rest/appliance/rest/{nePk}/cpustat" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ArubaSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="time" PARAMVALUE="$currentTime" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-SPSDCPUUtilization" APINAME="api-SPSDCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of Aruba SilverPeak SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-SPSDMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-SPSDMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-SPSDMemoryUtilization" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/gms/rest/appliance/rest/{nePk}/memory" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ArubaSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="time" PARAMVALUE="$currentTime" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-SPSDMemoryUtilization" APINAME="api-SPSDMemoryUtilization"/>
+	
+	<Graph YAXISTEXT="milliseconds" description="Monitor the Jitter of Aruba SilverPeak SDWAN Tunnel" displayName="Tunnel Jitter" failureThreshold="1" graphName="api-SPSDTJitter" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-SPSDTJitter" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-SPSDTJitter" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/gms/rest/stats2/aggregate/tunnel" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ArubaSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="metric" PARAMVALUE="jitter" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="startTime" PARAMVALUE="$startTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="endTime" PARAMVALUE="$endTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="overlay" PARAMVALUE="all" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="granularity" PARAMVALUE="minute" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-SPSDTJitter" APINAME="api-SPSDTJitter"/>
+
+	<Graph YAXISTEXT="milliseconds" description="Monitor the Latency of Aruba SilverPeak SDWAN Tunnel" displayName="Tunnel Latency" failureThreshold="1" graphName="api-SPSDTLatency" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-SPSDTLatency" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-SPSDTLatency" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/gms/rest/stats2/aggregate/tunnel" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ArubaSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="metric" PARAMVALUE="latency" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="startTime" PARAMVALUE="$startTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="endTime" PARAMVALUE="$endTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="overlay" PARAMVALUE="all" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="granularity" PARAMVALUE="minute" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-SPSDTLatency" APINAME="api-SPSDTLatency"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Packet Loss of Aruba SilverPeak SDWAN Tunnel" displayName="Tunnel Packet Loss" failureThreshold="1" graphName="api-SPSDTPacketLoss" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-SPSDTPacketLoss" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-SPSDTPacketLoss" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/gms/rest/stats2/aggregate/tunnel" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ArubaSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="metric" PARAMVALUE="loss" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="startTime" PARAMVALUE="$startTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="endTime" PARAMVALUE="$endTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="overlay" PARAMVALUE="all" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="granularity" PARAMVALUE="minute" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-SPSDTPacketLoss" APINAME="api-SPSDTPacketLoss"/>
+
+
+	<Graph YAXISTEXT="bytes" description="Aruba SDWAN Interface - RX Traffic" displayName="Interface RX Bytes" failureThreshold="1" graphName="api-SPSDRXTraffic" graphType="multiple" isNumeric="true" oid="api-SPSDRXTraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba" pollDataType="1">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-SPSDRXTraffic" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/gms/rest/stats/timeseries/interface/{nePk}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ArubaSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="startTime" PARAMVALUE="$startTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="endTime" PARAMVALUE="$endTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="trafficType" PARAMVALUE="all_traffic" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="granularity" PARAMVALUE="minute" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-SPSDRXTraffic" APINAME="api-SPSDRXTraffic"/>
+
+	<Graph YAXISTEXT="bytes" description="Aruba SDWAN Interface - TX Traffic" displayName="Interface TX Bytes" failureThreshold="1" graphName="api-SPSDTXTraffic" graphType="multiple" isNumeric="true" oid="api-SPSDTXTraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba" pollDataType="1">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-SPSDTXTraffic" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/gms/rest/stats/timeseries/interface/{nePk}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ArubaSDWAN" HANDLEREDIRECTS="TRUE">
+		<RESTAPIGRAPHPARAMS PARAMNAME="startTime" PARAMVALUE="$startTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="endTime" PARAMVALUE="$endTime" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="trafficType" PARAMVALUE="all_traffic" PARAMHOLDER="URL"/>
+		<RESTAPIGRAPHPARAMS PARAMNAME="granularity" PARAMVALUE="minute" PARAMHOLDER="URL"/>
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-SPSDTXTraffic" APINAME="api-SPSDTXTraffic"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of VeloCloud SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-VCSDCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-VCSDCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDCPUUtilization" METHOD="POST" HEADERS="Authorization" APIURL="/portal/rest/metrics/getEdgeStatusMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDCPUUtilization" APINAME="api-VCSDCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of VeloCloud SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-VCSDMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-VCSDMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDMemoryUtilization" METHOD="POST" HEADERS="Authorization" APIURL="/portal/rest/metrics/getEdgeStatusMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDMemoryUtilization" APINAME="api-VCSDMemoryUtilization"/>
+	
+	<Graph YAXISTEXT="milliseconds" description="Monitor the Jitter of VeloCloud SDWAN Tunnel" displayName="Tunnel Jitter" failureThreshold="1" graphName="api-VCSDTJitter" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-VCSDTJitter" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDTJitter" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/portal/rest/metrics/getEdgeSDWANPeerPathMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDTJitter" APINAME="api-VCSDTJitter"/>
+
+	<Graph YAXISTEXT="milliseconds" description="Monitor the Latency of VeloCloud SDWAN Tunnel" displayName="Tunnel Latency" failureThreshold="1" graphName="api-VCSDTLatency" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-VCSDTLatency" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDTLatency" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/portal/rest/metrics/getEdgeSDWANPeerPathMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDTLatency" APINAME="api-VCSDTLatency"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Packet Loss of VeloCloud SDWAN Tunnel" displayName="Tunnel Packet Loss" failureThreshold="1" graphName="api-VCSDTPacketLoss" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-VCSDTPacketLoss" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDTPacketLoss" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/portal/rest/metrics/getEdgeSDWANPeerPathMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDTPacketLoss" APINAME="api-VCSDTPacketLoss"/>
+
+	<Graph YAXISTEXT="Status" description="Monitor the Status VeloCloud SDWAN Tunnel" displayName="Tunnel Status" failureThreshold="1" graphName="api-VCSDTStatus" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-VCSDTStatus" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDTStatus" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/portal/rest/metrics/getEdgeSDWANPeerPathMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDTStatus" APINAME="api-VCSDTStatus"/>
+
+	<Graph YAXISTEXT="bytes" description="VeloCloud Interface - TX Traffic" displayName="TX Traffic" failureThreshold="1" graphName="api-VCSDTTxTraffic" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-VCSDTTxTraffic" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDTTxTraffic" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/portal/rest/monitoring/getAggregateEdgeLinkMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDTTxTraffic" APINAME="api-VCSDTTxTraffic"/>
+
+	<Graph YAXISTEXT="bytes" description="VeloCloud Interface - RX Traffic" displayName="RX Traffic" failureThreshold="1" graphName="api-VCSDTRxTraffic" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-VCSDTRxTraffic" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDTRxTraffic" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/portal/rest/monitoring/getAggregateEdgeLinkMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDTRxTraffic" APINAME="api-VCSDTRxTraffic"/>
+
+	<Graph YAXISTEXT="bytes" description="VeloCloud Interface - Traffic" displayName="Traffic" failureThreshold="1" graphName="api-VCSDTTraffic" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-VCSDTTraffic" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Arista Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VCSDTTraffic" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/portal/rest/monitoring/getAggregateEdgeLinkMetrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VCSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VCSDTTraffic" APINAME="api-VCSDTTraffic"/>
+
+	<DevicePackageToGraph deviceType="VeloCloud SD-WAN" graphName="api-VCSDTTraffic"/>
+
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Aruba Central SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-ACSDAPCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACSDAPCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDAPCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/aps/{serial}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDAPCPUUtilization" APINAME="api-ACSDAPCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of Aruba Central SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-ACSDAPMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACSDAPMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDAPMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/aps/{serial}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDAPMemoryUtilization" APINAME="api-ACSDAPMemoryUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Clients of Aruba Central SDWAN devices" displayName="Clients info" failureThreshold="1" graphName="api-ACSDClientsInfo" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACSDClientsInfo" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDClientsInfo" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/clients/wireless" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDClientsInfo" APINAME="api-ACSDClientsInfo"/>
+
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Aruba Central SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-ACSDSWCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACSDSWCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDSWCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/switches/{serial}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDSWCPUUtilization" APINAME="api-ACSDSWCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of Aruba Central SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-ACSDSWMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACSDSWMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDSWMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/switches/{serial}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDSWMemoryUtilization" APINAME="api-ACSDSWMemoryUtilization"/>
+
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Aruba Central SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-ACSDGWCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACSDGWCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDGWCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/gateways/{serial}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDGWCPUUtilization" APINAME="api-ACSDGWCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of Aruba Central SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-ACSDGWMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACSDGWMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDGWMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/gateways/{serial}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDGWMemoryUtilization" APINAME="api-ACSDGWMemoryUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Tunnel Packetloss of Aruba Central SDWAN devices" displayName="Tunnel Packetloss" failureThreshold="1" graphName="api-ACSDGWTunnelPacketloss" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-ACSDGWTunnelPacketloss" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDGWTunnelPacketloss" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/gateways/{serial}/tunnels" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDGWTunnelPacketloss" APINAME="api-ACSDGWTunnelPacketloss"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Tunnel Jitter of Aruba Central SDWAN devices" displayName="Tunnel Jitter" failureThreshold="1" graphName="api-ACSDGWTunnelJitter" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-ACSDGWTunnelJitter" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDGWTunnelJitter" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/gateways/{serial}/tunnels" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDGWTunnelJitter" APINAME="api-ACSDGWTunnelJitter"/>
+
+	<Graph YAXISTEXT="Milliseconds" description="Monitor the Tunnel latency of Aruba Central SDWAN devices" displayName="Tunnel Latency" failureThreshold="1" graphName="api-ACSDGWTunnelLatency" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-ACSDGWTunnelLatency" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDGWTunnelLatency" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/gateways/{serial}/tunnels" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDGWTunnelLatency" APINAME="api-ACSDGWTunnelLatency"/>
+
+
+	<Graph YAXISTEXT="Milliseconds" description="Monitor the Tunnel Status of Aruba Central SDWAN devices" displayName="Tunnel Status" failureThreshold="1" graphName="api-ACSDGWTunnelStatus" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACSDGWTunnelStatus" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Aruba">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACSDGWTunnelStatus" METHOD="GET" HEADERS="Authorization" APIURL="/monitoring/v1/gateways/{serial}/tunnels" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACSDGWTunnelStatus" APINAME="api-ACSDGWTunnelStatus"/>
+
+	<DevicePackageToGraph deviceType="Aruba Access Points" graphName="api-ACSDAPCPUUtilization|api-ACSDAPMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Aruba Switches" graphName="api-ACSDSWMemoryUtilization|api-ACSDSWCPUUtilization"/>
+	<DevicePackageToGraph deviceType="Aruba Edge Devices" graphName="api-ACSDGWTunnelStatus|api-ACSDGWTunnelLatency|api-ACSDGWTunnelJitter|api-ACSDGWMemoryUtilization|api-ACSDGWCPUUtilization"/>
+	
+
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of JuniperMist SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-JMSDAPCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-JMSDAPCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Juniper">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-JMSDAPCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/v1/sites/{site_id}/stats/devices?type=ap" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="JMSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-JMSDAPCPUUtilization" APINAME="api-JMSDAPCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of JuniperMist SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-JMSDAPMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-JMSDAPMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Juniper">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-JMSDAPMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/v1/sites/{site_id}/stats/devices?type=ap" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="JMSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-JMSDAPMemoryUtilization" APINAME="api-JMSDAPMemoryUtilization"/>
+
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of JuniperMist SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-JMSDSWCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-JMSDSWCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Juniper">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-JMSDSWCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/v1/sites/{site_id}/stats/devices?type=switch" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="JMSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-JMSDSWCPUUtilization" APINAME="api-JMSDSWCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of JuniperMist SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-JMSDSWMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-JMSDSWMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Juniper">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-JMSDSWMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/v1/sites/{site_id}/stats/devices?type=switch" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="JMSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-JMSDSWMemoryUtilization" APINAME="api-JMSDSWMemoryUtilization"/>
+
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of JuniperMist SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-JMSDGWCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-JMSDGWCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Juniper">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-JMSDGWCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/v1/sites/{site_id}/stats/devices?type=gateway" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="JMSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-JMSDGWCPUUtilization" APINAME="api-JMSDGWCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of JuniperMist SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-JMSDGWMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-JMSDGWMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Juniper">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-JMSDGWMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/v1/sites/{site_id}/stats/devices?type=gateway" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="JMSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-JMSDGWMemoryUtilization" APINAME="api-JMSDGWMemoryUtilization"/>
+	
+	<DevicePackageToGraph deviceType="Juniper Access Points" graphName="api-JMSDAPCPUUtilization|api-JMSDAPMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Juniper Switches" graphName="api-JMSDSWCPUUtilization|api-JMSDSWMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Juniper Edge Devices" graphName="api-JMSDGWCPUUtilization|api-JMSDGWMemoryUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Versa Networks devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-VRSACPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-VRSACPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Versa Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VRSACPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/vnms/dashboard/applianceStatus/{appliance_uuid}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VERSA" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VRSACPUUtilization" APINAME="api-VRSACPUUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the memory of Versa Networks devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-VRSAMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-VRSAMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Versa Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VRSAMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/vnms/dashboard/applianceStatus/{appliance_uuid}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VERSA" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VRSAMemoryUtilization" APINAME="api-VRSAMemoryUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the disk of Versa Networks devices" displayName="Disk Utilization" failureThreshold="1" graphName="api-VRSADiskUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-VRSADiskUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Versa Networks">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-VRSADiskUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/vnms/dashboard/applianceStatus/{appliance_uuid}" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="VERSA" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-VRSADiskUtilization" APINAME="api-VRSADiskUtilization"/>
+	<DevicePackageToGraph deviceType="Versa Controllers" graphName="api-VRSACPUUtilization|api-VRSAMemoryUtilization|api-VRSADiskUtilization"/>
+	<DevicePackageToGraph deviceType="Versa Edge Devices" graphName="api-VRSACPUUtilization|api-VRSAMemoryUtilization|api-VRSADiskUtilization"/>
+	<DevicePackageToGraph deviceType="Aruba Access Points" graphName="api-ACSDAPCPUUtilization|api-ACSDAPMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Aruba Switches" graphName="api-ACSDSWMemoryUtilization|api-ACSDSWCPUUtilization"/>
+	<DevicePackageToGraph deviceType="Aruba Edge Devices" graphName="api-ACSDGWTunnelStatus|api-ACSDGWTunnelLatency|api-ACSDGWTunnelJitter|api-ACSDGWMemoryUtilization|api-ACSDGWCPUUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Arista CloudVision devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-ACVDECPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACVDECPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACVDECPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/resources/inventory/v1/Device/all" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACVSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACVDECPUUtilization" APINAME="api-ACVDECPUUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the memory of Arista CloudVision devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-ACVDEMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-ACVDEMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Arista">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-ACVDEMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/resources/inventory/v1/Device/all" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="ACVSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-ACVDEMemoryUtilization" APINAME="api-ACVDEMemoryUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Cambium cnMaestro devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-CAMDECPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-CAMDECPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cambium">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-CAMDECPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/v2/devices/statistics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CAMSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-CAMDECPUUtilization" APINAME="api-CAMDECPUUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the memory of Cambium cnMaestro devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-CAMDEMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-CAMDEMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Cambium">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-CAMDEMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/api/v2/devices/statistics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CAMSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-CAMDEMemoryUtilization" APINAME="api-CAMDEMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cambium Access Points" graphName="api-CAMDECPUUtilization|api-CAMDEMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cambium Switches" graphName="api-CAMDECPUUtilization|api-CAMDEMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cambium Edge Devices" graphName="api-CAMDECPUUtilization|api-CAMDEMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cambium Wireless Devices" graphName="api-CAMDECPUUtilization|api-CAMDEMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="Cambium PON OLTs" graphName="api-CAMDECPUUtilization|api-CAMDEMemoryUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Prisma SD-WAN ION devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-PSSDIONCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-PSSDIONCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Palo Alto">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-PSSDIONCPUUtilization" METHOD="POST" HEADERS="Authorization" APIURL="/v2.3/api/tenants/{tenant_id}/monitor/sys_metrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="PSSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-PSSDIONCPUUtilization" APINAME="api-PSSDIONCPUUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of Prisma SD-WAN ION devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-PSSDIONMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-PSSDIONMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Palo Alto">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-PSSDIONMemoryUtilization" METHOD="POST" HEADERS="Authorization" APIURL="/v2.3/api/tenants/{tenant_id}/monitor/sys_metrics" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="PSSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-PSSDIONMemoryUtilization" APINAME="api-PSSDIONMemoryUtilization"/>
+
+	<DevicePackageToGraph deviceType="Prisma ION Devices" graphName="api-PSSDIONCPUUtilization|api-PSSDIONMemoryUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="SD-WAN CPU utilization" displayName="CPU Utilization" failureThreshold="1" graphName="api-REMCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-REMCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="SD-WAN"><![CDATA[]]></Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-REMCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CPSDWAN" HANDLEREDIRECTS="TRUE"></RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-REMCPUUtilization" APINAME="api-REMCPUUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="SD-WAN memory utilization" displayName="Memory Utilization" failureThreshold="1" graphName="api-REMMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-REMMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="SD-WAN"><![CDATA[]]></Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-REMMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="CPSDWAN" HANDLEREDIRECTS="TRUE"></RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-REMMemoryUtilization" APINAME="api-REMMemoryUtilization"/>
+	
+	<DevicePackageToGraph deviceType="Cradlepoint Routers" graphName="api-REMCPUUtilization|api-REMMemoryUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of ExtremeCloud IQ access points" displayName="CPU Utilization" failureThreshold="1" graphName="api-XIQAPCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-XIQAPCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-XIQAPCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/devices/{deviceId}/history/cpu-mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="XIQSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-XIQAPCPUUtilization" APINAME="api-XIQAPCPUUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the memory of ExtremeCloud IQ access points" displayName="Memory Utilization" failureThreshold="1" graphName="api-XIQAPMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-XIQAPMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-XIQAPMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/devices/{deviceId}/history/cpu-mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="XIQSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-XIQAPMemoryUtilization" APINAME="api-XIQAPMemoryUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of ExtremeCloud IQ switches" displayName="CPU Utilization" failureThreshold="1" graphName="api-XIQSWCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-XIQSWCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-XIQSWCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/devices/{deviceId}/history/cpu-mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="XIQSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-XIQSWCPUUtilization" APINAME="api-XIQSWCPUUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the memory of ExtremeCloud IQ switches" displayName="Memory Utilization" failureThreshold="1" graphName="api-XIQSWMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-XIQSWMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-XIQSWMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/devices/{deviceId}/history/cpu-mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="XIQSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-XIQSWMemoryUtilization" APINAME="api-XIQSWMemoryUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of ExtremeCloud IQ routers" displayName="CPU Utilization" failureThreshold="1" graphName="api-XIQRTCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-XIQRTCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-XIQRTCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/devices/{deviceId}/history/cpu-mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="XIQSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-XIQRTCPUUtilization" APINAME="api-XIQRTCPUUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the memory of ExtremeCloud IQ routers" displayName="Memory Utilization" failureThreshold="1" graphName="api-XIQRTMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-XIQRTMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-XIQRTMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/devices/{deviceId}/history/cpu-mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="XIQSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-XIQRTMemoryUtilization" APINAME="api-XIQRTMemoryUtilization"/>
+	<Graph YAXISTEXT="Count" description="Discover active clients associated with an ExtremeCloud IQ device" displayName="Clients Info" failureThreshold="1" graphName="api-XIQClientsInfo" graphType="node" isNumeric="true" pollDataType="3" oid="api-XIQClientsInfo" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-XIQClientsInfo" METHOD="GET" HEADERS="Authorization" APIURL="/clients/active?deviceIds={deviceId}&amp;limit=100&amp;page=1" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="XIQSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-XIQClientsInfo" APINAME="api-XIQClientsInfo"/>
+	<DevicePackageToGraph deviceType="ExtremeCloud IQ Access Points" graphName="api-XIQAPCPUUtilization|api-XIQAPMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="ExtremeCloud IQ Switches" graphName="api-XIQSWCPUUtilization|api-XIQSWMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="ExtremeCloud IQ Routers" graphName="api-XIQRTCPUUtilization|api-XIQRTMemoryUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of ExtremeCloud SD-WAN appliances" displayName="CPU Utilization" failureThreshold="1" graphName="api-EXSDCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-EXSDCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme Networks"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-EXSDCPUUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/sdwan/xapi/monitoring/v1/appliances/{device_id}/system-usage" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="EXSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-EXSDCPUUtilization" APINAME="api-EXSDCPUUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Monitor the memory of ExtremeCloud SD-WAN appliances" displayName="Memory Utilization" failureThreshold="1" graphName="api-EXSDMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-EXSDMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme Networks"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-EXSDMemoryUtilization" METHOD="GET" HEADERS="Authorization" APIURL="/sdwan/xapi/monitoring/v1/appliances/{device_id}/system-usage" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="EXSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-EXSDMemoryUtilization" APINAME="api-EXSDMemoryUtilization"/>
+	<DevicePackageToGraph deviceType="ExtremeCloud Edges" graphName="api-EXSDCPUUtilization|api-EXSDMemoryUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Panorama CPU utilization" displayName="CPU Utilization" failureThreshold="1" graphName="api-PANCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-PANCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Palo Alto"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-PANCPUUtilization" METHOD="GET" HEADERS="X-PAN-KEY" APIURL="/api?type=op&amp;cmd=&lt;show&gt;&lt;running&gt;&lt;resource-monitor&gt;&lt;minute/&gt;&lt;/resource-monitor&gt;&lt;/running&gt;&lt;/show&gt;&amp;target={serial}" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PANSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-PANCPUUtilization" APINAME="api-PANCPUUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Panorama firewall memory utilization" displayName="Memory Utilization" failureThreshold="1" graphName="api-PANMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-PANMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Palo Alto"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-PANMemoryUtilization" METHOD="GET" HEADERS="X-PAN-KEY" APIURL="/api?type=op&amp;cmd=&lt;show&gt;&lt;system&gt;&lt;resources/&gt;&lt;/system&gt;&lt;/show&gt;&amp;target={serial}" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PANSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-PANMemoryUtilization" APINAME="api-PANMemoryUtilization"/>
+	<Graph YAXISTEXT="Percentage" description="Panorama firewall disk utilization" displayName="Disk Utilization" failureThreshold="1" graphName="api-PANDiskUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-PANDiskUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Palo Alto"/>
+	<RESTAPIGRAPHDETAILS APINAME="api-PANDiskUtilization" METHOD="GET" HEADERS="X-PAN-KEY" APIURL="/api?type=op&amp;cmd=&lt;show&gt;&lt;system&gt;&lt;disk-space/&gt;&lt;/system&gt;&lt;/show&gt;&amp;target={serial}" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PANSDWAN" HANDLEREDIRECTS="TRUE"/>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-PANDiskUtilization" APINAME="api-PANDiskUtilization"/>
+	<DevicePackageToGraph deviceType="Panorama Firewalls" graphName="api-PANCPUUtilization|api-PANMemoryUtilization|api-PANDiskUtilization"/>
+	
+	<Graph YAXISTEXT="bytes" description="Teltonika SDWAN Interface - RX Traffic" displayName="Interface RX Bytes" failureThreshold="1" graphName="api-TTNSDRXTraffic" graphType="multiple" isNumeric="true" oid="api-TTNSDRXTraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Teltonika" pollDataType="1">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-TTNSDRXTraffic" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/api/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="TTNSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-TTNSDRXTraffic" APINAME="api-TTNSDRXTraffic"/>
+
+	<Graph YAXISTEXT="bytes" description="Teltonika SDWAN Interface - TX Traffic" displayName="Interface TX Bytes" failureThreshold="1" graphName="api-TTNSDTXTraffic" graphType="multiple" isNumeric="true" oid="api-TTNSDTXTraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Teltonika" pollDataType="1">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-TTNSDTXTraffic" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/api/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="TTNSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-TTNSDTXTraffic" APINAME="api-TTNSDTXTraffic"/>
+
+	<Graph YAXISTEXT="bytes" description="Teltonika SDWAN Interface - Total Traffic" displayName="Interface Total Bytes" failureThreshold="1" graphName="api-TTNSDTLTraffic" graphType="multiple" isNumeric="true" oid="api-TTNSDTLTraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Teltonika" pollDataType="1">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-TTNSDTLTraffic" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/api/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="TTNSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-TTNSDTLTraffic" APINAME="api-TTNSDTLTraffic"/>
+
+
+	<Graph YAXISTEXT="bytes" description="Teltonika SDWAN Sim - RX Traffic" displayName="Sim RX Bytes" failureThreshold="1" graphName="api-TTNSDSimRXTraffic" graphType="multiple" isNumeric="true" oid="api-TTNSDSimRXTraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Teltonika" pollDataType="1">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-TTNSDSimRXTraffic" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/api/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="TTNSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-TTNSDSimRXTraffic" APINAME="api-TTNSDSimRXTraffic"/>
+
+	<Graph YAXISTEXT="bytes" description="Teltonika SDWAN Sim - TX Traffic" displayName="Sim TX Bytes" failureThreshold="1" graphName="api-TTNSDSimTXTraffic" graphType="multiple" isNumeric="true" oid="api-TTNSDSimTXTraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Teltonika" pollDataType="1">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-TTNSDSimTXTraffic" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/api/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="TTNSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-TTNSDSimTXTraffic" APINAME="api-TTNSDSimTXTraffic"/>
+
+	<Graph YAXISTEXT="bytes" description="Teltonika SDWAN Sim - Total Traffic" displayName="Sim Total Bytes" failureThreshold="1" graphName="api-TTNSDSimTLTraffic" graphType="multiple" isNumeric="true" oid="api-TTNSDSimTLTraffic" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Teltonika" pollDataType="1">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-TTNSDSimTLTraffic" METHOD="GET" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/api/devices" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="TTNSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-TTNSDSimTLTraffic" APINAME="api-TTNSDSimTLTraffic"/>
+
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Fortinet SDWAN devices" displayName="CPU Utilization" failureThreshold="1" graphName="api-FMGCPUUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-FMGCPUUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-FMGCPUUtilization" METHOD="POST" HEADERS="Authorization" APIURL="/jsonrpc" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="FMGSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-FMGCPUUtilization" APINAME="api-FMGCPUUtilization"/>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of Fortinet SDWAN devices" displayName="Memory Utilization" failureThreshold="1" graphName="api-FMGMemoryUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-FMGMemoryUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-FMGMemoryUtilization" METHOD="POST" HEADERS="Authorization" APIURL="/jsonrpc" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="FMGSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-FMGMemoryUtilization" APINAME="api-FMGMemoryUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Disk of Fortinet SDWAN devices" displayName="Disk Utilization" failureThreshold="1" graphName="api-FMGDiskUtilization" graphType="node" isNumeric="true" pollDataType="3" oid="api-FMGDiskUtilization" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-FMGDiskUtilization" METHOD="POST" HEADERS="Authorization" APIURL="/jsonrpc" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="FMGSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-FMGDiskUtilization" APINAME="api-FMGDiskUtilization"/>
+
+	<Graph YAXISTEXT="milliseconds" description="Monitor the Jitter of Fortinet SDWAN Tunnel" displayName="Tunnel Jitter" failureThreshold="1" graphName="api-FMGSDTJitter" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-FMGSDTJitter" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-FMGSDTJitter" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/jsonrpc" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="FMGSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-FMGSDTJitter" APINAME="api-FMGSDTJitter"/>
+
+	<Graph YAXISTEXT="milliseconds" description="Monitor the Latency of Fortinet SDWAN Tunnel" displayName="Tunnel Latency" failureThreshold="1" graphName="api-FMGSDTLatency" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-FMGSDTLatency" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-FMGSDTLatency" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/jsonrpc" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="FMGSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-FMGSDTLatency" APINAME="api-FMGSDTLatency"/>
+
+	<Graph YAXISTEXT="Percentage" description="Monitor the Packet Loss of Fortinet SDWAN Tunnel" displayName="Tunnel Packet Loss" failureThreshold="1" graphName="api-FMGSDTPacketLoss" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-FMGSDTPacketLoss" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-FMGSDTPacketLoss" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/jsonrpc" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="FMGSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-FMGSDTPacketLoss" APINAME="api-FMGSDTPacketLoss"/>
+
+	<Graph YAXISTEXT="Status" description="Monitor the Status Fortinet SDWAN Tunnel" displayName="Tunnel Metrics" failureThreshold="1" graphName="api-FMGSDTMetrics" graphType="multiple" isNumeric="true" pollDataType="3" oid="api-FMGSDTMetrics" period="900" protocol="RESTAPI" showDial="false" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="api-FMGSDTMetrics" METHOD="POST" HEADERS="gmsSessionID=${Cookie}, orchCsrfToken=${X-XSRF-TOKEN}" APIURL="/jsonrpc" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="FMGSDWAN" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="api-FMGSDTMetrics" APINAME="api-FMGSDTMetrics"/>
+
+	<DevicePackageToGraph deviceType="FortiManager FortiGates" graphName="api-FMGCPUUtilization|api-FMGMemoryUtilization|api-FMGDiskUtilization|api-FMGSDTPacketLoss|api-FMGSDTLatency|api-FMGSDTJitter|api-FMGSDTMetrics"/>
+	<DevicePackageToGraph deviceType="FortiManager FortiAPs" graphName="api-FMGCPUUtilization|api-FMGMemoryUtilization|api-FMGDiskUtilization"/>
+	<DevicePackageToGraph deviceType="FortiManager FortiSwitches" graphName="api-FMGCPUUtilization|api-FMGMemoryUtilization|api-FMGDiskUtilization"/>
+
+	<!-- Extreme Monitors Starts -->
+
+	<Graph YAXISTEXT="Number(s)" description="Extreme Controller Client count (RestAPI)" displayName="Extreme Campus Controller client count" failureThreshold="1" graphName="ExtremeControllerClientCount" graphType="node" isNumeric="true" oid="AP" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="ExtremeControllerClientCount" METHOD="GET" HEADERS="X-Key" APIURL="/clientCount" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="ExtremeControllerClientCount" APINAME="ExtremeControllerClientCount"/>
+
+
+	<Graph YAXISTEXT="Number(s)" description="Extreme AP Radio TXPower (RestAPI)" displayName="Extreme AP Radio TXPower (RestAPI)" failureThreshold="1" graphName="ExtremeAPRadioTXPower" graphType="node" isNumeric="true" oid="AP" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="ExtremeAPRadioTXPower" METHOD="GET" HEADERS="X-Key" APIURL="/txPower" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="ExtremeAPRadioTXPower" APINAME="ExtremeAPRadioTXPower"/>
+
+	<DevicePackageToGraph deviceType="Extreme Campus Controller" graphName="ExtremeControllerClientCount"/>
+	<DevicePackageToGraph deviceType="Extreme Thin Access Point" graphName="ExtremeAPRadioTXPower"/>
+
+	<!-- Extreme WiNG -->
+	<Graph YAXISTEXT="seconds" description="Extreme WiNG Controller SysUpTime (RestAPI)" displayName="Extreme WiNG Controller SysUpTime" failureThreshold="1" graphName="ExtremeWiNGControllerSysUpTime" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="ExtremeWiNGControllerSysUpTime" METHOD="GET" HEADERS="X-Key" APIURL="/SysUpTime" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="ExtremeWiNGControllerSysUpTime" APINAME="ExtremeWiNGControllerSysUpTime"/>
+
+	<Graph YAXISTEXT="seconds" description="Extreme WiNG Access Point SysUpTime (RestAPI)" displayName="Extreme WiNG Access Point SysUpTime" failureThreshold="1" graphName="ExtremeWiNGAPSysUpTime" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Extreme Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="ExtremeWiNGAPSysUpTime" METHOD="GET" HEADERS="X-Key" APIURL="/SysUpTime" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="ExtremeWiNGAPSysUpTime" APINAME="ExtremeWiNGAPSysUpTime"/>
+	
+	<DevicePackageToGraph deviceType="Extreme WiNG Controller" graphName="ExtremeWiNGControllerSysUpTime"/>
+	<DevicePackageToGraph deviceType="Extreme WiNG Thin AccessPoint" graphName="ExtremeWiNGAPSysUpTime"/>
+
+	<!-- Extreme Monitors Ends -->
+
+	<!-- Fortinet Monitors Starts -->
+	<Graph YAXISTEXT="Percentage" description="CPU Utilization for FortiWiFi (RESTAPI)" displayName="FortiWiFi Controller CPU Utilization" failureThreshold="1" graphName="FortiWiFiWLCCPUUtilization" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FortiWiFiWLCCPUUtilization" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="FortiWiFiWLCCPUUtilization" APINAME="FortiWiFiWLCCPUUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Memory Utilization for FortiWiFi (RESTAPI)" displayName="FortiWiFi Controller Memory Utilization" failureThreshold="1" graphName="FortiWiFiWLCMemUtilization" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FortiWiFiWLCMemUtilization" METHOD="GET" HEADERS="X-Key" APIURL="/mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="FortiWiFiWLCMemUtilization" APINAME="FortiWiFiWLCMemUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Disk Utilization for FortiWiFi (RESTAPI)" displayName="FortiWiFi Controller Disk Utilization" failureThreshold="1" graphName="FortiWiFiWLCDiskUtilization" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FortiWiFiWLCDiskUtilization" METHOD="GET" HEADERS="X-Key" APIURL="/disk" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="FortiWiFiWLCDiskUtilization" APINAME="FortiWiFiWLCDiskUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="CPU Utilization for FortiAP (RESTAPI)" displayName="FortiAP CPU Utilization" failureThreshold="1" graphName="FortiAPCPUUtilization" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FortiAPCPUUtilization" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="FortiAPCPUUtilization" APINAME="FortiAPCPUUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Memory Utilization for FortiAP (RESTAPI)" displayName="FortiAP Memory Utilization" failureThreshold="1" graphName="FortiAPMemoryUtilization" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FortiAPMemoryUtilization" METHOD="GET" HEADERS="X-Key" APIURL="/mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="FortiAPMemoryUtilization" APINAME="FortiAPMemoryUtilization"/>
+
+	<Graph YAXISTEXT="Number(s)" description="FortiAP Client count (RestAPI)" displayName="FortiAP Client count" failureThreshold="1" graphName="FortiAPClientCount" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Fortinet">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="FortiAPClientCount" METHOD="GET" HEADERS="X-Key" APIURL="/clientCount" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="FortiAPClientCount" APINAME="FortiAPClientCount"/>
+
+	<DevicePackageToGraph deviceType="FortiWiFi Controller" graphName="FortiWiFiWLCCPUUtilization|FortiWiFiWLCMemUtilization|FortiWiFiWLCDiskUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="FortiWiFi Thin AccessPoint" graphName="FortiAPCPUUtilization|FortiAPMemoryUtilization" dialtype="meter" unit="%"/>
+	<DevicePackageToGraph deviceType="FortiWiFi Thin AccessPoint" graphName="FortiAPClientCount"  dialtype="number" unit="Nos"/>
+
+    <DevicePackageToGraph deviceType="FortiGate NGFW" graphName="FortiWiFiWLCCPUUtilization|FortiWiFiWLCMemUtilization|FortiWiFiWLCDiskUtilization" dialtype="meter" unit="%"/>
+
+	<!-- Fortinet Monitors Ends -->
+
+	<!-- Celona Monitors Starts -->
+	<Graph YAXISTEXT="Percentage" description="Monitor the CPU of Celona Edge Node" displayName="CPU Utilization" failureThreshold="1" graphName="api-CelonaEdgeNodeCPU" graphType="node" isNumeric="true" pollDataType="3" oid="API" showDial="true" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Celona">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+	</Graph>
+	
+	<Graph YAXISTEXT="Percentage" description="Monitor the Memory of Celona Edge Node" displayName="Memory Utilization" failureThreshold="1" graphName="api-CelonaEdgeMem" graphType="node" isNumeric="true" pollDataType="3" oid="API" showDial="true" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Celona">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+	</Graph>
+
+	<Graph YAXISTEXT="Minutes" description="Celona Edge Node up time" displayName="Edge Node UpTime" failureThreshold="1" graphName="api-CelonaEdgeNodeUpTime" graphType="node" isNumeric="true" oid="API" showDial="true" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Celona">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+	</Graph>
+	<DevicePackageToGraph deviceType="Celona Edge Express" graphName="api-CelonaEdgeNodeCPU|api-CelonaEdgeMem|api-CelonaEdgeNodeUpTime"/>
+
+	<Graph YAXISTEXT="Minutes" description="Celona AccessPoint up time" displayName="Access Point UpTime" failureThreshold="1" graphName="api-CelonaAPUpTime" graphType="node" isNumeric="true" oid="API" showDial="true" period="900" protocol="RESTAPI" saveAbsolutes="false" timeAvg="false" vendorName="Celona">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV3"/>
+	</Graph>
+	<DevicePackageToGraph deviceType="Celona Access Points" graphName="api-CelonaAPUpTime"/>
+	<!-- Celona Monitors Ends -->
+	
+	<!-- Palo Alto BGP Monitor starts (REST API based - no SNMP OID) -->
+	<Graph  YAXISTEXT="In Updates" description="BGP Peer In Updates" displayName="BGP Peer In Updates" failureThreshold="1" graphName="paloaltoBGPPeerInUpdate" graphType="multiple" isNumeric="true" numericType="1" oid="paloaltoBGPPeerInUpdate" period="300" protocol="RESTAPI" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+			<UserProps propName="GROUPNAME" propValue="PALOALTO"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="paloaltoBGPPeerInUpdate" METHOD="GET" HEADERS="" APIURL="/api" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PALOALTO" HANDLEREDIRECTS="TRUE">
+			</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="paloaltoBGPPeerInUpdate" APINAME="paloaltoBGPPeerInUpdate"/>
+	<Graph  YAXISTEXT="Out Updates" description="BGP Peer Out Updates" displayName="BGP Peer Out Updates" failureThreshold="1" graphName="paloaltoBGPPeerOutUpdate" graphType="multiple" isNumeric="true" numericType="1" oid="paloaltoBGPPeerOutUpdate" period="300" protocol="RESTAPI" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+			<UserProps propName="GROUPNAME" propValue="PALOALTO"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="paloaltoBGPPeerOutUpdate" METHOD="GET" HEADERS="" APIURL="/api" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PALOALTO" HANDLEREDIRECTS="TRUE">
+			</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="paloaltoBGPPeerOutUpdate" APINAME="paloaltoBGPPeerOutUpdate"/>
+	<Graph  YAXISTEXT="Total Messages Sent" description="BGP Peer Total Messages Sent" displayName="BGP Peer Total Messages Sent" failureThreshold="1" graphName="paloaltoBGPPeerTotalMessageSent" graphType="multiple" isNumeric="true" numericType="1" oid="paloaltoBGPPeerTotalMessageSent" period="300" protocol="RESTAPI" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+			<UserProps propName="GROUPNAME" propValue="PALOALTO"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="paloaltoBGPPeerTotalMessageSent" METHOD="GET" HEADERS="" APIURL="/api" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PALOALTO" HANDLEREDIRECTS="TRUE">
+			</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="paloaltoBGPPeerTotalMessageSent" APINAME="paloaltoBGPPeerTotalMessageSent"/>
+	<Graph  YAXISTEXT="Total Messages Received" description="BGP Peer Total Messages Received" displayName="BGP Peer Total Messages Received" failureThreshold="1" graphName="paloaltoBGPPeerTotalMessageReceived" graphType="multiple" isNumeric="true" numericType="1" oid="paloaltoBGPPeerTotalMessageReceived" period="300" protocol="RESTAPI" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Palo Alto Networks">
+			<UserProps propName="GROUPNAME" propValue="PALOALTO"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="paloaltoBGPPeerTotalMessageReceived" METHOD="GET" HEADERS="" APIURL="/api" RESPONSE_FORMAT="XML" REQUEST_FORMAT="STRING" APIGROUP="PALOALTO" HANDLEREDIRECTS="TRUE">
+			</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="paloaltoBGPPeerTotalMessageReceived" APINAME="paloaltoBGPPeerTotalMessageReceived"/>
+	<!-- Palo Alto BGP Monitor Ends-->
+	<!-- Ubiquiti Monitors Starts -->
+	<Graph YAXISTEXT="Days" description="Ubiquiti Controller SysUptime (RestAPI)" displayName="Ubiquiti Controller SysUptime" failureThreshold="1" graphName="UbiquitiWLCUptime" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiWLCUptime" METHOD="GET" HEADERS="X-Key" APIURL="/SysUpTime" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiWLCUptime" APINAME="UbiquitiWLCUptime"/>
+
+	<Graph YAXISTEXT="Number(s)" description="Ubiquiti Controller Guest Connected (RestAPI)" displayName="Ubiquiti Controller Guest Connected" failureThreshold="1" graphName="UbiquitiWLCGuestConnected" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiWLCGuestConnected" METHOD="GET" HEADERS="X-Key" APIURL="/guestConnected" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiWLCGuestConnected" APINAME="UbiquitiWLCGuestConnected"/>
+
+	<Graph YAXISTEXT="Number(s)" description="Ubiquiti Controller User Connected (RestAPI)" displayName="Ubiquiti Controller User Connected" failureThreshold="1" graphName="UbiquitiWLCUserConnected" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiWLCUserConnected" METHOD="GET" HEADERS="X-Key" APIURL="/userConnected" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiWLCUserConnected" APINAME="UbiquitiWLCUserConnected"/>
+
+	<Graph YAXISTEXT="Number(s)" description="Ubiquiti Controller Disconnected AP (RestAPI)" displayName="Ubiquiti Controller Disconnected AP" failureThreshold="1" graphName="UbiquitiWLCDisconnectedAP" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiWLCDisconnectedAP" METHOD="GET" HEADERS="X-Key" APIURL="/apDisconnected" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiWLCDisconnectedAP" APINAME="UbiquitiWLCDisconnectedAP"/>
+
+	<Graph YAXISTEXT="Number(s)" description="Ubiquiti Controller Pending AP (RestAPI)" displayName="Ubiquiti Controller Pending AP" failureThreshold="1" graphName="UbiquitiWLCPendingAP" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiWLCPendingAP" METHOD="GET" HEADERS="X-Key" APIURL="/pendingAP" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiWLCPendingAP" APINAME="UbiquitiWLCPendingAP"/>
+
+	<Graph YAXISTEXT="Percentage" description="Ubiquiti AP CPU Utilization (RestAPI)" displayName="Ubiquiti AP CPU Utilization" failureThreshold="1" graphName="UbiquitiAPCPUUtilization" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiAPCPUUtilization" METHOD="GET" HEADERS="X-Key" APIURL="/cpu" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiAPCPUUtilization" APINAME="UbiquitiAPCPUUtilization"/>
+
+	<Graph YAXISTEXT="Percentage" description="Ubiquiti AP Memory Utilization (RestAPI)" displayName="Ubiquiti AP Memory Utilization" failureThreshold="1" graphName="UbiquitiAPMemoryUtilization" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiAPMemoryUtilization" METHOD="GET" HEADERS="X-Key" APIURL="/mem" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiAPMemoryUtilization" APINAME="UbiquitiAPMemoryUtilization"/>
+
+	<Graph YAXISTEXT="" description="Ubiquiti AP SysUptime (RestAPI)" displayName="Ubiquiti AP SysUptime" failureThreshold="1" graphName="UbiquitiAPUptime" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiAPUptime" METHOD="GET" HEADERS="X-Key" APIURL="/SysUpTime" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiAPUptime" APINAME="UbiquitiAPUptime"/>
+
+	<Graph YAXISTEXT="Number(s)" description="Ubiquiti AP Client Count (RestAPI)" displayName="Ubiquiti AP Client Count" failureThreshold="1" graphName="UbiquitiAPClientCount" graphType="node" isNumeric="true" oid="API" period="900" protocol="RESTAPI" saveAbsolutes="true" timeAvg="false" vendorName="Ubiquiti Networks">
+		<UserProps propName="GROUPNAME" propValue="RESTAPIV2"/>
+	</Graph>
+	<RESTAPIGRAPHDETAILS APINAME="UbiquitiAPClientCount" METHOD="GET" HEADERS="X-Key" APIURL="/clientCount" RESPONSE_FORMAT="JSON" REQUEST_FORMAT="STRING" APIGROUP="RESTAPIV2" HANDLEREDIRECTS="TRUE">
+	</RESTAPIGRAPHDETAILS>
+	<RESTAPIGRAPHMAP GRAPHNAME="UbiquitiAPClientCount" APINAME="UbiquitiAPClientCount"/>
+
+	<DevicePackageToGraph deviceType="Ubiquiti Controller" graphName="UbiquitiWLCUptime"/>
+	<DevicePackageToGraph deviceType="Ubiquiti Thin AccessPoint" graphName="UbiquitiAPCPUUtilization|UbiquitiAPMemoryUtilization|UbiquitiAPUptime|UbiquitiAPClientCount"/>
+
+	<!-- Ubiquiti Monitors Ends -->
+
+</GRAPHDETAIL>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+
+<DeviceConfiguration>
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:citrix_netscaler" templatename="Citrix_NetScaler" displayname="Citrix Netscaler Firewall" ostype="" description="For all Citrix Netscaler Firewall devices">
+        <NCMVendorDevice vendorid="Citrix" />
+        <NCMDevicePersonality personalityid="CitrixNetScaler" />
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SCP"/>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:citrix_scp_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:citrix_netscaler" managementprotocolid="SSH" transferprotocolid="SCP" displayname="SSH - SCP">
+
+            <NCMDeviceCriteria commandmapid="SSH_SCP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="CitrixNetScaler_config_fetch" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="CitrixNetScaler_config_push" />
+
+                <!-- Enable change Tracking Thru Syslog -->
+                
+		        <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Citrix_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Citrix_Disable_Change_Tracking_Syslog" />
+
+               
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:citrix_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:citrix_netscaler" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+        
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="CitrixNetScaler_config_cli_fetch" taskhandling="true"/>
+         <NCMReadFromResponse operationid="BackupRunningConfig" recordid="citrix_cli_run_rec"/>
+
+        
+         <!-- Enable change Tracking Thru Syslog -->
+
+         <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Citrix_Enable_Change_Tracking_Syslog" />
+         <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Citrix_Disable_Change_Tracking_Syslog" />
+			 
+        
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:citrix_netscaler_mpx" templatename="Citrix_NetScaler_MPX" displayname="Citrix Netscaler MPX Firewall" ostype="" description="For all Citrix Netscaler MPX-8400 Firewall devices">
+        <NCMVendorDevice vendorid="Citrix" />
+        <NCMDevicePersonality personalityid="CitrixNetScalerMPX" />
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:citrix_netscaler_mpx_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:citrix_netscaler_mpx" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+        
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="citrix_netscaler_mpx_config_cli_fetch" taskhandling="true"/>
+         <NCMReadFromResponse operationid="BackupRunningConfig" recordid="citrix_netscaler_mpx_cli_run_rec13"/>
+        
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>
+
+

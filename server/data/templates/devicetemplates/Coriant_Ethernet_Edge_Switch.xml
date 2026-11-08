@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For all Coriant Ethernet Edge Switch" displayName="Coriant Ethernet Edge Switch" osType="" templateName="Coriant_Ethernet_Edge_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Coriant" vendorName="Coriant">
+		<Commands>
+			<Command commandstr="show equipment"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="true"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Coriant Ethernet Edge Switch" personalityName="CoriantEthernetEdgeSwitch">	
+		<Login enablecommand="enable" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SysLocation" size="30" desc="SysLocation of Coriant Ethernet Edge Switch" displayname="SysLocation" defaultvalue="Not Available" sequenceid="1"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CoriantEthernetSwitchHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_coriant_ethernet_edge_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="\s*sysLocation:\s*(.*)" NAME="SYSTEMLOCATION">
+											<PARAM NAME="SYSTEMLOCATION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol>
+					<Commands>
+						<Command commandstr="show equipment" parsercommandname="hardware_prop_coriant_ethernet_edge_switch" responseparserid="coriant_ethernet_edge_switch_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="30000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

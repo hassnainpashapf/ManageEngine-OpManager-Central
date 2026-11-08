@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For E-Series -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_e_switch_e1200" templatename="Force10_E_Series_Switch" displayname="Force10 E-Series Switch" ostype="FTOS" description="For all Force10 E-Series Switches">
+        <NCMVendorDevice vendorid="Force10" />
+        <NCMDevicePersonality personalityid="Force10Switch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:force10_e_switch_e1200_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_e_switch_e1200"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="force10switch_e_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="force10switch_e_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="force10switch_e_cli_startup_config_upload"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="force10switch_e_cli_running_config_upload"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="force10switch_e_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:force10_e_switch_e1200_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_e_switch_e1200"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="force10switch_e_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="force10switch_e_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="force10switch_e_cli_startup_config_upload"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="force10switch_e_cli_running_config_upload"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="force10switch_e_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+		<!-- TELNET and SSH -->
+		
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:force10switch_e_cli_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_e_switch_e1200" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="force10switch_e_cli_telnet_startup_config_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="force10switch_e_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="force10switch_e_cli_telnet_running_config_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="force10switch_e_show_running_config_rec"/>
+
+
+		
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:force10switch_e_cli_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_e_switch_e1200" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="force10switch_e_cli_telnet_startup_config_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="force10switch_e_cli_show_startup_config_rec"/>
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="force10switch_e_cli_telnet_running_config_backup" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="force10switch_e_show_running_config_rec"/>
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_enable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+    </NCMDeviceTemplate>
+
+
+    <!-- For C-Series -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_c_switch_c300" templatename="Force10_C_Series_Switch" displayname="Force10 C-Series Switch" ostype="FTOS" description="For all Force10 C-Series Switches">
+        <NCMVendorDevice vendorid="Force10"/>
+        <NCMDevicePersonality personalityid="Force10Switch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:force10_c_switch_c300_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_c_switch_c300"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="force10switch_e_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="force10switch_e_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="force10switch_e_cli_startup_config_upload"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="force10switch_e_cli_running_config_upload"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="force10switch_e_cli_copy_running_to_startup" />
+
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:force10_c_switch_c300_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_c_switch_c300"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="force10switch_e_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="force10switch_e_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="force10switch_e_cli_startup_config_upload"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="force10switch_e_cli_running_config_upload"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="force10switch_e_cli_copy_running_to_startup" />
+
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="force10switch_e_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+    <!-- For S-Series -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_s_switch_s25p" templatename="Force10_S_Series_Switch" displayname="Force10 S-Series Switch" ostype="SFTOS" description="For all Force10 S-Series Switches">
+        <NCMVendorDevice vendorid="Force10"/>
+        <NCMDevicePersonality personalityid="Force10Switch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:force10_s_switch_s25p_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_s_switch_s25p"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="force10switch_s_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="force10switch_s_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="force10switch_s_cli_startup_config_upload"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="force10switch_s_cli_running_config_upload"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="force10switch_s_cli_copy_running_to_startup" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:force10_s_switch_s25p_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:force10_s_switch_s25p"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="force10switch_s_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="force10switch_s_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="force10switch_s_cli_startup_config_upload"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="force10switch_s_cli_running_config_upload"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="force10switch_s_cli_copy_running_to_startup" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

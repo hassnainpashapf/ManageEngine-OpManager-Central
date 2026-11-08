@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- execute copy running config tftp command mode -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_switch_cli_fetch_startup_ispec_1"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy startup-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="hp_switch_cli_fetch_startup_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+	    <InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_switch_cli_config_get_running_ispec_1"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_switch_cli_config_get_running_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="." commandecho="false" promptecho="true" promptactionid="hpActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_switch_cli_push_startup_ispec_1"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy tftp startup-config ${UserInput:tftp_server_address} ${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_switch_cli_push_startup_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<!-- HP P Series Switch -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="hppActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_p_series_switch_cli_config_get_running_ispec_1"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="/c/ptcfg ${UserInput:tftp_server_address} ${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="hp_p_series_switch_cli_config_get_running_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="..">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="hp_p_series_switch_cli_config_terminal_exit1_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+
+
+<!-- Records & interaction spec for downloading running config thru conf t mode -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="180000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="hpActionId">
+	<InteractionSpec timeout="180000" protocol="CLI" interactionid="hp_switch_cli_push_running_conft_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="configure terminal">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hp_switch_cli_push_running_conft_rec_1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="${UserInput:FileContents}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hp_switch_cli_push_running_conft_rec_2" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="exit">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hp_switch_cli_push_running_conft_rec_3" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+
+<!-- 4100gl series Running Config download record and interaction spec -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="hpActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_4100gl_switch_cli_push_running_ispec_1"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="copy tftp running-config ${UserInput:tftp_server_address} ${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_4100gl_switch_cli_push_running_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<!-- 4000M Upload & Download records and interaction specs-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_4000M_switch_cli_prompt_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="54">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_4000M_switch_cli_prompt_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_4000M_switch_cli_fetch_running_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="put ${UserInput:tftp_server_address} CONFIG ${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_4000M_switch_cli_fetch_running_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_4000M_switch_cli_push_running_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="get ${UserInput:tftp_server_address} CONFIG ${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_4000M_switch_cli_push_running_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_4000M_switch_cli_exit_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="exit">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_4000M_switch_cli_exit_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_4000M_switch_cli_logout_ispec_1"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="00">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_4000M_switch_cli_logout_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="hp_4000M_switch_cli_logout_ispec_2"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="Y">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="hp_4000M_switch_cli_logout_rec_2" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- HP Ethernet Switch -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="180000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="3comActionId">
+	<InteractionSpec timeout="180000" protocol="CLI" interactionid="hp_ethernet_switch_backup_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="tftp ${UserInput:tftp_server_address} put startup.cfg ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="hp_ethernet_switch_backup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="no page">
+            <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1" >    
+                <Record type="CLI" recordid="hp_switch_paging_disable_rec" protocol="CLI"/>
+	        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="show config">
+            <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1" >    
+                <Record type="CLI" recordid="show_hp_switch_startup" protocol="CLI"/>
+	        </CLIInputRecord>
+    </CLICommand>
+	
+    <CLICommand command="show running-config">
+            <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1" >    
+                <Record type="CLI" recordid="show_hp_switch_running" protocol="CLI"/>
+	        </CLIInputRecord>
+    </CLICommand>
+	
+</CLICommandList>

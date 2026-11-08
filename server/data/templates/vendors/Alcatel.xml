@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For AlcatelSwitch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatel_switch" templatename="Alcatel_OmniSwitch"  displayname="Alcatel OmniSwitch"  description="For all omniswitch">
+        <NCMVendorDevice vendorid="Alcatel"/>
+
+        <NCMDevicePersonality personalityid="AlcatelSwitch"/>
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatel_switch"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alcatel_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alcatel_switch_cli_fetch_running_rec"/>
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatel_switch"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alcatel_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alcatel_switch_cli_fetch_running_rec"/>
+
+
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+    </NCMDeviceTemplate>
+
+   <!-- For AlcatelSwitch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatel_6200_switch"
+	    templatename="Alcatel_6200_OmniStackSwitch"  displayname="Alcatel OmniStack 6200"  description="For OmniStack switch 6200">
+	    <NCMVendorDevice vendorid="Alcatel"/>
+
+	    <NCMDevicePersonality personalityid="AlcatelSwitch"/>
+
+	    <NCMSupportedProtocol protocolid="TELNET">
+		    <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+	    </NCMSupportedProtocol>
+
+	    <NCMSupportedProtocol protocolid="SSH">
+		    <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+	    </NCMSupportedProtocol>
+
+	    <NCMSupportedProtocol protocolid="TFTP"/>
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_6200_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatel_6200_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		    <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alcatel_cli_6200_switch_startup_config_backup" />
+			          <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alcatel_cli_6200_switch_running_config_backup" />
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_6200_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatel_6200_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alcatel_cli_6200_switch_startup_config_backup" />
+			    <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alcatel_cli_6200_switch_running_config_backup" />
+		    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>                                                          
+    
+<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_6200_ssh1" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatel_6200_switch"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alcatel_6200_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alcatel_6200_cli_backup_show_startup"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alcatel_6200_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alcatel_6200_cli_backup_show_running"/>
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_6200_telnet1" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatel_6200_switch"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+	
+
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alcatel_6200_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alcatel_6200_cli_backup_show_startup"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alcatel_6200_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alcatel_6200_cli_backup_show_running"/>
+	
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+<!-- For Alcatel-Lucent 7750 Service Router -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatelrouter"
+	    templatename="AlcateRouter"  displayname="Alcatel Service Router"  description="For all Alcatel-Lucent 7750 Service Routers">
+	    <NCMVendorDevice vendorid="Alcatel"/>
+
+	    <NCMDevicePersonality personalityid="AlcatelRouter"/>
+
+	    <NCMSupportedProtocol protocolid="TELNET">
+		    <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+	    </NCMSupportedProtocol>
+
+	    <NCMSupportedProtocol protocolid="SSH">
+		    <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+	    </NCMSupportedProtocol>
+
+	    <NCMSupportedProtocol protocolid="TFTP"/>
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_7500_servicerouter_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatelrouter" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		    <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alcatel_7500_servicerouter_startup_config_backup" />
+				    </NCMDeviceCriteria>
+	    </NCMProtocolCombination>
+
+	    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_7500_servicerouter_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatelrouter" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		    <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			    <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alcatel_7500_servicerouter_startup_config_backup" />
+		   </NCMDeviceCriteria>
+	    </NCMProtocolCombination>                                                          
+    
+<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_7500_servicerouter_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatelrouter"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alcatel_7500_servicerouter_cli_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alcatel_7500_servicerouter_cli_backup_show_startup"/>	
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alcatel_7500_servicerouter_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alcatelrouter"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">      
+
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alcatel_7500_servicerouter_cli_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alcatel_7500_servicerouter_cli_backup_show_startup"/>	
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>
+
+
+

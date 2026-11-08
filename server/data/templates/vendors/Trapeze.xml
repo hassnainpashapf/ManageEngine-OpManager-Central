@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Trapeze WLAN Controller -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:trapeze_wlan_controller" templatename="Trapeze_WLAN_Controller" ostype="NA" displayname="Trapeze WLAN Controller MX 800" description="For all Trapeze WLAN Controller">
+        <NCMVendorDevice vendorid="Trapeze" />
+        <NCMDevicePersonality personalityid="TrapezeWLANController" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:trapeze_wlan_controller_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:trapeze_wlan_controller"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+      <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="trapeze_wlan_controller_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="trapeze_wlan_controller_cli_fetch_running_rec"/>
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:trapeze_wlan_controller_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:trapeze_wlan_controller"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="trapeze_wlan_controller_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="trapeze_wlan_controller_cli_fetch_running_rec"/>	
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	
+	
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+
+<!-- Records and Interactionspec definition are under mibselection directory -->
+<MibSelection>
+	<NCMMIBSelection interactionspecid="mib_selection_snmp_get" mibid="NCMMIBSelection:mibid:UVH@9346914" mibname="CISCO-CONFIG-COPY-MIB" recordid="for_cisco_config_copy_mib"/>
+	<NCMMIBSelection interactionspecid="mib_selection_snmp_get" mibid="NCMMIBSelection:mibid:UVH@25288004" mibname="OLD-CISCO-SYS-MIB" recordid="for_old_cisco_sys_mib"/>
+</MibSelection>
+

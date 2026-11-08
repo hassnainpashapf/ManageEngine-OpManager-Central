@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For all Cisco Catalyst 9100,9120AX Series Access points" displayName="Cisco Catalyst Access Point" osType="IOS XE" templateName="Cisco_Catalyst_Access_Point" multiConfigTemplate="false" category="Access Point">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces network"/>
+			<Command commandstr="show interfaces wired"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show inventory"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Startup">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="InterfaceDetails">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="Enable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging trap ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="50" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Disable">
+                	<Command commandstr="configure terminal" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cisco Catalyst Access Point" personalityName="CiscoCatalystAccessPoint">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="PROCESSOR" size="150" desc="" displayname="Processor" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="TOTALMEMORY" size="150" desc="" displayname="Total Memory" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="USEDSHAREDMEMORY" size="150" desc="" displayname="Used Shared Memory" defaultvalue="Not Available" sequenceid="15"/>
+				<Column name="PROCESSORBOARDID" size="100" desc="" displayname="Processor Board ID" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="PCBSERIALNUMBER" size="100" desc="" displayname="PCB Serial Number" defaultvalue="Not Available" sequenceid="25"/>
+				<Column name="BOOTLOADER" size="100" desc="" displayname="Bootloader" defaultvalue="Not Available" sequenceid="30"/>
+				<Column name="BOOTLOADERVERSION" size="100" desc="" displayname="Bootloader Version" defaultvalue="Not Available" sequenceid="35"/>
+				<Column name="PRIMARYBOOTIMAGE" size="100" desc="" displayname="Primary Boot Image" defaultvalue="Not Available" sequenceid="40"/>
+				<Column name="BACKUPBOOTIMAGE" size="100" desc="" displayname="Backup Boot Image" defaultvalue="Not Available" sequenceid="45"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+					<Regex>^Using.*out.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging on</Regex>
+					<Regex>logging trap (emergencies|alerts|critical|errors|warnings)</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>(logging $SYSLOG_SERVER_IP$)|(logging host $SYSLOG_SERVER_IP$)</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoCatalystAPHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_ap_sh_inven">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="SERIES1" EXPRESSION=".*(?i)DESCR\s*:\s*&quot;*Cisco\sCatalyst\s(\S+)\sSeries.*">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*PID\s*:\s*((\w+)\S+).*SN\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="2"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="3"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						<COMMAND NAME="hardware_prop_ap_sh_ver">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*(?i)AP\s+Running\s+Image\s*:\s*(\S+).*">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PROCESSOR" EXPRESSION=".*(?i)cisco\s+\S+\s+(ARMv\d+\s+Processor\s+rev\s+\d+\s+\(.*?\)).*with\s+(\d+)\/(\d+)K\s+bytes\s+of\s+memo.*">
+											<PARAM NAME="PROCESSOR" TOKENNO="1"/>
+											<PARAM NAME="TOTALMEMORY" TOKENNO="2"/>
+											<PARAM NAME="USEDSHAREDMEMORY" TOKENNO="3"/>
+										</REGEX>
+										<REGEX NAME="PROCESSORBOARDID" EXPRESSION=".*(?i)Processor\s+board\s+ID\s+(\S+).*">
+											<PARAM NAME="PROCESSORBOARDID" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="PCBSERIALNUMBER" EXPRESSION=".*(?i)PCB\s+Serial\s+Number\s*:\s*(\S+).*">
+											<PARAM NAME="PCBSERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*(?i)MAC\s+Address\s*:\s*(\S+).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BOOTLOADER" EXPRESSION=".*(?i)BOOTLDR\s*:\s*(\S+).*Version\s+(\S+).*">
+											<PARAM NAME="BOOTLOADER" TOKENNO="1"/>
+											<PARAM NAME="BOOTLOADERVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="PRIMARYBOOTIMAGE" EXPRESSION=".*(?i)Primary\s+Boot\s+Image\s*:\s*(\S+).*">
+											<PARAM NAME="PRIMARYBOOTIMAGE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="BACKUPBOOTIMAGE" EXPRESSION=".*(?i)Backup\s+Boot\s+Image\s*:\s*(\S+).*">
+											<PARAM NAME="BACKUPBOOTIMAGE" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show inventory" parsercommandname="hardware_prop_ap_sh_inven" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show version" parsercommandname="hardware_prop_ap_sh_ver" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

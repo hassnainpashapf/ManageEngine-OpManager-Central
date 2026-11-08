@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+<!-- Juniper Virtual Chassis -->
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="Virtual Chassis Switch Memory Utilization" displayName="Virtual Chassis Switch Memory Utilization" failureThreshold="1" graphName="jnxVCMemberMemoryUtilization" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2636.3.1.13.1.11.9" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Celsius" description="Virtual Chassis Switch Temperature" displayName="Virtual Chassis Switch Temperature" failureThreshold="1" graphName="jnxVCMemberRETemperature" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2636.3.1.13.1.7.9" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="Virtual Chassis Switch CPU Utilization" displayName="Virtual Chassis Switch CPU Utilization" failureThreshold="1"  graphName="jnxVCMemberRECPUUtilization" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2636.3.1.13.1.8.9" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="Virtual Chassis Switch CPU Utilization 5 Min Avg" displayName="Virtual Chassis Switch CPU Utilization 5Min Avg" failureThreshold="1" graphName="jnxVCMemberRE5MinAvgCPUUtilization" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2636.3.1.13.1.21.9" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Status" description="Virtual Chassis Switch Status" displayName="Virtual Chassis Switch Status" failureThreshold="1"  graphName="jnxVCMemberOperatingState" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2636.3.1.13.1.6.9" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Role" description="Virtual Chassis Switch Role" displayName="Virtual Chassis Switch Role" failureThreshold="1"  graphName="jnxVCMemberSwitchRole" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2636.3.40.1.4.1.1.1.3" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Priority" description="Virtual Chassis Switch priority" displayName="Virtual Chassis Switch priority" failureThreshold="1" graphName="jnxVCMemberPriority" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.2636.3.40.1.4.1.1.1.6" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Juniper" pollDataType="1">
+<UserProps/>
+</Graph>
+<!-- Cisco Switch Stack -->
+<Graph DisplayColumn="" Index="" YAXISTEXT="Status" description="Stackable Switch Status" displayName="Stackable Switch Status" failureThreshold="1"  graphName="ciscoswSwitchState" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.500.1.2.1.1.6" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Role" description="Stackable Switch Role" displayName="Stackable Switch Role" failureThreshold="1" graphName="cisco1cswSwitchRole" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.500.1.2.1.1.3" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph YAXISTEXT="Status" description="Redundant Ring connection Status" displayName="Redundant Ring connection Status" failureThreshold="1" graphName="ciscoswRingRedundant" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.500.1.1.3.0" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph YAXISTEXT="Status" description="Chassis Fan Status" displayName="Chassis Fan Status" failureThreshold="1" graphName="cswchassisFanStatus" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.5.1.2.9.0" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph YAXISTEXT="Status" description="Chassis PS1 Status" displayName="Chassis PS1 Status" failureThreshold="1" graphName="cswchassisPs1Status" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.5.1.2.4.0" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph YAXISTEXT="Status" description="Chassis PS2 Status" displayName="Chassis PS2 Status" failureThreshold="1" graphName="cswchassisPs2Status" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.5.1.2.7.0" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Status" description="Stack Port Status" displayName="Stack Port Status" failureThreshold="1" graphName="Cisco-cswStackPortOperStatus" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.500.1.2.2.1.1" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Priority" description="Stackable Switch Hardware priority" displayName="Stackable Switch Hardware priority" failureThreshold="1" graphName="cisco-csw1SwitchHwPriority" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.500.1.2.1.1.5" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Priority" description="Stackable Switch Software priority" displayName="Stackable Switch Software priority" failureThreshold="1" graphName="cisco-csw1SwitchSwPriority" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.500.1.2.1.1.4" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<!-- Cisco VSS -->
+<Graph DisplayColumn="" Index="" YAXISTEXT="Role" description="Virtual Switch Role" displayName="Virtual Switch Role" failureThreshold="1" graphName="cisco-cvsChassisRole" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.388.1.2.2.1.2" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Status" description="Virtual Switch Link Status" displayName="Virtual Switch Link Status" failureThreshold="1" graphName="cisco-
+cvsVSLConnectOperStatus" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.9.9.388.1.3.1.1.3" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph YAXISTEXT="Hours" description="Virtual Switch UpTime" displayName="Virtual Switch UpTime" failureThreshold="1" graphName="vssSysUpTime" graphType="multiple" isNumeric="true" numericType="1" oid="(.1.3.6.1.4.1.9.9.388.1.2.2.1.3/360000)" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Cisco" pollDataType="1">
+<UserProps/>
+</Graph>
+<!-- Fortinet High Availability -->
+<Graph DisplayColumn="" Index="" YAXISTEXT="HA Mode" description="Master Switch HA Mode" displayName="Master Switch HA Mode" failureThreshold="1" graphName="fgt_MasterHaSystemMode" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12356.101.13.1.1.1" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="HA Switch CPU Utilization" displayName="HA Switch CPU Utilization" failureThreshold="1" graphName="fn_hamemberCpuUtil" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12356.101.13.2.1.1.3" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="HA Switch Memory Utilization" displayName="HA Switch Memory Utilization" failureThreshold="1" graphName="fn_hamemberMemoryUtil" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12356.101.13.2.1.1.4" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Sessions" description="HA Switch Session Count" displayName="HA Switch Session Count" failureThreshold="1" graphName="fn_hamemberSessionCount" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12356.101.13.2.1.1.6" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Status" description="HA Sync Status" displayName="HA Sync Status" failureThreshold="1" graphName="fn_haSyncState" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.12356.101.13.2.1.1.12" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet" pollDataType="1">
+<UserProps/>
+</Graph>
+<!-- HP Aruba Switch Stack -->
+<Graph YAXISTEXT="Status" description="Stack Operational Status" displayName="Stack Operational Status" failureThreshold="1" graphName="hpstack_hpStackOperStatus" graphType="node" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.11.2.14.11.5.1.69.1.1.2.0" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Role" description="Stackable Switch Role" displayName="Stackable Switch Role" failureThreshold="1" graphName="hpstack_hpStackMemberState" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.11.2.14.11.5.1.69.1.3.1.9" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Hours" description="Stackable Switch Uptime" displayName="Stackable Switch Uptime" failureThreshold="1" graphName="hpstack_hpStackMemberUpTime" graphType="multiple" isNumeric="true" numericType="1" oid="(.1.3.6.1.4.1.11.2.14.11.5.1.69.1.3.1.11/360000)" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="Stackable Switch CPU Utilization" displayName="Stackable Switch CPU Utilization" failureThreshold="1" graphName="hpstack_hpStackMemberCpuUtil" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.11.2.14.11.5.1.69.1.3.1.15" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="Stackable Switch Memory Utilization" displayName="Stackable Switch Memory Utilization" failureThreshold="1" graphName="hpstack_stackMemberMemoryUtil" graphType="multiple" isNumeric="true" numericType="1" oid="((.1.3.6.1.4.1.11.2.14.11.5.1.69.1.3.1.16-.1.3.6.1.4.1.11.2.14.11.5.1.69.1.3.1.17)*100)/.1.3.6.1.4.1.11.2.14.11.5.1.69.1.3.1.16" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Status" description="Stack Port Status" displayName="Stack Port Status" failureThreshold="1" graphName="hpStack_PortOperStatus" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.11.2.14.11.5.1.69.1.5.1.3" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<!-- HP Aruba VSF -->
+<Graph DisplayColumn="" Index="." YAXISTEXT="Role" description="VSF Switch Role" displayName="VSF Switch Role" failureThreshold="1"  graphName="vsf_hpicfVsfVCMemberState" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.11.2.14.11.5.1.116.1.3.1.9" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Hours" description="VSF Switch Uptime" displayName="VSF Switch Uptime" failureThreshold="1" graphName="vsf_hpicfVsfVCMemberUpTime" graphType="multiple" isNumeric="true" numericType="1" oid="(.1.3.6.1.4.1.11.2.14.11.5.1.116.1.3.1.11/360000)" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="VSF Switch CPU Utilization" displayName="VSF Switch CPU Utilization" failureThreshold="1" graphName="vsf_hpicfVsfVCMemberCpuUtil" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.11.2.14.11.5.1.116.1.3.1.19" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="%" description="VSF Switch Memory Utilization" displayName="VSF Switch Memory Utilization" failureThreshold="1" graphName="vsf_hpicfVsfMemoryUtil" graphType="multiple" isNumeric="true" numericType="1" oid="((.1.3.6.1.4.1.11.2.14.11.5.1.116.1.3.1.20-.1.3.6.1.4.1.11.2.14.11.5.1.116.1.3.1.21)*100)/.1.3.6.1.4.1.11.2.14.11.5.1.116.1.3.1.20" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Status" description="VSF Link Status" displayName="VSF Link Status" failureThreshold="1" graphName="vsf_hpicfVsfVCLinkOperStatus" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.11.2.14.11.5.1.116.1.4.1.4" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+<Graph DisplayColumn="" Index="" YAXISTEXT="Status" description="VSF Port Status" displayName="VSF Port Status" failureThreshold="1" graphName="vsf_hpicfVsfVCPortOperStatus" graphType="multiple" isNumeric="true" numericType="1" oid=".1.3.6.1.4.1.11.2.14.11.5.1.116.1.5.1.1" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard" pollDataType="1">
+<UserProps/>
+</Graph>
+</GRAPHDETAIL>
+

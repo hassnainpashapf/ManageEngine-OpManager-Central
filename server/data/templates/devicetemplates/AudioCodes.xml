@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For AudioCodes Media" displayName="AudioCodes Media" osType="NA" templateName="AudioCodes Media">
+	<RestTemplate name=""/>
+	<Vendor displayName="AudioCodes" vendorName="AudioCodes">
+		<Commands>
+			<Command commandstr="show system version"/>			
+		</Commands>
+		<LoggingLevels>
+			<Level name="EMERGENCY" number="0" sequenceid="1"/>
+			<Level name="ALERT" number="1" sequenceid="2"/>
+			<Level name="CRITICAL" number="2" sequenceid="3"/>
+			<Level name="ERROR" number="3" sequenceid="4"/>
+			<Level name="WARNING" number="4" sequenceid="5"/>
+			<Level name="NOTICE" number="5" sequenceid="6"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="configure system" delay="" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="30000"/>
+                	<Command commandecho="" commandstr="cli-settings" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="3" timeout="30000"/>
+                	<Command commandecho="" commandstr="window-height 0" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="4" timeout="30000"/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="5" timeout="30000"/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="6" timeout="30000"/>
+                	<Command commandecho="" commandstr="show running-config full" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="7" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>		
+        	<OperationGroup type="Changedetection">
+            	<Operation name="Enable">
+                	<Command commandecho="" commandstr="configure troubleshoot" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="syslog" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout=""/>
+                	<Command commandecho="" commandstr="syslog on" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="4" timeout=""/>
+                	<Command commandecho="" commandstr="syslog-ip ${UserInput:HostIpAddress}" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="5" timeout=""/>
+                	<Command commandecho="" commandstr="log-level ${UserInput:LoggingLevel}" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="6" timeout=""/>
+                	<Command commandecho="" commandstr="activate" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="7" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="8" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="9" timeout=""/>
+            	</Operation>
+            	<Operation name="Disable">
+                	<Command commandecho="" commandstr="configure troubleshoot" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="syslog" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout=""/>
+                	<Command commandecho="" commandstr="syslog off" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="4" timeout=""/>
+                	<Command commandecho="" commandstr="activate" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="5" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="6" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${CRLF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="7" timeout=""/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="AudioCodesMedia" personalityName="AudioCodesMedia">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${CRLF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Software Version" displayname="Software Version" name="SOFTWARE_VERSION" sequenceid="10" size="100"/>
+				<Column defaultvalue="Not Available" desc="Hardware Version" displayname="Hardware Version" name="HARDWARE_VERSION" sequenceid="20" size="100"/>
+				<Column defaultvalue="Not Available" desc="CPU" displayname="CPU" name="CPU" sequenceid="30" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>syslog on</Regex>
+					<Regex>syslog-ip $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="AudioCodesHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_AudioCodes">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Serial\s*Number\s*:\s*(\S*).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*;Software\s*Version\s*:\s*(.*)" NAME="SOFTWARE_VERSION">
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*CPU\s*:\s*(.*)" NAME="CPU">
+											<PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*HardwareVersion\s*:\s*(.*)" NAME="HARDWARE_VERSION">
+											<PARAM NAME="HARDWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Board\s*:\s*(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>								
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system version" parsercommandname="hardware_prop_AudioCodes" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="MEDIAPACK MP-124" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.3"/>
+		<NCMDeviceSysOID model="Mediant 2000" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.31"/>
+        <NCMDeviceSysOID model="Mediant 1000" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.47"/>
+        <NCMDeviceSysOID model="MEDIANT 3000 E-SBC" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.49"/>
+        <NCMDeviceSysOID model="MEDIAPACK MP-118" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.56"/>
+        <NCMDeviceSysOID model="MEDIAPACK MP-114" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.57"/>
+        <NCMDeviceSysOID model="MEDIANT 600" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.65"/>	
+		<NCMDeviceSysOID model="Mediant 1000" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.67"/>
+        <NCMDeviceSysOID model="MEDIANT 4000 E-SBC" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.70"/>
+        <NCMDeviceSysOID model="M1000 ESBC" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.71"/>
+        <NCMDeviceSysOID model="MEDIANT 800 E-SBC" ostype="" series="Mediant 800" sysoid=".1.3.6.1.4.1.5003.8.1.1.72"/>
+        <NCMDeviceSysOID model="MEDIANT 2600 E-SBC" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.78"/>
+        <NCMDeviceSysOID model="MEDIANT VIRTUAL EDITION SBC" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.79"/>
+        <NCMDeviceSysOID model="SW 9000 SBC" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.1.1.83"/>
+        <NCMDeviceSysOID model="G680" ostype="" series="[NA]" sysoid=".1.3.6.1.4.1.5003.8.2.1.2"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

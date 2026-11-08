@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Dell Connectrix B Series Switch" osType="Fabric OS" templateName="Dell_Connectrix_BSeries_Switch" multiConfigTemplate="false" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Dell" vendorName="Dell">
+		<Commands>
+			<Command commandstr="chassisshow"/>
+			<Command commandstr="version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="configshow|more" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="240000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+			<OperationGroup type="others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandstr="cg fgsave" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="2" timeout="120000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Dell Connectrix BSeries Switch" personalityName="DellConnectrixBSeriesSwitch">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BootProm" size="150" desc="" displayname="Boot PROM" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="Kernel" size="150" desc="" displayname="Kernel" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="PART_NUM" size="150" desc="" displayname="PART_NUM" defaultvalue="Not Available" sequenceid="30"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="DellConnectrixBSeriesSwitchHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="dell_connectrix_BSeries_switch_version_cmd">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION="(.*OS):\s*(\S*).*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="BootProm" EXPRESSION=".*[Bb]oot[Pp]rom:\s*(\S*).*">
+											<PARAM NAME="BootProm" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="Kernel" EXPRESSION=".*[Kk]ernel:\s*(\S*).*">
+											<PARAM NAME="Kernel" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+						<COMMAND NAME="dell_connectrix_BSeries_switch_chassisShow_cmd">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="PART_NUM" EXPRESSION="^[Pp]art\s*[Nn]um\s*:\s*(\S*).*">
+											<PARAM NAME="PART_NUM" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION="^[Ss]erial\s*[Nn]um\s*:\s*(\S*).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="SSH">
+					<Commands operation="">
+						<Command commandstr="version" parsercommandname="dell_connectrix_BSeries_switch_version_cmd" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+						<Command commandstr="chassisShow" parsercommandname="dell_connectrix_BSeries_switch_chassisShow_cmd" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds>
+		<PromptActionId name="yesActionId" prompt="yes, y, no, n" command="yes" suffix="${LF}"/>
+	</PromptActionIds>
+</NCMDeviceTemplate>

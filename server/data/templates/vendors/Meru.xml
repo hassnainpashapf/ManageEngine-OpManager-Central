@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Meru wlan controller -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:meru_wlan_controller" templatename="Meru_Wlan_Controller" displayname="Meru WLAN controller" ostype="Meru" description="For Meru wlan controller MC1000 devices">
+        <NCMVendorDevice vendorid="Meru"/>
+        <NCMDevicePersonality personalityid="MeruWLANController"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:meru_wlan_controller_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:meru_wlan_controller"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+          <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="meru_wlan_controller_running_telnet_backup" taskhandling="true"/>
+          <NCMReadFromResponse operationid="BackupRunningConfig" recordid="meru_wlan_controller_cli_running_config_rec"/>
+			 
+          <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="meru_wlan_controller_startup_telnet_backup" taskhandling="true"/>
+          <NCMReadFromResponse operationid="BackupStartupConfig" recordid="meru_wlan_controller_cli_startup_config_rec"/>
+             
+ <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="meru_wlan_controller_Enable_Change_Tracking_Syslog" />
+ <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="meru_wlan_controller_Disable_Change_Tracking_Syslog" />
+         </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:meru_wlan_controller_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:meru_wlan_controller"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+          <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="meru_wlan_controller_running_telnet_backup" taskhandling="true"/>
+          <NCMReadFromResponse operationid="BackupRunningConfig" recordid="meru_wlan_controller_cli_running_config_rec"/>
+		  	 
+          <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="meru_wlan_controller_startup_telnet_backup" taskhandling="true"/>
+          <NCMReadFromResponse operationid="BackupStartupConfig" recordid="meru_wlan_controller_cli_startup_config_rec"/>
+             
+<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="meru_wlan_controller_Enable_Change_Tracking_Syslog" />
+<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="meru_wlan_controller_Disable_Change_Tracking_Syslog" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

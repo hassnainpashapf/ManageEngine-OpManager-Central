@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Century Systems NXR Series" displayName="Century Systems NXR Series" osType="" templateName="Century Systems NXR Series">
+	<RestTemplate name=""/>
+	<Vendor displayName="Century Systems" vendorName="CenturySystems">
+		<Commands>
+			<Command commandstr="show system"/>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="debugging" number="5" sequenceid="1"/>
+			<Level name="information" number="6" sequenceid="2"/>
+			<Level name="notification" number="7" sequenceid="3"/>
+			<Level name="warning" number="8" sequenceid="4"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="terminal length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="240000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="save config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Changedetection">
+            	<Operation name="Enable">
+                	<Command commandecho="" commandstr="config t" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="syslog" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout=""/>
+                	<Command commandecho="" commandstr="server ${UserInput:HostIpAddress}" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="4" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="5" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="6" timeout=""/>
+            	</Operation>
+            	<Operation name="Disable">
+                	<Command commandecho="" commandstr="config t" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout=""/>
+                	<Command commandecho="" commandstr="syslog" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="3" timeout=""/>
+                	<Command commandecho="" commandstr="no server ${UserInput:HostIpAddress}" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="4" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="5" timeout=""/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="6" timeout=""/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Century Systems NXR Series" personalityName="CenturySystemsNXRSeries">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Build" displayname="Build" name="BUILD" sequenceid="1" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>.*Generating current config:.*</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>server.*$SYSLOG_SERVER_IP.*</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CenturySystemsHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_century_systems_nxr_series">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Century\s*Systems\s*(\S*)\s*Series\s*ver\s*(\S*)\s*\(build\s*(.*)\).*" NAME="SERIES">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+											<PARAM NAME="BUILD" TOKENNO="3"/>
+										</REGEX>								
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>  
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_century_systems_nxr_series" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="NXR-130" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.1"/>
+        <NCMDeviceSysOID model="NXR-120" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.2"/>
+        <NCMDeviceSysOID model="NXR-1200" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.3"/>
+        <NCMDeviceSysOID model="NXR-125" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.4"/>
+        <NCMDeviceSysOID model="NXR-155WM" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.5"/>
+        <NCMDeviceSysOID model="NXR-155XW" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.6"/>
+        <NCMDeviceSysOID model="NXR-155L" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.7"/>
+        <NCMDeviceSysOID model="NXR-230" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.10"/>
+        <NCMDeviceSysOID model="NXR-350" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.11"/>
+        <NCMDeviceSysOID model="NXR-1300" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.12"/>
+        <NCMDeviceSysOID model="NXR-1320" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.13"/>
+		<NCMDeviceSysOID model="NXR-G100" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.100"/>
+        <NCMDeviceSysOID model="NXR-G100F" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.101"/>
+        <NCMDeviceSysOID model="NXR-G100KL" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.102"/>
+        <NCMDeviceSysOID model="NXR-G100N" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.103"/>
+        <NCMDeviceSysOID model="NXR-G100S" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.104"/>
+        <NCMDeviceSysOID model="NXR-G100NL" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.105"/>
+        <NCMDeviceSysOID model="NXR-G100SL" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.106"/>
+        <NCMDeviceSysOID model="NXR-G100KT" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.107"/>
+        <NCMDeviceSysOID model="NXR-G100NLW" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.108"/>
+        <NCMDeviceSysOID model="NXR-G100KLW" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.109"/>
+        <NCMDeviceSysOID model="NXR-G100SLW" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.110"/>
+        <NCMDeviceSysOID model="NXR-G100WM" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.111"/>
+        <NCMDeviceSysOID model="NXR-G100KL-R2" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.112"/>
+        <NCMDeviceSysOID model="NXR-G100L" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.113"/>
+        <NCMDeviceSysOID model="NXR-G100WM-R2" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.114"/>
+        <NCMDeviceSysOID model="NXR-G100KLW-R2" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.115"/>
+        <NCMDeviceSysOID model="NXR-G240" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.120"/>
+        <NCMDeviceSysOID model="NXR-G240L" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.121"/>
+        <NCMDeviceSysOID model="NXR-G240ML-CA" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.122"/>
+        <NCMDeviceSysOID model="NXR-G240L-CA" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.123"/>
+        <NCMDeviceSysOID model="NXR-G260" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.140"/>
+        <NCMDeviceSysOID model="NXR-G260L" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.141"/>
+        <NCMDeviceSysOID model="NXR-G260ML-CA" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.142"/>
+        <NCMDeviceSysOID model="NXR-G260L-CA" ostype="" series="" sysoid=".1.3.6.1.4.1.20376.1.8.143"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

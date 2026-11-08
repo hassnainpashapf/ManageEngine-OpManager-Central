@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <Graph description="Monitoring the usage in each partition of the VirtualMachine using VIWebService" displayName="Partition Details of the Device (%)" graphName="VMware-vmPartitionDetails" YAXISTEXT="Percentage" failureThreshold="1" graphType="multiplenode" isNumeric="true" oid="vm.disk.used.space" period="3600" protocol="VIWebService" saveAbsolutes="false" timeAvg="false" vendorName="VMware" vendorSubCategory="VMware-VM Monitors" pollDataType="3">
+		<UserProps propname="COMMUNITY" propvalue="VirtualMachine"/>
+        <UserProps propname="GROUPNAME" propvalue="default"/>
+        <UserProps propname="POLICYNAME" propvalue="VMware-vmPartitionDetails"/>
+	</Graph>
+</GRAPHDETAIL>

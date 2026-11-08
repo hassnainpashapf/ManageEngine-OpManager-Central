@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Lenovo Flex Fabric Switch" osType="" templateName="Lenovo_Flex_Fabric_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Lenovo" vendorName="Lenovo">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Lenovo FlexFabric Switch" personalityName="LenovoFlexFabricSwitch">	
+		<Login enablecommand="en" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SOFTWARE_VERSION" size="50" desc="Software Version" displayname="Software Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="PLD_FIRMWARE_VERSION" size="50" desc="PLD Firmware Version" displayname="PLD Firmware Version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="HARDWARE_PART_NO" size="100" desc="Hardware Part Number" displayname="Hardware Part No" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="PCBA_PART_NO" size="100" desc="PCBA Part Number" displayname="PCBA Part No" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="HARDWARE_REVISION" size="100" desc="Hardware Revision" displayname="Hardware Revision" defaultvalue="Not Available" sequenceid="5"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="LenovoFlexFabricSwitchHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_lenovo_flex_switch_cmd">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Flex\sSystem\sFabric\s(\S+).*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="[Pp][Ll][Dd]\s[Ff]irmware\s[Vv]ersion\s*:\s(.*)" NAME="FIRMWAREVERSION">
+											<PARAM NAME="PLD_FIRMWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="MAC\s[Aa]ddress\s*:\s*(\S+)\s*IP.*" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="[Ss]erial\s[Nn]umber\s*:\s(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="[Hh]ardware\s[Pp]art\s[Nn]umber\s*:\s(.*)" NAME="HARDWAREPARTNO">
+											<PARAM NAME="HARDWARE_PART_NO" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="[Pp][Cc][Bb][Aa]\s[Pp]art\s[Nn]umber\s*:\s*(.*)" NAME="PCBAPARTNO">
+											<PARAM NAME="PCBA_PART_NO" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Hardware\s*Revision\s*:\s*(.*)" NAME="HARDWARE_REVISION">
+											<PARAM NAME="HARDWARE_REVISION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="Software\s[Vv]ersion\s(\S+).*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_lenovo_flex_switch_cmd" responseparserid="lenovo_flex_fabric_switch_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="30000" promptactionid=""/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

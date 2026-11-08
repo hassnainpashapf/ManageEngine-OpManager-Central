@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<GRAPHDETAIL>
+	    <Graph YAXISTEXT="Percentage" description="Monitors the CPU Utilization of HyperV-VM for each core using VIWMI" displayName="CPU Utilization Per Core" failureThreshold="1" graphName="HyperV-VMCPUUtilizationPerCore" graphType="multiple" isNumeric="true" oid="vm.cpu.usage.average" period="300" protocol="VIWMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="HyperV-VM Monitors" >
+			<UserProps propName="COMMUNITY" propValue="VirtualMachine"/>
+			<UserProps propName="GROUPNAME" propValue="default"/>
+			<UserProps propName="POLICYNAME" propValue="HyperV-vmCPUUsagePerCore"/>
+		</Graph>
+
+	    <DevicePackageToGraph deviceType="HyperV-VM" graphName="HyperV-VMCPUUtilizationPerCore"/>
+	</GRAPHDETAIL>

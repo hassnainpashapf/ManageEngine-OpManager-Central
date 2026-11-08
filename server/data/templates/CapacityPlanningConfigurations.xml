@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Capacity_Planning>
+    <CPRRules RULENAME="webclient.reports.cpr.overutilized.rule" DISPLAYNAME="ncm.server.rest.default" DESCRIPTION="Lists the heavily used devices with insufficient resources" TIMETHRESHOLD="50" TIMECONDITION="1" CRITERIAPATTERN="1AND2AND3" TYPE="Device"/>
+    <CPRRules RULENAME="webclient.reports.cpr.underutilized.rule" DISPLAYNAME="ncm.server.rest.default" DESCRIPTION="Lists the devices with over allocated resources" TIMETHRESHOLD="50" TIMECONDITION="1" CRITERIAPATTERN="4AND5AND6" TYPE="Device"/>
+    <CPRRules RULENAME="webclient.reports.cpr.idle.rule" DISPLAYNAME="ncm.server.rest.default" TIMETHRESHOLD="50" DESCRIPTION="Lists the idle devices in the network" TIMECONDITION="1" CRITERIAPATTERN="7AND8AND9" TYPE="Device"/>
+
+    <CPRThresholds RULENAME="webclient.reports.cpr.overutilized.rule" PERFGROUPNAME="CPU Utilization" VAL="70" CONDITION="1" />
+    <CPRThresholds RULENAME="webclient.reports.cpr.overutilized.rule" PERFGROUPNAME="Disk Utilization" VAL="70" CONDITION="1" />
+    <CPRThresholds RULENAME="webclient.reports.cpr.overutilized.rule" PERFGROUPNAME="Memory Utilization" VAL="70" CONDITION="1" />
+    <CPRThresholds RULENAME="webclient.reports.cpr.underutilized.rule" PERFGROUPNAME="CPU Utilization" VAL="30" CONDITION="2" />
+    <CPRThresholds RULENAME="webclient.reports.cpr.underutilized.rule" PERFGROUPNAME="Disk Utilization" VAL="30" CONDITION="2" />
+    <CPRThresholds RULENAME="webclient.reports.cpr.underutilized.rule" PERFGROUPNAME="Memory Utilization" VAL="30" CONDITION="2" />
+    <CPRThresholds RULENAME="webclient.reports.cpr.idle.rule" PERFGROUPNAME="CPU Utilization" VAL="10" CONDITION="2" />
+    <CPRThresholds RULENAME="webclient.reports.cpr.idle.rule" PERFGROUPNAME="Disk Utilization" VAL="10" CONDITION="2" />
+    <CPRThresholds RULENAME="webclient.reports.cpr.idle.rule" PERFGROUPNAME="Memory Utilization" VAL="10" CONDITION="2" />
+
+    <CPReportToRule REPORTNAME="webclient.reports.cpr.overutilized.name" RULENAME="webclient.reports.cpr.overutilized.rule" />
+    <CPReportToRule REPORTNAME="webclient.reports.cpr.underutilized.name" RULENAME="webclient.reports.cpr.underutilized.rule" />
+    <CPReportToRule REPORTNAME="webclient.reports.cpr.idle.name" RULENAME="webclient.reports.cpr.idle.rule" />
+
+</Capacity_Planning>

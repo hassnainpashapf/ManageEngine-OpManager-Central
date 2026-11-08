@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For DCS-3650 Switch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:dcn_switch" templatename="DCN_Switch" displayname="DCS Switch" ostype="NA" description="For all DCS-3650 Switch">
+        <NCMVendorDevice vendorid="DCNetworks"/>
+        <NCMDevicePersonality personalityid="DCSSwitch"/>
+		
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dcn_switch_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:dcn_switch"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dcn_switch_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="dcn_switch_cli_show_startup_config_rec"/>
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dcn_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="dcn_switch_cli_show_running_config_rec"/>
+
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="dcn_switch_cli_copy_running_to_startup" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:dcn_switch_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:dcn_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="dcn_switch_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="dcn_switch_cli_show_startup_config_rec"/>			 
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="dcn_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="dcn_switch_cli_show_running_config_rec"/>
+			 <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="dcn_switch_cli_copy_running_to_startup" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

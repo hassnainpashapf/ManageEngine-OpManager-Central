@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+       <!-- For Vyatta -->
+	   
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:vyatta" templatename="Vyatta" displayname="Vyatta" ostype="NA" description="For all vyatta devices">
+        <NCMVendorDevice vendorid="Vyatta" />
+        <NCMDevicePersonality personalityid="Vyatta"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>        
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:vyatta_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:vyatta" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="vyatta_cli_running_config_backup" />
+				<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="vyatta_cli_running_config_upload" />
+                
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>		
+     
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:vyatta_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:vyatta" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="vyatta_cli_running_config_backup" />
+				<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="vyatta_cli_running_config_upload" />
+                
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination >
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:vyatta_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:vyatta" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="vyatta_telnet_running_config_fetch" taskhandling="true"/>
+    		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="vyatta_cli_show_running_config_rec"/>
+                
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:vyatta_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:vyatta" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="vyatta_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="vyatta_cli_show_running_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+		
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

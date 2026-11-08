@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="TransPortWirelessRouterId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="pravail_aps_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="system lines set 0">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="pravail_aps_cli_paging_disable_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="Config show">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="pravail_aps_cli_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="pravail_aps_hardware_prop_parser" promptactionid="TransPortWirelessRouterId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="pravail_aps_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="system hardware">
+	<CLIInputRecord parsercommandname="hardware_prop_pravail_aps" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="pravail_aps_cli_show_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

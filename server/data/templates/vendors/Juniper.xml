@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+<!-- For Juniper J Series -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_jseries" templatename="Juniper_JSeries_Router" displayname="Juniper J-Series Router" ostype="JunOS" description="For all Juniper J-Series Router">
+<NCMVendorDevice vendorid="Juniper" />
+<NCMDevicePersonality personalityid="JuniperRouter" />
+
+<NCMSupportedProtocol protocolid="TELNET">
+<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="SSH">
+<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+</NCMSupportedProtocol>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_router_jseries_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_jseries"
+			managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+	<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Juniper_Router_CLI_Running_Config_Fetch"
+				    taskhandling="true"/>
+		
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_juniper_running"/>
+
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_disable_syslog_change_tracking" />
+
+		
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+<!-- telnet -->
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_router_jseries_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_jseries"
+			managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+	<NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Juniper_Router_CLI_Running_Config_Fetch"
+				    taskhandling="true"/>
+		
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_juniper_running"/>
+
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_disable_syslog_change_tracking" />
+
+		
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_mseries" templatename="Juniper_MSeries_Router" displayname="Juniper M-Series Router" ostype="JunOS" description="For all Juniper M-Series Router">
+<NCMVendorDevice vendorid="Juniper" />
+<NCMDevicePersonality personalityid="JuniperRouter" />
+
+<NCMSupportedProtocol protocolid="TELNET">
+<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="SSH">
+<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+</NCMSupportedProtocol>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_router_mseries_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_mseries"
+			managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+	<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Juniper_Router_CLI_Running_Config_Fetch"
+				    taskhandling="true"/>		
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_juniper_running"/>
+		
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_disable_syslog_change_tracking" />
+
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+<!-- telnet -->
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_router_mseries_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_mseries"
+			managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+	<NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Juniper_Router_CLI_Running_Config_Fetch"
+				    taskhandling="true"/>		
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_juniper_running"/>
+		
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_disable_syslog_change_tracking" />
+
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+<!--Juniper E series-->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_eseries" templatename="Juniper_ESeries_Router" displayname="Juniper E-Series Router" ostype="JunOS" description="For all Juniper E-Series Router">
+	<NCMVendorDevice vendorid="Juniper" />
+	<NCMDevicePersonality personalityid="JuniperRouter" />
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	<!-- For Telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_router_eseries_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_eseries"
+				managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniperEseries_telnet_running_config_fetch"
+					    taskhandling="true"/>			
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_juniper_running"/>
+				
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_disable_syslog_change_tracking" />
+
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+	<!--For SSH-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_router_eseries_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_router_eseries"
+				managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+			
+			
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniperEseries_telnet_running_config_fetch"
+					    taskhandling="true"/>			
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_juniper_running"/>
+				
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_router_disable_syslog_change_tracking" />
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+	
+	
+</NCMDeviceTemplate>
+
+
+ <!-- For Juniper EX 4200 Switches -->
+ 
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_switch_exseries" templatename="Juniper_EX4200_Switch" displayname="Juniper EX4200 Switch" description="For all Juniper Ex4200 Switches">
+        <NCMVendorDevice vendorid="Juniper" />
+        <NCMDevicePersonality personalityid="JuniperSwitch" />
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+	    <NCMSupportedProtocol protocolid="SCP"/>
+		
+		      
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_ex4200_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_switch_exseries" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		 <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_ex4200_switch_show_running_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupRunningConfig" recordid="juniper_ex4200_switch_show_running_config_rec"/>
+
+         <NCMDeviceOperation operationid="BackupVlan" executiongroupid="juniper_ex4200_switch_backup_vlan_CLI" taskhandling="true"/>
+         <NCMReadFromResponse operationid="BackupVlan" recordid="juniper_ex4200_switch_backup_vlan_rec_0"/>
+		
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_disable_syslog_change_tracking" />
+
+			
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+               <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_ex4200_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_switch_exseries" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		 <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_ex4200_switch_show_running_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupRunningConfig" recordid="juniper_ex4200_switch_show_running_config_rec"/>
+
+         <NCMDeviceOperation operationid="BackupVlan" executiongroupid="juniper_ex4200_switch_backup_vlan_CLI" taskhandling="true"/>
+         <NCMReadFromResponse operationid="BackupVlan" recordid="juniper_ex4200_switch_backup_vlan_rec_0"/>
+                <!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_disable_syslog_change_tracking" />
+
+          </NCMDeviceCriteria>
+		  
+        </NCMProtocolCombination>
+
+<!-- for TELNET-TFTP-->
+
+		<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_ex4200_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_switch_exseries" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_ex4200_switch_running_config_backup"/>
+	        
+			<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_disable_syslog_change_tracking" />
+				
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_ex4200_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_switch_exseries" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_ex4200_switch_running_config_backup"/>
+	          
+			  <!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_disable_syslog_change_tracking" />
+				
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+<!-- for SSH-SCP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_ex4200_switch_ssh_scp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_switch_exseries" managementprotocolid="SSH" transferprotocolid="SCP" displayname="SSH - SCP">
+            <NCMDeviceCriteria commandmapid="SSH_SCP_Command">
+			
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_ex4200_switch_running_config_backup_scp"/>
+			
+			<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_disable_syslog_change_tracking" />			
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>    	
+</NCMDeviceTemplate>
+
+ <!-- For Juniper SRX devices -->
+ 
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_srx" templatename="Juniper_SRX" displayname="Juniper SRX" ostype="JunOS" description="For all Juniper SRX 100h">
+        <NCMVendorDevice vendorid="Juniper"/>
+        <NCMDevicePersonality personalityid="JuniperSRX"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_srx_ssh"  devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_srx"  managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+			
+	          <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_srx_cli_running_config_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="juniper_srx_cli_show_config_rec"/> 
+			 
+		 <!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_srx_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_srx_disable_syslog_change_tracking" />
+
+         
+		 </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_srx_telnet"  devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_srx"  managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_srx_cli_running_config_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="juniper_srx_cli_show_config_rec"/>
+
+			  
+		 <!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_srx_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_srx_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+ <!-- For Juniper Load Balancer -->
+ 
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_load_balancer" templatename="Juniper_Load_Balancer" displayname="Juniper LoadBalancer" ostype="JunOS" description="For all Juniper LoadBalancer">
+        <NCMVendorDevice vendorid="Juniper"/>
+        <NCMDevicePersonality personalityid="JuniperLoadBalancer"/>
+		
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+		<!-- TELNET -->
+        
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_load_balancer_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_load_balancer" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			
+              <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_load_balancer_running_config_backup"/>
+			  
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>		
+    </NCMDeviceTemplate>	
+		
+	 <!-- For Juniper WLAN controller devices -->
+ 
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_wlan" templatename="Juniper_WLAN" displayname="Juniper WLAN controller" ostype="JunOS" description="For all WLAN controller Version: 7.5.2.3">
+        <NCMVendorDevice vendorid="Juniper"/>
+        <NCMDevicePersonality personalityid="JuniperWLAN"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_wlan_ssh"  devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_wlan"  managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+			
+	          <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_wlan_cli_running_config_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="juniper_wlan_cli_show_config_rec"/>
+         
+		 </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_wlan_telnet"  devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_wlan"  managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="juniper_wlan_cli_running_config_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="juniper_wlan_cli_show_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+
+
+<!-- For Juniper QFX3000-G Switches -->
+ 
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_fabric_switch_qfxseries" templatename="Juniper_Fabirc_QFX3000G_Switch" displayname="Juniper Fabric QFX3000-G Switch" description="For all Juniper Fabric QFX3000-G Switches">
+        <NCMVendorDevice vendorid="Juniper" />
+        <NCMDevicePersonality personalityid="JuniperFabricSwitch" />
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+		      
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_fabric_qfx3000g_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_fabric_switch_qfxseries" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		 <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="juniper_fabric_qfx3000g_switch_show_startup_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupStartupConfig" recordid="juniper_fabric_qfx3000g_switch_show_startup_config_rec"/>
+		
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_disable_syslog_change_tracking" />
+
+			
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+               <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_fabric_qfx3000g_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:juniper_fabric_switch_qfxseries" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		 <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="juniper_fabric_qfx3000g_switch_show_startup_config" taskhandling="true"/>
+	     <NCMReadFromResponse operationid="BackupStartupConfig" recordid="juniper_fabric_qfx3000g_switch_show_startup_config_rec"/>
+		 	
+			<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_ex4200_switch_disable_syslog_change_tracking" />
+
+          </NCMDeviceCriteria>
+		  
+        </NCMProtocolCombination>
+	
+</NCMDeviceTemplate>
+
+<!-- Juniper MX Router Series -->
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:Juniper_mx_serires_router" templatename="Juniper_MX_Series_Router" displayname="Juniper MX-Series Router" ostype="JunOS" description="For all Juniper MX-Series Router">
+<NCMVendorDevice vendorid="Juniper" />
+<NCMDevicePersonality personalityid="JuniperMXRouter" />
+
+<NCMSupportedProtocol protocolid="TELNET">
+<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+</NCMSupportedProtocol>
+
+<NCMSupportedProtocol protocolid="SSH">
+<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+</NCMSupportedProtocol>
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_router_mx_series_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:Juniper_mx_serires_router"
+			managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+	<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Juniper_MX_Router_CLI_Running_Config_Fetch"
+				    taskhandling="true"/>		
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_juniper_mx_router_running"/>
+		
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_mx_router_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_mx_router_disable_syslog_change_tracking" />
+
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+<!-- telnet -->
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:juniper_router_mx_series_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:Juniper_mx_serires_router"
+			managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+	<NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="Juniper_MX_Router_CLI_Running_Config_Fetch"
+				    taskhandling="true"/>		
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="show_juniper_mx_router_running"/>
+		
+		<!-- Change Tracking thru Syslog -->
+		
+            <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="juniper_mx_router_enable_syslog_change_tracking" />
+            <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="juniper_mx_router_disable_syslog_change_tracking" />
+
+	</NCMDeviceCriteria>
+</NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+	
+</DeviceConfiguration>

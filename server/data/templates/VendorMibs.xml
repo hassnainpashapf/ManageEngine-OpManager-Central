@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<VendorMibs>
+<!-- for cisco switches -->
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoSwitch" mibid="CISCO-CONFIG-COPY-MIB" sequenceid="1"/>
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoSwitch" mibid="OLD-CISCO-SYS-MIB" sequenceid="2"/>
+
+<!-- for cisco routers -->
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoRouter" mibid="CISCO-CONFIG-COPY-MIB" sequenceid="1"/>
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoRouter" mibid="OLD-CISCO-SYS-MIB" sequenceid="2"/>
+
+<!-- for cisco iads -->
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoIAD" mibid="CISCO-CONFIG-COPY-MIB" sequenceid="1"/>
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoIAD" mibid="OLD-CISCO-SYS-MIB" sequenceid="2"/>
+
+<!-- for cisco accessservers -->
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoAccessServer" mibid="CISCO-CONFIG-COPY-MIB" sequenceid="1"/>
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoAccessServer" mibid="OLD-CISCO-SYS-MIB" sequenceid="2"/>
+
+<!-- for cisco accesspoints -->
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoAccessPoint" mibid="CISCO-CONFIG-COPY-MIB" sequenceid="1"/>
+<NCMVendorMIB vendorid="Cisco" personalityid="CiscoAccessPoint" mibid="OLD-CISCO-SYS-MIB" sequenceid="2"/>
+
+</VendorMibs>
+

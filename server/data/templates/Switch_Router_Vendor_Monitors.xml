@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	<!-- Topo 5133 starts -->	
+	<Graph YAXISTEXT="%" description="Juniper Networks - Storage percent (used across multiple Junos models)" displayName="Disk Utilization" failureThreshold="1" graphName="jnxHrStoragePercentUsed" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.31.1.1.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="Node total session in use." displayName="Active Connection(s)" failureThreshold="1" graphName="jnxJsNodeCurrentTotalSession" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.39.1.12.1.4.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Status" description="Notification to signal switchover/failover." displayName="HA State" failureThreshold="1" graphName="jnxJsChassisClusterSwitchover" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2636.3.39.1.14.1.0.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Juniper">
+	    <UserProps/>
+	</Graph>	
+	<Graph YAXISTEXT="%" description="This object indicates the disk usage rate." displayName="Disk Usage" failureThreshold="1" graphName="hwDiskUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2011.5.25.31.1.1.22.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Huawei">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="Dell Networking OS10 (S-series) - Stack unit temperature reading" displayName="Temperature" failureThreshold="1" graphName="dellNetStackUnitTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.6027.3.26.1.3.4.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Dell Inc.">
+	    <UserProps/>
+	</Graph>	
+	<Graph YAXISTEXT="%" description="Indicates the memory utilisation." displayName="Memory Utilization" failureThreshold="1" graphName="3com.memory.utilization" graphType="multiple" isNumeric="true" oid="((1.3.6.1.4.1.43.45.1.6.1.2.1.1.2-1.3.6.1.4.1.43.45.1.6.1.2.1.1.3)/1.3.6.1.4.1.43.45.1.6.1.2.1.1.2)*100" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="Environment type.temperature(1), humidity(2), fog(3)" displayName="Temperature" failureThreshold="1" graphName="hwdevMSlotEnvironmentType" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.2.23.1.9.1.3.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+	    <UserProps/>
+	</Graph>   
+	<Graph YAXISTEXT="Number(s)" description="Active Connections." displayName="Active Connection(s)" failureThreshold="1" graphName="h3cFWConnNumCurr" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.43.45.1.10.2.88.1.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="3Com">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="The CPU utilization by this process. This is the utilization of the process in the last 5 minutes." displayName="CPU Usage (5 mins avg)" failureThreshold="1" graphName="extremeCpuMonitorUtilization5mins" graphType="multiple" isNumeric="true" oid="StringToNumeric[.1.3.6.1.4.1.1916.1.32.1.3.1.9]" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Extreme Networks switch - Per-process memory utilization percentage" displayName="Memory Utilization" failureThreshold="1" graphName="extreme.system.memory.utilization" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.4.1.1916.1.32.2.2.1.2/.1.3.6.1.4.1.1916.1.32.2.2.1.4) * 100" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Extreme Networks">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Nokia - Primary CPU load percentage for Nokia security appliances" displayName="CPU Utilization" failureThreshold="1" graphName="hardwarePrimaryCPU" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.94.1.45.2.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nokia" >
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Nokia (Check Point) Firewall - Hardware memory usage percentage currently in use" displayName="Memory Utilization" failureThreshold="1" graphName="hardwareMemoryUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.94.1.45.2.2.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nokia" >
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Status" description="An indication of whether or not the internal temperature reading of this chassis is higher than the recommended operating temperature. normal(1), overTemperature(2)" displayName="Temperature" failureThreshold="1" graphName="ipsoChassisTemperature" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.94.1.21.1.1.5" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Nokia">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Status" description="An over-temperature warning trap signifies that the warning temperature threshold has been exceeded." displayName="Low Voltage" failureThreshold="1" graphName="adGenAOSOverTempProtectionWarning" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.664.5.53.1.10.0.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Adtran" pollDataType="2">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Status" description="An over-temperature shutdown trap signifies that the shutdown temperature threshold has been exceeded, and the unit will restart into low-power mode." displayName="High Voltage" failureThreshold="1" graphName="adGenAOSOverTempProtectionShutdown" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.664.5.53.1.10.0.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Adtran" pollDataType="2">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="The average cpu usage in a 5 minute window for this process." displayName="CPU Usage (5 mins avg)" failureThreshold="1" graphName="eriRouterCpuProc5Min" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.193.218.2.6.3.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="This object returns the percentage of time the CPU has been busy over the last 1 hour." displayName="Ericsson CPU last 1 Hour" failureThreshold="1" graphName="s5ChasUtilCPUUsageLast1Hour" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.8.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Celsius" description="The current temperature value of the temperature sensor. This is measured in units of a half degree centigrade, e.g. a value of 121 indicates a temperature of 60.5 degrees C." displayName="Ericsson temperature" failureThreshold="1" graphName="s5ChasTmpSnrTmpValue" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.45.1.6.3.7.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ericsson">
+	    <UserProps/>
+	</Graph>	
+	<Graph YAXISTEXT="%" description="The system dynamic memory utilization, in unit of percentage." displayName="DRAM Utilization" failureThreshold="1" graphName="snAgSystemDRAMUtil" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.1991.1.1.2.12.4.1.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade" pollDataType="2">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Brocade devices - Dynamic memory utilization per module in hundredths of a percent" displayName="Memory utilization" failureThreshold="1" graphName="snAgentBrdMemoryUtil100thPercent" graphType="multiple" isNumeric="true" oid="((.1.3.6.1.4.1.1991.1.1.2.2.1.1.28)*0.01)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Celsius" description="Brocade (Foundry) stackable - Per-unit chassis temperature (0.5 degree C resolution)" displayName="Temperature" failureThreshold="1" graphName="snChasUnitActualTemperature" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.4.1.1991.1.1.1.4.1.1.4)*0.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Brocade">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Ruckus SmartZone - CPU usage percentage for the SmartZone controller" displayName="CPU Utilization" failureThreshold="1" graphName="ruckusSZCPUPerc" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.25053.2.11.2.17.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ruckus" pollDataType="2">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Ruckus SmartZone Controller - Memory usage percentage" displayName="Memory Utilization" failureThreshold="1" graphName="ruckusSZMemoryPerc" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.25053.2.11.2.18.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ruckus" pollDataType="2">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Status" description="The temperature status." displayName="Temperature" failureThreshold="1" graphName="ruckusSZTemperatureStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.25053.2.11.2.120" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ruckus">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="The SZ's disk usage percent." displayName="Disk Utilization" failureThreshold="1" graphName="ruckusSZDiskPerc" graphType="node" isNumeric="false" oid=".1.3.6.1.4.1.25053.2.11.2.19.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Ruckus" pollDataType="2">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Netgear - Per-process CPU utilization percentage for Netgear managed switches" displayName="CPU Utilization" failureThreshold="1" graphName="agentSwitchCpuProcessPercentageUtilization." graphType="multiple" isNumeric="true" oid="StringToNumeric[.1.3.6.1.4.1.4526.10.1.1.5.3.1.3]" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="" description="5 minute average for CPU usage for Netgear router" displayName="CPU Utilization (5 Min Avg)" failureThreshold="1" graphName="CPU Usage 5 Minute Average." graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.4526.3.2.2.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="" displayName="Netgear Memory Utilization" failureThreshold="1" graphName="Memory Utilization" graphType="node" isNumeric="true" oid="(.1.3.6.1.4.1.4526.10.1.1.5.2.0- .1.3.6.1.4.1.4526.10.1.1.5.1.0 )/(.1.3.6.1.4.1.4526.10.1.1.5.2.0)*100" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="The state of temperature sensor.low(0), normal(1), warning(2), critical(3), shutdown(4), notpresent(5), notoperational(6) " displayName="Temperature" failureThreshold="1" graphName="boxServicesTempSensorState" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.4526.10.43.1.8.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Netgear">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="The average CPU usage for the entity in a period of time." displayName="CPU Usage" failureThreshold="1" graphName="hpnicfEntityExtCpuAvgUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.15.2.6.1.1.1.1.26" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="The average CPU usage for the entity in a period of time." displayName="CPU Usage" failureThreshold="1" graphName="hh3cEntityExtCpuAvgUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.6.1.1.1.1.26" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="HPE Comware networking devices - Average memory utilization over a period (hpnicf entity extension MIB)" displayName="Memory Utilization" failureThreshold="1" graphName="hpnicfEntityExtMemAvgUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.15.2.6.1.1.1.1.27" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="H3C - Average memory utilization over a period of time for H3C Comware devices" displayName="Memory Utilization" failureThreshold="1" graphName="hh3cEntityExtMemAvgUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.25506.2.6.1.1.1.1.27" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="H3C">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Status" description="HP/H3C (HPN-ICF) series - Entity extension temperature reading for hardware components" displayName="Temperature" failureThreshold="1" graphName="hpnicfEntityExtTemperature" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.11.2.14.11.15.2.6.1.1.1.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+	    <UserProps/>
+	</Graph>	
+	<Graph YAXISTEXT="%" description="Fortinet FortiWeb - Current CPU usage percentage (alternate OID)" displayName="CPU Utilization" failureThreshold="1" graphName="fwSysCpuUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.107.2.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Fortinet FortiGate - CPU usage percentage per virtual domain (VDOM)" displayName="CPU Utilization" failureThreshold="1" graphName="fgVdEntCpuUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.3.2.1.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Fortinet FortiGate firewall - Virtual domain (VDOM) memory usage percentage" displayName="Memory Utilization" failureThreshold="1" graphName="fgVdEntMemUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.3.2.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="Fortinet FortiGate wireless controller - WTP (managed access point) memory usage percentage" displayName="Memory Utilization" failureThreshold="1" graphName="fgWcWtpSessionWtpMemoryUsage" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.14.4.4.1.21" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="The PSU temperature." displayName="Temperature" failureThreshold="1" graphName="fadcPSUTemp" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.112.6.2.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>	
+	<Graph YAXISTEXT="Number(s)" description="Fortinet FortiADC - Instantaneous log disk usage" displayName="Disk Usage" failureThreshold="1" graphName="fadcSysLogDiskUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.112.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="Fortinet FortiGate - Instantaneous active session count on the device" displayName="Active Session Count" failureThreshold="1" graphName="fgSysSesCountNew" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.4.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="Number(s)" description="Fortinet FortiGate (legacy MIB, non-indexed) - Instantaneous active session count" displayName="Active Session Count" failureThreshold="1" graphName="fgSysSesCountOld" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.12356.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+
+	<Graph YAXISTEXT="Number(s)" description="Fortinet FortiGate - Number of active sessions per virtual domain (VDOM)" displayName="Active Session Count" failureThreshold="1" graphName="fgVdEntSesCount" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.3.2.1.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+
+	<Graph YAXISTEXT="Number(s)" description="HA cluster member state of the virtual domain on this device (master, backup or standalone)
+	master(1), backup(2), standalone(3) " displayName="HA State" failureThreshold="1" graphName="fgVdEntHaState" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.12356.101.3.2.1.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Fortinet">
+	    <UserProps/>
+	</Graph>
+
+	<Graph YAXISTEXT="Number(s)" description="The most recent measurement obtained by the agent for this sensor. To correctly interpret the value of this object, the associated entPhySensorType, entPhySensorScale, and entPhySensorPrecision objects must also be examined." displayName="Temperature" failureThreshold="1" graphName="entPhySensorValue" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.99.1.1.1.4.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="SonicWALL, Inc.">
+	    <UserProps/>
+	</Graph>	
+	<Graph YAXISTEXT="Number(s)" description="Sensor is out of range TRUE(1), FALSE(0), READING ERROR(2)" displayName="Temperature" failureThreshold="1" graphName="snwtempertureSensorStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2620.1.6.7.8.1.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+	    <UserProps/>
+	</Graph>
+	<Graph YAXISTEXT="%" description="" displayName="Disk Utilization" failureThreshold="1" graphName="SonicwallDiskUtilization" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.4.1.2620.1.6.7.6.1.4/.1.3.6.1.4.1.2620.1.6.7.6.1.3)*100" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CheckPoint">
+	    <UserProps/>
+	</Graph>	
+	<Graph YAXISTEXT="" description="Sophos HAState" displayName="HA State" failureThreshold="1" graphName="sfosHAStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2604.5.1.4.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sophos">
+	    <UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="Days" customGraph="false" description="The amount of time since this host was last initialized" displayName="Host Resources SysUpTime (Days)" failureThreshold="1" graphName="HRSysUpTimeInDays" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.25.1.1.0/86400)" period="900" protocol="SNMP" timeAvg="false" standardGraph="General Monitors">
+	        <UserProps/>
+	</Graph>
+	<Graph saveAbsolutes="false" YAXISTEXT="Days" customGraph="false" description="The number of seconds since the value of the snmpEngineBoots object last changed" displayName="SNMP SysUpTime (Days)" failureThreshold="1" graphName="SnmpEngineSysUpTimeInDays" graphType="node" isNumeric="true" oid="(.1.3.6.1.6.3.10.2.1.3.0/86400)" period="900" protocol="SNMP" timeAvg="false" standardGraph="General Monitors">
+	        <UserProps/>
+	</Graph>
+    <Graph YAXISTEXT="%" description="Percentage of the device CPU utilization during the last 5 minutes. The value 101 is a dummy value, indicating that the CPU utilization was not measured (since measurement is disabled or was disabled during last 1 seconds)." displayName="CPU Utilization(Last 5 min)" failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.6.1.101.1.7.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco" graphName="rlCpuUtilDuringLastSecond">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Percentage of the device CPU utilization during the last minutes. The value 101 is a dummy value, indicating that the CPU utilization was not measured (since measurement is disabled or was disabled during last 1 minutes)." displayName="CPU Utilization(Last 1 min)" failureThreshold="1"  graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.6.1.101.1.8.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Cisco" graphName="rlCpuUtilDuringLastMinute">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="AP CPU current Usage " displayName="AP CPU Usage" failureThreshold="1" graphName="cLApCpuCurrentUsage " graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.513.1.1.1.1.57" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph> 
+    <Graph YAXISTEXT="%" description="Cisco IOS/IOS-XE - Five-minute CPU load average from CISCO-PROCESS-MIB, used across multiple Cisco platforms" displayName="CPU Usage (5 mins avg)" failureThreshold="1" graphName="cpmCPULoadAvg5min " graphType="multiple" isNumeric="true" oid="1.3.6.1.4.1.9.9.109.1.1.1.1.25" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>   
+    <Graph YAXISTEXT="%" description="CPU Load 1Min Avg " displayName="CPU Usage (1 mins avg)" failureThreshold="1" graphName="cpmCPULoadAvg1min " graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.24" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>   
+    <Graph YAXISTEXT="%" description="CPU Load 15Min Avg " displayName="CPU Usage (15 mins avg)" failureThreshold="1" graphName="cpmCPULoadAvg15min " graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.26" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>      
+    <Graph YAXISTEXT="%" description="" displayName="Memory Utilization(Last 1 Min)" failureThreshold="1" graphName="ciscoMemoryPoolUtilization1Min" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.48.1.2.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="" displayName="Memory Utilization(Last 5 Min)" failureThreshold="1" graphName="ciscoMemoryPoolUtilization5Min" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.48.1.2.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Status" description="" displayName="Cluster status" failureThreshold="1" graphName="ccMemberOperStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.134.1.2.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The overall CPU wide system memory which is currently under use. This object is a 64-bit version of cpmCPUMemoryUsed." displayName="Memory Utilization(Last 10 Min)" failureThreshold="1" graphName="ciscoMemoryPoolUtilization10Min" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.48.1.2.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Cisco IOS/IOS-XE devices - 64-bit CPU-wide memory currently in use (CISCO-PROCESS-MIB)" displayName="Memory Utilization" failureThreshold="1" graphName="cpmCPUMemoryHCUsed" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.9.9.109.1.1.1.1.17" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cisco Wireless Access Point - Current average memory usage (CISCO-LWAPP-AP-MIB)" displayName="Memory Utilization" failureThreshold="1" graphName="APMemoryCurrentUsage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.513.1.1.1.1.55" period="900" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Cisco" DisplayColumn=".1.3.6.1.4.1.9.9.512.1.1.1.1.4" Index=".1.3.6.1.4.1.9.9.512.1.1.1.1.1">
+        <UserProps/>
+    </Graph> 
+    <Graph YAXISTEXT="Numbers" description="Indicates whether this is the primary redundant unit or not. If this unit is the primary unit, this object is true. If this unit is the secondary unit, this object is false." displayName="HA State" failureThreshold="1" graphName="cLHaPrimaryUnit" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.9.9.198888.0.1.12.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Cisco">
+        <UserProps/>
+    </Graph>
+    <!-- Topo 5133 ends -->
+</GRAPHDETAIL>

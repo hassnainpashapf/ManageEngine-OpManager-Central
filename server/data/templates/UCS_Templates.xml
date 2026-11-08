@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco CIMC" iconName="UCS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2179"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Juniper CTP 2024" iconName="UCS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18841.1.2.1.1.1"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Juniper"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco UCS S3260" iconName="UCS.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.2487"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

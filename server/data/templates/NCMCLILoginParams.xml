@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<NCMDeviceLoginDetails>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoRouter" personalityid="CiscoRouter"  commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoSwitch" personalityid="CiscoSwitch"  commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoFirewall" personalityid="CiscoFirewall" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoIAD" personalityid="CiscoIAD" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoAccessPoint" personalityid="CiscoAccessPoint" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoCatOSSwitch1" personalityid="CiscoCatOSSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoCatOSSwitch2" personalityid="CiscoCatOSSwitch" model="6509" loginprefixcommand="&#10;" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoAccessServer" personalityid="CiscoAccessServer" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoContentSwitch" personalityid="CiscoContentSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoASA" personalityid="CiscoASA" commandsuffix="&#10;" enablecommand="enable"/>
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoIDS" personalityid="CiscoIDS" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:ArubaWifiSwitch" personalityid="ArubaWifiSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HPSwitch" personalityid="HPSwitch" commandsuffix="&#10;" enablecommand="enable" loginprefixprompt="continue" loginprefixcommand="&#10;" postloginprompt="continue" postlogincommand="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HPAccessPoint" personalityid="HPAccessPoint" commandsuffix="&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HPPSeriesSwitch" personalityid="HPPSeriesSwitch" commandsuffix="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:FoundrySwitch" personalityid="FoundrySwitch" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:3ComSwitch" personalityid="3ComSwitch" commandsuffix="&#13;&#10;" postloginprompt="to continue" postlogincommand="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:FortiGateFirewall" personalityid="FortiGateFirewall" commandsuffix="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NetscreenFirewall" personalityid="NetscreenFirewall" commandsuffix="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:EnterasysSwitch" personalityid="EnterasysSwitch" loginprefixcommand="y" loginprefixprompt="y/n"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AdtranLANSwitch" personalityid="AdtranLANSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+	
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NortelBayStackSwitch" personalityid="NortelBayStackSwitch" loginprefixcommand="CTRL-Y" loginprefixprompt="Ctrl-Y to begin"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NortelPassportSwitch" personalityid="NortelPassportSwitch"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NortelPWRSwitch" personalityid="NortelPWRSwitch" commandsuffix="&#13;&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:DLinkSwitch" personalityid="DLinkSwitch" commandsuffix="&#10;" enablecommand="enable admin"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BlueCoatProxySG" personalityid="BlueCoatProxySG"  commandsuffix="&#10;" enablecommand="enable"/>
+      <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:PacketShaper" personalityid="PacketShaper" commandsuffix="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HuaweiARRouter" personalityid="HuaweiARRouter"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:ProximAccessPoint" personalityid="ProximAccessPoint"/>
+        <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:ExtremeSwitch" personalityid="ExtremeSwitch"/>
+        <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoVoiceGateway" personalityid="CiscoVoiceGateway" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:Force10Switch" personalityid="Force10Switch" commandsuffix="&#10;" enablecommand="enable"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoVPNConcentrator" personalityid="CiscoVPNConcentrator" commandsuffix="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoMDS" personalityid="CiscoMDS" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NetgearSwitch" personalityid="NetgearSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:JuniperRouter" personalityid="JuniperRouter" commandsuffix="&#10;" enablecommand="enable"/>
+		<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:JuniperMXRouter" personalityid="JuniperMXRouter" commandsuffix="&#10;" enablecommand="enable"/>
+	
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:DellSwitch" personalityid="DellSwitch"  commandsuffix="&#10;" enablecommand="enable"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:SlimLine" personalityid="SlimLine"  commandsuffix="&#10;" enablecommand="enable"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NortelContivityVPNRouter" personalityid="NortelContivityVPNRouter" commandsuffix="&#10;" enablecommand="enable"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:EnterasysRouter" personalityid="EnterasysRouter" commandsuffix="&#10;" enablecommand="enable"/>
+
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:RiverbedSteelhead"  personalityid="RiverbedSteelhead" commandsuffix="&#10;" enablecommand="enable"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlcatelSwitch"  personalityid="AlcatelSwitch" commandsuffix="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlcatelRouter"  personalityid="AlcatelRouter" commandsuffix="&#10;"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlaxalaSwitch"  personalityid="AlaxalaSwitch" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HitachiGR2000Router"  personalityid="HitachiGR2000Router" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NortelSwitchModule" personalityid="NortelSwitchModule"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:RadwareSwitch" personalityid="RadwareSwitch"/>
+      <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:RadwareLinkProofSwitch" personalityid="RadwareLinkProofSwitch" commandsuffix="&#10;"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoWLANController" personalityid="CiscoWLANController"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BrocadeSwitch" personalityid="BrocadeSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+	<!-- Cisco WAAS -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoWAAS"  personalityid="CiscoWAAS" commandsuffix="&#10;" enablecommand="enable"/>
+
+    <!-- Checkpoint  Firewall-->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CheckPointFirewall"   commandsuffix="&#10;" personalityid="CheckPointFirewall" enablecommand="expert"/>
+    
+     <!-- Cisco ACE Module -->
+     <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoACEModule" personalityid="CiscoACEModule" commandsuffix="&#10;" enablecommand="enable"/>
+
+     <!-- AvayaGateway -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AvayaMediaGateway" personalityid="AvayaMediaGateway" commandsuffix="&#10;" enablecommand="enable"/>
+
+    <!-- Lambda driver -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:LambdaDriver" personalityid="LambdaDriver" commandsuffix="&#10;" enablecommand="enable"/>
+    
+   <!-- Dax Devices -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:DaxRouter" personalityid="DaxRouter" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:DaxSwitch" personalityid="DaxSwitch" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+   
+    <!-- Cisco IOS XR -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoIOSXR"  personalityid="CiscoIOSXR" commandsuffix="&#10;" enablecommand="enable"/>
+
+    <!-- H3C Switches -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:h3cswitch"  personalityid="H3CSwitch" commandsuffix="&#10;" />
+
+    <!-- Yamaha Router -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:yamaharouter"  personalityid="YamahaRouter" commandsuffix="&#10;" enablecommand="administrator"/>
+
+    <!-- Vanguard Router --> 
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:VanguardRouter" personalityid="VanguardRouter" loginprefixcommand="atds&#13;&#10;" loginprefixprompt="OK"/>
+    
+    <!-- AlliedTelesis Switch -->
+     <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlliedTelesisSwitch" personalityid="AlliedTelesisSwitch" loginprefixcommand="&#10;"/>
+     <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AdtranNetvantaRouter" personalityid="AdtranNetvantaRouter" commandsuffix="&#10;" enablecommand="enable"/>
+     
+     <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:F5Bigip" personalityid="F5Bigip" loginprefixcommand="&#10;"/>
+
+<!--  CitrixNetScaler  -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CitrixNetScaler" personalityid="CitrixNetScaler" commandsuffix ="&#10;"/>
+
+ <!-- Hitachi Switches -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HitachiCableSwitch"  personalityid="HitachiCableSwitch" commandsuffix="&#10;"/>
+
+     <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:FujitsuPYCBSwitch" personalityid="FujitsuPYCBSwitch"  commandsuffix="&#10;"/>
+
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:Motorola" personalityid="Motorola"  commandsuffix="&#10;" enablecommand="enable" loginprefixcommand="cli&#10;" loginprefixprompt="login:"/>   
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoNexusSwitch" personalityid="CiscoNexusSwitch"  commandsuffix="&#10;" enablecommand="enable" loginprefixcommand="yes&#10;" loginprefixprompt="(yes/no)?"/>
+
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:JuniperSwitch" personalityid="JuniperSwitch" commandsuffix="&#10;" enablecommand="configure"/>
+
+<!--  Sphereon 4500 Fibre Channel Switch   -->
+
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:SphereonSwitch" personalityid="SphereonSwitch" commandsuffix ="&#10;"/>
+
+<!-- AlliedTelesis AT-8000S Series Switch -->
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlliedTelesisAT8000S" personalityid="AlliedTelesisAT8000S" commandsuffix="&#10;" enablecommand="enable"/>
+
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:FortiGateFortiAnalyzer" personalityid="FortiGateFortiAnalyzer" commandsuffix="&#10;"/>
+
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CanogaPerkins" personalityid="CanogaPerkins" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+
+<!-- WatchGuard Firewall -->
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:WatchGuardFirewall" personalityid="WatchGuardFirewall" commandsuffix="&#13;&#10;"/>
+
+<!-- Acme Packet -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NetSD3800"  personalityid="NetSD3800" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CienaLEOSSwitch"  personalityid="CienaLEOSSwitch" commandsuffix="&#13;&#10;"/>
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CienaSAOSSwitch"  personalityid="CienaSAOSSwitch" commandsuffix="&#13;&#10;"/>
+	<!-- PaloAlto Firewall -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:PaloAltoFirewall" personalityid="PaloAltoFirewall" commandsuffix="&#13;&#10;"/>	
+	
+<!-- ADVA Optical Networking Telnet-->
+
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:ADVAOPTICALNETWORKING" personalityid="ADVAOPTICALNETWORKING" commandsuffix="&#13;&#10;"   postloginprompt="[Y/N]-->" postlogincommand="y&#13;&#10;"/>
+
+	<!-- Meru wlan controller -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:MeruWLANController" personalityid="MeruWLANController" commandsuffix="&#13;&#10;"/>	
+	
+	   <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlaxalaSwitch5400"  personalityid="AlaxalaSwitch5400" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+
+		
+<!--Allied Telesis CenterCOM GS900M V2 -->
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlliedTelesisGS900MSwitch"  personalityid="AlliedTelesisGS900MSwitch" commandsuffix="&#13;&#10;"/>
+	
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HuaweiSwitch" personalityid="HuaweiSwitch" commandsuffix="&#13;&#10;"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:H3CSSeriesSwitch"  personalityid="H3CSSeriesSwitch" commandsuffix="&#10;" enablecommand="super"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HuaweiSSwitch"  personalityid="HuaweiSSwitch" commandsuffix="&#10;" enablecommand="super"/>
+	
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HirschmannSwitch" personalityid="HirschmannSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BrocadeFastIronSwitch" personalityid="BrocadeFastIronSwitch" commandsuffix="&#10;&#13;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:TransPortWirelessRouter" personalityid="TransPortWirelessRouter" commandsuffix="&#13;&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:RedbackRouter" personalityid="RedbackRouter" commandsuffix="&#13;&#10;"/>	
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BNTRackSwitch" personalityid="BNTRackSwitch"  commandsuffix="&#13;&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AristaSwitch" personalityid="AristaSwitch"  commandsuffix="&#10;" enablecommand="enable"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:DCSSwitch" personalityid="DCSSwitch" commandsuffix="&#13;&#10;" enablecommand="enable"/>	
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:F5ARX" personalityid="F5ARX" loginprefixcommand="yes&#13;&#10;" loginprefixprompt="(yes/no)?" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AX2500LoadBalancers" personalityid="AX2500LoadBalancers"  commandsuffix="&#13;&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BrocadeFiberSwitch" personalityid="BrocadeFiberSwitch"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlliedTelesisCenterComSwitch" personalityid="AlliedTelesisCenterComSwitch" loginprefixcommand="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AlliedTelesisEthernetSwitch" personalityid="AlliedTelesisEthernetSwitch" commandsuffix="&#13;&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:FoundryFastIronSwitch" personalityid="FoundryFastIronSwitch" commandsuffix="&#13;&#10;"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:ZXRRouter" personalityid="ZXRRouter" commandsuffix="&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:DellPowerConnectSwitch" personalityid="DellPowerConnectSwitch"  commandsuffix="&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoASRRouter" personalityid="CiscoASRRouter" commandsuffix="&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BrocadeSilkWormFiberSwitch" personalityid="BrocadeSilkWormFiberSwitch"/>	
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:F5Bigip10X" personalityid="F5Bigip10X" loginprefixcommand="&#10;"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BlueCoatProxySGOS" personalityid="BlueCoatProxySGOS"  commandsuffix="&#10;" enablecommand="enable"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoIronport" personalityid="CiscoIronport" commandsuffix="&#10;"/> 
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:Vyatta" personalityid="Vyatta" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:RadwareAlteonSwitch" personalityid="RadwareAlteonSwitch" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BrocadeVDXSwitch" personalityid="BrocadeVDXSwitch"  commandsuffix="&#10;" enablecommand="enable"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:JuniperSRX"  personalityid="JuniperSRX" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NECIX2025" personalityid="NECIX2025" commandsuffix="&#13;&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:ADVAFSP"  personalityid="ADVAFSP" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:MikrotikRouter"  personalityid="MikrotikRouter" commandsuffix="&#10;"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:WelotecRouter" personalityid="WelotecRouter" commandsuffix="&#10;" enablecommand="enable"/> 
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CrescendoLoadBalancer" personalityid="CrescendoLoadBalancer" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:RuggedComSwitch" personalityid="RuggedComSwitch"  commandsuffix="&#13;&#10;"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:RuijieSwitch" personalityid="RuijieSwitch"  commandsuffix="&#10;" enablecommand="enable"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:FujitsuFirewall" personalityid="FujitsuFirewall" commandsuffix="&#10;" enablecommand="su"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:F5Bigip11X" personalityid="F5Bigip11X" loginprefixcommand="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:EdgeCoreSwitch" personalityid="EdgeCoreSwitch"  commandsuffix="&#10;" enablecommand="enable"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:TelcoSwitch" personalityid="TelcoSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:OccamSwitch" personalityid="OccamSwitch" commandsuffix="&#10;" enablecommand="enable"/> 
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AdtranRouter" personalityid="AdtranRouter" commandsuffix="&#10;" enablecommand="enable"/> 
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoSBSwitch"  personalityid="CiscoSBSwitch" commandsuffix="&#10;" enablecommand="enable"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:NokiaIPSO" personalityid="NokiaIPSO" commandsuffix="&#10;"  postloginprompt="]" postlogincommand="&#10;" enablecommand="enable"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HPEthernetSwitch" personalityid="HPEthernetSwitch" commandsuffix="&#10;" enablecommand="_cmdline-mode on" loginprefixprompt="continue" loginprefixcommand="&#10;" postloginprompt="continue" postlogincommand="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CitrixNetScalerMPX" personalityid="CitrixNetScalerMPX" commandsuffix ="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:3Com5500Switch" personalityid="3Com5500Switch" commandsuffix="&#13;&#10;" postloginprompt="to continue" postlogincommand="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:FortiGateFirewallVER4" personalityid="FortiGateFirewallVER4" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:FiberHomeSwitch" personalityid="FiberHomeSwitch" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:ZXRRouterZSR" personalityid="ZXRRouterZSR" commandsuffix="&#10;" enablecommand="enable"/> 
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:ArubaController" personalityid="ArubaController"  commandsuffix="&#10;" enablecommand="enable"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:TippingpointIPS" personalityid="TippingpointIPS"  commandsuffix="&#10;" enablecommand="enable"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:MobileIronSentry" personalityid="MobileIronSentry"  commandsuffix="&#10;" enablecommand="enable"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:JuniperLoadBalancer" personalityid="JuniperLoadBalancer" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CienaSwitch" personalityid="CienaSwitch" commandsuffix="&#13;&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:H3CDevice"  personalityid="H3CDevice" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CheckPointGaiaFirewall" personalityid="CheckPointGaiaFirewall" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AvocentACS" personalityid="AvocentACS" commandsuffix="&#10;"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:JuniperWLAN" personalityid="JuniperWLAN"  commandsuffix="&#10;" enablecommand="enable"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:PravailAPS" personalityid="PravailAPS" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:AvocentTerminal" personalityid="AvocentTerminal" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:CiscoASRMobileGateway" personalityid="CiscoASRMobileGateway" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HP5500Switch" personalityid="HP5500Switch" commandsuffix="&#13;&#10;" postloginprompt="to continue" postlogincommand="&#10;"/> 
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:PaloAltoPanoramaFirewall" personalityid="PaloAltoPanoramaFirewall" commandsuffix="&#10;"/>
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HuaweiNERouter" personalityid="HuaweiNERouter"  commandsuffix="&#10;" enablecommand="su"/>
+    <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:HuaweiS5300Switch" personalityid="HuaweiS5300Switch"  commandsuffix="&#10;" enablecommand="su"/>
+  
+  <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:DLinkDESSwitch" personalityid="DLinkDESSwitch" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:BrocadeRouter" personalityid="BrocadeRouter" commandsuffix="&#10;" enablecommand="enable"/>
+
+
+<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:INSYSMoRoS" personalityid="INSYSMoRoS"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:SonicWALLFirewall" personalityid="SonicWALLFirewall"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:TrapezeWLANController" personalityid="TrapezeWLANController"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:UbiquitiAirOs" personalityid="UbiquitiAirOs"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:GarderosRouter" personalityid="GarderosRouter"  commandsuffix="&#10;" enablecommand="enable"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:JuniperFabricSwitch"  personalityid="JuniperFabricSwitch" commandsuffix="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:F5Netcon" personalityid="F5Netcon" loginprefixcommand="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:F5Bigip114" personalityid="F5Bigip114" loginprefixcommand="&#10;"/>
+ <NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:EdgeCoreL2Switch"  personalityid="EdgeCoreL2Switch" commandsuffix="&#10;"/>
+
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:MiMOMaxGPSTornado" personalityid="MiMOMaxGPSTornado"/>
+	<NCMCLILoginParams loginparamsid="NCMCLILoginParams:loginparamsid:MiMOMaxGPSPyxis" personalityid="MiMOMaxGPSPyxis"/>
+</NCMDeviceLoginDetails>

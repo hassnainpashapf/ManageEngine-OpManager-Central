@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+
+<DeviceConfiguration>
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_switch" templatename="H3C_Switch" displayname="H3C Switch" ostype="Comware Software" description="H3C Switch">
+        <NCMVendorDevice vendorid="H3C" />
+        <NCMDevicePersonality personalityid="H3CSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+        
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_switch_config_sync" />
+                
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+                <!-- Enable change Tracking Thru Syslog -->
+                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Disable_Change_Tracking_Syslog" />
+                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                
+                	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_config_backup" />
+                
+                	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+                
+                	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_switch_config_sync" />
+                	<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+
+                	<!-- Enable change Tracking Thru Syslog -->
+                
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+        
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_switch_config_sync" />
+
+             	<!-- Enable change Tracking Thru Syslog -->	                     
+			 
+        	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_switch_config_sync" />
+             
+		<!-- Enable change Tracking Thru Syslog -->
+	                     
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+                                                <!-- H3C S Series Switch -->
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_s7_switch" templatename="H3C_S7_Switch" displayname="H3C S Series Switch" ostype="Comware Software" description="H3C Switch">
+        <NCMVendorDevice vendorid="H3C" />
+        <NCMDevicePersonality personalityid="H3CSSeriesSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_s7_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_s7_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_s7_switch_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+        
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+                
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+                <!-- Enable change Tracking Thru Syslog -->
+                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Disable_Change_Tracking_Syslog" />
+                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_s7_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_s7_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                
+                	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_s7_switch_config_backup" />
+                
+                	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+                
+                	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+                	<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+
+                	<!-- Enable change Tracking Thru Syslog -->
+                
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_s7_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_s7_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+        
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+
+             	<!-- Enable change Tracking Thru Syslog -->	                     
+			 
+        	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_s7_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_s7_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_s_switch_config_sync" />
+             
+		<!-- Enable change Tracking Thru Syslog -->
+	                     
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="H3C_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_router" templatename="h3c_router" displayname="H3C Device" ostype="Comware Software" description="H3C MSR20-11">
+        <NCMVendorDevice vendorid="H3C" />
+        <NCMDevicePersonality personalityid="H3CDevice" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_router_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_router" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_config_backup" />
+                
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+        
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_switch_config_sync" />
+                
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+                <!-- Enable change Tracking Thru Syslog -->
+                
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+                    
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_router_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_router" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                
+                	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_config_backup" />
+                
+                	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+                
+                	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_switch_config_sync" />
+                	<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="h3c_switch_config_upload" />
+
+
+                	<!-- Enable change Tracking Thru Syslog -->
+                
+			<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+                    
+                	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+        
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_router" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+        
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_switch_config_sync" />
+
+             	<!-- Enable change Tracking Thru Syslog -->	                     
+			 
+        	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:h3c_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:h3c_router" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+        	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="h3c_switch_current_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="h3c_cli_current_config_rec"/>
+
+        	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="h3c_switch_saved_config_telnet_backup" taskhandling="true"/>
+        	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="h3c_cli_saved_config_rec"/>
+
+        	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="h3c_switch_config_sync" />
+             
+		<!-- Enable change Tracking Thru Syslog -->
+	                     
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Enable_Change_Tracking_Syslog" />
+	
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="huawei_Switch_Disable_Change_Tracking_Syslog" />
+
+        	</NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="DellActionId">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="dell_switch_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- Backup Startup -->
+<CLICommand command="copy startup-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dell_switch_cli_backup_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Backup Running -->
+<CLICommand command="copy running-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dell_switch_cli_backup_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Push Startup -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dell_switch_cli_push_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Push Running -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} running-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dell_switch_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Config Sync Operation -->
+<CLICommand command="copy running-config startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dell_switch_sync_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware commands -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="dell_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="dell_switch_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show system">
+	<CLIInputRecord parsercommandname="hardware_prop_dell_switch" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dell_switch_hardware_prop_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_dell_switch" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dell_switch_hardware_prop_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show system id">
+	<CLIInputRecord parsercommandname="hardware_prop_dell_switch" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dell_switch_hardware_prop_rec3" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- DELL 5224 Switch -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="DellActionId">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="dell_5224_switch_cli_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="dell_5224_switch_cli_tftp_ip_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt=":" commandecho="false" promptecho="true" promptactionid="DellActionId">
+  <InteractionSpec timeout="30000" protocol="CLI" interactionid="dell_5224_switch_cli_ispec1"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy run tftp">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dell_5224_switch_cli_backup_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy startup-config tftp">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dell_5224_switch_cli_backup_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="dell_5224_switch_cli_file_name_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware commands -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="dell_5224_hardware_prop_parser" promptactionid="yesActionId">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="dell_5224_switch_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show system">
+	<CLIInputRecord parsercommandname="hardware_prop_dell_5224_switch" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dell_5224_switch_hardware_prop_rec1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_dell_5224_switch" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dell_5224_switch_hardware_prop_rec2" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

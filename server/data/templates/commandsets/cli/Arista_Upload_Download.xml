@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="arista_switch_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="show startup-config">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="arista_switch_cli_fetch_startup_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show running-config">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="arista_switch_cli_fetch_running_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="terminal length 0">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="arista_switch_cli_terminal_length_0_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="arista_switch_hardware_prop_parser">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="arista_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_arista_switch_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="arista_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+	<CLICommand command="write memory">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="arista_switch_sync_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+</CLICommandList>
+

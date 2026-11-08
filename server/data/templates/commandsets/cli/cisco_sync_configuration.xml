@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+		<InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_sync_config_ipsec" />
+	</CLIInteractionSpec>
+
+	<CLICommand command="copy running-config startup-config">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_sync_config_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<CLICommand command="write mem">
+		<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_sync_config_write_mem_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	
+	<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+		<InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_prompt_sync_config_ipsec" />
+	</CLIInteractionSpec>
+
+</CLICommandList>

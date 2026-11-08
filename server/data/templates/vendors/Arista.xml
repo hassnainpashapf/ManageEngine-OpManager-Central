@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Arista Networks devices -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:arista_switch" templatename="Arista" displayname="Arista Networks Switch"  description="For all arista devices" IS_DEPRICATED="true">
+        <NCMVendorDevice vendorid="Arista"/>
+
+        <NCMDevicePersonality personalityid="AristaSwitch"/>
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:arista_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:arista_switch"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="arista_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="arista_switch_cli_fetch_startup_rec"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="arista_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="arista_switch_cli_fetch_running_rec"/>
+	<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="arista_switch_cli_copy_running_to_startup" />
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:arista_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:arista_switch"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="arista_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="arista_switch_cli_fetch_startup_rec"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="arista_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="arista_switch_cli_fetch_running_rec"/>
+    <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="arista_switch_cli_copy_running_to_startup" />        
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	
+	
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+
+
+
+

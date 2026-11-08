@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- execute copy running config tftp command mode -->
+
+    <CLIInteractionSpec  interactionverb="1" requesttimeout="60000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="60000" protocol="CLI" interactionid="cisco_switch_cli_push_running_ios_12_0_irec_1"/>
+    </CLIInteractionSpec>
+
+<CLICommand command="copy tftp system:/running-config">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_switch_cli_push_running_ios_12_0_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="60000" protocol="CLI" interactionid="cisco_switch_cli_push_running_ios_12_0_irec_2" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_switch_cli_push_running_ios_12_0_rec_2" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+        <InteractionSpec timeout="60000" protocol="CLI" interactionid="cisco_switch_cli_push_running_ios_12_0_irec_3" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_switch_cli_push_running_ios_12_0_rec_3" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

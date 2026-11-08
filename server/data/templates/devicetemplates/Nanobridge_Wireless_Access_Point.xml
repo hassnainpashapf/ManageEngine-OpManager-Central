@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="Nanobridge Wireless Access Point" displayName="Nanobridge Wireless Access Point" osType="" templateName="Nanobridge_Wireless_Access_Point">
+	<RestTemplate name=""/>
+	<Vendor displayName="Ubiquiti" vendorName="Ubiquiti">
+		<Commands>
+			<Command commandstr="cat /etc/version"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="cat /tmp/system.cfg" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Nanobridge Wireless AccessPoint" personalityName="NanobridgeWirelessAccessPoint">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BIOS_VERSION" size="100" desc="Bios Version" displayname="BIOS Version" defaultvalue="Not Available" sequenceid="40"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^(\s*)Done</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="NanobridgeWirelessAPPropParser.xml"> 		
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_nanobridge_wireless_ap">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										
+										<REGEX EXPRESSION="\s*Bios Version\s*:\s*(.*)" NAME="BIOS_VERSION">
+											<PARAM NAME="BIOS_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*model\s*:\s*(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol>
+					<Commands>
+						<Command commandstr="cat /tmp/system.cfg" parsercommandname="hardware_prop_nanobridge_wireless_ap" responseparserid="NanobridgeWirelessAP_hardware_prop_parser" messagesuffix="${LF}" prompt="#" timeout="120000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

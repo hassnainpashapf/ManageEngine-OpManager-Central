@@ -1,0 +1,117 @@
+<!--$Id$ -->
+<DeviceConfiguration>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:FujitsuPYCBEIBP1Gb" templatename="Fujitsu_PY_CB" displayname="Fujitsu PY CB Eth Switch/IBP" description="For Fujitsu PY CB Eth Switch/IBP 1Gb 36/12">
+        <NCMVendorDevice vendorid="Fujitsu" />
+        <NCMDevicePersonality personalityid="FujitsuPYCBSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+         <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:FujitsuPYCB_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:FujitsuPYCBEIBP1Gb" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+        <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fujitsu_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="fujitsu_cli_show_running_config_rec"/>
+
+        
+        </NCMDeviceCriteria>
+
+         </NCMProtocolCombination>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:FujitsuPYCB_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:FujitsuPYCBEIBP1Gb" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+       <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fujitsu_telnet_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="fujitsu_cli_show_running_config_rec"/>
+
+        </NCMDeviceCriteria>
+
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>	
+	
+    <!-- For Fujitsu IPCOM EX1100 Firewalls  -->
+	
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:fujitsu_firewall" templatename="Fujitsu_Firewall" displayname="Fujitsu IPCOM EX1100"  description="For all Fujitsu IPCOM EX1100 Firewall">
+        <NCMVendorDevice vendorid="Fujitsu"/>
+
+        <NCMDevicePersonality personalityid="FujitsuFirewall"/>
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	  <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fujitsu_firewall_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fujitsu_firewall" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="fujitsu_firewall_CLI_Startup_Config_Backup" />
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fujitsu_firewall_CLI_Running_Config_Backup" />
+	
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fujitsu_firewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fujitsu_firewall_disable_syslog_change_tracking" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fujitsu_firewall_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fujitsu_firewall" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+		
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="fujitsu_firewall_CLI_Startup_Config_Backup" />
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fujitsu_firewall_CLI_Running_Config_Backup" />
+	
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fujitsu_firewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fujitsu_firewall_disable_syslog_change_tracking" />
+
+	   </NCMDeviceCriteria>
+  </NCMProtocolCombination>
+  
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fujitsu_firewall_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fujitsu_firewall"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="fujitsu_firewall_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="fujitsu_firewall_show_startup_config_rec"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fujitsu_firewall_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="fujitsu_firewall_show_running_config_rec"/>
+	
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fujitsu_firewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fujitsu_firewall_disable_syslog_change_tracking" />
+
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fujitsu_firewall_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:fujitsu_firewall"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="fujitsu_firewall_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="fujitsu_firewall_show_startup_config_rec"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fujitsu_firewall_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="fujitsu_firewall_show_running_config_rec"/>     
+	
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fujitsu_firewall_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fujitsu_firewall_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>	
+    </NCMDeviceTemplate>
+	
+</DeviceConfiguration>

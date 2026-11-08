@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="ArubaOS-CX Switch" osType="AOS-CX" templateName="ArubaOS_CX_Switch">
+	<RestTemplate name="HPEArubaOSCX"/>
+	<Vendor displayName="Aruba" vendorName="Aruba">
+		<Commands/>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="no page" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show startup-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="no page" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="write memory" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="config t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging severity ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="120000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="120000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="config t" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="120000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="120000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="ArubaOS-Cx Switch" personalityName="ArubaOSCxSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="continue" postlogincommand="" preloginprompt="continue" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BIOS_VERSION" size="50" desc="Version of BIOS in the switch" displayname="BIOS Version" defaultvalue="Not Available" sequenceid="1"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+                    <Regex>^.*Running\s*configuration.*$</Regex>
+                    <Regex>^.*Current\s*configuration.*$</Regex>
+                    <Regex>^.*Startup\s*configuration:.*$</Regex>
+                    <Regex>^.*show\s*running-config.*$</Regex>
+                    <Regex>^.*show\s*config.*$</Regex>
+					<Regex operation="upload">^password.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>logging\s*$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="ArubaOSCXSwitchPropParser.xml"/>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show modules" parsercommandname="hardware_prop_ArubaOS_CX_Switch" responseparserid="ArubaOS_CX_Switch_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="hpActionId"/>
+						<Command commandstr="show version" parsercommandname="hardware_prop_ArubaOS_CX_Switch" responseparserid="ArubaOS_CX_Switch_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="hpActionId"/>
+						<Command commandstr="show system" parsercommandname="hardware_prop_ArubaOS_CX_Switch" responseparserid="ArubaOS_CX_Switch_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="hpActionId"/>
+						<Command commandstr="show hardware" parsercommandname="hardware_prop_ArubaOS_CX_Switch" responseparserid="ArubaOS_CX_Switch_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="120000" promptactionid="hpActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+		<NCMDeviceSysOID model="Aruba 6300m" ostype="ArubaOS" series="Aruba 6300m" sysoid=".1.3.6.1.4.1.47196.4.1.1.1.103"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

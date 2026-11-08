@@ -1,0 +1,823 @@
+<?xml version="1.0" encoding="UTF-8"?><GRAPHDETAIL>
+	<Graph YAXISTEXT="Status" description="The current status of this printer device. other(1), unknown(2), idle(3), printing(4), warmup(5)" displayName="Printer status" failureThreshold="1" graphName="PrinterDeviceStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.2.1.25.3.5.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" standardGraph="Printer Monitors">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="State" description="The status of this cover sub-unit (other (1) , doorOpen (3) , doorClosed (4) , interlockOpen (5) , interlockClosed (6))." displayName="Printer Cover Status" failureThreshold="1" graphName="prtCoverStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.2.1.43.6.1.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" standardGraph="Printer Monitors">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="%" description="Cartridge Level (%)" displayName="Cartridge Level" failureThreshold="1" graphName="cartridgeLevel" graphType="multiple" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9*100)/(.1.3.6.1.2.1.43.11.1.1.8)" period="900" protocol="SNMP" saveAbsolutes="false" timeAvg="false" DisplayColumn=".1.3.6.1.2.1.43.12.1.1.4" Index=".1.3.6.1.2.1.43.12.1.1.4" standardGraph="Printer Monitors">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The current level if this supply is a container ; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is sensed by the printer and is read-only ; otherwise , the value may be written (by a Remote Contol Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Current BlackTonerLevel%" failureThreshold="1" graphName="prtMarkerSuppliesLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Takes the SuppliesLevel and SuppliesMaxCapacity UnDPs and transforms their values into an actual percentage, regardless if the original values are in percentage or raw form." displayName="SuppliesPercentage" failureThreshold="1" graphName="SuppliesPercentage" graphType="node" isNumeric="true" oid="((.1.3.6.1.2.1.43.11.1.1.9) / ( .1.3.6.1.2.1.43.11.1.1.8))  * 100" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="This object is used to report the number of pages that have been printed by this consumable that are of the specified media size - A4 or Letter. Additional information:  This object will only exist for Authentic HP consumables. If the cartridge is deemed to be NonHP , then this object  will not exist." displayName="A4 Pages printed" failureThreshold="1" graphName="consumable-status-page-count-a4-letter" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.10.1.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="This object is used to report the number of pages that have been printed by this consumable that are of the specified media size - B5 or Executive. Additional information: This object will only exist for Authentic HP consumables. If the cartridge is deemed to be NonHP , then this object will not exist." displayName="B5 pages printed" failureThreshold="1" graphName="consumable-status-page-count-b5-executive" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.10.1.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="HP Printer - Current black toner supply level (standard Printer MIB marker supplies)" displayName="Current Toner level - Black" failureThreshold="1" graphName="prtMarkerSuppliesLevel1" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="HP Printer - Current cyan toner supply level (standard Printer MIB marker supplies)" displayName="Current Toner level - Cyan" failureThreshold="1" graphName="prtMarkerSuppliesLevel2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="HP Printer - Current magenta toner supply level (standard Printer MIB marker supplies)" displayName="Current Toner level - Magenta" failureThreshold="1" graphName="prtMarkerSuppliesLevel3" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="HP Printer - Current yellow toner supply level (standard Printer MIB marker supplies)" displayName="Current Toner level - Yellow" failureThreshold="1" graphName="prtMarkerSuppliesLevel4" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="HP Printer - Current black toner supply level (standard Printer MIB marker supplies)" displayName="Current Toner level - black" failureThreshold="1" graphName="hp.black.toner.now" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current Toner level - Cyan. The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Current Toner level - Cyan" failureThreshold="1" graphName="hp.cyan.toner.now" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current Toner level - Fuser kit. The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Current Toner level - Fuser kit" failureThreshold="1" graphName="hp.fuser.kit.now" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current Toner level - Magenta. The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Current Toner level - Magenta" failureThreshold="1" graphName="hp.magenta.toner.now" graphType="node" isNumeric="tu" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current Level of Transfer kit. The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Current Level of Transfer kit" failureThreshold="1" graphName="hp.transfer.kit.now" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current Toner level - Yellow. The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Current Toner level - Yellow" failureThreshold="1" graphName="hp.yellow.toner.now" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This indicates that the peripheral cover or door is open. For some peripherals, such as the HP LaserJet IIISi printer or HP DesignJet plotter, this value is always a zero (0)." displayName="HP_Door_Open" failureThreshold="1" graphName="gdStatusDoorOpen" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.3.9.1.1.2.17.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This indicates that the peripheral has a paper jam. For some peripherals, such as the HP LaserJet IIISi printer or HP DesignJet plotter, this value is always a zero (0)." displayName="HP_PaperJam" failureThreshold="1" graphName="gdStatusPaperJam" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.3.9.1.1.2.9.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This indicates that the peripheral is out of paper. For some peripherals, such as the HP LaserJet IIISi printer or HP DesignJet plotter, this value is always a zero (0)." displayName="HP_Paper_Out" failureThreshold="1" graphName="gdStatusPaperOut" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.11.2.3.9.1.1.2.8.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Hewlett-Packard">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current capacity of the input sub-unit in input sub-unit capacity units (PrtCapacityUnitTC). If this input sub-unit can reliably sense this value, the value is sensed by the printer and may not be changed by management requests; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. The value (-3) means that the printer knows that at least one unit remains.  200 - OK, 52 - LOW, 0 - EMPTY" displayName="Current Tray level" failureThreshold="1" graphName="prtTrayLevelManual" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.8.2.1.10.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CANON Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current capacity of the input sub-unit in input sub-unit capacity units (PrtCapacityUnitTC). If this input sub-unit can reliably sense this value, the value is sensed by the printer and may not be changed by management requests; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. The value (-3) means that the printer knows that at least one unit remains. 200 - OK, 52 - LOW, 0 - EMPTY" displayName="Tray 1 Paper status" failureThreshold="1" graphName="prtInputCurrentLevelTray1" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.8.2.1.10.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CANON Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current capacity of the input sub-unit in input sub-unit capacity units (PrtCapacityUnitTC). If this input sub-unit can reliably sense this value, the value is sensed by the printer and may not be changed by management requests; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. The value (-3) means that the printer knows that at least one unit remains.. 200 - OK, 52 - LOW, 0 - EMPTY" displayName="Tray 2 Paper status" failureThreshold="1" graphName="prtInputCurrentLevelTray2" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.8.2.1.10.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CANON Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current capacity of the input sub-unit in input sub-unit capacity units (PrtCapacityUnitTC). If this input sub-unit can reliably sense this value, the value is sensed by the printer and may not be changed by management requests; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. The value (-3) means that the printer knows that at least one unit remains. 200 - OK, 52 - LOW, 0 - EMPTY" displayName="Tray 3 Paper status" failureThreshold="1" graphName="prtInputCurrentLevelTray3" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.8.2.1.10.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CANON Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current capacity of the input sub-unit in input sub-unit capacity units (PrtCapacityUnitTC). If this input sub-unit can reliably sense this value, the value is sensed by the printer and may not be changed by management requests; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. The value (-3) means that the printer knows that at least one unit remains. 200 - OK, 52 - LOW, 0 - EMPTY" displayName="Tray 4 Paper status" failureThreshold="1" graphName="prtInputCurrentLevelTray4" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.8.2.1.10.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CANON Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively.. Block Toner level : 0 Empty, 5 low, 7 ok" displayName="Black Toner Level" failureThreshold="1" graphName="prtblackTonerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CANON Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Waste toner is excess toner that remains on the drum surface after printing. This excess toner is removed from the drum by a cleaning blade and is discarded to a waste toner bottle or container. The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively.. Waste Toner level : 0 Empty, 5 low, 7 ok" displayName="Waste Toner Status" failureThreshold="1" graphName="prtWasteTonerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CANON Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="This reports the True count and not the count on the copier e.g. (engineer may perform 1000 copies at time of commissioning that show in this figure but not on the interface)." displayName="Total Pages Printed" failureThreshold="1" graphName="prtPrintsAll" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="CANON Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current status of this printer device. other(1), unknown(2), idle(3), printing(4), warmup(5)" displayName="Printer status" failureThreshold="1" graphName="hrPrinterStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.25.3.5.1.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Dell Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current status of this input sub-unit." displayName="Input status" failureThreshold="1" graphName="prtInputStatus" graphType="multiple" isNumeric="true" oid=".1.3.6.1.2.1.43.8.2.1.11" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Dell Inc.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_black_developer_cartridge_remaining" displayName="Developer cartridge remaining - Black" failureThreshold="1" graphName="Amount_of_black_developer_cartridge_remaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.12" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_black_drum_remaining" displayName="Drum remaining - Black" failureThreshold="1" graphName="Amount_of_black_drum_remaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.11" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_black_toner_remaining" displayName="Toner remaining - Black" failureThreshold="1" graphName="Tonerremaining-Black" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_cyan_developer_cartridge_remaining" displayName="Developer cartridge remaining - Cyan" failureThreshold="1" graphName="Developercartridgeremaining-Cyan" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_cyan_drum_remaining" displayName="Drum remaining - Cyan" failureThreshold="1" graphName="Drumremaining-Cyan" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_cyan_toner_remaining" displayName="Toner remaining Cyan" failureThreshold="1" graphName="TonerremainingCyan" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_fusing_unit_remaining" displayName="Fusing unit remaining" failureThreshold="1" graphName="Fusingunitremaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.14" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_image_transfer_belt_unit_remaining" displayName="Image_transfer_belt_unit_remaining" failureThreshold="1" graphName="Image_transfer_belt_unit_remaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.15" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_magenta_developer_cartridge_remaining" displayName="Developer Catridge remaining - magenta" failureThreshold="1" graphName="DeveloperCatridgeremaining-magenta" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.8" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_magenta_drum_remaining" displayName="Remaining drum - Magenta" failureThreshold="1" graphName="Remainingdrum-Magenta" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.7" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_magenta_toner_remaining" displayName="Toner Remaining - Magenta" failureThreshold="1" graphName="TonerRemaining-Magenta" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_ozone_filter_remaining" displayName="Ozone filter unit remaining" failureThreshold="1" graphName="OzoneFilterUnitRemaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.17" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_transfer_roller_unit_remaining" displayName="Transfer roller unit remaining" failureThreshold="1" graphName="TransferRollerUnitRemaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.16" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Konica-Minolta printer - Remaining level of yellow developer cartridge via standard Printer MIB" displayName="Yellow developer cartridge remaining" failureThreshold="1" graphName="YellowDeveloperCartridgeRemaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.10" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_yellow_drum_remaining" displayName="Yellow drum remaining" failureThreshold="1" graphName="YellowDrumRemaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.9" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount_of_yellow_toner_remaining" displayName="Yellow toner remaining" failureThreshold="1" graphName="YellowTonerRemaining" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Konica-Minolta printer - Total lifetime page count via standard Printer MIB" displayName="Total Pages printed" failureThreshold="1" graphName="TotalPrints" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total Duplex pages printed" displayName="Total duplex prints" failureThreshold="1" graphName="totalprinterduplex" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.18334.1.1.1.5.7.2.1.3.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total Scanned pages" displayName="Total Scans" failureThreshold="1" graphName="totalprinterscan" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.18334.1.1.1.5.7.2.1.5.0" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total Color pages printed" displayName="Total Color Prints" failureThreshold="1" graphName="totalColorPrints" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.18334.1.1.1.5.7.2.3.1.11.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total Fax Sent" displayName="Total Fax Sent" failureThreshold="1" graphName="totalFaxTx" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.18334.1.1.1.5.7.2.3.1.9.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total Fax Received" displayName="Total Fax Received" failureThreshold="1" graphName="totalFaxRx" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.18334.1.1.1.5.7.2.3.1.10.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Level Cyan" displayName="Toner Level Cyan" failureThreshold="1" graphName="tonerLevelCyan" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Level Black" displayName="Toner Level Black" failureThreshold="1" graphName="tonerLevelBlack" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Level Magenta" displayName="Toner Level Magenta" failureThreshold="1" graphName="tonerLevelMagenta" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Level Yellow" displayName="Toner Level Yellow" failureThreshold="1" graphName="tonerLevelYellow" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Full Toner Container" displayName="Full Toner Container" failureThreshold="1" graphName="recipientedetonercheio" graphType="node" isNumeric="true" oid="1.3.6.1.2.1.43.11.1.1.9.1.13" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Fusing Unit Usage" displayName="Fuser Level" failureThreshold="1" graphName="fuserLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.14" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Yellow developer cartridge remaining" displayName="Yellow developer cartridge remaining" failureThreshold="1" graphName="rolodetransferencia" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.10" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Konica-Minolta printer - Black toner cartridge level as a percentage (marker supply index 1.1)" displayName="Cartridge level % - Black" failureThreshold="1" graphName="black.cartridge.toner" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Konica-Minolta printer - Black developer cartridge level as a percentage (marker supply index 1.3)" displayName="Cartridge level % - Developer Cartridge (Black)" failureThreshold="1" graphName="developer.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Developer Powder (Black)" displayName="Cartridge level % - Developer Powder (Black)" failureThreshold="1" graphName="developer.powder.percents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Konica-Minolta printer - Black drum cartridge level as a percentage (marker supply index 1.2)" displayName="Cartridge level % - Drum Cartridge (Black)" failureThreshold="1" graphName="drumcartridge.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Fuser Unit" displayName="Cartridge level % - Fuser Unit" failureThreshold="1" graphName="fuser.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Paper Dust Remover. The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Cartridge level % - Paper Dust Remover" failureThreshold="1" graphName="prtPaperDustRemover" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.8" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Fuser Kit leve %. The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Cartridge level % - Transfer Unit" failureThreshold="1" graphName="prtCatridgeTransferLevelPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Konica-Minolta printer - Black cartridge level as a percentage (marker supply index 1.4)" displayName="Cartridge level % - Black" failureThreshold="1" graphName="black.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Cyan" displayName="Cartridge level % - Cyan" failureThreshold="1" graphName="cyan.cartridge.toner" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Konica-Minolta printer - Black developer cartridge level as a percentage (marker supply index 1.12)" displayName="Cartridge level % - Developer Cartridge (Black)" failureThreshold="1" graphName="developerblack.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Developer Cartridge (Cyan)" displayName="Cartridge level % - Developer Cartridge (Cyan)" failureThreshold="1" graphName="developercyan.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Developer Cartridge (Magenta)" displayName="Cartridge level % - Developer Cartridge (Magenta)" failureThreshold="1" graphName="developermagenta.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Developer Cartridge (Yellow)" displayName="Cartridge level % - Developer Cartridge (Yellow)" failureThreshold="1" graphName="developeryellow.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Konica-Minolta printer - Black drum cartridge level as a percentage (marker supply index 1.11)" displayName="Cartridge level % - Drum Cartridge (Black)" failureThreshold="1" graphName="drumblack.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Drum Cartridge (Cyan)" displayName="Cartridge level % - Drum Cartridge (Cyan)" failureThreshold="1" graphName="drumcyan.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Drum Cartridge (Magenta)" displayName="Cartridge level % - Drum Cartridge (Magenta)" failureThreshold="1" graphName="drummagenta.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Drum Cartridge (Yellow)" displayName="Cartridge level % - Drum Cartridge (Yellow)" failureThreshold="1" graphName="drumyellow.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Fusing Unit" displayName="Cartridge level % - Fusing Unit" failureThreshold="1" graphName="fuser.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object represents any error conditions detected by the printer. The error conditions are encoded as bits in an octet string, with the following definitions: Condition Bit # lowPaper 0 noPaper 1 lowToner 2 noToner 3 doorOpen 4 jammed 5 offline 6 serviceRequested 7 inputTrayMissing 8 outputTrayMissing 9 markerSupplyMissing 10 outputNearFull 11 outputFull 12 inputTrayEmpty 13 overduePreventMaint 14 Bits are numbered starting with the most significant bit of the first byte being bit 0, the least significant bit of the first byte being bit 7, the most significant bit of the second byte being bit 8, and so on. A one bit encodes that the condition was detected, while a zero bit encodes that the condition was not detected. This object is useful for alerting an operator to specific warning or error conditions that may occur, especially those requiring human intervention." displayName="Printer error state" failureThreshold="1" graphName="hrPrinterDetectedErrorState" graphType="node" isNumeric="false" oid=".1.3.6.1.2.1.25.3.5.1.2.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Magenta" displayName="Cartridge level % - Magenta" failureThreshold="1" graphName="magenta.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Ozone Filter" displayName="Cartridge level % - Ozone Filter" failureThreshold="1" graphName="ozone.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.17" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by prtMarkerCounterUnit. Note: This object should be implemented as a persistent object with a reliable value throughout the lifetime of the printer." displayName="Pages printed - total" failureThreshold="1" graphName="Pages_printed_total" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - toner waste box" displayName="Cartridge level % - toner waste box" failureThreshold="1" graphName="tonerwastebox.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Transfer Roller Unit" displayName="Cartridge level % - Transfer Roller Unit" failureThreshold="1" graphName="transferroller.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.16" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge level % - Yellow" displayName="Cartridge level % - Yellow" failureThreshold="1" graphName="yellow.cartridge.procents" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Konica-Minolta">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Kyocera printer - Total pages printed counter via Kyocera private MIB" displayName="Total Pages printed" failureThreshold="1" graphName="ContadorTotal" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1347.42.2.1.1.1.6.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The time (in hundredths of a second) since the network management portion of the system was last re-initialized." displayName="System Uptime" failureThreshold="1" graphName="sysUpTimeInstance" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.1.3.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Black Toner: current count" displayName="Black Toner: current count" failureThreshold="1" graphName="BlackTonerCurrent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object represents any error conditions detected by the printer. The error conditions are encoded as bits in an octet string, with the following definitions: Condition Bit # lowPaper 0 noPaper 1 lowToner 2 noToner 3 doorOpen 4 jammed 5 offline 6 serviceRequested 7 inputTrayMissing 8 outputTrayMissing 9 markerSupplyMissing 10 outputNearFull 11 outputFull 12 inputTrayEmpty 13 overduePreventMaint 14 Bits are numbered starting with the most significant bit of the first byte being bit 0, the least significant bit of the first byte being bit 7, the most significant bit of the second byte being bit 8, and so on. A one bit encodes that the condition was detected, while a zero bit encodes that the condition was not detected. This object is useful for alerting an operator to specific warning or error conditions that may occur, especially those requiring human intervention." displayName="Printer Error status Message" failureThreshold="1" graphName="PrinterErrorstatusMessage" graphType="node" isNumeric="false" oid=".1.3.6.1.2.1.25.3.5.1.2.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="KYOCERA Corporation" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively. Magenta color." displayName="Magenta Toner: current count" failureThreshold="1" graphName="MagentaToner-currentcount" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by prtMarkerCounterUnit. Note: This object should be implemented as a persistent object with a reliable value throughout the lifetime of the printer." displayName="Total Pages printed" failureThreshold="1" graphName="TotalPagesprinted" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Black Level %" displayName="Amount of toner: Black" failureThreshold="1" graphName="Amountoftoner-Black" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.4) * 100 / (.1.3.6.1.2.1.43.11.1.1.8.1.4)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Cyan Level %" displayName="Amount of toner: Cyan" failureThreshold="1" graphName="Amountoftoner-Cyan" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.1) * 100 / (.1.3.6.1.2.1.43.11.1.1.8.1.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Magenta Level %" displayName="Amount of toner: Magenta" failureThreshold="1" graphName="Amountoftoner-Magenta" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.2) * 100 / (.1.3.6.1.2.1.43.11.1.1.8.1.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Yellow Level %" displayName="Amount of toner: Yellow" failureThreshold="1" graphName="Amountoftoner-Yellow" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.3)*100 /(.1.3.6.1.2.1.43.11.1.1.8.1.3)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total Printed pages" displayName="Printed pages total" failureThreshold="1" graphName="kcprtMarkerPages" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1347.43.10.1.1.12.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total pages unscrambled while printing" displayName="Page unscrambled" failureThreshold="1" graphName="kmMFPScanCounterItem" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1347.42.3.1.3.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object represents any error conditions detected by the printer. The error conditions are encoded as bits in an octet string, with the following definitions: Condition Bit # lowPaper 0 noPaper 1 lowToner 2 noToner 3 doorOpen 4 jammed 5 offline 6 serviceRequested 7 inputTrayMissing 8 outputTrayMissing 9 markerSupplyMissing 10 outputNearFull 11 outputFull 12 inputTrayEmpty 13 overduePreventMaint 14 Bits are numbered starting with the most significant bit of the first byte being bit 0, the least significant bit of the first byte being bit 7, the most significant bit of the second byte being bit 8, and so on. A one bit encodes that the condition was detected, while a zero bit encodes that the condition was not detected. This object is useful for alerting an operator to specific warning or error conditions that may occur, especially those requiring human intervention." displayName="Print Error status" failureThreshold="1" graphName="PrintErrorstatus" graphType="node" isNumeric="false" oid=".1.3.6.1.2.1.25.3.5.1.2.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="KYOCERA Corporation" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Number of papers placed in the Tray" displayName="Papers in Tray" failureThreshold="1" graphName="PapersinTray" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1347.42.23.1.16.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total scanned pages" displayName="Total scanned pages" failureThreshold="1" graphName="Totalscannedpages" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1347.42.3.1.4.1.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total scanned and copied pages" displayName="Total scanned and copied pages" failureThreshold="1" graphName="Totalscannedandcopiedpages" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1347.46.10.1.1.5.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total Color pages printed" displayName="Total Color pages" failureThreshold="1" graphName="TotalColorpages" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1347.42.3.1.2.1.1.2.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total copies" displayName="Total Copies" failureThreshold="1" graphName="TotalCopies" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.1347.42.3.1.1.1.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current status of this printer device. other(1), unknown(2), idle(3), printing(4), warmup(5)" displayName="Printer Status" failureThreshold="1" graphName="PrinterStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.25.3.5.1.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Remaining Toner in Catridge" failureThreshold="1" graphName="RemainingTonerCatridge" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object represents any error conditions detected by the printer. The error conditions are encoded as bits in an octet string, with the following definitions: Condition Bit # lowPaper 0 noPaper 1 lowToner 2 noToner 3 doorOpen 4 jammed 5 offline 6 serviceRequested 7 inputTrayMissing 8 outputTrayMissing 9 markerSupplyMissing 10 outputNearFull 11 outputFull 12 inputTrayEmpty 13 overduePreventMaint 14 Bits are numbered starting with the most significant bit of the first byte being bit 0, the least significant bit of the first byte being bit 7, the most significant bit of the second byte being bit 8, and so on. A one bit encodes that the condition was detected, while a zero bit encodes that the condition was not detected. This object is useful for alerting an operator to specific warning or error conditions that may occur, especially those requiring human intervention." displayName="Printer Errors detected" failureThreshold="1" graphName="PrinterError" graphType="node" isNumeric="false" oid=".1.3.6.1.2.1.25.3.5.1.2.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="KYOCERA Corporation" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by prtMarkerCounterUnit. Note: This object should be implemented as a persistent object with a reliable value throughout the lifetime of the printer." displayName="Total Printed pages" failureThreshold="1" graphName="PrintedpagesAll" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Amount of Toner level in percent" displayName="Current amount of toner Percent" failureThreshold="1" graphName="tonerRemainingPercent" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.1) *100/(.1.3.6.1.2.1.43.11.1.1.8.1.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="KYOCERA Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by prtMarkerCounterUnit. Note: This object should be implemented as a persistent object with a reliable value throughout the lifetime of the printer." displayName="Total Pages printed" failureThreshold="1" graphName="prtPrintsLifeTime" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Samsung Electronics Co., LTD.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Mono color pages total" displayName="Mono Pages" failureThreshold="1" graphName="prtPrintsMonochrome" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.236.11.5.1.1.9.2.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Samsung Electronics Co., LTD.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Tray 1 Roller Counter lifetime" displayName="Tray 1 Roller Counter" failureThreshold="1" graphName="prtRollerCountTray1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.236.11.5.1.1.3.33.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Samsung Electronics Co., LTD.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Black Cartridge Level" displayName="Black Cartridge Level" failureThreshold="1" graphName="prtCatridgeLevelBlack" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.236.11.5.11.53.61.5.2.1.13.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Samsung Electronics Co., LTD.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Black Cartrige Printed Pages" displayName="Black Cartrige Printed Pages" failureThreshold="1" graphName="samsungprtMarkerSuppliesCapacity" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.236.11.5.11.53.61.5.2.1.14.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Samsung Electronics Co., LTD.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Hours" description="Transfer Roller Hours run totally." displayName="Transfer Roller Total Hours" failureThreshold="1" graphName="samsungRollPagesHours" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.236.11.5.1.1.3.27.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Samsung Electronics Co., LTD.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="Hours" description="Hours Fuser unit is run" displayName="Total Hours Fuser is run" failureThreshold="1" graphName="samsungFuserUnitHours" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.236.11.5.1.1.3.25.0" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Samsung Electronics Co., LTD.">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Tray 1 Paper left. A return value of 0 indicates that the margin is sufficient, and a return value of 9 indicates that the paper has run out." displayName="Tray 1 Paper status" failureThreshold="1" graphName="printer.tray.status[1]" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.20.2.2.1.11.2.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Tray 2 Paper left. A return value of 0 indicates that the margin is sufficient, and a return value of 9 indicates that the paper has run out." displayName="Tray 2 Paper status" failureThreshold="1" graphName="printer.tray.status[2]" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.20.2.2.1.11.2.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Tray 3 Paper left. A return value of 0 indicates that the margin is sufficient, and a return value of 9 indicates that the paper has run out." displayName="Tray 3 Paper status" failureThreshold="1" graphName="printer.tray.status[3]" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.20.2.2.1.11.2.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Black toner level percent. The return value range is 0-100 (similar to a percentage), 0 means the toner is used up, and 100 means the toner is sufficient." displayName="Black toner level percent" failureThreshold="1" graphName="prints.toner.status[black]" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cyan toner balance. The return value range is 0-100 (similar to a percentage), 0 means the toner is used up, and 100 means the toner is sufficient." displayName="Cyan toner balance" failureThreshold="1" graphName="cyanbalance" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Magenta ink level. The return value range is 0-100 (similar to a percentage), 0 means the toner is used up, and 100 means the toner is sufficient." displayName="Magenta level" failureThreshold="1" graphName="magentaInkStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Yellow ink level. The return value range is 0-100 (similar to a percentage), 0 means the toner is used up, and 100 means the toner is sufficient." displayName="Yellow level" failureThreshold="1" graphName="yellowInkStatus" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Black Inkt % left. The current level if this supply is a container; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is reported by the printer and is read-only; otherwise, the value may be written (by a Remote Control Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Black Inkt % left" failureThreshold="1" graphName="BlackInkLeft" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cleaning Unit % left" displayName="Cleaning Unit % left" failureThreshold="1" graphName="CleaningUnitleft" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cyan Inkt % left" displayName="Cyan Ink % left" failureThreshold="1" graphName="CyanInktleft" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Magenta Inkt % left" displayName="Magenta Ink % left" failureThreshold="1" graphName="MagentaInktleft" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Paper Left in Tray 1" displayName="Paper Left in Tray 1" failureThreshold="1" graphName="PaperLeftinTray1" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.8.2.1.10.1.1)*100/(.1.3.6.1.2.1.43.8.2.1.9.1.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Paper Left in Tray 2" displayName="Paper Left in Tray 2" failureThreshold="1" graphName="PaperLeftinTray2" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.8.2.1.10.1.2)*100/(.1.3.6.1.2.1.43.8.2.1.9.1.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Paper Left in Tray 3" displayName="Paper Left in Tray 3" failureThreshold="1" graphName="PaperLeftinTray3" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.8.2.1.10.1.3)*100/(.1.3.6.1.2.1.43.8.2.1.9.1.3)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Yellow Inkt % left" displayName="Yellow Ink % left" failureThreshold="1" graphName="YellowInktleft" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current cartridge toner level - cyan" displayName="Current cartridge toner level - cyan" failureThreshold="1" graphName="Currentcartridgetonerlevel-cyan" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current cartridge toner level - magenta" displayName="Current cartridge toner level - magenta" failureThreshold="1" graphName="Currentcartridgetonerlevel-magenta" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current cartridge toner level - yellow" displayName="Current cartridge toner level - yellow" failureThreshold="1" graphName="Currentcartridgetonerlevel-yellow" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current toner waste box level" displayName="Current toner waste box level" failureThreshold="1" graphName="Currenttonerwasteboxlevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current cartridge toner level - black" displayName="Current cartridge toner level - black" failureThreshold="1" graphName="Currentcartridgetonerlevel-black" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by prtMarkerCounterUnit. Note: This object should be implemented as a persistent object with a reliable value throughout the lifetime of the printer." displayName="Pages printed - total" failureThreshold="1" graphName="Pagesprinted-total" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Cyan" displayName="Cartridge toner level % - Cyan" failureThreshold="1" graphName="CartridgetonerlevelPercent-Cyan" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.1)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Yellow" displayName="Cartridge toner level % - Yellow" failureThreshold="1" graphName="CartridgetonerlevelPercent-Yellow" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.3)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.3)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by prtMarkerCounterUnit. Note: This object should be implemented as a persistent object with a reliable value throughout the lifetime of the printer." displayName="Pages printed - total" failureThreshold="1" graphName="PagesprintedAll" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current drum cartridge level - black" displayName="Current drum cartridge level - black" failureThreshold="1" graphName="Currentdrumcartridgelevel-black" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Pages printed - black" displayName="Pages printed - black" failureThreshold="1" graphName="Pagesprinted-black" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Pages printed - color" displayName="Pages printed - color" failureThreshold="1" graphName="Pagesprinted-color" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Pages printed - total" displayName="Pages printed - total" failureThreshold="1" graphName="Pagesprinted-total" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge drum level % - black" displayName="Cartridge drum level % - black" failureThreshold="1" graphName="CartridgedrumlevelPercent-black" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.6)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.6)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge drum level % - Cyan" displayName="Cartridge drum level % - Cyan" failureThreshold="1" graphName="CartridgedrumlevelPercent-Cyan" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.9)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.9)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge drum level % - Magenta" displayName="Cartridge drum level % - Magenta" failureThreshold="1" graphName="CartridgedrumlevelPercent-Magenta" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.8)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.8)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge drum level % - Yellow" displayName="Cartridge drum level % - Yellow" failureThreshold="1" graphName="CartridgedrumlevelPercent-Yellow" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.7)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.7)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Magenta" displayName="Cartridge toner level % - Magenta" failureThreshold="1" graphName="CartridgetonerlevelPercent-Magenta" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.3)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.3)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Cyan" displayName="Cartridge toner level % - Cyan" failureThreshold="1" graphName="CartridgetonerlevelPercent-Cyan" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.2)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Yellow" displayName="Cartridge toner level % - Yellow" failureThreshold="1" graphName="CartridgetonerlevelPercent-Yellow" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.4)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.4)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Current drum unit level % - black" displayName="Current drum unit level % - black" failureThreshold="1" graphName="CurrentdrumunitlevelPercent-black" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Current drum unit level % - cyan" displayName="Current drum unit level % - cyan" failureThreshold="1" graphName="CurrentdrumunitlevelPercent-cyan" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Current drum unit level % - magenta" displayName="Current drum unit level % - magenta" failureThreshold="1" graphName="CurrentdrumunitlevelPercent-magenta" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Current drum unit level % - yellow" displayName="Current drum unit level % - yellow" failureThreshold="1" graphName="CurrentdrumunitlevelPercent-yellow" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Cyan" displayName="Cartridge toner level % - Cyan" failureThreshold="1" graphName="CartridgetonerlevelPercent-Cyan" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.2)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Yellow" displayName="Cartridge toner level % - Yellow" failureThreshold="1" graphName="CartridgetonerlevelPercent-Yellow" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.4)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.4)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Current Feed Roll" displayName="Current Feed Roll" failureThreshold="1" graphName="CurrentFeedRoll" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.18" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Cyan" displayName="Cartridge toner level % - Cyan" failureThreshold="1" graphName="CartridgetonerlevelPercent-Cyan" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.4)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.4)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Yellow" displayName="Cartridge toner level % - Yellow" failureThreshold="1" graphName="CartridgetonerlevelPercent-Yellow" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.2)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Belt Cleaner Status %" displayName="Current Belt Cleaner Level %" failureThreshold="1" graphName="BeltCleanerStatusPercent" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.17)*100 / (.1.3.6.1.2.1.43.11.1.1.8.1.17)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Current drum toner level % - black" displayName="Current drum toner level % - black" failureThreshold="1" graphName="CurrentdrumtonerlevelPercent-black" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Current drum toner level % - cyan" displayName="Current drum toner level % - cyan" failureThreshold="1" graphName="CurrentdrumtonerlevelPercent-cyan" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Current drum toner level % - magenta" displayName="Current drum toner level % - magenta" failureThreshold="1" graphName="CurrentdrumtonerlevelPercent-magenta" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Current drum toner level % - yellow" displayName="Current drum toner level % - yellow" failureThreshold="1" graphName="CurrentdrumtonerlevelPercent-yellow" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Cyan" displayName="Cartridge toner level % - Cyan" failureThreshold="1" graphName="CartridgetonerlevelPercent-Cyan" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.2)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Yellow" displayName="Cartridge toner level % - Yellow" failureThreshold="1" graphName="CartridgetonerlevelPercent-Yellow" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.4)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.4)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Printed Pages - color" displayName="Printed Pages - color" failureThreshold="1" graphName="PrintedPages-color" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Second Bias Transfer Roller %" displayName="Second Bias Transfer Roller %" failureThreshold="1" graphName="SecondBiasTransferRollerPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Transfer Belt Cleaner %" displayName="Transfer Belt Cleaner %" failureThreshold="1" graphName="TransferBeltCleanerPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Drum Black (R1) in %" displayName="Drum Black (R1) in %" failureThreshold="1" graphName="DrumBlack(R1)inPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Drum Cyan (R2) in %" displayName="Drum Cyan (R2) in %" failureThreshold="1" graphName="DrumCyan(R2)inPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Drum Magenta (R3) in %" displayName="Drum Magenta (R3) in %" failureThreshold="1" graphName="DrumMagenta(R3)inPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Drum Yellow (R4) in %" displayName="Drum Yellow (R4) in %" failureThreshold="1" graphName="DrumYellow(R4)inPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - black" displayName="Cartridge toner level % - black" failureThreshold="1" graphName="CartridgetonerlevelPercent-black" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.1)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Cyan" displayName="Cartridge toner level % - Cyan" failureThreshold="1" graphName="CartridgetonerlevelPercent-Cyan" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.2)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.2)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cartridge toner level % - Yellow" displayName="Cartridge toner level % - Yellow" failureThreshold="1" graphName="CartridgetonerlevelPercent-Yellow" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.4)*100/(.1.3.6.1.2.1.43.11.1.1.8.1.4)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Pages printed - black/white" displayName="Pages printed - black/white" failureThreshold="1" graphName="Pagesprinted-black/white" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Second Transfer Roller in %" displayName="Second Transfer Roller in %" failureThreshold="1" graphName="SecondTransferRollerinPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Transfer Belt Cleaner in %" displayName="Transfer Belt Cleaner in %" failureThreshold="1" graphName="TransferBeltCleanerinPercent" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner Waste Container in %" displayName="Toner Waste Container in %" failureThreshold="1" graphName="TonerWasteContainerinPercent" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.10) *100 / (.1.3.6.1.2.1.43.11.1.1.8.1.10)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Xerox">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Printer Belt Level" displayName="Printer Belt Level" failureThreshold="1" graphName="prtBeltLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Lexmark International">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="This object represents any error conditions detected by the printer. The error conditions are encoded as bits in an octet string, with the following definitions: Condition Bit # lowPaper 0 noPaper 1 lowToner 2 noToner 3 doorOpen 4 jammed 5 offline 6 serviceRequested 7 inputTrayMissing 8 outputTrayMissing 9 markerSupplyMissing 10 outputNearFull 11 outputFull 12 inputTrayEmpty 13 overduePreventMaint 14 Bits are numbered starting with the most significant bit of the first byte being bit 0, the least significant bit of the first byte being bit 7, the most significant bit of the second byte being bit 8, and so on. A one bit encodes that the condition was detected, while a zero bit encodes that the condition was not detected. This object is useful for alerting an operator to specific warning or error conditions that may occur, especially those requiring human intervention." displayName="Printer Message Status" failureThreshold="1" graphName="prtConsoleDisplayBufferText" graphType="node" isNumeric="false" oid=".1.3.6.1.2.1.43.16.5.1.2.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Lexmark International" pollDataType="2">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Toner Level CYAN" displayName="Toner Level CYAN" failureThreshold="1" graphName="prtCyanTonerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Lexmark International">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Toner Level MAGENTA" displayName="Toner Level MAGENTA" failureThreshold="1" graphName="prtMagentaTonerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Lexmark International">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Toner Level YELLOW" displayName="Toner Level YELLOW" failureThreshold="1" graphName="prtYellowTonerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Lexmark International">
+        <UserProps/>
+    </Graph>
+	<Graph YAXISTEXT="" description="Toner Level BLACK" displayName="Toner Level BLACK" failureThreshold="1" graphName="lexMarkprtBlackTonerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Lexmark International">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by prtMarkerCounterUnit. Note: This object should be implemented as a persistent object with a reliable value throughout the lifetime of the printer." displayName="Total Pages printed" failureThreshold="1" graphName="prtMarkerLifeCount" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Lexmark International">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Black Developer Usage" displayName="Black Developer Usage" failureThreshold="1" graphName="sharp.printer.toner.black.dev.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.13" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Black Photoconductive Drum Usage" displayName="Black Photoconductive Drum Usage" failureThreshold="1" graphName="sharp.printer.toner.black.drum.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Black Toner Usage" displayName="Black Toner Usage" failureThreshold="1" graphName="sharp.printer.toner.black.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cyan Developer tonor Usage" displayName="Cyan Developer Usage" failureThreshold="1" graphName="sharp.printer.toner.cyan.dev.usag" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.10" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cyan Photoconductive Drum Usage" displayName="Cyan Photoconductive Drum Usage" failureThreshold="1" graphName="sharp.printer.toner.cyan.drum.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.6" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Cyan Toner Usage" displayName="Cyan Toner Usage" failureThreshold="1" graphName="sharp.printer.toner.cyan.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Fusing Unit Usage" displayName="Fusing Unit Usage" failureThreshold="1" graphName="sharp.printer.fusing.unit.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.14" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Magenta Developer Usage" displayName="Magenta Developer Usage" failureThreshold="1" graphName="sharp.printer.toner.magenta.dev.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.11" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Magenta Photoconductive Drum Usage" displayName="Magenta Photoconductive Drum Usage" failureThreshold="1" graphName="sharp.printer.toner.magenta.drum.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.7" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Magenta Toner Usage" displayName="Magenta Toner Usage" failureThreshold="1" graphName="sharp.printer.toner.magenta.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Waste Toner Usage" displayName="Waste Toner Usage" failureThreshold="1" graphName="sharp.printer.toner.waste.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Yellow Developer Usage" displayName="Yellow Developer Usage" failureThreshold="1" graphName="sharp.printer.toner.yellow.dev.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.12" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Yellow Photoconductive Drum Usage" displayName="Yellow Photoconductive Drum Usage" failureThreshold="1" graphName="sharp.printer.toner.yellow.drum.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Yellow Toner Usage" displayName="Yellow Toner Usage" failureThreshold="1" graphName="sharp.printer.toner.yellow.usage" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total pages printed" displayName="Total pages printed" failureThreshold="1" graphName="sharpPrintedPages" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2385.1.1.19.2.1.4.1.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total pages copied" displayName="Total pages copied" failureThreshold="1" graphName="sharpPrinterPagesCopied" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2385.1.1.19.2.1.4.4.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Sharp">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by prtMarkerCounterUnit. Note: This object should be implemented as a persistent object with a reliable value throughout the lifetime of the printer." displayName="Pages printed - total" failureThreshold="1" graphName="prtPagesCountLifetime" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Toshiba Corporation">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="The current level if this supply is a container ; the remaining space if this supply is a receptacle. If this supply container/receptacle can reliably sense this value, the value is sensed by the printer and is read-only ; otherwise , the value may be written (by a Remote Contol Panel or a Management Application). The value (-1) means other and specifically indicates that the sub-unit places no restrictions on this parameter. The value (-2) means unknown. A value of (-3) means that the printer knows that there is some supply/remaining space, respectively." displayName="Toner monochrome level" failureThreshold="1" graphName="BlackTonerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.11.1.1.9.1.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Epson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of papers" description="The count of the number of units of measure counted during the life of printer using units of measure as specified by CounterUnit." displayName="Total Papers printed" failureThreshold="1" graphName="LifetimePageCount" graphType="node" isNumeric="true" oid=".1.3.6.1.2.1.43.10.2.1.4.1.1" period="300" protocol="SNMP" saveAbsolutes="" timeAvg="false" vendorName="Epson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Takes the BlackTonerLevel and BlackTonerMaxCapacity UnDPs and transforms their values into an actual percentage, regardless if the original values are in percentage or raw form." displayName="Available Black Toner Percent" failureThreshold="1" graphName="BlackTonerPercentage" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.11.1.1.9.1.1) * 100 /(.1.3.6.1.2.1.43.11.1.1.8.1.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Epson">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total pages scanned" displayName="Total pages scanned" failureThreshold="1" graphName="Totalpagesscanned" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.402.1.4.2.1.7.4" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total pages copied" displayName="Total pages copied" failureThreshold="1" graphName="Totalpagescopied" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.402.1.4.2.1.7.5" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Drum Status" displayName="Drum Status" failureThreshold="1" graphName="DrumLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.1.2.2.3.1.1.4.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Fax Pages Received" displayName="Fax Pages Received" failureThreshold="1" graphName="FaxReceivePage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.402.1.4.2.1.7.9" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Fax Pages Sent" displayName="Fax Pages Sent" failureThreshold="1" graphName="FaxSendPage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.402.1.4.2.1.7.8" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="FlatBed (FB) scanned pages count" displayName="FB Scanned Pages" failureThreshold="1" graphName="FBScanPage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.402.1.4.2.1.7.3" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Online Print Center (OPC) initiated printed pages" displayName="OPC_Drum_Count" failureThreshold="1" graphName="OPCDrumCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.402.1.4.2.1.7.2" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="" description="Toner level" displayName="Toner Level" failureThreshold="1" graphName="TonerLevel" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.1.2.2.3.1.1.4.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="No. of pages" description="Total pages printed" displayName="Total Print Pages" failureThreshold="1" graphName="TotalPrintPage" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.258.402.1.4.2.1.7.1" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner cartridge black Percent" displayName="Toner cartridge black Percent" failureThreshold="1" graphName="TonercartridgeblackPercent" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.13.4.1.8.1.1)*100/(.1.3.6.1.2.1.43.13.4.1.7.1.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Drum black Percent" displayName="Drum black Percent" failureThreshold="1" graphName="DrumblackPercent" graphType="node" isNumeric="true" oid="(.1.3.6.1.2.1.43.13.4.1.6.1.1)*100/(.1.3.6.1.2.1.43.13.4.1.5.1.1)" period="300" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Panasonic ">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="Pages" description="Total Page count Printerd and Copier" displayName="Total pages (Printer and Copier)" failureThreshold="1" graphName="pcrichTotPageCount" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.19.1.0" period="900" protocol="SNMP" timeAvg="false" unit="Pages" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="Pages" description="Total printed pages black and white" displayName="Total pages printed (Black and White)" failureThreshold="1" graphName="richoTotPrintedPageBW" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.19.2.0" period="900" protocol="SNMP" timeAvg="false" unit="Pages"  vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph saveAbsolutes="false" YAXISTEXT="Pages" description="Total pages copy black and white"  displayName="Total page copy (Printer and Copier)" failureThreshold="1" graphName="richTotPageCopyPC" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.367.3.2.1.2.19.4.0" period="900" protocol="SNMP" timeAvg="false" unit="Pages" vendorName="RICOH">
+        <UserProps/>
+    </Graph>
+    <Graph YAXISTEXT="%" description="Toner level" displayName="Toner level" failureThreshold="1" graphName="TonerCurrentLevel" graphType="multiple" isNumeric="true" oid="StringToNumeric[.1.3.6.1.4.1.2001.1.1.1.1.100.3.1.1.3]" period="900" protocol="SNMP" sSave="true" showDial="false" saveAbsolutes="false" timeAvg="false" vendorName="OKI">
+	<UserProps/>
+	</Graph>
+    <DevicePackageToGraph deviceType="Xerox DocuPrint N3225" graphName="Currentdrumcartridgelevel-black|PagesprintedAll|Currentcartridgetonerlevel-black|CartridgedrumlevelPercent-black|Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Konica-Minolta Bizhub C284" graphName="totalColorPrints|recipientedetonercheio|totalFaxTx|tonerLevelBlack|rolodetransferencia|totalFaxRx|totalprinterscan|TotalPrints|totalprinterduplex|fuserLevel"/>
+    <DevicePackageToGraph deviceType="Konica-Minolta Bizhub C284e" graphName="totalColorPrints|recipientedetonercheio|totalFaxTx|tonerLevelBlack|rolodetransferencia|totalFaxRx|totalprinterscan|TotalPrints|totalprinterduplex|fuserLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International CS725" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International CX725" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International C925" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International X925" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International C792" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International C920" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International C950" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International X950" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International X792" graphName="prtConsoleDisplayBufferText|prtblackTonerLevel"/>
+    <DevicePackageToGraph deviceType="Konica-Minolta Bizhub C224e" graphName="Pages_printed_total|fuser.cartridge.procents|black.cartridge.procents|transferroller.cartridge.procents|hrPrinterDetectedErrorState|developerblack.cartridge.procents|tonerwastebox.cartridge.procents|drumblack.cartridge.procents"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 6605DN" graphName="Pages_printed_total|Currentcartridgetonerlevel-black|hrPrinterDetectedErrorState|Currenttonerwasteboxlevel"/>
+    <DevicePackageToGraph deviceType="Konica-Minolta Bizhub C364" graphName="Fusingunitremaining|Amount_of_black_drum_remaining|Tonerremaining-Black|TotalPrints|Amount_of_black_developer_cartridge_remaining|OzoneFilterUnitRemaining"/>
+    <DevicePackageToGraph deviceType="Konica-Minolta Bizhub C368" graphName="Fusingunitremaining|Amount_of_black_drum_remaining|Tonerremaining-Black|TotalPrints|Amount_of_black_developer_cartridge_remaining|OzoneFilterUnitRemaining"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 7855" graphName="TotalPagesprinted|TonerWasteContainerinPercent|TransferBeltCleanerinPercent|Pagesprinted-black/white|SecondTransferRollerinPercent|CartridgetonerlevelPercent-black|Pagesprinted-color|DrumBlack(R1)inPercent"/>
+    <DevicePackageToGraph deviceType="Kyocera Printer" graphName="TotalCopies|PrinterStatus|Totalscannedandcopiedpages|TotalColorpages|kmMFPScanCounterItem|PrintErrorstatus|RemainingTonerCatridge|kcprtMarkerPages|Totalscannedpages|PapersinTray"/>
+    <DevicePackageToGraph deviceType="Xerox ColorQube 9301" graphName="BlackInkLeft|CleaningUnitleft|PaperLeftinTray2|PaperLeftinTray3|PaperLeftinTray1|Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox ColorQube 9302" graphName="BlackInkLeft|CleaningUnitleft|PaperLeftinTray2|PaperLeftinTray3|PaperLeftinTray1|Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox ColorQube 9303" graphName="BlackInkLeft|CleaningUnitleft|PaperLeftinTray2|PaperLeftinTray3|PaperLeftinTray1"/>
+    <DevicePackageToGraph deviceType="Toshiba Corporation e-Studio2050C" graphName="PrinterStatus|prtPagesCountLifetime"/>
+    <DevicePackageToGraph deviceType="Toshiba Corporation e-Studio2555c" graphName="PrinterStatus|prtPagesCountLifetime"/>
+    <DevicePackageToGraph deviceType="Toshiba Corporation e-Studio4520c" graphName="PrinterStatus|prtPagesCountLifetime"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 7328" graphName="CurrentFeedRoll|CartridgedrumlevelPercent-black|BeltCleanerStatusPercent|CartridgetonerlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 7335" graphName="CurrentFeedRoll|CartridgedrumlevelPercent-black|BeltCleanerStatusPercent|CartridgetonerlevelPercent-black|Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 7345" graphName="CurrentFeedRoll|CartridgedrumlevelPercent-black|BeltCleanerStatusPercent|CartridgetonerlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 7346" graphName="CurrentFeedRoll|CartridgedrumlevelPercent-black|BeltCleanerStatusPercent|CartridgetonerlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Konica-Minolta Bizhub C35" graphName="Amount_of_black_drum_remaining|tonerLevelBlack|Amount_of_black_developer_cartridge_remaining|TotalPrints|totalprinterduplex"/>
+    <DevicePackageToGraph deviceType="Konica-Minolta Bizhub C35P" graphName="Amount_of_black_drum_remaining|tonerLevelBlack|Amount_of_black_developer_cartridge_remaining|TotalPrints|totalprinterduplex"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard HP 2840" graphName="hp.transfer.kit.now|gdStatusPaperOut|gdStatusDoorOpen|gdStatusPaperJam"/>
+    <DevicePackageToGraph deviceType="Xerox Phaser 3635MFP" graphName="Currentcartridgetonerlevel-black|Pagesprinted-total"/>
+    <DevicePackageToGraph deviceType="Xerox Phaser 4600" graphName="Currentcartridgetonerlevel-black|Pagesprinted-total"/>
+    <DevicePackageToGraph deviceType="Xerox Phaser 4620" graphName="Currentcartridgetonerlevel-black|Pagesprinted-total"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 3220" graphName="Currentcartridgetonerlevel-black|CartridgetonerlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 3325" graphName="Currentcartridgetonerlevel-black|CartridgetonerlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Xerox Phaser 3610" graphName="Currentcartridgetonerlevel-black|CartridgetonerlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Kyocera 6.xx" graphName="BlackTonerCurrent|Amountoftoner-Black|PrinterErrorstatusMessage|TotalPagesprinted"/>
+    <DevicePackageToGraph deviceType="Kyocera 7.xx" graphName="BlackTonerCurrent|Amountoftoner-Black|PrinterErrorstatusMessage|TotalPagesprinted"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 5225" graphName="CartridgedrumlevelPercent-black|Pagesprinted-total|Pagesprinted-color|Pagesprinted-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 7120" graphName="CartridgedrumlevelPercent-black|CartridgetonerlevelPercent-black|CurrentdrumunitlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 7125" graphName="CartridgedrumlevelPercent-black|CartridgetonerlevelPercent-black|CurrentdrumunitlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Xerox Phaser 6130N" graphName="Pagesprinted-total|CartridgetonerlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 7525 v1 Multifunction System" graphName="Pagesprinted-total|TransferBeltCleanerPercent|SecondBiasTransferRollerPercent|PrintedPages-color|Pagesprinted-black|CurrentdrumtonerlevelPercent-black|CartridgetonerlevelPercent-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 5325" graphName="Pagesprinted-color|Pagesprinted-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 5330" graphName="Pagesprinted-color|Pagesprinted-black"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 5335" graphName="Pagesprinted-color|Pagesprinted-black"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard HP P4015" graphName="SuppliesPercentage|prtMarkerLifeCount|prtMarkerSuppliesLevel"/>
+    <DevicePackageToGraph deviceType="Epson AL-C4200" graphName="SuppliesPercentage|BlackTonerPercentage|LifetimePageCount"/>
+    <DevicePackageToGraph deviceType="Epson EPL-N2550" graphName="SuppliesPercentage|BlackTonerPercentage|LifetimePageCount"/>
+    <DevicePackageToGraph deviceType="Epson EPL-N3000" graphName="SuppliesPercentage|BlackTonerPercentage|LifetimePageCount"/>
+    <DevicePackageToGraph deviceType="Epson Printer" graphName="SuppliesPercentage|BlackTonerPercentage|LifetimePageCount"/>
+    <DevicePackageToGraph deviceType="Lexmark International W850" graphName="prtMarkerLifeCount|prtMarkerSuppliesLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International MX911" graphName="prtMarkerLifeCount|prtMarkerSuppliesLevel"/>
+    <DevicePackageToGraph deviceType="Lexmark International MS610de" graphName="prtMarkerLifeCount|prtMarkerSuppliesLevel"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 6505DN" graphName="hrPrinterDetectedErrorState"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 3615" graphName="hrPrinterDetectedErrorState"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 3655X" graphName="hrPrinterDetectedErrorState"/>
+    <!-- Revision 1-->
+    <!-- DevicePackageToGraph deviceType="Ricoh SP C320DN" graphName="pcrichTotPageCount"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C320DN" graphName="richoTotPrintedPageBW"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C320DN" graphName="richTotPageCopyPC"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C320DN" graphName="richTonerlevelBlack"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C320DN" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C830DN" graphName="pcrichTotPageCount"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C830DN" graphName="richoTotPrintedPageBW"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C830DN" graphName="richTotPageCopyPC"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C830DN" graphName="richTonerlevelBlack"/>
+    <DevicePackageToGraph deviceType="Ricoh SP C830DN" graphName="SysUpTime"/-->
+    <DevicePackageToGraph deviceType="CANON iPF710" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-IV 4070" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-IV C2275" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-IV C3373" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-IV C4470" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-IV C4475" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C2275 T2" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C2275" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C2276" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C3373" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C3375 T2" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C3375" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C4475 T2" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C4475" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-V C5576" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-VI C3371" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-VI C4471" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox DocuCentre-IV C2263" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox DocuCentre-IV C2265" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox DocuPrint CM405 df" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox DocuPrint P355 d" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox DocuPrint" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox Document Centre" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox WorkCentre Pro" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Fuji Xerox WorkCentre" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP LaserJet 3055" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="KONICA MINOLTA HOLDINGS Ineo 350" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Lexmark C782" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Lexmark CX923de" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Lexmark MS521dn" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Lexmark MS622de" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Lexmark MX622ade" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Lexmark T644" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Matsushita EI Doc-Centre" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Tec e-STUDIO167" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Tektronix Phaser 850DX" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Color 550" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Color 560" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox DocuPrint N2025" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox DocuPrint N2125" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox DocuPrint N24/N32" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox DocuPrint N2825" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox DocuPrint N4025" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox DocuPrint NC60" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox DocuPrint" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Center 240ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Center 265LP" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Center 265ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 230ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 255LP" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 255ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 332LP" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 332ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 340LP" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 340ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 420ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 432ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 440ST" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 450" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 460" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 465" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 470" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 475" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 480" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre 485" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Doc-Centre" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Phaser 4400DT" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox Wide Format 6279" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 5150" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 5632 v1" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre 5645 v1 MFS" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre Pro MFS" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre Pro" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox WorkCentre" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Xerox ColorQube 9201" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP LaserJet Pro MFP" graphName="prtMarkerSuppliesLevel3|prtMarkerSuppliesLevel2|prtMarkerSuppliesLevel1|prtMarkerSuppliesLevel4|CartridgetonerlevelPercent-black|CartridgetonerlevelPercent-Magenta|CartridgetonerlevelPercent-Cyan|CartridgetonerlevelPercent-Yellow|PagesprintedAll"/>
+    <!-- 1947 dt start-->
+    <DevicePackageToGraph deviceType="OKI OkiLAN" graphName="TonerCurrentLevel"/>
+    <!-- 1947 dt end-->
+    <!-- 2481 dt starts -->
+    <DevicePackageToGraph deviceType="HP Office Jet 8600" graphName="hp.magenta.toner.now|hp.cyan.toner.now|hp.black.toner.now|hp.yellow.toner.now|CartridgetonerlevelPercent-black|CartridgetonerlevelPercent-Magenta|CartridgetonerlevelPercent-Cyan|CartridgetonerlevelPercent-Yellow|PagesprintedAll"/>
+    <DevicePackageToGraph deviceType="Xerox AltaLink C8030" graphName="Pagesprinted-black|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <!-- 2481 dt end -->
+    <!-- 2679 Start-->
+    <DevicePackageToGraph deviceType="Xerox AltaLink C8145" graphName="Pagesprinted-black|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <!--  2679 End -->
+    <!-- New Graph addition for M7 changes starts -->
+    <DevicePackageToGraph deviceType="Fuji Xerox ApeosPort-VI C2271" graphName="Pagesprinted-black/white|Pagesprinted-color|Pagesprinted-total|SysUpTime"/>
+    <!-- New Graph addition for M7 changes ends -->
+</GRAPHDETAIL>

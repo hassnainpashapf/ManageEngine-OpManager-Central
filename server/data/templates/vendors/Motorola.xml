@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Motorola devices -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:motorola_switch" templatename="Motorola" displayname="Motorola Wireless Switch"  description="For all Motorola devices">
+        <NCMVendorDevice vendorid="Motorola"/>
+
+        <NCMDevicePersonality personalityid="Motorola"/>
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+        
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+	
+	<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:motorola_ws_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:motorola_switch"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="motorola_ws_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="motorola_ws_cli_fetch_startup_rec"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="motorola_ws_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="motorola_ws_cli_fetch_running_rec"/>
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:motorola_ws_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:motorola_switch"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="motorola_ws_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="motorola_ws_cli_fetch_startup_rec"/>	
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="motorola_ws_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="motorola_ws_cli_fetch_running_rec"/>
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	
+	
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+
+
+
+

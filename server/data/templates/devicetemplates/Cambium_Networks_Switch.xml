@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Cambium Networks Devices" displayName="Cambium Networks Switch" osType="" templateName="Cambium_Networks_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cambium" vendorName="Cambium">
+		<Commands/>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="config terminal" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="2" timeout="30000"/>
+                	<Command commandecho="" commandstr="set cli pagination off" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="3" timeout="30000"/>
+                	<Command commandecho="" commandstr="exit" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="4" timeout="30000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="5" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="Others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandecho="" commandstr="write startup-config" delay="" messagesuffix="${LF}" prompt="" promptactionid="NA" promptecho="" readfromresponse="" sequenceid="2" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="copy running-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}" delay="" messagesuffix="${LF}" prompt="" promptactionid="yesActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="30000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="copy startup-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}" delay="" messagesuffix="${LF}" prompt="" promptactionid="yesActionId" promptecho="" readfromresponse="" sequenceid="2" timeout="30000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cambium Networks Switch" personalityName="CambiumNetworksSwitch">	
+		<Login enablecommand="" postlogincommand="" postloginprompt="to continue" prelogincommand="" preloginprompt="" suffix="${CRLF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Hardware Version" displayname="Hardware Version" name="HARDWAREVERSION" sequenceid="10" size="100"/>
+				<Column defaultvalue="Not Available" desc="Firmware Version" displayname="Firmware Version" name="FIRMWAREVERSION" sequenceid="20" size="100"/>
+				<Column defaultvalue="Not Available" desc="CNS Software Version" displayname="CNS Software Version" name="CNSSOFTWAREVERSION" sequenceid="30" size="100"/>
+				<Column defaultvalue="Not Available" desc="Manufacture Date" displayname="Manufacture Date" name="MANUFACTUREDATE" sequenceid="40" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CambiumHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_cambium_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="MODEL" EXPRESSION=".*Model\s*Name\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial\s*Number\s*:\s*(\S*).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>	  
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION=".*Base\s*MAC\s*Address\s*:\s*(\S*).*">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>	  
+										</REGEX>										
+										<REGEX NAME="HARDWAREVERSION" EXPRESSION=".*Hardware\s*Version\s*:\s*(\S*).*">
+											<PARAM NAME="HARDWAREVERSION" TOKENNO="1"/>	  
+										</REGEX>											
+										<REGEX NAME="FIRMWAREVERSION" EXPRESSION=".*Firmware\s*Version\s*:\s*(\S*).*">
+											<PARAM NAME="FIRMWAREVERSION" TOKENNO="1"/>	  
+										</REGEX>											
+										<REGEX NAME="CNSSOFTWAREVERSION" EXPRESSION=".*CNS\s*Software\s*Version\s*:\s*(\S*).*">
+											<PARAM NAME="CNSSOFTWAREVERSION" TOKENNO="1"/>	  
+										</REGEX>							
+										<REGEX NAME="MANUFACTUREDATE" EXPRESSION=".*Manufacture\s*Date\s*:\s*(\S*).*">
+											<PARAM NAME="MANUFACTUREDATE" TOKENNO="1"/>	  
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system info" messagesuffix="${LF}" parsercommandname="hardware_prop_cambium_switch" prompt="${UserInput:Prompt}" promptactionid="yesActionId" timeout="30000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="" ostype="" series="" sysoid=".1.3.6.1.4.1.17713.21.9.33"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

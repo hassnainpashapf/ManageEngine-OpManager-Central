@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Upload -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="aruba_wifiswitch_cli_fetch_config_ispec"/>
+</CLIInteractionSpec>
+
+<!-- Upload Running -->
+<CLICommand command="copy running-config tftp: ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="aruba_wifiswitch_cli_fetch_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Upload Startup -->
+<CLICommand command="copy startup-config tftp: ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="aruba_wifiswitch_cli_fetch_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="aruba_wifiswitch_cli_push_config_ispec" />
+</CLIInteractionSpec>
+
+<!-- Download Running -->
+<CLICommand command="copy tftp: ${UserInput:tftp_server_address} ${UserInput:file_name} running-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="aruba_wifiswitch_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Startup -->
+<CLICommand command="copy tftp: ${UserInput:tftp_server_address} ${UserInput:file_name} startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="aruba_wifiswitch_cli_push_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+    <!-- Backup Running -->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="aruba_wifiswitch_cli_config_running_ispec_0"/>
+    </CLIInteractionSpec>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="aruba_wifiswitch_cli_config_running_ispec_1"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="no paging">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="aruba_wifiswitch_cli_paging_disable_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="show running-config">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="aruba_wifiswitch_cli_backup_running_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <!-- Backup Startup -->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="aruba_wifiswitch_cli_config_startup_ispec_0"/>
+    </CLIInteractionSpec>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="aruba_wifiswitch_cli_config_startup_ispec_1"/>
+    </CLIInteractionSpec>
+
+    <CLICommand command="no paging">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="aruba_wifiswitch_cli_paging_disable_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="show configuration">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="aruba_wifiswitch_cli_backup_startup_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+<!-- Backup -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="aruba_controller_cli_fetch_config_ispec"/>
+</CLIInteractionSpec>
+
+
+<CLICommand command="no paging">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="aruba_controller_cli_paging_disable_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show configuration">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="aruba_controller_cli_backup_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

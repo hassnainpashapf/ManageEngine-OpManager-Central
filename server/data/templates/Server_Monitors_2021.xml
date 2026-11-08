@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+	
+	<!--Performance monitors (WMI) start-->
+	<Graph graphName="WMI-CPU_UtilizationPerCore" displayName="CPU Utilization Per Core" period="900" YAXISTEXT="%" description="Monitors the CPU Utilization percentage of individual CPU Cores." failureThreshold="1" graphType="multiple" isNumeric="true" oid="WMI-CPUUtilizationPerCore" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Processor Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-ActiveRemoteDesktopConnections" displayName="Active Remote Desktop Connections" period="3600" YAXISTEXT="Count" description="Monitors the number of sessions that are currently connected where the user has logged in." failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-ActiveRemoteDesktopConnections" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Server Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-SwapMemoryInMB" displayName="Swap Memory in MB" period="3600" YAXISTEXT="MB" description="Monitors the amount of physical memory that has been swapped out to the machine in MB." failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-SwapMemoryInMB" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Memory Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-SwapMemory_Utilization" displayName="Swap Memory Utilization" period="900" YAXISTEXT="%" description="Monitors the percentage of memory that has been swapped out to the machine." failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-SwapMemoryUtilization" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Memory Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-InactiveRemoteDesktopConnections" displayName="Inactive Remote Desktop Connections" period="900" YAXISTEXT="Sessions" description="Monitors number of sessions that are waiting for the initial connection and waiting for users to log in, or where the session has been disconnected but a user is logged in." failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-InactiveRemoteDesktopConnections" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Server Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-TotalRemoteDesktopConnections" displayName="Total Remote Desktop Connections" period="900" YAXISTEXT="Sessions" description="Monitors the total number of sessions recorded on the server." failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-TotalRemoteDesktopConnections" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Server Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-PageFileUsage" displayName="Page File Usage" period="900" YAXISTEXT="%" description="Monitors the percentage of page file usage." failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-PageFileUsage" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Memory Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-AvailableMemoryinMB" displayName="Available Memory in MB" period="900" YAXISTEXT="MB" description="Monitors the amount of physical memory (in MB) immediately available for allocation to a process or for system use" failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-AvailableMemoryinMB" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Memory Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-FileSystemBytesRead" displayName="File System Bytes Read" period="900" YAXISTEXT="Bytes" description="Monitors the total number of bytes read by the File System from disk drive." failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-FileSystemBytesRead" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="System Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+
+	<Graph graphName="WMI-FileSystemBytesWritten" displayName="File System Bytes Written" period="900" YAXISTEXT="Bytes" description="Monitors the total number of bytes written by the File System from disk drive." failureThreshold="1" graphType="node" isNumeric="true" oid="WMI-FileSystemBytesWritten" protocol="WMI" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="System Monitors">
+		<UserProps propName="GROUPNAME" propValue="WMI"/>
+	</Graph>
+	<!--Performance monitors (WMI) end-->
+
+	<!--AD monitors (WMI) start-->
+	<Graph graphName="ADDefaultNetworkLDAPSuccessfulBindsPersecond" displayName="Successful LDAP Binds per second" period="900" YAXISTEXT="Binds/sec" description="Number of successful LDAP Binds per second." failureThreshold="1" graphType="node" isNumeric="true" oid="AD.Default.Network.LDAPSuccessfulBindsPersecond" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="ADGRAPHS">
+		<AppGraphProps monitorName="NETWORK"/>
+	</Graph>
+
+	<Graph graphName="ADDefaultPerfDRAInboundFullSyncObjectsRemaining" displayName="DRA Inbound Full Sync Objects Remaining" period="900" YAXISTEXT="Objects" description="The number of objects remaining until the full sync is completed." failureThreshold="1" graphType="node" isNumeric="true" oid="AD.Default.Perf.DRAInboundFullSyncObjectsRemaining" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="ADGRAPHS">
+		<AppGraphProps monitorName="PERFCOUNTER"/>
+	</Graph>
+
+	<Graph graphName="ADDefaultPerfDSThreadsInUse" displayName="DS Threads in use" period="900" YAXISTEXT="Threads" description="The current number of threads used by the directory service." failureThreshold="1" graphType="node" isNumeric="true" oid="AD.Default.Perf.DSThreadsInUse" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="ADGRAPHS">
+		<AppGraphProps monitorName="PERFCOUNTER"/>
+	</Graph>
+
+	<Graph graphName="ADDefaultDFSRDFSRProcessMemory" displayName="DFSR Process Memory" period="900" YAXISTEXT="MB" description="Monitors the total amount of physical memory being used." failureThreshold="1" graphType="node" isNumeric="true" oid="AD.Default.DFSR.DFSRProcessMemory" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="ADGRAPHS">
+		<AppGraphProps monitorName="DFSR PROCESS"/>
+	</Graph>
+
+	<Graph graphName="ADDefaultDFSRDFSRProcessFileReadRate" displayName="DFSR Process File Read Rate" period="900" YAXISTEXT="Bytes/sec" description="Monitors the rate of DFSR Process file reads." failureThreshold="1" graphType="node" isNumeric="true" oid="AD.Default.DFSR.DFSRProcessFileReadRate" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="ADGRAPHS">
+		<AppGraphProps monitorName="DFSR PROCESS"/>
+	</Graph>
+
+	<Graph graphName="ADDefaultDFSRDFSRProcessFileWriteRate" displayName="DFSR Process File Write Rate" period="900" YAXISTEXT="Bytes/sec" description="Monitors the rate of DFSR Process file writes." failureThreshold="1" graphType="node" isNumeric="true" oid="AD.Default.DFSR.DFSRProcessFileWriteRate" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="ADGRAPHS">
+		<AppGraphProps monitorName="DFSR PROCESS"/>
+	</Graph>
+
+	<Graph graphName="ADDefaultDFSRDFSRHandleCount" displayName="DFSR Handle Count" period="900" YAXISTEXT="Handles" description="The total number of handles currently open by this process. This is equal to the sum of the handles currently open by all threads in this process." failureThreshold="1" graphType="node" isNumeric="true" oid="AD.Default.DFSR.DFSRHandleCount" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="ADGRAPHS">
+		<AppGraphProps monitorName="DFSR PROCESS"/>
+	</Graph>
+
+	<Graph graphName="ADDefaultDFSRCPUUsage" displayName="DFSR CPU Usage" period="900" YAXISTEXT="%" description="Monitors the CPU usage of this process." failureThreshold="1" graphType="multiple" isNumeric="true" oid="AD.Default.DFSR.DFSRCPUUsage" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="ADGRAPHS">
+		<AppGraphProps monitorName="DFSR PROCESS"/>
+	</Graph>
+	<!--AD monitors (WMI) end-->
+
+	<!--Exchange monitors (WMI) start-->
+	<Graph graphName="ExchangeDefaultAverageCalendarAttendantProcessingTime" displayName="Average Calendar Attendant Processing Time" period="900" YAXISTEXT="ms" description="Monitors the average time taken to process an event in the Calendar Attendant." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.AverageCalendarAttendantProcessingTime" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.crbooking" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultCalendarAttendantRequestsFailed" displayName="Failed Calendar Attendant Requests" period="900" YAXISTEXT="Requests" description="Monitors the total number of failed requests that occurred while the Calendar Attendant was processing events." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.CalendarAttendantRequestsFailed" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.crbooking" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultRPCSlowRequestsAverageLatencyInmSec" displayName="RPC slow requests average latency" period="900" YAXISTEXT="ms" description="Monitors the average latency of slow requests in ms" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.RPCSlowRequestsAverageLatencyInmSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.IS" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultTransportLogRecordStallsPerSec" displayName="Transport Log Record Stalls per second" period="900" YAXISTEXT="logs/sec" description="Monitors the number of log records that cannot be added to the log buffers in a second, when log buffers are full." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.TransportLogRecordStallsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Database" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultTransportLogThreadsWaiting" displayName="Transport Log Threads waiting" period="900" YAXISTEXT="Threads" description="Monitors the number of threads waiting to write their data to the log to complete an update of the database." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.TransportLogThreadsWaiting" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Database" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultTransportVersionBucketsaAlocated" displayName="Transport Version buckets allocated" period="900" YAXISTEXT="Buckets" description="Monitors the total number of version buckets allocated." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.TransportVersionBucketsaAlocated" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Database" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultCopyQueueLength" displayName="Copy Queue Length" period="900" YAXISTEXT="Queues" description="Monitors the number of log files waiting to be copied to the passive copy log file folder." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.CopyQueueLength" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.replication" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultLogCopyKBPSec" displayName="Log Copy KB per second" period="900" YAXISTEXT="KB/Sec" description="Monitors the amount of the log files (in KB) that are copied per second." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.LogCopyKBPSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.replication" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultLogReplayIsNotKeepingUp" displayName="Log Replay is not keeping up" period="900" YAXISTEXT="LogReplay" description="Displays 1 when log replay is falling behind and not able to keep up with log copying and inspection." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.LogReplayIsNotKeepingUp" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.replication" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultLogReplayRateGenerationsPerSec" displayName="Log Replay Rate generations" period="900" YAXISTEXT="LogReplay/sec" description="Monitors the number of log files that have been replayed per second." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.LogReplayRateGenerationsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.replication" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultReplayQueueLength" displayName="Replay Queue Length" period="900" YAXISTEXT="Queues" description="Monitors the number of transaction log files waiting to be replayed into the passive copy." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.ReplayQueueLength" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.replication" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultIODatabaseReadsAverageLatency" displayName="I/O Database Reads Average Latency" period="900" YAXISTEXT="ms" description="Monitors the average time taken for database read operation in milliseconds." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.IODatabaseReadsAverageLatency" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Database" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultIODatabaseWritesAverageLatency" displayName="I/O Database Writes Average Latency" period="900" YAXISTEXT="ms" description="Monitors the average time taken for database write operation in milliseconds." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.IODatabaseWritesAverageLatency" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Database" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultIOLogReadsAverageLatency" displayName="I/O Log Reads Average Latency" period="900" YAXISTEXT="ms" description="Monitors the average time taken to read data from a log file." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.IOLogReadsAverageLatency" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Database" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultMessagesDeleted" displayName="Messages deleted" period="900" YAXISTEXT="Messages" description="Monitors the number of messages deleted." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.MessagesDeleted" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Transport" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultMessagesQuarantined" displayName="Messages quarantined" period="900" YAXISTEXT="Messages" description="Monitors the number of messages quarantined." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.MessagesQuarantined" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Transport" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultMessagesRejected" displayName="Messages rejected" period="900" YAXISTEXT="Messages" description="Monitors the number of messages rejected." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.MessagesRejected" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Transport" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultAverageSearchTimeInms" displayName="Average search time in ms" period="900" YAXISTEXT="ms" description="Monitors the average time taken to search messages in milliseconds." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.AverageSearchTimeInms" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.OWA" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultCurrentUsers" displayName="Current Users" period="900" YAXISTEXT="Users" description="Monitors the number of current user logged on to the Outlook Web Access." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.CurrentUsers" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.OWA" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultFailedRequestsPerSec" displayName="Failed requests per second" period="900" YAXISTEXT="Requests/sec" description="Monitors the number of requests failed in a second, while accessing Outlook Web Access." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.FailedRequestsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.OWA" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultMessagesSent" displayName="Messages sent" period="900" YAXISTEXT="Messages" description="Monitors the number of messages sent from Outlook Web Access." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.MessagesSent" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.OWA" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultAverageResponseTime" displayName="Average Response Time" period="900" YAXISTEXT="ms" description="Monitors the average time taken get response from the Exchange service." failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.AverageResponseTime" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.OWA" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultPendingPingCommand" displayName="Pending ping command" period="900" YAXISTEXT="Commands" description="Monitors the number of ping commands currently pending on the Exchange server" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.PendingPingCommand" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.ActiveSync" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultMessageByteSentPerSec" displayName="Message bytes sent per second" period="900" YAXISTEXT="Bytes/sec" description="Monitors the amount of messages (in bytes) sent by the SMTPSend connector per second" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.MessageByteSentPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Transport" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultMessageByteReceivedPerSec" displayName="Message bytes received per second" period="900" YAXISTEXT="Bytes/sec" description="Monitors the amount of messages (in bytes) received by the SMTPSend connector per second" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.MessageByteReceivedPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.Transport" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultMailboxSearches" displayName="Mailbox searches" period="900" YAXISTEXT="Searches/sec" description="Monitors the number of mailbox searches done per second on the Exchange server" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.MailboxSearches" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.ActiveSync" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultSearchCommands" displayName="Search commands" period="900" YAXISTEXT="Commands/sec" description="Monitors the number of search commands triggered per second on the Exchange server" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.SearchCommands" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.ActiveSync" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	#31
+	<Graph graphName="ExchangeDefaultSendMailCommands" displayName="Send mail commands" period="900" YAXISTEXT="Commands/sec" description="Monitors the number of send mail commands triggered per second on the Exchange server" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.SendMailCommands" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.ActiveSync" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultSyncCommands" displayName="Sync commands" period="900" YAXISTEXT="Commands/sec" description="Monitors the number of sync commands triggered per second on the Exchange server" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.SyncCommands" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.ActiveSync" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultAverageRequestTime" displayName="Average Request Time" period="900" YAXISTEXT="ms" description="Monitors the average time taken for requesting the Exchange server" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.AverageRequestTime" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.ActiveSync" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+
+	<Graph graphName="ExchangeDefaultMailboxItemFetchCommandsPerSec" displayName="Mailbox Item Fetch Commands per second" period="900" YAXISTEXT="Commands/sec" description="Monitors the number of Mailbox Item Fetch Commands triggered per second on the Exchange server" failureThreshold="1" graphType="node" isNumeric="true" oid="Exchange.Default.MailboxItemFetchCommandsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="XCHGMONITORS">
+		<AppGraphProps monitorName="webclient.exchange.ActiveSync" exchangeVersions="2013,2016,2019"/>
+	</Graph>
+	<!--Exchange monitors (WMI) end-->
+
+	<!--MSSQL monitors (WMI) start-->
+	<Graph graphName="MSSQLFreeListStallsPerSec" displayName="Free list stalls per second" period="900" YAXISTEXT="Stalls/sec" description="Monitors the number of requests per second that had to wait for a free page." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLBuffer.FreeListStallsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLBuffer"/>
+	</Graph>
+
+	<Graph graphName="MSSQLDataFileSizeInGB" displayName="Data File Size in GB" period="900" YAXISTEXT="GB" description="Monitors the cumulative size of all the data files in the database in GB." failureThreshold="1" graphType="multiple" isNumeric="true" oid="MSSQL.MSSQLGeneral.DataFileSizeInGB" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLDatabase"/>
+	</Graph>
+
+	<Graph graphName="MSSQLLogFileSizeInGB" displayName="Log File Size in GB" period="900" YAXISTEXT="GB" description="Monitors the size of all the log files in the database in GB." failureThreshold="1" graphType="multiple" isNumeric="true" oid="MSSQL.MSSQLGeneral.LogFileSizeInGB" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLDatabase"/>
+	</Graph>
+
+	<Graph graphName="MSSQLLogFilesFreeSizeInGB" displayName="Log Files Free Size in GB" period="900" YAXISTEXT="GB" description="Monitors the available space of all the log files in the database in GB." failureThreshold="1" graphType="multiple" isNumeric="true" oid="MSSQL.MSSQLGeneral.LogFilesFreeSizeInGB" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLDatabase"/>
+	</Graph>
+
+	<Graph graphName="MSSQLAverageDiskTimePerRead" displayName="Average Disk time per read" period="900" YAXISTEXT="ms" description="Monitors the average time (in seconds) of a single read action on the disk." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLRPStats.AverageDiskTimePerRead" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLResourcePoolStats"/>
+	</Graph>
+
+	<Graph graphName="MSSQLAverageDiskTimePerWrite" displayName="Average Disk time per write" period="900" YAXISTEXT="ms" description="Monitors the average time (in seconds) of a single write action on the disk." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLRPStats.AverageDiskTimePerWrite" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLResourcePoolStats"/>
+	</Graph>
+
+	<Graph graphName="MSSQLTotalLatchWaitTimeInms" displayName="Total Latch Wait Time in ms" period="900" YAXISTEXT="ms" description="Monitors the total time spent waiting across all transactions (in milliseconds) to acquire a lock in the last second." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLLocks.TotalLatchWaitTimeInms" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLLocks"/>
+	</Graph>
+
+	<Graph graphName="MSSQLMemoryGrantsOutstanding" displayName="Memory Grants Outstanding" period="900" YAXISTEXT="Memory" description="Monitors the total number of processes that have successfully acquired memory." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLMemory.MemoryGrantsOutstanding" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLMemory"/>
+	</Graph>
+
+	<Graph graphName="MSSQLWorkfilesCreatedPerSec" displayName="Workfiles created per second" period="900" YAXISTEXT="Workfiles/sec" description="Monitors the number of work files created per second." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLMemory.WorkfilesCreatedPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLMemory"/>
+	</Graph>
+
+	<Graph graphName="MSSQLWorktablesCreatedPerSec" displayName="Work tables created per second" period="900" YAXISTEXT="Worktables/sec" description="Monitors the number of work tables created per second." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLMemory.WorktablesCreatedPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLMemory"/>
+	</Graph>
+
+	<Graph graphName="MSSQLAutoParamAttemptsPerSec" displayName="Auto Param attempts per second" period="900" YAXISTEXT="AutoParam/sec" description="Monitors the number of auto parameterization attempts per second." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLGeneral.AutoParamAttemptsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLGeneral"/>
+	</Graph>
+
+	<Graph graphName="MSSQLFailedAutoParamsPerSec" displayName="Failed Auto Params per second" period="900" YAXISTEXT="AutoParam/sec" description="Monitors the number of failed auto parameterization attempts per second." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLGeneral.FailedAutoParamsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLGeneral"/>
+	</Graph>
+
+	<Graph graphName="MSSQLLongestTransactionRunningTime" displayName="Longest Transaction Running Time" period="900" YAXISTEXT="Sec" description="Monitors the time (in seconds) of the transaction that has been running the longest." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLGeneral.LongestTransactionRunningTime" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLGeneral"/>
+	</Graph>
+
+	<Graph graphName="MSSQLErrorsPerSec" displayName="Errors per second" period="900" YAXISTEXT="Errors/sec" description="Monitors the number of errors per second." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLGeneral.ErrorsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLGeneral"/>
+	</Graph>
+
+	<Graph graphName="MSSQLPageLookupsPerSec" displayName="Page Lookups per second" period="900" YAXISTEXT="Pagelookups/sec" description="Monitors the number of Page Lookups done per second." failureThreshold="1" graphType="node" isNumeric="true" oid="MSSQL.MSSQLBuffer.PageLookupsPerSec" protocol="WMI" saveAbsolutes="false" timeAvg="false" appMonitorType="MSSQLGRAPHS">
+		<AppGraphProps monitorName="MSSQLBuffer"/>
+	</Graph>
+	<!--MSSQL monitors (WMI) end-->
+
+	<!--SNMP monitors start-->
+	<Graph graphName="aixPagingSpaceUsedPercentage" displayName="Paging Space used in %" period="900" YAXISTEXT="Percentage" description="Monitors the used percentage of the paging space of AIX server." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2.6.191.2.4.2.1.5" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="IBM" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="aixPagingSpaceAvailablePercentage" displayName="Paging Space available in %" period="900" YAXISTEXT="Percentage" description="Monitors the available percentage of the paging space of AIX server." failureThreshold="1" graphType="multiple" isNumeric="true" oid="100-(.1.3.6.1.4.1.2.6.191.2.4.2.1.5)" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="IBM" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Win-LogicalDriveStatus" displayName="Logical Drive status" period="900" YAXISTEXT="Numeric" description="Monitors the status of logical drives. KEY: 2 - Ok, 3 - Failed, 10 - Overheating, 11 - Shutdown, 13 - notAvailable" failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.232.3.2.3.1.1.4" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Win-FileAccessViolations" displayName="File Access Violations" period="900" YAXISTEXT="failures" description="Monitors the number of access permission violations encountered on this server." failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.77.1.2.10.0" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Win-NumberOfSystemErrors" displayName="Number of System Errors" period="900" YAXISTEXT="errors" description="Monitors the number of system errors encountered on the server." failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.77.1.2.11.0" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Win-NumberOfInstalledServices" displayName="Number of installed services" period="3600" YAXISTEXT="services" description="Monitors the number of network services installed on this server." failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.77.1.2.2.0" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Win-NumberOfSharedResources" displayName="Number of Shared Resources" period="900" YAXISTEXT="shares" description="Monitors the number of shared resources on this server." failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.77.1.2.26.0" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Win-NumberOfOpenedFiles" displayName="Number of Opened Files" period="900" YAXISTEXT="Files" description="Monitors the total number of files that have been opened on the server." failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.77.1.2.4.0" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Win-NumberOfPrintQueuedJobs" displayName="Number of Print Queued Jobs" period="900" YAXISTEXT="jobs" description="Monitors the total number of print jobs that have been spooled on the server." failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.77.1.2.6.0" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="WinFailedLogins" displayName="Number of Failed Logins" period="900" YAXISTEXT="Login Failures" description="Monitors the number of password violations encountered on the server." failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.77.1.2.9.0" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Microsoft" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Lin-LoadAverageLast1Minute" displayName="Load Average (last 1 minute)" period="900" YAXISTEXT="load" description="Load Average (last 1 minute)" failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2021.10.1.5.1/100" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Linux" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="netsnmp-LoadAverageLast1Minute" displayName="Load Average (last 1 minute)" period="900" YAXISTEXT="load" description="Load Average (last 1 minute)" failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2021.10.1.5.1/100" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="net-snmp" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="rhel-LoadAverageLast1Minute" displayName="Load Average (last 1 minute)" period="900" YAXISTEXT="load" description="Load Average (last 1 minute)" failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.2021.10.1.5.1/100" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Red Hat RHEL" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Lin-DiskBytesReads" displayName="Disk Bytes read" period="900" YAXISTEXT="Bytes" description="Monitors the number of bytes read from this device." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.12" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Linux" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="netsnmp-DiskBytesReads" displayName="Disk Bytes read" period="900" YAXISTEXT="Bytes" description="Monitors the number of bytes read from this device." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.12" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="net-snmp" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="rhel-DiskBytesReads" displayName="Disk Bytes read" period="900" YAXISTEXT="Bytes" description="Monitors the number of bytes read from this device." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.12" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Red Hat RHEL" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Lin-DiskIOReadRate" displayName="Disk I/O reads" period="900" YAXISTEXT="IO Reads" description="Monitors the number of read actions performed on the device since boot." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.5" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Linux" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="netsnmp-DiskIOReadRate" displayName="Disk I/O reads" period="900" YAXISTEXT="IO Reads" description="Monitors the number of read actions performed on the device since boot." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.5" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="net-snmp" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="rhel-DiskIOReadRate" displayName="Disk I/O reads" period="900" YAXISTEXT="IO Reads" description="Monitors the number of read actions performed on the device since boot." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.5" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Red Hat RHEL" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Lin-DiskIOWrites" displayName="Disk I/O Writes" period="900" YAXISTEXT="IO Writes" description="Monitors the number of write action performed on the device since boot." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.6" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Linux" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="netsnmp-DiskIOWrites" displayName="Disk I/O Writes" period="900" YAXISTEXT="IO Writes" description="Monitors the number of write action performed on the device since boot." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.6" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="net-snmp" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="rhel-DiskIOWrites" displayName="Disk I/O Writes" period="900" YAXISTEXT="IO Writes" description="Monitors the number of write action performed on the device since boot." failureThreshold="1" graphType="multiple" isNumeric="true" oid=".1.3.6.1.4.1.2021.13.15.1.1.6" protocol="SNMP" saveAbsolutes="false" timeAvg="false" vendorName="Red Hat RHEL" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Lin-SystemTemperature" displayName="System Temperature" period="900" YAXISTEXT="Celsius" description="Monitors the temperature of Disk Station in degree Celsius." failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6574.1.2.0" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Linux" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<Graph graphName="Lin-SystemPowerStatus" displayName="System Power Status" period="900" YAXISTEXT="Status" description="Monitors the power status of server. KEY: Normal (1), Failed (2)" failureThreshold="1" graphType="node" isNumeric="true" oid=".1.3.6.1.4.1.6574.1.3.0" protocol="SNMP" saveAbsolutes="true" timeAvg="false" vendorName="Linux" vendorSubCategory="Performance Monitors">
+	</Graph>
+
+	<!--SNMP monitors end-->
+
+	<!-- Windows 2022 & Windows 11 support -->
+	<DevicePackageToGraph deviceType="Windows 2022" graphName="WMI-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="WMI-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="WMI-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="WMI-PartitionDetails"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="ProcessCount"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="Win-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="PartitionWiseDiskDetails"/>
+	<DevicePackageToGraph deviceType="Windows 2022" graphName="WMIIOReadandWriteRate"/>
+	<DevicePackageToGraph deviceType="Windows 2022" graphName="WMIAvgDiskLatency"/>
+
+	<DevicePackageToGraph deviceType="Windows 11" graphName="WMI-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="WMI-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="WMI-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="WMI-PartitionDetails"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="ProcessCount"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="Win-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="PartitionWiseDiskDetails"/>
+	<DevicePackageToGraph deviceType="Windows 11" graphName="WMIIOReadandWriteRate"/>
+	<DevicePackageToGraph deviceType="Windows 11" graphName="WMIAvgDiskLatency"/>
+
+	<DevicePackageToGraph deviceType="Windows 2025" graphName="WMI-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 2025" graphName="WMI-DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Windows 2025" graphName="WMI-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 2025" graphName="WMI-PartitionDetails"/>
+    <DevicePackageToGraph deviceType="Windows 2025" graphName="ProcessCount"/>
+    <DevicePackageToGraph deviceType="Windows 2025" graphName="DiskUtilization" dialtype="pie" unit="%"/>
+    <DevicePackageToGraph deviceType="Windows 2025" graphName="Win-MemoryUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 2025" graphName="Win-CPUUtilization" dialtype="meter" unit="%" isATEnabled="true"/>
+    <DevicePackageToGraph deviceType="Windows 2025" graphName="PartitionWiseDiskDetails"/>
+	<DevicePackageToGraph deviceType="Windows 2025" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+	<DevicePackageToGraph deviceType="Windows 2025" graphName="SysUpTimeInDays" dialtype="number" unit="Days"/>
+
+</GRAPHDETAIL>

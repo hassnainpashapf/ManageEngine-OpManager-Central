@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>	
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Cisco" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cisco Catalyst SD-WAN">
+            <SysOIDs>
+                <SysOID oid="CiscoSDWANViptela"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vManage">
+            <SysOIDs>
+                <SysOID oid="CiscovManage"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vSmart">
+            <SysOIDs>
+                <SysOID oid="CiscovSmart"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vBond">
+            <SysOIDs>
+                <SysOID oid="CiscovBond"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Router" Vendor="Cisco" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cisco vEdge-C8500-12X">
+            <SysOIDs>
+                <SysOID oid="CiscoC850012X"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-C8500-12X4QC">
+            <SysOIDs>
+                <SysOID oid="CiscoC850012X4QC"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-C8500L-8S4X">
+            <SysOIDs>
+                <SysOID oid="CiscoC8500L8S4X"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-C8500-20X6C">
+            <SysOIDs>
+                <SysOID oid="CiscoC850020X6C"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-CSR-1000v">
+            <SysOIDs>
+                <SysOID oid="CiscoCSR1000v"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-C8000V">
+            <SysOIDs>
+                <SysOID oid="CiscoC8000V"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-ISRv">
+            <SysOIDs>
+                <SysOID oid="CiscoISRv"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-100">
+            <SysOIDs>
+                <SysOID oid="Ciscov100"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-100-B">
+            <SysOIDs>
+                <SysOID oid="Ciscov100B"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-100-M">
+            <SysOIDs>
+                <SysOID oid="Ciscov100M"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-100-WM">
+            <SysOIDs>
+                <SysOID oid="Ciscov100WM"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-1000">
+            <SysOIDs>
+                <SysOID oid="Ciscov1000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-2000">
+            <SysOIDs>
+                <SysOID oid="Ciscov2000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-5000">
+            <SysOIDs>
+                <SysOID oid="Ciscov5000"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cisco vEdge-cloud">
+            <SysOIDs>
+                <SysOID oid="CiscovCloud"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Aruba" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="HPE Aruba EdgeConnect SD-WAN">
+            <SysOIDs>
+                <SysOID oid="HPEArubaEdgeConnect"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+	
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Arista Networks" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="VeloCloud SD-WAN">
+            <SysOIDs>
+                <SysOID oid="VeloCloud SD-WAN"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+	
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Aruba" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="HPE Aruba Central SD-WAN">
+            <SysOIDs>
+                <SysOID oid="HPEArubaCentralSDWAN"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Aruba" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Aruba Access Points">
+            <SysOIDs>
+                <SysOID oid="HPEArubaCentralAccessPoint"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Switch" Vendor="Aruba" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Aruba Switches">
+            <SysOIDs>
+                <SysOID oid="HPEArubaCentralSwitch"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Router" Vendor="Aruba" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Aruba Edge Devices">
+            <SysOIDs>
+                <SysOID oid="HPEArubaCentralRouter"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Juniper" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Juniper Mist">
+            <SysOIDs>
+                <SysOID oid="JuniperMist"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Juniper" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Juniper Access Points">
+            <SysOIDs>
+                <SysOID oid="JuniperMistAP"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Switch" Vendor="Juniper" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Juniper Switches">
+            <SysOIDs>
+                <SysOID oid="JuniperMistSwitch"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Router" Vendor="Juniper" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Juniper Edge Devices">
+            <SysOIDs>
+                <SysOID oid="JuniperMistRouter"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Arista Networks" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Arista CloudVision">
+            <SysOIDs>
+                <SysOID oid="AristaCloudVision"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="Switch" Vendor="Arista Networks" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Arista EOS Devices">
+            <SysOIDs>
+                <SysOID oid="AristaCloudVisionEOS"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Cambium" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cambium cnMaestro">
+            <SysOIDs><SysOID oid="CambiumCnMaestro"/></SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Cambium" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cambium Access Points"><SysOIDs><SysOID oid="CambiumAccessPoint"/></SysOIDs></CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Switch" Vendor="Cambium" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cambium Switches"><SysOIDs><SysOID oid="CambiumSwitch"/></SysOIDs></CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Cambium" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Cambium Edge Devices"><SysOIDs><SysOID oid="CambiumEdge"/></SysOIDs></CustomDevicePackage>
+        <CustomDevicePackage deviceType="Cambium Wireless Devices"><SysOIDs><SysOID oid="CambiumWireless"/></SysOIDs></CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Tejas" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Tejas PON">
+            <SysOIDs>
+                <SysOID oid="TejasPON"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="CIENA" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Ciena PON">
+            <SysOIDs>
+                <SysOID oid="CienaPON"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+
+        <CustomDevicePackageSet Category="SDWAN" Vendor="Teltonika" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Teltonika SD-WAN">
+            <SysOIDs>
+                <SysOID oid="TeltonikaSDWAN"/>
+            </SysOIDs>
+        </CustomDevicePackage>     
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Teltonika" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Teltonika Edge">
+            <SysOIDs>
+                <SysOID oid="TeltonikaEdge"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Palo Alto" iconName="default.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Prisma SD-WAN">
+            <SysOIDs>
+                <SysOID oid="PrismaSDWAN"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Palo Alto" iconName="router.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Prisma ION Devices">
+            <SysOIDs>
+                <SysOID oid="PrismaION"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Versa Networks" iconName="default.png" pingInterval="15"><CustomDevicePackage deviceType="Versa Networks"><SysOIDs><SysOID oid="VersaNetworks"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Versa Networks" iconName="router.png" pingInterval="15"><CustomDevicePackage deviceType="Versa Controllers"><SysOIDs><SysOID oid="VersaController"/></SysOIDs></CustomDevicePackage><CustomDevicePackage deviceType="Versa Edge Devices"><SysOIDs><SysOID oid="VersaEdge"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Extreme Networks" iconName="default.png" pingInterval="15"><CustomDevicePackage deviceType="ExtremeCloud IQ"><SysOIDs><SysOID oid="ExtremeCloudIQ"/></SysOIDs></CustomDevicePackage><CustomDevicePackage deviceType="ExtremeCloud SD-WAN"><SysOIDs><SysOID oid="ExtremeCloudSDWAN"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Extreme Networks" iconName="router.png" pingInterval="15"><CustomDevicePackage deviceType="ExtremeCloud IQ Sites"><SysOIDs><SysOID oid="ExtremeCloudIQSite"/></SysOIDs></CustomDevicePackage><CustomDevicePackage deviceType="ExtremeCloud SD-WAN Sites"><SysOIDs><SysOID oid="ExtremeCloudSite"/></SysOIDs></CustomDevicePackage><CustomDevicePackage deviceType="ExtremeCloud Edges"><SysOIDs><SysOID oid="ExtremeCloudEdge"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Extreme Networks" iconName="default.png" pingInterval="15"><CustomDevicePackage deviceType="ExtremeCloud IQ Access Points"><SysOIDs><SysOID oid="ExtremeCloudIQAP"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Switch" Vendor="Extreme Networks" iconName="default.png" pingInterval="15"><CustomDevicePackage deviceType="ExtremeCloud IQ Switches"><SysOIDs><SysOID oid="ExtremeCloudIQSwitch"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Router" Vendor="Extreme Networks" iconName="router.png" pingInterval="15"><CustomDevicePackage deviceType="ExtremeCloud IQ Routers"><SysOIDs><SysOID oid="ExtremeCloudIQRouter"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Fortinet" iconName="default.png" pingInterval="15"><CustomDevicePackage deviceType="FortiManager"><SysOIDs><SysOID oid="FortiManager"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Fortinet" iconName="firewall.png" pingInterval="15"><CustomDevicePackage deviceType="FortiManager FortiGates"><SysOIDs><SysOID oid="FortiManagerFortiGate"/></SysOIDs></CustomDevicePackage><CustomDevicePackage deviceType="FortiManager FortiExtenders"><SysOIDs><SysOID oid="FortiManagerFortiExtender"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="WirelessAccessPoint" Vendor="Fortinet" iconName="default.png" pingInterval="15"><CustomDevicePackage deviceType="FortiManager FortiAPs"><SysOIDs><SysOID oid="FortiManagerFortiAP"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Switch" Vendor="Fortinet" iconName="default.png" pingInterval="15"><CustomDevicePackage deviceType="FortiManager FortiSwitches"><SysOIDs><SysOID oid="FortiManagerFortiSwitch"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="SDWAN" Vendor="Palo Alto Networks" iconName="default.png" pingInterval="15"><CustomDevicePackage deviceType="Palo Alto Panorama"><SysOIDs><SysOID oid="PaloAltoPanorama"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Firewall" Vendor="Palo Alto Networks" iconName="firewall.png" pingInterval="15"><CustomDevicePackage deviceType="Panorama Firewalls"><SysOIDs><SysOID oid="PanoramaFirewall"/></SysOIDs></CustomDevicePackage></CustomDevicePackageSet>
+</CustomDevicePackage>

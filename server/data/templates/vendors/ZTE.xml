@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:zxr_router" templatename="ZXR_Router" ostype="NA" displayname="ZXR Router" description="For all ZXR10 Router Operating System Software">
+   	<NCMVendorDevice vendorid="ZTE" />
+   	<NCMDevicePersonality personalityid="ZXRRouter" />
+
+   	<NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+   	</NCMSupportedProtocol>
+
+	<NCMSupportedProtocol protocolid="SSH">
+	    <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:zxr_router_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:zxr_router" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ZXR_router_CLI_Startup_Config_Backup" />
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ZXR_router_CLI_Running_Config_Backup" />
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:zxr_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:zxr_router" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+		
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="ZXR_router_CLI_Startup_Config_Backup" />
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="ZXR_router_CLI_Running_Config_Backup" />
+
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+
+    <!-- For ZXR Version 10 Routers  -->
+	
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:zxr_router_zsr" templatename="ZXR_Router_ZSR" displayname="ZXR Router ZSR Version 2.x" ostype="NA" description="For all Version ZXR10 ZSR V2.08.11.B.20
+ Router Operating System Software">
+        <NCMVendorDevice vendorid="ZTE"/>
+        <NCMDevicePersonality personalityid="ZXRRouterZSR"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:zxr_router_zsr_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:zxr_router_zsr"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="zxr_router_zsr_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="zxr_router_zsr_cli_show_startup_config_rec"/>
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="zxr_router_zsr_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="zxr_router_zsr_cli_show_running_config_rec"/>
+			 
+            <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="zxr_router_zsr_copy_running_to_startup" />
+			
+		
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="zxr_router_zsr_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="zxr_router_zsr_disable_syslog_change_tracking" />
+
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:zxr_router_zsr_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:zxr_router_zsr"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="zxr_router_zsr_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="zxr_router_zsr_cli_show_startup_config_rec"/>			 
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="zxr_router_zsr_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="zxr_router_zsr_cli_show_running_config_rec"/>
+			 
+             <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="zxr_router_zsr_copy_running_to_startup" />
+			 
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="zxr_router_zsr_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="zxr_router_zsr_disable_syslog_change_tracking" />
+
+			 
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+</DeviceConfiguration>

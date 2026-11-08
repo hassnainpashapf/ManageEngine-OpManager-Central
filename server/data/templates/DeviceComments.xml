@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceCommentsList>
+
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:1" criteria_name="Comment !" description="Exclude the command while versioning and from showing diff" criteria="^\s*!.*"/>
+    <NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:2" criteria_name="Comment #" description="Exclude the command while versioning and from showing diff" criteria="^\s*#.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:3" criteria_name="CiscoFirewall Comment :" description="Exclude the command while versioning and from showing diff" criteria="^\s*:.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:4" criteria_name="CiscoFirewall pager command" description="Exclude the command while versioning and from showing diff" criteria="\s*.*pager.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:5" criteria_name="Comment ;" description="Exclude the command while versioning and from showing diff" criteria="^\s*;.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:6" criteria_name="NTP Clock Period" description="Exclude the command while versioning and from showing diff" criteria="^\s*ntp\s*clock-period.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:7" criteria_name="Last Configuration Header" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*!\s*.*Last\s*configuration.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:8" criteria_name="Saved Message" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*:\s*.*Saved.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:9" criteria_name="CiscoFirewall asdm command" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*asdm.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:10" criteria_name="Uncompressed file content command" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*Uncompressed configuration.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:juniper_total_config_size" criteria_name="Total Config size command" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*Total Config size.*"/>
+    <NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:11" criteria_name="Exclude speed" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*speed.*"/>
+
+    <NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:h3c_screen_length_0" criteria_name="Remove screen length 0" description="Remove the screen length 0 line from the config" criteria="^\s*screen\-length.*"/>
+    <NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:ciscoasa" criteria_name="Exclude CryptoCheckSum" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*Cryptochecksum:.*"/>
+
+    <NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:12" criteria_name="Current Configuration" description="Exclude the following statement while backing up after syncing the files" criteria="^\s*Current configuration\s:\s\d*\s*bytes\s*"/>
+
+    <NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:13" criteria_name="boot system flash" description="Exclude the following statement while backing up after syncing the files" criteria="^\s*boot\ssystem\sflash\sflash:.*"/>
+	<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:setpassword" criteria_name="set password ENC" description="Exclude the password encryption while versioning and from showing diff" criteria="^\s*set passw*"/>
+
+
+<!-- added for ArubaWifiSwitch -->
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:14" criteria_name="Exclude Key" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*key.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:15" criteria_name="Exclude wpa-passwordphrase" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*wpa-passphrase.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:16" criteria_name="Exclude localip" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*localip.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:17" criteria_name="Exclude masterip ipsec" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*masterip.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:18" criteria_name="Exclude enable secret" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*enable\ssecret.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:19" criteria_name="Exclude ike authentication PRE-SHARE" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*ike\sauthentication\sPRE-SHARE.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:20" criteria_name="Exclude mgmt-user" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*mgmt-user.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:21" criteria_name="Exclude admpw" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*admpw.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:22" criteria_name="Exclude pswd" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*pswd.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:23" criteria_name="Exclude Configuration dump taken" description="Exclude the following statement while versioning and from showing diff" criteria=".*Configuration\sdump\staken\s.*"/>
+<NCMExcludeCriteria criteria_id="NCMExcludeCriteria:criteria_id:24" criteria_name="Exclude usrpw" description="Exclude the following statement while versioning and from showing diff" criteria="^\s*usrpw\s.*"/>
+
+<!-- ends here -->
+
+<NCMDeviceExdCriteria personalityid="ArubaWifiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:14"/>
+<NCMDeviceExdCriteria personalityid="ArubaWifiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:15"/>
+<NCMDeviceExdCriteria personalityid="ArubaWifiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:16"/>
+<NCMDeviceExdCriteria personalityid="ArubaWifiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:17"/>
+<NCMDeviceExdCriteria personalityid="ArubaWifiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:18"/>
+<NCMDeviceExdCriteria personalityid="ArubaWifiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:19"/>
+<NCMDeviceExdCriteria personalityid="ArubaWifiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:20"/>
+
+	<!-- command to exclude Cryptochecksum; for CISCO ASA-->
+
+
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:6"/>
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:7"/>
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:12"/>
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:11"/>
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:13"/>   
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:23"/>
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:24"/>
+    <NCMDeviceExdCriteria personalityid="CiscoSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="CiscoSwitch" criteria_id="NCMExcludeCriteria:criteria_id:6"/>
+    <NCMDeviceExdCriteria personalityid="CiscoSwitch" criteria_id="NCMExcludeCriteria:criteria_id:7"/>
+    <NCMDeviceExdCriteria personalityid="CiscoSwitch" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+    <NCMDeviceExdCriteria personalityid="CiscoSwitch" criteria_id="NCMExcludeCriteria:criteria_id:23"/>
+    <NCMDeviceExdCriteria personalityid="CiscoSwitch" criteria_id="NCMExcludeCriteria:criteria_id:24"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:3"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:4"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:8"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:9"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:23"/>
+    <NCMDeviceExdCriteria personalityid="CiscoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:24"/>
+    <NCMDeviceExdCriteria personalityid="CiscoAccessPoint" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoAccessPoint" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+    <NCMDeviceExdCriteria personalityid="HPSwitch" criteria_id="NCMExcludeCriteria:criteria_id:5"/>
+    <NCMDeviceExdCriteria personalityid="HPAccessPoint" criteria_id="NCMExcludeCriteria:criteria_id:5"/>
+    <NCMDeviceExdCriteria personalityid="FoundrySwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="3ComSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="AdtranLANSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="NortelBayStackSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="NortelPassportSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="NortelPWRSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="BlueCoatProxySG" criteria_id="NCMExcludeCriteria:criteria_id:5"/>
+    <NCMDeviceExdCriteria personalityid="FortiGateFirewall" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="DLinkSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="NetscreenFirewall" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="NetscreenFirewall" criteria_id="NCMExcludeCriteria:criteria_id:juniper_total_config_size"/>
+    <NCMDeviceExdCriteria personalityid="Force10Switch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="NortelContivityVPNRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="NortelSwitchModule" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="NortelSwitchModule" criteria_id="NCMExcludeCriteria:criteria_id:21"/>
+    <NCMDeviceExdCriteria personalityid="NortelSwitchModule" criteria_id="NCMExcludeCriteria:criteria_id:22"/>
+    <NCMDeviceExdCriteria personalityid="NortelSwitchModule" criteria_id="NCMExcludeCriteria:criteria_id:23"/>
+    <NCMDeviceExdCriteria personalityid="NortelSwitchModule" criteria_id="NCMExcludeCriteria:criteria_id:24"/>
+
+    <NCMDeviceExdCriteria personalityid="CiscoVPNConcentrator" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="CiscoVPNConcentrator" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+    <NCMDeviceExdCriteria personalityid="NetgearSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="JuniperRouter" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="JuniperRouter" criteria_id="NCMExcludeCriteria:criteria_id:juniper_total_config_size"/>
+    
+        <NCMDeviceExdCriteria personalityid="JuniperMXRouter" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="JuniperMXRouter" criteria_id="NCMExcludeCriteria:criteria_id:juniper_total_config_size"/>
+    
+    
+    <NCMDeviceExdCriteria personalityid="CiscoContentSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoContentSwitch" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+    <NCMDeviceExdCriteria personalityid="CiscoMDS" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoMDS" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+    <NCMDeviceExdCriteria personalityid="CiscoMDS" criteria_id="NCMExcludeCriteria:criteria_id:21"/>
+    <NCMDeviceExdCriteria personalityid="CiscoMDS" criteria_id="NCMExcludeCriteria:criteria_id:22"/>
+    <NCMDeviceExdCriteria personalityid="CiscoMDS" criteria_id="NCMExcludeCriteria:criteria_id:23"/>
+    <NCMDeviceExdCriteria personalityid="CiscoMDS" criteria_id="NCMExcludeCriteria:criteria_id:24"/>
+    <NCMDeviceExdCriteria personalityid="CiscoASA" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoASA" criteria_id="NCMExcludeCriteria:criteria_id:3"/>
+    <NCMDeviceExdCriteria personalityid="CiscoASA" criteria_id="NCMExcludeCriteria:criteria_id:4"/>
+    <NCMDeviceExdCriteria personalityid="CiscoASA" criteria_id="NCMExcludeCriteria:criteria_id:8"/>
+    <NCMDeviceExdCriteria personalityid="CiscoASA" criteria_id="NCMExcludeCriteria:criteria_id:9"/>
+    <NCMDeviceExdCriteria personalityid="CiscoASA" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+    <NCMDeviceExdCriteria personalityid="CiscoASA" criteria_id="NCMExcludeCriteria:criteria_id:ciscoasa"/>
+
+    <NCMDeviceExdCriteria personalityid="CiscoCatOSSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="CiscoCatOSSwitch" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+
+    <NCMDeviceExdCriteria personalityid="DellSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+    <NCMDeviceExdCriteria personalityid="EnterasysRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="AlcatelSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+    <NCMDeviceExdCriteria personalityid="AlaxalaSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="AlaxalaSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    
+        <NCMDeviceExdCriteria personalityid="HitachiGR2000Router" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="HitachiGR2000Router" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+   
+    <!-- Ignoring Cryptochecksum for CiscoRouter -->
+    <NCMDeviceExdCriteria personalityid="CiscoRouter" criteria_id="NCMExcludeCriteria:criteria_id:ciscoasa"/>
+    <!-- Ignoring Cryptochecksum for Aruba -->
+    <NCMDeviceExdCriteria personalityid="ArubaWifiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:ciscoasa"/>
+
+    <!-- Cisco Voice Gateway -->
+            <NCMDeviceExdCriteria personalityid="CiscoVoiceGateway" criteria_id="NCMExcludeCriteria:criteria_id:6"/>
+
+    <!-- CheckPoint Firewall -->
+    <NCMDeviceExdCriteria personalityid="CheckPointFirewall" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+
+    <!--CiscoACEModule -->
+    <NCMDeviceExdCriteria personalityid="CiscoACEModule" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoACEModule" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+     <NCMDeviceExdCriteria personalityid="CiscoACEModule" criteria_id="NCMExcludeCriteria:criteria_id:23"/>
+    <NCMDeviceExdCriteria personalityid="CiscoACEModule" criteria_id="NCMExcludeCriteria:criteria_id:24"/>
+
+    <!--CiscoIOSXR -->
+    <NCMDeviceExdCriteria personalityid="CiscoIOSXR" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoIOSXR" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+
+    <!--CiscoWAAS -->
+    <NCMDeviceExdCriteria personalityid="CiscoWAAS" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoWAAS" criteria_id="NCMExcludeCriteria:criteria_id:10"/>
+
+    <!-- AvayaGateway -->
+    <NCMDeviceExdCriteria personalityid="AvayaMediaGateway" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+    <!-- ################ Doubtful Entries  ##################   -->
+    <NCMDeviceExdCriteria personalityid="CiscoIAD" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="CiscoAccessServer" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="EnterasysSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="HuaweiARRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+  
+
+     <!-- Lambdadriver -->
+    <NCMDeviceExdCriteria personalityid="LambdaDriver" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+    <!-- Dax -->
+    <NCMDeviceExdCriteria personalityid="DaxRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="DaxSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+     <!-- H3C -->
+    <NCMDeviceExdCriteria personalityid="H3CSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="H3CSwitch" criteria_id="NCMExcludeCriteria:criteria_id:h3c_screen_length_0"/>
+
+    <!-- Yamaha Router  -->
+    <NCMDeviceExdCriteria personalityid="YamahaRouter" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+
+    <!-- Vanguard Router -->
+     <NCMDeviceExdCriteria personalityid="VanguardRouter" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+
+    <!-- Extreme Switch -->
+    <NCMDeviceExdCriteria personalityid="ExtremeSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <!--Adtran Netvanta Router-->
+    <NCMDeviceExdCriteria personalityid="AdtranNetvantaRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+    <!-- CitrixNetScaler -->
+    <NCMDeviceExdCriteria personalityid="CitrixNetScaler" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+
+    <!-- Hitachi Switch -->
+     <NCMDeviceExdCriteria personalityid="HitachiCableSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+   <!-- Juniper EX 4200 Switches -->
+     <NCMDeviceExdCriteria personalityid="JuniperSwitch" criteria_id="NCMExcludeCriteria:criteria_id:juniper_total_config_size"/>
+
+   <!-- Sphereon 4500 Fibre Channel Switch-->
+
+     <NCMDeviceExdCriteria personalityid="SphereonSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+    <!-- Allied Telesis AT-8000S Switch-->
+
+     <NCMDeviceExdCriteria personalityid="AlliedTelesisAT8000S" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+ <NCMDeviceExdCriteria personalityid="Motorola" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="PacketShaper" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="CiscoNexusSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="HPPSeriesSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="RadwareLinkProofSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="AlcatelRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="FortiGateFortiAnalyzer" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+<NCMDeviceExdCriteria personalityid="CanogaPerkins" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+
+<!-- Newly Added -->
+ <NCMDeviceExdCriteria personalityid="ProximAccessPoint" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="SlimLine" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="RiverbedSteelhead" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="RadwareSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="CiscoWLANController" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="BrocadeSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="AlliedTelesisSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="F5Bigip" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="CiscoIDS" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="FujitsuPYCBSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="WatchGuardFirewall" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="NetSD3800" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="PaloAltoFirewall" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="ADVAOPTICALNETWORKING" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="MeruWLANController" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="AlaxalaSwitch5400" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="AlaxalaSwitch5400" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+  <NCMDeviceExdCriteria personalityid="AlliedTelesisGS900MSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+    <NCMDeviceExdCriteria personalityid="H3CSSeriesSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="H3CSSeriesSwitch" criteria_id="NCMExcludeCriteria:criteria_id:h3c_screen_length_0"/>		
+    <NCMDeviceExdCriteria personalityid="HuaweiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="HuaweiSwitch" criteria_id="NCMExcludeCriteria:criteria_id:h3c_screen_length_0"/>
+	  <NCMDeviceExdCriteria personalityid="HuaweiSSwitch" criteria_id="NCMExcludeCriteria:criteria_id:2"/>
+    <NCMDeviceExdCriteria personalityid="HuaweiSSwitch" criteria_id="NCMExcludeCriteria:criteria_id:h3c_screen_length_0"/>
+ <NCMDeviceExdCriteria personalityid="HirschmannSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="BrocadeFastIronSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="TransPortWirelessRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="BrocadeFiberSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="RedbackRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="BNTRackSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="AristaSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="DCSSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="F5ARX" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="AX2500LoadBalancers" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="AlliedTelesisCenterComSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="AlliedTelesisEthernetSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="FoundryFastIronSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="ZXRRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="DellPowerConnectSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="CiscoASRRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="BrocadeSilkWormFiberSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="F5Bigip10X" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="BlueCoatProxySGOS" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="CiscoIronport" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="Vyatta" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="RadwareAlteonSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="BrocadeVDXSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="JuniperSRX" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="NECIX2025" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="ADVAFSP" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="MikrotikRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="WelotecRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="CrescendoLoadBalancer" criteria_id="NCMExcludeCriteria:criteria_id:1"/> 
+ <NCMDeviceExdCriteria personalityid="RuggedComSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>     
+ <NCMDeviceExdCriteria personalityid="RuijieSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="FujitsuFirewall" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="F5Bigip11X" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="EdgeCoreSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="TelcoSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="OccamSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="AdtranRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="CiscoSBSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="NokiaIPSO" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="HPEthernetSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="CitrixNetScalerMPX" criteria_id="NCMExcludeCriteria:criteria_id:1"/>    
+ <NCMDeviceExdCriteria personalityid="3Com5500Switch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="FortiGateFirewallVER4" criteria_id="NCMExcludeCriteria:criteria_id:1"/> 
+ <NCMDeviceExdCriteria personalityid="FortiGateFirewallVER4" criteria_id="NCMExcludeCriteria:criteria_id:setpassword"/>  
+ <NCMDeviceExdCriteria personalityid="FiberHomeSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="ZXRRouterZSR" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="ArubaController" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="TippingpointIPS" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="MobileIronSentry" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="JuniperLoadBalancer" criteria_id="NCMExcludeCriteria:criteria_id:1"/>    
+ <NCMDeviceExdCriteria personalityid="CienaSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="H3CDevice" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="CheckPointGaiaFirewall" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="AvocentACS" criteria_id="NCMExcludeCriteria:criteria_id:1"/>     
+ <NCMDeviceExdCriteria personalityid="JuniperWLAN" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="PravailAPS" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="AvocentTerminal" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="CiscoASRMobileGateway" criteria_id="NCMExcludeCriteria:criteria_id:1"/>   
+ <NCMDeviceExdCriteria personalityid="HP5500Switch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="PaloAltoPanoramaFirewall" criteria_id="NCMExcludeCriteria:criteria_id:1"/> 
+ <NCMDeviceExdCriteria personalityid="HuaweiNERouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+  <NCMDeviceExdCriteria personalityid="HuaweiS5300Switch" criteria_id="NCMExcludeCriteria:criteria_id:1"/> 
+  
+ <NCMDeviceExdCriteria personalityid="DLinkDESSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/> 
+ <NCMDeviceExdCriteria personalityid="BrocadeRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="INSYSMoRoS" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="SonicWALLFirewall" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="TrapezeWLANController" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="UbiquitiAirOs" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="GarderosRouter" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="JuniperFabricSwitch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+ <NCMDeviceExdCriteria personalityid="F5Netcon" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="F5Bigip114" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+ <NCMDeviceExdCriteria personalityid="EdgeCoreL2Switch" criteria_id="NCMExcludeCriteria:criteria_id:1"/>  
+
+    <NCMDeviceExdCriteria personalityid="MiMOMaxGPSTornado" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+    <NCMDeviceExdCriteria personalityid="MiMOMaxGPSPyxis" criteria_id="NCMExcludeCriteria:criteria_id:1"/>
+</DeviceCommentsList>

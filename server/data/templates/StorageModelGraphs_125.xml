@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<GRAPHDETAIL>
+
+
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Capacity Utilization" minInterval="60"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="PORT_TOTAL_MBPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Port_IOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="PORT_queueLength" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="PORT_AVG_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="PORT_AVG_READ_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="PORT_AVG_WRITE_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Controller_CPUUSAGE" minInterval ="60"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Controller_ReadCacheHitRatio" minInterval ="60"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Controller_WriteCacheHitRatio" minInterval ="60"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="StorageAPI_Controller Bytes/sec" minInterval ="60"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Controller_IOPS" minInterval ="60"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Disk_Throughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Disk Throughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Disk_QUEUELENGTH" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="DiskGroup_Throughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="DiskGroup_IOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="DiskGroup_AVG_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="DiskGroup_AVG_READ_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="DiskGroup_AVG_WRITE_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="VolumeThroughput" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Volume_IOPS" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Volume_ReadCacheHitRatio" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Volume_WriteCacheHitRatio" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="STORAGEPOOL_Throughput" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="STORAGEPOOL_IOPS" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="POOL_AVG_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="POOL_AVG_READ_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="POOL_AVG_WRITE_RESPONSE_TIME" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Temperature_Sensor_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_DiskPool_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Chassis_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Fan_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Powersupply_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Battery_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Port_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Controller_Status" minInterval ="60"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_StoragePool_Status" minInterval ="300"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_DISK_Status" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_Volume_Status" minInterval ="900"/>
+    <StorageModelToGraph deviceType="DELL EMC PowerVault ME4" graphName="Storage_DISK_Health_Status" minInterval ="900"/>
+
+
+</GRAPHDETAIL>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<!-- Upload Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_catos_switch_cli_config_get_running_irec_1"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy config tftp">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="cisco_catos_switch_cli_config_get_running_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_catos_switch_cli_config_get_running_irec_2" />
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="cisco_catos_switch_cli_config_get_running_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="catOSActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_catos_switch_cli_config_get_running_irec_3" />
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="cisco_catos_switch_cli_config_get_running_rec_3" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Download Config -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_catos_switch_cli_push_running_irec_1"/>
+</CLIInteractionSpec>
+
+<CLICommand command="copy tftp config">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="cisco_catos_switch_cli_push_running_rec_1" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+   <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_catos_switch_cli_push_running_irec_2" />
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="cisco_catos_switch_cli_push_running_rec_2" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="catOSActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="cisco_catos_switch_cli_push_running_irec_3" />
+</CLIInteractionSpec>
+
+<CLICommand command="${UserInput:file_name}">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="cisco_catos_switch_cli_push_running_rec_3" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- ######################################### cisco catalyst 1900 ##########################################-->
+ 	 
+ 	 <CLICommand command="copy nvram tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+ 	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+ 	      <Record type="CLI" recordid="cisco_catos_switch_cli_backup_running_rec" protocol="CLI"/>
+ 	    </CLIInputRecord>
+ 	 </CLICommand>
+ 	 
+ 	 <CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} nvram">
+ 	    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+ 	      <Record type="CLI" recordid="cisco_catos_switch_cli_upload_running_rec" protocol="CLI"/>
+ 	    </CLIInputRecord>
+ 	 </CLICommand>
+ 	 
+ 			<CLICommand command="terminal length 0">
+				<CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+					<Record protocol="CLI" recordid="Cisco_CatOS_Switch_1900_CLI_backup_vlan_rec_0" type="CLI"/>
+				</CLIInputRecord>
+			</CLICommand>	
+			<CLICommand command="show vlan">
+				<CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+					<Record protocol="CLI" recordid="Cisco_CatOS_Switch_1900_CLI_backup_vlan_rec_1" type="CLI"/>
+				</CLIInputRecord>
+			</CLICommand>		
+			<CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" requesttimeout="20000">
+				<InteractionSpec interactionid="Cisco_CatOS_Switch_1900_CLI_backup_vlan_ispec_0" protocol="CLI" timeout="20000"/>
+			</CLIInteractionSpec>	
+			<CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" promptactionid="catOSActionId" requesttimeout="20000">
+				<InteractionSpec interactionid="Cisco_CatOS_Switch_1900_CLI_backup_vlan_ispec_1" protocol="CLI" timeout="20000"/>
+			</CLIInteractionSpec>
+		
+			<CLICommand command="show inventory">
+                <CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+                    <Record protocol="CLI" recordid="Cisco_CatOS_Switch_1900_CLI_backup_inventory_rec_1" type="CLI"/>
+                </CLIInputRecord>
+            </CLICommand>
+            <CLICommand command="terminal length 0">
+                <CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+                    <Record protocol="CLI" recordid="Cisco_CatOS_Switch_1900_CLI_backup_inventory_rec_0" type="CLI"/>
+                </CLIInputRecord>
+            </CLICommand>
+            <CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" requesttimeout="20000">
+                <InteractionSpec interactionid="Cisco_CatOS_Switch_1900_CLI_backup_inventory_ispec_0" protocol="CLI" timeout="20000"/>
+            </CLIInteractionSpec>
+            <CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" promptactionid="catOSActionId" requesttimeout="20000">
+                <InteractionSpec interactionid="Cisco_CatOS_Switch_1900_CLI_backup_inventory_ispec_1" protocol="CLI" timeout="20000"/>
+            </CLIInteractionSpec>
+
+			<CLICommand command="terminal length 0">
+				<CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+					<Record protocol="CLI" recordid="cisco_catos_switch_CLI_backup_vlan_rec_0" type="CLI"/>
+				</CLIInputRecord>
+			</CLICommand>	
+			<CLICommand command="show vlan">
+				<CLIInputRecord inputsourcetype="1" messagesuffix="&#10;">
+					<Record protocol="CLI" recordid="cisco_catos_switch_CLI_backup_vlan_rec_1" type="CLI"/>
+				</CLIInputRecord>
+			</CLICommand>		
+			<CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" requesttimeout="20000">
+				<InteractionSpec interactionid="cisco_catos_switch_CLI_backup_vlan_ispec_0" protocol="CLI" timeout="20000"/>
+			</CLIInteractionSpec>	
+			<CLIInteractionSpec commandecho="false" interactionverb="1" prompt="${UserInput:EnablePrompt}" promptecho="true" promptactionid="catOSActionId" requesttimeout="20000">
+				<InteractionSpec interactionid="cisco_catos_switch_CLI_backup_vlan_ispec_1" protocol="CLI" timeout="20000"/>
+			</CLIInteractionSpec>
+
+<!-- ############################################################################################################-->
+
+</CLICommandList>
+
+
+
+
+
+
+
+

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="HPE 1920 Series Switch" displayName="HPE 1920 Series Switch" osType="Comware Software" templateName="HPE_1920_Series_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="HPE" vendorName="HP">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="info" number="7" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="screen-length disable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="180000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display saved-configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="180000" promptactionid="hpActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="screen-length disable" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="180000" promptactionid="hpActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display current-configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="180000" promptactionid="hpActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center enable" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="30" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="undo info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="backup startup-config to ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="180000" promptactionid="hppActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="backup running-config to ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="180000" promptactionid="hppActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center enable" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="30" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="40" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="undo info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="30" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="HPE 1920 Switch" personalityName="HPE1920Switch">	
+		<Login enablecommand="_cmdline-mode on" suffix="${LF}" postloginprompt="continue" postlogincommand="" preloginprompt="continue" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="HARDWARE_VER" size="100" desc="Hardware Version" displayname="Hardware Version" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="BOOTROM_VER" size="100" desc="Bootrom Version" displayname="Bootrom Version" defaultvalue="Not Available" sequenceid="20"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>info-center loghost $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HPE1920HwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_hp_1920_switch">
+						 <VALID-RULE>
+							<METADATA>
+								<SCALAR REFERENCEREQ="false">
+
+									<REGEX NAME="BOOTROM_VER" EXPRESSION=".*Bootrom\s*Version\s*is\s*(\S*).*">
+										<PARAM NAME="BOOTROM_VER" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="HARDWARE_VER" EXPRESSION=".*Hardware\s*Version\s*is\s*(\S*).*">
+										<PARAM NAME="HARDWARE_VER" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="OSVERSION" EXPRESSION=".*Software.*Version\s*(\S*),\s*Release.*">
+										<PARAM NAME="OSVERSION" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="MODEL" EXPRESSION=".*HPE\s*(\S*)\s*Switch\s*uptime.*">
+										<PARAM NAME="MODEL" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="SERIALNUMBER" EXPRESSION=".*SERIAL_NUMBER\s*:\s*(\S*).*">
+										<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+									</REGEX>
+									<REGEX NAME="MACADDRESS" EXPRESSION=".*MAC_ADDRESS\s*:\s*(\S*).*">
+										<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+									</REGEX>
+								</SCALAR>
+							</METADATA>
+						 </VALID-RULE>
+						 <ERROR-RULE>
+						 <!-- Error rule specific to the command -->
+							<METADATA>
+								<SCALAR>
+								  <!-- error message for command  -->
+								  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+									 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+								  </REGEX>
+								</SCALAR>
+							</METADATA>
+						 </ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" parsercommandname="hardware_prop_hp_1920_switch" responseparserid="hp_1920_switch_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+						<Command commandstr="display device manuinfo" parsercommandname="hardware_prop_hp_1920_switch" responseparserid="hp_1920_switch_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="hpActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

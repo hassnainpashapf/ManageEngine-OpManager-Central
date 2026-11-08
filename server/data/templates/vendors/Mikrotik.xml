@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Mikrotik Router -->
+	
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:mikrotik_router" templatename="Mikrotik_Router" displayname="Mikrotik Router"  description="For all Mikrotik Router">
+        <NCMVendorDevice vendorid="Mikrotik"/>
+
+        <NCMDevicePersonality personalityid="MikrotikRouter"/>
+        
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>		
+			
+	   <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+			
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:mikrotik_router_telent" devicetemplateid="NCMDeviceTemplate:devicetemplateid:mikrotik_router"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="mikrotik_router_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="mikrotik_router_cli_fetch_running_rec"/>            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>	
+		
+	<!-- SSH -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:mikrotik_router_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:mikrotik_router"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="mikrotik_router_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="mikrotik_router_cli_fetch_running_rec"/>            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>	
+		
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+
+
+

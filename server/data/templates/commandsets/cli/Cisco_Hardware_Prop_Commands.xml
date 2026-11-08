@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="cisco_hardware_prop_parser" promptactionid="yesActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_show_version_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_router" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_ios_switch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_ios_switch_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_catos_switch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_catos_switch_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_pix_firewall" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_pix_firewall_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_iad" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_iad_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_accessserver" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_accessserver_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_accesspoint" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_accesspoint_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_asa" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_asa_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_voicegateway" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_vg_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show chassis verbose">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_contentswitch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_contentswitch_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+<!--Cisco WAAS-->
+<CLICommand command="show hardware">
+	<CLIInputRecord parsercommandname="hardware_prop_cisco_WAAS" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_WAAS_hardware_prop" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- CiscoACEModule -->
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_ace_module" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_ace_module_version_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show hardware">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_ace_module" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_ace_module_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- Cisco IOS XR-->
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="hardware_prop_cisco_IOSXR" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="cisco_IOSXR_hardware_prop" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- Show Running Config -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_cli_show_running_config_irec" />
+</CLIInteractionSpec>
+
+<!--Cisco IDS-->
+
+<CLICommand command="show configuration">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="ciscoids_generic_show_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy current-config backup-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="ciscoids_copy_cur_to_backupconfig" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="show version">
+	<CLIInputRecord parsercommandname="ciscoids_generic_show_version" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="ciscoids_generic_show_version_prop" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Cisco IDS Ends -->
+
+<CLICommand command="show running-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="cisco_cli_show_running_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- For command "terminal length 0" - This is to avoid the -More- in the output -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_cli_terminal_length_0_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="terminal length 0">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="cisco_cli_terminal_length_0_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- Cisco Nexus Switch -->
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_nexus_switch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_nexus_show_command_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="sh hardware">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_nexus_switch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_nexus_show_command_rec1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- Cisco MDS Switch -->
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_cisco_mds" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_mds_show_command_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

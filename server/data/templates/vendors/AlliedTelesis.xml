@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For AlliedTelesisSwitch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_switch" templatename="AlliedTelesis_Switch" displayname="Allied Telesis Switch" ostype="" description="For all Allied Telesis Switch devices">
+        <NCMVendorDevice vendorid="AlliedTelesis"/>
+        <NCMDevicePersonality personalityid="AlliedTelesisSwitch"/>
+
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+       
+
+		<!-- SSH - TFTP -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_switch_ssh_tftp" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_switch"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_cli_config_backup" />
+                      
+         
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET - TFTP -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_switch_telnet_tftp" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_cli_config_backup" />
+                   
+            
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+<!-- For  Allied Telesis AT-8000S series Switches -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_at8000s_switch" templatename="Alliedtelesis_AT8000S_Switch" displayname="Allied Telesis AT-8000S Switch" ostype="" description="For all Allied Telesis AT-8000S Switch">
+        <NCMVendorDevice vendorid="AlliedTelesis" />
+        <NCMDevicePersonality personalityid="AlliedTelesisAT8000S" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_at8000s_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_at8000s_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_at8000s_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_at8000s_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="alliedtelesis_at8000s_switch_cli_startup_config_upload"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alliedtelesis_at8000s_switch_cli_running_config_upload"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alliedtelesis_at8000s_switch_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+  <!-- <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_at8000s_switch_enable_syslog_change_tracking" />
+ <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_at8000s_switch_disable_syslog_change_tracking" /> -->
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_at8000s_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_at8000s_switch"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+              
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_at8000s_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_at8000s_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="alliedtelesis_at8000s_switch_cli_startup_config_upload"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alliedtelesis_at8000s_switch_cli_running_config_upload"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alliedtelesis_at8000s_switch_cli_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+<!--  <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_at8000s_switch_enable_syslog_change_tracking" />
+  <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_at8000s_switch_disable_syslog_change_tracking" /> -->
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_at8000s_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_at8000s_switch"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_at8000s_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alliedtelesis_at8000s_show_running_config_rec"/>
+
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_at8000s_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alliedtelesis_at8000s_show_startup_config_rec"/>
+
+
+                <!-- Change Tracking thru Syslog -->
+  
+  <!-- <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_at8000s_switch_enable_syslog_change_tracking" />       <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_at8000s_switch_disable_syslog_change_tracking" /> -->
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_at8000s_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_at8000s_switch"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_at8000s_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alliedtelesis_at8000s_show_running_config_rec"/>
+      
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_at8000s_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alliedtelesis_at8000s_show_startup_config_rec"/>
+
+
+                     <!-- Change Tracking thru Syslog -->
+ 
+  <!-- <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_at8000s_switch_enable_syslog_change_tracking" /> <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_at8000s_switch_disable_syslog_change_tracking" /> -->
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+                                      <!-- For Allied Telesis CenterCOM GS900M V2 series Switches -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_centercom_gs900m_switch" templatename="Alliedtelesis_CenterCOM_GS900M_Switch" displayname="Allied Telesis CenterCOM Switch" ostype="" description="For all Allied Telesis CenterCOM GS900M V2 series Switches">
+        <NCMVendorDevice vendorid="AlliedTelesis" />
+        <NCMDevicePersonality personalityid="AlliedTelesisGS900MSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_centercom_gs900m_switch_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_centercom_gs900m_switch"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+	
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_gs900m_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alliedtelesis_gs900m_show_startup_config_rec"/>
+
+
+                <!-- Change Tracking thru Syslog -->
+  
+   <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_gs900m_switch_enable_syslog_change_tracking" />       
+  <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_gs900m_switch_disable_syslog_change_tracking" /> 
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_centercom_gs900m_switch_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_centercom_gs900m_switch"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+      
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_gs900m_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alliedtelesis_gs900m_show_startup_config_rec"/>
+
+
+                     <!-- Change Tracking thru Syslog -->
+ 
+   <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_gs900m_switch_enable_syslog_change_tracking" /> 
+      <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_gs900m_switch_disable_syslog_change_tracking" /> 
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+													
+														
+    <!-- For AlliedTelesisSwitch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_centercom_switch" templatename="AlliedTelesis_CenterCom_Switch" displayname="Allied Telesis CenterCom 87XX Switch" ostype="" description="For all Allied Telesis CenterCom 8724XSL Switch">
+        <NCMVendorDevice vendorid="AlliedTelesis"/>
+        <NCMDevicePersonality personalityid="AlliedTelesisCenterComSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+        <NCMSupportedProtocol protocolid="TFTP"/>
+       		
+	<!-- TELNET - TFTP -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_centercom_switch_centercom_switch_telnet_tftp" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_centercom_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">            
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_centercom_switch_cli_config_backup" />                        
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+<!-- For  Allied Telesis x200,SBx908 and x600 series Switches -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_ethernet_switch" templatename="Alliedtelesis_Ethernet_Switch" displayname="Allied Telesis X600 and X200 and SBx Switch" ostype="AlliedWare Plus" description="For all Allied Telesis X600,X200 and SBx Switch">
+        <NCMVendorDevice vendorid="AlliedTelesis" />
+        <NCMDevicePersonality personalityid="AlliedTelesisEthernetSwitch" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_ethernet_switch_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_ethernet_switch"
+            managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_ethernet_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_ethernet_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="alliedtelesis_ethernet_switch_cli_startup_config_upload"/>
+                <!-- NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alliedtelesis_ethernet_switch_cli_running_config_upload"/ -->
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alliedtelesis_ethernet_switch_sync_config1" />
+
+                <!-- Change Tracking thru Syslog -->
+  <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_ethernet_switch_enable_syslog_change_tracking" />
+ <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_ethernet_switch_disable_syslog_change_tracking" /> 
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_ethernet_switch_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_ethernet_switch"
+            managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+              
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_ethernet_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_ethernet_switch_cli_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="alliedtelesis_ethernet_switch_cli_startup_config_upload"/>
+                <!-- NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alliedtelesis_ethernet_switch_cli_running_config_upload"/ -->
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alliedtelesis_ethernet_switch_sync_config1" />
+
+                <!-- Change Tracking thru Syslog -->
+ <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_ethernet_switch_enable_syslog_change_tracking" />
+  <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_ethernet_switch_disable_syslog_change_tracking" /> 
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+<!-- SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_ethernet_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_ethernet_switch"
+	managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_ethernet_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alliedtelesis_ethernet_switch_show_running_config_rec"/>
+
+	<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_ethernet_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alliedtelesis_ethernet_switch_show_startup_config_rec"/>
+
+   <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alliedtelesis_ethernet_switch_sync_config2" />
+
+                <!-- Change Tracking thru Syslog -->
+  
+  <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_ethernet_switch_enable_syslog_change_tracking" /> 
+  <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_ethernet_switch_disable_syslog_change_tracking" /> 
+	
+        </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alliedtelesis_ethernet_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alliedtelesis_ethernet_switch"
+	managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+        <NCMDeviceCriteria commandmapid="TELNET_Command">
+		
+	<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alliedtelesis_ethernet_switch_running_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alliedtelesis_ethernet_switch_show_running_config_rec"/>
+      
+      <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alliedtelesis_ethernet_switch_startup_config_backup" taskhandling="true"/>
+	<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alliedtelesis_ethernet_switch_show_startup_config_rec"/>	
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alliedtelesis_ethernet_switch_sync_config2" />
+
+
+                     <!-- Change Tracking thru Syslog -->
+ 
+  <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_ethernet_switch_enable_syslog_change_tracking" /> 
+  <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="alliedtelesis_ethernet_switch_disable_syslog_change_tracking" />
+            
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>
+
+

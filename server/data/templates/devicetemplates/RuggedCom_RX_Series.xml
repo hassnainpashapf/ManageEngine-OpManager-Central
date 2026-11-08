@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For RuggedCom RX Series" displayName="RuggedCom RX Series" osType="ROX" templateName="RuggedCom RX Series">
+	<RestTemplate name=""/>
+	<Vendor displayName="RuggedCom" vendorName="RuggedCom">
+		<Commands>
+			<Command commandstr="show  chassis | nomore"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="show running-config | nomore" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="2" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="RuggedCom RX Series" personalityName="RuggedComRXSeries">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Software License" displayname="Software License" name="SOFTWARE_LICENSE" sequenceid="1" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="RuggedComHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_ruggedcom_rx_series">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION='\s*rox\s*release\s*\"(ROX)\s*(\S*).*' NAME="OSTYPE">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*system\s*serial\s*number\s*(\S*).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*model\s*(\S*).*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION='\s*software\s*license\s*\"(.*)\".*' NAME="SOFTWARE_LICENSE">
+											<PARAM NAME="SOFTWARE_LICENSE" TOKENNO="1"/>
+										</REGEX>								
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show  chassis | nomore" messagesuffix="${LF}" parsercommandname="hardware_prop_ruggedcom_rx_series" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="RX5000" ostype="" series="" sysoid=".1.3.6.1.4.1.15004.2.5.1"/>
+        <NCMDeviceSysOID model="RX1500" ostype="" series="" sysoid=".1.3.6.1.4.1.15004.2.8.1"/>
+        <NCMDeviceSysOID model="RX1510" ostype="" series="" sysoid=".1.3.6.1.4.1.15004.2.8.11"/>
+        <NCMDeviceSysOID model="RX1511" ostype="" series="" sysoid=".1.3.6.1.4.1.15004.2.8.12"/>
+        <NCMDeviceSysOID model="RX1512" ostype="" series="" sysoid=".1.3.6.1.4.1.15004.2.8.13"/>
+        <NCMDeviceSysOID model="RX1501" ostype="" series="" sysoid=".1.3.6.1.4.1.15004.2.8.2"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

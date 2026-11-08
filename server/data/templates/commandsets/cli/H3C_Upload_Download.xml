@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+
+<CLICommandList>
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="H3CSwitchActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="h3c_switch_ispec"/>
+    </CLIInteractionSpec>
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="enter key):" commandecho="false" promptecho="true" promptactionid="H3CSwitchActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="h3c_switch_file_ispec"/>
+    </CLIInteractionSpec>
+
+
+ <!-- backup running-config -->
+    
+    <CLICommand command="save main">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="h3c_save_main_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+     <CLICommand command="save de_running.cfg">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="h3c_save_file_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="tftp ${UserInput:tftp_server_address} put flash:/deviceexpert.cfg ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="h3c_switch_backup_startup_rec" protocol="CLI"/>
+         </CLIInputRecord>
+     </CLICommand>
+
+      <CLICommand command="tftp ${UserInput:tftp_server_address} put flash:/de_running.cfg ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="h3c_switch_backup_running_rec" protocol="CLI"/>
+         </CLIInputRecord>
+     </CLICommand>
+   
+    
+    <CLICommand command="delete de_running.cfg">
+            <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    	        <Record type="CLI" recordid="h3c_switch_delete_rec" protocol="CLI"/>
+             </CLIInputRecord>
+    </CLICommand>			
+
+       
+    
+    <!-- Upload file config -->
+    <CLICommand command="tftp ${UserInput:tftp_server_address} get ${UserInput:file_name}">
+          <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+               <Record type="CLI" recordid="h3c_switch_upload_startup_rec" protocol="CLI"/>
+          </CLIInputRecord>
+    </CLICommand>
+
+
+    <CLICommand command="copy ${UserInput:file_name} deviceexpert.cfg">
+           <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+               <Record type="CLI" recordid="h3c_switch_copy_backup_rec" protocol="CLI"/>
+           </CLIInputRecord>
+    </CLICommand>
+    
+    
+    <CLICommand command="startup saved-configuration deviceexpert.cfg">
+           <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+             	<Record type="CLI" recordid="h3c_switch_save_startup_rec" protocol="CLI"/>
+           </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="return">
+            <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1" >    
+                <Record type="CLI" recordid="h3c_switch_return_rec" protocol="CLI"/>
+	        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="undo terminal logging">
+            <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1" >    
+                <Record type="CLI" recordid="h3c_switch_mute_terminal_log_rec" protocol="CLI"/>
+	        </CLIInputRecord>
+    </CLICommand>
+
+ 
+     <!-- Telnet/SSH backup -->
+
+   
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="]" commandecho="false" promptecho="true" promptactionid="H3CSwitchActionId"> 
+          <InteractionSpec timeout="120000" protocol="CLI" interactionid="h3c_switch_ispec_1"/>
+    </CLIInteractionSpec>
+
+    
+    <CLICommand command="system-view">
+                      <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                    		<Record type="CLI" recordid="h3c_system_view_rec" protocol="CLI"/>
+                      </CLIInputRecord>
+    </CLICommand>
+  
+  
+    <CLICommand command="user-interface vty 0 4">
+                        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                      		<Record type="CLI" recordid="h3c_ui_rec" protocol="CLI"/>
+                        </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="screen-length 0">
+                    <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+                    	<Record type="CLI" recordid="h3c_screen_length_rec" protocol="CLI"/>
+                    </CLIInputRecord>
+    </CLICommand>
+
+    <!-- display current-config -->
+    
+    <CLICommand command="display current-configuration">
+         <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+              <Record type="CLI" recordid="h3c_cli_current_config_rec" protocol="CLI"/>
+         </CLIInputRecord>
+     </CLICommand>
+
+      <CLICommand command="display saved-configuration">
+         <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+              <Record type="CLI" recordid="h3c_cli_saved_config_rec" protocol="CLI"/>
+         </CLIInputRecord>
+     </CLICommand>
+
+
+
+ 
+    <!-- Hardware Properties -->
+    
+    <CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="h3c_switch_hardware_prop_parser" promptactionid="H3CSwitchActionId">
+            <InteractionSpec timeout="20000" protocol="CLI" interactionid="h3c_switch_hardware_prop_ispec"/>
+    </CLIInteractionSpec>
+    
+    <CLICommand command="display version">
+        <CLIInputRecord parsercommandname="hardware_prop_h3c_switch" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="h3c_switch_hardware_prop_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="display device manuinfo">
+        <CLIInputRecord parsercommandname="hardware_prop_h3c_switch" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="h3c_switch_manuinfo_hardware_prop_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+    
+   <CLICommand command="display boot-loader">
+        <CLIInputRecord parsercommandname="hardware_prop_h3c_switch" messagesuffix="&#10;" inputsourcetype="1">
+              <Record type="CLI" recordid="h3c_switch_bootloader_hardware_prop_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="undo screen-length">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="h3c_screen_length_reset_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+		<!-- H3C New Device Model -->
+	
+<CLICommand command="tftp ${UserInput:tftp_server_address} put deviceexpert.cfg ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="h3c_s7_switch_backup_startup_rec" protocol="CLI"/>
+         </CLIInputRecord>
+     </CLICommand>
+
+      <CLICommand command="tftp ${UserInput:tftp_server_address} put de_running.cfg ${UserInput:file_name}">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	        <Record type="CLI" recordid="h3c_s7_switch_backup_running_rec" protocol="CLI"/>
+         </CLIInputRecord>
+     </CLICommand>
+	 
+	 <CLICommand command="save">
+        <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="h3c_s_save_main_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	<CLICommand command="display version">
+        <CLIInputRecord parsercommandname="hardware_prop_h3c_s_switch" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="h3c_s_switch_hardware_prop_rec" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+	
+	<CLICommand command="display device manuinfo">
+        <CLIInputRecord parsercommandname="hardware_prop_h3c_s_switch" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="h3c_s_switch_hardware_prop_rec1" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+    
+    <CLICommand command="display esn">
+        <CLIInputRecord parsercommandname="hardware_prop_h3c_s_switch" messagesuffix="&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="h3c_s_switch_hardware_prop_rec2" protocol="CLI"/>
+        </CLIInputRecord>
+    </CLICommand>
+
+</CLICommandList>
+

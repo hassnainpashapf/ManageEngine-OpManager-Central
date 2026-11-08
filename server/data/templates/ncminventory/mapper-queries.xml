@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<mapper-queries>
+    <SelectQuery queryid="SelectQuery:queryid:9" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="NetworkElement" tablename="NetworkElement">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:9" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="NetworkElement" value="${DNSNAME}" comparator="0" columnname="NETWORKELEMENTNAME"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="NetworkElementPKQuery" queryid="SelectQuery:queryid:9"/>
+
+    <SelectQuery queryid="SelectQuery:queryid:10" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="NEInterface" tablename="NEInterface">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:10" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="NEInterface" value="${ADDRESS}" comparator="0" columnname="INTERFACENAME"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="IPInterfacePKQuery" queryid="SelectQuery:queryid:10"/>
+
+    <SelectQuery queryid="SelectQuery:queryid:11" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="StorageDetails" tablename="StorageDetails">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:11" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="StorageDetails" value="${StorageDetails.STORAGEINDEX}" comparator="0" columnname="STORAGEINDEX"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="StoragePKQuery" queryid="SelectQuery:queryid:11"/>
+
+   <SelectQuery queryid="SelectQuery:queryid:12" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="InetService" tablename="InetService">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:12" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="InetService" value="${InetService.PORT}" comparator="0" columnname="PORT"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="DBInetServicePKQuery" queryid="SelectQuery:queryid:12"/>
+
+   <SelectQuery queryid="SelectQuery:queryid:13" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="NEPort" tablename="NEPort">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:13" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="NEPort" value="${NEPort.PORTINDEX}" comparator="0" columnname="PORTINDEX"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="NEPortPKQuery" queryid="SelectQuery:queryid:13"/>
+
+   <SelectQuery queryid="SelectQuery:queryid:14" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="NEService" tablename="NEService">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:14" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="NEService" value="${NEService.SERVICENAME}" comparator="0" columnname="SERVICENAME"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="HostResourceServicePKQuery" queryid="SelectQuery:queryid:14"/>
+
+    <SelectQuery queryid="SelectQuery:queryid:15" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="PrinterInputUnit" tablename="PrinterInputUnit">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:15" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="PrinterInputUnit" value="${PrinterInputUnit.INPUTINDEX}" comparator="0" columnname="INPUTINDEX"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="PrinterPKQuery" queryid="SelectQuery:queryid:15"/>
+
+    <SelectQuery queryid="SelectQuery:queryid:16" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="PrinterOutputUnit" tablename="PrinterOutputUnit">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:16" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="PrinterOutputUnit" value="${PrinterOutputUnit.OUTPUTINDEX}" comparator="0" columnname="OUTPUTINDEX"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="PrinterOutputPKQuery" queryid="SelectQuery:queryid:16"/>
+
+    <SelectQuery queryid="SelectQuery:queryid:17" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="PrinterMarker" tablename="PrinterMarker">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:17" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="PrinterMarker" value="${PrinterMarker.MARKERINDEX" comparator="0" columnname="MARKERINDEX"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="PrinterMarkerPKQuery" queryid="SelectQuery:queryid:17"/>
+
+    <SelectQuery queryid="SelectQuery:queryid:18" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="PrinterMarkerSupplier" tablename="PrinterMarkerSupplier">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:18" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="PrinterMarkerSupplier" value="${PrinterMarkerSupplier.MARKERSUPPLIESINDEX}" comparator="0" columnname="MARKERSUPPLIESINDEX"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="PrinterMarkerSuppliesPKQuery" queryid="SelectQuery:queryid:18"/>
+
+    <SelectQuery queryid="SelectQuery:queryid:19" startindex="0" numofobjects="0">
+        <SelectTableList>
+            <SelectTable tablealias="NetworkElement" tablename="NetworkElement">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="0"/>
+                </SelectColumnList>
+            </SelectTable>
+            <SelectTable tablealias="ResourceContainer" tablename="ResourceContainer">
+                <SelectColumnList>
+                    <SelectColumn columnalias="*" columnname="*" columnindex="1"/>
+                </SelectColumnList>
+                <JoinTable referencedtable="ResourceContainer" jointype="2">
+                    <JoinColumnsList>
+                        <JoinColumns referencedtablecolumn="RESOURCEID" basetablecolumn="RESOURCEID"/>
+                    </JoinColumnsList>
+                </JoinTable>
+            </SelectTable>
+        </SelectTableList>
+        <CriteriaList>
+            <Criteria criteriaid="Criteria:criteriaid:19" logicalrepresentation="1">
+                <RelationalCriteriaList>
+                    <RelationalCriteria relationalcriteriaid="1" tablealias="ResourceContainer" value="${NETWORKELEMENTID}" comparator="0" columnname="RESOURCEID"/>
+                </RelationalCriteriaList>
+            </Criteria>
+        </CriteriaList>
+    </SelectQuery>
+    <MapperQueries name="NetworkElementContQuery" queryid="SelectQuery:queryid:19"/>
+</mapper-queries>

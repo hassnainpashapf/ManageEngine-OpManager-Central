@@ -1,0 +1,1345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+
+    <!--
+    DO NOT CHANGE THIS XML IN PPM CASES
+    AS THIS XML WILL ALREADY BE POPULATED AND THIS MAPPING CAN BE REMOVED BY USER FROM UI
+    SO EITHER CREATE A NEW XML AND DUMP NEWLY OR USE INSERT QUERY IN DATABASECHANGES
+    -->
+    <PERFGROUP PERFGROUPNAME="CPU Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Disk Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Memory Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Fan State"/>
+    <PERFGROUP PERFGROUPNAME="Power supply status"/>
+    <PERFGROUP PERFGROUPNAME="Input Voltage"/>
+    <PERFGROUP PERFGROUPNAME="Battery Voltage"/>
+    <PERFGROUP PERFGROUPNAME="System Status"/>
+    <PERFGROUP PERFGROUPNAME="UPS Charge"/>
+    <PERFGROUP PERFGROUPNAME="Battery Status"/>
+    <PERFGROUP PERFGROUPNAME="Output Current"/>
+    <PERFGROUP PERFGROUPNAME="UPS Efficiency"/>
+    <PERFGROUP PERFGROUPNAME="Power Loss"/>
+    <PERFGROUP PERFGROUPNAME="Battery Capacity"/>
+    <PERFGROUP PERFGROUPNAME="CPU Temperature"/>
+    <PERFGROUP PERFGROUPNAME="Fan speed"/>
+    <PERFGROUP PERFGROUPNAME="Active Session Count"/>
+    <PERFGROUP PERFGROUPNAME="Battery Temperature"/>
+    <PERFGROUP PERFGROUPNAME="UPS Output Voltage"/>
+    <PERFGROUP PERFGROUPNAME="Total Pages Printed"/>
+    <PERFGROUP PERFGROUPNAME="Active User Count"/>
+    <PERFGROUP PERFGROUPNAME="PSU Voltage"/>
+    <PERFGROUP PERFGROUPNAME="UPS Load"/>
+    <PERFGROUP PERFGROUPNAME="Network Usage"/>
+    <PERFGROUP PERFGROUPNAME="Disk Reads"/>
+    <PERFGROUP PERFGROUPNAME="RAID IOPS"/>
+    <PERFGROUP PERFGROUPNAME="Swap Memory Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Controller IO Rate"/>
+    <PERFGROUP PERFGROUPNAME="UPS Output Power"/>
+    <PERFGROUP PERFGROUPNAME="UPS Input Power"/>
+    <PERFGROUP PERFGROUPNAME="Battery Count"/>
+    <PERFGROUP PERFGROUPNAME="Total Disk Read Throughput"/>
+    <PERFGROUP PERFGROUPNAME="Sensor Temperature"/>
+    <PERFGROUP PERFGROUPNAME="System Temperature"/>
+    <PERFGROUP PERFGROUPNAME="Temperature Status"/>
+    <PERFGROUP PERFGROUPNAME="Bandwidth Utilization"/>
+    <PERFGROUP PERFGROUPNAME="UPS Output Frequency"/>
+    <PERFGROUP PERFGROUPNAME="Supply Air Temperature"/>
+    <PERFGROUP PERFGROUPNAME="Return Air Temperature"/>
+    <PERFGROUP PERFGROUPNAME="Cooling Humidity"/>
+    <PERFGROUP PERFGROUPNAME="Cooling Capacity"/>
+    <PERFGROUP PERFGROUPNAME="Airflow Rate"/>
+    <PERFGROUP PERFGROUPNAME="Total Packets Transmitted"/>
+    <PERFGROUP PERFGROUPNAME="Disk Status"/>
+    <PERFGROUP PERFGROUPNAME="SMTP Hits"/>
+    <PERFGROUP PERFGROUPNAME="Storage Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Tx Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Rx Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Switch Errors"/>
+    <PERFGROUP PERFGROUPNAME="Disk Writes"/>
+    <PERFGROUP PERFGROUPNAME="Switch Role"/>
+    <PERFGROUP PERFGROUPNAME="Transmit Traffic"/>
+    <PERFGROUP PERFGROUPNAME="Total Disk Bandwidth"/>
+    <PERFGROUP PERFGROUPNAME="Free Disk Space (GB)"/>
+    <PERFGROUP PERFGROUPNAME="Used Disk Space (GB)"/>
+    <PERFGROUP PERFGROUPNAME="Total Disk Space (GB)"/>
+    <PERFGROUP PERFGROUPNAME="Access Point Active Users"/>
+    <PERFGROUP PERFGROUPNAME="Storagepool Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Concurrent Sessions"/>
+    <PERFGROUP PERFGROUPNAME="Remaining Battery Time"/>
+    <PERFGROUP PERFGROUPNAME="Power Consumption"/>
+    <PERFGROUP PERFGROUPNAME="Volume Utilization"/>
+    <PERFGROUP PERFGROUPNAME="RAID Capacity Utilization"/>
+    <PERFGROUP PERFGROUPNAME="Receive Traffic"/>
+    <PERFGROUP PERFGROUPNAME="Port IOps"/>
+    <PERFGROUP PERFGROUPNAME="Load Average"/>
+    <PERFGROUP PERFGROUPNAME="Disk I/O Reads"/>
+    <PERFGROUP PERFGROUPNAME="Disk I/O Writes"/>
+    <PERFGROUP PERFGROUPNAME="SSL Sessions"/>
+    <PERFGROUP PERFGROUPNAME="Disk Write Speed"/>
+    <PERFGROUP PERFGROUPNAME="System Voltage"/>
+    <PERFGROUP PERFGROUPNAME="Volume Read Percent"/>
+    <PERFGROUP PERFGROUPNAME="Volume Write Percent"/>
+    <PERFGROUP PERFGROUPNAME="Total Packets Received"/>
+
+    <!-- DISK UTILIZATION PerfGroup Mapping Start -->
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="WMI-DiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="Telnet-DiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="NSDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="BlueCoatDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="CyberoamDiskUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="IronportDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="A10DiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="deviceDiskUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="diskPercentUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="diskFullPercent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="fgSysDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="xgdiskPercentUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="ciscoSWDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="RadwareDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="CiscoUMVADiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="fnfsDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="SFOSDiskPercentUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="riverbedSFdsAveDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="symantecSGDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="DiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="CitrixDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="fnfacSysLogDiskUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="Proxmox-ctDiskUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Utilization" POLICYNAME="FortiWiFiWLCDiskUtilization"/>
+    <!-- DISK UTILIZATION PerfGroup Mapping End -->
+
+
+    <!-- Memory Utilization PerfGroup Mapping Start -->
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="FortigateFirewallMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="tpSysMonitorMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="panMgmtMemoryUtilization1020"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="panMgmtMemoryUtilization20"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="panAllStorageUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hwEntityMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ProCurveMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RouterMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="SwitchMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="JuniperMemoryutilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="WMI-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="NetscreenFirewallMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="AlcatelDeviceMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="XOS.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="BlueCoatMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="NSMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="F5MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="BarracudaMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CiscoNexusMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CyberoamMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="IronportMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="JuniperSSGMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="A10MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CiscoWLCMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="HyperV-vmMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="HyperV-hostMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CHuaweiMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S12508-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CS3100MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CS3MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CSMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CS58MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S5500-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S7500-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S7503E-S-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S7506E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S7510E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S9508-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CS95MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S9512E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CSRMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C_S3600-28TP-SI-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CS75EMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C_S7506E-S_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C_SR8808-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="HuaweiSMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S3328-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="HuaweiS5700MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C_MSR_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S5700POE-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei_AR46-40_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-NE20E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S2403-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S3-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S7806-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S3352-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S9303-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-Eudemon300-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Netscreen-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MAIPU-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MyPower-S4126E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MyPower-S4128E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="TopSec-TG1203-VPN-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="SecGate-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZhongXing-ZXR10-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZXR10-5200-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Nsfocus-waf-p300-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZTE-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="DPX8000-A12-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-AR1220-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-AR2240-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei_SRG1220-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S5500-28C-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZXR10-PS-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RuiJie-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Bluecoat-proxySG-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Radware-AD-508-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Radware-DP-502-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S9312-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-USG9520-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S5120-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S3700-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="V-4400fire-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S7506E-S-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-SecBlade-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Amaranten-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-Quidway-Router-R2621-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-NE40E-X3-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-NE40-4-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZTE-ZXR10-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-USG9300-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S8505-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="OpZoon-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="PTMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="PEMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="KYLAND-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="VENUS_FW_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="DPtech-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="FiberHome-EPON-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Tainet_Venus_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZTE-ZXR10-2826E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZTE-ZXR10-2826S-LE-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S3610-PWR-EI-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S9505E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="VENUS-VSOS-V2.6-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S5800-32C-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S10508-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3C-S5120-52SC-HI-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Juniper-SRX650-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="F5-BIG-IP-1600-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Hillstone-SG-6000-G5150-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZTE-2850-26TM-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-epon-olt-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-epon-MA5600T-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei_AR3260_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="FiberHome-PAF-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="DCN-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="F5-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Array-APV-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Huawei-S7703-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="DELL_Force10_S25N_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="DELL_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Eudemon1000E-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="HS-USG9310-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Juniper-EX-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Xen-hostMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Xen-vmMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="VolktekMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RuiJieMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="OpZoonMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="s5ChasUtilMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ng_SwitchCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="DCN-DCRS-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Nutanix-clusterMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Nutanix-hostMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Nutanix-vmMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="sonicCurrMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ruckusSystemMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hwCESWMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hpearubaWlsxMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hpColubrisCurrMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="OneAccessMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="adtrannvAOSHeapMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="avayaERS3.10MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="avayaERSMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="AristaSWEOS4.22.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="acmePacketMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fnadcMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fnfacSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fnfddSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="lancomSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="lancom1711MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="lancom1722MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="pattonSNMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="memRTUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ArubaMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="arubaWLCMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="AutelanMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="HongxinMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3CWLCMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RuckusZDWLCMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="zyxelsysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CheckPointMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RuiJieMemoryUtilization1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="SangforMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MpMemStatsTotalMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="DNOS.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fnfmMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fsMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="feRAMMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="feVMMemUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="snAgGblDynMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hh3cEntityExtMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="zxr10SystemMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="sonicwallWAFMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="brocade-SysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ubntAirMaxMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="cisco-cpmCPUMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hwDevMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hpe3Com.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ax2130sMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="atSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="arubaCPUCDMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="acSysStateDataMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="cpMemActiveRealMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ciscocempMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ciscocempHCMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CiscoUMVAMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fsnmsMemoryPoolUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fmlSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fnFwSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fsaSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="NGAgentSWMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="radwareSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="snMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="SFOSMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="timeNXMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hp6300MMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="extremeMemoryUtilizationSystem"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="yshMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZhongXingMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="devicePhysicalMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="rtyrhMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="iveMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fgsys_MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="H3c.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="jnxJsSPUMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MemoryUtilizationPercent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="resourceHPMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MemoryUtilizationUsedPercent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="dpStatusMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MiKroTik.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="xgMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="DellChassisMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="h3cEntityExtMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="sgiMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="chStackUnitMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="aosMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ruckusZDSystemMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="jnxVCMemberMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="IBMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="raisecomMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="rhmMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="symantecSGMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="EdgeCoreSWMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="IxiaNTO-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="PepLinkMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZyXELESSysMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZyXEL2200.24.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZyXEL2200.8.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="SonicMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="TotalPercentMemory"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CitrixMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Win-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Telnet-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="NetSNMPMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ARISTAAVGMEM"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="nk_sgiMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CiscoSwitchMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CiscoMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Lin-MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="acSysStateVoIPMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="APMemoryUsageAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="VMware-vmMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="VMware-hostMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-cSDMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MerakiMemoryUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-SPSDMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Proxmox-hostMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Proxmox-vmMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Proxmox-ctMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Nutanix-vmHypervisorMemUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="TelemetryCiscoXEMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="TelemetryOpenConfigMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-CelonaEdgeMem"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="extremeMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-VCSDMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Alaxala3660MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="IAPMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RuiJieWLCMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="MemoryUtilizationSangfor"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="FireEyeMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="uhpMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="tpSysMonitorMemoryUtilization.1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="JuniperREMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="JuniperFPCMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Juniper-SPUMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="F5SysGTMMMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="F5SysGOthersMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="citrixSDWANStatsMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="GBNPFOAM.Memoryutilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="EdgeCoreSW51MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="HIKMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ZyXEL4728F.MemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="CiscoFPRHCMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="extremeMemoryUtilizationUser"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="aosMemoryUtilization1MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fgSys_LowMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="PhysicalTotalMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="BarracudaBufferMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fn_hamemberMemoryUtil"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="hpstack_stackMemberMemoryUtil"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="vsf_hpicfVsfMemoryUtil"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RuckusMemUtil15Avg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="FortiWiFiWLCMemUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="FortiAPMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="dgs6600DRAMUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="freeMemory"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="jnxOperatingMemoryRE0"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="APMemoryUsageRate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="AutelanMemoryUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="HongxinMemoryUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Node_MEMORYUSAGE"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RAID_MEMORYUSAGE"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="RAID_SWAP_MEMORYUSAGE"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="F5_VELOS_Controller_1_Memory"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="F5_VELOS_Controller_2_Memory"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="rwspMemUseStatsMemUseFrom1stMargin"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="F5SysGSwapMemoryUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="EMCVNXFile_MEMORY_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="EMC_UNITY_Memory_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Solaris-FreeMemory"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="3com.memory.utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="extremeCpuMonitorUtilization5mins"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="extreme.system.memory.utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="Memory Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fgVdEntMemUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="fgWcWtpSessionWtpMemoryUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ciscoMemoryPoolUtilization1Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ciscoMemoryPoolUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="ciscoMemoryPoolUtilization10Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-apicMemory"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-fabricMemory"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="WMIVirtualMemoryUsedPercent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-ACSDSWMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-ACSDAPMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Memory Utilization" POLICYNAME="api-ACSDGWMemoryUtilization"/>
+    <!-- Memory Utilization PerfGroup Association End -->
+
+    <!-- CPU Utilization PerfGroup Association Start-->
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CiscoFirewallCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="FortigateFirewallCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CpqHoCPUUtilizationMin"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="WMI-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="NetscreenFirewallCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ProCurveCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="FoundryCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="AlcatelDeviceCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ExtremeCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="BlueCoatCpuUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="NSCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="SteelheadCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="BarracudaCPUUtilization15min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CiscoNexusCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CyberoamCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="IronportCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="JuniperSSGCPUUtilization5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="A10CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CiscoWLCCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="HyperV-vmCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="HyperV-hostCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="NetAppCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CHuaweiCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S12508-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CS3100CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CS3CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CSCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CS58CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S5500-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S7500-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S7503E-S-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S7506E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S7510E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S9508-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CS95CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S9512E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CSRCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C_S3600-28TP-SI-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CS75CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C_S7506E-S_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C_SR8808-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="HuaweiSCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S3328-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="HuaweiS5700CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S9300-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C_MSR_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S5700-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei_AR46-40_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-NE20E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S2403-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S2403H-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S3-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S7806-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S3352-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S9303-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-Eudemon300-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Juniper-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="MAIPU-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="MyPower-S4126E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="MyPower-S4128E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="TopSec-TG1203-VPN-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="SecGate-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZhongXing-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZhongXing-ZXR10-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Nsfocus-waf-p300-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZTE-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DPtech-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-AR1220-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-AR2240-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S5500-28C-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZXR10-PS-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="RuiJie-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Bluecoat-proxySG-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Radware-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S9312-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-USG9520-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S5120-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S3700-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="V-4400fire-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S7506E-S-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-SecBlade-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-WX3008-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Amaranten-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-Quidway-Router-R2621-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-S3552G-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-NE40-4-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZTE-ZX-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="OpZoon-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="PTCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="PECPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="KYLAND-CPUutilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="VENUS_FW_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="FiberHome-EPON-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Tainet_Venus_2816_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZTE-ZXPON-EPON-ONU-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZTE-ZXR10-2826E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZTE-ZXR10-2826S-LE-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S3610-PWR-EI-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S9505E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="VENUS-VSOS-V2.6-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S5800-32C-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S10508-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S5120-52SC-HI-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Juniper-SRX650-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5-BIG-IP-1600-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Hillstone-SG-6000-G5150-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZTE-2850-26TM-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-epon-olt-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-epon-MA5600T-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei_AR3260_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="FiberHome-PAF-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DCN-CPUutilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Array-APV-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Huawei-s7703-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C-S2108-E0004-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DELL_Force10_S25N_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DELL_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Eudemon1000E-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="HS-USG9310-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Juniper-EX-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="UCS-FabricInterconnectCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="VMware-vmCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="VMware-hostCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Xen-hostCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Xen-vmCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="APC.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="agentCurrentCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="yshMultiCpuUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="VolktekCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="PT6608OpZoonCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="OpZoonCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ng_SwitchTotalCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="nt_CPUUtilizationLast1Minute"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="s5ChasUtilTable"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="picoSchedRtUtl1Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DCN-DCRS-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Nutanix-clusterCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Nutanix-hostCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Nutanix-vmCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hwCESWCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ruckusSystemCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="siemensrcDeviceStsCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hpAruabawlsxsysXCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hpColubrisCurrCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="radmpCPUUtilization4Second"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="avayaERS3.10CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="avayaERSCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="acmePacketCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fnADCC5MinCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fnfacSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fnfddSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="lancomSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="lancom1711CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="lancom1722CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="pattonSNCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="aiAPCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="xsysCpuUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ArubaCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="arubaWLCCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="AutelanCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="HongxinCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CWLCCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="RuckusZDWLCCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="RuckusSZWLCCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ipsoProcessorUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="SangforCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="WSTONCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="f5LBCPUUtilization5MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DNOS.CPUUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CiscoCPUUtilization5minavg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="blbSystemLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="uhpCpuUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cvsysCpuUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="foxtech.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="dellEmcSCPUUtilization5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="panmgmpCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hh3cEntityExtCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="zxr10SystemCPUUtilization5MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="sonicWAFCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hwAvgDuty5minCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Pica8.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hpe3Com.Last1MinCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ubnt5MinAvgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ax2130sLast1MinCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="atCPUUtilizationAvgLast5Minutes"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="arubaCPUCDCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="acSysStateDataCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CiscoUVASSCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="dlinkrlSBCPUUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DellNX.rlCPUUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="netHSMCPUUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="etsysResourceCPUUtilization5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fsnmsCPUUtilizationLast5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fmlSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fnFwSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fsaSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="NGAgentSWCpuTotalUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="JuniperSPUCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="snCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="SFOSCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="timeNxCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilizationAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="s5ChasCPUUtilizationLast10Seconds"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="swMemCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="swCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilization_5mins"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="agentSwitchProcessTotalCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="chStackUnitCPUUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="extremeCPUUtilizationMax"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cdxCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="spStatsCPUUtilization1Second"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="rlCPUUtilization_Last5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cpmTotal5secRev_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="snAgGblCPUUtilization1MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="rcSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="yshCPUUtilization5Mins"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="dgs6600SysCPUUtilization5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZhongXingCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="h3cEntityExtCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cpmTotal5sec_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="sgiCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="adtran5minCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilization_Last1Minute"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="deviceCPUUtilizationAvg5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="currentCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="csXRSystemCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="csNXRSystemCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="yrhMultiCPUUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Cisco-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="aos.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="extremeTotalCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ruckusZDSystemCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="iveCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cpm5minTotal_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="wgSystemCPUUtilization5"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilization_percentusage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="resourceHPCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilizationPercent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="dpStatusCPUUtilizationtenSeconds"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DellChassis5MinCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="prolCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="xgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fmSys_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fsSys_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fortinetCurrentCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="jnxVCMemberRECPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="IBCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="raisecomTotalCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="zyxelsysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="rhmCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="symantecSGCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3C.EntityExtCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="IxiaNTO-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="PepLinkCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZyXELESSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZyXEL2200.24.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZyXEL2200.8.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Lin-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CitrixCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="SonicCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="SangforUCD5MinAgvCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="NetSNMPCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Telnet-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="NetSNMPCPUUtilizationRaw"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="EMC_UNITY_CPU_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Win-CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="VMware-hostCPUAvgUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ARISTAAVGCPU"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="nk_sgiCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Juniper_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="jnxOperatingCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="BusyPerCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="RouterCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="SwitchCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="acSysStateVoIpCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="checkpointSVNCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cpm1minTotal_CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="riverbedshCPUUtilization5MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="APCPUUsageAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-cSDCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-SPSDCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="MerakiCPUUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Proxmox-hostCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Proxmox-vmCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Proxmox-ctCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="TelemetryOpenConfigCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="TelemetryCiscoXECPUUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="TelemetryCiscoXECPUUtilization1Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-CelonaEdgeNodeCPU"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Alaxala3660sCpuUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-VCSDCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="rdnTotalCPUUtilization1Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="rdnTotalCPUUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="rtyrhCPUUtilization5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="RuiJieWLCCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="RuiJieFITAPCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="HyperV-VMCPUUtilizationPerCore"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="DNOS.CpuUtilization1Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cvusrCpuUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="laLoad1MinAvgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="laLoad15MinAvgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hh3cEntityExtCPUUtilization5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hwDevMultiCPUUtilization5MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ubnt1MinAvgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ubnt15MinAvgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="dlinrlSBCPUUtilization1min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="etsysResourceCPUUtilization1min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="extremeNetSysCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="JuniperRECPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="JuniperFPCCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="radwarespStatsCPUUtilization4Second"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="radwarespStatsCPUUtilization64Second"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="VMWarevceCpuUtilPct5min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="OneAccessCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="adGenAOS1MinCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="lancomSys1MinCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="riverbedSF5MinCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="EdgeCoreSW1MinAvgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="citrixSDWANStatsCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="GBNPFOAM.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hitachiNPCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="EdgeCoreSW511MinAvgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="WatchGuardSystemCPUUtilization5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="WatchGuardSystemCPUUtilization1Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZyXELZLDCPUUtilization1MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZyXELZLDCPUUtilization5MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ZyXEL4728F.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CiscoFPRFTDCPUUtiliztion1MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilizationMaxLast5Minutes"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilizationMax"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="s5ChasCPUUtilizationLast1Minute"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="s5ChasTotalCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilization_5secs"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilization_1min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="extremeCPUUtilization5secs"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="extremeCPUUtilization5mins"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cdxSstatsCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cdxstatsMaxCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="mpCPUUtilization1Second"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="mpCPUUtilization64Seconds"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="axSysAverageDataCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="AvgBusy1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="dgs6600SysCPUUtilization1min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="aosCPUUtilization1MinAvg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hwCPUUtilizationPer5Minute"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilizationPer5Minute"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="cpmTotal1minRevCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="jnxOperatingCPUUtilizationRE0"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="jnxOperatingCPUUtilizationRE1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="SlaveCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="deviceCPUUtilizationAvg1min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="netopiaAverageCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUtilizationWLC"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="wgSystemCPUUtilization1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="jnxJsSPUCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="nsResCPUUtilizationLast1Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CpqHoCPUUtilizationFiveMin"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CpqHoCPUUtilizationThirtyMin"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CpqHoCPUUtilizationHour"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="XOS.CPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="jnxVCMemberRE5MinAvgCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fn_hamemberCpuUtil"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hpstack_hpStackMemberCpuUtil"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="vsf_hpicfVsfVCMemberCpuUtil"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="rlCpuUtilDuringLastSecond"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="rlCpuUtilDuringLastMinute"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="RuckusCPUUtil15Avg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="FortiWiFiWLCCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="FortiAPCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hwCpuCostRatePer5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hwCpuCostRatePer1Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="hwCpuCostRate5sec"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="axSysAverageControlCpuUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="APCPUUsageRate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="AutelanCPUUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="HongxinCPUUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="H3CAPCPUUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPULoadAMB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPUUsageSMB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CPU Usage (%)"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Controller_CPULoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Controller_CPUUSAGE"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="Node_CPUUSAGE"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="RAID_CPUUSAGE"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5_VELOS_Controller_1_CPU1minavg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5_VELOS_Controller_2_CPU1minavg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5_VELOS_Blade_1_CPU1minavg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5_VELOS_Blade_2_CPU1minavg"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5_VELOS_Blade_1_CPUCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="F5_VELOS_Blade_2_CPUcurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="tpSysMonitorCpu5Minutes.1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="tpSysMonitorCpu5Minutes"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="EMCVNXFile_CPU_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="IBMSVC_CPU_UTILIZATION"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="CLI-CPUIdle"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="eriRouterCpuProc5Min"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="agentSwitchCpuProcessPercentageUtilization."/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fwSysCpuUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="fgVdEntCpuUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-apicCPU"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-fabricCPU"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="WMI-CPU_UtilizationPerCore"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ADDefaultDFSRCPUUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="atCPUUtilizationAvgLast1Second"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="tpSysMonitorCpu5Seconds"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="ruckusZDSystemStatsCPUUtil"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="f5TmmCpuUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-ACSDSWCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-ACSDAPCPUUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Utilization" POLICYNAME="api-ACSDGWCPUUtilization"/>
+    
+    <!-- CPU Utilization PerfGroup Association End-->
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="A10FanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="coolingDeviceStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="os10FanOperStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="snChasFanOperStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="sc2csStatusFans"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="ax2130sFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="acSysFanTrayFansStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="RadwareFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="hwibmcFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="hwEntityFanState"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="hpH3CDevMFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="fnadcFanState"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="raisecomFanState"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="EdgeCoreSWFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="hitachiNPFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="EdgeCoreSW51FanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="TrendMicroTP.FanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="RuiJieFanstate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="DNOS.FanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="cpqHeThermalFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="ciscoEnvMonFanStateCust"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="drsFanCurrStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="ssgFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="LenovEnvFanStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan State"  POLICYNAME="cswchassisFanStatus"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="RuiJiePowerstate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="ciscoEnvMonSupplyStateRev"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="ssgPowerStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="sc2PowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="ax2130sPowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="acSysPowerSupplySeverity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="avtecREIntPowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="LenovEnvPowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="hwibmcPowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="radwarehwPowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="hitachiNPPowerStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="DNOS.PowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="cpqPowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="dellRACpowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="os10PowerSupplyOperStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="NetAppPowerSupplyStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="currentSysPowerStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="systemPowerState"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="hwEntityPwrState"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="EdgeCoreSwPowerStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="EdgeCoreSw51PowerStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power supply status"  POLICYNAME="Lin-SystemPowerStatus"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="PowerSupplyMainVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="PowerSupplyInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="TLUPSInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="lcUpsInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="powerSupplyCurrentInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="CSUPSInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="TrippUPSInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="apcATSInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="eatonPDUInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="rupsInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="cpsupsAdvanceInputLineVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="UCS-MotherboardInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="UCS-ChassisPSUsInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="dellRACpowerSupplyMaxInputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="upsAdvInputLineVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Input Voltage"  POLICYNAME="upsInputVoltage"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="ADICOMBatVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="NETVISIONBatVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="UPSV4BatVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="upsBatteryVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="upsmgBatteryVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="lcUpsBatVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="ppcupsSmartBatteryVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="batteryVoltageV7"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="rupsBatteryVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="CSupsBatteryVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="TrippupsBatteryVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="jemaUpsBatteryVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="MicroChipBatteryVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Voltage"  POLICYNAME="cpsupsAdvanceBatteryVoltage"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="systemHealthStatXcc"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="globalSystemStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="drsGlobalSystemStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="foxtech.deviceStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="sc2csSystemStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="hpiloSystemStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="bks350SystemStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="adtrannvAOSDeviceHealth"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="rittalCIIISysStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="riverbedSFSystemStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="HIKSysOnlineStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Status"  POLICYNAME="riverbedshSystemHealthStatus"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="UPSCharge"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="PWUPSCharge"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="MGEUPSCharge"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="TripUPSCharge"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="cpsupsAdvanceBatteryCapacity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="LiebertUPS Charge"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="TLUPSEstimatedChargeRemaining"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="ADICOMBatCapacity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="MASTERYSBatCapacity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="NETVISIONBatCapacity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="UPSV4BatCapacity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Charge"  POLICYNAME="upsAdvBatteryCapacity"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="ppcupsBaseBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="dellRacCMOSBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="ssgBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="ilomsunPlatBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="RielloBatteryHealth"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="rupsBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="SCUPSBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="jemaUpsBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="cpsBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="EMC_VNXe_Battery_Status"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="upsBasicBatteryStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Status"  POLICYNAME="upsBatteryStatus"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="PWUPSOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="UPSOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="CSupsOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="TrippupsOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="jemaUpsOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="upsOutputCurrent1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="lcUpsOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="apcATSSWOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="eatonPDUOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="cpsupsAdvanceOutputCurrent"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Output Current"  POLICYNAME="upsAdvOutputCurrent"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Efficiency"  POLICYNAME="apcUPSEfficiency"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Efficiency"  POLICYNAME="UPSEfficiency"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Efficiency"  POLICYNAME="PWUPSEfficiency"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Efficiency"  POLICYNAME="emersonUPSEfficiency"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power Loss"  POLICYNAME="apcPowerLoss"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power Loss"  POLICYNAME="PowerLoss"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power Loss"  POLICYNAME="PWUPSPowerLoss"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power Loss"  POLICYNAME="emersonPowerLoss"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Capacity"  POLICYNAME="upsAdvBatteryRunTimeRemaining"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Capacity"  POLICYNAME="upsEstimatedMinutesRemaining"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Capacity"  POLICYNAME="lcUpsBatTimeRemaining"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Capacity"  POLICYNAME="upsSecondsOnBattery"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Capacity"  POLICYNAME="PWUPSTimeRemaining"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="CPUTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="F5CPUTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="CPUTemperatureVal"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="mtxrHlCpuTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="cbsHwModuleCpuTemp"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="DPtechCPUTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="Storage_CPU_Temperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="HPCPUTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="MiKroTik.CPUtemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="rfsModulecurrentCPUTemp1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="CPU Temperature"  POLICYNAME="rfsModulecurrentCPUTemp2"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="coolingDeviceSpeed"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="hwibmcFanSpeed"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="hwEntityFanSpeed"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="extremeFanSpeed"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="EdgeCoreSWFanSpeed"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="ZyXELESHWFanSpeed"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="EdgeCoreSW51FanSpeed"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="UCS-FanSpeed"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Fan speed"  POLICYNAME="FCSwitchSNIAFCMGMT_Fan Speed"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="CiscoPIX501FirewallSessionCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="FortigateFirewallSessionCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="NetscreenFirewallSessionCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="ActiveSessionCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="fgSysSesCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="JuniperSSGRssSessionCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="jnxJsSPUMonitoringCurrentTotalSession"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="sysStatClientCurConns"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="sysSessionNum"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active Session Count"  POLICYNAME="riverbedSFactiveConnections"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Temperature"  POLICYNAME="upsBatteryTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Temperature"  POLICYNAME="lcUpsBatTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Temperature"  POLICYNAME="CSupsBatteryTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Temperature"  POLICYNAME="TrippupsBatteryTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Temperature"  POLICYNAME="JemaUpsBatteryTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Temperature"  POLICYNAME="rupsBatteryTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Temperature"  POLICYNAME="cpsUpsBatTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Temperature"  POLICYNAME="upsAdvBatteryTemperature"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Battery Count"  POLICYNAME="upsAdvBatteryNumOfBattPacks"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="PWUPSOutputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="UPSOutputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="CSUPSOutputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="TrippUPSOutputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="jemaUpsOutputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="upsAdvOutputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="TLUPSOutputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="lcUpsOutputVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Voltage"  POLICYNAME="cpsupsAdvanceOutputVoltage"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="TotalPrints"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="ContadorTotal"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="TotalPagesprinted"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="prtPrintsLifeTime"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="Pages_printed_total"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="Pagesprinted-total"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="PagesprintedAll"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="prtPagesCountLifetime"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="prtPrintsAll"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Pages Printed"  POLICYNAME="kmbizhubSysTotalPagePrint"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active User Count"  POLICYNAME="sonicWallWAFActiveUsers"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active User Count"  POLICYNAME="liveUsers"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active User Count"  POLICYNAME="xgliveUsers"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active User Count"  POLICYNAME="SFOSLiveUsersCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active User Count"  POLICYNAME="api-activeUsersCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active User Count"  POLICYNAME="NoOfActiveUsers"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active User Count"  POLICYNAME="AutelanNoOfActiveUsers"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Active User Count"  POLICYNAME="HongxinNoOfActiveUsers"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="PSU Voltage"  POLICYNAME="drsPSUVoltsReading"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="PSU Voltage"  POLICYNAME="DelldmmPSUVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="PSU Voltage"  POLICYNAME="ZyXELESHWVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="PSU Voltage"  POLICYNAME="ZyXEL2200.24.Voltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="PSU Voltage"  POLICYNAME="ZyXEL2200.8.Voltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="PSU Voltage"  POLICYNAME="ZyXEL4728F.Voltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="PSU Voltage"  POLICYNAME="TrendMicroTP.Voltage"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="MGEUPSLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="TripUPSLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="UPSLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="PWUPSLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="upsAdvOutputLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="lcUpsOutputLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="LiebertUPS Load"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="CSUPSOutputPercentLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="TLUPSOutputPercentLoad"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="UPSOutputLoadRate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Load"  POLICYNAME="mgoutputLoadPerPhase"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Network Usage"  POLICYNAME="HyperV-vmNetUsageAverage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Network Usage"  POLICYNAME="HyperV-hostNetUsageAverage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Network Usage"  POLICYNAME="VMware-vmNetUsageAverage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Network Usage"  POLICYNAME="VMware-hostNetUsageAverage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Network Usage"  POLICYNAME="Xen-hostNetUsageAverage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Network Usage"  POLICYNAME="Xen-vmNetUsageAverage"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Reads"  POLICYNAME="DiskReadsPerSec"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Reads"  POLICYNAME="StorageAPI_Disk Reads/sec"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Reads"  POLICYNAME="SMI_Disk Reads/sec"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Reads"  POLICYNAME="EMC_UNITY_Disk Reads/sec"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID IOPS"  POLICYNAME="Storage Throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID IOPS"  POLICYNAME="SMI_Storage Throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID IOPS"  POLICYNAME="PureStorage_RAID_IOPS"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID IOPS"  POLICYNAME="NETAPP_E_Storage Throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID IOPS"  POLICYNAME="HPMSAP2000_Storage Throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID IOPS"  POLICYNAME="SMIS_Storage Throughput"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Swap Memory Utilization"  POLICYNAME="iveSwapUtil"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Swap Memory Utilization"  POLICYNAME="WMI-SwapMemory_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Swap Memory Utilization"  POLICYNAME="Linux-SwapMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Swap Memory Utilization"  POLICYNAME="AIX-SwapMemoryUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Swap Memory Utilization"  POLICYNAME="deviceSwapSpaceUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Swap Memory Utilization"  POLICYNAME="swapPercentUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Swap Memory Utilization"  POLICYNAME="ruckusZDSystemStatsMemoryUtil"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Controller IO Rate"  POLICYNAME="HPMSAP2000_Controller Throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Controller IO Rate"  POLICYNAME="Controller_IOPS"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Controller IO Rate"  POLICYNAME="NETAPP_E_Controller Throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Controller IO Rate"  POLICYNAME="SMI_Controller Throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Controller IO Rate"  POLICYNAME="SMIS_Controller Throughput"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Power"  POLICYNAME="CSupsOutputPower1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Power"  POLICYNAME="TrippupsOutputPower"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Power"  POLICYNAME="cpsupsAdvanceOutputPower"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Power"  POLICYNAME="upsOutputPower1"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Power"  POLICYNAME="lcUpsOutputWatts"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Power"  POLICYNAME="apcOutputPower"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Power"  POLICYNAME="UPSOutputPower"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Input Power"  POLICYNAME="apcInputPower"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Input Power"  POLICYNAME="UPSInputPower"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Input Power"  POLICYNAME="PWUPSInputPower"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Input Power"  POLICYNAME="emersonInputPower"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Read Throughput"  POLICYNAME="RAID_Disk_Read_throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Read Throughput"  POLICYNAME="RAID_Disk_Write_throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Read Throughput"  POLICYNAME="Total_Disk_Read_Throughput"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Read Throughput"  POLICYNAME="Disk_Read_throughput"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Sensor Temperature"  POLICYNAME="AKCPSensorTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Sensor Temperature"  POLICYNAME="apcmemSensorsTemperatureCelcius"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Sensor Temperature"  POLICYNAME="tempSensorReading"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Sensor Temperature"  POLICYNAME="LenovEnvSensorTemperatureCelcius"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Sensor Temperature"  POLICYNAME="cpSensorTempReading"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Sensor Temperature"  POLICYNAME="MerakiSensorTemperature"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Temperature"  POLICYNAME="A10SystemTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Temperature"  POLICYNAME="sysTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Temperature"  POLICYNAME="systemTemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Temperature"  POLICYNAME="Storage_System_Temperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Temperature"  POLICYNAME="MiKroTik.Systemtemperature"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Temperature"  POLICYNAME="Lin-SystemTemperature"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Temperature Status"  POLICYNAME="akcpsensorProbeTempStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Temperature Status"  POLICYNAME="LenovEnvTempSensorStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Temperature Status"  POLICYNAME="Dell_TemperatureStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Temperature Status"  POLICYNAME="temperatureProbeStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Temperature Status"  POLICYNAME="DelldmmTempCurrStatus"/>   
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Bandwidth Utilization"  POLICYNAME="Accordance_BandwidthUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Bandwidth Utilization"  POLICYNAME="FCSwitchMCDATAEF6000_BandwidthUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Bandwidth Utilization"  POLICYNAME="FCSwitchMCDATAED5000_BandwidthUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Bandwidth Utilization"  POLICYNAME="FCSwitchMCDATAES1000_BandwidthUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Bandwidth Utilization"  POLICYNAME="Cisco_BandwidthUtilization"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Frequency"  POLICYNAME="CSupsOutputFrequency"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Frequency"  POLICYNAME="TrippupsOutputFrequency"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Frequency"  POLICYNAME="cpsupsAdvanceOutputFrequency"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Frequency"  POLICYNAME="upsAdvOutputFrequency"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="UPS Output Frequency"  POLICYNAME="upsOutputFrequency"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Packets Transmitted"  POLICYNAME="dlinkrlStatisticsPortTx"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Packets Transmitted"  POLICYNAME="OutTotalPackets"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Packets Transmitted"  POLICYNAME="citrixSDWANStatsTxPackets"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Status"  POLICYNAME="hwibmchardDiskStatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Status"  POLICYNAME="fnadcDiskState"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Status"  POLICYNAME="HIKDiskstatus"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Status"  POLICYNAME="raidEventSev"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Status"  POLICYNAME="syshw_physicalDiskStatus"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="SMTP Hits"  POLICYNAME="CyberoamSmtpHits"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="SMTP Hits"  POLICYNAME="smtpHits"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="SMTP Hits"  POLICYNAME="xgSmtpHits"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="SMTP Hits"  POLICYNAME="SFOSSmtpHits"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Storage Utilization"  POLICYNAME="etsysResourceStorageUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Storage Utilization"  POLICYNAME="timeNxStorageUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Storage Utilization"  POLICYNAME="hpeArubasysXStorageUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Storage Utilization"  POLICYNAME="adtrannvAOSFileSystemUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Storage Utilization"  POLICYNAME="Nutanix-vmStorageUtilization"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Tx Utilization"  POLICYNAME="FCSwitchMCDATAEF6000_TxUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Tx Utilization"  POLICYNAME="FCSwitchMCDATAED5000_TxUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Tx Utilization"  POLICYNAME="FCSwitchMCDATAES1000_TxUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Tx Utilization"  POLICYNAME="Cisco_TxUtilization"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Rx Utilization"  POLICYNAME="FCSwitchMCDATAEF6000_RxUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Rx Utilization"  POLICYNAME="FCSwitchMCDATAED5000_RxUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Rx Utilization"  POLICYNAME="FCSwitchMCDATAES1000_RxUtilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Rx Utilization"  POLICYNAME="Cisco_RxUtilization"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Switch Errors"  POLICYNAME="FCSwitchMCDATAEF6000_Errors"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Switch Errors"  POLICYNAME="FCSwitchMCDATAED5000_Errors"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Switch Errors"  POLICYNAME="FCSwitchMCDATAES1000_Errors"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Switch Errors"  POLICYNAME="FCSwitchSNIAFCMGMT_Errors"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Writes"  POLICYNAME="DiskWritesPerSec"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Writes"  POLICYNAME="StorageAPI_Disk Writes/sec"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Writes"  POLICYNAME="SMI_Disk Writes/sec"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Writes"  POLICYNAME="EMC_UNITY_Disk Writes/sec"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Switch Role"  POLICYNAME="EdgeCoresStackSwitchRole"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Switch Role"  POLICYNAME="extremeSWStackRole"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Switch Role"  POLICYNAME="cisco1cswSwitchRole"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Switch Role"  POLICYNAME="hpstack_hpStackMemberState"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Transmit Traffic"  POLICYNAME="FCSwitchMCDATAEF6000_TxTraffic"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Transmit Traffic"  POLICYNAME="FCSwitchMCDATAED5000_TxTraffic"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Transmit Traffic"  POLICYNAME="FCSwitchMCDATAES1000_TxTraffic"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Bandwidth"  POLICYNAME="ThreePAR_DISK Total Bandwidth"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Bandwidth"  POLICYNAME="Clariion_Disk Total Bandwidth"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Bandwidth"  POLICYNAME="Symmetrix_Disk Total Bandwidth"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Free Disk Space (GB)"  POLICYNAME="Win-FreeDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Free Disk Space (GB)"  POLICYNAME="Telnet-FreeDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Free Disk Space (GB)"  POLICYNAME="WMI-FreeDiskSpaceInGB"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Used Disk Space (GB)"  POLICYNAME="Win-UsedDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Used Disk Space (GB)"  POLICYNAME="Telnet-UsedDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Used Disk Space (GB)"  POLICYNAME="WMI-UsedDiskSpaceInGB"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Access Point Active Users"  POLICYNAME="APActiveUserCount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Access Point Active Users"  POLICYNAME="CiscoAPActiveUsercount"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Access Point Active Users"  POLICYNAME="HongxinAPActiveUsercount"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Storagepool Utilization"  POLICYNAME="Storagepool_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Storagepool Utilization"  POLICYNAME="SMI_Storagepool_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Storagepool Utilization"  POLICYNAME="ThreePAR_SMI_Storagepool_Utilization"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Concurrent Sessions"  POLICYNAME="fwConcurrentSessions"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Concurrent Sessions"  POLICYNAME="fnfwProxyConcurrentSessions"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Concurrent Sessions"  POLICYNAME="acmePacketapSysGlobalConSess"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Remaining Battery Time"  POLICYNAME="rupsEstimatedMinutesRemaining"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Remaining Battery Time"  POLICYNAME="jemaUpsEstimatedMinutesRemaining"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Remaining Battery Time"  POLICYNAME="cpsUpsBatTimeRemaining"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power Consumption"  POLICYNAME="mtxrHlPower"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power Consumption"  POLICYNAME="hitachiNPPowerUsage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Power Consumption"  POLICYNAME="FujitsuNOSSysPowerConsumption"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Utilization"  POLICYNAME="Volume_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Utilization"  POLICYNAME="SMI_Volume_Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Utilization"  POLICYNAME="EMCVNXFile_Volume_Utilization"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID Capacity Utilization"  POLICYNAME="EMCVNXFile_Capacity Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID Capacity Utilization"  POLICYNAME="PureStorage_Capacity Utilization"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="RAID Capacity Utilization"  POLICYNAME="HPMSAP2000_Capacity Utilization"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Receive Traffic"  POLICYNAME="FCSwitchMCDATAEF6000_RxTraffic"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Receive Traffic"  POLICYNAME="FCSwitchMCDATAED5000_RxTraffic"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Receive Traffic"  POLICYNAME="FCSwitchMCDATAES1000_RxTraffic"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Port IOps" POLICYNAME="Port_IOPS"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Port IOps" POLICYNAME="SMI_Port_IOPS"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Port IOps" POLICYNAME="NETAPP_E_PORT_Throughput"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Load Average"  POLICYNAME="Lin-LoadAverageLast1Minute"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Load Average"  POLICYNAME="netsnmp-LoadAverageLast1Minute"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Load Average"  POLICYNAME="rhel-LoadAverageLast1Minute"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk I/O Reads"  POLICYNAME="Lin-DiskIOReadRate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk I/O Reads"  POLICYNAME="netsnmp-DiskIOReadRate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk I/O Reads"  POLICYNAME="rhel-DiskIOReadRate"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk I/O Writes"  POLICYNAME="Lin-DiskIOWrites"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk I/O Writes"  POLICYNAME="netsnmp-DiskIOWrites"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk I/O Writes"  POLICYNAME="rhel-DiskIOWrites"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="SSL Sessions"  POLICYNAME="sslSlbStatUniqCurSessions"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="SSL Sessions"  POLICYNAME="SonicFWSSSLConnection"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="SSL Sessions"  POLICYNAME="NSSSLSessions"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Write Speed"  POLICYNAME="VMware-vmDiskWriteAverage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Write Speed"  POLICYNAME="VMware-hostDiskWriteAverage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Write Speed"  POLICYNAME="WMIDiskWriteSpeedinkbps"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Write Speed"  POLICYNAME="Proxmox-vmDiskWriteRate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Disk Write Speed"  POLICYNAME="Proxmox-ctDiskWriteRate"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Voltage"  POLICYNAME="MiKroTik.Voltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Voltage"  POLICYNAME="fnadcPowerSupplyVoltage"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="System Voltage"  POLICYNAME="raisecomVoltage"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Read Percent"  POLICYNAME="ThreePAR_VOLUME_PercentRead"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Read Percent"  POLICYNAME="Symmetrix_VOLUME_PercentRead"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Read Percent"  POLICYNAME="SMIS_Volume_PercentRead"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Write Percent"  POLICYNAME="ThreePAR_VOLUME_PercentWrite"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Write Percent"  POLICYNAME="Symmetrix_VOLUME_PercentWrite"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Volume Write Percent"  POLICYNAME="SMIS_Volume_PercentWrite"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Packets Received"  POLICYNAME="RxPkt"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Packets Received"  POLICYNAME="InTotalPackets"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Packets Received"  POLICYNAME="citrixSDWANStatsRxPackets"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Space (GB)"  POLICYNAME="Linux-TotalDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Space (GB)"  POLICYNAME="Solaris-TotalDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Space (GB)"  POLICYNAME="HP-UX-TotalDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Space (GB)"  POLICYNAME="AIX-TotalDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Space (GB)"  POLICYNAME="Mac-TotalDiskSpaceInGB"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Total Disk Space (GB)"  POLICYNAME="WMI-TotalDiskSpaceInGB"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Supply Air Temperature"  POLICYNAME="supplyAirTemp"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Supply Air Temperature"  POLICYNAME="liebertSupplyAirTemp"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Supply Air Temperature"  POLICYNAME="stulzSupplyAirTemp"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Supply Air Temperature"  POLICYNAME="rittalSupplyAirTemp"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Supply Air Temperature"  POLICYNAME="apcInRowSupplyAirTemp"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Return Air Temperature"  POLICYNAME="returnAirTemp"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Return Air Temperature"  POLICYNAME="liebertReturnAirTemp"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Return Air Temperature"  POLICYNAME="stulzReturnAirTemp"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Return Air Temperature"  POLICYNAME="apcInRowReturnAirTemp"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Cooling Humidity"  POLICYNAME="humidity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Cooling Humidity"  POLICYNAME="liebertHumidity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Cooling Humidity"  POLICYNAME="stulzHumidity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Cooling Humidity"  POLICYNAME="rittalHumidity"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Cooling Capacity"  POLICYNAME="coolingCapacity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Cooling Capacity"  POLICYNAME="liebertCoolingCapacity"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Cooling Capacity"  POLICYNAME="apcInRowCoolingCapacity"/>
+
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Airflow Rate"  POLICYNAME="airflowRate"/>
+    <PERFGROUPTOMONITOR PERFGROUPNAME="Airflow Rate"  POLICYNAME="apcInRowAirflowRate"/>
+
+</GRAPHDETAIL>

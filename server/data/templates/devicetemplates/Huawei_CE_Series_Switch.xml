@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Huawei CE Series Switch" osType="VRP" templateName="Huawei_CE_Series_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Huawei" vendorName="Huawei">
+		<Commands>
+			<Command commandstr="display version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="warnings" number="5" sequenceid="1"/>
+			<Level name="notifications" number="6" sequenceid="2"/>
+			<Level name="informational" number="7" sequenceid="3"/>
+			<Level name="debugging" number="8" sequenceid="4"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="screen-length 0 temporary" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display saved-configuration" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="screen-length 0 temporary" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="30000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="display current-configuration" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="syncconfiguration">
+                	<Command commandstr="save" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="info-center source default channel loghost log level ${UserInput:LoggingLevel}" messagesuffix="${LF}" prompt="]" sequenceid="30" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="40" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="system-view" messagesuffix="${LF}" prompt="]" sequenceid="10" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="undo info-center loghost ${UserInput:HostIpAddress}" messagesuffix="${LF}" prompt="]" sequenceid="20" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="return" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="30" timeout="130000" promptactionid="H3CSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Huawei CE Series Switch" personalityName="HuaweiCESeriesSwitch">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SOFTWARE_VERSION" size="100" desc="Stores the software version" displayname="Software Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="PATCH_VERSION" size="100" desc="Stores the patch verison" displayname="Patch Version" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="enable">
+					<Regex>info-center loghost $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HuaweiCESeriesHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_huawei_ce_series">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="(.*)\s\(R\)\ssoftware,\sVersion\s(\S*)\s\((\S*)\s(\S*)\)" NAME="OSVERSION">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+											<PARAM NAME="SERIES" TOKENNO="3"/>
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="4"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*HUAWEI\s(\S*).*uptime.*" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="Patch\sVersion:\s(\S*).*" NAME="PATCHVERSION">
+											<PARAM NAME="PATCH_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*MAC\saddress:\s(\S*).*" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Slot\s*1\s*ESN\s*:\s*(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol>
+					<Commands>
+						<Command commandstr="display version" parsercommandname="hardware_prop_huawei_ce_series" responseparserid="huawei_ce_switch_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="130000" promptactionid="H3CSwitchActionId"/>
+						<Command commandstr="display bridge mac-address" parsercommandname="hardware_prop_huawei_ce_series" responseparserid="huawei_ce_switch_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="130000" promptactionid="H3CSwitchActionId"/>
+						<Command commandstr="display sn license" parsercommandname="hardware_prop_huawei_ce_series" responseparserid="huawei_ce_switch_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="130000" promptactionid="H3CSwitchActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

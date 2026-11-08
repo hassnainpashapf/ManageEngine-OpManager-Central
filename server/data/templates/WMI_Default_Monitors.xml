@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="Windows Vista" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="WindowsNT" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2003" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows XP" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2000" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 98" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2008" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 7" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2008 R2" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 8" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2012" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2012 R2" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 10" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2016" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2019" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 2022" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+    <DevicePackageToGraph deviceType="Windows 11" graphName="WMISystemUpTime" dialtype="number" unit="Minutes"/>
+</GRAPHDETAIL>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco ACI" iconName="aci.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="CiscoACI"/>
+        </SysOIDs>
+        <Category name="SDN"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco APIC" iconName="apic.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="CiscoAPIC"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="Cisco ACI Nexus 9000" iconName="aci_nexus.png" pingInterval="900">
+        <SysOIDs>
+            <SysOID oid="CiscoACISwitch"/>
+        </SysOIDs>
+        <Category name="Switch"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

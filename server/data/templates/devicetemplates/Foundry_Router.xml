@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Foundry Router" osType="[NA]" templateName="Foundry_Router">
+	<RestTemplate name=""/>
+	<Vendor displayName="Foundry" vendorName="Foundry">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show memory"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="informational" number="6" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="copy startup-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy running-config tftp ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="upload">
+            	<Operation name="startup">
+                	<Command commandstr="copy tftp startup-config ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="5000"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="copy tftp running-config ${UserInput:tftp_server_address} ${UserInput:file_name}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure terminal" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging buffered ${UserInput:LoggingLevel}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure terminal" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="startup">
+                	<Command commandstr="enable password-display" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="skip-page-display" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show configuration" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="running">
+                	<Command commandstr="enable password-display" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="1" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="skip-page-display" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+			<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure terminal" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging on" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging ${UserInput:HostIpAddress}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="logging buffered ${UserInput:LoggingLevel}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="6" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="7" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure terminal" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="no logging ${UserInput:HostIpAddress}" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="4" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="end" messagesuffix="${CRLF}" prompt="${UserInput:EnablePrompt}" sequenceid="5" timeout="20000" promptactionid="foundryActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="FoundryRouter" personalityName="FoundryRouter">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="CPU" size="20" desc="Switch CPU" displayname="CPU" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="CPUTYPE" size="30" desc="CPU Type" displayname="CPU Type" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="CPUREVISION" size="20" desc="Revision of CPU" displayname="CPU Revision" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="BOOTFLASHSIZE" size="15" desc="Identifies the size of BOOT FLASH in the switch" displayname="Boot Flash Size" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="CODEFLASHSIZE" size="15" desc="Identifies the size of CODE FLASH in the switch" displayname="Code Flash Size" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="DRAMSIZE" size="15" desc="Identifies the size of DRAM in the switch" displayname="DRAM Size" defaultvalue="Not Available" sequenceid="6"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging buffered informational</Regex>
+					<Regex>no logging on</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>logging (host\s)?$SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="FoundryHardwarePropParser.xml"/> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_foundry_switch" responseparserid="foundry_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="foundryActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds>
+		<PromptActionId command="$32" prompt="--More--" name="foundryActionId"/>
+        <PromptActionId suffix="${CRLF}" prompt="done." name="foundryActionId"/>
+	</PromptActionIds>
+</NCMDeviceTemplate>

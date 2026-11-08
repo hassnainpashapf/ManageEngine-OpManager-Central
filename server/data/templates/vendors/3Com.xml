@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+<!-- For 3Com switches -->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_menu_switch" templatename="3Com_MenuBased_Switch" displayname="3Com Menu Based Switches" description="For all 3Com menu based switches">
+    <NCMVendorDevice vendorid="3Com" />
+    <NCMDevicePersonality personalityid="3ComSwitch" />
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+	    <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:3com_menu_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_menu_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3comswitch_cli_running_config_backup" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="3comswitch_cli_running_config_upload" />
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:3com_menu_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_menu_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3comswitch_cli_running_config_backup" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="3comswitch_cli_running_config_upload" />
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_4500_series_switch" templatename="3Com_4500_Series_Switch" displayname="3Com 4500 Series Switch" description="For all 3Com 4500 Series Switches">
+    <NCMVendorDevice vendorid="3Com" />
+    <NCMDevicePersonality personalityid="3ComSwitch" />
+
+    <NCMSupportedProtocol protocolid="TELNET">
+        <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="SSH">
+	    <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+    </NCMSupportedProtocol>
+
+    <NCMSupportedProtocol protocolid="TFTP"/>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:3com_4500_series_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_4500_series_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+        <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3comswitch_4500_cli_running_config_fetch" />
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="3comswitch_4500_cli_startup_config_fetch" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="3comswitch_4500_cli_running_config_push" />
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="3comswitch_4500_cli_startup_config_push" />
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+    <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:3com_4500_series_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_4500_series_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+        <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3comswitch_4500_cli_running_config_fetch" />
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="3comswitch_4500_cli_startup_config_fetch" />
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="3comswitch_4500_cli_running_config_push" />
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="3comswitch_4500_cli_startup_config_push" />
+        </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_4200G_series_switch" templatename="3Com_4200G_Series_Switch" displayname="3Com 4200G Series Switch" description="For all 3Com 4200G Series Switches">
+	<NCMVendorDevice vendorid="3Com" />
+	<NCMDevicePersonality personalityid="3ComSwitch" />
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="TFTP"/>
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:3com_4200G_series_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_4200G_series_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+		<NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3comswitch_4200G_cli_running_config_fetch" />
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="3comswitch_4200G_cli_startup_config_fetch" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="3comswitch_4200G_cli_running_config_push" />
+			<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="3comswitch_4200G_cli_startup_config_push" />
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:3com_4200G_series_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_4200G_series_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+		<NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+			<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3comswitch_4200G_cli_running_config_fetch" />
+			<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="3comswitch_4200G_cli_startup_config_fetch" />
+			<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="3comswitch_4200G_cli_running_config_push" />
+			<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="3comswitch_4200G_cli_startup_config_push" />
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+</NCMDeviceTemplate>
+
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_5500_switch_switch" templatename="3com_5500_switch_switch" displayname="3Com 5500 Series Switch" ostype="NA" description="For all 3Com 5500 and 4400 Series Switches">
+        <NCMVendorDevice vendorid="3Com"/>
+        <NCMDevicePersonality personalityid="3Com5500Switch"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:3com_5500_switch_switch_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_5500_switch_switch"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3com_5500_switch_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="3com_5500_switch_cli_current_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:3com_5500_switch_switch_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:3com_5500_switch_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="3com_5500_switch_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="3com_5500_switch_cli_current_config_rec"/>
+			 
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+
+</DeviceConfiguration>

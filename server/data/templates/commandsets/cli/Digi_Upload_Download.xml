@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="TransPortWirelessRouterId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="digi_router_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="config 0 showall">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="digi_router_cli_show_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="config c showall">
+   <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="digi_router_cli_running_show_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="digi_router_hardware_prop_parser" promptactionid="TransPortWirelessRouterId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="digi_router_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="ati5">
+	<CLIInputRecord parsercommandname="hardware_prop_digi_router" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="digi_router_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>
+

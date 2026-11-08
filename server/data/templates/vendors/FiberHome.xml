@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For FiberHome Switch -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:fiberhome_switch" templatename="FiberHome_Switch" displayname="FiberHome Switch" ostype="NA" description="For all FiberHome Switch">
+        <NCMVendorDevice vendorid="FiberHome"/>
+        <NCMDevicePersonality personalityid="FiberHomeSwitch"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fiberhome_switch_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:fiberhome_switch"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="fiberhome_switch_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="fiberhome_switch_cli_show_startup_config_rec"/>
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fiberhome_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="fiberhome_switch_cli_show_running_config_rec"/>
+			 
+            <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="fiberhome_switch_copy_running_to_startup" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fiberhome_switch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fiberhome_switch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:fiberhome_switch_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:fiberhome_switch"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="fiberhome_switch_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="fiberhome_switch_cli_show_startup_config_rec"/>			 
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="fiberhome_switch_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="fiberhome_switch_cli_show_running_config_rec"/>
+			 
+             <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="fiberhome_switch_copy_running_to_startup" />
+			   
+			   <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="fiberhome_switch_enable_syslog_change_tracking" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="fiberhome_switch_disable_syslog_change_tracking" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

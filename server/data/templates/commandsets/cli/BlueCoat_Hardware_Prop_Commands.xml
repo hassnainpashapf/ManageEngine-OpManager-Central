@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="bluecoat_hardware_prop_parser">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="bluecoat_show_version_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+ <CLIInputRecord parsercommandname="hardware_prop_bluecoat_proxyapp" messagesuffix="&#10;" inputsourcetype="1">
+  <Record type="CLI" recordid="bluecoat_proxyapp_hardware_prop" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+
+<!-- ####################### Bluecoat Packet Shaper #################################################### -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="packet_shaper_hardware_prop_parser">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="packet_shaper_show_version_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="unit details">
+ <CLIInputRecord parsercommandname="hardware_prop_packet_shaper" messagesuffix="&#10;" inputsourcetype="1">
+  <Record type="CLI" recordid="packet_shaper_hardware_prop" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="sys info">
+ <CLIInputRecord parsercommandname="hardware_prop_packet_shaper" messagesuffix="&#10;" inputsourcetype="1">
+  <Record type="CLI" recordid="packet_shaper_hardware_prop1" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="version">
+ <CLIInputRecord parsercommandname="hardware_prop_packet_shaper" messagesuffix="&#10;" inputsourcetype="1">
+  <Record type="CLI" recordid="packet_shaper_hardware_prop2" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="image show">
+ <CLIInputRecord parsercommandname="hardware_prop_packet_shaper" messagesuffix="&#10;" inputsourcetype="1">
+  <Record type="CLI" recordid="packet_shaper_hardware_prop3" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

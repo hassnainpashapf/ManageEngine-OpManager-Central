@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<ProtocolConfiguration>
+	<NCMProtocol protocolid="NCMProtocol:protocolid:UVH@33457350" protocolname="TELNET"/>
+	<NCMProtocol protocolid="NCMProtocol:protocolid:UVH@12519709" protocolname="SSH"/>
+	<NCMProtocol protocolid="NCMProtocol:protocolid:UVH@32473751" protocolname="SNMP"/>
+	<NCMProtocol protocolid="NCMProtocol:protocolid:UVH@23504184" protocolname="TFTP"/>
+	<NCMProtocol protocolid="NCMProtocol:protocolid:scp" protocolname="SCP"/>
+	<NCMProtocol protocolid="NCMProtocol:protocolid:REST" protocolname="REST API"/>
+	<NCMProtocol protocolid="NCMProtocol:protocolid:sftp" protocolname="SFTP"/>
+	<NCMCrRuleProtocolCombination COMBINATIONID="NCMCrRuleProtocolCombination:SSH" DISPLAYNAME="SSH" MANAGEMENTPROTOCOLID="SSH" TRANSFERPROTOCOLID="SSH" />
+	<NCMCrRuleProtocolCombination COMBINATIONID="NCMCrRuleProtocolCombination:SSHSCP" DISPLAYNAME="SSH - SCP" MANAGEMENTPROTOCOLID="SSH" TRANSFERPROTOCOLID="SCP" />
+	<NCMCrRuleProtocolCombination COMBINATIONID="NCMCrRuleProtocolCombination:SSHTFTP" DISPLAYNAME="SSH - TFTP" MANAGEMENTPROTOCOLID="SSH" TRANSFERPROTOCOLID="TFTP" />
+	<NCMCrRuleProtocolCombination COMBINATIONID="NCMCrRuleProtocolCombination:TELNET" DISPLAYNAME="TELNET" MANAGEMENTPROTOCOLID="TELNET" TRANSFERPROTOCOLID="TELNET" />
+	<NCMCrRuleProtocolCombination COMBINATIONID="NCMCrRuleProtocolCombination:TELNETTFTP" DISPLAYNAME="TELNET - TFTP" MANAGEMENTPROTOCOLID="TELNET" TRANSFERPROTOCOLID="TFTP" />
+	<NCMCrRuleProtocolCombination COMBINATIONID="NCMCrRuleProtocolCombination:SNMP" DISPLAYNAME="SNMP - TFTP" MANAGEMENTPROTOCOLID="SNMP" TRANSFERPROTOCOLID="TFTP" />
+	<NCMCrRuleProtocolCombination COMBINATIONID="NCMCrRuleProtocolCombination:SSHSFTP" DISPLAYNAME="SSH - SFTP" MANAGEMENTPROTOCOLID="SSH" TRANSFERPROTOCOLID="SFTP" />
+</ProtocolConfiguration>

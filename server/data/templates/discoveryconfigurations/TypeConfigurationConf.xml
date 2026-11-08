@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+
+<TypeConfigurationConf>
+
+    <!-- General DataRetrival -->
+    <DiscoveryConfiguration name="NCMDeviceDiscovery"
+        dataretrievalgroupid="DataRetrievalGroup:dataretrievalgroupid:1">
+        <TypeConfiguration />
+    </DiscoveryConfiguration>
+
+    <DataRetrievalConfiguration
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1"
+        interactionid="ne-snmp-get"
+        connectioncriteria="first"/>
+    <DataRetrievalRecord
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1"
+        recordid="ne-snmp-get"/>
+    <DataRetrievalRecord
+        dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1"
+        recordid="systemdetails-get"/>
+    <DataRetrievalGroup dataretrievalgroupid="DataRetrievalGroup:dataretrievalgroupid:1">
+        <DataRetrievalRelation
+            dataretrievalid="DataRetrievalConfiguration:dataretrievalid:1"
+            notifyidentificationresponse="true"
+            typeofrequest="TYPE_IDENTIFICATION"/>
+    </DataRetrievalGroup>
+
+    <DiscoveryConfiguration name="NCMNetworkElement" mapperid="DiscoveryMapperConfiguration:mapperid:1">
+        <TypeRecordConfiguration typename="NCMDeviceDiscovery" type="NCMResource" personality="NCMResource">
+            <TypeMatchCriteriaList>
+                <TypeMatchCriteria
+                    orderid="NCMResource1"
+                    matchattribute="SYSOID"
+                    matchcondition="contains"
+                    matchvalue="."/>
+            </TypeMatchCriteriaList>
+        </TypeRecordConfiguration>
+    </DiscoveryConfiguration>
+
+    <DiscoveryMapperConfiguration
+        mapperid="DiscoveryMapperConfiguration:mapperid:1"
+        resourcetype="NCMResource"
+        connectioncriteria="first"
+        use_ne_connection="true">
+    </DiscoveryMapperConfiguration>
+    <DiscoveryMapperOperation
+        mapperid="DiscoveryMapperConfiguration:mapperid:1"
+        resourcetype="NCMResource"
+        operation="GET_DEVICE_INFO"
+        protocol="SNMP"/>
+
+    <TypeRelation typegroupname="TypeGroup0" typename="NCMDeviceDiscovery" orderid="1"/>
+
+</TypeConfigurationConf>

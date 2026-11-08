@@ -1,0 +1,3148 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<mapper-configuration>
+
+    <Operations personalityname="NCMResource" operationname="GET_DEVICE_INFO">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+                <RecordInformationList>
+                    <RecordInformation recordid="general-discovery-get"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoRouter" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+            <ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+                <RecordInformationList>
+                    <RecordInformation recordid="cisco-router-hardware-get"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+			<ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco_router_hardware_prop"/>
+			</RecordInformationList>
+            </ProtocolInformation>
+			<ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco_router_hardware_prop"/>
+			</RecordInformationList>
+            </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+            <ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+                <RecordInformationList>
+                    <RecordInformation recordid="cisco-switch-hardware-get"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+			<ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco_ios_switch_hardware_prop"/>
+				</RecordInformationList>
+            </ProtocolInformation>
+			<ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco_ios_switch_hardware_prop"/>
+				</RecordInformationList>
+            </ProtocolInformation>
+
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoCatOSSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		   <RecordInformation recordid="cisco_catos_switch_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+	    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		   <RecordInformation recordid="cisco_catos_switch_hardware_prop"/>
+		</RecordInformationList>
+        </ProtocolInformation>
+
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoFirewall" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="cisco_pix_firewall_hardware_prop"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="cisco_pix_firewall_hardware_prop"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoIAD" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+            <ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+                <RecordInformationList>
+                    <RecordInformation recordid="cisco-router-hardware-get"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+	    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_iad_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+	    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_iad_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoAccessServer" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+            <ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+                <RecordInformationList>
+                    <RecordInformation recordid="cisco-router-hardware-get"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+	    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_accessserver_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_accessserver_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoContentSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_contentswitch_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoASA" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_asa_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+       <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_asa_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoVoiceGateway" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_vg_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+       	    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+		    <RecordInformation recordid="cisco_vg_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoAccessPoint" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+            <ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+                <RecordInformationList>
+                    <RecordInformation recordid="cisco-accesspoint-hardware-get"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+           <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+			<RecordInformation recordid="cisco_accesspoint_hardware_prop"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+
+	   <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+		<RecordInformationList>
+			<RecordInformation recordid="cisco_accesspoint_hardware_prop"/>
+		</RecordInformationList>
+           </ProtocolInformation>
+
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="NetscreenFirewall" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="netscreen_firewall_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="netscreen_firewall_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="netscreen_firewall_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="netscreen_firewall_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="FortiGateFirewall" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="fortigate_firewall_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="fortigate_firewall_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="fortigate_firewall_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="fortigate_firewall_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="FoundrySwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="foundry_switch_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="foundry_switch_hardware_prop"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="foundry_switch_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="foundry_switch_ssh_hardware_prop"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="AdtranLANSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	       <ProtocolInformation protocol="CLI" interactionid="adtran_lan_switch_hardware_prop_ispec">
+	          <RecordInformationList>
+	            <RecordInformation recordid="adtran_lan_switch_hardware_prop"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="adtran_lan_switch_hardware_prop_ispec">
+	          <RecordInformationList>
+	            <RecordInformation recordid="adtran_lan_switch_hardware_prop"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+    
+    <!--AdtranNetvantaRouter-->
+    
+    <Operations personalityname="AdtranNetvantaRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="adtran_lan_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="adtran_netvanta_router_hardware_prop1"/>
+				    <RecordInformation recordid="adtran_netvanta_router_hardware_prop2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="adtran_lan_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="adtran_netvanta_router_hardware_prop1"/>
+				    <RecordInformation recordid="adtran_netvanta_router_hardware_prop2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	    <Operations personalityname="NortelPassportSwitch" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="nortel_passport_show_switch_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nortel_passport_8600_cli_false"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="nortel_passport_show_switch_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nortel_passport_8600_cli_false"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="NortelPassportSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	       <ProtocolInformation protocol="CLI" interactionid="nortel_passport_show_switch_hardware_prop">
+	          <RecordInformationList>
+	            <RecordInformation recordid="nortel_passport_switch_hardware_prop"/>
+	            <RecordInformation recordid="nortel_passport_8600_hardware_rec1"/>
+	            <RecordInformation recordid="nortel_passport_8600_hardware_rec2"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+	       <ProtocolInformation protocol="SSH" interactionid="nortel_passport_show_switch_hardware_prop">
+	          <RecordInformationList>
+	            <RecordInformation recordid="nortel_passport_switch_hardware_prop"/>
+	            <RecordInformation recordid="nortel_passport_8600_hardware_rec1"/>
+	            <RecordInformation recordid="nortel_passport_8600_hardware_rec2"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="NortelBayStackSwitch" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+		<ProtocolInformation protocol="CLI" interactionid="nortel_baystackswitch_cli_command_exec_irec">
+                <RecordInformationList>
+                    <RecordInformation recordid="nortel_baystack_hardware_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+	    <ProtocolInformation protocol="SSH" interactionid="nortel_baystackswitch_cli_command_exec_irec">
+                <RecordInformationList>
+                    <RecordInformation recordid="nortel_baystack_hardware_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="NortelBayStackSwitch" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="nortel_baystackswitch_cli_command_exec_irec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nortel_baystackswitch_cli_climode_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="nortel_baystackswitch_cli_command_exec_irec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nortel_baystackswitch_cli_climode_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+    <Operations personalityname="NortelBayStackSwitch" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="nortel_baystackswitch_cli_mainmenu_irec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nortel_baystackswitch_cli_exit_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="nortel_baystackswitch_cli_mainmenu_irec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nortel_baystackswitch_cli_exit_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+<Operations personalityname="NortelPWRSwitch" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+		<ProtocolInformation protocol="CLI" interactionid="nortel_pwrswitch_cli_command_exec_irec">
+                <RecordInformationList>
+                    <RecordInformation recordid="nortel_pwrswitch_cli_hardware_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+	 
+        </ProtocolInformationList>
+    </Operations>
+
+
+
+    <Operations personalityname="NortelContivityVPNRouter" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+		<ProtocolInformation protocol="CLI" interactionid="nortel_contivity_vpnrouter_hardware_irec">
+                <RecordInformationList>
+                    <RecordInformation recordid="nortel_contivity_vpnrouter_hardware_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+	    <ProtocolInformation protocol="SSH" interactionid="nortel_contivity_vpnrouter_hardware_irec">
+                <RecordInformationList>
+                    <RecordInformation recordid="nortel_contivity_vpnrouter_hardware_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+
+    <Operations personalityname="NortelSwitchModule" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+			<ProtocolInformation protocol="CLI" interactionid="nortel_switchmodule_hardware_ispec">
+                <RecordInformationList>
+                    <RecordInformation recordid="nortel_switchmodule_hardware_rec"/>
+                </RecordInformationList>
+        	</ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+
+    <Operations personalityname="DLinkSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	       <ProtocolInformation protocol="CLI" interactionid="dlink_switch_hardware_prop">
+	          <RecordInformationList>
+	            <RecordInformation recordid="dlink_switch_hardware_rec1"/>
+	            <RecordInformation recordid="dlink_switch_hardware_rec2"/>
+	            <RecordInformation recordid="dlink_switch_hardware_rec3"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+	       <ProtocolInformation protocol="SSH" interactionid="dlink_switch_hardware_prop">
+	          <RecordInformationList>
+	            <RecordInformation recordid="dlink_switch_hardware_rec1"/>
+	            <RecordInformation recordid="dlink_switch_hardware_rec2"/>
+	            <RecordInformation recordid="dlink_switch_hardware_rec3"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <!--
+    <Operations personalityname="FoundrySwitch" operationname="ENTER_ENABLE_MODE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="foundry_enable_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="foundry_enable_rec"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="enable_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="enable_rec"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="FoundrySwitch" operationname="ENTER_ENABLE_PASSWORD">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="foundry_privilege_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="foundry_password_rec"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="privilege_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="password_rec"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="FoundrySwitch" operationname="EXIT_ENABLE_MODE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="foundry_enableprompt_exit_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="foundry_enableprompt_exit_rec"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="foundry_ssh_enableprompt_exit_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="foundry_ssh_enableprompt_exit_rec"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+    -->
+
+    <Operations personalityname="HPSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="hp_switch_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="hp_switch_hardware_prop"/>
+	         <RecordInformation recordid="hp_switch_hardware_prop_1"/>
+	      </RecordInformationList>
+        </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="hp_switch_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="hp_switch_hardware_prop"/>
+	         <RecordInformation recordid="hp_switch_hardware_prop_1"/>
+	      </RecordInformationList>
+       </ProtocolInformation>
+
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="HPAccessPoint" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="hp_ap_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="hp_ap_hardware_prop_rec1"/>
+	         <RecordInformation recordid="hp_ap_hardware_prop_rec2"/>
+	      </RecordInformationList>
+        </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="hp_ap_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="hp_ap_hardware_prop_rec1"/>
+	         <RecordInformation recordid="hp_ap_hardware_prop_rec2"/>
+	      </RecordInformationList>
+       </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+ 
+  <Operations personalityname="HPPSeriesSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="hp_p_switch_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="hp_p_switch_hardware_prop_rec1"/>   
+   	      </RecordInformationList>
+                  
+        </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="hp_p_switch_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="hp_p_switch_hardware_prop_rec1"/>
+            </RecordInformationList>
+       </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+  <Operations personalityname="HPPSeriesSwitch" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="hp_p_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="hp_p_series_switch_cli_config_terminal_exit1_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="hp_p_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="hp_p_series_switch_cli_config_terminal_exit1_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="3ComSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="3com_switch_hardware_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="3com_switch_cli_hardware_prop"/>
+		 <RecordInformation recordid="3com_switch_4500_cli_hardware_rec_1"/>
+		 <RecordInformation recordid="3com_switch_4200G_cli_hardware_prop"/>
+		 
+	      </RecordInformationList>
+            </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="3com_switch_hardware_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="3com_switch_cli_hardware_prop"/>
+		 <RecordInformation recordid="3com_switch_4500_cli_hardware_rec_1"/>
+		 <RecordInformation recordid="3com_switch_4200G_cli_hardware_prop"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+     <Operations personalityname="FoundrySwitch" operationname="GET_INTERFACES">
+	<ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="foundry_switch_interface_details_ispec">
+	     <RecordInformationList>
+		<RecordInformation recordid="foundry_switch_interface_details"/>
+	     </RecordInformationList>
+	   </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="foundry_switch_interface_details_ispec">
+	     <RecordInformationList>
+		<RecordInformation recordid="foundry_switch_ssh_interface_details"/>
+	     </RecordInformationList>
+	   </ProtocolInformation>
+	</ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoSwitch" operationname="GET_INTERFACES">
+	   <ProtocolInformationList>
+			<ProtocolInformation protocol="SNMP" interactionid="NETableGet">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-interfaces-iftable-get"/>
+					<RecordInformation recordid="cisco-interfaces-ipaddrtable-get"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+    </Operations>
+
+     <Operations personalityname="CiscoRouter" operationname="GET_INTERFACES">
+	   <ProtocolInformationList>
+			<ProtocolInformation protocol="SNMP" interactionid="NETableGet">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-interfaces-iftable-get"/>
+					<RecordInformation recordid="cisco-interfaces-ipaddrtable-get"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+    </Operations>
+
+     <Operations personalityname="CiscoIAD" operationname="GET_INTERFACES">
+	   <ProtocolInformationList>
+			<ProtocolInformation protocol="SNMP" interactionid="NETableGet">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-interfaces-iftable-get"/>
+					<RecordInformation recordid="cisco-interfaces-ipaddrtable-get"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+    </Operations>
+
+     <Operations personalityname="CiscoAccessServer" operationname="GET_INTERFACES">
+	   <ProtocolInformationList>
+			<ProtocolInformation protocol="SNMP" interactionid="NETableGet">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-interfaces-iftable-get"/>
+					<RecordInformation recordid="cisco-interfaces-ipaddrtable-get"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoAccessPoint" operationname="GET_INTERFACES">
+	   <ProtocolInformationList>
+			<ProtocolInformation protocol="SNMP" interactionid="NETableGet">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-interfaces-iftable-get"/>
+					<RecordInformation recordid="cisco-interfaces-ipaddrtable-get"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="HuaweiARRouter" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="CLI" interactionid="huawei_arrouter_cli_hardware_ispec">
+                <RecordInformationList>
+                    <RecordInformation recordid="huawei_arrouter_hardware_prop"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="ArubaWifiSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	       <ProtocolInformation protocol="CLI" interactionid="aruba_wifiswitch_hardware_prop_ispec">
+		       <RecordInformationList>
+		       <RecordInformation recordid="aruba_wifiswitch_hardware_prop_rec"/>
+		       </RecordInformationList>
+		       <RecordInformationList>
+		       <RecordInformation recordid="aruba_wifiswitch_hardware_prop_rec1"/>
+		       </RecordInformationList>	    
+
+           </ProtocolInformation>
+	       <ProtocolInformation protocol="SSH" interactionid="aruba_wifiswitch_hardware_prop_ispec">
+	          <RecordInformationList>
+	            <RecordInformation recordid="aruba_wifiswitch_hardware_prop_rec"/>
+    	      </RecordInformationList>
+
+              <RecordInformationList>
+		       <RecordInformation recordid="aruba_wifiswitch_hardware_prop_rec1"/>
+		       </RecordInformationList>
+
+           </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="ProximAccessPoint" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="proxim_ap_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="proxim_ap_hardware_prop_rec1"/>
+	      </RecordInformationList>
+        </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="hp_ap_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="proxim_ap_hardware_prop_rec1"/>
+	      </RecordInformationList>
+       </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="ExtremeSwitch" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="CLI" interactionid="extremeblackdiamondswitch_hardware_prop_ispec">
+                <RecordInformationList>
+                    <RecordInformation recordid="extremeblackdiamond_hardware_prop_rec"/>
+		    <RecordInformation recordid="extremeblackdiamond_hardware_prop_rec1"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+            <ProtocolInformation protocol="SSH" interactionid="extremeblackdiamondswitch_hardware_prop_ispec">
+                <RecordInformationList>
+                    <RecordInformation recordid="extremeblackdiamond_hardware_prop_rec"/>
+		    <RecordInformation recordid="extremeblackdiamond_hardware_prop_rec1"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+
+    <Operations personalityname="Force10Switch" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="CLI" interactionid="Force10_Switch_hardware_prop_ispec">
+                <RecordInformationList>
+                    <RecordInformation recordid="Force10_Switch_hardware_prop_rec"/>
+                    <RecordInformation recordid="Force10_Switch_hardware_prop_rec1"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+            <ProtocolInformation protocol="SSH" interactionid="Force10_Switch_hardware_prop_ispec">
+                <RecordInformationList>
+                    <RecordInformation recordid="Force10_Switch_hardware_prop_rec"/>
+                    <RecordInformation recordid="Force10_Switch_hardware_prop_rec1"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="BlueCoatProxySG" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+           <ProtocolInformation protocol="CLI" interactionid="bluecoat_show_version_hardware_prop">
+              <RecordInformationList>
+                 <RecordInformation recordid="bluecoat_proxyapp_hardware_prop"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+<Operations personalityname="PacketShaper" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+           <ProtocolInformation protocol="CLI" interactionid="packet_shaper_show_version_hardware_prop">
+              <RecordInformationList>
+                  <RecordInformation recordid="packet_shaper_hardware_prop"/>
+			<RecordInformation recordid="packet_shaper_hardware_prop1"/>
+			<RecordInformation recordid="packet_shaper_hardware_prop2"/>
+			<RecordInformation recordid="packet_shaper_hardware_prop3"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="EnterasysSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+           <ProtocolInformation protocol="CLI" interactionid="enterasys_switch_cli_hardware_ispec">
+              <RecordInformationList>
+                 <RecordInformation recordid="enterasys_switch_cli_hardware_rec"/>
+                 <RecordInformation recordid="enterasys_switch_cli_hardware_showversion_rec"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+           <ProtocolInformation protocol="SSH" interactionid="enterasys_switch_cli_hardware_ispec">
+              <RecordInformationList>
+                 <RecordInformation recordid="enterasys_switch_cli_hardware_rec"/>
+                 <RecordInformation recordid="enterasys_switch_cli_hardware_showversion_rec"/>
+                 <RecordInformation recordid="enterasys_switch_cli_hardware_xpedition_rec1"/>
+                 <RecordInformation recordid="enterasys_switch_cli_hardware_xpedition_rec2"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="EnterasysRouter" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+           <ProtocolInformation protocol="CLI" interactionid="enterasys_router_cli_hardware_ispec">
+              <RecordInformationList>
+                 <RecordInformation recordid="enterasys_router_cli_hardware_rec"/>
+    	      </RecordInformationList>
+           </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="enterasys_router_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="enterasys_router_cli_hardware_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+
+    <Operations personalityname="NetgearSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="netgear_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="netgear_switch_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="netgear_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="netgear_switch_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+    <Operations personalityname="JuniperRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="juniper_router_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="juniper_router_hardware_prop_rec1"/>
+				    <RecordInformation recordid="juniper_router_hardware_prop_rec2"/>
+				    <RecordInformation recordid="juniper_router_hardware_prop_rec3"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="juniper_router_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="juniper_router_hardware_prop_rec1"/>
+				    <RecordInformation recordid="juniper_router_hardware_prop_rec2"/>
+				    <RecordInformation recordid="juniper_router_hardware_prop_rec3"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+	<Operations personalityname="JuniperMXRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="juniper_mx_router_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="juniper_mx_router_hardware_prop_rec1"/>
+				    <RecordInformation recordid="juniper_mx_router_hardware_prop_rec2"/>
+				    <RecordInformation recordid="juniper_mx_router_hardware_prop_rec3"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="juniper_mx_router_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="juniper_mx_router_hardware_prop_rec1"/>
+				    <RecordInformation recordid="juniper_mx_router_hardware_prop_rec2"/>
+				    <RecordInformation recordid="juniper_mx_router_hardware_prop_rec3"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+	</Operations>
+
+    <Operations personalityname="DellSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="dell_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="dell_switch_hardware_prop_rec1"/>
+				    <RecordInformation recordid="dell_switch_hardware_prop_rec2"/>
+				    <RecordInformation recordid="dell_switch_hardware_prop_rec3"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="dell_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="dell_switch_hardware_prop_rec1"/>
+				    <RecordInformation recordid="dell_switch_hardware_prop_rec2"/>
+				    <RecordInformation recordid="dell_switch_hardware_prop_rec3"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="SlimLine" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="slim_line_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="slim_line_hardware_prop_rec1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="slim_line_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="slim_line_hardware_prop_rec1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+    <!-- Cisco VPN Concentrator -->
+    <Operations personalityname="CiscoVPNConcentrator" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="cisco_vpn_concentrator_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_vpn_concentrator_hardware_rec_1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_vpn_concentrator_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_vpn_concentrator_hardware_rec_1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoVPNConcentrator" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="cisco_vpn_concentrator_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_vpn_concentrator_hardware_rec_2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_vpn_concentrator_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_vpn_concentrator_hardware_rec_1"/>
+				    <RecordInformation recordid="cisco_vpn_concentrator_hardware_rec_2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoVPNConcentrator" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="cisco_vpn_concentrator_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_vpn_concentrator_cli_main_menu"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_vpn_concentrator_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_vpn_concentrator_cli_main_menu"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+    <!-- CiscoMDS -->
+    <Operations personalityname="CiscoMDS" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_mds_show_command_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_mds_show_command_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+     <!-- CiscoIDS -->
+    <Operations personalityname="CiscoIDS" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="ciscoids_generic_show_version_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+
+	    </ProtocolInformationList>
+
+  <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="ciscoids_generic_show_version_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+
+	    </ProtocolInformationList>
+    </Operations>
+ <!-- CiscoIDS ends here -->
+
+ <!-- Fujitse -->
+    <Operations personalityname="FujitsuPYCBSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="fujitsu_show_hardware_version">
+			    <RecordInformationList>
+				    <RecordInformation recordid="fujitsu_show_version"/>
+				    <RecordInformation recordid="fujitsu_show_hardware"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+
+	    </ProtocolInformationList>
+
+  <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="fujitsu_show_hardware_version">
+			    <RecordInformationList>
+				    <RecordInformation recordid="fujitsu_show_version"/>
+				    <RecordInformation recordid="fujitsu_show_hardware"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+
+	    </ProtocolInformationList>
+    </Operations>
+ <!-- Fujitsu ends here -->
+
+    <!--River Bed -->
+    <Operations personalityname="RiverbedSteelhead" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="riverbed_steelhead_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="riverbed_steelhead_cli_hardware_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="riverbed_steelhead_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="riverbed_steelhead_cli_hardware_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <!--Alcatel -->
+    <Operations personalityname="AlcatelSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alcatel_switch_show_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alcatel_switch_cli_hardware_rec"/>
+				    <RecordInformation recordid="alcatel_switch_cli_system_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="alcatel_switch_show_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alcatel_switch_cli_hardware_rec"/>
+				    <RecordInformation recordid="alcatel_switch_cli_system_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <!--Alaxala Switch-->
+    <Operations personalityname="AlaxalaSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alaxala_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alaxala_switch_hardware_prop_rec1"/>
+				    <RecordInformation recordid="alaxala_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="alaxala_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alaxala_switch_hardware_prop_rec1"/>
+				    <RecordInformation recordid="alaxala_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+    
+        <!--Hitachi GR 2000 Router-->
+    <Operations personalityname="HitachiGR2000Router" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="hitachi_gr_2000_router_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="hitachi_gr_2000_router_hardware_prop_rec1"/>
+				    <RecordInformation recordid="hitachi_gr_2000_router_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="hitachi_gr_2000_router_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="hitachi_gr_2000_router_hardware_prop_rec1"/>
+				    <RecordInformation recordid="hitachi_gr_2000_router_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <!--RadwareSwitch-->
+    <Operations personalityname="RadwareSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="radware_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="radware_switch_cli_hardware_deviceinfo_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="radware_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="radware_switch_cli_hardware_deviceinfo_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+<!-- Added by prabhat -->
+<Operations personalityname="RadwareSwitch" operationname="GET_HARDWARE1">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="radware_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="radware_switch_cli_hardware_deviceinfo_rec1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="radware_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="radware_switch_cli_hardware_deviceinfo_rec1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+    -->
+    <!--CiscoWLANController-->
+    <Operations personalityname="CiscoWLANController" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="cisco_wlan_controller_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_wlan_controller_hardware_rec"/>
+				    <RecordInformation recordid="cisco_wlan_controller_hardware_rec1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_wlan_controller_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_wlan_controller_hardware_rec"/>
+				    <RecordInformation recordid="cisco_wlan_controller_hardware_rec1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+<!--Radware Link Proof Switch-->
+
+    <Operations personalityname="RadwareLinkProofSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="radware_link_proof_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="radware_link_proof_switch_cli_hardware_link_proof_deviceinfo_rec1"/>
+				    <RecordInformation recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec2"/>
+				    <RecordInformation recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec3"/>
+				    <RecordInformation recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec4"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="radware_link_proof_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="radware_link_proof_switch_cli_hardware_link_proof_deviceinfo_rec1"/>
+				    <RecordInformation recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec2"/>
+				    <RecordInformation recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec3"/>
+				    <RecordInformation recordid="radware_link_proof_switch_cli_hardware_deviceinfo_rec4"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+    
+
+    <!--BrocadeSwitch-->
+    <Operations personalityname="BrocadeSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="brocade_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="brocade_switch_cli_hardware_version_rec"/>
+				    <RecordInformation recordid="brocade_switch_cli_hardware_showchassiss_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+    
+    <!--Cisco WAAS-->
+    <Operations personalityname="CiscoWAAS" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    
+		    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    
+				    <RecordInformation recordid="cisco_WAAS_hardware_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    
+				    <RecordInformation recordid="cisco_WAAS_hardware_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <!-- CheckPoint Firewall -->
+
+    <Operations personalityname="CheckPointFirewall" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="CLI" interactionid="checkpoint_firewall_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="checkpoint_firewall_hardware_prop"/>
+			    </RecordInformationList>
+            </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="checkpoint_firewall_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="checkpoint_firewall_hardware_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+     <!-- CiscoACEModule -->
+
+    <Operations personalityname="CiscoACEModule" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_ace_module_version_prop"/>
+				    <RecordInformation recordid="cisco_ace_module_hardware_prop"/>
+			    </RecordInformationList>
+            </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_ace_module_version_prop"/>
+				    <RecordInformation recordid="cisco_ace_module_hardware_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <!-- AvayaGateway -->
+
+     <Operations personalityname="AvayaMediaGateway" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="CLI" interactionid="avaya_media_gateway_hardware_ispec">
+			    <RecordInformationList>
+                    <RecordInformation recordid="avaya_media_gateway_hardware_prop_rec"/>
+			    </RecordInformationList>
+            </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="avaya_media_gateway_hardware_ispec">
+			    <RecordInformationList>
+                    <RecordInformation recordid="avaya_media_gateway_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	   </ProtocolInformationList>
+    </Operations>
+
+    <!-- LambdaDriver -->
+
+    <Operations personalityname="LambdaDriver" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="CLI" interactionid="mrv_hardware_ispec">
+			    <RecordInformationList>
+                    <RecordInformation recordid="mrv_hardware_prop_rec"/>                    
+			    </RecordInformationList>
+            </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="mrv_hardware_ispec">
+			    <RecordInformationList>
+                    <RecordInformation recordid="mrv_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	       </ProtocolInformationList>
+    </Operations>
+    
+<!-- DaxDx -->
+    
+   <Operations personalityname="DaxRouter" operationname="GET_HARDWARE">
+            <ProtocolInformationList>
+                <ProtocolInformation protocol="CLI" interactionid="dax_cli_hardware_ispec">
+    			    <RecordInformationList>
+                        <RecordInformation recordid="dax_router_cli_hardware_version_rec"/>                    
+    			    </RecordInformationList>
+                </ProtocolInformation>
+    		    <ProtocolInformation protocol="SSH" interactionid="dax_cli_hardware_ispec">
+    			    <RecordInformationList>
+                        <RecordInformation recordid="dax_router_cli_hardware_version_rec"/>
+    			    </RecordInformationList>
+    		    </ProtocolInformation>
+    	       </ProtocolInformationList>
+    </Operations>
+    
+    <Operations personalityname="DaxSwitch" operationname="GET_HARDWARE">
+                <ProtocolInformationList>
+                    <ProtocolInformation protocol="CLI" interactionid="dax_cli_hardware_ispec">
+        			    <RecordInformationList>
+                            <RecordInformation recordid="dax_switch_cli_hardware_version_rec"/>                    
+        			    </RecordInformationList>
+                    </ProtocolInformation>
+        		    <ProtocolInformation protocol="SSH" interactionid="dax_cli_hardware_ispec">
+        			    <RecordInformationList>
+                            <RecordInformation recordid="dax_switch_cli_hardware_version_rec"/>
+        			    </RecordInformationList>
+        		    </ProtocolInformation>
+        	       </ProtocolInformationList>
+    </Operations>
+    
+    
+    <!--Cisco IOS XR -->
+    <Operations personalityname="CiscoIOSXR" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_IOSXR_hardware_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="cisco_IOSXR_hardware_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+     <!-- H3C -->
+
+   <Operations personalityname="H3CSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_switch_manuinfo_hardware_prop_rec"/>
+                    <RecordInformation recordid="h3c_switch_bootloader_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_switch_manuinfo_hardware_prop_rec"/>
+                    <RecordInformation recordid="h3c_switch_bootloader_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <!-- Yamaha Devices -->
+
+    <Operations personalityname="YamahaRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="yamaha_router_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="yamaha_router_cli_hardware_version_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="yamaha_router_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="yamaha_router_cli_hardware_version_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="VanguardRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="vanguard_router_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="vanguard_router_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+    
+    
+    <!-- AlliedTelesisSwitch -->
+    
+    <Operations personalityname="AlliedTelesisSwitch" operationname="GET_HARDWARE">
+    	    <ProtocolInformationList>
+    		    <ProtocolInformation protocol="CLI" interactionid="alliedTelesis_switch_ispec1">
+    			    <RecordInformationList>
+    				    <RecordInformation recordid="alliedtelesis_switch_cli_show_system_rec"/>
+    			    </RecordInformationList>
+    		    </ProtocolInformation>
+    		    <ProtocolInformation protocol="SSH" interactionid="alliedTelesis_switch_ispec1">
+    			    <RecordInformationList>
+    				    <RecordInformation recordid="alliedtelesis_switch_cli_show_system_rec"/>
+    			    </RecordInformationList>
+    		    </ProtocolInformation>
+    	    </ProtocolInformationList>
+    </Operations>
+
+    <!--F5 Big-Ip-->
+    <Operations personalityname="F5Bigip" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="f5bigip_version_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="f5_bigip_hardware_prop_rec1"/>
+				    <RecordInformation recordid="f5_bigip_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="f5bigip_version_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="f5_bigip_hardware_prop_rec1"/>
+				    <RecordInformation recordid="f5_bigip_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+ <!-- CitrixNetScaler -->
+
+<Operations personalityname="CitrixNetScaler" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="citrix_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_shell_prompt"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="citrix_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_shell_prompt"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CitrixNetScaler" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="citrix_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="citrix_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CitrixNetScaler" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="citrix_cli_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_shell_exit"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="citrix_cli_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_shell_exit"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+ <!-- HitachiSwitch -->
+     <Operations personalityname="HitachiCableSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="hitachi_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="hitachi_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="hitachi_switch_hardware_prop_rec_1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="hitachi_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				   <RecordInformation recordid="hitachi_switch_hardware_prop_rec"/>
+                   <RecordInformation recordid="hitachi_switch_hardware_prop_rec_1"/>
+                </RecordInformationList>
+		    </ProtocolInformation>
+	      </ProtocolInformationList>
+    </Operations>   
+
+<!-- Motorola Wireless Switches -->
+
+     <Operations personalityname="Motorola" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="motorola_ws_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="motorola_ws_cli_hardware_version_rec"/>
+		   </RecordInformationList>
+		    </ProtocolInformation>
+     	        <ProtocolInformation protocol="SSH" interactionid="motorola_ws_cli_hardware_ispec">
+			    <RecordInformationList>		
+	                      <RecordInformation recordid="motorola_ws_cli_hardware_version_rec"/>		   
+                </RecordInformationList>
+		    </ProtocolInformation>
+	      </ProtocolInformationList>
+    </Operations>
+
+    <!-- Sphereon Switches -->
+
+    <Operations personalityname="SphereonSwitch" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+            <ProtocolInformation protocol="CLI" interactionid="sphereon_4500_fibre_switch_cli_hardware_ispec">
+                <RecordInformationList>
+                    <RecordInformation recordid="sphereon_4500_fibre_switch_cli_hardware_version_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+            <ProtocolInformation protocol="SSH" interactionid="sphereon_4500_fibre_switch_cli_hardware_ispec">
+                <RecordInformationList>
+                    <RecordInformation recordid="sphereon_4500_fibre_switch_cli_hardware_version_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CiscoNexusSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+      
+			<ProtocolInformation protocol="CLI" interactionid="cisco_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco_nexus_show_command_rec"/>
+					<RecordInformation recordid="cisco_nexus_show_command_rec1"/>
+				</RecordInformationList>
+            </ProtocolInformation>
+			<ProtocolInformation protocol="SSH" interactionid="cisco_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco_nexus_show_command_rec"/>
+					<RecordInformation recordid="cisco_nexus_show_command_rec1"/>
+				</RecordInformationList>
+            </ProtocolInformation>
+
+        </ProtocolInformationList>
+    </Operations>
+
+ <!-- Juniper Switch -->
+
+<Operations personalityname="JuniperSwitch" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="juniper_ex4200_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="juniper_ex4200_switch_enable_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="juniper_ex4200_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="juniper_ex4200_switch_enable_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+<Operations personalityname="JuniperSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+      
+			<ProtocolInformation protocol="CLI" interactionid="juniper_ex4200_switch_hardware_prop_ispec">
+				<RecordInformationList>
+					<!-- RecordInformation recordid="juniper_ex4200_switch_hardware_prop_rec1"/ -->
+					<RecordInformation recordid="juniper_ex4200_switch_hardware_prop_rec2"/>
+				</RecordInformationList>
+            </ProtocolInformation>
+			<ProtocolInformation protocol="SSH" interactionid="juniper_ex4200_switch_hardware_prop_ispec">
+				<RecordInformationList>
+					<!-- RecordInformation recordid="juniper_ex4200_switch_hardware_prop_rec1"/ -->
+					<RecordInformation recordid="juniper_ex4200_switch_hardware_prop_rec2"/>
+				</RecordInformationList>
+            </ProtocolInformation>
+
+        </ProtocolInformationList>
+    </Operations>
+	
+
+  <Operations personalityname="JuniperSwitch" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="juniper_ex4200_switch_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="juniper_ex4200_switch_tftp_backup_config_rec_5"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="juniper_ex4200_switch_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="juniper_ex4200_switch_tftp_backup_config_rec_5"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+<!-- Allied Telesis AT-8000S series Switch -->
+    
+    <Operations personalityname="AlliedTelesisAT8000S" operationname="GET_HARDWARE">
+    	    <ProtocolInformationList>
+    		    <ProtocolInformation protocol="CLI" interactionid="alliedTelesis_switch_ispec1">
+    			    <RecordInformationList>
+    				    <RecordInformation recordid="alliedtelesis_switch_cli_show_system_rec"/>
+    			    </RecordInformationList>
+    		    </ProtocolInformation>
+    		    <ProtocolInformation protocol="SSH" interactionid="alliedTelesis_switch_ispec1">
+    			    <RecordInformationList>
+    				    <RecordInformation recordid="alliedtelesis_switch_cli_show_system_rec"/>
+    			    </RecordInformationList>
+    		    </ProtocolInformation>
+    	    </ProtocolInformationList>
+    </Operations>
+
+<!--Alcatel-Lucent 7750 Service Router -->
+
+    <Operations personalityname="AlcatelRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alcatel_7500_servicerouter_show_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alcatel_7500_servicerouter_cli_hardware_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="alcatel_7500_servicerouter_show_hardware_prop">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alcatel_7500_servicerouter_cli_hardware_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+<Operations personalityname="FortiGateFortiAnalyzer" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="fortigate_firewall_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="fortigate_firewall_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="fortigate_firewall_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="fortigate_firewall_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+    
+    <Operations personalityname="CanogaPerkins" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	    <ProtocolInformation protocol="CLI" interactionid="canoga_perkins_hardware_ispec">
+		<RecordInformationList>
+		    <RecordInformation recordid="canoga_perkins_hardware_prop_rec"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+       <ProtocolInformation protocol="SSH" interactionid="canoga_perkins_hardware_ispec">
+		<RecordInformationList>
+		    <RecordInformation recordid="canoga_perkins_hardware_prop_rec"/>
+		</RecordInformationList>
+            </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+
+	<Operations personalityname="WatchGuardFirewall" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="watchguard_firewall_show_hardware_prop">
+		    <RecordInformationList>
+		        <RecordInformation recordid="watchguard_firewall_hw_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="watchguard_firewall_show_hardware_prop">
+		    <RecordInformationList>
+		        <RecordInformation recordid="watchguard_firewall_hw_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>		
+
+<Operations personalityname="NetSD3800" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="acmepacket_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="acmepacket_cli_hardware_show_version_rec"/>
+				<RecordInformation recordid="acmepacket_cli_hardware_show_prom_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>	   	
+		 
+	     <ProtocolInformation protocol="SSH" interactionid="acmepacket_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="acmepacket_cli_hardware_show_version_rec"/>
+				<RecordInformation recordid="acmepacket_cli_hardware_show_prom_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>	 
+		 
+       </ProtocolInformationList>
+    </Operations>
+	
+ <Operations personalityname="CienaSAOSSwitch" operationname="GET_HARDWARE">
+            <ProtocolInformationList>
+                <ProtocolInformation protocol="CLI" interactionid="ciena_cli_hardware_ispec_saos">
+    			    <RecordInformationList>
+                        <RecordInformation recordid="ciena_switch_cli_hardware_version_rec_saos"/>
+                        <RecordInformation recordid="ciena_switch_mac_rec_saos"/>
+    			    </RecordInformationList>
+                </ProtocolInformation>
+
+    	       </ProtocolInformationList>
+ </Operations>
+
+  <Operations personalityname="CienaLEOSSwitch" operationname="GET_HARDWARE">
+            <ProtocolInformationList>
+                <ProtocolInformation protocol="CLI" interactionid="ciena_cli_hardware_ispec_leos">
+    			    <RecordInformationList>
+                        <RecordInformation recordid="ciena_switch_cli_hardware_version_rec_leos"/>
+                        <RecordInformation recordid="ciena_switch_mac_rec_leos"/>
+    			    </RecordInformationList>
+                </ProtocolInformation>
+
+    	       </ProtocolInformationList>
+ </Operations>	
+
+	<Operations personalityname="PaloAltoFirewall" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="paloalto_firewall_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="paloalto_firewall_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="paloalto_firewall_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="paloalto_firewall_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>	   
+    </Operations>		
+	
+	<Operations personalityname="ADVAOPTICALNETWORKING" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="adva_fsp150ccf_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="adva_fsp150ccf_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>	   
+	     <ProtocolInformation protocol="SSH" interactionid="adva_fsp150ccf_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="adva_fsp150ccf_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+	
+	<Operations personalityname="MeruWLANController" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="meru_wlan_controller_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="meru_wlan_controller_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="meru_wlan_controller_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="meru_wlan_controller_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>	
+		
+    <!--Alaxala 5400 Switch-->
+	
+    <Operations personalityname="AlaxalaSwitch5400" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alaxala_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alaxala_switch_hardware_prop_rec1"/>
+				    <RecordInformation recordid="alaxala_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="alaxala_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alaxala_switch_hardware_prop_rec1"/>
+				    <RecordInformation recordid="alaxala_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+		
+	<!-- Allied Telesis GS 900M Switch -->
+    
+    <Operations personalityname="AlliedTelesisGS900MSwitch" operationname="GET_HARDWARE">
+    	    <ProtocolInformationList>
+    		    <ProtocolInformation protocol="CLI" interactionid="alliedtelesis_centercom_gs900m_switch_hw_ispec">
+    			    <RecordInformationList>
+    				    <RecordInformation recordid="alliedtelesis_gs900m_switch_show_rec"/>
+    			    </RecordInformationList>
+    		    </ProtocolInformation>
+    		    <ProtocolInformation protocol="SSH" interactionid="alliedtelesis_centercom_gs900m_switch_hw_ispec">
+    			    <RecordInformationList>
+    				    <RecordInformation recordid="alliedtelesis_gs900m_switch_show_rec"/>
+    			    </RecordInformationList>
+    		    </ProtocolInformation>
+    	    </ProtocolInformationList>
+    </Operations>
+	
+	<!-- H3C S Series Switch -->
+
+   <Operations personalityname="H3CSSeriesSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec1"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	<Operations personalityname="HuaweiSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	
+	
+	<Operations personalityname="HuaweiSSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_s_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+
+<Operations personalityname="HirschmannSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="hirschmann_switch_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="hirschmann_switch_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>	   		     
+	  <ProtocolInformation protocol="SSH" interactionid="hirschmann_switch_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="hirschmann_switch_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>			 
+       </ProtocolInformationList>
+    </Operations>
+
+
+            <Operations personalityname="BrocadeFastIronSwitch" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="brocade_fastiron_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="brocade_fastiron_switch_cli_show_disablepagging_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="brocade_fastiron_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="brocade_fastiron_switch_cli_show_disablepagging_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+  <Operations personalityname="BrocadeFastIronSwitch" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="brocade_fastiron_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="brocade_fastiron_switch_cli_show_disablepagging_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="brocade_fastiron_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="brocade_fastiron_switch_cli_show_disablepagging_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	<Operations personalityname="BrocadeFastIronSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="brocade_fastiron_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				   <RecordInformation recordid="brocade_fastiron_switch_cli_hardware_chassis_rec"/>
+				    <RecordInformation recordid="brocade_fastiron_switch_cli_hardware_version_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="brocade_fastiron_switch_cli_hardware_ispec">
+			    <RecordInformationList>				  
+			<RecordInformation recordid="brocade_fastiron_switch_cli_hardware_chassis_rec"/>
+				    <RecordInformation recordid="brocade_fastiron_switch_cli_hardware_version_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+	  </Operations>
+	   
+
+	<Operations personalityname="TransPortWirelessRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="digi_router_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="digi_router_cli_hardware_version_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="digi_router_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="digi_router_cli_hardware_version_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	
+    <!--Brocade Fiber Switch-->
+    <Operations personalityname="BrocadeFiberSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="brocade_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="brocade_fiber_switch_cli_hardware_version_rec"/>
+				    <RecordInformation recordid="brocade_fiber_switch_cli_hardware_showchassiss_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+	
+	 <Operations personalityname="RedbackRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="redback_router_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="redback_router_cli_hardware_version_rec"/>				   
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="redback_router_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="redback_router_cli_hardware_version_rec"/>				    
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	
+	 <Operations personalityname="BNTRackSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="bnt_rackswitch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="bnt_rackswitch_cli_hardware_version_rec"/>				   
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="bnt_rackswitch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="bnt_rackswitch_cli_hardware_version_rec"/>				    
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>	
+	
+	 <Operations personalityname="AristaSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="arista_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="arista_switch_cli_hardware_version_rec"/>				   
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="arista_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="arista_switch_cli_hardware_version_rec"/>				    
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	
+	 <Operations personalityname="DCSSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="dcn_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="dcn_switch_cli_hardware_version_rec"/>				   
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="dcn_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="dcn_switch_cli_hardware_version_rec"/>				    
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>	
+	
+	 <Operations personalityname="F5ARX" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="F5_arx_version_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="f5_arx_hardware_prop_rec"/>				   
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="F5_arx_version_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="f5_arx_hardware_prop_rec"/>				    
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+		
+	 <Operations personalityname="AX2500LoadBalancers" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="a10_networks_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="a10_networks_cli_hardware_version_rec"/>				   
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="a10_networks_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="a10_networks_cli_hardware_version_rec"/>				    
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+		
+            <Operations personalityname="AlliedTelesisCenterComSwitch" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alliedtelesis_centercom_switch_switch_hw_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alliedtelesis_centercom_switch_cli_paging_off_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		     </ProtocolInformationList>
+    </Operations>
+
+  <Operations personalityname="AlliedTelesisCenterComSwitch" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alliedtelesis_centercom_switch_switch_hw_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alliedtelesis_centercom_switch_cli_paging_on_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		     </ProtocolInformationList>
+    </Operations>	
+		
+	 <Operations personalityname="AlliedTelesisCenterComSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alliedtelesis_centercom_switch_switch_hw_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alliedtelesis_centercom_switch_switch_cli_show_system_rec"/>				   
+			    </RecordInformationList>
+		    </ProtocolInformation>
+  </ProtocolInformationList>		   
+    </Operations>
+		
+                     <!-- AlliedTelesis Ethernet Switch -->	
+
+            <Operations personalityname="AlliedTelesisEthernetSwitch" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alliedtelesis_ethernet_switch_hw_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alliedtelesis_ethernet_switch_terminal_length_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="alliedtelesis_ethernet_switch_hw_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alliedtelesis_ethernet_switch_terminal_length_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+  <Operations personalityname="AlliedTelesisEthernetSwitch" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alliedtelesis_ethernet_switch_hw_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alliedtelesis_ethernet_switch_terminal_length_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="alliedtelesis_ethernet_switch_hw_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="alliedtelesis_ethernet_switch_terminal_length_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	<Operations personalityname="AlliedTelesisEthernetSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="alliedtelesis_ethernet_switch_hw_ispec">
+			    <RecordInformationList>
+				   <RecordInformation recordid="alliedtelesis_ethernet_switch_show_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="alliedtelesis_ethernet_switch_hw_ispec">
+			    <RecordInformationList>				  
+			<RecordInformation recordid="alliedtelesis_ethernet_switch_show_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+	  </Operations>	  	
+
+    <Operations personalityname="FoundryFastIronSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="foundry_switch_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="foundry_switch_hardware_prop"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="foundry_switch_hardware_prop_ispec">
+	      <RecordInformationList>
+	         <RecordInformation recordid="foundry_switch_ssh_hardware_prop"/>
+	      </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+
+     <Operations personalityname="FoundryFastIronSwitch" operationname="GET_INTERFACES">
+	<ProtocolInformationList>
+	   <ProtocolInformation protocol="CLI" interactionid="foundry_switch_interface_details_ispec">
+	     <RecordInformationList>
+		<RecordInformation recordid="foundry_switch_interface_details"/>
+	     </RecordInformationList>
+	   </ProtocolInformation>
+	   <ProtocolInformation protocol="SSH" interactionid="foundry_switch_interface_details_ispec">
+	     <RecordInformationList>
+		<RecordInformation recordid="foundry_switch_ssh_interface_details"/>
+	     </RecordInformationList>
+	   </ProtocolInformation>
+	</ProtocolInformationList>
+    </Operations>
+	
+	
+	<Operations personalityname="ZXRRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="zxr_router_hardware_prop_ispec">
+			    <RecordInformationList>
+				   <RecordInformation recordid="zxr_router_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="zxr_router_hardware_prop_ispec">
+			    <RecordInformationList>				  
+			<RecordInformation recordid="zxr_router_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+	  </Operations>
+	  
+	    	  
+    <Operations personalityname="DellPowerConnectSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="dell_5224_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="dell_5224_switch_hardware_prop_rec1"/>
+				    <RecordInformation recordid="dell_5224_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="dell_5224_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="dell_5224_switch_hardware_prop_rec1"/>
+				    <RecordInformation recordid="dell_5224_switch_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>	  	  
+		  
+
+    <Operations personalityname="CiscoASRRouter" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="show_cisco_asr_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="cisco_asr_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="show_cisco_asr_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="cisco_asr_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+	
+    <!--Brocade Fiber Switch-->
+    <Operations personalityname="BrocadeSilkWormFiberSwitch" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="brocade_3850_fiber_switch_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="brocade_fiber_3850_switch_cli_hardware_version_rec"/>
+				    <RecordInformation recordid="brocade_fiber_3850_switch_cli_hardware_showchassiss_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>	
+	
+	
+    <Operations personalityname="F5Bigip10X" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="f5bigip_10x_version_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="f5_10x_bigip_hardware_prop_rec1"/>
+				    <RecordInformation recordid="f5_10x_bigip_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="f5bigip_10x_version_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="f5_10x_bigip_hardware_prop_rec1"/>
+				    <RecordInformation recordid="f5_10x_bigip_hardware_prop_rec2"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+		
+    <Operations personalityname="BlueCoatProxySGOS" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="bluecoat_proxy_sgos_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="bluecoat_proxy_sgos_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="bluecoat_proxy_sgos_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="bluecoat_proxy_sgos_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="CiscoIronport" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="cisco_iron_port_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="cisco_iron_port_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="cisco_iron_port_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="cisco_iron_port_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+		
+		
+    <Operations personalityname="Vyatta" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="vyatta_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="vyatta_cli_hardware_version_rec"/>
+		  <RecordInformation recordid="vyatta_cli_hardware_version_rec1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="vyatta_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="vyatta_cli_hardware_version_rec"/>
+		  <RecordInformation recordid="vyatta_cli_hardware_version_rec1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+				
+	
+    <Operations personalityname="RadwareAlteonSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="radware_alteon_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="radware_alteon_switch_hardware_rec1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="radware_alteon_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="radware_alteon_switch_hardware_rec1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>		
+    </Operations>
+	  	  	  	
+    <Operations personalityname="BrocadeVDXSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="brocade_vdx_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="hardware_prop_brocade_vdx_switch_cli_hardware_version_rec"/>
+		  <RecordInformation recordid="hardware_prop_brocade_vdx_switch_cli_hardware_showsystem_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="brocade_vdx_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="hardware_prop_brocade_vdx_switch_cli_hardware_version_rec"/>
+		  <RecordInformation recordid="hardware_prop_brocade_vdx_switch_cli_hardware_showsystem_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+		
+    <Operations personalityname="JuniperSRX" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="juniper_srx_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="juniper_srx_hardware_prop_rec"/>
+	 	  <RecordInformation recordid="juniper_srx_hardware_prop_rec2"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="juniper_srx_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="juniper_srx_hardware_prop_rec"/>
+	 	  <RecordInformation recordid="juniper_srx_hardware_prop_rec2"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	  	  	  
+		
+    <Operations personalityname="NECIX2025" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="nec_ix2025_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="nec_ix2025_hardware_prop_rec"/>
+	 	  <RecordInformation recordid="nec_ix2025_hardware_prop_rec1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="ADVAFSP" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="adva_fsp150cc_ge201_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="adva_fsp150cc_ge201_cli_show_system_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="adva_fsp150cc_ge201_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="adva_fsp150cc_ge201_cli_show_system_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+	
+		
+    <Operations personalityname="MikrotikRouter" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="mikrotik_router_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="mikrotik_router_cli_hardware1_rec"/>
+	 	  <RecordInformation recordid="mikrotik_router_cli_hardware2_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="mikrotik_router_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="mikrotik_router_cli_hardware1_rec"/>
+	 	  <RecordInformation recordid="mikrotik_router_cli_hardware2_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>		
+    </Operations>
+	
+	
+    <Operations personalityname="WelotecRouter" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="welotec_router_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="welotec_router_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="welotec_router_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="welotec_router_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="CrescendoLoadBalancer" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="F5_crescendo_networks_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="F5_crescendo_networks_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="F5_crescendo_networks_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="F5_crescendo_networks_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>	  	  	  
+	
+    <Operations personalityname="RuggedComSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="ruggedcom_switch_cli_hardware_ispec">
+        <RecordInformationList>
+		    <RecordInformation recordid="ruggedcom_switch_cli_hardware_version_rec"/>
+	    </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="ruggedcom_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+		  	  <RecordInformation recordid="ruggedcom_switch_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	  	  	  
+    <Operations personalityname="RuijieSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="ruijie_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="ruijie_switch_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="ruijie_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="ruijie_switch_cli_hardware_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="FujitsuFirewall" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="fujitsu_firewall_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="fujitsu_firewall_show_system_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="fujitsu_firewall_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="fujitsu_firewall_show_system_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	  	  	  
+		
+    <Operations personalityname="F5Bigip11X" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="SSH" interactionid="f5bigip_11x_version_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="f5_11x_bigip_hardware_prop_rec1"/>
+	 	  <RecordInformation recordid="f5_11x_bigip_hardware_prop_rec2"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="EdgeCoreSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="edgecore_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="edgecore_switch_cli_hardware_version_rec"/>
+	 	  <RecordInformation recordid="edgecore_switch_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="edgecore_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="edgecore_switch_cli_hardware_version_rec"/>
+	 	  <RecordInformation recordid="edgecore_switch_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations> 	  	
+	
+    <Operations personalityname="TelcoSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="telco_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="telco_switch_cli_show_version_rec"/>
+	 	  <RecordInformation recordid="telco_switch_cli_show_manufacturing_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="telco_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="telco_switch_cli_show_version_rec"/>
+	 	  <RecordInformation recordid="telco_switch_cli_show_manufacturing_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="OccamSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="occam_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="occam_switch_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="occam_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="occam_switch_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="AdtranRouter" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="adtran_router_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="adtran_router_hardware_prop"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="adtran_router_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="adtran_router_hardware_prop"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+	  	  	  
+    <Operations personalityname="CiscoSBSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="cisco_300_switch_show_hardware_prop">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="cisco_300_switch_cli_hardware_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="cisco_300_switch_show_hardware_prop">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="cisco_300_switch_cli_hardware_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+			  
+    <Operations personalityname="NokiaIPSO" operationname="GET_HARDWARE">
+        <ProtocolInformationList>
+		<ProtocolInformation protocol="CLI" interactionid="nokia_ipso_cli_ispec1">
+                <RecordInformationList>
+                    <RecordInformation recordid="nokia_ipso_cli_hardware_version_rec"/>
+                    <RecordInformation recordid="nokia_ipso_cli_asset_soft_rec"/>
+                    <RecordInformation recordid="nokia_ipso_cli_asset_pack_rec"/>
+                    <RecordInformation recordid="nokia_ipso_cli_show_int_rec"/>
+                    <RecordInformation recordid="nokia_ipso_cli_show_cluster_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+	    <ProtocolInformation protocol="SSH" interactionid="nokia_ipso_cli_ispec1">
+                <RecordInformationList>
+                    <RecordInformation recordid="nokia_ipso_cli_hardware_version_rec"/>
+                    <RecordInformation recordid="nokia_ipso_cli_asset_soft_rec"/>
+                    <RecordInformation recordid="nokia_ipso_cli_asset_pack_rec"/>
+                    <RecordInformation recordid="nokia_ipso_cli_show_int_rec"/>
+                    <RecordInformation recordid="nokia_ipso_cli_show_cluster_rec"/>
+                </RecordInformationList>
+            </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="NokiaIPSO" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="nokia_ipso_cli_ispec1">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nokia_ipso_cli_clish_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="nokia_ipso_cli_ispec1">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nokia_ipso_cli_clish_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="NokiaIPSO" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="nokia_ipso_cli_ispec2">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nokia_ipso_cli_exit_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="nokia_ipso_cli_ispec2">
+			    <RecordInformationList>
+				    <RecordInformation recordid="nokia_ipso_cli_exit_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="HPEthernetSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="hp_ethernet_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="hp_ethernet_switch_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="hp_ethernet_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="hp_ethernet_switch_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+	<!-- CitrixNetScaler -->
+
+<Operations personalityname="CitrixNetScalerMPX" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="citrix_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_shell_prompt"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CitrixNetScalerMPX" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="citrix_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+    <Operations personalityname="CitrixNetScalerMPX" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="citrix_cli_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="citrix_shell_exit"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="3Com5500Switch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="3com_switch_5500_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="3com_5500_switch_cli_hardware_prop"/>
+	 	  <RecordInformation recordid="3com_5500_switch_cli_hardware_prop1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="3com_switch_5500_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="3com_5500_switch_cli_hardware_prop"/>
+	 	  <RecordInformation recordid="3com_5500_switch_cli_hardware_prop1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+	
+<Operations personalityname="FortiGateFirewallVER4" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="fortigate_firewall_v4_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="fortigate_firewall_v4_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="fortigate_firewall_v4_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="fortigate_firewall_v4_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+		
+    <Operations personalityname="FiberHomeSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="fiberhome_switch_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="fiberhome_switch_cli_show_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="fiberhome_switch_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="fiberhome_switch_cli_show_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+		
+    <Operations personalityname="ZXRRouterZSR" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="zxr_router_zsr_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="zxr_router_zsr_cli_show_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="zxr_router_zsr_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="zxr_router_zsr_cli_show_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+		
+    <Operations personalityname="ArubaController" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="aruba_controller_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="aruba_controller_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="aruba_controller_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="aruba_controller_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="TippingpointIPS" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="tippingpoint_ips_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="tippingpoint_ips_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="tippingpoint_ips_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="tippingpoint_ips_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="MobileIronSentry" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="mobileiron_sentry_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="mobileiron_sentry_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="mobileiron_sentry_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="mobileiron_sentry_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="JuniperLoadBalancer" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="juniper_load_balancer_hardware_prop_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="juniper_load_balancer_hardware_prop_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="CienaSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="ciena_switch_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="ciena_switch_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="ciena_switch_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="ciena_switch_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+     <!-- H3C -->
+
+   <Operations personalityname="H3CDevice" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_switch_manuinfo_hardware_prop_rec"/>
+                    <RecordInformation recordid="h3c_switch_bootloader_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+            
+            <ProtocolInformation protocol="SSH" interactionid="h3c_switch_hardware_prop_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="h3c_switch_hardware_prop_rec"/>
+				    <RecordInformation recordid="h3c_switch_manuinfo_hardware_prop_rec"/>
+                    <RecordInformation recordid="h3c_switch_bootloader_hardware_prop_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="CheckPointGaiaFirewall" operationname="ENTER_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="checkpoint_gaia_firewall_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="checkpoint_gaia_firewall_hardware_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="checkpoint_gaia_firewall_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="checkpoint_gaia_firewall_hardware_prop"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+<Operations personalityname="CheckPointGaiaFirewall" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="checkpoint_gaia_firewall_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="checkpoint_gaia_firewall_hardware_prop"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="checkpoint_gaia_firewall_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="checkpoint_gaia_firewall_hardware_prop"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="CheckPointGaiaFirewall" operationname="EXIT_ENABLE_MODE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="CLI" interactionid="checkpoint_gaia_firewall_cli_ispec2">
+			    <RecordInformationList>
+				    <RecordInformation recordid="checkpoint_gaia_firewall_cli_exit_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+		    <ProtocolInformation protocol="SSH" interactionid="checkpoint_gaia_firewall_cli_ispec2">
+			    <RecordInformationList>
+				    <RecordInformation recordid="checkpoint_gaia_firewall_cli_exit_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="AvocentACS" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="avocent_acs_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="avocent_acs_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="avocent_acs_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="avocent_acs_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+		
+    <Operations personalityname="JuniperWLAN" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="juniper_wlan_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="juniper_wlan_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="juniper_wlan_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="juniper_wlan_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="PravailAPS" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="pravail_aps_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="pravail_aps_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="pravail_aps_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="pravail_aps_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+		
+	
+<Operations personalityname="AvocentTerminal" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="avocent_terminal_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="avocent_terminal_cli_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="avocent_terminal_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="avocent_terminal_cli_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="CiscoASRMobileGateway" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="cisco_asr_5000_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="cisco_asr_5000_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <ProtocolInformation protocol="SSH" interactionid="cisco_asr_5000_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="cisco_asr_5000_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+       </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="HP5500Switch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="3com_switch_5500_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="3com_5500_switch_cli_hardware_prop"/>
+	 	  <RecordInformation recordid="3com_5500_switch_cli_hardware_prop1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="3com_switch_5500_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="3com_5500_switch_cli_hardware_prop"/>
+	 	  <RecordInformation recordid="3com_5500_switch_cli_hardware_prop1"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="PaloAltoPanoramaFirewall" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+	     <ProtocolInformation protocol="CLI" interactionid="paloalto_panorama_firewall_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="paloalto_panorama_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation>
+	     <!-- ProtocolInformation protocol="SSH" interactionid="paloalto_panorama_firewall_cli_hardware_ispec">
+		    <RecordInformationList>
+		        <RecordInformation recordid="paloalto_panorama_cli_hardware_version_rec"/>
+		    </RecordInformationList>
+         </ProtocolInformation -->
+       </ProtocolInformationList>
+    </Operations>
+	
+	
+    <Operations personalityname="HuaweiNERouter" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="huawei_ne_router_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="huawei_ne_router_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="huawei_ne_router_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="huawei_ne_router_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+    
+        <Operations personalityname="HuaweiS5300Switch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="huawei_s_5300_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="huawei_s_5300_switch_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="huawei_s_5300_switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="huawei_s_5300_switch_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+    <Operations personalityname="DLinkDESSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+ 	  <ProtocolInformation protocol="CLI" interactionid="dlink_des3200_switch_hardware_prop">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="dlink_des3200_switch_hardware_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  <ProtocolInformation protocol="SSH" interactionid="dlink_des3200_switch_hardware_prop">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="dlink_des3200_switch_hardware_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+        </ProtocolInformationList>
+    </Operations>
+	
+    <!--Brocade Router-->
+    <Operations personalityname="BrocadeRouter" operationname="GET_HARDWARE">
+	    <ProtocolInformationList>
+		    <ProtocolInformation protocol="SSH" interactionid="brocade_router_cli_hardware_ispec">
+			    <RecordInformationList>
+				    <RecordInformation recordid="brocade_router_cli_hardware_version_rec"/>
+				    <RecordInformation recordid="brocade_router_cli_hardware_showchassiss_rec"/>
+			    </RecordInformationList>
+		    </ProtocolInformation>
+	    </ProtocolInformationList>
+    </Operations>
+
+
+<Operations personalityname="INSYSMoRoS" operationname="GET_HARDWARE">
+		<ProtocolInformationList>
+			<ProtocolInformation protocol="SSH" interactionid="insys_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="insys_moros_hardware_prop"/>
+					<RecordInformation recordid="insys_moros_hardware_prop1"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+			<ProtocolInformation protocol="CLI" interactionid="insys_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="insys_moros_hardware_prop"/>
+					<RecordInformation recordid="insys_moros_hardware_prop1"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+	</Operations>
+    	
+
+<Operations personalityname="SonicWALLFirewall" operationname="GET_HARDWARE">
+		<ProtocolInformationList>
+			<!--ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-router-hardware-get"/>
+				</RecordInformationList>
+			</ProtocolInformation-->
+			<ProtocolInformation protocol="SSH" interactionid="sonicwall_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="sonicwall_firewall_hardware_prop"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+			<ProtocolInformation protocol="CLI" interactionid="sonicwall_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="sonicwall_firewall_hardware_prop"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+	</Operations>
+
+<Operations personalityname="TrapezeWLANController" operationname="GET_HARDWARE">
+		<ProtocolInformationList>
+			<!--ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-router-hardware-get"/>
+				</RecordInformationList>
+			</ProtocolInformation-->
+			<ProtocolInformation protocol="SSH" interactionid="trapeze_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="trapeze_wlan_controller_hardware_prop"/>
+					<RecordInformation recordid="trapeze_wlan_controller_hardware_prop1"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+			<ProtocolInformation protocol="CLI" interactionid="trapeze_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="trapeze_wlan_controller_hardware_prop"/>
+					<RecordInformation recordid="trapeze_wlan_controller_hardware_prop1"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+	</Operations>
+
+
+<Operations personalityname="UbiquitiAirOs" operationname="GET_HARDWARE">
+		<ProtocolInformationList>
+			<!--ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-router-hardware-get"/>
+				</RecordInformationList>
+			</ProtocolInformation-->
+			<ProtocolInformation protocol="SSH" interactionid="ubiquiti_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="ubiquiti_air_os_hardware_prop"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+			<ProtocolInformation protocol="CLI" interactionid="ubiquiti_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="ubiquiti_air_os_hardware_prop"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+	</Operations>
+    	
+
+<Operations personalityname="GarderosRouter" operationname="GET_HARDWARE">
+		<ProtocolInformationList>
+			<!--ProtocolInformation protocol="SNMP" interactionid="ne-snmp-get">
+				<RecordInformationList>
+					<RecordInformation recordid="cisco-router-hardware-get"/>
+				</RecordInformationList>
+			</ProtocolInformation-->
+			<ProtocolInformation protocol="SSH" interactionid="garderos_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="garderos_grs_router_hardware_prop"/>
+					<RecordInformation recordid="garderos_grs_router_system_version_details"/>
+					<RecordInformation recordid="garderos_grs_router_system_serial"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+	</Operations>
+
+<Operations personalityname="JuniperFabricSwitch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+      
+			<ProtocolInformation protocol="CLI" interactionid="juniper_fabric_qfx3000g_switch_hardware_prop_ispec">
+				<RecordInformationList>
+					<RecordInformation recordid="juniper_fabric_qfx3000g_switch_hardware_prop_rec"/>
+				</RecordInformationList>
+            </ProtocolInformation>
+			<ProtocolInformation protocol="SSH" interactionid="juniper_fabric_qfx3000g_switch_hardware_prop_ispec">
+				<RecordInformationList>
+					<RecordInformation recordid="juniper_fabric_qfx3000g_switch_hardware_prop_rec"/>
+				</RecordInformationList>
+            </ProtocolInformation>
+
+        </ProtocolInformationList>
+    </Operations>
+
+
+    <Operations personalityname="F5Netcon" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+
+	<ProtocolInformation protocol="CLI" interactionid="F5_Netcon_version_hardware_prop_ispec">
+		<RecordInformationList>
+	 	  <RecordInformation recordid="f5_netcon_hardware_prop_rec1"/>
+	 	  <RecordInformation recordid="f5_netcon_hardware_prop_rec2"/>
+		</RecordInformationList>
+	</ProtocolInformation>
+
+ 	  <ProtocolInformation protocol="SSH" interactionid="F5_Netcon_version_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="f5_netcon_hardware_prop_rec1"/>
+	 	  <RecordInformation recordid="f5_netcon_hardware_prop_rec2"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  </ProtocolInformationList>
+    </Operations>
+
+
+
+
+
+
+    <Operations personalityname="F5Bigip114" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+
+	<ProtocolInformation protocol="CLI" interactionid="F5_Bigip_11_4_version_hardware_prop_ispec">
+		<RecordInformationList>
+	 	  <RecordInformation recordid="f5_bigip_11_4_hardware_prop_rec"/>
+		</RecordInformationList>
+	</ProtocolInformation>
+
+ 	  <ProtocolInformation protocol="SSH" interactionid="F5_Bigip_11_4_version_hardware_prop_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="f5_bigip_11_4_hardware_prop_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  </ProtocolInformationList>
+    </Operations>
+
+
+    <Operations personalityname="EdgeCoreL2Switch" operationname="GET_HARDWARE">
+       <ProtocolInformationList>
+
+	<ProtocolInformation protocol="CLI" interactionid="EdgeCore_L2_Switch_cli_hardware_ispec">
+		<RecordInformationList>
+	 	  <RecordInformation recordid="EdgeCore_L2_Switch_cli_show_version_rec"/>
+		</RecordInformationList>
+	</ProtocolInformation>
+
+ 	  <ProtocolInformation protocol="SSH" interactionid="EdgeCore_L2_Switch_cli_hardware_ispec">
+	      <RecordInformationList>
+	 	  <RecordInformation recordid="EdgeCore_L2_Switch_cli_show_version_rec"/>
+	      </RecordInformationList>
+      </ProtocolInformation>
+ 	  </ProtocolInformationList>
+    </Operations>
+
+
+
+    <Operations personalityname="MiMOMaxGPSTornado" operationname="GET_HARDWARE">
+		<ProtocolInformationList>
+			<ProtocolInformation protocol="SSH" interactionid="mimomax_gps_tornado_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="mimomax_gps_tornado_hardware_prop"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+			<ProtocolInformation protocol="CLI" interactionid="mimomax_gps_tornado_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="mimomax_gps_tornado_hardware_prop"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+	</Operations>
+
+
+<Operations personalityname="MiMOMaxGPSPyxis" operationname="GET_HARDWARE">
+		<ProtocolInformationList>
+			<ProtocolInformation protocol="SSH" interactionid="mimomax_gps_pyxis_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="mimomax_gps_pyxis_hardware_prop"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+			<ProtocolInformation protocol="CLI" interactionid="mimomax_gps_pyxis_show_version_hardware_prop">
+				<RecordInformationList>
+					<RecordInformation recordid="mimomax_gps_pyxis_hardware_prop"/>
+				</RecordInformationList>
+			</ProtocolInformation>
+		</ProtocolInformationList>
+	</Operations>
+    	
+
+ </mapper-configuration>

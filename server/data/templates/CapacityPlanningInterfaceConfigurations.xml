@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Capacity_Planning>
+    <CPRRules RULENAME="opm.reports.interface.cpr.overutilized.rule" DISPLAYNAME="ncm.server.rest.default" DESCRIPTION="Lists the heavily used interfaces with insufficient resources" TIMETHRESHOLD="50" TIMECONDITION="1" CRITERIAPATTERN="10" TYPE="Interface"/>
+    <CPRRules RULENAME="opm.reports.interface.cpr.underutilized.rule" DISPLAYNAME="ncm.server.rest.default" DESCRIPTION="Lists the interfaces with over allocated resources" TIMETHRESHOLD="50" TIMECONDITION="1" CRITERIAPATTERN="11" TYPE="Interface"/>
+    <CPRRules RULENAME="opm.reports.interface.cpr.idle.rule" DISPLAYNAME="ncm.server.rest.default" TIMETHRESHOLD="50" DESCRIPTION="Lists the idle interfaces in the network" TIMECONDITION="1" CRITERIAPATTERN="12" TYPE="Interface"/>
+
+    <CPRInterfaceThresholds RULENAME="opm.reports.interface.cpr.overutilized.rule" MONITORNAME="Interface Utilization" VAL="80" CONDITION="1" UNIT="%" TYPE="Dynamic"/>
+    <CPRInterfaceThresholds RULENAME="opm.reports.interface.cpr.underutilized.rule" MONITORNAME="Interface Utilization" VAL="30" CONDITION="2" UNIT="%" TYPE="Dynamic"/>
+    <CPRInterfaceThresholds RULENAME="opm.reports.interface.cpr.idle.rule" MONITORNAME="Interface Utilization" VAL="10" CONDITION="2" UNIT="%" TYPE="Dynamic"/>
+
+    <CPReportToRule REPORTNAME="opm.reports.interface.cpr.overutilized.name" RULENAME="opm.reports.interface.cpr.overutilized.rule" />
+    <CPReportToRule REPORTNAME="opm.reports.interface.cpr.underutilized.name" RULENAME="opm.reports.interface.cpr.underutilized.rule" />
+    <CPReportToRule REPORTNAME="opm.reports.interface.cpr.idle.name" RULENAME="opm.reports.interface.cpr.idle.rule" />
+
+</Capacity_Planning>

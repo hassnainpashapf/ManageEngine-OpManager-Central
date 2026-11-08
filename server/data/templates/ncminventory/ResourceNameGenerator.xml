@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<WorkFlow>
+<Statements statement_id="Statements:statement_id:UVH@6843626"/>
+<Statements statement_id="Statements:statement_id:UVH@11683292"/>
+<Statements statement_id="Statements:statement_id:UVH@21404265"/>
+<Workflow_Unit workflow_unit_id="Workflow_Unit:workflow_unit_id:UVH@29789811">
+<Templates name="ResourceNameGenerator">
+<Template_DataList>
+<Template_Data variable_type="String" variable_name="TopoOperation">
+<Template_Variables/>
+</Template_Data>
+</Template_DataList>
+<Workflow_Templates human_in_the_loop="false">
+<WorkFlow_Type type="TopoFilter"/>
+<Workflow_StatementsList>
+<Workflow_Statements next_statement_id="Statements:statement_id:UVH@11683292" statement_id="Statements:statement_id:UVH@6843626" workflow_unit_id="Workflow_Unit:workflow_unit_id:UVH@29789811"/>
+<Workflow_Statements statement_id="Statements:statement_id:UVH@21404265" workflow_unit_id="Workflow_Unit:workflow_unit_id:UVH@4423115"/>
+<Workflow_Statements statement_id="Statements:statement_id:UVH@11683292" workflow_unit_id="Workflow_Unit:workflow_unit_id:UVH@553984"/>
+</Workflow_StatementsList>
+</Workflow_Templates>
+<Task_Templates human_task="false" workflow_template_id="Workflow_Unit:workflow_unit_id:UVH@29789811">
+<Java_Api class_name="com.adventnet.nms.DummyTask" description="User Task"/>
+</Task_Templates>
+</Templates>
+</Workflow_Unit>
+<Workflow_Unit workflow_unit_id="Workflow_Unit:workflow_unit_id:UVH@553984">
+<Rules evaluate_seq="false" workflow_template_id="Workflow_Unit:workflow_unit_id:UVH@29789811">
+<Rules_To_StatementsList>
+<Rules_To_Statements true_statement_id="Statements:statement_id:UVH@21404265" boolean_expression_id="Expressions:expression_id:UVH@16239569" sequence_number="1"/>
+</Rules_To_StatementsList>
+</Rules>
+</Workflow_Unit>
+<Workflow_Unit workflow_unit_id="Workflow_Unit:workflow_unit_id:UVH@4423115">
+<Templates name="NameGenerator">
+<Task_Templates human_task="false" workflow_template_id="Workflow_Unit:workflow_unit_id:UVH@29789811">
+<Java_Api class_name="com.adventnet.nms.topo.di.ResourceNameGenerator" description="User Task"/>
+</Task_Templates>
+</Templates>
+</Workflow_Unit>
+<Expressions expression_id="Expressions:expression_id:UVH@16239569">
+<Boolean_Expressions>
+<Bool_Expr_TermsList>
+<Bool_Expr_Terms negate_term="false" term_exp_id="Expressions:expression_id:UVH@6690098"/>
+</Bool_Expr_TermsList>
+<Bool_Expr_With_Terms term_conjug_operator="21"/>
+</Boolean_Expressions>
+</Expressions>
+<Expressions expression_id="Expressions:expression_id:UVH@6690098">
+<Bool_Str_Comp_Const constant="ADD" operator="15" left_expression_id="Expressions:expression_id:UVH@33140442">
+<Boolean_Expressions/>
+</Bool_Str_Comp_Const>
+</Expressions>
+<Expressions expression_id="Expressions:expression_id:UVH@33140442">
+<String_Template_Vars template_id="Workflow_Unit:workflow_unit_id:UVH@29789811" variable_name="TopoOperation">
+<String_Expressions/>
+</String_Template_Vars>
+</Expressions>
+</WorkFlow>
+

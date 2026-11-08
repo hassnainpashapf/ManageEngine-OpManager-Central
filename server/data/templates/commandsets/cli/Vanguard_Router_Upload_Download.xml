@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<!-- Vanguard Router Commands -->
+
+<!-- Fetch Running Config -->
+
+<CLICommandList>
+
+<CLIInteractionSpec  interactionverb="1" requesttimeout="20000" prompt="#Enter Selection:" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="vanguard_router_cli_menu_prompt_irec"/>
+</CLIInteractionSpec>
+
+
+<CLICommand command="29">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="vanguard_router_cli_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec  interactionverb="1" requesttimeout="20000" prompt=">" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="vanguard_router_cli_prompt_irec"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec  interactionverb="1" requesttimeout="20000" prompt="OK" commandecho="false" promptecho="true">
+	<InteractionSpec timeout="20000" protocol="CLI" interactionid="vanguard_router_cli_Logout_prompt_irec"/>
+</CLIInteractionSpec>
+
+
+
+
+<CLICommand command="tftp getscript ${UserInput:file_name} ${UserInput:tftp_server_address}">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="vanguard_router_cli_fetch_running_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="1">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="vanguard_router_cli_Logout_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+<CLICommand command="tftp setscript ${UserInput:file_name} ${UserInput:tftp_server_address}">
+	<CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="vanguard_router_cli_push_running_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

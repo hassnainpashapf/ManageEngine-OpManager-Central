@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Hirschmann GREYHOUND Switch" osType="" templateName="Hirschmann_greyhound_switch" category="Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Hirschmann" vendorName="Hirschmann">
+		<Commands>
+			<Command commandstr="show system info"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+		    <OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="cli numlines 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="80000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandecho="" commandstr="show running-config script all" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" promptecho="" readfromresponse="true" sequenceid="20" timeout="60000"/>
+            	</Operation>
+           	</OperationGroup>
+			<OperationGroup type="Others">
+			   	<Operation name="syncconfiguration">
+                	<Command commandstr="copy running-config startup-config " messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="30000" promptactionid="HirschmannSwitchActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            </OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Hirschmann GREYHOUND Switch" personalityName="HirschmannGREYHOUNDSwitch">
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Hardware revision" displayname="Hardware revision" name="HARDWARE_REV" sequenceid="1" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HirschmannGreyhoundHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_hirschmann_greyhound">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Firmware software release.*FLASH\)\.+(\S+)-(\S+).*">
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+										<REGEX NAME="SERIES" EXPRESSION=".*Device hardware description\.+((\S*)-\S+).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="2"/>
+										</REGEX>
+									    <REGEX NAME="HARDWARE_REV" EXPRESSION=".*Device hardware revision\.+(\S*).*">
+											<PARAM NAME="HARDWARE_REV" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*Serial number\.+(\S+).*">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+									    <REGEX NAME="MACADDRESS" EXPRESSION=".*MAC address.*nagement\)\.+(\S*).*">
+										   	<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+									    </REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system info" messagesuffix="${LF}" parsercommandname="hardware_prop_hirschmann_greyhound" prompt="${UserInput:EnablePrompt}" promptactionid="H3CSwitchActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

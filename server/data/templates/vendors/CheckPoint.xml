@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For CheckPoint Firewall -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:checkpoint_firewall" templatename="CheckPoint_Firewall" displayname="CheckPoint Firewall" ostype="Edge X" description="For all CheckPoint Firewalls">
+        <NCMVendorDevice vendorid="CheckPoint"/>
+        <NCMDevicePersonality personalityid="CheckPointFirewall"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+		</NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        
+
+         <!-- SSH -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:checkpoint_firewall_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:checkpoint_firewall" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+               <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="checkpoint_firewall_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="checkpoint_firewall_backup_running_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:checkpoint_firewall_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:checkpoint_firewall" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+               <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="checkpoint_firewall_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="checkpoint_firewall_backup_running_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+    <!-- For CheckPoint Gaia  Firewall -->
+	
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:checkpoint_gaia_firewall" templatename="CheckPoint_Gaia_Firewall" displayname="CheckPoint Gaia Firewall" ostype="GAIA" description="For all Check Point Firewall Gaia R75.46">
+        <NCMVendorDevice vendorid="CheckPoint"/>
+        <NCMDevicePersonality personalityid="CheckPointGaiaFirewall"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+		</NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        
+
+         <!-- SSH -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:checkpoint_gaia_firewall_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:checkpoint_gaia_firewall" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+               <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="checkpoint_gaia_firewall_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="checkpoint_gaia_firewall_backup_running_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- telnet -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:checkpoint_gaia_firewall_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:checkpoint_gaia_firewall" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+               <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="checkpoint_gaia_firewall_running_config_backup" taskhandling="true"/>
+                <NCMReadFromResponse operationid="BackupRunningConfig" recordid="checkpoint_gaia_firewall_backup_running_rec"/>
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

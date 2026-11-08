@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomDevicePackage>
+<!--CustomDevicePackageSet Category="Printer" Vendor="RICOH" iconName="Printer.png" pingInterval="15">
+      <CustomDevicePackage deviceType="Ricoh SP C320DN">
+          <SysOIDs>
+              <SysOID oid=".1.3.6.1.4.1.367.1.1">
+                  <RULES customOid=".1.3.6.1.4.1.367.3.2.1.1.1.1.0" operatorDispName="webclient.admin.ruleaction.operator.regex" operatorID="13" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue=".*SP C320DN.*"/>
+              </SysOID>
+          </SysOIDs>
+       </CustomDevicePackage>
+   <CustomDevicePackage deviceType="Ricoh SP C830DN">
+       <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.367.1.1">
+                <RULES customOid=".1.3.6.1.4.1.367.3.2.1.1.1.1.0" operatorDispName="webclient.admin.ruleaction.operator.regex" operatorID="13" ruleKeyID="401" ruleName="CUSTOMOID" ruleTypeID="4" ruleValue=".*SP C830DN.*"/>
+            </SysOID>
+    </SysOIDs>
+  </CustomDevicePackage>
+  </CustomDevicePackageSet-->
+<CustomDevicePackageSet Category="Printer" Vendor="CANON" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="CANON iPF710">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1602.4.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+  <CustomDevicePackageSet Category="Printer" Vendor="Fuji Xerox" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C3320">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.27.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox DocuCentre-V C5575">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.8.9.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox DocuPrint P455 d">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.36.18.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox DocuPrint CP305 d">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.36.7.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fuji Xerox DocuCentre-V C4475 T2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.8.7.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox Apeosport IV C5575">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.9.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-IV 4070">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.19.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-IV C2275">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-IV C3373">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.3.2"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.3.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-IV C4470">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.8.7.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-IV C4475">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.20.7.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C2275 T2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.24.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C2275">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.22.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C2276">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.31.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C3373">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.22.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C3375 T2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.24.4.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C3375">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.22.5.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C4475 T2">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.24.7.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C4475">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.22.6.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-V C5576">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.31.9.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-VI C3371">
+        <SysOIDs>
+	    <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.34.9.1"/>
+	    <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.34.9.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-VI C4471">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.34.7.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox DocuCentre-IV C2263">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.5.2.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.5.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox DocuCentre-IV C2265">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.5.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox DocuPrint CM405 df">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.32.7.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox DocuPrint P355 d">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.36.18.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox DocuPrint">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.9.3.1.7.8.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.2.3.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.1.3"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.18.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.19.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.21.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.23.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.28.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.30.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.31.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.32.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.37.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.4.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.41.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.7.8.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox Document Centre">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.21.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.21.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.21.2.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.21.3.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.21.5.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.21.6.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.21.6.2"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.21.7.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.18.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.20.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.21.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.22.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.27.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.28.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.3.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.31.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.33.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.6.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.6.1.2"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.6.2.1"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.6.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.6.8.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox WorkCentre Pro">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.22.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox WorkCentre">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.22.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fuji Xerox ApeosPort-VI C2271">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.35.34.21.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Printer" Vendor="Hewlett-Packard" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="HP LaserJet 3055">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.11.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+	<CustomDevicePackage deviceType="HP LaserJet Pro MFP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.26696.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="HP Office Jet 8600">
+        <SysOIDs>
+            <SysOID oid=".40231213.4.811937840.808464432.808464432.808464432.808464432.808463408"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Printer" Vendor="KONICA MINOLTA HOLDINGS" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="KONICA MINOLTA HOLDINGS Ineo 350">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.2.1.2.1.6.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="KONICA MINOLTA Bizhub">
+        <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.104.2.5"/>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.116.2.4"/>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.104.3.5"/>
+        </SysOIDs>
+     </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Printer" Vendor="Lexmark International" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Lexmark C782">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.2.71106823"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark CX923de">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.52.71107191"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark MS521dn">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.51.71107188"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark MS622de">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.51.71107190"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark MX622ade">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.52.71107185"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lexmark T644">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.641.1.71106751"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Printer" Vendor="Matsushita Electric Industrial" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Matsushita EI Doc-Centre">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.258.300.127.1.297.93.1.8.6.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.258.300.127.1.297.93.1.8.7.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+<CustomDevicePackageSet Category="Printer" Vendor="Tec Corporation" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Tec e-STUDIO167">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1129.2.3.24.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Printer" Vendor="Tektronix" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Tektronix Phaser 850DX">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.128.2.1.4.2.7.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+
+<CustomDevicePackageSet Category="Printer" Vendor="Xerox" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Xerox Phaser 6022">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.4.39.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Color 550">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.39.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Color 560">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.7.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9301">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.4.1.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox ColorQube 9302">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.24.4.2.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N2025">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.17.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N2125">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.18.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N24/N32">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N2825">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.20.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N3225">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.21.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint N4025">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.22.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint NC60">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.2.3.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.2.3.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox DocuPrint">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.2.2.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.2.4.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.19.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.3.2.3.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Center 240ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.5.1.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.5.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Center 265LP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.4.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.4.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Center 265ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.4.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 230ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.22.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.22.1.3"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.1.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.1.3"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.3.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 255LP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.7.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.7.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 255ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.7.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.7.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 332LP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.9.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.9.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 332ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.9.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 340LP">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.6.2.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.6.2.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 340ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.6.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 420ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.19.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.19.1.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 432ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.20.1.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.20.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 440ST">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.21.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.21.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 450">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 460">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 465">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 470">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.4.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 475">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.17.5.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 480">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.23.1.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.23.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre 485">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.23.2.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Doc-Centre">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.19.2.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.19.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.20.1.4"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.20.1.5"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.20.2.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.27.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.1.8.1.4"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.4.2.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Phaser 4400DT">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.2.1.3"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox Wide Format 6279">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.22.1.4.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5150">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.32.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5632 v1">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.35.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 5645 v1 MFS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.3.38.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre 7335">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.4.20.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro MFS">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.3.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.4.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.8.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.33.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre Pro">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.25.1"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.1.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox WorkCentre">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.25"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.2"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.3"/>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.2.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox AltaLink C8030">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.35.2.1.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Xerox AltaLink C8145">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.253.8.62.1.35.2.8.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Printer" Vendor="Sharp" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Sharp MX-5070N">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.2385.3.1.112.1.4"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Printer" Vendor="Zebra Technologies Corporation" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Zebra Printer">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.10642.1.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Printer" Vendor="Seiko Epson Corporation" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Seiko Epson Printer">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.1248.3.1.2.1.3.6.85.66.45.69.48.51"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+  </CustomDevicePackageSet>
+  <CustomDevicePackageSet Category="Printer" Vendor="Konica-Minolta" iconName="printer.png" pingInterval="15">
+    <CustomDevicePackage deviceType="Konica-Minolta DEVELOP Ineo Plus 258">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.2.1.2.1.131.2.10"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C4050i">
+        <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.215.2.1"/>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.182.3.1"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Konica-Minolta Bizhub C759">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.163.3.2"/>
+        </SysOIDs>
+    </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Toshiba Corporation" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Toshiba Tec e-STUIDO">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.51.2"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.61.3"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.45.3"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.68.4"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.44.2"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.59.3"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.68.6"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.37.2"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.70.3"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.58.4"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.67.1"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.33.3"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.36.2"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.37.4"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.53.3"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.45.2"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.68.5"/>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.40.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Datamax" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Datamax Printer">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.10917.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Lexmark International" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Lexmark MX521ade">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.52.71107184"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark XM5163">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.2.71107140"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark MS621dn">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.51.71107189"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark CS720">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.1.71107157"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark CS820">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.51.71107160"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark MS421dn">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.51.71107187"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark CX622ade">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.52.71107213"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark CX310dn">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.2.71107119"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark MS823dn">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.51.71107168"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark CX522ade">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.52.71107212"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark CX625ADHE">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.52.71107337"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark MX826adxe">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.52.71107342"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark MX722ADHE">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.52.71107169"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Lexmark MX421ade">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.641.52.71107183"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Fuji Xerox" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Fuji Xerox DocuCentre-IV C3375">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.4.4.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fuji Xerox DocuCentre-V C2265">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.37.22.3.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fuji Xerox ApeosPort C3570">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.39.18.9.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Fuji Xerox ApeosPort C2560">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.39.8.2.1"/>
+            </SysOIDs>
+         </CustomDevicePackage>
+           <CustomDevicePackage deviceType="Fuji Xerox ApeosPort C4570">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.297.1.11.93.1.39.18.8.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Epson" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Epson TM-m30">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1248.3.1.2.1.3.6.84.77.45.109.51.48"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Epson UB-E04">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1248.3.1.2.1.3.6.85.66.45.69.48.52"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Epson TM-T88VI">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1248.3.1.2.1.3.8.84.77.45.84.56.56.86.73"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Epson LQ-2090">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1248.1.1.2.1.3.5.69.73.80.69.53"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Sharp" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Sharp MX-3140N">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2385.3.1.95.1.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Sharp MX-M565N">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2385.3.1.99.1.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Sharp MX-2314N">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2385.3.1.94.1.7"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Sharp MX-M362N">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.2385.3.1.71.1.16"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Xerox" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Xerox WorkCentre 3550">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.5.24.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox AltaLink C8035">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.35.2.2.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox AltaLink C8045">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.35.2.3.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox VersaLink B405">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.34.1.2.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox VersaLink C405">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.34.4.2.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox AltaLink B8155">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.35.1.7.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox AltaLink B8055">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.35.1.2.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox VersaLink C505">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.34.5.2.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox VersaLink C7020 MFP">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.34.2.2.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox 3330">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.19.7.1.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox B600">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.34.7.1.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox WorkCentre 6515">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.7.28.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox AltaLink C8070">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.35.2.5.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox VersaLink C7030">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.34.2.4.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox AltaLink C8055">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.35.2.4.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox WorkCentre 3345">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.20.7.30.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox Versalink B7030">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.34.2.3.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Xerox VersaLink B400">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.253.8.62.1.34.1.1.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Samsung Electronics Co., LTD." iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Samsung SL-X4220RX">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.236.11.5.11.62.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Zebra Technologies Corporation" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Zebra Tech Printer">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.10642.200"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="Konica-Minolta" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 205i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.206.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 206">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.136.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C452">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.48.3.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.48.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 3602P">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.34.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C253">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.30.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C658">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.142.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 458">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.159.3.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.159.3.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.159.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C224e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.107.2.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C454e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.104.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.104.3.3"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C258">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.3.9"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.2.8"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.3.8"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.3.10"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.2.9"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.3.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.2.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.131.2.10"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C458">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.144.2.5"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.144.2.7"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.144.2.6"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.144.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.144.3.7"/>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.144.3.3"/>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.144.3.6"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4052">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10018.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C550i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.177.3.1"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.177.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C364e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.105.3.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.105.3.4"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.105.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.105.3.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.105.2.5"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.105.3.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C300i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.180.2.1"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.180.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.180.3.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 423">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.63.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C360i">
+	    <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.179.3.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.179.2.1"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.179.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.179.3.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 36C">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.2.1.2.1.49.3.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C220">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.57.3.1"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.57.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C308e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.169.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4020i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10025.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C554e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.103.2.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.103.3.5"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.103.3.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4000i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.10007.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C308">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.130.2.10"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.130.3.9"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.130.2.8"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.130.2.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.130.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.130.2.7"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 284e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.111.2.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 454e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.109.3.4"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.109.2.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3850">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.113.2.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta 250">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.7.1.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 458e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.167.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C250i">
+	    <SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.181.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.181.3.1"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.181.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C353">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.29.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 3622">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10014.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C558">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.143.2.6"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.143.3.5"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.143.2.5"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.143.3.7"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C654e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.80.2.6"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4750">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.115.2.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 3301P">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.28.1.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 363">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.64.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta C MF335-1">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.2.1.2.1.114.2.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C750i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.212.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4702P">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.1.1.32.1.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 554e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.103.2.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 368e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.168.3.1"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.168.3.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub PRO 1100">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.126.2.6"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 558e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.166.3.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C280">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.50.3.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.50.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3350i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.183.3.1"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.183.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.183.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 308e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.169.3.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.169.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C287">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.132.2.7"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.132.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C364">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.83.3.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3300i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.186.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.186.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C360">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.49.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Sindoh N501">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.2.1.2.1.123.3.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 4422">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.10013.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 227">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.124.2.11"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.124.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 36">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.87.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C368">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.2.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.3.8"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.2.5"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.2.9"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.2.8"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.3.7"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.3.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.2.4"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.2.10"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.3.9"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.3.10"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.129.3.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C754e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.79.2.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.79.2.6"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C450i">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.178.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3350">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.114.2.4"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub PRO 1051">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.35.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Aurora ADC 367">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.2.1.2.1.130.2.10"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C284e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.106.3.5"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.106.3.2"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.82.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub 654e">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.102.3.5"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3351">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.151.2.4"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.151.2.1"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.151.2.3"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.151.2.6"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.151.2.5"/>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.122.2.1"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+        <CustomDevicePackage deviceType="Konica-Minolta Bizhub C3110">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.18334.1.1.1.2.1.117.2.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+    <CustomDevicePackageSet Category="Printer" Vendor="OKIE" iconName="printer.png" pingInterval="15">
+        <CustomDevicePackage deviceType="OKI ES7470 MFP">
+            <SysOIDs>
+                <SysOID oid=".1.3.6.1.4.1.1129.2.3.48.2"/>
+            </SysOIDs>
+        </CustomDevicePackage>
+    </CustomDevicePackageSet>
+</CustomDevicePackage>

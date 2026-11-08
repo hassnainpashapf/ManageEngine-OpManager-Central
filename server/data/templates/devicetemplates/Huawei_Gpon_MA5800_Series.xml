@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Huawei Gpon MA5800 Series" displayName="Huawei Gpon MA5800 Series" osType="" templateName="Huawei Gpon MA5800 Series">
+	<RestTemplate name=""/>
+	<Vendor displayName="Huawei" vendorName="Huawei">
+		<Commands>
+			<Command commandstr="display version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="warnings" number="5" sequenceid="1"/>
+			<Level name="notifications" number="6" sequenceid="2"/>
+			<Level name="informational" number="7" sequenceid="3"/>
+			<Level name="debugging" number="8" sequenceid="4"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="scroll" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="huaweiActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="60000"/>
+                	<Command commandecho="" commandstr="display current-configuration" delay="" messagesuffix="${LF}" prompt="" promptactionid="huaweiActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="130000"/>
+            	</Operation>
+            	<Operation name="Startup">
+                	<Command commandecho="" commandstr="scroll" delay="" messagesuffix="${LF}" prompt="" promptactionid="huaweiActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="60000"/>
+                	<Command commandecho="" commandstr="display saved-configuration" delay="" messagesuffix="${LF}" prompt="" promptactionid="huaweiActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="130000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Huawei Gpon M5800 Series" personalityName="HuaweiGponM5800Series">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Patch" displayname="Patch" name="PATCH" sequenceid="1" size="100"/>
+				<Column defaultvalue="Not Available" desc="Software Version" displayname="Software Version" name="SOFTWARE_VERSION" sequenceid="2" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HuaweiGponHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_huawei_gpon_ma5800">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="PATCH" EXPRESSION=".*PATCH\s*:\s*(\S*).*">
+											<PARAM NAME="PATCH" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL" EXPRESSION=".*PRODUCT\s*:\s*(\S*).*">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX> 
+										<REGEX NAME="SOFTWARE_VERSION" EXPRESSION=".*VERSION\s*:\s*(\S*).*">
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX> 							
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0" />
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>   
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="display version" messagesuffix="${LF}" parsercommandname="hardware_prop_huawei_gpon_ma5800" prompt="${UserInput:EnablePrompt}" promptactionid="huaweiActionId" timeout="120000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds>
+		<PromptActionId name="huaweiActionId" prompt="}:" command="&#10;" suffix="${LF}"/>
+		<PromptActionId name="huaweiActionId" prompt=":" command="&#10;" suffix="${LF}"/>
+	</PromptActionIds>
+</NCMDeviceTemplate>

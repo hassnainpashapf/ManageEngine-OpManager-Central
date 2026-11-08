@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLIMultiplePromptActionList>
+	<!--
+
+	NOTE : If the command starts with $ and value given like $xx then char with ascii value
+	xx will be replaced.. this logic is present in CLIConfigurationFactory . java
+
+    <CLIMultiplePromptAction promptactionid="yesActionId" prompt="$" command=""/>
+    <CLIMultiplePromptAction promptactionid="yesActionId" prompt="#" command=""/>
+    -->
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco1" promptactionid="yesActionId" prompt="[confirm]" command="&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco2" promptactionid="yesActionId" prompt="--More--" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco3" promptactionid="yesActionId" prompt="-- More --" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco4" promptactionid="yesActionId" prompt="[yes/no]" command="yes&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco5" promptactionid="yesActionId" prompt="]?" command="&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco6" promptactionid="yesActionId" prompt="y/n" command="y"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco7" promptactionid="yesActionId" prompt="yes/no" command="yes&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco8" promptactionid="yesActionId" prompt="---(more)---" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco9" promptactionid="yesActionId" prompt="--- more ---" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco10" promptactionid="yesActionId" prompt="---MORE---" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco11" promptactionid="yesActionId" prompt="---more---" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:RadwareCompleted" promptactionid="yesActionId" prompt="completed" command="&#10;"/>
+
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Image1" promptactionid="ImageDownloadPromptAction1" prompt="[confirm]" command="&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Image2" promptactionid="ImageDownloadPromptActioni2" prompt="[yes/no]" command="yes&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Image3" promptactionid="ImageDownloadPromptAction2" prompt="[confirm]" command="&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Foundry1" promptactionid="foundryActionId" prompt="done." command="&#13;&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Foundry2" promptactionid="foundryActionId" prompt="--More--" command="$32"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:HP1" promptactionid="hpActionId" prompt="-- MORE --" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:HP2" promptactionid="hpActionId" prompt="[y/n]" command="y"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:HP3" promptactionid="hpActionId" prompt="next line:" command="$32"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:HP5" promptactionid="hpActionId" prompt="continue" command="&#10;"/>
+
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:HP4" promptactionid="hppActionId" prompt="TFTP server:" command="&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:3Com1" promptactionid="3comActionId" prompt="notes:" command="Config backed up by NCM&#13;&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:3Com2" promptactionid="3comActionId" prompt="(yes,no)[no]:" command="yes&#13;&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:3Com3" promptactionid="3comActionId" prompt="[Y/N]:" command="y&#13;&#10;"/>
+
+    <!--CLIMultiplePromptAction promptactionid="3comActionId" prompt="WARNING:" command=""/-->
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:CatOS" promptactionid="catOSActionId" prompt="(y/n) [n]?" command="y&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:NetScreen" promptactionid="netscreenActionId" prompt="--- more ---" command="$32"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:NortelPP1" promptactionid="nortelPPActionId" prompt="ontinue" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:NortelPP2" promptactionid="nortelPPActionId" prompt="--More--" command="$32"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Nortel8600" promptactionid="nortel8600ActionId" prompt="(y/n) ?" command="y&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:DLink1" promptactionid="dlinkActionId" prompt="All" command="&#97;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:DLink2" promptactionid="dlinkActionId" prompt="?[Yes" command="&#121;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Enterasys1" promptactionid="EnterasysActionId" prompt="]?" command="y&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Enterasys2" promptactionid="EnterasysActionId" prompt="--More--" command="$32"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:CiscoVPNConcentratorActionId" promptactionid="CiscoVPNConcentratorActionId" prompt="Continue ->" command="&#113;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:CiscoWLANController1" promptactionid="CiscoWLANControllerActionId" prompt="(y/N)" command="y&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:CiscoWLANController2" promptactionid="CiscoWLANControllerActionId" prompt="--More--" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:CiscoWLANController3" promptactionid="CiscoWLANControllerActionId" prompt="continue..." command="&#10;"/>
+
+
+    <!-- Covers all types of More for show commands & other actions for CustomTemplate script execution -->
+    <!-- For Cisco & Force10-->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution1" promptactionid="scriptExecutionActionId" prompt="[confirm]" command="&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution2" promptactionid="scriptExecutionActionId" prompt="--More--" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution3" promptactionid="scriptExecutionActionId" prompt="-- More --" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution4" promptactionid="scriptExecutionActionId" prompt="[yes/no]" command="yes&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution5" promptactionid="scriptExecutionActionId" prompt="]?" command="&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution6" promptactionid="scriptExecutionActionId" prompt="y/n" command="y&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution7" promptactionid="scriptExecutionActionId" prompt="yes/no" command="yes&#10;"/>
+    <!-- For Foundry -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution8" promptactionid="scriptExecutionActionId" prompt="done." command="&#13;&#10;"/>
+    <!-- For HP -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution9" promptactionid="scriptExecutionActionId" prompt="-- MORE --" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution10" promptactionid="scriptExecutionActionId" prompt="next line:" command="$32"/>
+    <!-- For Netscreen -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution11" promptactionid="scriptExecutionActionId" prompt="--- more ---" command="$32"/>
+    <!-- For Nortel -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution12" promptactionid="scriptExecutionActionId" prompt="continue" command="&#10;"/>
+    <!-- For DLink -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution13" promptactionid="scriptExecutionActionId" prompt="Allllaa" command="&#97;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution14" promptactionid="scriptExecutionActionId" prompt="?[Yes" command="&#121;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution15" promptactionid="scriptExecutionActionId" prompt="----More" command="$32"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution16" promptactionid="scriptExecutionActionId" prompt="---(more)---" command="$32"/>
+    <!-- For Alaxala -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution17" promptactionid="scriptExecutionActionId" prompt="byte" command="&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:ScriptExecution18" promptactionid="scriptExecutionActionId" prompt="Press any key to continue (Q to quit)" command="&#13;&#32;"/>
+
+    <!-- For Nortel -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:NortelContivity1" promptactionid="NortelContivityActionId" prompt="--More--" command="$32"/>
+
+
+	<!-- For Alaxala -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Alaxala1" promptactionid="AlaxalaActionId" prompt="y/n" command="y&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Alaxala2" promptactionid="AlaxalaActionId" prompt="byte" command="&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Alaxala3" promptactionid="AlaxalaActionId" prompt="Press any key to continue (Q to quit)" command="&#13;&#32;"/>
+    
+    <!-- For Alaxala 1230-->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Alaxala4" promptactionid="Alaxala1230ActionId" prompt="Press any key to continue (Q to quit)" command="&#13;&#32;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Alaxala5" promptactionid="Alaxala1230ActionId" prompt="y/n" command="y&#13;&#10;"/>
+
+
+	<!-- For Brocade -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Brocade1" promptactionid="BrocadeActionId" prompt="y/n" command="y&#10;"/>
+
+      <!-- H3C Switches -->
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:h3c1" promptactionid="H3CSwitchActionId" prompt="[Y/N]" command="Y&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:h3c2" promptactionid="H3CSwitchActionId" prompt="File uploaded successfully" command="&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:h3c3" promptactionid="H3CSwitchActionId" prompt="saved configuration successfully" command="&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:h3c4" promptactionid="H3CSwitchActionId" prompt="Done." command="&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:h3c5" promptactionid="H3CSwitchActionId" prompt="enter key):" command="&#10;"/> 
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Hitachi1" promptactionid="hitachiActionId" prompt="y/n" command="y&#13;&#10;"/>
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:h3c6" promptactionid="H3CSwitchActionId" prompt="[Y(yes)/N(no)/C(cancel)]:" command="Y&#10;"/> 
+
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:h3c7" promptactionid="H3CSwitchActionId" prompt="[Y/N]:" command="Y&#10;"/> 
+    
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:h3c8" promptactionid="H3CSwitchActionId" prompt="---- More ----" command="$32"/> 
+    
+<!-- For Bluecoat Packet Shaper -->
+
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:packetshaper" promptactionid="PackershaperActionId" prompt="(YES):" command="yes&#13;&#10;"/>
+
+<!-- <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:CiscoFWSMFirewall" promptactionid="FwsmActionId" prompt="[running-config]?" command="&#10;"/> -->
+
+	
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:canogaperkins" promptactionid="CanogaPerkinsActionId" prompt="-- MORE --" command="$32"/>
+
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:HirschmannSwitch" promptactionid="HirschmannSwitchActionId" prompt="(y/n)" command="y&#10;"/>
+
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:transporteirelessrouter" promptactionid="TransPortWirelessRouterId" prompt="OK" command="&#13;&#10;"/>
+
+
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Dell1" promptactionid="DellActionId" prompt="(y/n)" command="y&#10;"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Dell2" promptactionid="DellActionId" prompt="[Yes/press any key for no]...." command="y&#10;"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Ironport" promptactionid="IronportId" prompt="[Y]>" command="y&#10;"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Radware3" promptactionid="RadwareActionId" prompt="[y/n]:" command="n&#10;"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Radware4" promptactionid="RadwareActionId" prompt="ontinue" command="$32"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Radware5" promptactionid="RadwareActionId" prompt="--More--" command="$32"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:necActionId" promptactionid="necActionId" prompt="No]):" command="y&#13;&#10;"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Fiberhome" promptactionid="FiberhomeId" prompt="[y]" command="y"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Ironport2" promptactionid="IronportId" prompt="-Press Any Key For More-" command="$32"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco12" promptactionid="Cisco300SwitchActionId" prompt="] ?" command="Y&#10;"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco13" promptactionid="yesActionId" prompt="---(more" command="$32"/>
+<CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco14" promptactionid="yesActionId" prompt="n):" command="y&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Cisco15" promptactionid="yesActionId" prompt="[confirm]" command="&#10;"/>
+    <CLIMultiplePromptAction promptactionuniqueid="CLIMultiplePromptAction:promptactionuniqueid:Ironport3" promptactionid="IronportId" prompt="--More--" command="$32"/>
+</CLIMultiplePromptActionList>
+

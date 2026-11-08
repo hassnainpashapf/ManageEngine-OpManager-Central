@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Proxim AccessPoints -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:proxim_ap_4000" templatename="Proxim_AccessPoint" displayname="Proxim AccessPoint" description="For all Proxim AccessPoints">
+        <NCMVendorDevice vendorid="Proxim"/>
+        <NCMDevicePersonality personalityid="ProximAccessPoint"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials"/>
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:proxim_ap_4000_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:proxim_ap_4000" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="proximaccesspoint_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="proximaccesspoint_cli_running_config_upload"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:proxim_ap_4000_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:proxim_ap_4000" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="proximaccesspoint_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="proximaccesspoint_cli_running_config_upload"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+    </NCMDeviceTemplate>
+
+
+</DeviceConfiguration>

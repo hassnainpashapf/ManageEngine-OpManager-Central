@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For PaloAlto Firewall -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:paloalto_firewall" templatename="PaloAlto_Firewall" displayname="PaloAlto Firewall PA-4000" ostype="PaloAlto" description="For all PaloAlto PA-4000 Firewall">
+        <NCMVendorDevice vendorid="PaloAlto"/>
+        <NCMMULTICONFIGTEMPLATES devicetemplateid="NCMDeviceTemplate:devicetemplateid:paloalto_firewall" configcount="2" description="To backup each 2 configs a new license required"/>
+    	<NCMDevicePersonality personalityid="PaloAltoFirewall"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:paloalto_firewall_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:paloalto_firewall"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="paloalto_firewall_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="paloalto_firewall_cli_show_config_rec"/>
+         
+		 </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:paloalto_firewall_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:paloalto_firewall"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="paloalto_firewall_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="paloalto_firewall_cli_show_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+	
+<!-- For PaloAlto Panorama Firewall -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:paloalto_panorama_firewall" templatename="PaloAlto_Panorama_Firewall" displayname="PaloAlto Panorama Firewall" ostype="PaloAlto" description="For all Centralized Management console for Palo Alto Firewalls" IS_DEPRICATED="true">
+        <NCMVendorDevice vendorid="PaloAlto"/>
+        <NCMDevicePersonality personalityid="PaloAltoPanoramaFirewall"/>
+
+		<!-- NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol -->
+
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+
+		<!-- SSH -->
+        <!-- NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:paloalto_panorama_firewall_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:paloalto_panorama_firewall"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="paloalto_panorama_firewall_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="paloalto_panorama_firewall_cli_show_config_rec"/>
+         
+		 </NCMDeviceCriteria>
+        </NCMProtocolCombination -->
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:paloalto_panorama_firewall_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:paloalto_panorama_firewall"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="paloalto_panorama_firewall_cli_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="paloalto_panorama_firewall_cli_show_config_rec"/>
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>
+

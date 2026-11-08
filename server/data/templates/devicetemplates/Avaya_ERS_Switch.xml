@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="Avaya ERS Switch" displayName="Avaya ERS Switch" osType="" templateName="Avaya_ERS_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Avaya" vendorName="Avaya">
+		<Commands>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Avaya ERS Switch" personalityName="AvayaERSSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="OperationMode" size="30" desc="Operation Mode of the device" displayname="Operation Mode" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="SysUpTime" size="30" desc="SysUpTime of the device" displayname="SysUpTime" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="SysNtpTime" size="30" desc="SysNtpTime of the device" displayname="SysNtpTime" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="SysName" size="30" desc="SysName of the device" displayname="SysName" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="SysLocation" size="30" desc="SysLocation of the device" displayname="SysLocation" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="SystemDescription" size="250" desc="System Description of the device" displayname="System Description" defaultvalue="Not Available" sequenceid="6"/>
+				<Column name="OperationalSoftware" size="30" desc="Operational Software of the device" displayname="Operational Software" defaultvalue="Not Available" sequenceid="7"/>
+				<Column name="InstalledSoftware" size="30" desc="Installed Software of the device" displayname="Installed Software" defaultvalue="Not Available" sequenceid="8"/>
+				<Column name="PowerStatus" size="30" desc="Power Status of the device" displayname="Power Status" defaultvalue="Not Available" sequenceid="9"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="AvayaERSSwitchHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_avaya_ers_switch">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OPERATIONMODE" EXPRESSION="\s*Operation\sMode:\s*(.*)">
+											<PARAM NAME="OPERATIONMODE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MACADDRESS" EXPRESSION="\s*MAC\sAddress:\s*(.*)">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="POWERSTATUS" EXPRESSION="\s*Power\sStatus:\s*(.*)">
+											<PARAM NAME="POWERSTATUS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SYSTEMDESCRIPTION" EXPRESSION="\s*sysDescr:\s*(.*)">
+											<PARAM NAME="SYSTEMDESCRIPTION" TOKENNO="1"/>
+										</REGEX>
+										 <REGEX NAME="SERIAL" EXPRESSION="\s*Serial\s#:\s*(.*)">
+											<PARAM NAME="SERIAL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="OPERATIONALSOFTWARE" EXPRESSION="\s*Operational\sSoftware:\s*(.*)">
+											<PARAM NAME="OPERATIONALSOFTWARE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="INSTALLEDSOFTWARE" EXPRESSION="\s*Installed\sSoftware:\s*(.*)">
+											<PARAM NAME="INSTALLEDSOFTWARE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SYSTEMUPTIME" EXPRESSION="\s*sysUpTime:\s*(.*)">
+											<PARAM NAME="SYSTEMUPTIME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SYSTEMNTPTIME" EXPRESSION="\s*sysNtpTime:\s*(.*)">
+											<PARAM NAME="SYSTEMNTPTIME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SYSTEMNAME" EXPRESSION="\s*sysName:\s*(.*)">
+											<PARAM NAME="SYSTEMNAME" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SYSTEMLOCATION" EXPRESSION="\s*sysLocation:\s*(.*)">
+											<PARAM NAME="SYSTEMLOCATION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show sys-info" parsercommandname="hardware_prop_avaya_ers_switch" responseparserid="avaya_ers_switch_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="60000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="ERS8803R" ostype="NA" series="8800" sysoid=".1.3.6.1.4.1.2272.57"/>
+        <NCMDeviceSysOID model="ERS8806" ostype="NA" series="8800" sysoid=".1.3.6.1.4.1.2272.58"/>
+        <NCMDeviceSysOID model="ERS8810" ostype="NA" series="8800" sysoid=".1.3.6.1.4.1.2272.59"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

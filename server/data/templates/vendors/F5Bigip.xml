@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+
+<DeviceConfiguration>
+
+    <!-- For F5 Bigip -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip" templatename="F5_Big_IP"  displayname="F5 BIG-IP" ostype="BIG-IP"  description="For F5 Bigip">
+        <NCMVendorDevice vendorid="F5"/>
+
+        <NCMDevicePersonality personalityid="F5Bigip"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+         <NCMSupportedProtocol protocolid="SCP"/>
+
+<!-- For Telnet -->
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Bigip_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5Bigip_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_bigip_show_startup_config_rec5"/>
+			
+		<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_Disable_Change_Tracking_Syslog" />	
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+<!-- For SSH -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Bigip_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5Bigip_telnet_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_bigip_show_startup_config_rec5"/>
+		
+		<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_Disable_Change_Tracking_Syslog" />
+        </NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+<!--SSH-SCP-->
+
+<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Bigip_ssh_scp"
+devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip"
+            managementprotocolid="SSH" transferprotocolid="SCP" displayname="SSH - SCP">
+            <NCMDeviceCriteria commandmapid="SSH_SCP_Command">
+
+              <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5Bigip_scp_startup_config_fetch"/>
+	      
+	      <!-- Change Tracking thru Syslog -->
+	      <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_Enable_Change_Tracking_Syslog" />
+	      <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_Disable_Change_Tracking_Syslog" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+<!-- F5 ARX devices -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:f5_arx" templatename="F5_ARX" displayname="F5 ARX" ostype="NA" description="For all F5 ARX devices">
+        <NCMVendorDevice vendorid="F5"/>
+        <NCMDevicePersonality personalityid="F5ARX"/>
+		
+        <NCMSupportedProtocol protocolid="TELNET">
+			<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+       
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+
+		<!-- SSH -->
+            <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:f5_arx_ssh" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:f5_arx"
+            managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+            <NCMDeviceCriteria commandmapid="SSH_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="f5_arx_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_arx_show_startup_config_rec"/>
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="f5_arx_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="F5_arx_show_running_config_rec"/>
+			 
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+	<!-- TELNET -->
+         <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:f5_arx_telnet" 
+            devicetemplateid="NCMDeviceTemplate:devicetemplateid:f5_arx"
+            managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+            <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+             <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="f5_arx_cli_startup_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_arx_show_startup_config_rec"/>			 
+			 
+             <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="f5_arx_cli_running_backup" taskhandling="true"/>
+             <NCMReadFromResponse operationid="BackupRunningConfig" recordid="F5_arx_show_running_config_rec"/>
+			 
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+	
+	
+	
+	   <!-- For F5 10x Bigip -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip_10" templatename="F5_Big_IP_10"  displayname="F5 BIG-IP Version 10.X" ostype="BIG-IP"  description="For F5 Bigip Version 10.X">
+        <NCMVendorDevice vendorid="F5"/>
+
+        <NCMDevicePersonality personalityid="F5Bigip10X"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+<!-- For Telnet -->
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Bigip_telnet_10x_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip_10" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5Bigip_10x_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_bigip_10x_show_startup_config_rec7"/>
+			
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="F5Bigip_10x_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="F5_bigip_10x_show_running_config_rec"/>
+			
+		<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_10x_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_Disable_Change_Tracking_Syslog" />	
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+<!-- For SSH -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Bigip_ssh_10x_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip_10" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5Bigip_10x_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_bigip_10x_show_startup_config_rec7"/>		
+			
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="F5Bigip_10x_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="F5_bigip_10x_show_running_config_rec"/>
+		
+		<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_10x_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="F5_Bigip_Disable_Change_Tracking_Syslog" />
+        </NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+	
+	   <!-- For F5 Crescendo Networks-->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:f5_crescendo_networks" templatename="F5_Crescendo_Networks"  displayname="Crescendo Networks Load Balancer" ostype="NA"  description="For F5 Crescendo Networks Load-Balancer">
+        <NCMVendorDevice vendorid="F5"/>
+        <NCMDevicePersonality personalityid="CrescendoLoadBalancer"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+<!-- For Telnet -->
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:f5_crescendo_networks_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:f5_crescendo_networks" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5_crescendo_networks_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_crescendo_networks_startup_config_rec"/>
+			
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="F5_crescendo_networks_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="F5_crescendo_networks_running_config_rec"/>
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+<!-- For SSH -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:f5_crescendo_networks_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:f5_crescendo_networks" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5_crescendo_networks_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_crescendo_networks_startup_config_rec"/>		
+			
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="F5_crescendo_networks_running_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupRunningConfig" recordid="F5_crescendo_networks_running_config_rec"/>		
+
+        </NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+	 <!-- For F5 11x Bigip -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip_11" templatename="F5_Big_IP_11"  displayname="F5 BIG-IP Version 11.X" ostype="BIG-IP"  description="For F5 Bigip Version 11.X">
+        <NCMVendorDevice vendorid="F5"/>
+
+        <NCMDevicePersonality personalityid="F5Bigip11X"/>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Bigip_ssh_11x_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip_11" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5Bigip_11x_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_bigip_11x_show_startup_config_rec37"/>				
+		
+        </NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+	 <!-- For F5 Netcon -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Netcon" templatename="F5_Netcon"  displayname="F5 Netcon" ostype="NA"  description="For F5 Netcon">
+        <NCMVendorDevice vendorid="F5"/>
+
+        <NCMDevicePersonality personalityid="F5Netcon"/>
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+
+<!-- For Telnet -->
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Netcon_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Netcon" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5_Netcon_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_bigip_11x_show_startup_config_rec37"/>	
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Netcon_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Netcon" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5_Netcon_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_bigip_11x_show_startup_config_rec37"/>				
+		
+        </NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+
+ <!-- For F5 Big Ip 11.4 -->
+
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip_11_4" templatename="F5_Bigip_11_4"  displayname="F5 BIG-IP 11.4" ostype="BIG-IP"  description="For F5 Big-Ip 11.4">
+        <NCMVendorDevice vendorid="F5"/>
+
+        <NCMDevicePersonality personalityid="F5Bigip114"/>
+
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+
+<!-- For Telnet -->
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Bigip_11_4_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip_11_4" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5_Bigip_11_4_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_Bigip_11_4_show_running_config_rec"/>	
+
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:F5_Bigip_11_4_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:F5_Bigip_11_4" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="F5_Bigip_11_4_startup_config_fetch" taskhandling="true"/>
+		<NCMReadFromResponse operationid="BackupStartupConfig" recordid="F5_Bigip_11_4_show_running_config_rec"/>				
+		
+        </NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+</DeviceConfiguration>

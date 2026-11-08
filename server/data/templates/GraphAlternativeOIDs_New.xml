@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<GraphAlternativeOIDs>
+	<GraphAlternativeOID GRAPHNAME="WMI-CPUUtilization" OID="CPU Utilization ProcessorInformation Utility" DISPLAYNAME="ProcessorInformation._Total_Utility" INFO="It provides an overview of CPU activity, monitoring the load and overall performance of the system." />
+</GraphAlternativeOIDs>

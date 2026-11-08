@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+	<!-- this record is used in hardware population of Nortel Passport Switches -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="nortel_hardware_prop_parser" promptactionid="nortelPPActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="nortel_passport_show_switch_hardware_prop"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show switch">
+<CLIInputRecord parsercommandname="hardware_prop_nortel_passport_switch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="nortel_passport_switch_hardware_prop" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<!-- For Passport 8600 series -->
+<CLICommand command="show sys info">
+<CLIInputRecord parsercommandname="hardware_prop_nortel_passport_8600_sysinfo" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="nortel_passport_8600_hardware_rec1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show sys perf">
+<CLIInputRecord parsercommandname="hardware_prop_nortel_passport_8600_sysperf" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="nortel_passport_8600_hardware_rec2" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="cli config more false">
+<CLIInputRecord parsercommandname="hardware_prop_nortel_passport_8600_sysperf" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="nortel_passport_8600_cli_false" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<!-- For BayStack series -->
+
+<!-- upload-download interactions resued -->
+
+<CLICommand command="show sys-info">
+    <CLIInputRecord parsercommandname="hardware_prop_nortel_baystack_sysinfo" messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_baystack_hardware_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+
+<!-- For PWR series -->
+
+<CLICommand command="show system ver">
+    <CLIInputRecord parsercommandname="hardware_prop_nortel_pwrswitch_sysinfo" messagesuffix="&#10;" inputsourcetype="1">
+	  <Record type="CLI" recordid="nortel_pwrswitch_cli_hardware_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+
+
+<!-- For Contivity VPN Router series -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true"  responseparserid="nortel_hardware_prop_parser" promptactionid="NortelContivityActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="nortel_contivity_vpnrouter_hardware_irec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+    <CLIInputRecord parsercommandname="hardware_prop_nortel_contivity_showver" messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_contivity_vpnrouter_hardware_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+
+<!-- For Nortel Networks Layer2-3 Gb Ethernet Switch Module devices -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true"  responseparserid="nortel_hardware_prop_parser" promptactionid="nortelPPActionId">
+    <InteractionSpec timeout="20000" protocol="CLI" interactionid="nortel_switchmodule_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="general">
+    <CLIInputRecord parsercommandname="hardware_prop_nortel_switchmodule_general" messagesuffix="&#10;" inputsourcetype="1">
+        <Record type="CLI" recordid="nortel_switchmodule_hardware_rec" protocol="CLI"/>
+    </CLIInputRecord>
+</CLICommand>
+
+
+</CLICommandList>

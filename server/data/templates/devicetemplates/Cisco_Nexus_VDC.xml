@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Cisco Nexus VDC" osType="NX-OS" templateName="Cisco_Nexus_VDC" multiConfigTemplate="true">
+	<RestTemplate name=""/>
+	<Vendor displayName="Cisco" vendorName="Cisco">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show interfaces"/>
+			<Command commandstr="show access-lists"/>
+			<Command commandstr="show logging"/>
+			<Command commandstr="show ip traffic"/>
+			<Command commandstr="show buffers"/>
+			<Command commandstr="show hardware"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Startup">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show startup-config vdc-all" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="90000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config vdc-all" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="90000" promptactionid="NA" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="others">
+            	<Operation name="Syncconfiguration">
+                	<Command commandstr="copy running-config startup-config vdc-all" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Cisco Nexus Switch" personalityName="CiscoNexusSwitch">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="(yes/no)?" prelogincommand="yes"/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="BIOS" size="150" desc="BIOS Version" displayname="BIOS" defaultvalue="Not Available" sequenceid="10"/>
+				<Column name="SYSTEM_IMAGE" size="150" desc="System Image Size" displayname="SYSTEM IMAGE" defaultvalue="Not Available" sequenceid="20"/>
+				<Column name="PROCESSOR_ID" size="150" desc="Processor Board ID" displayname="PROCESSOR BOARD ID" defaultvalue="Not Available" sequenceid="30"/>
+				<Column name="BOOTFLASH" size="150" desc="BOOT FLASH" displayname="BOOT FLASH" defaultvalue="Not Available" sequenceid="40"/>
+				<Column name="CMP_VERSION" size="150" desc="CMP BIOS VERSION" displayname="CMP BIOS VERSION" defaultvalue="Not Available" sequenceid="50"/>
+				<Column name="CMP_IMAGE" size="150" desc="CMP Image version" displayname="CMP IMAGE VERSION" defaultvalue="Not Available" sequenceid="60"/>
+				<Column name="SYSTEM" size="150" desc="System details" displayname="SYSTEM" defaultvalue="Not Available" sequenceid="70"/>
+				<Column name="LOADER" size="150" desc="Loder" displayname="LOADER" defaultvalue="Not Available" sequenceid="90"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers>
+				<SyslogState state="disable">
+					<Regex>no logging server $SYSLOG_SERVER_IP$</Regex>
+				</SyslogState>
+				<SyslogState state="enable">
+					<Regex>logging server $SYSLOG_SERVER_IP</Regex>
+				</SyslogState>
+			</SyslogStateCheckers>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="CiscoHardwarePropParser.xml"/> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_cisco_nexus_switch" responseparserid="cisco_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="sh hardware" parsercommandname="hardware_prop_cisco_nexus_switch" responseparserid="cisco_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

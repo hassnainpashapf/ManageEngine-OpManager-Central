@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Extreme VDX" osType="NOS" templateName="Extreme_VDX">
+	<RestTemplate name=""/>
+	<Vendor displayName="Extreme" vendorName="Extreme">
+		<Commands/>
+		<LoggingLevels>
+			<Level name="info" number="5" sequenceid="1"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="60000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show running-config" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="240000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Extreme VDX" personalityName="ExtremeVDX">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="FIRMWARE_VERSION" size="50" desc="Firmware Version" displayname="Firmware Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="KERNEL" size="100" desc="Kernel" displayname="Kernel" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="CONTROL_PROCESSOR" size="100" desc="Control Processor" displayname="Control Processor" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="BOOT_PROM" size="150" desc="Boot PROM" displayname="Boot PROM" defaultvalue="Not Available" sequenceid="4"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>.*Generating current config:.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="ExtremeVDXHwPropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="extremeVdx_hardware_prop_cmd">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX NAME="OSVERSION" EXPRESSION=".*Operating\s*System\s*Version\s*:\s*(.*)">
+										  <PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Firmware\s*name\s*:\s*(.*)" NAME="FIRMWARE_VERSION">
+											<PARAM NAME="FIRMWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Kernel\s*:\s*(.*)" NAME="KERNEL">
+											<PARAM NAME="KERNEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*BootProm\s*:\s*(.*)" NAME="BOOT_PROM">
+											<PARAM NAME="BOOT_PROM" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Control\s*Processor\s*:\s*(.*)" NAME="CONTROL_PROCESSOR">
+											<PARAM NAME="CONTROL_PROCESSOR" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Stack\s*MAC\s*:\s*(.*)" NAME="MACADDRESS">
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Chassis\s*Name\s*:\s*(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*Serial\s*Num\s*:\s*(\S+).*" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<METADATA>
+									<SCALAR>
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show chassis" parsercommandname="extremeVdx_hardware_prop_cmd" responseparserid="extreme_vdx_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+						<Command commandstr="show system" parsercommandname="extremeVdx_hardware_prop_cmd" responseparserid="extreme_vdx_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+						<Command commandstr="show version" parsercommandname="extremeVdx_hardware_prop_cmd" responseparserid="extreme_vdx_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="60000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

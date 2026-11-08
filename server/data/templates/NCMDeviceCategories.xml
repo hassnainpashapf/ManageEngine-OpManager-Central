@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NCMDeviceCategories>
+	<NCMDeviceCategory categoryid="NCMDeviceCategory:categoryid:Router" category="Router"/>
+	<NCMDeviceCategory categoryid="NCMDeviceCategory:categoryid:Switch" category="Switch"/>
+	<NCMDeviceCategory categoryid="NCMDeviceCategory:categoryid:Firewall" category="Firewall"/>
+	<NCMDeviceCategory categoryid="NCMDeviceCategory:categoryid:Controller" category="Controller"/>
+	<NCMDeviceCategory categoryid="NCMDeviceCategory:categoryid:Access Point" category="Access Point"/>
+	<NCMDeviceCategory categoryid="NCMDeviceCategory:categoryid:Load Balancer" category="Load Balancer"/>
+	<NCMDeviceCategory categoryid="NCMDeviceCategory:categoryid:Server" category="Server"/>
+	<NCMDeviceCategory categoryid="NCMDeviceCategory:categoryid:General" category="General"/>
+</NCMDeviceCategories>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><CustomDevicePackage>
+    <CustomDevicePackage deviceType="Black Box Corporation LES1508A" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.6878.15.1.6"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Black Box Corporation"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco MCS 7825I" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.746"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco MCS 7835I" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.585"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco MCS 7845H" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.586"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco SRE 300 ISM" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1149"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco SRE 910 SM" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9.1.1523"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Cisco TelePresence Video Communication Server" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5596.130.6.4.1"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Cisco"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu PRIMERGY BX600S2" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7244.1"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Fujitsu"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Fujitsu PRIMERGY BX900 S2" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.7244.1.1.1"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Fujitsu"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lantronix EDS4100" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.244.1.13"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Lantronix"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Lantronix MSS100" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.244.23"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Lantronix"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="McAfee Event Receiver" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.23128.1000.3.1"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="McAfee"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Meinberg LANTIME M1000" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.5597.30"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Meinberg"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Microsemi Corporation SyncServer S600" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.9070.1.2.5.7.4"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Microsemi Corporation"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Sensatronics EM1" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.16174.1.1.3"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Sensatronics"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Linux FreeBSD" iconName="Server.png" pingInterval="300">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.8072.3.2.8"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="net-snmp"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Windows 2019" iconName="winVista.png" pingInterval="5" iconToLower="false">
+	<SysOIDs>
+		<SysOID oid=".1.3.6.1.4.1.311.1.1.3.1.3"/>
+	</SysOIDs>
+        <Category name="Server"/>
+	<Vendor name="Microsoft"/>
+	<Version version="2"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nutanix" iconName="workstation.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.nutanix"/>
+            <SysOID oid=".1.3.6.1.4.1.41263"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Nutanix"/>
+        <Version version="2"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nutanix Cluster" iconName="nutanixcluster.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid="Nutanix-Cluster"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Nutanix"/>
+        <Version version="2"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nutanix Host" iconName="nutanixhost.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid="Nutanix-Host"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Nutanix"/>
+        <Version version="2"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nutanix Virtual Machine" iconName="nutanixvm.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid="Nutanix-VM"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Nutanix"/>
+        <Version version="2"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Nutanix Prism Central" iconName="nutanixprismcentral.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid="Nutanix-PrismCentral"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Nutanix"/>
+        <Version version="2"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Windows 2022" iconName="windows_2012.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.311.1.1.3.1.2"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Microsoft"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Windows 11" iconName="windows11.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid=".1.3.6.1.4.1.311.1.1.3.1.1"/>
+        </SysOIDs>
+        <Category name="Desktop"/>
+        <Vendor name="Microsoft"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Windows 2025" iconName="windows_2012.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid="windows2025"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Microsoft"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxmox Node" iconName="winVista.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid="ProxmoxNode"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Proxmox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxmox Virtual Machine" iconName="winVista.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid="ProxmoxVM"/>
+        </SysOIDs>
+        <Category name="Server"/>
+        <Vendor name="Proxmox"/>
+    </CustomDevicePackage>
+    <CustomDevicePackage deviceType="Proxmox Container" iconName="winVista.png" pingInterval="5">
+        <SysOIDs>
+            <SysOID oid="ProxmoxLXC"/>
+        </SysOIDs>
+        <Category name="Container"/>
+        <Vendor name="Proxmox"/>
+    </CustomDevicePackage>
+</CustomDevicePackage>

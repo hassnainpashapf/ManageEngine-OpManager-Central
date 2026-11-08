@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+	<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:watchguard_firewall" templatename="WatchGuard_Firewall" displayname="WatchGuard Firewall" description="For all WatchGuard Firewall devices">
+		<NCMVendorDevice vendorid="WatchGuard" />
+        <NCMDevicePersonality personalityid="WatchGuardFirewall" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:watch_guard_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:watchguard_firewall" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="watch_guard_cli_startup_config_backup" />
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="watch_guard_cli_startup_config_upload" />
+		
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:watch_guard_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:watchguard_firewall" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="watch_guard_cli_startup_config_backup" />
+		<NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="watch_guard_cli_startup_config_upload" />
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+    </NCMDeviceTemplate>
+
+</DeviceConfiguration>

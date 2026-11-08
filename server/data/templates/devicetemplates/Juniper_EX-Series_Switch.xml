@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Juniper EX-Series Switch" osType="[NA]" templateName="Juniper_EX-Series_Switch">
+	<RestTemplate name=""/>
+	<Vendor displayName="Juniper" vendorName="Juniper">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show chassis hardware"/>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notice" number="5" sequenceid="0"/>
+			<Level name="warning" number="6" sequenceid="1"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="show configuration | display set | no-more" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="60000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Vlan">
+                	<Command commandstr="show vlans | no-more" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="delete system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH - SCP">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="show | display set | save scp://${UserInput:scp_username}@${UserInput:tftp_server_address}/${UserInput:file_name}" messagesuffix="${LF}" prompt="word:" sequenceid="10" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="${UserInput:scp_password}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="30000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="delete system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+		<Protocol name="SSH/TELNET - TFTP">
+        	<OperationGroup type="backup">
+            	<Operation name="Running">
+                	<Command commandstr="show | display set | save ${UserInput:file_name}" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="run start shell" messagesuffix="${LF}" prompt="%" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="tftp ${UserInput:tftp_server_address}" messagesuffix="${LF}" prompt="tftp>" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="put ${UserInput:file_name}" messagesuffix="${LF}" prompt="tftp>" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="quit" messagesuffix="${LF}" prompt="%" sequenceid="50" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="60" timeout="60000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+        	<OperationGroup type="changedetection">
+            	<Operation name="enable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="set system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="disable">
+                	<Command commandstr="configure" messagesuffix="${LF}" prompt="#" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="delete system syslog host ${UserInput:HostIpAddress} any any" messagesuffix="${LF}" prompt="#" sequenceid="20" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="commit" messagesuffix="${LF}" prompt="#" sequenceid="30" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="exit" messagesuffix="${LF}" prompt=">" sequenceid="40" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Juniper EX4200 Switch" personalityName="JuniperSwitch"/>
+    <NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="ProductLineEX3200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.30"/>
+        <NCMDeviceSysOID model="ProductLineEX4200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.31"/>
+        <NCMDeviceSysOID model="ProductLineEX8208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.32"/>
+        <NCMDeviceSysOID model="ProductLineEX8216" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.33"/>
+        <NCMDeviceSysOID model="ProductLineEX2200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.43"/>
+        <NCMDeviceSysOID model="ProductLineEX4500" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.44"/>
+        <NCMDeviceSysOID model="ProductLineEX6210" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.74"/>
+        <NCMDeviceSysOID model="ProductLineEX3300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.76"/>
+        <NCMDeviceSysOID model="ProductLineEX4550" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.92"/>
+        <NCMDeviceSysOID model="ProductLineEX9214" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.102"/>
+        <NCMDeviceSysOID model="ProductLineEX9208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.103"/>
+        <NCMDeviceSysOID model="ProductLineEX9204" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.104"/>
+        <NCMDeviceSysOID model="ProductLineEX4600" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.109"/>
+        <NCMDeviceSysOID model="ProductLineEX3400" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.131"/>
+        <NCMDeviceSysOID model="ProductLineEX2300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.132"/>
+        <NCMDeviceSysOID model="ProductLineEX9251" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.1.151"/>
+        <NCMDeviceSysOID model="EX3200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.30"/>
+        <NCMDeviceSysOID model="EX8208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.32"/>
+        <NCMDeviceSysOID model="EX8216" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.33"/>
+        <NCMDeviceSysOID model="EX4500" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.44"/>
+        <NCMDeviceSysOID model="EX4300" ostype="JUNOS" series="EX Series" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.63"/>
+        <NCMDeviceSysOID model="EX6210" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.74"/>
+        <NCMDeviceSysOID model="EX4550" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.92"/>
+        <NCMDeviceSysOID model="EX9214" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.102"/>
+        <NCMDeviceSysOID model="EX9208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.103"/>
+        <NCMDeviceSysOID model="EX9204" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.104"/>
+        <NCMDeviceSysOID model="EX4600" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.109"/>
+        <NCMDeviceSysOID model="EX3400" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.131"/>
+        <NCMDeviceSysOID model="EX2300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.132"/>
+        <NCMDeviceSysOID model="ProductLineEX9251" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.151"/>
+        <NCMDeviceSysOID model="ProductModelEX3200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.30"/>
+        <NCMDeviceSysOID model="ProductModelEX4200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.31"/>
+        <NCMDeviceSysOID model="ProductModelEX8208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.32"/>
+        <NCMDeviceSysOID model="ProductModelEX8216" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.33"/>
+        <NCMDeviceSysOID model="ProductModelEX2200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.43"/>
+        <NCMDeviceSysOID model="ProductModelEX4500" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.44"/>
+        <NCMDeviceSysOID model="ProductModelEX4300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.63"/>
+        <NCMDeviceSysOID model="ProductModelEX6210" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.74"/>
+        <NCMDeviceSysOID model="ProductModelEX3300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.76"/>
+        <NCMDeviceSysOID model="ProductModelEX4550" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.92"/>
+        <NCMDeviceSysOID model="ProductModelEX9214" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.102"/>
+        <NCMDeviceSysOID model="ProductModelEX9208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.103"/>
+        <NCMDeviceSysOID model="ProductModelEX9204" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.104"/>
+        <NCMDeviceSysOID model="ProductModelEX4600" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.109"/>
+        <NCMDeviceSysOID model="ProductModelEX3400" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.131"/>
+        <NCMDeviceSysOID model="ProductModelEX2300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.132"/>
+        <NCMDeviceSysOID model="ProductModelEX9251" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.3.151"/>
+        <NCMDeviceSysOID model="ProductVariationEX3200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.30"/>
+        <NCMDeviceSysOID model="ProductEX3200port24T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.30.1"/>
+        <NCMDeviceSysOID model="ProductEX3200port24P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.30.2"/>
+        <NCMDeviceSysOID model="ProductEX3200port48T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.30.3"/>
+        <NCMDeviceSysOID model="ProductEX3200port48P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.30.4"/>
+        <NCMDeviceSysOID model="ProductVariationEX4200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.31"/>
+        <NCMDeviceSysOID model="ProductEX4200port24T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.31.1"/>
+        <NCMDeviceSysOID model="ProductEX4200port24P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.31.2"/>
+        <NCMDeviceSysOID model="ProductEX4200port48T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.31.3"/>
+        <NCMDeviceSysOID model="ProductEX4200port48P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.31.4"/>
+        <NCMDeviceSysOID model="ProductEX4200port24F" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.31.5"/>
+        <NCMDeviceSysOID model="ProductEX4200port24PX" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.31.6"/>
+        <NCMDeviceSysOID model="ProductEX4200port48PX" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.31.7"/>
+        <NCMDeviceSysOID model="ProductVariationEX8208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.32"/>
+        <NCMDeviceSysOID model="ProductVariationEX8216" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.33"/>
+        <NCMDeviceSysOID model="ProductVariationEX2200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.43"/>
+        <NCMDeviceSysOID model="ProductEX2200port24T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.43.1"/>
+        <NCMDeviceSysOID model="ProductEX2200port24P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.43.2"/>
+        <NCMDeviceSysOID model="ProductEX2200port48T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.43.3"/>
+        <NCMDeviceSysOID model="ProductEX2200port48P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.43.4"/>
+        <NCMDeviceSysOID model="ProductEX2200Cport12T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.43.5"/>
+        <NCMDeviceSysOID model="ProductEX2200Cport12P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.43.6"/>
+        <NCMDeviceSysOID model="ProductEX2200port24TDC" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.43.7"/>
+        <NCMDeviceSysOID model="ProductVariationEX4500" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.44"/>
+        <NCMDeviceSysOID model="ProductEX4500port40F" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.44.1"/>
+        <NCMDeviceSysOID model="ProductEX4500port20F" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.44.2"/>
+        <NCMDeviceSysOID model="ProductVariationEX6210" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.74"/>
+        <NCMDeviceSysOID model="ProductVariationEX3300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.76"/>
+        <NCMDeviceSysOID model="ProductEX3300port24T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.76.1"/>
+        <NCMDeviceSysOID model="ProductEX3300port24P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.76.2"/>
+        <NCMDeviceSysOID model="ProductEX3300port48T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.76.3"/>
+        <NCMDeviceSysOID model="ProductEX3300port48P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.76.4"/>
+        <NCMDeviceSysOID model="ProductEX3300port24TDC" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.76.5"/>
+        <NCMDeviceSysOID model="ProductEX3300port48TBF" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.76.6"/>
+        <NCMDeviceSysOID model="ProductVariationEX4550" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.92"/>
+        <NCMDeviceSysOID model="ProductEX4550port32F" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.92.1"/>
+        <NCMDeviceSysOID model="ProductEX4550port32T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.92.2"/>
+        <NCMDeviceSysOID model="ProductVariationEX9214" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.102"/>
+        <NCMDeviceSysOID model="ProductVariationEX9208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.103"/>
+        <NCMDeviceSysOID model="ProductVariationEX9204" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.104"/>
+        <NCMDeviceSysOID model="ProductVariationEX4600" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.109"/>
+        <NCMDeviceSysOID model="ProductEX4600" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.109.1"/>
+        <NCMDeviceSysOID model="ProductVariationEX3400" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.131"/>
+        <NCMDeviceSysOID model="ProductEX3400port24T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.131.1"/>
+        <NCMDeviceSysOID model="ProductEX3400port48T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.131.2"/>
+        <NCMDeviceSysOID model="ProductEX3400port24P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.131.3"/>
+        <NCMDeviceSysOID model="ProductEX3400port48P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.131.4"/>
+        <NCMDeviceSysOID model="ProductVariationEX2300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132"/>
+        <NCMDeviceSysOID model="ProductEX2300port24T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132.1"/>
+        <NCMDeviceSysOID model="ProductEX2300port48T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132.2"/>
+        <NCMDeviceSysOID model="ProductEX2300port24P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132.3"/>
+        <NCMDeviceSysOID model="ProductEX2300port48P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132.4"/>
+        <NCMDeviceSysOID model="ProductEX2300Cport12T" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132.5"/>
+        <NCMDeviceSysOID model="ProductEX2300Cport12P" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132.6"/>
+        <NCMDeviceSysOID model="ProductEX2300port24MP" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132.7"/>
+        <NCMDeviceSysOID model="ProductEX2300port48MP" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.132.8"/>
+        <NCMDeviceSysOID model="ProductVariationEX9251" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.4.151"/>
+        <NCMDeviceSysOID model="ChassisEX3200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.30"/>
+        <NCMDeviceSysOID model="ChassisEX4200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.31"/>
+        <NCMDeviceSysOID model="EX4200RE0" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.31.1"/>
+        <NCMDeviceSysOID model="EX4200RE1" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.31.2"/>
+        <NCMDeviceSysOID model="ChassisEX8208" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.32"/>
+        <NCMDeviceSysOID model="ChassisEX8216" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.33"/>
+        <NCMDeviceSysOID model="ChassisEX2200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.43"/>
+        <NCMDeviceSysOID model="ChassisEX4500" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.44"/>
+        <NCMDeviceSysOID model="EX4500RE0" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.44.1"/>
+        <NCMDeviceSysOID model="EX4500RE1" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.44.2"/>
+        <NCMDeviceSysOID model="ChassisEX6210" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.74"/>
+        <NCMDeviceSysOID model="ChassisEX3300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.76"/>
+        <NCMDeviceSysOID model="EX3300RE0" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.76.1"/>
+        <NCMDeviceSysOID model="EX3300RE1" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.2.1.76.2"/>
+        <NCMDeviceSysOID model="EX4200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.31"/>
+        <NCMDeviceSysOID model="EX2200" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.43"/>
+        <NCMDeviceSysOID model="EX3300" ostype="JUNOS" series="EX" sysoid=".1.3.6.1.4.1.2636.1.1.1.2.76"/>
+    </NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

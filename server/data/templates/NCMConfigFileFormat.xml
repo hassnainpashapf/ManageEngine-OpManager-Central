@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<NCMConfigFileFormatList>
+	<!-- default value is Text -->
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoRouter" personalityid="CiscoRouter" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoSwitch" personalityid="CiscoSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoNexusSwitch" personalityid="CiscoNexusSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoFirewall" personalityid="CiscoFirewall"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoIAD" personalityid="CiscoIAD"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoAccessPoint" personalityid="CiscoAccessPoint"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoCatOSSwitch" personalityid="CiscoCatOSSwitch"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoAccessServer" personalityid="CiscoAccessServer"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoContentSwitch" personalityid="CiscoContentSwitch"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoASA" personalityid="CiscoASA"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HPSwitch" personalityid="HPSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HPAccessPoint" personalityid="HPAccessPoint" />
+      <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HPPSeriesSwitch" personalityid="HPPSeriesSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:FoundrySwitch" personalityid="FoundrySwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:3ComSwitch" personalityid="3ComSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:FortiGateFirewall" personalityid="FortiGateFirewall" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NetscreenFirewall" personalityid="NetscreenFirewall" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:EnterasysSwitch" personalityid="EnterasysSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AdtranLANSwitch" personalityid="AdtranLANSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AdtranNetvantaRouter" personalityid="AdtranNetvantaRouter" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NortelBayStackSwitch" personalityid="NortelBayStackSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NortelPassportSwitch" personalityid="NortelPassportSwitch"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NortelPWRSwitch" personalityid="NortelPWRSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:DLinkSwitch" personalityid="DLinkSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BlueCoatProxySG" personalityid="BlueCoatProxySG" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BlueCoatPacketShaper" personalityid="PacketShaper" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HuaweiARRouter" personalityid="HuaweiARRouter"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:ProximAccessPoint" personalityid="ProximAccessPoint" fileformat="Binary"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:ExtremeSwitch" personalityid="ExtremeSwitch"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoVoiceGateway" personalityid="CiscoVoiceGateway"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:ArubaWifiSwitch" personalityid="ArubaWifiSwitch"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:Force10Switch" personalityid="Force10Switch"/>
+
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoVPNConcentrator" personalityid="CiscoVPNConcentrator"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoMDS" personalityid="CiscoMDS"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NetgearSwitch" personalityid="NetgearSwitch"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:JuniperRouter" personalityid="JuniperRouter"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:JuniperMXRouter" personalityid="JuniperMXRouter"/>
+    
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:JuniperSwitch" personalityid="JuniperSwitch"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:DellSwitch" personalityid="DellSwitch"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:SlimLine" personalityid="SlimLine"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NortelContivityVPNRouter" personalityid=	"NortelContivityVPNRouter" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:EnterasysRouter" personalityid="EnterasysRouter" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:RiverbedSteelhead" personalityid="RiverbedSteelhead" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlcatelSwitch" personalityid="AlcatelSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlcatelRouter" personalityid="AlcatelRouter" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlaxalaSwitch" personalityid="AlaxalaSwitch" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HitachiGR2000Router" personalityid="HitachiGR2000Router" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NortelSwitchModule" personalityid="NortelSwitchModule" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:RadwareSwitch" personalityid="RadwareSwitch" fileformat="Binary"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:RadwareLinkProofSwitch" personalityid="RadwareLinkProofSwitch"/>
+
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoWLANController" personalityid="CiscoWLANController"/>
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BrocadeSwitch" personalityid="BrocadeSwitch" />
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoIDS" personalityid="CiscoIDS"/>
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:FujitsuPYCBSwitch" personalityid="FujitsuPYCBSwitch"/>
+	<!--Cisco WAAS -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoWAAS" personalityid="CiscoWAAS"/>
+    <!-- CheckPoint Firewall -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CheckPointFirewall"  personalityid="CheckPointFirewall"/>
+   
+
+    <!-- CiscoACEModule -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoACEModule"   personalityid="CiscoACEModule"/>
+
+    <!-- AvayaGateway -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AvayaMediaGateway" personalityid="AvayaMediaGateway"/>
+
+    <!-- LambdaDriver -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:LambdaDriver" personalityid="LambdaDriver"/>
+
+    <!-- Dax Devices -->    
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:DaxRouter" personalityid="DaxRouter"/>    
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:DaxSwitch" personalityid="DaxSwitch"/>
+    
+    
+    <!--Cisco IOS XR -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoIOSXR" personalityid="CiscoIOSXR"/>
+
+    <!-- H3C-->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:H3CSwitch" personalityid="H3CSwitch"/>
+    
+    <!-- Yamaha Router-->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:YamahaRouter" personalityid="YamahaRouter"/>
+
+    <!-- Vanguard Router-->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:VanguardRouter" personalityid="VanguardRouter"/>
+    
+    <!-- AlliedTelesisSwitch -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlliedTelesisSwitch" personalityid="AlliedTelesisSwitch"/>
+        
+    <!-- F5 Bigip -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:F5Bigip" personalityid="F5Bigip"/>
+
+    <!-- HitachiSwitch -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HitachiSwitch" personalityid="HitachiCableSwitch"/>
+
+    <!-- CitrixNetScaler -->	     
+      <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CitrixNetScaler" personalityid="CitrixNetScaler"/>    
+    
+    <!-- Motorola Wireless Switch  -->	     
+      <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:Motorola" personalityid="Motorola"/>    
+
+    <!-- Sphereon 4500 Fibre Channel Switch  -->	     
+      <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:SphereonSwitch" personalityid="SphereonSwitch"/> 
+
+<!-- Allied Telesis AT-8000S series Switch -->
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlliedTelesisAT8000S" personalityid="AlliedTelesisAT8000S"/>
+
+<!-- For FortiNet FortiGate FortiAnalyzer Version 400B -->
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:FortiGateFortiAnalyzer" personalityid="FortiGateFortiAnalyzer" />
+
+
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CanogaPerkins" personalityid="CanogaPerkins" />
+
+
+<!-- For WatchGuard Firewall -->
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:WatchGuardFirewall" personalityid="WatchGuardFirewall" />
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CienaLEOSSwitch" personalityid="CienaLEOSSwitch" />
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CienaSAOSSwitch" personalityid="CienaSAOSSwitch" />
+
+<!-- For PaloAlto Firewall -->
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:PaloAltoFirewall" personalityid="PaloAltoFirewall" />
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:ADVAOPTICALNETWORKING" personalityid="ADVAOPTICALNETWORKING" />
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:MeruWLANController" personalityid="MeruWLANController" />
+
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlaxalaSwitch5400" personalityid="AlaxalaSwitch5400" />
+
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlliedTelesisGS900MSwitch" personalityid="AlliedTelesisGS900MSwitch"/>    
+
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:H3CSSeriesSwitch" personalityid="H3CSSeriesSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HuaweiSwitch" personalityid="HuaweiSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HuaweiSSwitch" personalityid="HuaweiSSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HirschmannSwitch" personalityid="HirschmannSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BrocadeFastIronSwitch" personalityid="BrocadeFastIronSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:TransPortWirelessRouter" personalityid="TransPortWirelessRouter"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BrocadeFiberSwitch" personalityid="BrocadeFiberSwitch" />
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:RedbackRouter" personalityid="RedbackRouter"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BNTRackSwitch" personalityid="BNTRackSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AristaSwitch" personalityid="AristaSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:DCSSwitch" personalityid="DCSSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:F5ARX" personalityid="F5ARX"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AX2500LoadBalancers" personalityid="AX2500LoadBalancers"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlliedTelesisCenterComSwitch" personalityid="AlliedTelesisCenterComSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AlliedTelesisEthernetSwitch" personalityid="AlliedTelesisEthernetSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:FoundryFastIronSwitch" personalityid="FoundryFastIronSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:ZXRRouter" personalityid="ZXRRouter"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:DellPowerConnectSwitch" personalityid="DellPowerConnectSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoASRRouter" personalityid="CiscoASRRouter"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BrocadeSilkWormFiberSwitch" personalityid="BrocadeSilkWormFiberSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:F5Bigip10X" personalityid="F5Bigip10X"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BlueCoatProxySGOS" personalityid="BlueCoatProxySGOS"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoIronport" personalityid="CiscoIronport"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:Vyatta" personalityid="Vyatta"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:RadwareAlteonSwitch" personalityid="RadwareAlteonSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BrocadeVDXSwitch" personalityid="BrocadeVDXSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:JuniperSRX" personalityid="JuniperSRX"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NECIX2025" personalityid="NECIX2025"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:ADVAFSP" personalityid="ADVAFSP"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NetSD3800" personalityid="NetSD3800"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:MikrotikRouter" personalityid="MikrotikRouter"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:WelotecRouter" personalityid="WelotecRouter"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CrescendoLoadBalancer" personalityid="CrescendoLoadBalancer"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:RuggedComSwitch" personalityid="RuggedComSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:RuijieSwitch" personalityid="RuijieSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:FujitsuFirewall" personalityid="FujitsuFirewall"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:F5Bigip11X" personalityid="F5Bigip11X"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:EdgeCoreSwitch" personalityid="EdgeCoreSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:TelcoSwitch" personalityid="TelcoSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:OccamSwitch" personalityid="OccamSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AdtranRouter" personalityid="AdtranRouter"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoSBSwitch" personalityid="CiscoSBSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:NokiaIPSO" personalityid="NokiaIPSO"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HPEthernetSwitch" personalityid="HPEthernetSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CitrixNetScalerMPX" personalityid="CitrixNetScalerMPX"/>   
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:3Com5500Switch" personalityid="3Com5500Switch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:FortiGateFirewallVER4" personalityid="FortiGateFirewallVER4"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:FiberHomeSwitch" personalityid="FiberHomeSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:ZXRRouterZSR" personalityid="ZXRRouterZSR"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:ArubaController" personalityid="ArubaController"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:TippingpointIPS" personalityid="TippingpointIPS"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:MobileIronSentry" personalityid="MobileIronSentry"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:JuniperLoadBalancer" personalityid="JuniperLoadBalancer"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CienaSwitch" personalityid="CienaSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:H3CDevice" personalityid="H3CDevice"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CheckPointGaiaFirewall" personalityid="CheckPointGaiaFirewall"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AvocentACS" personalityid="AvocentACS"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:JuniperWLAN" personalityid="JuniperWLAN"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:PravailAPS" personalityid="PravailAPS"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:AvocentTerminal" personalityid="AvocentTerminal"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:CiscoASRMobileGateway" personalityid="CiscoASRMobileGateway"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HP5500Switch" personalityid="HP5500Switch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:PaloAltoPanoramaFirewall" personalityid="PaloAltoPanoramaFirewall"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HuaweiNERouter" personalityid="HuaweiNERouter"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:HuaweiS5300Switch" personalityid="HuaweiS5300Switch"/>
+
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:DLinkDESSwitch" personalityid="DLinkDESSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:BrocadeRouter" personalityid="BrocadeRouter"/>
+
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:INSYSMoRoS" personalityid="INSYSMoRoS" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:SonicWALLFirewall" personalityid="SonicWALLFirewall" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:TrapezeWLANController" personalityid="TrapezeWLANController" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:UbiquitiAirOs" personalityid="UbiquitiAirOs" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:GarderosRouter" personalityid="GarderosRouter" />
+    <NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:JuniperFabricSwitch" personalityid="JuniperFabricSwitch"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:F5Netcon" personalityid="F5Netcon"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:F5Bigip114" personalityid="F5Bigip114"/>
+<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:EdgeCoreL2Switch" personalityid="EdgeCoreL2Switch"/>
+
+	<!-- default value is Text -->
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:MiMOMaxGPSTornado" personalityid="MiMOMaxGPSTornado" />
+	<NCMConfigFileFormat ncmconfigfileparamsid="NCMConfigFileFormat:ncmconfigfileparamsid:MiMOMaxGPSPyxis" personalityid="MiMOMaxGPSPyxis" />
+</NCMConfigFileFormatList>

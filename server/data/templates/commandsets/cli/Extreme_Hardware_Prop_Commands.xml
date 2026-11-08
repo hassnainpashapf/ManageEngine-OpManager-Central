@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" responseparserid="extreme_hardware_prop_parser">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="extremeblackdiamondswitch_hardware_prop_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="hardware_prop_extreme_black_diamond_switch" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="extremeblackdiamond_hardware_prop_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show switch">
+<CLIInputRecord parsercommandname="hardware_prop_extreme_black_diamond_switch" messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="extremeblackdiamond_hardware_prop_rec1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

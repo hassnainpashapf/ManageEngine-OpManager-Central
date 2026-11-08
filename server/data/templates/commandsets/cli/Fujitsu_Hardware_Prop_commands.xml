@@ -1,0 +1,113 @@
+<!-- $Id$ -->
+<!-- For command "terminal length 0" - This is to avoid the -More- in the output -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="fujitsu_cli_no_pager_irec" />
+</CLIInteractionSpec>
+
+<CLICommand command="show running-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_cli_show_running_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="no pager">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_cli_no_pager_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="fujitsu_show_running_config" />
+</CLIInteractionSpec>
+
+<CLICommand command="show version">
+<CLIInputRecord parsercommandname="fujitsu_show_version_parser" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="fujitsu_show_version" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show hardware">
+	<CLIInputRecord parsercommandname="fujitsu_show_hardware_parser" messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="fujitsu_show_hardware" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="fujitsu_show_hardware_version" promptactionid="yesActionId">
+ <InteractionSpec timeout="20000" protocol="CLI" interactionid="fujitsu_show_hardware_version"/>
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="fujitsu_firewall_cli_ispec" />
+</CLIInteractionSpec>
+
+<CLICommand command="show running-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_firewall_show_running_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show startup-config">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_firewall_show_startup_config_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="terminal pager disable">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_firewall_pager_disable_rec" protocol="CLI"/>
+ </CLIInputRecord>
+</CLICommand>
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="#" commandecho="false" promptecho="true" responseparserid="fujitsu_firewall_hardware_prop_parser" promptactionid="yesActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="fujitsu_firewall_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show system information">
+<CLIInputRecord parsercommandname="fujitsu_firewall_show_system_parser" messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="fujitsu_firewall_show_system_rec" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt=">" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="fujitsu_firewall_tftp_config" />
+</CLIInteractionSpec>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="#" commandecho="false" promptecho="true" promptactionid="yesActionId">
+  <InteractionSpec timeout="20000" protocol="CLI" interactionid="fujitsu_firewall_tftp_connect" />
+</CLIInteractionSpec>
+
+<CLICommand command="tftp">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_firewall_tftp_rec" protocol="CLI"/>
+ </CLIInputRecord>
+ </CLICommand>
+ 
+ <CLICommand command="connect ${UserInput:tftp_server_address}">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_firewall_tftp_ip_rec" protocol="CLI"/>
+ </CLIInputRecord> 
+ </CLICommand>
+
+ <CLICommand command="put running-config.cli ${UserInput:file_name}">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_firewall_tftp_running_rec" protocol="CLI"/>
+ </CLIInputRecord> 
+ </CLICommand>
+ 
+ <CLICommand command="put startup-config.cli ${UserInput:file_name}">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_firewall_tftp_startup_rec" protocol="CLI"/>
+ </CLIInputRecord> 
+ </CLICommand>
+ 
+ <CLICommand command="quit">
+ <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+   <Record type="CLI" recordid="fujitsu_firewall_tftp_exit_rec" protocol="CLI"/>
+ </CLIInputRecord> 
+ </CLICommand>
+
+
+</CLICommandList>

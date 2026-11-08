@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="vThunder Load Balancer" displayName="vThunder Load Balancer" osType="ACOS" templateName="vThunder_Load_Balancer">
+	<RestTemplate name=""/>
+	<Vendor displayName="A10Networks" vendorName="A10Networks">
+		<Commands>
+			<Command commandstr="show version"/>
+		</Commands>
+		<LoggingLevels>
+			<Level name="notifications" number="5" sequenceid="0"/>
+			<Level name="informational" number="6" sequenceid="1"/>
+			<Level name="debugging" number="7" sequenceid="2"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="terminal length 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="10" timeout="20000" promptactionid="" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="sh partition-config all" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="20" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="vThunderLoadBalancer" personalityName="vThunderLoadBalancer">	
+		<Login enablecommand="enable" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="AFLEX_VERSION" size="100" desc="aFlex Version" displayname="aFlex Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="AXAPI_VERSION" size="100" desc="aXAPI Version" displayname="aXAPI Version" defaultvalue="Not Available" sequenceid="2"/>
+				<Column name="VIRTUALIZATION_TYPE" size="100" desc="Virtualization Type" displayname="Virtualization Type" defaultvalue="Not Available" sequenceid="3"/>
+				<Column name="SYSTEM_POLLING_MODE" size="100" desc="System Polling Mode" displayname="System Polling Mode" defaultvalue="Not Available" sequenceid="4"/>
+				<Column name="CPU" size="100" desc="CPU" displayname="CPU" defaultvalue="Not Available" sequenceid="5"/>
+				<Column name="STORAGE" size="100" desc="Storage" displayname="Storage" defaultvalue="Not Available" sequenceid="6"/>
+				<Column name="TOTAL_SYSTEM_MEMORY" size="100" desc="Total System Memory" displayname="Total System Memory" defaultvalue="Not Available" sequenceid="7"/>
+				<Column name="FREE_MEMORY" size="100" desc="Free Memory" displayname="Free Memory" defaultvalue="Not Available" sequenceid="8"/>
+				<Column name="SMBIOS_VERSION" size="100" desc="SMBIOS Version" displayname="SMBIOS Version" defaultvalue="Not Available" sequenceid="9"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deleteLine">
+					<Regex>^Building.*\n\n^Current.*\n</Regex>
+				</Criteria>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="vThunderHardwarePropParser.xml">
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_vThunder_loadbalancer">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+
+										<REGEX EXPRESSION="\s*64-bit\s\S+\s\S+\s\S+\s\((\S+)\)\sversion\s(\S+)," NAME="OSTYPE">
+										  <PARAM NAME="OSTYPE" TOKENNO="1"/>
+										  <PARAM NAME="OSVERSION" TOKENNO="2"/>
+										</REGEX>
+
+										<REGEX EXPRESSION="\s*Serial Number:\s(\S+)" NAME="SERIALNUMBER">
+										  <PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*aFleX version:\s(\S+)" NAME="AFLEX_VERSION">
+										  <PARAM NAME="AFLEX_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*aXAPI version:\s(\S+)" NAME="AXAPI_VERSION">
+										  <PARAM NAME="AXAPI_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Virtualization type:\s(\S+)" NAME="VIRTUALIZATION_TYPE">
+										  <PARAM NAME="VIRTUALIZATION_TYPE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*System Polling Mode\s:\s(\S+)" NAME="SYSTEM_POLLING_MODE">
+										  <PARAM NAME="SYSTEM_POLLING_MODE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*CPU\s*:\s(.*)" NAME="CPU">
+										  <PARAM NAME="CPU" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Storage\s*:\s(.*)" NAME="STORAGE">
+										  <PARAM NAME="STORAGE" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Memory\s*:\s*Total\s*System\s*Memory\s*(\S+\s\S+),\s*Free\s*Memory\s*(\S+\s\S+)" NAME="TOTAL_SYSTEM_MEMORY">
+										  <PARAM NAME="TOTAL_SYSTEM_MEMORY" TOKENNO="1"/>
+										  <PARAM NAME="FREE_MEMORY" TOKENNO="2"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*SMBIOS\s*:\sBuild Version:\s*(.*)" NAME="SMBIOS_VERSION">
+										  <PARAM NAME="SMBIOS_VERSION" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_vThunder_loadbalancer" responseparserid="vThunder_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+						<Command commandstr="show hardware" parsercommandname="hardware_prop_vThunder_loadbalancer" responseparserid="vThunder_hardware_prop_parser" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" timeout="20000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

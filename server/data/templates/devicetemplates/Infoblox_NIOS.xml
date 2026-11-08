@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="" displayName="Infoblox NIOS" osType="NIOS" templateName="Infoblox_NIOS" multiConfigTemplate="true">
+	<RestTemplate name=""/>
+	<Vendor displayName="Infoblox" vendorName="Infoblox">
+		<Commands/>
+		<LoggingLevels>
+			<Level name="info" number="5" sequenceid="1"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="backup">
+            	<Operation name="running">
+                	<Command commandstr="set lines 0" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="10" timeout="40000" promptactionid="yesActionId" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show config dns" messagesuffix="${LF}" prompt="${UserInput:Prompt}" sequenceid="20" timeout="120000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Dhcp">
+                	<Command commandstr="set lines 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show config dhcp" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+            	<Operation name="Healthd">
+                	<Command commandstr="set lines 0" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="2" timeout="20000" promptactionid="NA" readfromresponse="false" promptecho="true" commandecho="false" delay="0"/>
+                	<Command commandstr="show config healthd" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" sequenceid="3" timeout="20000" promptactionid="yesActionId" readfromresponse="true" promptecho="true" commandecho="false" delay="0"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Infoblox NIOS" personalityName="InfobloxNIOS">	
+		<Login enablecommand="" suffix="${LF}" postloginprompt="" postlogincommand="" preloginprompt="" prelogincommand=""/>
+		<PersonalityTable>
+			<Columns>
+				<Column name="SOFTWARE_VERSION" size="150" desc="Software Version" displayname="Software Version" defaultvalue="Not Available" sequenceid="1"/>
+				<Column name="HOTFIX" size="150" desc="HotFix" displayname="HotFix" defaultvalue="Not Available" sequenceid="2"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="InfobloxNIOSHwPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_infoblox_nios">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*Version\s:\s*([^-]*).*" NAME="OSVERSION">
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+											<PARAM NAME="SOFTWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="HOTFIX" EXPRESSION=".*Hotfix\s*:\s*(.*)">
+											<PARAM NAME="HOTFIX" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="SERIALNUMBER" EXPRESSION=".*SN\s*:\s*(.*)">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL1" EXPRESSION=".*Member hardware platform\s*=\s*(.*)">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+										<REGEX NAME="MODEL2" EXPRESSION=".*Member hardware type\s*=\s*(.*)">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX NAME="CmdError1" EXPRESSION=".*(Incomplete command).*">
+											<PARAM NAME="ErrorMsg" TOKENNO="0" />
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+								
+							</ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" parsercommandname="hardware_prop_infoblox_nios" responseparserid="infoblox_nios_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="40000" promptactionid="yesActionId"/>
+						<Command commandstr="show hardware-type" parsercommandname="hardware_prop_infoblox_nios" responseparserid="infoblox_nios_hw_prop_parser" messagesuffix="${LF}" prompt="${UserInput:Prompt}" timeout="40000" promptactionid="yesActionId"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+        <NCMDeviceSysOID model="ib4020" series="" sysoid=".1.3.6.1.4.1.7779.1.1422"/>
+		<NCMDeviceSysOID model="ib4010" series="" sysoid=".1.3.6.1.4.1.7779.1.1421"/>
+		<NCMDeviceSysOID model="ib4000" series="" sysoid=".1.3.6.1.4.1.7779.1.1420"/>
+		<NCMDeviceSysOID model="ib2000a" series="" sysoid=".1.3.6.1.4.1.7779.1.1307"/>
+		<NCMDeviceSysOID model="ib250a" series="" sysoid=".1.3.6.1.4.1.7779.1.1306"/>
+		<NCMDeviceSysOID model="ib1852a" series="" sysoid=".1.3.6.1.4.1.7779.1.1305"/>
+        <NCMDeviceSysOID model="ib1552a" series="" sysoid=".1.3.6.1.4.1.7779.1.1304"/>
+		<NCMDeviceSysOID model="ib1550a" series="" sysoid=".1.3.6.1.4.1.7779.1.1303"/>
+		<NCMDeviceSysOID model="ib1050a" series="" sysoid=".1.3.6.1.4.1.7779.1.1302"/>
+		<NCMDeviceSysOID model="ib550a" series="" sysoid=".1.3.6.1.4.1.7779.1.1301"/>
+		<NCMDeviceSysOID model="ib1220" series="" sysoid=".1.3.6.1.4.1.7779.1.1207"/>
+		<NCMDeviceSysOID model="ib250" series="" sysoid=".1.3.6.1.4.1.7779.1.1206"/>
+		<NCMDeviceSysOID model="ib2000" series="" sysoid=".1.3.6.1.4.1.7779.1.1205"/>
+		<NCMDeviceSysOID model="ib1552" series="" sysoid=".1.3.6.1.4.1.7779.1.1204"/>
+		<NCMDeviceSysOID model="ib1550" series="" sysoid=".1.3.6.1.4.1.7779.1.1203"/>
+		<NCMDeviceSysOID model="ib1050" series="" sysoid=".1.3.6.1.4.1.7779.1.1202"/>
+		<NCMDeviceSysOID model="ib550" series="" sysoid=".1.3.6.1.4.1.7779.1.1201"/>
+		<NCMDeviceSysOID model="ib500" series="" sysoid=".1.3.6.1.4.1.7779.1.1103"/>
+		<NCMDeviceSysOID model="ib1200" series="" sysoid=".1.3.6.1.4.1.7779.1.1102"/>
+		<NCMDeviceSysOID model="ib1000" series="" sysoid=".1.3.6.1.4.1.7779.1.1101"/>
+		<NCMDeviceSysOID model="ibVnios" series="" sysoid=".1.3.6.1.4.1.7779.1.1004"/>
+		<NCMDeviceSysOID model="ibVm" series="" sysoid=".1.3.6.1.4.1.7779.1.1003"/>
+		<NCMDeviceSysOID model="ibCisco" series="" sysoid=".1.3.6.1.4.1.7779.1.1002"/>
+		<NCMDeviceSysOID model="ibRsp2" series="" sysoid=".1.3.6.1.4.1.7779.1.1001"/>
+		<NCMDeviceSysOID model="ibDefault" series="" sysoid=".1.3.6.1.4.1.7779.1.1000"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

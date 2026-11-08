@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OpmCLICommands>
+
+    <OpmCLICommand CLICommand="uname -s" description="The uname -s command fetches the kernel name, like 'Linux' or 'Solaris,' identifying the OS." CommandID="122" CommandMappingID="kernelName" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Discovery" CommandDisplayName="Kernel Name" IsDefaultCommand="true">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="uname -sr" description="The uname -sr command retrieves the kernel name and release version, such as 'AIX 7.1', 'SunOS 5.11', or 'HP-UX 11', to identify the OS" CommandID="123" CommandMappingID="kernelNameAndVersion" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Discovery" CommandDisplayName="Kernel Name and Version" IsDefaultCommand="false">
+    </OpmCLICommand>
+
+    <OpmCLICommand CLICommand="cat /etc/*release | grep -E '^NAME|DISTRIB_ID'" description="The Linux Distribution will be retrieved from the /etc/os-release and /etc/lsb-release files." CommandID="124" CommandMappingID="linuxDistribution" DeviceTypeName="Linux" ParseAllLines="false" SupportMultipleEntity="false" Vendor="net-snmp" GraphName="Discovery" CommandDisplayName="Linux Distribution" IsDefaultCommand="false">
+    </OpmCLICommand>
+
+</OpmCLICommands>

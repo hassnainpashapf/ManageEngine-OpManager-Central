@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+	<!-- to get available space on the selected devices -->
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false"  responseparserid="flash_size_parser" promptecho="true" promptactionid="yesActionId">
+		<InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_flash_size_ispec" />
+	</CLIInteractionSpec>
+
+
+	<CLICommand command="show flash">
+		<CLIInputRecord parsercommandname="flash_size_cisco_router" messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_router_show_flash_size_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false"  responseparserid="flash_file_list_parser" promptecho="true" promptactionid="yesActionId">
+		<InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_flash_file_list_ispec" />
+	</CLIInteractionSpec>
+	
+		
+	<!-- For this record above interaction spec will be used. -->
+	<CLICommand command="show flash">
+		<CLIInputRecord parsercommandname="flash_file_list_cisco_805" messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_router_805_show_flash_file_list_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	<CLICommand command="show flash">
+		<CLIInputRecord parsercommandname="flash_file_list_cisco_2501" messagesuffix="&#10;" inputsourcetype="1">
+			<Record type="CLI" recordid="cisco_router_2501_show_flash_file_list_rec" protocol="CLI"/>
+		</CLIInputRecord>
+	</CLICommand>
+	
+	
+	<!-- Image backup -->
+	<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+		<InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_upload_ispec_1"/>
+	</CLIInteractionSpec>
+	
+	<CLICommand command="copy flash tftp">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+	<Record type="CLI" recordid="cisco_router_image_upload_rec_1" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_upload_ispec_2" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:tftp_server_address}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_upload_rec_2" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_upload_ispec_3" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:source_file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_upload_rec_3" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[yes/no]" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_upload_ispec_4" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:dest_file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_upload_rec_4" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="180000" protocol="CLI" interactionid="cisco_router_cli_image_upload_ispec_5" />
+    </CLIInteractionSpec>
+
+<CLICommand command="yes">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_upload_rec_5" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<!-- Image download  -->
+	<!--
+	promptactionid="ImageDownloadPromptAction1">
+	-->
+		
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[confirm]" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_download_ispec_1" />
+    </CLIInteractionSpec>
+
+<CLICommand command="copy tftp flash">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_download_ispec_1_1" />
+    </CLIInteractionSpec>
+
+    <CLICommand command="y">
+	    <CLIInputRecord messagesuffix="&#32;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_1_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="?" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_download_ispec_2_3" />
+    </CLIInteractionSpec>
+
+    
+<CLICommand command="${UserInput:tftp_server_address}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_2" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="${UserInput:source_file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_3" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="[yes/no]" commandecho="false" promptecho="true" promptactionid="ImageDownloadPromptAction1">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_download_ispec_4" />
+    </CLIInteractionSpec>
+
+<CLICommand command="${UserInput:dest_file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_4" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+<!-- Need to give more timeout here as download will take 3-4 minutes -->
+
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="ImageDownloadPromptAction2">
+        <InteractionSpec timeout="300000" protocol="CLI" interactionid="cisco_router_cli_image_download_ispec_5" />
+    </CLIInteractionSpec>
+
+    <CLICommand command="${UserInput:save_config_file}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_5" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+
+
+<!--
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_download_ispec_5" />
+    </CLIInteractionSpec>
+
+<CLICommand command="configure terminal">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_5" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+    
+-->
+
+<!-- record to set flash image name - can be used only when CLIRecord supports partial $replacement strings
+<CLICommand command="boot system flash ${UserInput:dest_file_name}">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_5" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="end">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_5" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+
+-->
+
+<!-- to reload once download operation is over -->
+<!--
+    <CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_download_ispec_5" />
+    </CLIInteractionSpec>
+
+<CLICommand command="reload in 1">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_rec_5" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+-->
+
+<!-- to reload once download operation is over -->
+    <CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+        <InteractionSpec timeout="20000" protocol="CLI" interactionid="cisco_router_cli_image_download_configure_ispec_1" />
+    </CLIInteractionSpec>
+
+<CLICommand command="write">
+<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+<Record type="CLI" recordid="cisco_router_image_download_configure_rec_1" protocol="CLI"/>
+</CLIInputRecord>
+</CLICommand>
+    
+
+    
+
+</CLICommandList>

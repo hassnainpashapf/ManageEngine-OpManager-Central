@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For HPE Lights Out device" displayName="HPE Lights Out" osType="HPE iLO" templateName="HPE Lights Out">
+	<RestTemplate name=""/>
+	<Vendor displayName="HPE" vendorName="HP">
+		<Commands>
+			<Command commandstr="show version"/>
+			<Command commandstr="show system"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="show -a map1" delay="" messagesuffix="${LF}" prompt="${UserInput:Prompt}" promptactionid="NA" promptecho="" readfromresponse="true" sequenceid="2" timeout="130000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="HPE Lights Out" personalityName="HPELightsOut">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="OEMHP Server Name" displayname="OEMHP Server Name" name="OEMHP_SERVER_NAME" sequenceid="1" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="HPELightsOutPropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_hpe_lights_out_version">
+							 <VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+									<REGEX EXPRESSION=".*version=(\S*).*" NAME="OSVERSION">
+										<PARAM NAME="OSVERSION" TOKENNO="1"/>
+									</REGEX>
+									<REGEX EXPRESSION="\s*name=(.*)" NAME="SERIES">
+										<PARAM NAME="SERIES" TOKENNO="1"/>
+									</REGEX>
+								</SCALAR>
+								</METADATA>
+							 </VALID-RULE>
+							 <ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							 </ERROR-RULE>
+						</COMMAND>
+							
+						<COMMAND NAME="hardware_prop_hpe_lights_out_system">
+							 <VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION="\s*number=(.*)" NAME="SERIALNUMBER">
+											<PARAM NAME="SERIALNUMBER" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*name=(.*)" NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION=".*oemhp_server_name=(.*)" NAME="OEMHP_SERVER_NAME">
+											<PARAM NAME="OEMHP_SERVER_NAME" TOKENNO="1"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							 </VALID-RULE>
+							 <ERROR-RULE>
+							 <!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+									  <!-- error message for command  -->
+									  <REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+										 <PARAM NAME="ErrorMsg" TOKENNO="0"/>
+									  </REGEX>
+									</SCALAR>
+								</METADATA>
+							 </ERROR-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser>    
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show map1/firmware1" messagesuffix="${LF}" parsercommandname="hardware_prop_hpe_lights_out_version" prompt="${UserInput:Prompt}" promptactionid="yesActionId" timeout="130000"/>
+						<Command commandstr="show system1" messagesuffix="${LF}" parsercommandname="hardware_prop_hpe_lights_out_system" prompt="${UserInput:Prompt}" promptactionid="yesActionId" timeout="130000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

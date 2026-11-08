@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="dlinkActionId">
+  <InteractionSpec timeout="120000" protocol="CLI" interactionid="dlink_switch_irec"/>
+</CLIInteractionSpec>
+
+<!-- #############################   TYPE 1 Configuration - Starts ##############################-->
+<!-- Upload Running -->
+<CLICommand command="upload configuration ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type1_cli_fetch_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Running -->
+<CLICommand command="download configuration ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type1_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+<!-- #################################   TYPE 1 Configuration - Ends ###############################-->
+
+<!-- #############################   TYPE 2 Configuration - Starts ##############################-->
+<!-- Upload Startup -->
+<CLICommand command="copy startup-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type2_cli_fetch_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Upload Running -->
+<CLICommand command="copy running-config tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type2_cli_fetch_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Startup -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type2_cli_push_startup_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Running -->
+<CLICommand command="copy tftp://${UserInput:tftp_server_address}/${UserInput:file_name} running-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type2_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Config Sync Operation -->
+<CLICommand command="copy running-config startup-config">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type2_sync_config_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- #################################   TYPE 2 Configuration - Ends ###############################-->
+
+<!-- #############################   TYPE 3 Configuration - Starts ##############################-->
+<!-- Upload Running -->
+<CLICommand command="upload cfg_toTFTP ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type3_cli_fetch_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Running -->
+<CLICommand command="download cfg_fromTFTP ${UserInput:tftp_server_address} ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_switch_type3_cli_push_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Download Startup -->                                                                  <CLICommand command="download cfg_fromTFTP ${UserInput:tftp_server_address} ${UserInput:file_name} c:\startup.cfg">               
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_push_startup_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Upload Startup -->
+<CLICommand command="upload cfg_toTFTP ${UserInput:tftp_server_address} ${UserInput:file_name} C:\startup.cfg">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_fetch_startup_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- copy running to startup -->
+
+<CLICommand command="save">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_sync_config_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<!-- enable syslog change detection starts -->
+<CLICommand command="enable syslog">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_enable_changedetection10" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="config system_severity log information">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_enable_changedetection20" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="config system_severity trap information">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_enable_changedetection30" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="create syslog host 1 severity all facility local7 udp_port 514 ipaddress ${UserInput:tftp_server_address} state enable">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_enable_changedetection40" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="config log_save_timing on_demand">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_enable_changedetection50" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<CLICommand command="disable syslog">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_type3_cli_disable_changedetection" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+<!-- enalbe syslog change detedtion ends -->
+<!-- #################################   TYPE 3 Configuration - Ends ###############################-->
+
+<!-- ################################   DGS-3100 series - ###################-->
+
+
+<!-- Upload Running -->                                                                    
+<CLICommand command="upload configuration ${UserInput:tftp_server_address} ${UserInput:file_name} running">                                                                                     
+    	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_DGS_3100_cli_fetch_running_rec" protocol="CLI"/> 
+       	</CLIInputRecord>
+</CLICommand>                                                                              
+<!-- Download Running -->                                                                  
+<CLICommand command="download configuration ${UserInput:tftp_server_address} ${UserInput:file_name} running"> 
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_DGS_3100_cli_push_running_rec" protocol="CLI"/> 
+      	</CLIInputRecord>
+</CLICommand>
+
+
+<!-- Download Startup -->
+<CLICommand command="download configuration ${UserInput:tftp_server_address} ${UserInput:file_name} startup">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_DGS_3100_cli_push_startup_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<!-- Upload Startup -->
+<CLICommand command="upload configuration ${UserInput:tftp_server_address} ${UserInput:file_name} startup">
+	<CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+		<Record type="CLI" recordid="dlink_switch_DGS_3100_cli_fetch_startup_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="120000" prompt="${UserInput:Prompt}" commandecho="false" promptecho="true" promptactionid="dlinkActionId">
+  <InteractionSpec timeout="120000" protocol="CLI" interactionid="dlink_des3200_switch_irec"/>
+</CLIInteractionSpec>
+
+<!-- #############################  Configuration - Starts ##############################-->
+<!-- Upload Running -->
+<CLICommand command="upload cfg_toTFTP ${UserInput:tftp_server_address} dest_file ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_des3200_switch_cli_backup_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+<!-- Download Running -->
+<CLICommand command="download cfg_fromTFTP ${UserInput:tftp_server_address} src_file ${UserInput:file_name}">
+  <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+    <Record type="CLI" recordid="dlink_des3200_switch_cli_upload_running_rec" protocol="CLI"/>
+  </CLIInputRecord>
+</CLICommand>
+
+</CLICommandList>

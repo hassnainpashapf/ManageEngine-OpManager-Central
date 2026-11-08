@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+<!-- for Alcatel-Lucent 7750 Service Router  -->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="60000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true">
+<InteractionSpec timeout="60000" protocol="CLI" interactionid="alcatel_7500_servicerouter_cli_ispec"/>
+</CLIInteractionSpec>
+   
+<!--show command-->
+    <CLICommand command="environment no more">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="alcatel_7500_servicerouter_cli_backup_disable_paging" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+    <CLICommand command="admin display-config">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+            <Record type="CLI" recordid="alcatel_7500_servicerouter_cli_backup_show_startup" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+    <!-- Alcatel-Lucent 7750 Service Router tftp backup commands -->
+
+    <CLICommand command="admin save tftp://${UserInput:tftp_server_address}/${UserInput:file_name}">
+	    <CLIInputRecord messagesuffix="&#13;&#10;" inputsourcetype="1">
+		    <Record type="CLI" recordid="alcatel_7500_servicerouter_cli_backup_startup_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+<!--Show hardware info-->
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="20000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="alcatel_7500_servicerouter_hardware_prop_parser">
+<InteractionSpec timeout="20000" protocol="CLI" interactionid="alcatel_7500_servicerouter_show_hardware_prop"/>
+</CLIInteractionSpec>
+
+    <CLICommand command="show system information">
+	    <CLIInputRecord parsercommandname="hardware_prop_alcatel_7500_servicerouter" messagesuffix="&#13;&#10;" inputsourcetype="1">
+	    <Record type="CLI" recordid="alcatel_7500_servicerouter_cli_hardware_rec" protocol="CLI"/>
+	    </CLIInputRecord>
+    </CLICommand>
+
+</CLICommandList>
+

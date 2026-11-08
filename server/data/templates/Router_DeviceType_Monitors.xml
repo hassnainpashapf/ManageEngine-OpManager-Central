@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <DevicePackageToGraph deviceType="H3C Generic" graphName="UsedMemoryHuaweiH3c|FreeMemoryHuawei|CPUUtilizationPer5Minute|h3cEntityExtTemperature|h3cEntityExtMemoryUtilization|h3cEntityExtCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper Ericsson-GGSN" graphName="ggsnGtpErrorResourcesUnavailable|hrStorageSize3|ggsnGtpErrorIndicationReceived|ggsnGtpNbrOfTunnels|ggsnGtpErrorIndicationSent|ggsnNbrOfActivePdpContexts|ggsnGtpControlPacketDrops|ggsnGtpErrorPdpAddrUnknown"/>
+    <DevicePackageToGraph deviceType="Huawei Generic" graphName="hwEntityOpticalRxPower|hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|hwEntityOpticalTemperature|hwEntityOpticalTxPower"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard ProCurve 7000" graphName="ProCurveCPUUtilization|hpememTotal|hpememFree|hpMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard ProCurve 7001dl" graphName="ProCurveCPUUtilization|hpememTotal|hpememFree|hpMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard ProCurve 7102dl" graphName="ProCurveCPUUtilization|hpememTotal|hpememFree|hpMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard ProCurve 7203dl" graphName="ProCurveCPUUtilization|hpememTotal|hpememFree|hpMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Hewlett-Packard ProCurve 7306dl" graphName="ProCurveCPUUtilization|hpememTotal|hpememFree|hpMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Proteon GTX 1000" graphName="proResMemBufTotal|proStatusCrashes|proStatusStarts|proResMemHeapTotal"/>
+    <DevicePackageToGraph deviceType="Codex Motorola VANGUARD 7310" graphName="cdxstatsMaxCPUUtilization|tnppPDSStatFramesInPerSec|cdx6500NMNPScallsPerSecCur|cdx6500NMNPSbuffPacketExhaust|cdxCPUUtilization|cdx6500NMNPSstatsmemDram|tnppPDSStatFramesOutPerSec"/>
+    <DevicePackageToGraph deviceType="Cisco 4221 ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted|cpm5minTotal_CPUUtilization|ciscoEnvMonTemperatureStatusValue|CiscoMemoryUtilization|RouterCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 4321 ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco 4351 ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco 4431 ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted|cpm5minTotal_CPUUtilization|ciscoEnvMonTemperatureStatusValue|CiscoMemoryUtilization|RouterCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 4451-X ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted|cpm5minTotal_CPUUtilization|ciscoEnvMonTemperatureStatusValue|CiscoMemoryUtilization|RouterCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 888EA ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4321B Boost Router" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4331B Boost Router" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4351B Boost Router" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4451B Boost Router" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco 819 Hardened ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco 891F ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco C841M-4X ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco C892FSP ISR" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4331/K9" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4400" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4441" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4442" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ISR 4452" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ciscoISR4400" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 1001-HX" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 1002-X" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 1002-XC" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 1006-X" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 1009-X" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted|cpm5minTotal_CPUUtilization|ciscoEnvMonTemperatureStatusValue|CiscoMemoryUtilization|RouterCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 1013" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 5000" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 5500" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 9001" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901TenGigAC" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901TenGigACE" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901TenGigDC" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901TenGigDCE" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 920" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 9904" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 9910" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 9912" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 9922" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR1002-HX" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR901-AC-10GS" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR901-CC" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR901-DC-10G-CC" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR901-DC-10GS" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR901-DC-10GS-CC" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR901-E-CC" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR901-E-DC-10G-CC" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Cisco ASR903" graphName="cpmCPUMemoryUsed|cpmCPUMemoryFree|cpmTotal5sec_CPUUtilization|cpmCPUMemoryCommitted"/>
+    <DevicePackageToGraph deviceType="Arbor Networks Peakflow SP 5500" graphName="devicePhysicalMemoryUtilization|deviceDiskUsage|deviceCPUUtilizationAvg5min|deviceTotalFlows|deviceSwapSpaceUsage|deviceCPUUtilizationAvg1min"/>
+    <DevicePackageToGraph deviceType="Arbor Networks Peakflow SP 7000" graphName="devicePhysicalMemoryUtilization|deviceDiskUsage|deviceCPUUtilizationAvg5min|deviceTotalFlows|deviceSwapSpaceUsage|deviceCPUUtilizationAvg1min"/>
+    <DevicePackageToGraph deviceType="OpZoon PT-3750E-28F" graphName="PECPUUtilization|PEMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="OpZoon PT-3750E-28P" graphName="PECPUUtilization|PEMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="OpZoon PT-3750E-28T" graphName="PECPUUtilization|PEMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="OpZoon PT-3750E-28X" graphName="PECPUUtilization|PEMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="OpZoon PT-3750E-52T" graphName="PECPUUtilization|PEMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco Generic" graphName="cpm5minTotal_CPUUtilization|VPNtunnelstatus|CiscoBufferHgMiss|ciscoMemoryPoolUsed|ciscoMemoryPoolFree"/>
+    <DevicePackageToGraph deviceType="Huawei-S5700" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|hwEntityMemSize"/>
+    <DevicePackageToGraph deviceType="Huawei-S5700-24TP-SI-AC" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|hwEntityMemSize"/>
+    <DevicePackageToGraph deviceType="Huawei-S5700-48PT-SI-AC" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|hwEntityMemSize"/>
+    <DevicePackageToGraph deviceType="Huawei-S5700POE" graphName="hwEntityMemoryUtilization|Huawei-S3352-CPUUtilization|hwEntityMemSize"/>
+    <DevicePackageToGraph deviceType="Adtran NetVanta 1224R" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran NetVanta 1224ST" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran NetVanta 1224ST PoE" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran : NetVanta1224" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran Netvanta_1224STR" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran Netvanta_3305" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran Netvanta_4350" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran Netvanta 3205" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran : NetVanta1355" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran : NetVanta5305" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Adtran NetVanat 4305" graphName="adtran5minCPUUtilization|adtranMemoryUsage"/>
+    <DevicePackageToGraph deviceType="Juniper JCS 1200 Control System" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Juniper J4320 Service Router" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Juniper M-10 Router" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Juniper M-160 Router" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Juniper M-20 Router" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Juniper M-40 Router" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Juniper M-5 Router" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Juniper MX10" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0|JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper MX104" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Juniper MX5" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0|JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper Router MX240" graphName="jnxOperatingCPUUtilizationRE1|jnxOperatingCPUUtilizationRE0|jnxOperatingMemoryRE1|jnxOperatingMemoryRE0"/>
+    <DevicePackageToGraph deviceType="Alvarion BreezeACCESS VL" graphName="brzaccVLAverageReceiveRSSI|brzaccVLAverageReceiveSNR|brzaccVLAdbRSSI"/>
+    <DevicePackageToGraph deviceType="Arris E6000" graphName="dcxUsStatsRegComplete"/>
+    <DevicePackageToGraph deviceType="Nortel Routing Switch 5510-24T" graphName="CPUUtilization_Last1Minute|memAvail"/>
+    <DevicePackageToGraph deviceType="Nortel Routing Switch 5510-48T" graphName="CPUUtilization_Last1Minute|memAvail"/>
+    <DevicePackageToGraph deviceType="Nortel Routing Switch 5520-24T" graphName="CPUUtilization_Last1Minute|memAvail"/>
+    <DevicePackageToGraph deviceType="Nortel Routing Switch 5520-48T" graphName="CPUUtilization_Last1Minute|memAvail"/>
+    <DevicePackageToGraph deviceType="NEC NETNEX8775" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth"/>
+    <DevicePackageToGraph deviceType="NEC Bluefire 8000 series 10G ATM Switch" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth"/>
+    <DevicePackageToGraph deviceType="NEC Bluefire 8000 series 2.5G ATM Switch" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth"/>
+    <DevicePackageToGraph deviceType="Alcatel 7705SAR-8" graphName="sgiMemoryUsed|sgiCPUUtilization|sgiMemoryAvailable"/>
+    <DevicePackageToGraph deviceType="Arris Interactive" graphName="docsIfSigQSignalNoise"/>
+    <DevicePackageToGraph deviceType="H3C_SR8808" graphName="H3C_SR8808-CPUUtilization|H3C_SR8808-MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="ZhongXing ZTE-3881-AC" graphName="SlaveCPUUtilization|ZhongXing-ZXR10-CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine 20E" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine 5000E" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine NE20-2" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine NE40-4" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine NE5000oem" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R1600" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R1612" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R1613" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R1614" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R1615" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R1760" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R2509" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R2511" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R2511E" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R2610" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R2611" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R2620" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R2631E" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R3640E" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Huawei QuidWay NetEngine R4001" graphName="hwCPUUtilizationPer5Minute"/>
+    <DevicePackageToGraph deviceType="Avaya Switch 4524" graphName="s5ChasUtilMemoryAvailableMB|s5ChasUtilTable"/>
+    <DevicePackageToGraph deviceType="Avaya Switch 4548" graphName="s5ChasUtilMemoryAvailableMB|s5ChasUtilTable"/>
+    <DevicePackageToGraph deviceType="Alcatel 7710SR-c12" graphName="sgiCPUUtilization|sgiKbMemoryAvailable|sgiKbMemoryUsed|sgiMemoryUtilization|tmnxHwTemperature"/>
+    <DevicePackageToGraph deviceType="Alcatel 7710SR-c4" graphName="sgiCPUUtilization|sgiKbMemoryAvailable|sgiKbMemoryUsed|sgiMemoryUtilization|tmnxHwTemperature"/>
+    <DevicePackageToGraph deviceType="Alcatel 7750 SR4" graphName="sgiCPUUtilization|sgiKbMemoryAvailable|sgiKbMemoryUsed|sgiMemoryUtilization|tmnxHwTemperature"/>
+    <DevicePackageToGraph deviceType="Alcatel 7750 SR6" graphName="sgiCPUUtilization|sgiKbMemoryAvailable|sgiKbMemoryUsed|sgiMemoryUtilization|tmnxHwTemperature"/>
+    <DevicePackageToGraph deviceType="Alcatel 7750 SRc12" graphName="sgiCPUUtilization|sgiKbMemoryAvailable|sgiKbMemoryUsed|sgiMemoryUtilization|tmnxHwTemperature"/>
+    <DevicePackageToGraph deviceType="Alcatel 7750 SRc4" graphName="sgiCPUUtilization|sgiKbMemoryAvailable|sgiKbMemoryUsed|sgiMemoryUtilization|tmnxHwTemperature"/>
+    <DevicePackageToGraph deviceType="Netopia 3346" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia 4541" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia 4622" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia 5220" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia 5300" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia 5320" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia 655" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia PN640" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R3100" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R3232" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R5100" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R5131" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R6100" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R7100" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R7171" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R7200" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R910" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia R9100" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia  4652" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="Netopia Model 3346N-VGx Router" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="NetopiaR7200-T" graphName="currentCPUUtilization|netopiaUsedRAM"/>
+    <DevicePackageToGraph deviceType="AI AI194" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Adtran 908e" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Adtran Net Vanta 3448" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="ALAXALA AX2000R" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="ALAXALA AX7700R" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="ALAXALA AX7800R" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Alcatel PizzaPort" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Alcatel-Lucent alcatel7705SAR" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Allied Telesyn AT-3624TR" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya G250-DS1" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Avaya Communication Aura Communication Manager" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Bay 5000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Bay BayStack 200" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Bay NMM 331XA" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cabletron MINIMMAC" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cabletron MMAC-44T" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cabletron MRXI" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cabletron MicroMMAC" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cabletron SEHI" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cabletron TRMM-2" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cabletron TRMM-4" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cabletron TRMM" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Carrier Access caAdit600" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cisco 887VAGW+7-E-K9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901-12C-F-D" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901S-2SG-F-D" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901S-3SG-F-AH" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 901S-3SG-F-D" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 819G4GVK9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 887VA" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR92-24SZIM" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR920-12-CZ-D" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR920-12-CZA" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR920-24TZM" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR920-4S-ZA" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR920-4S-ZD" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR920-8S-Z0A" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR920-8S-Z0D" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ASR920" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco C888K9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco CBR-8" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco CRS8S" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco NMECUE" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco SG350-28 28-Port GB" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco wsc1000" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 819-GWLTEGA-EK9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco880" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco899-LTE-GA-K9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco IR829-2LTE-EA-BK9" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco VG202XM" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco VG204XM" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco VG204" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco VG320" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco VX310" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco cisco880 ISR" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ciscoASR901" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco ciscoVG350" graphName="CiscoMemoryPoolFree|CiscoMemoryPoolUsed|CiscoMemoryUtilization|CiscoTemperature|RouterCPUUtilization|RouterMemoryUtilization|SysUpTime|cpm5minTotal_CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Digilink DL 3100" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="EdgewaterNetworks EM4508 Series" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Encore Networks Bandit III" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Ericsson SSR8004" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="General DataComm Xedge 6002" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR954" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C 6604-A" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C 6604" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C 6608" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C 6616-A" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C 6616" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C A6602" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C A8800" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C HSR 6602-XG" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR1003-8 AC" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR20-10" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR20-11" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR20-12-W" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR20-13-W-NA" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR20-13" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR20-20" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR20-21" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR20-40" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR2003 AC" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C msr30-10" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR30-11E" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR30-11F" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR3012 AC" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR3012 DC" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR3024 AC" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR3024 DC" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR3024 PoE" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR3044" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR3064" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR4060" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR4080" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR50-40" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR9304GLTEA" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C MSR930G" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C VSR1000" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C VSR1001 VSR E-LTU" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C VSR1004 VSR E-LTU" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C VSR1008 VSR E-LTU" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C-3com MSR9304GLTEG" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C-3com MSR930" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C-3com MSR931" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="H3C-3com h3c-MSR260010" graphName="H3CCPUUtilization|H3CMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="HP H3CJ3303A" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Huawei R2611" graphName="Huawei-MemoryUtilization|SysUpTime|hwCPUUtilizationPer5Minute|hwEntityTemperature"/>
+    <DevicePackageToGraph deviceType="Hypercom IN-tact 1101" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="IBM mdl 13 s/n 23t7677" graphName="SysUpTime|dpStatusCPUUtilizationtenSeconds|dpStatusMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper ACX2200" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper MX2010" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper MX2020" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper MX40" graphName="JuniperMemoryutilization|JuniperTemperature|SysUpTime|jnxOperatingCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Lucent AP 50-LAN" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Lucent STACK" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="MAIPU 2816" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="MAIPU 801E" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Motorola BSR2000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NBASE NH1026" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NEC SBC 1000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="NEC SBC 2000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Nortel Media Gateway" graphName="SysUpTime|CPUUtilization_Last1Minute|criticalTemperature"/>
+    <DevicePackageToGraph deviceType="Nortel SR3120" graphName="SysUpTime|CPUUtilization_Last1Minute|criticalTemperature"/>
+    <DevicePackageToGraph deviceType="Nortel SR4134" graphName="SysUpTime|CPUUtilization_Last1Minute|criticalTemperature"/>
+    <DevicePackageToGraph deviceType="PairGain REX2" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="PairGain REX" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Paradyne GranDSLAM-4200" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Paradyne iMarc 9123" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="PowerDsine PD-6006-AC-SNMP-PoE" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Redback SMS 1000" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Redback SMS 500" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Redback SSR8010" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Redback SmartEdge 600" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Sarian Systems WR44-L1A3-N13-SB" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Satelcom MegaBOX-E" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Satelcom MegaPAC-E" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Sonus Networks SBC 5110" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Sonus Networks, Inc. Tenor AX" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Teldat teldat-4Ge" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Teldat teldat-C1iPlus" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Teldat teldat-atlas-60" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Teldat teldat-c1plusl" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Teldat teldat-h1plus" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Teldat teldat-m1" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Teldat teldat-v" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Tiesse IMOLA CPU Multi Protocol Router" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Vbrick 4200" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Viptela vedge2000AC" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Visual Networks M112" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Visual Networks M115" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="ZTE ZXR10 M6000-8S" graphName="SysUpTime"/>
+    <DevicePackageToGraph deviceType="Cisco 881" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881G" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881G2" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881G7AK9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881G7K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GBK9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GPE" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GSK9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GUK9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GVK9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GW-7-A-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GW-7-E-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GW-S-A-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881GW-V-A-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881NPE" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881W-A-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881WD-A-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881WD-E-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881WEK9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco 881WPK9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco C891FW-A-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Cisco C891FW-E-K9" graphName="CiscoFirewallCPUUtilization|CiscoMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR2010V" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR2050V" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR3050S" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR4050S" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR410" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR410V2" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR410V3" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR420" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR440" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR441" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR442" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR443" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR444" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR450" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR450 DUAL" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR550" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR550S" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR551" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR552" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR560S" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR570" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR725" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR725 ROUTERDC" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR740" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR745" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR745 ROUTERDC" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR750S" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis AT AR770" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR 300" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR120" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR130S" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR130U" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR140S" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR140U" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR160" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR300L" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR300LU" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR300U" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR310" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR310U" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR320" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR330" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR350" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR370" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR370U" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR390" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR395" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR720" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="Allied Telesis CENTRECOM AR740" graphName="CPUUtilizationAvg|freeMemory|totalBuffers"/>
+    <DevicePackageToGraph deviceType="NEC AG400 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG500" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG510" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG520" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG530" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG531" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG540" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG600" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG610" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG611" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG650" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC AG651" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC CGW SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC HX 2105 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 1000 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 1010" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 1011" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 1020" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 1035I" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 1036" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 1036I" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 1050" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 2015" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 2106 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 2207 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 2215 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 2216 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 3015 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 3110" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC IX 3315 SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC RTU 2106" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC RTU B" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC RTU SERIES" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC UNIVERGE WA" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC WA1020" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC WA1500" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC WA2020" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC WA2021" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC WA2600" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC ix2000-Series" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC ix2004-Series" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC ix2005-Series" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC ix2025-Series" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="NEC ix2105-Series" graphName="linfBkwdAvailableBandWidth|linfFwdAvailableBandWidth|picoCelsius|picoHeapUtil|picoPowerSupplyStatus|picoSchedRtUtl1Min|slotIfConfStatus"/>
+    <DevicePackageToGraph deviceType="YAMAHA NVR510" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA NVR700W" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA PJP MC24" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 100I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 102I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 103I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 105E" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 105I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 105P" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 107E" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 140E" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 140F" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 140I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 140P" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 200I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 250I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 300I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 52PRO" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 56V" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 57I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 58I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 60W" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT 80I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT A50I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT A52I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT A55I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT V01" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT V700" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT W65B" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT W65I" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X1210" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X1500" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X2000" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X3000" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X3500" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X5000" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X800" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X820" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA RT X830" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA SRT 100" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA SWR2311P" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA YSL V810" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="YAMAHA YTD 442" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization|yrhMultiCPUUtilization5Min|rtyrhInboxTemperature"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 130" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 120" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 1200" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 125" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 155WM" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 155XM" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 155L" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 230" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 350" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 1300" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR 1320" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100F" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100KL" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100N" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100S" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100NL" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100SL" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100KT" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100NLW" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100KLW" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100SLW" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100WM" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100KL R2" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100L" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100WM R2" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G100KLW R2" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G240" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G240L" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G240ML CA" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G240L CA" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G260" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G260L" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G260L CA" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems NXR G260ML CA" graphName="csNXRSystemMemoryBuffers|csNXRSystemMemoryFree|csNXRSystemMemoryUsed|csNXRSystemCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Century Systems XR 1100" graphName="csXRSystemCPUUtilization|csXRSystemMemoryBuffers|csXRSystemMemoryFree|csXRSystemMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Century Systems XR 640 L2" graphName="csXRSystemCPUUtilization|csXRSystemMemoryBuffers|csXRSystemMemoryFree|csXRSystemMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Century Systems XR 410 L2" graphName="csXRSystemCPUUtilization|csXRSystemMemoryBuffers|csXRSystemMemoryFree|csXRSystemMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Century Systems XR 540" graphName="csXRSystemCPUUtilization|csXRSystemMemoryBuffers|csXRSystemMemoryFree|csXRSystemMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Century Systems XR 510" graphName="csXRSystemCPUUtilization|csXRSystemMemoryBuffers|csXRSystemMemoryFree|csXRSystemMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Century Systems XR 430" graphName="csXRSystemCPUUtilization|csXRSystemMemoryBuffers|csXRSystemMemoryFree|csXRSystemMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Century Systems XR 730" graphName="csXRSystemCPUUtilization|csXRSystemMemoryBuffers|csXRSystemMemoryFree|csXRSystemMemoryUsed"/>
+    <DevicePackageToGraph deviceType="Century Systems XR 1200" graphName="csXRSystemCPUUtilization|csXRSystemMemoryBuffers|csXRSystemMemoryFree|csXRSystemMemoryUsed"/>
+    <DevicePackageToGraph deviceType="DCN DCRS-7608E" graphName="DCN-DCRS-MemoryUtilization"/>
+    <DevicePackageToGraph deviceType="RuiJie-R2620" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R2624" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R2690" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R2692" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R3642" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R3662" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NBR1000" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NBR200" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-SECVPN100" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R2632" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R1762" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RCMS" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-HCL-R1762" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-HCL-R2632" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-HCL-R2692" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-HCL-R3642" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-HCL-R3662" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-HCL-R3740" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NBR2000" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NBR300" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NBR1200" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NBR1500" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R3802" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R3804" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR50-20" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR50-40" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR50-80" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NPE50-20" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR10-02" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR10-04" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-VPN120" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NPE80" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR20-24" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR20-14" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR30-44" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R2716" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-R2700" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-NPE50-40" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR20-18" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="RuiJie-RSR50E-80" graphName="RuiJieFanstate|RuiJiePowerstate"/>
+    <DevicePackageToGraph deviceType="Juniper SRX210" graphName="jnxJsSPUMonitoringCurrentTotalSession"/>
+    <DevicePackageToGraph deviceType="Juniper srx3400" graphName="jnxJsSPUMonitoringCurrentTotalSession"/>
+    <DevicePackageToGraph deviceType="Juniper SRX1400" graphName="jnxJsSPUMonitoringCurrentTotalSession"/>
+    <DevicePackageToGraph deviceType="Cisco ASR9006" graphName="Cisco-CPUUtilization"/>
+    <DevicePackageToGraph deviceType="Fujitsu SI-R G200" graphName="ipRoutingDiscards|Number of Network Interfaces|SysUpTime|etherStatsFragments|etherStatsJabbers|etherStatsCollisions|etherStatsPkts"/>
+    <DevicePackageToGraph deviceType="Fortigate-500" graphName="fortinetCurrentCPUUtilization|fgsys_MemoryUtilization|fgSysSesCount|fgVpnSslStatsLoginUsers|fgVpnSslStatsActiveTunnels|httpSessionsCount|FortigateFirewallSessionCount|FortigateFirewallCPUUtilization|FortigateFirewallMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Fortigate-3140B" graphName="fortinetCurrentCPUUtilization|fgsys_MemoryUtilization|fgSysSesCount|fgVpnSslStatsLoginUsers|fgVpnSslStatsActiveTunnels|httpSessionsCount|FortigateFirewallSessionCount|FortigateFirewallCPUUtilization|FortigateFirewallMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="Fortinet Fortigate-500" graphName="fortinetCurrentCPUUtilization|fgsys_MemoryUtilization|fgSysSesCount|fgVpnSslStatsLoginUsers|fgVpnSslStatsActiveTunnels|httpSessionsCount"/>
+    <DevicePackageToGraph deviceType="Cisco SM-X-ES3-24-P" graphName="RouterCPUUtilization|CiscoMemoryUtilization|CiscoTemperature"/>
+    <DevicePackageToGraph deviceType="Cisco ASR 1001X" graphName="cpm5minTotal_CPUUtilization|ciscoEnvMonTemperatureStatusValue|RouterCPUUtilization|cpmCPUMemoryUsed|cpmCPUMemoryFree"/>
+    <DevicePackageToGraph deviceType="Cisco 2900 IS Series" graphName="cpm5minTotal_CPUUtilization|ciscoEnvMonTemperatureStatusValue|RouterCPUUtilization|cpmCPUMemoryUsed|cpmCPUMemoryFree"/>
+    <DevicePackageToGraph deviceType="Cisco 3900 IS Series" graphName="cpm5minTotal_CPUUtilization|ciscoEnvMonTemperatureStatusValue|RouterCPUUtilization|cpmCPUMemoryUsed|cpmCPUMemoryFree"/>
+    <DevicePackageToGraph deviceType="D-Link DI-SR2800-20" graphName="Win-MemoryUtilization|Number of Network Interfaces|Win-UsedDiskSpaceInGB|DiskUtilization|Win-CPUUtilization|SysUpTime|Win-UsedDiskSpaceInMB|ProcessCount"/>
+    <DevicePackageToGraph deviceType="Romantis UHP 332" graphName="uhpUnroutedPkts|romantisSysTemperature|uhpMemoryUtilization|uhpCpuUtilization|SysUpTime|uhpNumStations"/>
+	<DevicePackageToGraph deviceType="MiKroTik Router" graphName="Mikrotik.UsedMemoryinMB|MiKroTik.MemoryUtilization|Mikrotik.FreeHDDSpaceinMB|MiKroTik.HDDSpace.Utilization|MiKroTik.CPUtemperature|TxRate|Win-CPUUtilization|MiKroTik.FreeMemoryinMB|MiKroTik.CPU.frequency|MiKroTik.Systemtemperature|SysUpTime|MiKroTik.Voltage|MiKroTik.UsedHDDSpaceinMB"/>
+    <!-- 1947 dt start-->
+    <DevicePackageToGraph deviceType="Cisco vEdge 100 Series" graphName="cvntpEventCount|cvusrCpuUtilization|cvsysCpuUtilization|cvSysmemoryUsed|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Huawei AR1220C" graphName="Huawei-S3352-CPUUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="Huawei AR161" graphName="Huawei-S3352-CPUUtilization|SysUpTime"/>
+    <!-- 1947 dt end-->
+    <!-- 2481 dt start -->
+    <DevicePackageToGraph deviceType="Cisco SM-X-ES3-24-P" graphName="RouterCPUUtilization"/>
+    <DevicePackageToGraph deviceType="Juniper MX204" graphName="jnxVCMemberRETemperature|jnxVCMemberRECPUUtilization|jnxVCMemberMemoryUtilization|SysUpTime"/>
+    <DevicePackageToGraph deviceType="ZTE ZXR10 M6000-3S" graphName="zxr10SystemMemoryUtilization|zxr10SystemCPUUtilization5MinAvg|SysUpTime"/>
+    <!-- 2481 dt end -->
+    <!-- Topo 2788 -->
+    <DevicePackageToGraph deviceType="Cisco 1111 4P ISR" graphName="CiscoMemoryUtilization|SysUpTime|CiscoFirewallCPUUtilization"/>
+    <!-- Nokia DT starts -->
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-1e" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-1e" graphName="nk_sgiMemoryUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-1e" graphName="nk_sgiCPUUtilization" dialtype="meter" unit="%"/>
+
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-2e" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-2e" graphName="nk_sgiMemoryUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-2e" graphName="nk_sgiCPUUtilization" dialtype="meter" unit="%"/>
+
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-1s" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-1s" graphName="nk_sgiMemoryUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-1s" graphName="ipsoProcessorUtilization" dialtype="meter" unit="%"/>
+
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-2s" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-2s" graphName="nk_sgiMemoryUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-2s" graphName="nk_sgiCPUUtilization" dialtype="meter" unit="%"/>
+
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-7s" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-7s" graphName="nk_sgiMemoryUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-7s" graphName="nk_sgiCPUUtilization" dialtype="meter" unit="%"/>
+
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-a4" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-a4" graphName="nk_sgiMemoryUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-a4" graphName="nk_sgiCPUUtilization" dialtype="meter" unit="%"/>
+
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-a8" graphName="SysUpTime" dialtype="number" unit="Hours"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-a8" graphName="nk_sgiMemoryUtilization" dialtype="meter" unit="%"/>
+    <DevicePackageToGraph deviceType="Nokia 7750 SR-a8" graphName="nk_sgiCPUUtilization" dialtype="meter" unit="%"/>
+    <!-- Nokia DT ends -->
+    <DevicePackageToGraph deviceType="YAMAHA RTX1200" graphName="rtyrhInboxTemperature|rtyrhCPUUtilization5min|rtyrhMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="YAMAHA NVR500" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization"/>
+    <DevicePackageToGraph deviceType="YAMAHA RTX810" graphName="rtyrhCPUUtilization5min|rtyrhMemoryUtilization"/>
+</GRAPHDETAIL>

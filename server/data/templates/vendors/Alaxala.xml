@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<DeviceConfiguration>
+
+    <!-- For Alaxala 2400 and 3600 Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_switch" templatename="Alaxala_2400_Switch" ostype="NA"  displayname="Alaxala 2400 3600 and 6300 Switches"  description="For Alaxala 2400,3600 Switches">
+        <NCMVendorDevice vendorid="Alaxala"/>
+
+        <NCMDevicePersonality personalityid="AlaxalaSwitch"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxala_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="alaxala_switch_cli_startup_config_push"/>
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxala_switch_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alaxala_switch_cli_running_config_push"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alaxala_switch_cli_copy_running_to_startup"/>  
+                
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Disable_Change_Tracking_Syslog" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- For Telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxalaswitch_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alaxala_switch_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxalaswitch_telnet_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alaxala_switch_show_running_config_rec"/>
+		<!--Upload Running config-->		
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alaxalaswitch_telnet_running_config_upload" taskhandling="true"/>
+			<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+			<!-- Hardware Prop Retrieval -->
+			<NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+			
+			
+			<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Disable_Change_Tracking_Syslog" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+<!--SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxala_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="alaxala_switch_cli_startup_config_push"/>
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxala_switch_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alaxala_switch_cli_running_config_push"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alaxala_switch_cli_copy_running_to_startup"/>
+                
+                
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Disable_Change_Tracking_Syslog" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- For SSH -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxalaswitch_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alaxala_switch_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxalaswitch_telnet_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alaxala_switch_show_running_config_rec"/>
+		<!--Upload Running config-->	
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alaxalaswitch_telnet_running_config_upload" taskhandling="true"/>
+			<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+	
+			<!-- Hardware Prop Retrieval -->
+			<NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+			
+			
+			<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Disable_Change_Tracking_Syslog" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+<!--For Alaxala 1230 Switch-->
+
+<NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala1230_switch" templatename="Alaxala_1230_Switch" ostype="NA" displayname="Alaxala 1230 Switch"  description="For Alaxala 1230 Switches">
+	<NCMVendorDevice vendorid="Alaxala"/>
+	
+	<NCMDevicePersonality personalityid="AlaxalaSwitch"/>
+	
+	<NCMSupportedProtocol protocolid="TELNET">
+		<NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+	</NCMSupportedProtocol>
+	
+	<NCMSupportedProtocol protocolid="SSH">
+		<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+	</NCMSupportedProtocol>
+	
+	
+	<!-- for Telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala1230_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala1230_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxala1230switch_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alaxala1230_switch_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxala1230switch_telnet_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alaxala1230_switch_show_running_config_rec"/>
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alaxala1230_switch_cli_copy_running_to_startup"/>
+			
+			<!-- Hardware Prop Retrieval -->
+		<NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface"/>
+			<!-- Change Tracking thru Syslog -->
+	   <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala1230_Switch_Enable_Change_Tracking_Syslog" />
+	    <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala1230_Switch_Disable_Change_Tracking_Syslog" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+	
+	<!-- for SSH -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala1230_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala1230_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxala1230switch_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alaxala1230_switch_show_startup_config_rec"/>
+			
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxala1230switch_telnet_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alaxala1230_switch_show_running_config_rec"/>
+			
+		<NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alaxala1230_switch_cli_copy_running_to_startup"/>
+			<!-- Hardware Prop Retrieval -->
+		<NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+			
+			<!-- Change Tracking thru Syslog -->
+	<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala1230_Switch_Enable_Change_Tracking_Syslog" />
+	<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala1230_Switch_Disable_Change_Tracking_Syslog" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+	
+</NCMDeviceTemplate>
+
+
+
+
+ <!-- For Alaxala 5400 Switches -->
+    <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_5400_switch" templatename="Alaxala_5400_Switch" ostype="NA" displayname="Alaxala 5400 Switch"  description="For Alaxala 5400 Switches">
+        <NCMVendorDevice vendorid="Alaxala"/>
+
+        <NCMDevicePersonality personalityid="AlaxalaSwitch5400"/>
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+		<NCMSupportedProtocol protocolid="SSH">
+			<NCMDeviceCredential credentialgroupid="SSH Credentials" />
+		</NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_5400_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_5400_switch" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxala_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="alaxala_switch_cli_startup_config_push"/>
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxala_switch_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alaxala_switch_cli_running_config_push"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alaxala_switch_cli_copy_running_to_startup"/>  
+                
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Disable_Change_Tracking_Syslog" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- For Telnet -->
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_5400_switch_telnet_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_5400_switch" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+		
+		<NCMDeviceCriteria commandmapid="TELNET_Command">
+			
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxalaswitch_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alaxala_switch_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxalaswitch_telnet_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alaxala_switch_show_running_config_rec"/>
+		<!--Upload Running config-->		
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alaxalaswitch_telnet_running_config_upload" taskhandling="true"/>
+			<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+
+			<!-- Hardware Prop Retrieval -->
+			<NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+			
+			
+			<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Disable_Change_Tracking_Syslog" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+
+<!--SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_5400_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_5400_switch" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxala_switch_cli_startup_config_backup" />
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="alaxala_switch_cli_startup_config_push"/>
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxala_switch_cli_running_config_backup"/>
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alaxala_switch_cli_running_config_push"/>
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="alaxala_switch_cli_copy_running_to_startup"/>
+                
+                
+                <!-- Hardware Prop Retrieval -->
+                <NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+
+                <!-- Change Tracking thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Disable_Change_Tracking_Syslog" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+	
+	<!-- For SSH -->
+	
+	<NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:alaxala_5400_switch_ssh_alone" devicetemplateid="NCMDeviceTemplate:devicetemplateid:alaxala_5400_switch" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+		
+		<NCMDeviceCriteria commandmapid="SSH_Command">
+		<NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="alaxalaswitch_telnet_startup_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupStartupConfig" recordid="alaxala_switch_show_startup_config_rec"/>
+		<NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="alaxalaswitch_telnet_running_config_fetch" taskhandling="true"/>
+			<NCMReadFromResponse operationid="BackupRunningConfig" recordid="alaxala_switch_show_running_config_rec"/>
+		<!--Upload Running config-->	
+		<NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="alaxalaswitch_telnet_running_config_upload" taskhandling="true"/>
+			<NCMUserInputKey operationid="UploadRunningConfig" userinputkey="FileContents"/>
+	
+			<!-- Hardware Prop Retrieval -->
+			<NCMDeviceOperation operationid="GetHardwareInterfaces" executiongroupid="alaxala_switch_cli_get_hardware_interface" />
+			
+			
+			<!-- Change Tracking thru Syslog -->
+		<NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Enable_Change_Tracking_Syslog" />
+		<NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Alaxala_Switch_Disable_Change_Tracking_Syslog" />
+			
+		</NCMDeviceCriteria>
+	</NCMProtocolCombination>
+</NCMDeviceTemplate>
+
+
+</DeviceConfiguration>
+
+
+

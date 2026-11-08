@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GRAPHDETAIL>
+    <Graph YAXISTEXT="Minutes" description="Monitors the System reboot time using CLI" displayName="System Reboot time" failureThreshold="1" graphName="Mac-SystemReboot" graphType="multiple" isNumeric="true" oid="Mac-SystemReboot" period="900" protocol="CLI" saveAbsolutes="false" timeAvg="false" vendorName="Apple" >
+        <UserProps propName="GROUPNAME" propValue="CLI"/>
+    </Graph>
+</GRAPHDETAIL>

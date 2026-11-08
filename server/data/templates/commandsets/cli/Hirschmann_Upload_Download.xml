@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<CLICommandList>
+
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" promptactionid="HirschmannSwitchActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="hirschmann_switch_cli_ispec"/>
+</CLIInteractionSpec>
+
+<!-- show config -->
+
+<CLICommand command="show running-config all">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="hirschmann_switch_cli_show_running_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="show startup-config all">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="hirschmann_switch_cli_show_startup_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+<CLICommand command="copy nvram:startup-config system:running-config">
+   <CLIInputRecord messagesuffix="&#10;" inputsourcetype="1">
+     <Record type="CLI" recordid="hirschmann_switch_cli_sync_config_rec" protocol="CLI"/>
+   </CLIInputRecord>
+</CLICommand>
+
+
+<!-- Hardware Properties -->
+<CLIInteractionSpec interactionverb="1" requesttimeout="30000" prompt="${UserInput:EnablePrompt}" commandecho="false" promptecho="true" responseparserid="hirschmann_switch_hardware_prop_parser" promptactionid="HirschmannSwitchActionId">
+   <InteractionSpec timeout="30000" protocol="CLI" interactionid="hirschmann_switch_cli_hardware_ispec"/>
+</CLIInteractionSpec>
+
+<CLICommand command="show sysinfo">
+	<CLIInputRecord parsercommandname="hardware_prop_hirschmann_switch" messagesuffix="&#10;" inputsourcetype="1">
+	   <Record type="CLI" recordid="hirschmann_switch_cli_hardware_version_rec" protocol="CLI"/>
+	</CLIInputRecord>
+</CLICommand>
+
+
+
+
+</CLICommandList>
+

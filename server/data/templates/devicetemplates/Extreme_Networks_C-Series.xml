@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For Extreme Networks C-Series" displayName="Extreme Networks C-Series" osType="EOS" templateName="Extreme Networks C-Series">
+	<RestTemplate name=""/>
+	<Vendor displayName="Extreme" vendorName="Extreme">
+		<Commands/>
+		<LoggingLevels>
+			<Level name="info" number="0" sequenceid="0"/>
+		</LoggingLevels>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="set length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="false" sequenceid="2" timeout="20000"/>
+                	<Command commandecho="" commandstr="show config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="EnterasysActionId" promptecho="" readfromresponse="true" sequenceid="3" timeout="120000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="Extreme Networks CSeries" personalityName="ExtremeNetworksCSeries">	
+		<Login enablecommand="enable" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Hardware" displayname="Hardware" name="HARDWARE" sequenceid="1" size="150"/>
+				<Column defaultvalue="Not Available" desc="Firmware Version" displayname="Firmware Version" name="FIRMWARE_VERSION" sequenceid="2" size="150"/>
+				<Column defaultvalue="Not Available" desc="Backup Firmware Version" displayname="Backup Firmware Version" name="BACKUP_FIRMWARE_VERSION" sequenceid="3" size="150"/>
+				<Column defaultvalue="Not Available" desc="PoE" displayname="PoE" name="POE" sequenceid="4" size="150"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines/>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="ExtremeHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+					<PARSER TYPE="rule1" CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser">
+						<COMMAND NAME="hardware_prop_extreme_networks_c_series">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION='(\S*)\s*(\S*)\s*Hw\s*:\s*(.*)' NAME="MODEL">
+											<PARAM NAME="MODEL" TOKENNO="1"/>
+											<PARAM NAME="SERIALNUMBER" TOKENNO="2"/>
+											<PARAM NAME="HARDWARE" TOKENNO="3"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*Fw\s*:\s*(\S*).*" NAME="FIRMWARE_VERSION">
+											<PARAM NAME="FIRMWARE_VERSION" TOKENNO="1"/>
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION="\s*BuFw\s*:\s*(\S*).*" NAME="BACKUP_FIRMWARE_VERSION">
+											<PARAM NAME="BACKUP_FIRMWARE_VERSION" TOKENNO="1"/>
+										</REGEX>
+										<REGEX EXPRESSION='\s*PoE\s*:\s*(\S*).*' NAME="POE">
+											<PARAM NAME="POE" TOKENNO="1"/>
+										</REGEX>							
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+						</COMMAND>
+					</PARSER>
+				</MESSAGE-PARSER>
+			</HardwareParser> 
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show version" messagesuffix="${LF}" parsercommandname="hardware_prop_extreme_networks_c_series" prompt="${UserInput:EnablePrompt}" promptactionid="EnterasysActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList/>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

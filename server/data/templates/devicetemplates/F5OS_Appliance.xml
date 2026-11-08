@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NCMDeviceTemplate description="For F5 devices using F5OS-A OS" displayName="F5OS-Appliance" osType="F5OS-A" templateName="F5OS_Appliance" category="General">
+	<RestTemplate name=""/>
+	<Vendor displayName="F5" vendorName="F5">
+		<Commands>
+			<Command commandstr="show system version"/>
+			<Command commandstr="show system licensing"/>
+		</Commands>
+		<LoggingLevels/>
+	</Vendor>
+	<Protocols>
+		<Protocol name="SSH/TELNET">
+        	<OperationGroup type="Backup">
+            	<Operation name="Running">
+                	<Command commandecho="" commandstr="screen-length 0" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="NA" promptecho="" readfromresponse="false" sequenceid="10" timeout="20000"/>
+                	<Command commandecho="" commandstr="show running-config" delay="" messagesuffix="${LF}" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" promptecho="" readfromresponse="true" sequenceid="20" timeout="60000"/>
+            	</Operation>
+        	</OperationGroup>
+    	</Protocol>
+	</Protocols>
+    <NCMPersonality displayName="F5OS Appliance" personalityName="F5OSAppliance">	
+		<Login enablecommand="" postlogincommand="" postloginprompt="" prelogincommand="" preloginprompt="" suffix="${LF}"/>
+		<PersonalityTable>
+			<Columns>
+				<Column defaultvalue="Not Available" desc="Service Version" displayname="Service Version" name="SERVICE_VERSION" sequenceid="5" size="100"/>
+				<Column defaultvalue="Not Available" desc="Platform ID" displayname="Platform ID" name="PLATFORM_ID" sequenceid="10" size="100"/>
+			</Columns>
+		</PersonalityTable>
+		<ConfigurationFile format="Text">
+ 			<ExcludeLines>
+				<Criteria type="deletePrompt">
+					<Regex>.*</Regex>
+				</Criteria>
+			</ExcludeLines>
+			<SyslogStateCheckers/>
+		</ConfigurationFile>
+		<HardwareDetails>
+			<HardwareParser parserFileName="F5OSApplianceHardwarePropParser.xml"> 
+				<MESSAGE-PARSER>
+		            <PARSER CLASSNAME="com.adventnet.util.parser.regex.scalar.RegExScalarParser" TYPE="rule1">
+						<COMMAND NAME="hardware_prop_f5os_appliance">
+							<VALID-RULE>
+								<METADATA>
+									<SCALAR REFERENCEREQ="false">
+										<REGEX EXPRESSION=".*(?i)state\sdescription\s+(r[0-9A-Za-z\-]+).*" NAME="MODEL">
+											<PARAM NAME="SERIES" TOKENNO="1"/>
+											<PARAM NAME="MODEL" TOKENNO="1"/>		
+										</REGEX>
+										<REGEX EXPRESSION=".*(?i)system version os-version\s*([\d\.]+).*" NAME="OSVERSION">		
+											<PARAM NAME="OSVERSION" TOKENNO="1"/>									
+										</REGEX>
+										<REGEX EXPRESSION=".*(?i)system version product\s*(\S*).*" NAME="OSTYPE">			
+											<PARAM NAME="OSTYPE" TOKENNO="1"/>									
+										</REGEX>
+										<REGEX EXPRESSION=".*system state base-mac\s*(\S*).*" NAME="MACADDRESS">		
+											<PARAM NAME="MACADDRESS" TOKENNO="1"/>									
+										</REGEX>
+										<REGEX EXPRESSION=".*system version service-version\s*(\S*).*" NAME="SERVICE_VERSION">
+											<PARAM NAME="SERVICE_VERSION" TOKENNO="1"/>									
+										</REGEX>
+										<REGEX EXPRESSION=".*(?i)Platform ID (\S+).*" NAME="PLATFORM_ID">	
+											<PARAM NAME="PLATFORM_ID" TOKENNO="1"/>								
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</VALID-RULE>
+							<ERROR-RULE>
+								<!-- Error rule specific to the command -->
+								<METADATA>
+									<SCALAR>
+										<!-- error message for command  -->
+										<REGEX EXPRESSION=".*(Incomplete command).*" NAME="CmdError1">
+											<PARAM NAME="ErrorMsg" TOKENNO="0"/>
+										</REGEX>
+									</SCALAR>
+								</METADATA>
+							</ERROR-RULE>
+						</COMMAND>
+		            </PARSER>
+		        </MESSAGE-PARSER>
+			</HardwareParser>
+			<Protocols>
+				<Protocol name="">
+					<Commands operation="">
+						<Command commandstr="show system version" messagesuffix="${LF}" parsercommandname="hardware_prop_f5os_appliance" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+						<Command commandstr="show system licensing" messagesuffix="${LF}" parsercommandname="hardware_prop_f5os_appliance" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+						<Command commandstr="show components component platform state description" messagesuffix="${LF}" parsercommandname="hardware_prop_f5os_appliance" prompt="${UserInput:EnablePrompt}" promptactionid="yesActionId" timeout="20000"/>
+					</Commands>
+				</Protocol>
+			</Protocols>
+		</HardwareDetails>
+	</NCMPersonality>
+	<NCMDeviceSysOIDList>
+		<NCMDeviceSysOID model="" ostype="" series="R5000" sysoid=".1.3.6.1.4.1.12276.1.3.1.1"/>
+		<NCMDeviceSysOID model="" ostype="" series="R10000" sysoid=".1.3.6.1.4.1.12276.1.3.1.2"/>
+		<NCMDeviceSysOID model="" ostype="" series="R2000" sysoid=".1.3.6.1.4.1.12276.1.3.1.3"/>
+		<NCMDeviceSysOID model="" ostype="" series="R4400" sysoid=".1.3.6.1.4.1.12276.1.3.1.4"/>
+	</NCMDeviceSysOIDList>
+	<CustDeviceSysOIDList/>
+	<PromptActionIds/>
+</NCMDeviceTemplate>

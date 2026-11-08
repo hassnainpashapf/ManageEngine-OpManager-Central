@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+
+<DeviceConfiguration>
+
+ <NCMDeviceTemplate devicetemplateid="NCMDeviceTemplate:devicetemplateid:avaya_media_gateway" templatename="Avaya_Media_Gateway" displayname="Avaya Media Gateway" ostype="Media Gateway" description="Avaya Media Gateway Device">
+        <NCMVendorDevice vendorid="Avaya" />
+        <NCMDevicePersonality personalityid="AvayaMediaGateway" />
+
+        <NCMSupportedProtocol protocolid="TELNET">
+            <NCMDeviceCredential credentialgroupid="Telnet Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="SSH">
+            <NCMDeviceCredential credentialgroupid="SSH Credentials" />
+        </NCMSupportedProtocol>
+
+        <NCMSupportedProtocol protocolid="TFTP"/>
+
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:avaya_media_gateway_telnet_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:avaya_media_gateway" managementprotocolid="TELNET" transferprotocolid="TFTP" displayname="TELNET - TFTP">
+
+            <NCMDeviceCriteria commandmapid="TELNET_TFTP_Command">
+                <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="avaya_media_gateway_startup_config_backup"/>
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="avaya_media_gateway_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="avaya_media_gateway_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="avaya_media_gateway_running_config_upload" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="avaya_media_gateway_running_startup_sync" />
+
+                <!-- Enable change Tracking Thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Avaya_Media_Gateway_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Avaya_Media_Gateway_Disable_Change_Tracking_Syslog" />
+
+
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+        <!-- for SSH-TFTP-->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:avaya_media_gateway_ssh_tftp" devicetemplateid="NCMDeviceTemplate:devicetemplateid:avaya_media_gateway" managementprotocolid="SSH" transferprotocolid="TFTP" displayname="SSH - TFTP">
+
+            <NCMDeviceCriteria commandmapid="SSH_TFTP_Command">
+	            <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="avaya_media_gateway_startup_config_backup"/>
+                <NCMDeviceOperation operationid="UploadStartupConfig" executiongroupid="avaya_media_gateway_startup_config_upload" />
+                <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="avaya_media_gateway_running_config_backup" />
+                <NCMDeviceOperation operationid="UploadRunningConfig" executiongroupid="avaya_media_gateway_running_config_upload" />
+                <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="avaya_media_gateway_running_startup_sync" />
+
+
+                 <!-- Enable change Tracking Thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Avaya_Media_Gateway_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Avaya_Media_Gateway_Disable_Change_Tracking_Syslog" />
+                </NCMDeviceCriteria>
+           </NCMProtocolCombination>
+
+        <!-- for SSH -->
+        <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:avaya_media_gateway_switch_ssh" devicetemplateid="NCMDeviceTemplate:devicetemplateid:avaya_media_gateway" managementprotocolid="SSH" transferprotocolid="SSH" displayname="SSH">
+        
+        <NCMDeviceCriteria commandmapid="SSH_Command">
+
+		       <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="avaya_telnet_startup_config_fetch" taskhandling="true"/>
+		       <NCMReadFromResponse operationid="BackupStartupConfig" recordid="avaya_cli_show_startup_config_rec"/>
+
+		       <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="avaya_telnet_running_config_fetch" taskhandling="true"/>
+		       <NCMReadFromResponse operationid="BackupRunningConfig" recordid="avaya_cli_show_running_config_rec"/>
+
+               <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="avaya_media_gateway_running_startup_sync" />
+                
+                <!-- Enable change Tracking Thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Avaya_Media_Gateway_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Avaya_Media_Gateway_Disable_Change_Tracking_Syslog" />
+            </NCMDeviceCriteria>
+        </NCMProtocolCombination>
+
+     <!-- for Telnet -->
+     <NCMProtocolCombination deviceprotocolid="NCMProtocolCombination:deviceprotocolid:avaya_media_gateway_switch_telnet" devicetemplateid="NCMDeviceTemplate:devicetemplateid:avaya_media_gateway" managementprotocolid="TELNET" transferprotocolid="TELNET" displayname="TELNET">
+
+     <NCMDeviceCriteria commandmapid="TELNET_Command">
+
+		       <NCMDeviceOperation operationid="BackupStartupConfig" executiongroupid="avaya_telnet_startup_config_fetch" taskhandling="true"/>
+		       <NCMReadFromResponse operationid="BackupStartupConfig" recordid="avaya_cli_show_startup_config_rec"/>
+
+		       <NCMDeviceOperation operationid="BackupRunningConfig" executiongroupid="avaya_telnet_running_config_fetch" taskhandling="true"/>
+		       <NCMReadFromResponse operationid="BackupRunningConfig" recordid="avaya_cli_show_running_config_rec"/>
+
+               <NCMDeviceOperation operationid="CopyRunningToStartup" executiongroupid="avaya_media_gateway_running_startup_sync" />
+
+                <!-- Enable change Tracking Thru Syslog -->
+                <NCMDeviceOperation operationid="EnableConfigChangeTrackingThruSyslog" executiongroupid="Avaya_Media_Gateway_Enable_Change_Tracking_Syslog" />
+                <NCMDeviceOperation operationid="DisableConfigChangeTrackingThruSyslog" executiongroupid="Avaya_Media_Gateway_Disable_Change_Tracking_Syslog" />
+            </NCMDeviceCriteria>
+    </NCMProtocolCombination>
+
+</NCMDeviceTemplate>
+
+
+</DeviceConfiguration>
