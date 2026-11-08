@@ -4,17 +4,12 @@
   function ensureLayoutPlacement() {
     ensureGlobalStyles();
     const h = ensureMainHeader();
-    const s = ensureSubnavBreadcrumbsBar();
+    ensureSubnavBreadcrumbsBar();
     let c = document.getElementById('opm-custom-suite-container');
     if (!c) {
       c = ensureOverlayContainer();
     }
-    if (s && c && s.parentNode) {
-      if (c.parentElement === s.parentElement && c.previousElementSibling === s) {
-        return;
-      }
-      s.parentNode.insertBefore(c, s.nextSibling);
-    } else if (h && c && h.parentNode) {
+    if (h && c && h.parentNode) {
       if (c.parentElement === h.parentElement && c.previousElementSibling === h) {
         return;
       }
@@ -405,7 +400,12 @@
       ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          if (data.type === 'ALARM_TOAST' && data.alarm) {
+          if (data.type === 'INITIAL_STATE') {
+            if (Array.isArray(data.devices)) state.devices = data.devices;
+            if (Array.isArray(data.alarms)) state.alarms = data.alarms;
+            if (Array.isArray(data.probes)) state.probes = data.probes;
+            handleRoute();
+          } else if (data.type === 'ALARM_TOAST' && data.alarm) {
             const alm = data.alarm;
             const devName = alm.device || alm.deviceName || 'DXB-CORE-SW-01';
             alm.device = devName;
@@ -420,6 +420,7 @@
             showToast(`[${alm.severity}] ${devName}: ${alm.message}`);
             if (!state.alarms.find(a => a.id === alm.id)) {
               state.alarms.unshift(alm);
+              handleRoute();
             }
           } else if ((data.type === 'POLLER_CYCLE' || data.type === 'METRIC_TICK') && data.devices) {
             data.devices.forEach(upd => {
@@ -458,6 +459,34 @@
     } catch (e) {}
   }
 
+  function loadBackendData() {
+    fetch('/api/devices')
+      .then(r => r.json())
+      .then(res => {
+        if (res && Array.isArray(res.devices)) {
+          state.devices = res.devices;
+          handleRoute();
+        }
+      }).catch(() => {});
+
+    fetch('/api/alarms')
+      .then(r => r.json())
+      .then(res => {
+        if (res && Array.isArray(res.rows || res.alarms)) {
+          state.alarms = res.rows || res.alarms;
+          handleRoute();
+        }
+      }).catch(() => {});
+
+    fetch('/api/probes')
+      .then(r => r.json())
+      .then(res => {
+        if (res && Array.isArray(res.probes)) {
+          state.probes = res.probes;
+        }
+      }).catch(() => {});
+  }
+
   // Initialize Suite
   function initSuite() {
     registerEmberRoutesAndTemplates();
@@ -467,6 +496,7 @@
     ensureLayoutPlacement();
     setupHeaderBrandingAndIcons();
     hookMainHeaderEvents();
+    loadBackendData();
     handleRoute();
     initWebSocketConnection();
     initContainerGuard();
