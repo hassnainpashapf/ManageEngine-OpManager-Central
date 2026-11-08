@@ -7216,6 +7216,14 @@
     const attentionDevices = filteredDevices.filter(d => d.status === 'Attention').length;
     const clearDevices = filteredDevices.filter(d => d.status === 'Clear').length;
 
+    // Dynamic category counters
+    const routerCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('router')).length;
+    const switchCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('switch')).length;
+    const serverCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('server')).length;
+    const firewallCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('firewall')).length;
+    const networkCount = routerCount + switchCount;
+    const networkAlarms = filteredAlarms.filter(a => ['Switch','Router','Network'].includes(a.category)).length;
+
     let subtabNavHtml = '';
     subtabs.forEach(st => {
       const isAct = st.id === activeSub;
