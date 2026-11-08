@@ -4,7 +4,7 @@ const WebSocket = require('/Users/hussnainpasha/.gemini/antigravity/scratch/opma
 const fs = require('fs');
 const path = require('path');
 
-const port = 9642;
+const port = 9648;
 const artifactDir = '/Users/hussnainpasha/.gemini/antigravity/brain/31e74a1e-a0ce-4ee5-a5c6-1e026db3577c';
 const userDataDir = `/tmp/chrome-test-${Date.now()}`;
 const targetUrl = 'http://192.168.30.65:8060/apiclient/fluidicv3/itom/index.html#/dashboard';
@@ -40,7 +40,7 @@ async function main() {
   const pageTarget = targets.find(t => t.type === 'page');
   if (!pageTarget) {
     chrome.kill();
-    throw new Error('Chrome page target not found! Targets: ' + JSON.stringify(targets));
+    throw new Error('Chrome page target not found!');
   }
 
   const ws = new WebSocket(pageTarget.webSocketDebuggerUrl);
@@ -70,6 +70,8 @@ async function main() {
 
   await send('Page.enable');
   await send('Runtime.enable');
+  await send('Network.enable');
+  await send('Network.setCacheDisabled', { cacheDisabled: true });
 
   async function evaluate(expression) {
     const res = await send('Runtime.evaluate', {
@@ -87,27 +89,37 @@ async function main() {
     console.log(`  ✓ Saved screenshot: ${filename} (${(buffer.length / 1024).toFixed(1)} KB)`);
   }
 
-  console.log('2. Navigating to CT 108 Dashboard:', targetUrl);
+  console.log('2. Navigating to CT 108 Dashboard with cache disabled:', targetUrl);
   await send('Page.navigate', { url: targetUrl });
-  await new Promise(r => setTimeout(r, 4000));
+  await new Promise(r => setTimeout(r, 4500));
 
-  console.log('3. Inspecting Header Elements on CT 108:');
-  const headerInfo = await evaluate(`(() => {
-    const hdr = document.getElementById('main-header');
-    if (!hdr) return { error: 'No #main-header' };
-    const launchers = hdr.querySelectorAll('#opm-app-launcher-btn, #opm-app-launcher-trigger');
-    const bellBadge = hdr.querySelector('.opm-bell-badge');
-    const probeLabel = hdr.querySelector('.zselectbox__selected');
-    const tabs = Array.from(hdr.querySelectorAll('.opm-main-nav-tab')).map(t => t.innerText.trim());
+  console.log('3. Inspecting UI elements on CT 108:');
+  const inspectReport = await evaluate(`(() => {
+    const subnav = document.getElementById('opm-header-subnav-bar');
+    const customLauncher = document.getElementById('opm-app-launcher-btn');
+    const topZia = document.getElementById('opm-header-zia-btn');
+    const bgpBtn = document.getElementById('opm-dash-bgp-btn');
+    const sdwanBtn = document.getElementById('opm-dash-sdwan-btn');
+    const dpiBtn = document.getElementById('opm-dash-dpi-btn');
+    const ndrBtn = document.getElementById('opm-dash-ndr-btn');
+    const bodyText = document.body.innerText;
+
     return {
-      launcherCount: launchers.length,
-      launcherTitle: launchers[0] ? (launchers[0].getAttribute('title') || '') : '',
-      bellBadgeDisplay: bellBadge ? window.getComputedStyle(bellBadge).display : 'none',
-      probeName: probeLabel ? probeLabel.innerText.trim() : '',
-      tabs: tabs
+      subnavBarExists: !!subnav,
+      subnavBarVisible: subnav ? window.getComputedStyle(subnav).display !== 'none' : false,
+      customLauncherVisible: customLauncher ? window.getComputedStyle(customLauncher).display !== 'none' : false,
+      topZiaVisible: topZia ? window.getComputedStyle(topZia).display !== 'none' : false,
+      bgpBtnVisible: bgpBtn ? window.getComputedStyle(bgpBtn).display !== 'none' : false,
+      sdwanBtnVisible: sdwanBtn ? window.getComputedStyle(sdwanBtn).display !== 'none' : false,
+      dpiBtnVisible: dpiBtn ? window.getComputedStyle(dpiBtn).display !== 'none' : false,
+      ndrBtnVisible: ndrBtn ? window.getComputedStyle(ndrBtn).display !== 'none' : false,
+      containsMockDxb: bodyText.includes('DXB-CORE-SW-01'),
+      containsMockNy: bodyText.includes('NY-DB-PROD-SQL'),
+      containsMockLon: bodyText.includes('LON-MAIL-EXCH-01')
     };
   })()`);
-  console.log('Header Info:', JSON.stringify(headerInfo, null, 2));
+
+  console.log('UI Verification Report:\n', JSON.stringify(inspectReport, null, 2));
 
   await captureScreenshot('screenshot_ct108_clean_dashboard.png');
 
@@ -128,7 +140,7 @@ async function main() {
 
   ws.close();
   chrome.kill();
-  console.log('7. All CT 108 Verifications Finished Successfully!');
+  console.log('7. CT 108 Verification Complete!');
 }
 
 main().catch(err => {
