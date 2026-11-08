@@ -53,7 +53,7 @@ router.post('/api/discovery/run', (req, res) => {
     { vendor: 'Juniper Networks', category: 'Router', type: 'Juniper MX204', os: 'Junos OS 21.4R1', sysDescr: 'Juniper Networks MX204 3D Universal Edge Router' }
   ];
 
-  const baseIpParts = (startIp || '10.10.0.1').split('.').slice(0, 3).join('.');
+  const baseIpParts = (startIp || '192.168.1.1').split('.').slice(0, 3).join('.');
   const discovered = [];
 
   const count = Math.min(4, Math.max(2, Math.floor(Math.random() * 3) + 2));
@@ -88,7 +88,7 @@ router.post('/api/discovery/run', (req, res) => {
   const logEntry = {
     id: 'DISC-' + Date.now(),
     probe: probe.displayName,
-    ipRange: ipRange || `${startIp || '10.10.0.1'} - ${endIp || '10.10.0.30'}`,
+    ipRange: ipRange || `${startIp || '192.168.1.1'} - ${endIp || '192.168.1.30'}`,
     discoveredCount: discovered.length,
     timestamp: new Date().toISOString(),
     devices: discovered.map(d => ({ name: d.name, ip: d.ip, category: d.category }))

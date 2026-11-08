@@ -658,7 +658,7 @@ let sslSettings = {
     validTo: '2027-11-30',
     serialNumber: '4A:8B:19:3C:99:FF:01:2A',
     keyType: 'RSA 2048-bit (SHA-256 with RSA)',
-    san: ['opmanager-central.enterprise.corp', 'opm-central.local', '10.10.1.10'],
+    san: ['opmanager-central.local', '192.168.30.65', '127.0.0.1'],
     status: 'Valid'
   }
 };

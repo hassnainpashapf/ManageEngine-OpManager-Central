@@ -128,9 +128,111 @@
         #main-header #main-nav > ul > li > a.nav-link::after {
           display: none !important;
         }
+        #main-header {
+          margin: 0 !important;
+          width: 100% !important;
+          height: 50px !important;
+          max-height: 50px !important;
+          min-height: 50px !important;
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+        #main-header #main-nav,
+        #main-header #main-nav ul,
+        #main-header #main-nav ul.main-nav {
+          height: 50px !important;
+          max-height: 50px !important;
+          min-height: 50px !important;
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        #main-header #main-nav li,
+        #main-header #main-nav li.active-menu,
+        #main-header #main-nav ul.main-nav > li {
+          height: 50px !important;
+          max-height: 50px !important;
+          min-height: 50px !important;
+          overflow: hidden !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          box-sizing: border-box !important;
+          background: transparent !important;
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+        }
         #main-header #main-nav .main-nav > ul > li > a.nav-link,
-        #main-header #main-nav > ul > li > a.nav-link {
-          padding: 0.65rem 1.25rem !important;
+        #main-header #main-nav > ul > li > a.nav-link,
+        #main-header #main-nav a.opm-main-nav-tab {
+          height: 50px !important;
+          max-height: 50px !important;
+          min-height: 50px !important;
+          line-height: 50px !important;
+          padding: 0 16px !important;
+          margin: 0 !important;
+          font-size: 13px !important;
+          font-weight: 500 !important;
+          color: #e2e8f0 !important;
+          text-decoration: none !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          box-sizing: border-box !important;
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+          border-radius: 0px !important;
+          overflow: hidden !important;
+          transform: none !important;
+        }
+        #main-header #main-nav a.nav-link:focus,
+        #main-header #main-nav a.nav-link:focus-visible,
+        #main-header #main-nav a.nav-link:active,
+        #main-header #main-nav a.opm-main-nav-tab:focus,
+        #main-header #main-nav a.opm-main-nav-tab:focus-visible,
+        #main-header #main-nav a.opm-main-nav-tab:active,
+        #main-header #main-nav li:focus,
+        #main-header #main-nav li:focus-visible {
+          outline: none !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+        #main-header #main-nav .main-nav > ul > li > a.nav-link.active,
+        #main-header #main-nav > ul > li > a.nav-link.active,
+        #main-header #main-nav a.opm-main-nav-tab.active {
+          background: #49bd80 !important;
+          background-color: #49bd80 !important;
+          color: #ffffff !important;
+          font-weight: 600 !important;
+          font-size: 13px !important;
+          height: 50px !important;
+          max-height: 50px !important;
+          line-height: 50px !important;
+          padding: 0 16px !important;
+          margin: 0 !important;
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+          border-radius: 0px !important;
+          transform: none !important;
+        }
+        #main-header #main-nav a .menu-name {
+          font-size: 13px !important;
+          line-height: 50px !important;
+          height: 50px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          color: inherit !important;
+          background: transparent !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          border: none !important;
+          outline: none !important;
         }
         .opm-widget-card {
           border-radius: 3px !important;
@@ -240,9 +342,9 @@
       tabs.forEach(t => {
         const isAct = t.id === currentTab;
         tabsHtml += `
-          <li class="${isAct ? 'active-menu' : ''}" style="list-style: none; display: inline-block; height: 100%;">
-            <a href="#/${t.id}" class="nav-link opm-main-nav-tab ${isAct ? 'active' : ''}" data-tab="${t.id}" style="color: #e2e8f0; text-decoration: none; font-size: 13px; font-weight: ${isAct ? '600' : '500'}; padding: 0 16px; height: 50px; display: flex; align-items: center; background: ${isAct ? '#49bd80' : 'transparent'}; transition: all 0.15s; letter-spacing: 0.2px;">
-              <span class="menu-name" style="color: ${isAct ? '#ffffff' : '#e2e8f0'};">${t.name}</span>
+          <li class="${isAct ? 'active-menu' : ''}" style="list-style: none; display: inline-flex; align-items: center; justify-content: center; height: 50px; max-height: 50px; overflow: hidden; margin: 0; padding: 0; border: none; outline: none;">
+            <a href="#/${t.id}" class="nav-link opm-main-nav-tab ${isAct ? 'active' : ''}" data-tab="${t.id}" style="color: ${isAct ? '#ffffff' : '#e2e8f0'}; text-decoration: none; font-size: 13px; font-weight: ${isAct ? '600' : '500'}; padding: 0 16px; height: 50px; max-height: 50px; line-height: 50px; display: inline-flex; align-items: center; justify-content: center; background: ${isAct ? '#49bd80' : 'transparent'}; border: none; outline: none; box-shadow: none; border-radius: 0; transition: all 0.15s; letter-spacing: 0.2px;">
+              <span class="menu-name" style="color: ${isAct ? '#ffffff' : '#e2e8f0'}; font-size: 13px; line-height: 50px; height: 50px; display: inline-flex; align-items: center;">${t.name}</span>
             </a>
           </li>
         `;
@@ -549,20 +651,32 @@
       if (el.closest('.dropdown-nav')) return;
       el.style.setProperty('background', 'transparent', 'important');
       el.style.setProperty('background-color', 'transparent', 'important');
+      el.style.setProperty('border', 'none', 'important');
+      el.style.setProperty('outline', 'none', 'important');
+      el.style.setProperty('box-shadow', 'none', 'important');
       el.style.setProperty('border-radius', '0px', 'important');
+      el.style.setProperty('height', '50px', 'important');
+      el.style.setProperty('max-height', '50px', 'important');
+      el.style.setProperty('line-height', '50px', 'important');
+      el.style.setProperty('margin', '0', 'important');
       if (el.tagName === 'A' || el.classList.contains('nav-link')) {
-        el.style.removeProperty('font-weight');
+        el.style.setProperty('font-size', '13px', 'important');
+        el.style.setProperty('font-weight', '500', 'important');
         el.style.setProperty('color', '#e2e8f0', 'important');
+        el.style.setProperty('padding', '0 16px', 'important');
         const span = el.querySelector('.menu-name');
         if (span) {
           span.style.setProperty('color', '#e2e8f0', 'important');
           span.style.setProperty('background', 'transparent', 'important');
+          span.style.setProperty('font-size', '13px', 'important');
+          span.style.setProperty('line-height', '50px', 'important');
+          span.style.setProperty('height', '50px', 'important');
         }
       }
     });
 
     // Now highlight ONLY the matching top-level tab with uniform #49bd80 emerald green
-    const topLinks = document.querySelectorAll('#main-header #main-nav .main-nav > ul > li > a.nav-link, #main-header #main-nav > ul > li > a.nav-link');
+    const topLinks = document.querySelectorAll('#main-header #main-nav .main-nav > ul > li > a.nav-link, #main-header #main-nav > ul > li > a.nav-link, #main-header #main-nav a.opm-main-nav-tab');
     let matched = false;
     topLinks.forEach(link => {
       if (matched) return;
@@ -574,16 +688,34 @@
         link.style.setProperty('background', '#49bd80', 'important');
         link.style.setProperty('background-color', '#49bd80', 'important');
         link.style.setProperty('color', '#ffffff', 'important');
+        link.style.setProperty('border', 'none', 'important');
+        link.style.setProperty('outline', 'none', 'important');
+        link.style.setProperty('box-shadow', 'none', 'important');
         link.style.setProperty('border-radius', '0px', 'important');
+        link.style.setProperty('font-size', '13px', 'important');
         link.style.setProperty('font-weight', '600', 'important');
+        link.style.setProperty('height', '50px', 'important');
+        link.style.setProperty('max-height', '50px', 'important');
+        link.style.setProperty('line-height', '50px', 'important');
+        link.style.setProperty('padding', '0 16px', 'important');
+        link.style.setProperty('margin', '0', 'important');
         if (nameSpan && nameSpan !== link) {
           nameSpan.style.setProperty('color', '#ffffff', 'important');
           nameSpan.style.setProperty('background', 'transparent', 'important');
+          nameSpan.style.setProperty('font-size', '13px', 'important');
+          nameSpan.style.setProperty('line-height', '50px', 'important');
+          nameSpan.style.setProperty('height', '50px', 'important');
         }
         if (link.parentElement && link.parentElement.tagName === 'LI') {
           link.parentElement.classList.add('active-menu');
           link.parentElement.style.setProperty('background', '#49bd80', 'important');
           link.parentElement.style.setProperty('background-color', '#49bd80', 'important');
+          link.parentElement.style.setProperty('border', 'none', 'important');
+          link.parentElement.style.setProperty('outline', 'none', 'important');
+          link.parentElement.style.setProperty('box-shadow', 'none', 'important');
+          link.parentElement.style.setProperty('height', '50px', 'important');
+          link.parentElement.style.setProperty('max-height', '50px', 'important');
+          link.parentElement.style.setProperty('overflow', 'hidden', 'important');
         }
       }
     });
@@ -782,35 +914,52 @@
       modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-    const dev = targetDev || state.devices[0];
+    const dev = targetDev || (state.devices && state.devices[0]);
+    if (!dev) {
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 8px; width: 560px; max-width: 95vw; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35); border: 1px solid #cbd5e1; padding: 32px 24px; text-align: center;">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">No Managed Devices for NCM Comparison</div>
+          <div style="font-size: 12px; color: #64748b; margin-bottom: 20px; line-height: 1.5;">Add a Cisco, Juniper, or HP switch/router with SSH or Telnet credentials to track startup vs running configuration drifts.</div>
+          <div style="display: flex; justify-content: center; gap: 10px;">
+            <button onclick="document.getElementById('opm-ncm-diff-modal').style.display='none'; showAddDeviceModal();" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Device</button>
+            <button onclick="document.getElementById('opm-ncm-diff-modal').style.display='none';" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+      return;
+    }
 
     const startupLines = [
       { num: '01', text: '! Last configuration change at 06:14:02 UTC' },
       { num: '02', text: 'version 17.09.04a' },
       { num: '03', text: 'service timestamps debug datetime msec' },
       { num: '04', text: 'service timestamps log datetime msec' },
-      { num: '05', text: 'hostname DXB-CORE-SW-01' },
+      { num: '05', text: `hostname ${dev.name}` },
       { num: '06', text: '!' },
       { num: '07', text: 'boot-start-marker' },
       { num: '08', text: 'boot-end-marker' },
       { num: '09', text: '!' },
       { num: '10', text: 'no aaa new-model' },
       { num: '11', text: '!' },
-      { num: '12', text: 'interface FortyGigabitEthernet1/0/48', highlight: 'del' },
-      { num: '13', text: ' description Core Uplink to DXB-EDGE-RTR-01', highlight: 'del' },
+      { num: '12', text: 'interface GigabitEthernet0/1', highlight: 'del' },
+      { num: '13', text: ` description Uplink to Gateway`, highlight: 'del' },
       { num: '14', text: ' switchport mode trunk', highlight: 'del' },
       { num: '15', text: ' switchport trunk allowed vlan 10,20,30,40', highlight: 'del' },
       { num: '16', text: ' no shutdown  <-- BASELINE IN STARTUP', highlight: 'del' },
       { num: '17', text: '!' },
-      { num: '18', text: 'interface TenGigabitEthernet1/0/1' },
-      { num: '19', text: ' description Distribution Trunk to LON' },
+      { num: '18', text: 'interface GigabitEthernet0/2' },
+      { num: '19', text: ' description Distribution Trunk' },
       { num: '20', text: ' switchport mode trunk' },
       { num: '21', text: '!' },
-      { num: '22', text: 'ip default-gateway 10.40.1.254' },
+      { num: '22', text: `ip default-gateway ${dev.ip || '192.168.1.1'}` },
       { num: '23', text: 'ip forward-protocol nd' },
       { num: '24', text: '!' },
       { num: '25', text: 'snmp-server community ******* RO' },
-      { num: '26', text: 'snmp-server host 10.0.0.10 version 2c *******' },
+      { num: '26', text: 'snmp-server host 127.0.0.1 version 2c *******' },
       { num: '27', text: 'line con 0' },
       { num: '28', text: 'line vty 0 4' },
       { num: '29', text: ' login' },
@@ -822,30 +971,30 @@
       { num: '02', text: 'version 17.09.04a' },
       { num: '03', text: 'service timestamps debug datetime msec' },
       { num: '04', text: 'service timestamps log datetime msec' },
-      { num: '05', text: 'hostname DXB-CORE-SW-01' },
+      { num: '05', text: `hostname ${dev.name}` },
       { num: '06', text: '!' },
       { num: '07', text: 'boot-start-marker' },
       { num: '08', text: 'boot-end-marker' },
       { num: '09', text: '!' },
       { num: '10', text: 'no aaa new-model' },
       { num: '11', text: '!' },
-      { num: '12', text: 'interface FortyGigabitEthernet1/0/48', highlight: 'add' },
-      { num: '13', text: ' description Core Uplink to DXB-EDGE-RTR-01', highlight: 'add' },
+      { num: '12', text: 'interface GigabitEthernet0/1', highlight: 'add' },
+      { num: '13', text: ` description Uplink to Gateway`, highlight: 'add' },
       { num: '14', text: ' switchport mode trunk', highlight: 'add' },
       { num: '15', text: ' switchport trunk allowed vlan 10,20,30,40', highlight: 'add' },
-      { num: '16', text: ' shutdown  <-- REASON FOR PORT 48 CRITICAL DOWN', highlight: 'add' },
+      { num: '16', text: ' shutdown  <-- REASON FOR PORT CRITICAL DOWN', highlight: 'add' },
       { num: '17', text: '!' },
-      { num: '18', text: 'interface TenGigabitEthernet1/0/1' },
-      { num: '19', text: ' description Distribution Trunk to LON' },
+      { num: '18', text: 'interface GigabitEthernet0/2' },
+      { num: '19', text: ' description Distribution Trunk' },
       { num: '20', text: ' switchport mode trunk' },
       { num: '21', text: '!' },
-      { num: '22', text: 'ip default-gateway 10.40.1.254' },
+      { num: '22', text: `ip default-gateway ${dev.ip || '192.168.1.1'}` },
       { num: '23', text: 'ip forward-protocol nd' },
       { num: '24', text: 'ip access-list standard 101', highlight: 'add' },
-      { num: '25', text: ' permit 10.0.0.0 0.255.255.255', highlight: 'add' },
+      { num: '25', text: ' permit 192.168.0.0 0.0.255.255', highlight: 'add' },
       { num: '26', text: '!' },
       { num: '27', text: 'snmp-server community ******* RO' },
-      { num: '28', text: 'snmp-server host 10.0.0.10 version 2c *******' },
+      { num: '28', text: 'snmp-server host 127.0.0.1 version 2c *******' },
       { num: '29', text: 'line con 0' },
       { num: '30', text: 'line vty 0 4' },
       { num: '31', text: ' login' },
@@ -1575,7 +1724,7 @@
     `;
     pop.style.display = 'block';
     pop.querySelector('#ql-add-dev').onclick = () => { pop.style.display = 'none'; showAddDeviceModal(); };
-    pop.querySelector('#ql-disc').onclick = () => { pop.style.display = 'none'; showToast('Subnet discovery scheduled on Dubai & NY probes.'); };
+    pop.querySelector('#ql-disc').onclick = () => { pop.style.display = 'none'; showToast('Subnet discovery scheduled across active probes.'); };
     pop.querySelector('#ql-backup').onclick = () => { pop.style.display = 'none'; showToast('Backup triggered for core routers and switches.'); };
     pop.querySelector('#ql-snmp').onclick = () => { pop.style.display = 'none'; showToast('SNMP v2c credentials verified: OK.'); };
   }
@@ -1941,7 +2090,7 @@
           } else if (type === 'tool') {
             const act = row.getAttribute('data-act');
             if (act === 'mib') showNetworkToolsModal(null, 'mib');
-            else if (act === 'ping') showNetworkToolsModal('10.40.1.1', 'ping');
+            else if (act === 'ping') showNetworkToolsModal((state.devices && state.devices[0]?.ip) || '127.0.0.1', 'ping');
             else if (act === 'zia') showZiaAssistantModal();
             else if (act === 'sla') { state.subTabs.reports = 'sla'; window.location.hash = '#/reports'; }
             else if (act === 'worldmap') { state.subTabs.maps = 'world'; window.location.hash = '#/maps'; }
@@ -2042,14 +2191,16 @@
       execBtn.disabled = true;
       execBtn.innerText = 'Pushing Config...';
       term.style.display = 'block';
-      term.innerHTML = '<div style="color: #94a3b8;">[1/4] Establishing SSHv2 session to 10.40.1.1:22 via Dubai Campus Core Probe...</div>';
+      const targetDevName = dev.name || 'Managed-Device';
+      const targetDevIp = dev.ip || '127.0.0.1';
+      term.innerHTML = `<div style="color: #94a3b8;">[1/4] Establishing SSHv2 session to ${targetDevIp}:22 via ${dev.probe || 'Central Probe'}...</div>`;
       
       setTimeout(() => {
         term.innerHTML += '<div style="color: #38bdf8;">[2/4] Probe authenticated. Session encryption: aes256-gcm. Pushing configuration commands...</div>';
       }, 400);
 
       setTimeout(() => {
-        term.innerHTML += '<div style="color: #38bdf8;">[3/4] DXB-CORE-SW-01(config)# service password-encryption<br>DXB-CORE-SW-01(config)# ip ssh version 2<br>DXB-CORE-SW-01# write memory [OK]</div>';
+        term.innerHTML += `<div style="color: #38bdf8;">[3/4] ${targetDevName}(config)# service password-encryption<br>${targetDevName}(config)# ip ssh version 2<br>${targetDevName}# write memory [OK]</div>`;
       }, 900);
 
       setTimeout(() => {
@@ -2073,11 +2224,12 @@
       modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
+    const hostIp = window.location.hostname || '192.168.30.65';
     const l = linkData || {
-      name: 'Central HQ <--> Dubai Campus Core Trans-WAN',
-      carrier: 'Tata Communications Global MPLS & SD-WAN',
-      src: 'Central HQ (10.0.0.10)',
-      dst: 'DXB-CORE-SW-01 (10.40.1.1)',
+      name: 'Central HQ <--> Enterprise WAN Gateway',
+      carrier: 'Carrier Transit MPLS & SD-WAN',
+      src: `Central HQ (${hostIp})`,
+      dst: `${(state.devices && state.devices[0]?.name) || 'Primary-Switch'} (${(state.devices && state.devices[0]?.ip) || '127.0.0.1'})`,
       srcInf: 'TenGigabitEthernet0/0/1',
       dstInf: 'FortyGigabitEthernet1/0/48',
       speed: '10 Gbps Committed / 40 Gbps Burst',
@@ -2171,14 +2323,11 @@
       document.body.appendChild(modal);
     }
 
-    const records = [
-      { time: '14:20:01.412', src: '10.10.1.50:5432', dst: '10.20.1.50:5432', proto: 'TCP (06)', app: 'PostgreSQL_Sync', bytes: '18.42 MB', pkts: '12,840', flags: 'ACK, PSH', nextHop: '10.40.1.1', dscp: 'AF41 (Priority)' },
-      { time: '14:20:00.890', src: '10.40.1.50:443', dst: '172.217.14.206:58210', proto: 'TCP (06)', app: 'HTTPS_SSL', bytes: '14.19 MB', pkts: '9,410', flags: 'ACK', nextHop: '10.10.0.1', dscp: 'CS0 (Default)' },
-      { time: '14:19:59.124', src: '10.10.1.1:500', dst: '10.30.1.1:500', proto: 'UDP (17)', app: 'IPSec_ESP', bytes: '9.84 MB', pkts: '6,720', flags: '-', nextHop: '10.0.0.1', dscp: 'CS6 (Routing)' },
-      { time: '14:19:57.652', src: '10.20.1.10:445', dst: '10.20.1.50:49280', proto: 'TCP (06)', app: 'SMBv3_Storage', bytes: '6.12 MB', pkts: '4,180', flags: 'ACK, PSH', nextHop: 'Direct', dscp: 'AF12 (Bulk)' },
-      { time: '14:19:55.318', src: '10.40.1.1:179', dst: '192.168.10.1:179', proto: 'TCP (06)', app: 'BGP_Routing', bytes: '1.24 MB', pkts: '840', flags: 'ACK', nextHop: '10.40.1.1', dscp: 'CS6 (Control)' },
-      { time: '14:19:52.109', src: '10.10.1.50:53', dst: '8.8.8.8:53', proto: 'UDP (17)', app: 'DNS_Query', bytes: '420 KB', pkts: '3,100', flags: '-', nextHop: '10.10.0.1', dscp: 'CS0 (Default)' }
-    ];
+    const dev = (state.devices && state.devices[0]);
+    const monitoredTarget = dev ? `${dev.name} (${dev.ip})` : `Central NetFlow Listener (${window.location.hostname || '192.168.30.65'})`;
+    const records = dev ? [
+      { time: 'Just now', src: `${dev.ip}:443`, dst: '192.168.1.1:58210', proto: 'TCP (06)', app: 'HTTPS_SSL', bytes: '1.24 MB', pkts: '840', flags: 'ACK', nextHop: 'Direct', dscp: 'CS0 (Default)' }
+    ] : [];
 
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 1040px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
@@ -2188,7 +2337,7 @@
             <div style="width: 32px; height: 32px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">NFA</div>
             <div>
               <div style="font-size: 15px; font-weight: 800; color: #0f172a;">ManageEngine NetFlow Analyzer &bull; Raw Flow Records Stream</div>
-              <div style="font-size: 11px; color: #64748b;">UDP 2055 / 9996 Ingestion &bull; Monitored on <strong style="color: #0070e0;">NY-CORE-RTR-01 (TenGigE0/0/0/0)</strong> &bull; IPFIX v10</div>
+              <div style="font-size: 11px; color: #64748b;">UDP 2055 / 9996 Ingestion &bull; Monitored on <strong style="color: #0070e0;">${monitoredTarget}</strong> &bull; IPFIX v10</div>
             </div>
           </div>
           <button id="close-nfa-records-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;" title="Close">✕</button>
@@ -2227,7 +2376,14 @@
               </tr>
             </thead>
             <tbody id="nfa-records-tbody">
-              ${records.map(r => `
+              ${records.length === 0 ? `
+                <tr>
+                  <td colspan="9" style="padding: 40px 10px; text-align: center; color: #64748b;">
+                    <div style="font-weight: 700; font-size: 13px; color: #1e293b; margin-bottom: 4px;">No Live NetFlow Packets Captured</div>
+                    <div>Configure NetFlow / IPFIX exporter on your routers/switches to UDP 2055 or 9996 on ${window.location.hostname || '192.168.30.65'}.</div>
+                  </td>
+                </tr>
+              ` : records.map(r => `
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                   <td style="padding: 8px 10px; font-family: monospace; color: #64748b;">${r.time}</td>
                   <td style="padding: 8px 10px; font-family: monospace; font-weight: 700; color: #0284c7;">${r.src}</td>
@@ -2274,7 +2430,7 @@
       document.body.appendChild(modal);
     }
 
-    const host = targetIp || '10.10.1.1';
+    const host = targetIp || (state.devices && state.devices[0]?.ip) || '127.0.0.1';
     let currentOid = initialOid || '.1.3.6.1.2.1.1.1.0';
 
     const mibNodes = [
@@ -2481,14 +2637,14 @@
     modal.querySelector('#mib-btn-get').onclick = () => {
       const targetOid = oidInput.value.trim();
       const node = mibNodes.find(n => n.oid === targetOid) || { name: 'leafNode', type: 'OCTET STRING' };
-      const dev = (state.devices || []).find(d => d.ip === host) || { name: 'NY-CORE-RTR-01', vendor: 'Cisco IOS' };
+      const dev = (state.devices || []).find(d => d.ip === host) || (state.devices && state.devices[0]) || { name: 'Central-Managed-Node', vendor: 'Enterprise OS' };
       
       let val = dev.name;
-      if (node.name === 'sysDescr') val = 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE4, RELEASE SOFTWARE (fc1)';
+      if (node.name === 'sysDescr') val = `${dev.vendor || 'Enterprise'} ${dev.type || 'Managed Node'} Software, Version 15.2, OpManager Monitored Node`;
       else if (node.name === 'sysObjectID') val = '.1.3.6.1.4.1.9.1.516';
       else if (node.name === 'sysUpTime') val = '148 days, 12:44:19.82 (1283305982 timeticks)';
       else if (node.name === 'sysContact') val = 'noc-support@manageengine.internal';
-      else if (node.name === 'sysLocation') val = 'US-East Equinix DC4, Rack B04-U12';
+      else if (node.name === 'sysLocation') val = 'Central Enterprise Core, Rack U12';
       else if (node.name === 'ifNumber') val = '52 interfaces';
       else if (node.name === 'ciscoEnvMonTemperatureStatusValue') val = '34 Celsius (Normal)';
 
@@ -2533,11 +2689,13 @@
       document.body.appendChild(modal);
     }
 
+    const srcName = (state.devices && state.devices[0]?.name) || 'Central Core Gateway';
+    const dstName = (state.devices && state.devices[1]?.name) || 'Branch Gateway';
     const l = linkData || {
-      name: 'Central HQ <--> Dubai Campus Core Trans-WAN',
-      carrier: 'Tata Communications Global MPLS',
-      src: 'NY-CORE-RTR-01',
-      dst: 'DXB-CORE-SW-01'
+      name: `${srcName} <--> ${dstName} Link`,
+      carrier: 'Enterprise IP SLA WAN',
+      src: srcName,
+      dst: dstName
     };
 
     modal.innerHTML = `
@@ -2645,7 +2803,7 @@
       document.body.appendChild(modal);
     }
 
-    const dev = targetDev || (state.devices && state.devices[0]) || { name: 'NY-CORE-RTR-01', ip: '10.10.1.1' };
+    const dev = targetDev || (state.devices && state.devices[0]) || { name: 'Central-Host', ip: '127.0.0.1' };
 
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
@@ -2914,7 +3072,7 @@
         <!-- Footer -->
         <div style="padding: 12px 22px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
           <button id="wf-test-run-btn" style="background: #0284c7; color: #ffffff; border: none; padding: 8px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-            ▶ Test Run Playbook on NY-CORE-RTR-01
+            ▶ Test Run Playbook on ${(state.devices && state.devices[0]?.name) || 'Managed-Node'}
           </button>
           <div style="display: flex; gap: 10px;">
             <button id="wf-cancel-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Cancel</button>
@@ -2930,8 +3088,9 @@
     
     const consoleBox = modal.querySelector('#wf-test-output-console');
     modal.querySelector('#wf-test-run-btn').onclick = () => {
+      const targetDev = (state.devices && state.devices[0]) || { name: 'Managed-Node', ip: '127.0.0.1' };
       consoleBox.style.display = 'block';
-      consoleBox.innerHTML = '<span style="color: #94a3b8;">[14:26:01] Initializing simulated workflow execution against NY-CORE-RTR-01 (10.10.1.1)...</span><br>';
+      consoleBox.innerHTML = `<span style="color: #94a3b8;">[14:26:01] Initializing simulated workflow execution against ${targetDev.name} (${targetDev.ip})...</span><br>`;
       setTimeout(() => {
         consoleBox.innerHTML += '<span style="color: #4ade80;">[14:26:02] Step 1: Evaluating trigger criteria... MATCH (Severity Critical).</span><br>';
       }, 300);
@@ -2964,7 +3123,32 @@
       document.body.appendChild(modal);
     }
 
-    const dev = switchDev || { name: 'NY-CORE-RTR-01', ip: '10.10.1.1', model: 'Cisco Catalyst 2960-X 48-GigE' };
+    const switchCandidate = switchDev || (state.devices || []).find(d => (d.category || '').toLowerCase().includes('switch')) || (state.devices && state.devices[0]);
+
+    if (!switchCandidate) {
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); border: 1px solid #cbd5e1;">
+          <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
+            <div style="font-size: 15px; font-weight: 800;">ManageEngine OpUtils &bull; Switch Port Mapper (SPM)</div>
+            <button id="close-spm-modal-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer;">✕</button>
+          </div>
+          <div style="padding: 40px 20px; text-align: center;">
+            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Switches Discovered</div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add network switches with SNMP enabled to map physical ports, MAC addresses, and connected IP endpoints.</div>
+            <button onclick="document.getElementById('opm-spm-modal').style.display='none'; showAddDeviceModal();" style="background: #0070e0; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Switch</button>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-spm-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      return;
+    }
+
+    const dev = {
+      name: switchCandidate.name,
+      ip: switchCandidate.ip,
+      model: switchCandidate.type || 'Enterprise Managed Switch'
+    };
 
     const ports = [];
     for (let i = 1; i <= 48; i++) {
@@ -3087,11 +3271,32 @@
       document.body.appendChild(modal);
     }
 
-    const arr = targetArray || {
-      name: 'NetApp AFF A400 NVMe All-Flash SAN',
-      ip: '10.10.1.80',
+    const storageDev = targetArray || (state.devices || []).find(d => ['storage', 'san', 'nas'].some(k => (d.category || '').toLowerCase().includes(k)));
+
+    if (!storageDev) {
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
+          <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
+            <div style="font-size: 15px; font-weight: 800; color: #fff;">ManageEngine OpManager Central &bull; SAN Storage &amp; LUN Telemetry</div>
+            <span id="close-storage-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer;" title="Close">✕</span>
+          </div>
+          <div style="padding: 40px 20px; text-align: center;">
+            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Storage Arrays Discovered</div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add SAN/NAS arrays, SMI-S providers, or Fiber Channel switches to monitor LUN latency, IOPS, and pool capacity.</div>
+            <button onclick="document.getElementById('opm-storage-array-modal').style.display='none'; showAddDeviceModal();" style="background: #0070e0; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Storage Device</button>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-storage-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      return;
+    }
+
+    const arr = {
+      name: storageDev.name,
+      ip: storageDev.ip,
       controllers: 'Active-Active Dual Node HA (Node-01 / Node-02)',
-      protocol: 'FCP (16 Gbps) & NVMe-oF'
+      protocol: 'FCP & NVMe-oF'
     };
 
     modal.innerHTML = `
@@ -3352,10 +3557,10 @@
             <span style="font-size: 13px; font-weight: 700; color: #5b21b6;">Zia AI Anomaly Correlation & Root Cause Analysis</span>
           </div>
           <p style="font-size: 12px; color: #4c1d95; line-height: 1.5; margin-bottom: 10px;">
-            Zia correlated this CPU spike (93.4%) with interface FortyGigE1/0/48 flapping down 1 minute prior. Automated STP reconvergence generated 42,000 packets/sec broadcast surge across Dubai VLAN 10.
+            Zia correlated this incident on ${alm.device} (${alm.probe || 'Central Probe'}). Automated event telemetry registered telemetry divergence: "${alm.message}".
           </p>
           <div style="background: #ffffff; border: 1px solid #c4b5fd; border-radius: 4px; padding: 8px 12px; font-size: 11px; color: #5b21b6;">
-            <strong>Recommended Action:</strong> Run 'show logging | include STP' and verify rapid-pvst portfast state on leaf switches.
+            <strong>Recommended Action:</strong> Inspect real-time SNMP/WMI telemetry metrics and verify health threshold state on ${alm.device}.
           </div>
         </div>
 
@@ -3489,7 +3694,19 @@
       modal = document.createElement('div');
       modal.id = 'opm-zia-modal';
       modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
-      modal.innerHTML = `
+      document.body.appendChild(modal);
+    }
+
+    const devCount = (state.devices && state.devices.length) || 0;
+    const prbCount = (state.probes && state.probes.length) || 1;
+    const critAlarms = (state.alarms || []).filter(a => a.severity === 'Critical');
+    const summaryText = devCount === 0
+      ? 'Currently monitoring 0 active nodes. Add servers and network switches across your connected enterprise probes to stream real-time Zia AI anomaly detection.'
+      : (critAlarms.length > 0 
+          ? `Currently monitoring ${devCount} core nodes across ${prbCount} distributed probes. Overall availability is at 99.98%. Primary attention is required on ${critAlarms[0].device} reporting: "${critAlarms[0].message}".`
+          : `Currently monitoring ${devCount} core nodes across ${prbCount} distributed probes. All monitored infrastructure nodes are performing within normal operational thresholds.`);
+
+    modal.innerHTML = `
         <div style="background: #ffffff; border-radius: 6px; width: 560px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); overflow: hidden;">
           <div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); padding: 18px 24px; color: #ffffff; display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -3502,8 +3719,7 @@
             <div style="background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 4px; padding: 14px; margin-bottom: 16px;">
               <div style="font-weight: 700; color: #5b21b6; margin-bottom: 4px;">Automated Executive Health Summary</div>
               <p style="margin: 0; color: #4c1d95;">
-                Currently monitoring 16 core nodes across 4 distributed probes. Overall availability is at 99.98%. 
-                Primary attention is required on Dubai Campus Core switch DXB-CORE-SW-01 experiencing 93.4% CPU spike correlated with link flap on FortyGigE1/0/48.
+                ${summaryText}
               </p>
             </div>
             <div style="font-weight: 700; color: #1e293b; margin-bottom: 8px;">Ask Zia AI a Question:</div>
@@ -3521,8 +3737,6 @@
           </div>
         </div>
       `;
-      document.body.appendChild(modal);
-    }
     modal.style.display = 'flex';
     document.getElementById('close-zia-btn').onclick = () => { modal.style.display = 'none'; };
     const promptInput = document.getElementById('zia-prompt-input');
@@ -3948,12 +4162,12 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 4px; color: #0f172a;">Associated CI Asset</label>
-              <input type="text" value="${alarm.device} (${alarm.ip || "10.40.1.1"})" readonly style="width: 100%; border: 1px solid #e2e8f0; background: #f8fafc; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; color: #64748b;">
+              <input type="text" value="${alarm.device} (${alarm.ip || (state.devices && state.devices[0]?.ip) || '127.0.0.1'})" readonly style="width: 100%; border: 1px solid #e2e8f0; background: #f8fafc; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; color: #64748b;">
             </div>
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 4px; color: #0f172a;">Assigned Support Group</label>
               <select style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff;">
-                <option>NOC Operations Tier 2 (Dubai/US Core)</option>
+                <option>NOC Operations Tier 2 (Central Support)</option>
                 <option>Datacenter Infrastructure Engineering</option>
                 <option>Network Core Routing Specialists</option>
               </select>
@@ -4634,7 +4848,7 @@
               interface FortyGigabitEthernet1/0/48<br>
               <span style="color: #f87171;">- no shutdown (in Startup baseline)</span><br>
               <span style="color: #f87171;">+ shutdown <-- REASON FOR PORT DOWN ALARM</span><br>
-              <span style="color: #4ade80;">+ access-list 101 permit tcp any host 10.40.1.1 eq 22</span>
+              <span style="color: #4ade80;">+ access-list 101 permit tcp any host ${(state.devices && state.devices[0]?.ip) || '192.168.1.1'} eq 22</span>
             </div>
           </div>
         `;
@@ -5471,10 +5685,7 @@
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">Probe Scope Permission</label>
               <select id="new-user-scope" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff; box-sizing: border-box;">
                 <option>Global Central (All Probes)</option>
-                <option>Dubai Campus Core</option>
-                <option>New York Data Center</option>
-                <option>London Branch Office</option>
-                <option>Singapore Cloud VPC</option>
+                ${(state.probes || []).map(p => `<option>${p.name}</option>`).join('')}
               </select>
             </div>
           </div>
@@ -5711,7 +5922,7 @@
             </div>
             
             <div style="font-size: 11px; color: #64748b; line-height: 1.5;">
-              Applying a new license key automatically distributes probe licenses across all connected probes (New York, London, Singapore, Dubai).
+              Applying a new license key automatically distributes probe licenses across all connected enterprise probes (${(state.probes || []).map(p => p.name).join(', ') || 'Connected Probes'}).
             </div>
           </div>
           <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end; gap: 8px;">
@@ -5766,13 +5977,16 @@
     ];
 
     const currentSvc = services.find(s => s.id === targetService) || services[0];
-    const probeName = sourceProbe ? sourceProbe.name : 'New York Data Center (Probe-01)';
+    const activeProbe = sourceProbe || (state.probes && state.probes[0]) || { name: 'Central HQ Probe', ip: '192.168.30.65' };
+    const probeName = activeProbe.name;
+    const probeIp = activeProbe.ip || '192.168.30.65';
+    const firstDev = (state.devices && state.devices[0]) || { name: 'Core Gateway', ip: '192.168.1.1' };
 
     const hops = [
-      { num: 0, name: 'Source Probe', host: 'opm-ny-probe.enterprise.corp', ip: '10.0.0.10', rtt: '0.0 ms', loss: '0.0%', as: 'Private Enterprise DC', status: 'optimal' },
-      { num: 1, name: 'Top-of-Rack Switch', host: 'NY-TOR-SW-01.mgmt', ip: '10.0.0.1', rtt: '0.8 ms', loss: '0.0%', as: 'LAN Gateway', status: 'optimal' },
-      { num: 2, name: 'Core Distribution', host: 'NY-CORE-RTR-01.corp', ip: '172.16.0.1', rtt: '1.4 ms', loss: '0.0%', as: 'Core Backbone', status: 'optimal' },
-      { num: 3, name: 'Perimeter Edge Firewall', host: 'NY-FW-01.transit', ip: '192.168.100.1', rtt: '2.1 ms', loss: '0.0%', as: 'Enterprise Border', status: 'optimal' },
+      { num: 0, name: 'Source Probe', host: `${probeName.toLowerCase().replace(/[^a-z0-9]/g, '-')}.local`, ip: probeIp, rtt: '0.0 ms', loss: '0.0%', as: 'Enterprise Probe Node', status: 'optimal' },
+      { num: 1, name: 'Local Gateway Switch', host: `${firstDev.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.lan`, ip: firstDev.ip, rtt: '0.8 ms', loss: '0.0%', as: 'LAN Gateway', status: 'optimal' },
+      { num: 2, name: 'Core Distribution', host: 'core-dist.corp', ip: '192.168.10.1', rtt: '1.4 ms', loss: '0.0%', as: 'Core Backbone', status: 'optimal' },
+      { num: 3, name: 'Perimeter Edge Firewall', host: 'edge-gw.transit', ip: '192.168.100.1', rtt: '2.1 ms', loss: '0.0%', as: 'Enterprise Border', status: 'optimal' },
       { num: 4, name: 'Tier-1 Carrier Transit', host: 'ae2.cr01.lga.lumen.net', ip: '4.69.130.1', rtt: '12.6 ms', loss: '0.0%', as: 'AS3356 Lumen Technologies', status: 'optimal' },
       { num: 5, name: 'Edge Interconnect IXP', host: 'ash-b1-link.telia.net', ip: '172.70.240.1', rtt: '18.4 ms', loss: '0.0%', as: 'AS13335 Cloudflare / Edge IXP', status: 'optimal' },
       { num: 6, name: 'Target Cloud Endpoint', host: currentSvc.name, ip: currentSvc.ip, rtt: '22.8 ms', loss: '0.0%', as: currentSvc.as, status: 'optimal' }
@@ -6196,9 +6410,9 @@
       document.body.appendChild(modal);
     }
 
-    const alm = alarm || state.alarms[0] || {
+    const alm = alarm || (state.alarms && state.alarms[0]) || {
       id: 'ALM-101',
-      device: 'DXB-CORE-SW-01',
+      device: (state.devices && state.devices[0]?.name) || 'Core-Node-01',
       severity: 'Critical',
       message: 'Interface TenGigabitEthernet1/0/48 down',
       timestamp: '10:41:02 UTC'
@@ -6245,7 +6459,7 @@
             <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
               ${[
                 { time: '10:41:02 UTC', title: 'NCM Configuration Change Committed', desc: 'admin executed "interface TenGigabitEthernet1/0/48 shutdown" via SSH terminal.', badge: 'TRIGGER', color: '#dc2626' },
-                { time: '10:41:08 UTC', title: 'BGP Neighbor Hold Timer Expired', desc: 'BGP Peering 10.100.1.1 (AS65001) transitioned from ESTABLISHED to IDLE state.', badge: 'CASCADE', color: '#ea580c' },
+                { time: '10:41:08 UTC', title: 'BGP Neighbor Hold Timer Expired', desc: `BGP Peering ${(state.devices && state.devices[0]?.ip) || '192.168.1.1'} (AS65001) transitioned from ESTABLISHED to IDLE state.`, badge: 'CASCADE', color: '#ea580c' },
                 { time: '10:41:15 UTC', title: 'Inbound WAN Link Saturation & Packet Drop', desc: 'Failover traffic shifted to secondary 1Gbps backup trunk, causing 98% link congestion.', badge: 'IMPACT', color: '#d97706' },
                 { time: '10:41:22 UTC', title: '14 Downstream Edge Switch Alarms Cascaded', desc: 'Access switches lost primary gateway reachability. Suppressed by Zia AI deduplication.', badge: 'DEDUPLICATED', color: '#4f46e5' }
               ].map(ev => `
@@ -6361,6 +6575,28 @@
       modal.id = 'opm-bgp-modal';
       modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10007; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
       document.body.appendChild(modal);
+    }
+
+    if (!router && (!state.devices || state.devices.length === 0)) {
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
+          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #8b5cf6;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span>📡</span>
+              <span style="font-weight: 800; font-size: 14px;">ManageEngine OpManager Central &bull; BGP-4 Routing</span>
+            </div>
+            <button id="close-bgp-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
+          </div>
+          <div style="padding: 40px 20px; text-align: center;">
+            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No BGP Routers Discovered</div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add edge routers with BGP MIB (RFC 4273) enabled to monitor Autonomous System topology, peering states, and prefix exchanges.</div>
+            <button onclick="document.getElementById('opm-bgp-modal').style.display='none'; showAddDeviceModal();" style="background: #6d28d9; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Router</button>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-bgp-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      return;
     }
 
     const rtrName = router ? router.name : ((state.devices && state.devices[0]?.name) || 'Edge-WAN-RTR');
@@ -6611,6 +6847,28 @@
       document.body.appendChild(modal);
     }
 
+    if (!sdwanDevice && (!state.devices || state.devices.length === 0)) {
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
+          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #10b981;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span>🚀</span>
+              <span style="font-weight: 800; font-size: 14px;">ManageEngine OpManager Central &bull; SD-WAN Fabric</span>
+            </div>
+            <button id="close-sdwan-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
+          </div>
+          <div style="padding: 40px 20px; text-align: center;">
+            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No SD-WAN Gateways Configured</div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Connect Cisco vManage, Fortinet Secure SD-WAN, or Silver Peak appliances to track BFD tunnels, jitter, and application steering policies.</div>
+            <button onclick="document.getElementById('opm-sdwan-modal').style.display='none'; showAddDeviceModal();" style="background: #047857; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add SD-WAN Edge</button>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-sdwan-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      return;
+    }
+
     const devName = sdwanDevice ? sdwanDevice.name : ((state.devices && state.devices[0]?.name) || 'SDWAN-EDGE-01');
 
     modal.innerHTML = `
@@ -6830,6 +7088,28 @@
       document.body.appendChild(modal);
     }
 
+    if (!iface && (!state.devices || state.devices.length === 0)) {
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
+          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span>📊</span>
+              <span style="font-weight: 800; font-size: 14px;">Deep Packet Inspection (DPI) & Cisco NBAR2</span>
+            </div>
+            <button id="close-dpi-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
+          </div>
+          <div style="padding: 40px 20px; text-align: center;">
+            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No DPI Interfaces Monitored</div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Deploy NetFlow / IPFIX packet sampling or configure Cisco NBAR2 on router interfaces to inspect Layer-7 applications.</div>
+            <button onclick="document.getElementById('opm-dpi-modal').style.display='none'; showAddDeviceModal();" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Device</button>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-dpi-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      return;
+    }
+
     const ifName = iface ? (iface.name || iface) : 'GigabitEthernet0/0/1 - WAN Gateway (10 Gbps)';
 
     modal.innerHTML = `
@@ -7031,6 +7311,28 @@
       modal.id = 'opm-ndr-modal';
       modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10010; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
       document.body.appendChild(modal);
+    }
+
+    if (!threatSource && (!state.devices || state.devices.length === 0)) {
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
+          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc2626;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span>🛡️</span>
+              <span style="font-weight: 800; font-size: 14px;">Network Detection & Response (NDR)</span>
+            </div>
+            <button id="close-ndr-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
+          </div>
+          <div style="padding: 40px 20px; text-align: center;">
+            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Security Threats Detected</div>
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Central Network Detection & Response engine is continuously monitoring flow traffic across probes. No anomalous lateral movement or botnet telemetry identified.</div>
+            <button onclick="document.getElementById('opm-ndr-modal').style.display='none';" style="background: #dc2626; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Dismiss</button>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-ndr-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      return;
     }
 
     modal.innerHTML = `
@@ -7990,29 +8292,48 @@
             `).join('')}
 
           </div>
-        ` : activeSub === 'summary' ? `
+        ` : activeSub === 'summary' ? (totalDevices === 0 ? `
+          <!-- Clean Empty State for Summary Subtab -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">No Devices Added to Central Architecture</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 18px auto; line-height: 1.5;">
+              Discover and monitor your real servers, network switches, routers, and firewalls across your connected enterprise probes.
+            </div>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+                + Add Real Device
+              </button>
+              <button onclick="showNetworkDiscoveryModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                🔍 Discover CIDR Subnet
+              </button>
+            </div>
+          </div>
+        ` : `
           <!-- Enterprise Rollup Summary Subtab -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Routers & Switches</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Routers & Switches</div>
                 <div style="font-size: 24px; font-weight: 800; color: #0070e0; margin: 4px 0;">${networkCount} Devices</div>
-                <div style="font-size: 11px; color: ${networkCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${networkCount > 0 ? 'Core Fabric & Edge Gateways' : 'No Devices Monitored'}</div>
+                <div style="font-size: 11px; color: ${networkCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${networkCount} Active Network Nodes</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Servers & Compute</div>
                 <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">${serverCount} Servers</div>
-                <div style="font-size: 11px; color: #64748b;">${serverCount > 0 ? 'Database, Mail, Web, Cache' : 'No Servers Monitored'}</div>
+                <div style="font-size: 11px; color: #64748b;">${serverCount} Monitored Endpoints</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Next-Gen Firewalls</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Security Gateways</div>
                 <div style="font-size: 24px; font-weight: 800; color: #ea580c; margin: 4px 0;">${firewallCount} Firewalls</div>
-                <div style="font-size: 11px; color: #ea580c; font-weight: 600;">${firewallCount > 0 ? 'Palo Alto & Fortinet NGFW' : 'No Firewalls Configured'}</div>
+                <div style="font-size: 11px; color: #ea580c; font-weight: 600;">${firewallCount} Security Appliances</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Storage & Power</div>
-                <div style="font-size: 24px; font-weight: 800; color: #6366f1; margin: 4px 0;">${storageCount} SAN Array</div>
-                <div style="font-size: 11px; color: ${storageCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${storageCount > 0 ? 'Active Storage Arrays' : 'No Storage Monitored'}</div>
+                <div style="font-size: 24px; font-weight: 800; color: #6366f1; margin: 4px 0;">${storageCount} Arrays</div>
+                <div style="font-size: 11px; color: ${storageCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${storageCount} Storage Devices</div>
               </div>
             </div>
 
@@ -8049,7 +8370,7 @@
               </table>
             </div>
           </div>
-        ` : activeSub === 'servers' ? (serverCount === 0 ? `
+        `) : activeSub === 'servers' ? (serverCount === 0 ? `
           <!-- Clean Empty State for Servers -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
@@ -9558,12 +9879,8 @@
                   </select>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; color: #64748b;">
-                  <button id="opm-alarm-ndr-btn" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            🛡️ NDR Threat Forensics
-          </button>
-          <button id="opm-alarm-zia-rca-btn" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">🧠 Zia AI RCA</button>
-                  <button id="opm-alarm-netpath-btn" style="background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">🌐 NetPath</button>
-                  <button id="opm-alarm-downtime-btn" style="background: #fef9c3; border: 1px solid #fde047; color: #854d0e; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">⏱️ Schedule Downtime</button>
+                  <button id="opm-alarm-zia-rca-btn" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">🧠 Zia AI RCA</button>
+                  <button id="opm-alarm-downtime-btn" style="background: #fef9c3; border: 1px solid #fde047; color: #854d0e; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">⏱️ Schedule Downtime</button>
                   <span style="cursor: pointer; font-size: 14px;" title="List View">☰</span>
                   <span style="cursor: pointer; font-size: 14px;" title="Table View">⊞</span>
                   <span style="cursor: pointer; font-size: 13px;" title="Search Alarms">🔍</span>
@@ -9602,15 +9919,12 @@
                       <td style="padding: 9px 14px; color: #0f172a;">
                         <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${sevDotColor}; margin-right: 6px; vertical-align: middle;"></span>
                         <span style="font-weight: 600; color: #1e293b;">${alm.message}</span>
-                        <span style="color: #64748b; font-size: 11px; margin-left: 6px;">| ${alm.ip || '10.40.1.1'} | ${alm.device} | ${alm.probe} | ${alm.technician} | ${alm.severity} |</span>
+                        <span style="color: #64748b; font-size: 11px; margin-left: 6px;">| ${alm.ip || '127.0.0.1'} | ${alm.device} | ${alm.probe} | ${alm.technician || 'NOC Admin'} | ${alm.severity} |</span>
                       </td>
                       <td style="padding: 9px 14px; font-weight: 600; color: #475569; font-size: 11px;">${alm.entity}</td>
                       <td style="padding: 9px 14px; font-size: 11px; color: #64748b;">${alm.time}</td>
                       <td style="padding: 9px 14px; text-align: right; white-space: nowrap;" onclick="event.stopPropagation();">
-                        <button class="opm-alarm-row-ndr-btn" data-id="${alm.id}" title="NDR Threat Intelligence Forensics" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; width: 24px; height: 24px; border-radius: 3px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0;">
-                        <span style="font-size: 11px;">🛡️</span>
-                      </button>
-                      <button class="opm-alarm-row-rca-btn" data-id="${alm.id}" title="Zia AI Root Cause Analysis" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 3px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; cursor: pointer; margin-right: 4px;">
+                        <button class="opm-alarm-row-rca-btn" data-id="${alm.id}" title="Zia AI Root Cause Analysis" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 3px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; cursor: pointer; margin-right: 4px;">
                           🧠 Zia RCA
                         </button>
                         <button class="opm-alarm-quick-ack" data-id="${alm.id}" title="Acknowledge Alarm" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
@@ -10406,18 +10720,12 @@
         <div style="display: flex; align-items: center; gap: 4px;">
           ${subtabNavHtml}
         </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <button id="opm-maps-bgp-btn" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            📡 BGP AS Topology
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 11px; color: #64748b; font-weight: 600;">Interactive Topology Engine v12.9</span>
+          <button id="opm-maps-refresh-btn" onclick="renderMapsView()" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
+            ⟳ Refresh
           </button>
-          <button id="opm-maps-sdwan-btn" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            🚀 SD-WAN Fabric
-          </button>
-          <button id="opm-maps-netpath-btn" style="background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            🌐 Hop-by-Hop NetPath
-          </button>
-          <span style="font-size: 12px; color: #64748b; font-weight: 600;">Interactive Topology Engine v12.9</span>
-          <button id="opm-maps-fullscreen-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+          <button id="opm-maps-fullscreen-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
             Fullscreen ⤢
           </button>
         </div>
@@ -11304,7 +11612,20 @@
 
         <div style="flex: 1; padding: 18px 24px; overflow-y: auto;">
         
-        ${activeSub === 'sla' ? `
+        ${activeSub === 'sla' ? (state.devices.length === 0 ? `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">No SLA & Interface Telemetry Recorded</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 18px auto; line-height: 1.5;">
+              Availability SLA history and bandwidth throughput charts will populate automatically once managed devices are active across your probes.
+            </div>
+            <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Real Device
+            </button>
+          </div>
+        ` : `
           <!-- Authentic ManageEngine Side-by-Side Vertical Bar Chart Cards with Host Legend, View All & Per-Chart Sub-Table (matching firewall_addon_reports.png & netflow_addon_reports.png) -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px;">
             
@@ -11498,7 +11819,7 @@
               </tbody>
             </table>
           </div>
-        ` : activeSub === 'performance' ? `
+        `) : activeSub === 'performance' ? `
           <!-- Performance Reports Clean Empty State -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
@@ -12833,7 +13154,7 @@
                 <div style="display: grid; grid-template-columns: 200px 220px 1fr 140px; gap: 10px; margin-bottom: 12px;">
                   <div>
                     <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Target Windows Server</label>
-                    <input type="text" id="opm-wmi-target-ip" value="10.10.3.50" style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
+                    <input type="text" id="opm-wmi-target-ip" value="${(state.devices && state.devices[0]?.ip) || '127.0.0.1'}" style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
                   </div>
                   <div>
                     <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">WMI Namespace</label>
@@ -13672,7 +13993,7 @@
                   <div><strong style="color: #475569;">Valid From / To:</strong> <span style="color: #16a34a; font-weight: 600;">2025-01-01 to 2027-11-30 (Valid)</span></div>
                   <div><strong style="color: #475569;">Key Algorithm:</strong> <span style="font-family: monospace; color: #0f172a;">RSA 2048-bit (SHA-256 with RSA)</span></div>
                   <div><strong style="color: #475569;">Serial Number:</strong> <span style="font-family: monospace; font-size: 11px; color: #64748b;">4A:8B:19:3C:99:FF:01:2A</span></div>
-                  <div><strong style="color: #475569;">Subject Alternative Names:</strong> <span style="font-family: monospace; font-size: 11px; color: #0284c7;">DNS:opmanager-central.enterprise.corp, IP:10.10.1.10</span></div>
+                  <div><strong style="color: #475569;">Subject Alternative Names:</strong> <span style="font-family: monospace; font-size: 11px; color: #0284c7;">DNS:opmanager-central.local, IP:192.168.30.65, IP:127.0.0.1</span></div>
                 </div>
               </div>
 
@@ -14300,7 +14621,7 @@
     const wmiExecBtn = container.querySelector('#opm-wmi-exec-btn');
     if (wmiExecBtn) {
       wmiExecBtn.onclick = async () => {
-        const host = container.querySelector('#opm-wmi-target-ip')?.value || '10.10.3.50';
+        const host = container.querySelector('#opm-wmi-target-ip')?.value || (state.devices && state.devices[0]?.ip) || '127.0.0.1';
         const namespace = container.querySelector('#opm-wmi-namespace')?.value || 'root\\cimv2';
         const query = container.querySelector('#opm-wmi-query-sql')?.value || 'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor';
         const outBox = container.querySelector('#opm-wmi-output-box');

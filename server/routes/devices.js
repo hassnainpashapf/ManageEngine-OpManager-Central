@@ -91,7 +91,7 @@ router.get(['/device/listInterfaces', '/api/json/device/listInterfaces', '/devic
 
 // Live Ping Response
 router.get(['/device/getPingResponse', '/api/json/device/getPingResponse'], (req, res) => {
-  const ip = req.query.ip || '10.40.1.1';
+  const ip = req.query.ip || (db.getDevices()[0]?.ip) || '127.0.0.1';
   res.json({
     status: 'success',
     ip,

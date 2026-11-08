@@ -128,9 +128,111 @@
         #main-header #main-nav > ul > li > a.nav-link::after {
           display: none !important;
         }
+        #main-header {
+          margin: 0 !important;
+          width: 100% !important;
+          height: 50px !important;
+          max-height: 50px !important;
+          min-height: 50px !important;
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+        #main-header #main-nav,
+        #main-header #main-nav ul,
+        #main-header #main-nav ul.main-nav {
+          height: 50px !important;
+          max-height: 50px !important;
+          min-height: 50px !important;
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        #main-header #main-nav li,
+        #main-header #main-nav li.active-menu,
+        #main-header #main-nav ul.main-nav > li {
+          height: 50px !important;
+          max-height: 50px !important;
+          min-height: 50px !important;
+          overflow: hidden !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          box-sizing: border-box !important;
+          background: transparent !important;
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+        }
         #main-header #main-nav .main-nav > ul > li > a.nav-link,
-        #main-header #main-nav > ul > li > a.nav-link {
-          padding: 0.65rem 1.25rem !important;
+        #main-header #main-nav > ul > li > a.nav-link,
+        #main-header #main-nav a.opm-main-nav-tab {
+          height: 50px !important;
+          max-height: 50px !important;
+          min-height: 50px !important;
+          line-height: 50px !important;
+          padding: 0 16px !important;
+          margin: 0 !important;
+          font-size: 13px !important;
+          font-weight: 500 !important;
+          color: #e2e8f0 !important;
+          text-decoration: none !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          box-sizing: border-box !important;
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+          border-radius: 0px !important;
+          overflow: hidden !important;
+          transform: none !important;
+        }
+        #main-header #main-nav a.nav-link:focus,
+        #main-header #main-nav a.nav-link:focus-visible,
+        #main-header #main-nav a.nav-link:active,
+        #main-header #main-nav a.opm-main-nav-tab:focus,
+        #main-header #main-nav a.opm-main-nav-tab:focus-visible,
+        #main-header #main-nav a.opm-main-nav-tab:active,
+        #main-header #main-nav li:focus,
+        #main-header #main-nav li:focus-visible {
+          outline: none !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+        #main-header #main-nav .main-nav > ul > li > a.nav-link.active,
+        #main-header #main-nav > ul > li > a.nav-link.active,
+        #main-header #main-nav a.opm-main-nav-tab.active {
+          background: #49bd80 !important;
+          background-color: #49bd80 !important;
+          color: #ffffff !important;
+          font-weight: 600 !important;
+          font-size: 13px !important;
+          height: 50px !important;
+          max-height: 50px !important;
+          line-height: 50px !important;
+          padding: 0 16px !important;
+          margin: 0 !important;
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+          border-radius: 0px !important;
+          transform: none !important;
+        }
+        #main-header #main-nav a .menu-name {
+          font-size: 13px !important;
+          line-height: 50px !important;
+          height: 50px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          color: inherit !important;
+          background: transparent !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          border: none !important;
+          outline: none !important;
         }
         .opm-widget-card {
           border-radius: 3px !important;
@@ -240,9 +342,9 @@
       tabs.forEach(t => {
         const isAct = t.id === currentTab;
         tabsHtml += `
-          <li class="${isAct ? 'active-menu' : ''}" style="list-style: none; display: inline-block; height: 100%;">
-            <a href="#/${t.id}" class="nav-link opm-main-nav-tab ${isAct ? 'active' : ''}" data-tab="${t.id}" style="color: #e2e8f0; text-decoration: none; font-size: 13px; font-weight: ${isAct ? '600' : '500'}; padding: 0 16px; height: 50px; display: flex; align-items: center; background: ${isAct ? '#49bd80' : 'transparent'}; transition: all 0.15s; letter-spacing: 0.2px;">
-              <span class="menu-name" style="color: ${isAct ? '#ffffff' : '#e2e8f0'};">${t.name}</span>
+          <li class="${isAct ? 'active-menu' : ''}" style="list-style: none; display: inline-flex; align-items: center; justify-content: center; height: 50px; max-height: 50px; overflow: hidden; margin: 0; padding: 0; border: none; outline: none;">
+            <a href="#/${t.id}" class="nav-link opm-main-nav-tab ${isAct ? 'active' : ''}" data-tab="${t.id}" style="color: ${isAct ? '#ffffff' : '#e2e8f0'}; text-decoration: none; font-size: 13px; font-weight: ${isAct ? '600' : '500'}; padding: 0 16px; height: 50px; max-height: 50px; line-height: 50px; display: inline-flex; align-items: center; justify-content: center; background: ${isAct ? '#49bd80' : 'transparent'}; border: none; outline: none; box-shadow: none; border-radius: 0; transition: all 0.15s; letter-spacing: 0.2px;">
+              <span class="menu-name" style="color: ${isAct ? '#ffffff' : '#e2e8f0'}; font-size: 13px; line-height: 50px; height: 50px; display: inline-flex; align-items: center;">${t.name}</span>
             </a>
           </li>
         `;
@@ -549,20 +651,32 @@
       if (el.closest('.dropdown-nav')) return;
       el.style.setProperty('background', 'transparent', 'important');
       el.style.setProperty('background-color', 'transparent', 'important');
+      el.style.setProperty('border', 'none', 'important');
+      el.style.setProperty('outline', 'none', 'important');
+      el.style.setProperty('box-shadow', 'none', 'important');
       el.style.setProperty('border-radius', '0px', 'important');
+      el.style.setProperty('height', '50px', 'important');
+      el.style.setProperty('max-height', '50px', 'important');
+      el.style.setProperty('line-height', '50px', 'important');
+      el.style.setProperty('margin', '0', 'important');
       if (el.tagName === 'A' || el.classList.contains('nav-link')) {
-        el.style.removeProperty('font-weight');
+        el.style.setProperty('font-size', '13px', 'important');
+        el.style.setProperty('font-weight', '500', 'important');
         el.style.setProperty('color', '#e2e8f0', 'important');
+        el.style.setProperty('padding', '0 16px', 'important');
         const span = el.querySelector('.menu-name');
         if (span) {
           span.style.setProperty('color', '#e2e8f0', 'important');
           span.style.setProperty('background', 'transparent', 'important');
+          span.style.setProperty('font-size', '13px', 'important');
+          span.style.setProperty('line-height', '50px', 'important');
+          span.style.setProperty('height', '50px', 'important');
         }
       }
     });
 
     // Now highlight ONLY the matching top-level tab with uniform #49bd80 emerald green
-    const topLinks = document.querySelectorAll('#main-header #main-nav .main-nav > ul > li > a.nav-link, #main-header #main-nav > ul > li > a.nav-link');
+    const topLinks = document.querySelectorAll('#main-header #main-nav .main-nav > ul > li > a.nav-link, #main-header #main-nav > ul > li > a.nav-link, #main-header #main-nav a.opm-main-nav-tab');
     let matched = false;
     topLinks.forEach(link => {
       if (matched) return;
@@ -574,16 +688,34 @@
         link.style.setProperty('background', '#49bd80', 'important');
         link.style.setProperty('background-color', '#49bd80', 'important');
         link.style.setProperty('color', '#ffffff', 'important');
+        link.style.setProperty('border', 'none', 'important');
+        link.style.setProperty('outline', 'none', 'important');
+        link.style.setProperty('box-shadow', 'none', 'important');
         link.style.setProperty('border-radius', '0px', 'important');
+        link.style.setProperty('font-size', '13px', 'important');
         link.style.setProperty('font-weight', '600', 'important');
+        link.style.setProperty('height', '50px', 'important');
+        link.style.setProperty('max-height', '50px', 'important');
+        link.style.setProperty('line-height', '50px', 'important');
+        link.style.setProperty('padding', '0 16px', 'important');
+        link.style.setProperty('margin', '0', 'important');
         if (nameSpan && nameSpan !== link) {
           nameSpan.style.setProperty('color', '#ffffff', 'important');
           nameSpan.style.setProperty('background', 'transparent', 'important');
+          nameSpan.style.setProperty('font-size', '13px', 'important');
+          nameSpan.style.setProperty('line-height', '50px', 'important');
+          nameSpan.style.setProperty('height', '50px', 'important');
         }
         if (link.parentElement && link.parentElement.tagName === 'LI') {
           link.parentElement.classList.add('active-menu');
           link.parentElement.style.setProperty('background', '#49bd80', 'important');
           link.parentElement.style.setProperty('background-color', '#49bd80', 'important');
+          link.parentElement.style.setProperty('border', 'none', 'important');
+          link.parentElement.style.setProperty('outline', 'none', 'important');
+          link.parentElement.style.setProperty('box-shadow', 'none', 'important');
+          link.parentElement.style.setProperty('height', '50px', 'important');
+          link.parentElement.style.setProperty('max-height', '50px', 'important');
+          link.parentElement.style.setProperty('overflow', 'hidden', 'important');
         }
       }
     });

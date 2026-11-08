@@ -474,7 +474,20 @@
 
         <div style="flex: 1; padding: 18px 24px; overflow-y: auto;">
         
-        ${activeSub === 'sla' ? `
+        ${activeSub === 'sla' ? (state.devices.length === 0 ? `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">No SLA & Interface Telemetry Recorded</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 18px auto; line-height: 1.5;">
+              Availability SLA history and bandwidth throughput charts will populate automatically once managed devices are active across your probes.
+            </div>
+            <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Real Device
+            </button>
+          </div>
+        ` : `
           <!-- Authentic ManageEngine Side-by-Side Vertical Bar Chart Cards with Host Legend, View All & Per-Chart Sub-Table (matching firewall_addon_reports.png & netflow_addon_reports.png) -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px;">
             
@@ -668,7 +681,7 @@
               </tbody>
             </table>
           </div>
-        ` : activeSub === 'performance' ? `
+        `) : activeSub === 'performance' ? `
           <!-- Performance Reports Clean Empty State -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
@@ -2003,7 +2016,7 @@
                 <div style="display: grid; grid-template-columns: 200px 220px 1fr 140px; gap: 10px; margin-bottom: 12px;">
                   <div>
                     <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Target Windows Server</label>
-                    <input type="text" id="opm-wmi-target-ip" value="10.10.3.50" style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
+                    <input type="text" id="opm-wmi-target-ip" value="${(state.devices && state.devices[0]?.ip) || '127.0.0.1'}" style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
                   </div>
                   <div>
                     <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">WMI Namespace</label>
@@ -2842,7 +2855,7 @@
                   <div><strong style="color: #475569;">Valid From / To:</strong> <span style="color: #16a34a; font-weight: 600;">2025-01-01 to 2027-11-30 (Valid)</span></div>
                   <div><strong style="color: #475569;">Key Algorithm:</strong> <span style="font-family: monospace; color: #0f172a;">RSA 2048-bit (SHA-256 with RSA)</span></div>
                   <div><strong style="color: #475569;">Serial Number:</strong> <span style="font-family: monospace; font-size: 11px; color: #64748b;">4A:8B:19:3C:99:FF:01:2A</span></div>
-                  <div><strong style="color: #475569;">Subject Alternative Names:</strong> <span style="font-family: monospace; font-size: 11px; color: #0284c7;">DNS:opmanager-central.enterprise.corp, IP:10.10.1.10</span></div>
+                  <div><strong style="color: #475569;">Subject Alternative Names:</strong> <span style="font-family: monospace; font-size: 11px; color: #0284c7;">DNS:opmanager-central.local, IP:192.168.30.65, IP:127.0.0.1</span></div>
                 </div>
               </div>
 
@@ -3470,7 +3483,7 @@
     const wmiExecBtn = container.querySelector('#opm-wmi-exec-btn');
     if (wmiExecBtn) {
       wmiExecBtn.onclick = async () => {
-        const host = container.querySelector('#opm-wmi-target-ip')?.value || '10.10.3.50';
+        const host = container.querySelector('#opm-wmi-target-ip')?.value || (state.devices && state.devices[0]?.ip) || '127.0.0.1';
         const namespace = container.querySelector('#opm-wmi-namespace')?.value || 'root\\cimv2';
         const query = container.querySelector('#opm-wmi-query-sql')?.value || 'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor';
         const outBox = container.querySelector('#opm-wmi-output-box');

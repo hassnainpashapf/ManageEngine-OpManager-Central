@@ -172,12 +172,8 @@
                   </select>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; color: #64748b;">
-                  <button id="opm-alarm-ndr-btn" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            🛡️ NDR Threat Forensics
-          </button>
-          <button id="opm-alarm-zia-rca-btn" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">🧠 Zia AI RCA</button>
-                  <button id="opm-alarm-netpath-btn" style="background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">🌐 NetPath</button>
-                  <button id="opm-alarm-downtime-btn" style="background: #fef9c3; border: 1px solid #fde047; color: #854d0e; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">⏱️ Schedule Downtime</button>
+                  <button id="opm-alarm-zia-rca-btn" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">🧠 Zia AI RCA</button>
+                  <button id="opm-alarm-downtime-btn" style="background: #fef9c3; border: 1px solid #fde047; color: #854d0e; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">⏱️ Schedule Downtime</button>
                   <span style="cursor: pointer; font-size: 14px;" title="List View">☰</span>
                   <span style="cursor: pointer; font-size: 14px;" title="Table View">⊞</span>
                   <span style="cursor: pointer; font-size: 13px;" title="Search Alarms">🔍</span>
@@ -216,15 +212,12 @@
                       <td style="padding: 9px 14px; color: #0f172a;">
                         <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${sevDotColor}; margin-right: 6px; vertical-align: middle;"></span>
                         <span style="font-weight: 600; color: #1e293b;">${alm.message}</span>
-                        <span style="color: #64748b; font-size: 11px; margin-left: 6px;">| ${alm.ip || '10.40.1.1'} | ${alm.device} | ${alm.probe} | ${alm.technician} | ${alm.severity} |</span>
+                        <span style="color: #64748b; font-size: 11px; margin-left: 6px;">| ${alm.ip || '127.0.0.1'} | ${alm.device} | ${alm.probe} | ${alm.technician || 'NOC Admin'} | ${alm.severity} |</span>
                       </td>
                       <td style="padding: 9px 14px; font-weight: 600; color: #475569; font-size: 11px;">${alm.entity}</td>
                       <td style="padding: 9px 14px; font-size: 11px; color: #64748b;">${alm.time}</td>
                       <td style="padding: 9px 14px; text-align: right; white-space: nowrap;" onclick="event.stopPropagation();">
-                        <button class="opm-alarm-row-ndr-btn" data-id="${alm.id}" title="NDR Threat Intelligence Forensics" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; width: 24px; height: 24px; border-radius: 3px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0;">
-                        <span style="font-size: 11px;">🛡️</span>
-                      </button>
-                      <button class="opm-alarm-row-rca-btn" data-id="${alm.id}" title="Zia AI Root Cause Analysis" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 3px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; cursor: pointer; margin-right: 4px;">
+                        <button class="opm-alarm-row-rca-btn" data-id="${alm.id}" title="Zia AI Root Cause Analysis" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 3px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; cursor: pointer; margin-right: 4px;">
                           🧠 Zia RCA
                         </button>
                         <button class="opm-alarm-quick-ack" data-id="${alm.id}" title="Acknowledge Alarm" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
@@ -1020,18 +1013,12 @@
         <div style="display: flex; align-items: center; gap: 4px;">
           ${subtabNavHtml}
         </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <button id="opm-maps-bgp-btn" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            📡 BGP AS Topology
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 11px; color: #64748b; font-weight: 600;">Interactive Topology Engine v12.9</span>
+          <button id="opm-maps-refresh-btn" onclick="renderMapsView()" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
+            ⟳ Refresh
           </button>
-          <button id="opm-maps-sdwan-btn" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            🚀 SD-WAN Fabric
-          </button>
-          <button id="opm-maps-netpath-btn" style="background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            🌐 Hop-by-Hop NetPath
-          </button>
-          <span style="font-size: 12px; color: #64748b; font-weight: 600;">Interactive Topology Engine v12.9</span>
-          <button id="opm-maps-fullscreen-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+          <button id="opm-maps-fullscreen-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
             Fullscreen ⤢
           </button>
         </div>

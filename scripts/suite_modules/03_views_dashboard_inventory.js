@@ -763,29 +763,48 @@
             `).join('')}
 
           </div>
-        ` : activeSub === 'summary' ? `
+        ` : activeSub === 'summary' ? (totalDevices === 0 ? `
+          <!-- Clean Empty State for Summary Subtab -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">No Devices Added to Central Architecture</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 18px auto; line-height: 1.5;">
+              Discover and monitor your real servers, network switches, routers, and firewalls across your connected enterprise probes.
+            </div>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+                + Add Real Device
+              </button>
+              <button onclick="showNetworkDiscoveryModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                🔍 Discover CIDR Subnet
+              </button>
+            </div>
+          </div>
+        ` : `
           <!-- Enterprise Rollup Summary Subtab -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Routers & Switches</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Routers & Switches</div>
                 <div style="font-size: 24px; font-weight: 800; color: #0070e0; margin: 4px 0;">${networkCount} Devices</div>
-                <div style="font-size: 11px; color: ${networkCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${networkCount > 0 ? 'Core Fabric & Edge Gateways' : 'No Devices Monitored'}</div>
+                <div style="font-size: 11px; color: ${networkCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${networkCount} Active Network Nodes</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Servers & Compute</div>
                 <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">${serverCount} Servers</div>
-                <div style="font-size: 11px; color: #64748b;">${serverCount > 0 ? 'Database, Mail, Web, Cache' : 'No Servers Monitored'}</div>
+                <div style="font-size: 11px; color: #64748b;">${serverCount} Monitored Endpoints</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Next-Gen Firewalls</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Security Gateways</div>
                 <div style="font-size: 24px; font-weight: 800; color: #ea580c; margin: 4px 0;">${firewallCount} Firewalls</div>
-                <div style="font-size: 11px; color: #ea580c; font-weight: 600;">${firewallCount > 0 ? 'Palo Alto & Fortinet NGFW' : 'No Firewalls Configured'}</div>
+                <div style="font-size: 11px; color: #ea580c; font-weight: 600;">${firewallCount} Security Appliances</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Storage & Power</div>
-                <div style="font-size: 24px; font-weight: 800; color: #6366f1; margin: 4px 0;">${storageCount} SAN Array</div>
-                <div style="font-size: 11px; color: ${storageCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${storageCount > 0 ? 'Active Storage Arrays' : 'No Storage Monitored'}</div>
+                <div style="font-size: 24px; font-weight: 800; color: #6366f1; margin: 4px 0;">${storageCount} Arrays</div>
+                <div style="font-size: 11px; color: ${storageCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${storageCount} Storage Devices</div>
               </div>
             </div>
 
@@ -822,7 +841,7 @@
               </table>
             </div>
           </div>
-        ` : activeSub === 'servers' ? (serverCount === 0 ? `
+        `) : activeSub === 'servers' ? (serverCount === 0 ? `
           <!-- Clean Empty State for Servers -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">

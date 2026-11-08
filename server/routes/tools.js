@@ -396,48 +396,59 @@ router.post('/api/tools/snmp-walk', (req, res) => {
 });
 
 // Switch Port Mapper Endpoint
-router.get('/api/tools/switch-ports', (req, res) => {
+router.get(['/api/tools/switch-ports', '/api/tools/spm'], (req, res) => {
   const { deviceId, ip } = req.query;
-  const dev = db.getDevices().find(d => d.id === deviceId || d.ip === ip) || db.getDevices()[0] || {
-    name: 'Target-Switch',
-    ip: ip || '10.0.0.1'
-  };
+  const devices = db.getDevices();
+  const dev = devices.find(d => d.id === deviceId || d.ip === ip) || devices[0];
+  if (!dev) {
+    return res.json({
+      status: 'success',
+      device: 'No Managed Switch',
+      ip: '127.0.0.1',
+      totalPorts: 0,
+      activePorts: 0,
+      ports: []
+    });
+  }
 
-  const ports = [
-    { port: 'Fa0/1', alias: 'Uplink-Core-Trunk', adminStatus: 'Up', operStatus: 'Up', speed: '1 Gbps', vlan: 10, mac: '00:1E:F7:28:9A:01', ip: '10.10.0.1', type: 'Trunk (802.1Q)' },
-    { port: 'Fa0/2', alias: 'Finance-Dept-Access', adminStatus: 'Up', operStatus: 'Up', speed: '100 Mbps', vlan: 20, mac: '44:D9:E7:5C:11:32', ip: '10.10.20.14', type: 'Access' },
-    { port: 'Fa0/3', alias: 'HR-Payroll-Workstation', adminStatus: 'Up', operStatus: 'Up', speed: '1 Gbps', vlan: 30, mac: 'B8:27:EB:94:4E:91', ip: '10.10.30.5', type: 'Access' },
-    { port: 'Fa0/4', alias: 'WiFi-AP-Corridor', adminStatus: 'Up', operStatus: 'Up', speed: '1 Gbps', vlan: 40, mac: '70:3A:0E:12:88:FF', ip: '10.10.40.2', type: 'Access (PoE+)' },
-    { port: 'Fa0/5', alias: 'VoIP-Phone-Desk-12', adminStatus: 'Up', operStatus: 'Up', speed: '100 Mbps', vlan: 50, mac: '00:08:5D:22:EE:99', ip: '10.10.50.89', type: 'Voice VLAN' },
-    { port: 'Fa0/6', alias: 'Spare-Disabled', adminStatus: 'Down', operStatus: 'Down', speed: 'Auto', vlan: 1, mac: '--', ip: '--', type: 'Shutdown' },
-    { port: 'Gi0/1', alias: 'TenGig-Storage-SAN', adminStatus: 'Up', operStatus: 'Up', speed: '10 Gbps', vlan: 100, mac: 'AC:1F:6B:44:00:2A', ip: '10.10.100.10', type: 'Access' }
-  ];
+  const ports = (dev.interfaces || []).map((iface, idx) => ({
+    port: iface.name || `Fa0/${idx + 1}`,
+    alias: iface.description || 'Monitored Interface',
+    adminStatus: iface.status === 'Down' ? 'Down' : 'Up',
+    operStatus: iface.status === 'Down' ? 'Down' : 'Up',
+    speed: iface.speed || '1 Gbps',
+    vlan: iface.vlan || 1,
+    mac: iface.mac || '--',
+    ip: iface.ip || dev.ip,
+    type: iface.type || 'Access'
+  }));
 
   res.json({
     status: 'success',
     device: dev.name,
     ip: dev.ip,
-    totalPorts: 48,
-    activePorts: 6,
+    totalPorts: ports.length,
+    activePorts: ports.filter(p => p.operStatus === 'Up').length,
     ports
   });
 });
 
 // Interactive Web CLI Terminal Command Executor
 router.post('/api/tools/terminal-exec', (req, res) => {
-  const { command = '', hostname = 'CORE-RTR-01' } = req.body;
+  const devices = db.getDevices();
+  const dev = devices.find(d => d.name === req.body.hostname || d.ip === req.body.hostname) || devices[0];
+  const hostname = dev ? dev.name : (req.body.hostname || 'Enterprise-Node');
+  const targetIp = dev ? dev.ip : '127.0.0.1';
+  const { command = '' } = req.body;
   const cmd = command.trim().toLowerCase();
 
   let output = '';
   if (cmd === 'show ip interface brief' || cmd === 'show ip int br' || cmd === 'sh ip int br' || cmd === 'show ip int') {
     output = `
 Interface              IP-Address      OK? Method Status                Protocol
-FastEthernet0/0        10.10.0.1       YES NVRAM  up                    up      
-FastEthernet0/1        10.20.0.1       YES NVRAM  up                    up      
-GigabitEthernet0/0/0   10.254.1.1      YES manual up                    up      
+GigabitEthernet0/0/0   ${targetIp}      YES manual up                    up      
 GigabitEthernet0/0/1   unassigned      YES unset  administratively down down    
-Loopback0              10.0.0.1        YES NVRAM  up                    up      
-Vlan1                  unassigned      YES NVRAM  down                  down    
+Loopback0              127.0.0.1       YES NVRAM  up                    up      
     `.trim();
   } else if (cmd === 'show version' || cmd === 'sh ver') {
     output = `
@@ -498,7 +509,7 @@ end
 
 // WMI QUERY TOOL
 router.post('/api/tools/wmi-query', (req, res) => {
-  const { host = '10.10.3.50', namespace = 'root\\cimv2', query = 'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor' } = req.body;
+  const { host = '127.0.0.1', namespace = 'root\\cimv2', query = 'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor' } = req.body;
 
   let records = [];
   if (query.toLowerCase().includes('operatingsystem')) {
@@ -507,16 +518,13 @@ router.post('/api/tools/wmi-query', (req, res) => {
     ];
   } else if (query.toLowerCase().includes('logicaldisk')) {
     records = [
-      { DeviceID: 'C:', VolumeName: 'System', FileSystem: 'NTFS', Size: '214748364800', FreeSpace: '112589990684' },
-      { DeviceID: 'D:', VolumeName: 'Data_SQL', FileSystem: 'ReFS', Size: '2199023255552', FreeSpace: '687194767360' }
+      { DeviceID: 'C:', VolumeName: 'System', FileSystem: 'NTFS', Size: '214748364800', FreeSpace: '112589990684' }
     ];
   } else {
     records = [
-      { Name: '_Total', PercentProcessorTime: '34' },
-      { Name: '0', PercentProcessorTime: '38' },
-      { Name: '1', PercentProcessorTime: '29' },
-      { Name: '2', PercentProcessorTime: '32' },
-      { Name: '3', PercentProcessorTime: '37' }
+      { Name: '_Total', PercentProcessorTime: '18' },
+      { Name: '0', PercentProcessorTime: '22' },
+      { Name: '1', PercentProcessorTime: '14' }
     ];
   }
 
@@ -534,16 +542,16 @@ router.post('/api/tools/wmi-query', (req, res) => {
 
 // CLI QUERY TOOL
 router.post('/api/tools/cli-query', (req, res) => {
-  const { host = '10.40.1.1', protocol = 'SSHv2', command = 'show version' } = req.body;
+  const { host = '127.0.0.1', protocol = 'SSHv2', command = 'show version' } = req.body;
   const cmd = command.trim().toLowerCase();
 
   let resultOutput = '';
   if (cmd === 'show version' || cmd === 'sh ver') {
-    resultOutput = `Cisco IOS XE Software, Version 17.09.04a\nCisco Catalyst 9500 Series Switch\nChassis Serial: FCW2349L09X\nUptime is 184 days, 14 hours, 22 minutes\nSystem image file is "bootflash:cat9k_iosxe.17.09.04a.SPA.bin"`;
+    resultOutput = `Cisco IOS XE Software, Version 17.09.04a\nUptime is 184 days, 14 hours, 22 minutes\nSystem image file is "bootflash:cat9k_iosxe.17.09.04a.SPA.bin"`;
   } else if (cmd.includes('interface') || cmd.includes('int')) {
-    resultOutput = `Port      Name               Status       Vlan       Duplex  Speed Type\nTe1/0/1   Uplink-Core        connected    trunk      full    10G   10GBase-LR\nTe1/0/2   Storage-Heartbeat  connected    100        full    10G   10GBase-SR\nFo1/0/48  Transit-Backbone   notconnect   routed     auto    40G   QSFP-40G-SR4`;
+    resultOutput = `Port      Name               Status       Vlan       Duplex  Speed Type\nTe1/0/1   Uplink-Core        connected    trunk      full    10G   10GBase-LR`;
   } else if (cmd.includes('route') || cmd.includes('ip route')) {
-    resultOutput = `Gateway of last resort is 10.40.1.254 to network 0.0.0.0\n\nS*    0.0.0.0/0 [1/0] via 10.40.1.254\nC     10.40.1.0/24 is directly connected, Vlan10\nO     10.10.0.0/16 [110/20] via 10.40.1.2, 3w4d, TenGigabitEthernet1/0/1\nO     10.20.0.0/16 [110/30] via 10.40.1.3, 3w4d, TenGigabitEthernet1/0/1`;
+    resultOutput = `Gateway of last resort is 192.168.1.1 to network 0.0.0.0\n\nS*    0.0.0.0/0 [1/0] via 192.168.1.1\nC     192.168.1.0/24 is directly connected, Vlan1`;
   } else {
     resultOutput = `Command executed successfully on ${host} via ${protocol}:\n${command}\nExit Code: 0 (OK)`;
   }
