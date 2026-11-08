@@ -40,7 +40,8 @@
     ],
     alarms: [],
     topInterfaces: [],
-    diskVolumes: []
+    diskVolumes: [],
+    agents: []
   };
   state.interfaces = [];
 
@@ -1484,7 +1485,7 @@
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">Registered Remote Probes:</span>
-              <span style="font-weight: 700;">4 / 4 Online (US, UK, SG, AE)</span>
+              <span style="font-weight: 700;">${state.probes.length} / ${state.probes.length || 1} Online</span>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">Database Engine:</span>
@@ -1716,11 +1717,11 @@
         else if (action === 'subnet-sweep') showSubnetDiscoveryModal();
         else if (action === 'diagnostic-tools') showNetworkToolsModal(null, 'ping');
         else if (action === 'mib-browser') showNetworkToolsModal(null, 'mib');
-        else if (action === 'add-probe') showProbeDetailsModal('new');
+        else if (action === 'add-probe') showAddProbeModal();
         else if (action === 'add-widget') showAddWidgetModal();
         else if (action === 'download-agent') {
-          window.open('/agents/OpManagerAgent.exe', '_blank');
-          showToast('Downloading OpManager Host Monitoring Agent...');
+          window.open('/downloads/OpManagerAgent.msi', '_blank');
+          showToast('Downloading OpManager Host Monitoring Agent (MSI)...');
         }
       };
     });
@@ -1743,8 +1744,8 @@
     pop.style.left = rect.left + 'px';
     pop.innerHTML = `
       <div style="background: #212121; color: #ffffff; padding: 10px 14px; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: space-between;">
-        <span>Select Monitoring Probe</span>
-        <span style="font-size: 10px; background: #1d824e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">4 ONLINE</span>
+        <span>Select Monitoring Probe / Branch</span>
+        <span style="font-size: 10px; background: #1d824e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">${state.probes.length} ONLINE</span>
       </div>
       <div style="padding: 4px 0; font-size: 12px; max-height: 300px; overflow-y: auto;">
         <div class="opm-probe-sel-item" data-id="all" style="padding: 10px 16px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f5f9; ${state.selectedProbe === 'all' ? 'background: #eff6ff; font-weight: 700;' : ''}">
@@ -1761,16 +1762,26 @@
                 <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
                 <span style="color: #0f172a;">${pr.name}</span>
               </div>
-              <div style="font-size: 10px; color: #64748b; margin-left: 16px;">${pr.ip} • ${pr.latency}ms • ${pr.devicesCount} devices</div>
+              <div style="font-size: 10px; color: #64748b; margin-left: 16px;">${pr.ip} • ${pr.latency}ms • ${pr.devicesCount || 0} devices</div>
             </div>
             <span style="font-size: 10px; color: #166534; font-weight: 600;">UP</span>
           </div>
         `).join('')}
       </div>
-      <div style="background: #fafbfc; border-top: 1px solid #e2e8f0; padding: 8px 14px; text-align: center;">
-        <a href="#/settings/probes" style="font-size: 11px; color: #0070e0; text-decoration: none; font-weight: 600;">Manage Probes & Clusters →</a>
+      <div style="background: #fafbfc; border-top: 1px solid #e2e8f0; padding: 8px 14px; display: flex; justify-content: space-between; align-items: center;">
+        <button id="opm-quick-add-probe-btn" style="background: none; border: none; font-size: 11px; color: #0070e0; font-weight: 700; cursor: pointer; padding: 0;">+ Add Branch / Probe</button>
+        <a href="#/settings" onclick="state.subTabs.settings='probes'; renderSettingsView();" style="font-size: 11px; color: #64748b; text-decoration: none; font-weight: 600;">Manage Probes →</a>
       </div>
     `;
+
+    const quickAddProbeBtn = pop.querySelector('#opm-quick-add-probe-btn');
+    if (quickAddProbeBtn) {
+      quickAddProbeBtn.onclick = (e) => {
+        e.stopPropagation();
+        pop.style.display = 'none';
+        showAddProbeModal();
+      };
+    }
     pop.style.display = 'block';
 
     pop.querySelectorAll('.opm-probe-sel-item').forEach(item => {
@@ -7313,6 +7324,7 @@
     const switchCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('switch')).length;
     const serverCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('server')).length;
     const firewallCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('firewall')).length;
+    const storageCount = filteredDevices.filter(d => ['storage', 'san', 'nas'].some(c => (d.category || '').toLowerCase().includes(c))).length;
     const networkCount = routerCount + switchCount;
     const networkAlarms = filteredAlarms.filter(a => ['Switch','Router','Network'].includes(a.category)).length;
 
@@ -7333,20 +7345,6 @@
           ${subtabNavHtml}
         </div>
         <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; height: 100%;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <button id="opm-dash-bgp-btn" title="BGP-4 Autonomous System Topology" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">
-              📡 BGP-4
-            </button>
-            <button id="opm-dash-sdwan-btn" title="SD-WAN Fabric & BFD Tunnels" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">
-              🚀 SD-WAN
-            </button>
-            <button id="opm-dash-dpi-btn" title="Deep Packet Inspection & Cisco NBAR2" style="background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">
-              📊 DPI
-            </button>
-            <button id="opm-dash-ndr-btn" title="Network Detection & Response (NDR Threat Forensics)" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">
-              🛡️ NDR
-            </button>
-          </div>
           <span id="opm-refresh-countdown-span" style="font-size: 11px; color: #64748b; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 3px;">
             <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #49bd80;"></span>
             Auto Refresh: ${state.autoRefreshCountdown}s
@@ -7364,7 +7362,7 @@
       <!-- ManageEngine OpManager 12 Collapsible Dark Executive Integrated Top Band (Tour/IntegratedDashboard.jpg replica) -->
       ${state.topBandCollapsed ? `
         <div style="background: #1e242c; border-bottom: 1px solid #0f172a; padding: 3px 24px; display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-size: 10px;">
-          <span>Integrated ITOM Executive Summary Band (Collapsed) • 16 Devices • 4 Enterprise Probes • 7 Alarms</span>
+          <span>Integrated ITOM Executive Summary Band (Collapsed) • ${totalDevices} Devices • ${state.probes.length} Enterprise Probes • ${filteredAlarms.length} Alarms</span>
           <button id="opm-toggle-topband-btn" title="Expand Executive Summary Band" style="background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #cbd5e1; font-size: 10px;">
             <img src="/apiclient/fluidicv2/img/TopBandExpand.svg" alt="Expand" style="height: 12px;"> Expand Band
           </button>
@@ -8109,23 +8107,23 @@
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Routers & Switches</div>
-                <div style="font-size: 24px; font-weight: 800; color: #0070e0; margin: 4px 0;">8 Devices</div>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">Core Fabric & Edge Gateways</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0070e0; margin: 4px 0;">${networkCount} Devices</div>
+                <div style="font-size: 11px; color: ${networkCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${networkCount > 0 ? 'Core Fabric & Edge Gateways' : 'No Devices Monitored'}</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Servers & Compute</div>
-                <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">5 Servers</div>
-                <div style="font-size: 11px; color: #64748b;">Database, Mail, Web, Cache</div>
+                <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">${serverCount} Servers</div>
+                <div style="font-size: 11px; color: #64748b;">${serverCount > 0 ? 'Database, Mail, Web, Cache' : 'No Servers Monitored'}</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Next-Gen Firewalls</div>
-                <div style="font-size: 24px; font-weight: 800; color: #ea580c; margin: 4px 0;">2 Firewalls</div>
-                <div style="font-size: 11px; color: #ea580c; font-weight: 600;">Palo Alto & Fortinet NGFW</div>
+                <div style="font-size: 24px; font-weight: 800; color: #ea580c; margin: 4px 0;">${firewallCount} Firewalls</div>
+                <div style="font-size: 11px; color: #ea580c; font-weight: 600;">${firewallCount > 0 ? 'Palo Alto & Fortinet NGFW' : 'No Firewalls Configured'}</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Storage & Power</div>
-                <div style="font-size: 24px; font-weight: 800; color: #6366f1; margin: 4px 0;">1 SAN Array</div>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">NetApp AFF A400 NVMe</div>
+                <div style="font-size: 24px; font-weight: 800; color: #6366f1; margin: 4px 0;">${storageCount} SAN Array</div>
+                <div style="font-size: 11px; color: ${storageCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${storageCount > 0 ? 'Active Storage Arrays' : 'No Storage Monitored'}</div>
               </div>
             </div>
 
@@ -8162,11 +8160,35 @@
               </table>
             </div>
           </div>
-        ` : activeSub === 'servers' ? `
+        ` : activeSub === 'servers' ? (serverCount === 0 ? `
+          <!-- Clean Empty State for Servers -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Server Host Telemetry Discovered</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 500px; margin: 0 auto 20px auto;">
+              Deploy the lightweight OpManager Agent on your Linux and Windows server hosts to stream real-time CPU, RAM, Disk, and Process daemon metrics.
+            </div>
+            <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+              <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Windows MSI Agent
+              </a>
+              <a href="/downloads/install-agent.sh" download style="display: inline-flex; align-items: center; gap: 6px; background: #16a34a; color: #ffffff; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Linux install-agent.sh
+              </a>
+              <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                + Add Server Host
+              </button>
+            </div>
+          </div>
+        ` : `
           <!-- Servers Subtab -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-              ${state.devices.filter(d => d.category === 'Servers').map(srv => `
+              ${filteredDevices.filter(d => (d.category || '').toLowerCase().includes('server')).map(srv => `
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                   <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
                     <div>
@@ -8185,1111 +8207,132 @@
                         <div style="width: ${srv.cpu}%; height: 100%; background: ${srv.cpu > 80 ? '#dc2626' : '#16a34a'};"></div>
                       </div>
                     </div>
-                    <div>
-                      <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
-                        <span>Memory Utilization</span>
-                        <strong style="color: ${srv.memory > 80 ? '#ea580c' : '#0284c7'};">${srv.memory}%</strong>
-                      </div>
-                      <div style="height: 5px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                        <div style="width: ${srv.memory}%; height: 100%; background: ${srv.memory > 80 ? '#ea580c' : '#0284c7'};"></div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               `).join('')}
             </div>
-
-            <!-- Server Process Monitors Table + Official ManageEngine Applications Manager (APM) Logos -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="padding: 12px 20px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <img src="/apiclient/fluidicv2/img/apm-logo.svg" alt="APM" style="height: 22px; object-fit: contain;">
-                  <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Active Server Daemon, Process &amp; APM Application Telemetry (HOST-RESOURCES-MIB hrSWRunTable)</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <img src="/apiclient/fluidicv2/img/apm-apps-logos/linux.svg" style="width: 18px; height: 18px;" title="Linux">
-                  <img src="/apiclient/fluidicv2/img/apm-apps-logos/windows.svg" style="width: 18px; height: 18px;" title="Windows Server">
-                  <img src="/apiclient/fluidicv2/img/apm-apps-logos/postgresql.svg" style="width: 18px; height: 18px;" title="PostgreSQL">
-                  <img src="/apiclient/fluidicv2/img/apm-apps-logos/mysql.svg" style="width: 18px; height: 18px;" title="MySQL">
-                  <img src="/apiclient/fluidicv2/img/apm-apps-logos/nginx.svg" style="width: 18px; height: 18px;" title="NGINX">
-                  <img src="/apiclient/fluidicv2/img/apm-apps-logos/docker.svg" style="width: 18px; height: 18px;" title="Docker">
-                  <img src="/apiclient/fluidicv2/img/apm-apps-logos/redis.svg" style="width: 18px; height: 18px;" title="Redis">
-                  <img src="/apiclient/fluidicv2/img/apm-apps-logos/tomcat.svg" style="width: 18px; height: 18px;" title="Apache Tomcat">
-                </div>
-              </div>
-              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                <thead>
-                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                    <th style="padding: 8px 12px;">PID</th>
-                    <th style="padding: 8px 12px;">Application / Process Name</th>
-                    <th style="padding: 8px 12px;">Target Server</th>
-                    <th style="padding: 8px 12px;">CPU %</th>
-                    <th style="padding: 8px 12px;">Memory Allocation</th>
-                    <th style="padding: 8px 12px;">Instance Count</th>
-                    <th style="padding: 8px 12px;">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 8px 12px; font-family: monospace;">1420</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/apm-apps-logos/postgresql.svg" style="width: 16px; height: 16px;"> postgres: main server process</td>
-                    <td style="padding: 8px 12px; color: #0070e0;">NY-DB-PROD-SQL</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #ea580c;">48.2%</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">3.8 GB (DRAM)</td>
-                    <td style="padding: 8px 12px;">12 workers</td>
-                    <td style="padding: 8px 12px;"><span style="color: #166534; font-weight: 700;">● RUNNING</span></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 8px 12px; font-family: monospace;">1804</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/apm-apps-logos/mysql.svg" style="width: 16px; height: 16px;"> mysqld daemon</td>
-                    <td style="padding: 8px 12px; color: #0070e0;">LON-MAIL-EXCH-01</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #16a34a;">22.4%</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">2.1 GB (DRAM)</td>
-                    <td style="padding: 8px 12px;">64 threads</td>
-                    <td style="padding: 8px 12px;"><span style="color: #166534; font-weight: 700;">● RUNNING</span></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 8px 12px; font-family: monospace;">2102</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/apm-apps-logos/nginx.svg" style="width: 16px; height: 16px;"> nginx: worker process</td>
-                    <td style="padding: 8px 12px; color: #0070e0;">DXB-WEB-FRONTEND-01</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0284c7;">14.1%</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">410 MB</td>
-                    <td style="padding: 8px 12px;">8 workers</td>
-                    <td style="padding: 8px 12px;"><span style="color: #166534; font-weight: 700;">● RUNNING</span></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 8px 12px; font-family: monospace;">844</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/apm-apps-logos/docker.svg" style="width: 16px; height: 16px;"> containerd / docker runtime daemon</td>
-                    <td style="padding: 8px 12px; color: #0070e0;">SG-APP-CLUSTER-01</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #16a34a;">8.6%</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">890 MB</td>
-                    <td style="padding: 8px 12px;">24 containers</td>
-                    <td style="padding: 8px 12px;"><span style="color: #166534; font-weight: 700;">● RUNNING</span></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 8px 12px; font-family: monospace;">3190</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/apm-apps-logos/redis.svg" style="width: 16px; height: 16px;"> redis-server *:6379 [cluster]</td>
-                    <td style="padding: 8px 12px; color: #0070e0;">SG-REDIS-CACHE-01</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #16a34a;">6.2%</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">1.4 GB (DRAM)</td>
-                    <td style="padding: 8px 12px;">4 shards</td>
-                    <td style="padding: 8px 12px;"><span style="color: #166534; font-weight: 700;">● RUNNING</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
-        ` : activeSub === 'virtualization' ? `
-          <!-- Virtualization Subtab (With Official Shipped /apiclient/fluidicv2/img/vmware/* Icons) -->
-          <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
-              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; display: flex; align-items: center; gap: 14px;">
-                <img src="/apiclient/fluidicv2/img/vmware/vCenter.png" alt="VMware vCenter" style="width: 38px; height: 38px; object-fit: contain;">
-                <div>
-                  <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">VMware vSphere ESXi 8.0</div>
-                  <div style="font-size: 20px; font-weight: 800; color: #0070e0; margin: 2px 0;">12 Guest VMs</div>
-                  <div style="font-size: 11px; color: #16a34a; font-weight: 600;">London Branch DC • Healthy</div>
-                </div>
-              </div>
-              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; display: flex; align-items: center; gap: 14px;">
-                <img src="/apiclient/fluidicv2/img/vmware/Proxmox-Node.png" alt="Proxmox VE" style="width: 38px; height: 38px; object-fit: contain;">
-                <div>
-                  <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Proxmox VE 8.1 HA Cluster</div>
-                  <div style="font-size: 20px; font-weight: 800; color: #0070e0; margin: 2px 0;">24 LXC Containers</div>
-                  <div style="font-size: 11px; color: #16a34a; font-weight: 600;">New York DC • 3 Nodes Active</div>
-                </div>
-              </div>
-              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; display: flex; align-items: center; gap: 14px;">
-                <img src="/apiclient/fluidicv2/img/vmware/HostSystem.png" alt="Hyper-V Host" style="width: 38px; height: 38px; object-fit: contain;">
-                <div>
-                  <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Microsoft Hyper-V 2022</div>
-                  <div style="font-size: 20px; font-weight: 800; color: #0070e0; margin: 2px 0;">16 Guest VMs</div>
-                  <div style="font-size: 11px; color: #16a34a; font-weight: 600;">Dubai DC Core • Cluster OK</div>
-                </div>
-              </div>
-              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; display: flex; align-items: center; gap: 14px;">
-                <img src="/apiclient/fluidicv2/img/vmware/PrismCentral.svg" alt="Nutanix Prism Central" style="width: 38px; height: 38px; object-fit: contain;">
-                <div>
-                  <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Nutanix AHV Prism Central</div>
-                  <div style="font-size: 20px; font-weight: 800; color: #0070e0; margin: 2px 0;">32 Microservices</div>
-                  <div style="font-size: 11px; color: #16a34a; font-weight: 600;">Singapore VPC • Tier 1</div>
-                </div>
-              </div>
+        `) : activeSub === 'virtualization' ? `
+          <!-- Virtualization Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-
-            <!-- Official VMware / Proxmox / Nutanix Virtual Entity Topology & Resource Metrics Table -->
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Virtualization Infrastructure Inventory (vCenter, ESXi, Proxmox VE &amp; Datastores)</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Polled via VMware vSphere SDK, Proxmox REST API &amp; Nutanix Prism v3 API</div>
-                </div>
-                <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-              </div>
-              <div style="padding: 12px 16px;">
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                  <thead>
-                    <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left; background: #f8fafc;">
-                      <th style="padding: 8px 10px;">Virtual Entity</th>
-                      <th style="padding: 8px 10px;">Type</th>
-                      <th style="padding: 8px 10px;"><img src="/apiclient/fluidicv2/img/vmware/vmcpu.png" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;">vCPU</th>
-                      <th style="padding: 8px 10px;"><img src="/apiclient/fluidicv2/img/vmware/vmmemory.png" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;">vRAM</th>
-                      <th style="padding: 8px 10px;"><img src="/apiclient/fluidicv2/img/vmware/vmdisk.png" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;">Datastore I/O</th>
-                      <th style="padding: 8px 10px;"><img src="/apiclient/fluidicv2/img/vmware/vmnetwork.png" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;">vSwitch Traffic</th>
-                      <th style="padding: 8px 10px;">State</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px 10px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/vmware/HostSystem.png" style="width: 18px; height: 18px;"> LON-ESXI-HOST-01.corp.local</td>
-                      <td style="padding: 8px 10px;">ESXi 8.0 Hypervisor</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">44.2% (32 Cores)</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">68.4% (256 GB)</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">1,840 IOPS</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">1.42 Gbps</td>
-                      <td style="padding: 8px 10px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">CONNECTED</span></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px 10px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/vmware/VirtualMachine.png" style="width: 18px; height: 18px;"> LON-ERP-SAP-VM01</td>
-                      <td style="padding: 8px 10px;">VMware Guest VM</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">38.0% (16 vCPU)</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">71.5% (64 GB)</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">620 IOPS</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">410 Mbps</td>
-                      <td style="padding: 8px 10px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">POWERED ON</span></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px 10px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/vmware/Datastore.png" style="width: 18px; height: 18px;"> LON-VMFS6-NVME-DS01</td>
-                      <td style="padding: 8px 10px;">VMFS-6 Datastore</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">—</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">11.4 TB / 16 TB</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">0.6 ms Latency</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">16G FC SAN</td>
-                      <td style="padding: 8px 10px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">HEALTHY</span></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px 10px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/vmware/DistributedVirtualSwitch.png" style="width: 18px; height: 18px;"> DSwitch-Core-Production</td>
-                      <td style="padding: 8px 10px;">vSphere Distributed Switch</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">—</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">48 PortGroups</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">0 Drops</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">3.80 Gbps</td>
-                      <td style="padding: 8px 10px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">UP (10GbE)</span></td>
-                    </tr>
-                    <tr>
-                      <td style="padding: 8px 10px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 8px;"><img src="/apiclient/fluidicv2/img/vmware/Proxmox-Container.png" style="width: 18px; height: 18px;"> NY-PVE-LXC-REDIS-04</td>
-                      <td style="padding: 8px 10px;">Proxmox LXC Container</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">19.4% (8 vCPU)</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">52.0% (32 GB)</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">940 IOPS (ZFS)</td>
-                      <td style="padding: 8px 10px; font-family: monospace;">285 Mbps</td>
-                      <td style="padding: 8px 10px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">RUNNING</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Virtual Machines or Hypervisors Discovered</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Connect your VMware vCenter/ESXi, Proxmox VE, Hyper-V, or Nutanix AHV nodes to discover and monitor virtual machines, datastores, and resource pools.
             </div>
-
-            <!-- Overcommit & Zombie VM reclamation -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
-                <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Host CPU & Memory Over-Commitment</div>
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span>vCPU Allocation Ratio (Target: &lt; 3:1)</span>
-                      <strong>2.1 : 1 (Optimal)</strong>
-                    </div>
-                    <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 70%; height: 100%; background: #16a34a;"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span>vRAM Memory Ballooning & Over-commit</span>
-                      <strong>68.4% (No Swapping)</strong>
-                    </div>
-                    <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 68.4%; height: 100%; background: #0284c7;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
-                <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Zombie & Idle VM Reclamation Advisor</div>
-                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; padding: 12px; margin-bottom: 10px;">
-                  <div style="font-size: 12px; font-weight: 700; color: #166534;">Reclaimable Compute Capacity: 180 GB RAM, 12 vCPUs</div>
-                  <div style="font-size: 11px; color: #15803d; margin-top: 2px;">2 inactive staging VMs powered on with 0% network I/O for 21 days.</div>
-                </div>
-                <button style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                  Reclaim Idle Resources
-                </button>
-              </div>
-            </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Virtualization Host
+            </button>
           </div>
         ` : activeSub === 'storage' ? `
-          <!-- Storage Subtab -->
-          <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
-                <div>
-                  <div style="font-size: 16px; font-weight: 800; color: #0f172a;">NetApp AFF A400 NVMe All-Flash SAN Storage</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Active-Active Dual Storage Controller • 24x NVMe SSD Bays (100% Healthy)</div>
-                </div>
-                <div style="display: flex; gap: 8px; align-items: center;">
-                  <button id="opm-storage-lun-inspector-btn" style="background: #0284c7; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">🔍 LUN &amp; RAID Latency Inspector</button>
-                  <span style="font-size: 11px; font-weight: 700; background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 4px;">OPERATIONAL</span>
-                </div>
-              </div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
-                <div style="background: #f8fafc; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0;">
-                  <div style="font-size: 11px; color: #64748b;">Raw Storage Capacity</div>
-                  <div style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 4px 0;">48.0 TB</div>
-                  <div style="font-size: 10px; color: #16a34a; font-weight: 600;">RAID-DP Dual Parity</div>
-                </div>
-                <div style="background: #f8fafc; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0;">
-                  <div style="font-size: 11px; color: #64748b;">Allocated Volume Pool</div>
-                  <div style="font-size: 20px; font-weight: 800; color: #0284c7; margin: 4px 0;">36.4 TB</div>
-                  <div style="font-size: 10px; color: #64748b;">75.8% Utilization</div>
-                </div>
-                <div style="background: #f8fafc; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0;">
-                  <div style="font-size: 11px; color: #64748b;">Aggregate SAN IOPS</div>
-                  <div style="font-size: 20px; font-weight: 800; color: #16a34a; margin: 4px 0;">42,500</div>
-                  <div style="font-size: 10px; color: #16a34a; font-weight: 600;">Read 65% / Write 35%</div>
-                </div>
-                <div style="background: #f8fafc; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0;">
-                  <div style="font-size: 11px; color: #64748b;">Controller Latency</div>
-                  <div style="font-size: 20px; font-weight: 800; color: #16a34a; margin: 4px 0;">0.8 ms</div>
-                  <div style="font-size: 10px; color: #16a34a; font-weight: 600;">Sub-millisecond NVMe</div>
-                </div>
-              </div>
+          <!-- Storage Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-
-            <!-- Volume Allocations & Capacity Runout -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-              <div style="padding: 14px 20px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a;">
-                Storage Volumes & Forecasted Runout Dates
-              </div>
-              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                <thead>
-                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                    <th style="padding: 8px 12px;">Volume Name</th>
-                    <th style="padding: 8px 12px;">Mounted Host / Target</th>
-                    <th style="padding: 8px 12px;">Used / Total</th>
-                    <th style="padding: 8px 12px;">Utilization</th>
-                    <th style="padding: 8px 12px;">Growth Rate</th>
-                    <th style="padding: 8px 12px;">Runout Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${state.diskVolumes.map(v => `
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">${v.partition}</td>
-                      <td style="padding: 10px 12px; color: #0070e0;">${v.device}</td>
-                      <td style="padding: 10px 12px; font-family: monospace;">${v.used} / ${v.total}</td>
-                      <td style="padding: 10px 12px;">
-                        <div style="display: flex; align-items: center; gap: 6px;">
-                          <div style="width: 60px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                            <div style="width: ${v.percent}%; height: 100%; background: ${v.percent > 90 ? '#dc2626' : (v.percent > 75 ? '#ea580c' : '#16a34a')};"></div>
-                          </div>
-                          <strong>${v.percent}%</strong>
-                        </div>
-                      </td>
-                      <td style="padding: 10px 12px; color: #64748b;">+1.2 GB / day</td>
-                      <td style="padding: 10px 12px; font-weight: 600; color: ${v.percent > 90 ? '#dc2626' : '#166534'};">${v.percent > 90 ? '42 Days Remaining' : '480+ Days Remaining'}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Storage Arrays or Partitions Discovered</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Connect NetApp, Dell EMC, HPE Nimble, or server host drive partitions via SNMP/WMI to monitor volume capacity, IOPS, and drive health.
             </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Storage Device
+            </button>
           </div>
-        ` : activeSub === 'network' ? `
+        ` : activeSub === 'network' ? (networkCount === 0 ? `
+          <!-- Network Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Network Routers or Switches Monitored</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Add your Cisco, Juniper, Arista, or Huawei network switches and routers via SNMP (v1/v2c/v3) to monitor port interfaces, traffic volume, and link latency.
+            </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Network Switch / Router
+            </button>
+          </div>
+        ` : `
           <!-- Network Subtab -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              
-              <!-- NFA Top Applications -->
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
-                <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 14px;">NetFlow (NFA) Top Applications by Bandwidth</div>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
-                      <span style="font-weight: 600;">HTTPS Web Services</span>
-                      <strong style="color: #0070e0;">1.84 Gbps (47.9%)</strong>
-                    </div>
-                    <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 47.9%; height: 100%; background: #0070e0;"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
-                      <span style="font-weight: 600;">BGP & Core Transit</span>
-                      <strong style="color: #10b981;">980 Mbps (25.5%)</strong>
-                    </div>
-                    <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 25.5%; height: 100%; background: #10b981;"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
-                      <span style="font-weight: 600;">Database Replication (PostgreSQL/MySQL)</span>
-                      <strong style="color: #6366f1;">420 Mbps (11.0%)</strong>
-                    </div>
-                    <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 11%; height: 100%; background: #6366f1;"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
-                      <span style="font-weight: 600;">SSH / Secure Shell</span>
-                      <strong style="color: #f59e0b;">420 Mbps (10.9%)</strong>
-                    </div>
-                    <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 10.9%; height: 100%; background: #f59e0b;"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
-                      <span style="font-weight: 600;">DNS Queries (UDP 53)</span>
-                      <strong style="color: #8b5cf6;">180 Mbps (4.7%)</strong>
-                    </div>
-                    <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 4.7%; height: 100%; background: #8b5cf6;"></div>
-                    </div>
-                  </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+              ${filteredDevices.filter(d => ['Routers','Switches'].includes(d.category)).map(dev => `
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
+                  <div style="font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${dev.id})">${dev.name}</div>
+                  <div style="font-size: 11px; color: #64748b;">${dev.ip}</div>
                 </div>
-              </div>
-
-              <!-- Cisco IP SLA & WAN RTT VoIP Metrics -->
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
-                <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 14px;">WAN RTT IP SLA & Quality of Service (QoS)</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
-                  <div style="background: #f8fafc; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0;">
-                    <div style="font-size: 11px; color: #64748b;">VoIP MOS Score</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #16a34a; margin: 4px 0;">4.38 / 5.0</div>
-                    <div style="font-size: 10px; color: #16a34a; font-weight: 600;">High Fidelity Voice</div>
-                  </div>
-                  <div style="background: #f8fafc; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0;">
-                    <div style="font-size: 11px; color: #64748b;">WAN Path Jitter</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #0284c7; margin: 4px 0;">1.42 ms</div>
-                    <div style="font-size: 10px; color: #16a34a; font-weight: 600;">Stable Buffer</div>
-                  </div>
-                </div>
-                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; padding: 12px;">
-                  <div style="font-size: 12px; font-weight: 700; color: #166534;">Cisco CBQoS Priority Queuing Active</div>
-                  <div style="font-size: 11px; color: #15803d; margin-top: 2px;">Voice/Video class-map 0 packet drops across 48 monitored interfaces.</div>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Cisco SD-WAN Fabric Controller Telemetry (vManage / vSmart / vBond / vEdge) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #0f172a;">Cisco SD-WAN (Viptela) Control &amp; Data Plane Telemetry</div>
-                  <div style="font-size: 11px; color: #64748b;">Overlay OMP Peers, BFD Tunnels &amp; Control Elements across 4 Global Regions</div>
-                </div>
-                <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px;">OMP Control Plane 100% Up</span>
-              </div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
-                <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
-                  <img src="/apiclient/fluidicv2/img/v-manage.svg" alt="vManage" style="width: 36px; height: 36px; object-fit: contain;">
-                  <div>
-                    <div style="font-size: 11px; color: #64748b; font-weight: 600;">Cisco vManage NMS</div>
-                    <div style="font-size: 18px; font-weight: 800; color: #0f172a;">1 / 1 Active</div>
-                    <div style="font-size: 10px; color: #16a34a; font-weight: 700;">Cluster Quorum OK</div>
-                  </div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
-                  <img src="/apiclient/fluidicv2/img/v-smart.svg" alt="vSmart" style="width: 36px; height: 36px; object-fit: contain;">
-                  <div>
-                    <div style="font-size: 11px; color: #64748b; font-weight: 600;">Cisco vSmart Controllers</div>
-                    <div style="font-size: 18px; font-weight: 800; color: #16a34a;">2 / 2 Active</div>
-                    <div style="font-size: 10px; color: #0284c7; font-weight: 700;">OMP Routes: 428</div>
-                  </div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
-                  <img src="/apiclient/fluidicv2/img/v-bond.svg" alt="vBond" style="width: 36px; height: 36px; object-fit: contain;">
-                  <div>
-                    <div style="font-size: 11px; color: #64748b; font-weight: 600;">Cisco vBond Orchestrator</div>
-                    <div style="font-size: 18px; font-weight: 800; color: #0284c7;">2 / 2 Active</div>
-                    <div style="font-size: 10px; color: #16a34a; font-weight: 700;">DTLS Auth Verified</div>
-                  </div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
-                  <img src="/apiclient/fluidicv2/img/v-edge.svg" alt="vEdge" style="width: 36px; height: 36px; object-fit: contain;">
-                  <div>
-                    <div style="font-size: 11px; color: #64748b; font-weight: 600;">WAN Edge Routers (vEdge)</div>
-                    <div style="font-size: 18px; font-weight: 800; color: #16a34a;">8 / 8 Active</div>
-                    <div style="font-size: 10px; color: #16a34a; font-weight: 700;">32 BFD Sessions Up</div>
-                  </div>
-                </div>
-              </div>
+              `).join('')}
             </div>
           </div>
-        ` : activeSub === 'netflow' ? `
-          <!-- NetFlow Analyzer Addon Dashboard Subtab (Exact replica of netflow_addon_dashboard.png) -->
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
-            
-            <!-- Widget 1: Device Summary (V5, V9, NSEL, SFlow, WLC vertical bars) -->
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Device Summary</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Devices | Last Hour</div>
-                </div>
-                <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-              </div>
-              <div style="padding: 24px 28px; display: flex; align-items: flex-end; justify-content: space-around; height: 185px; box-sizing: border-box;">
-                ${[
-                  { label: 'V5', count: 0, pct: 4, color: '#94a3b8' },
-                  { label: 'V9', count: 10, pct: 82, color: '#49bd80' },
-                  { label: 'NSEL', count: 6, pct: 58, color: '#49bd80' },
-                  { label: 'SFlow', count: 0, pct: 4, color: '#94a3b8' },
-                  { label: 'WLC', count: 2, pct: 24, color: '#49bd80' }
-                ].map(bar => `
-                  <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                    <div style="font-size: 18px; font-weight: 700; color: #334155;">${bar.count}</div>
-                    <div style="width: 8px; height: 92px; background: #e2e8f0; border-radius: 4px; display: flex; align-items: flex-end; overflow: hidden;">
-                      <div style="width: 100%; height: ${bar.pct}%; background: ${bar.color}; border-radius: 4px;"></div>
-                    </div>
-                    <div style="font-size: 11px; color: #475569; font-weight: 600;">${bar.label}</div>
-                  </div>
-                `).join('')}
-              </div>
+        `) : activeSub === 'netflow' ? `
+          <!-- NetFlow Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
             </div>
-
-            <!-- Widget 2: HeatMap (Link Up, Unknown, Link Down, Link Up & NoFlows + 48-tile grid) -->
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">HeatMap</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Devices | Last Hour</div>
-                </div>
-                <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-              </div>
-              <div style="padding: 14px 18px;">
-                <div style="display: flex; gap: 18px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 14px; font-size: 11px;">
-                  <span style="color: #16a34a; font-weight: 700; border-bottom: 2px solid #16a34a; padding-bottom: 5px;">Link Up</span>
-                  <span style="color: #64748b;">Unknown</span>
-                  <span style="color: #64748b;">Link Down</span>
-                  <span style="color: #64748b;">Link Up &amp; NoFlows</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 22px;">
-                  <div style="width: 120px; text-align: center; flex-shrink: 0;">
-                    <svg width="115" height="72" viewBox="0 0 120 74">
-                      <path d="M 14 62 A 46 46 0 0 1 106 62" fill="none" stroke="#e2e8f0" stroke-width="9" stroke-linecap="round"/>
-                      <path d="M 14 62 A 46 46 0 0 1 101 44" fill="none" stroke="#49bd80" stroke-width="9" stroke-linecap="round"/>
-                      <text x="60" y="54" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">48</text>
-                      <text x="60" y="68" text-anchor="middle" font-size="10" font-weight="600" fill="#64748b">Interfaces</text>
-                    </svg>
-                  </div>
-                  <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; flex: 1;">
-                    ${Array.from({ length: 48 }).map((_, i) => `
-                      <div title="Interface #${i + 1} (${i === 14 ? 'Critical Utilization 96%' : 'Link Up'})" style="height: 16px; border-radius: 2px; background: ${i === 14 ? '#ef4444' : '#49bd80'};"></div>
-                    `).join('')}
-                  </div>
-                </div>
-              </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Flow Records Ingested (UDP 2055 / 9996)</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 500px; margin: 0 auto 16px auto;">
+              Export NetFlow v5/v9, IPFIX, or sFlow streams from your core routers to UDP port 2055 to analyze application traffic breakdown and top talkers.
             </div>
-
-            <!-- Widget 3: Top N Protocol & Top N QoS Pie Charts -->
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Top N Protocol &amp; QoS Distribution</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Devices | Last Hour (Volume)</div>
-                </div>
-                <div style="display: flex; gap: 6px; align-items: center;"><button id="opm-open-spm-btn" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer;">🔍 Open 48-Port Switch Port Mapper</button><span style="color: #64748b; font-size: 13px;">↻ ⋮</span></div>
-              </div>
-              <div style="padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                  <div style="width: 92px; height: 92px; border-radius: 50%; background: conic-gradient(#10b981 0% 59.5%, #0284c7 59.5% 97.3%, #f59e0b 97.3% 99.1%, #ef4444 99.1% 100%); flex-shrink: 0;"></div>
-                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
-                    <div><span style="color:#10b981;">●</span> IPv6-NoNxt (59.56%)</div>
-                    <div><span style="color:#0284c7;">●</span> TCP (37.8%)</div>
-                    <div><span style="color:#f59e0b;">●</span> UDP (1.81%)</div>
-                    <div><span style="color:#ef4444;">●</span> ICMP (0.76%)</div>
-                  </div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 12px; border-left: 1px solid #f1f5f9; padding-left: 12px;">
-                  <div style="width: 92px; height: 92px; border-radius: 50%; background: conic-gradient(#10b981 0% 87.8%, #0284c7 87.8% 93.9%, #f59e0b 93.9% 96.8%, #6366f1 96.8% 100%); flex-shrink: 0;"></div>
-                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
-                    <div><span style="color:#10b981;">●</span> CS0 / Best Effort (87.84%)</div>
-                    <div><span style="color:#0284c7;">●</span> CS6 / Control (6.08%)</div>
-                    <div><span style="color:#f59e0b;">●</span> AF12 / Priority (2.86%)</div>
-                    <div><span style="color:#6366f1;">●</span> EF / Voice (3.22%)</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Widget 4: Top N Conversation (Traffic) -->
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Top N Conversation (Traffic)</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Devices | Last Hour</div>
-                </div>
-                <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-              </div>
-              <div style="padding: 14px 16px;">
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                  <thead>
-                    <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                      <th style="padding: 6px 4px;">Source</th>
-                      <th style="padding: 6px 4px;">Destination</th>
-                      <th style="padding: 6px 4px;">Application</th>
-                      <th style="padding: 6px 4px;">DSCP</th>
-                      <th style="padding: 6px 4px; text-align: right;">Traffic</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="opm-nfa-conv-row" style="border-bottom: 1px solid #f1f5f9; cursor: pointer;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'"><td style="padding: 7px 4px; font-family: monospace;">10.10.1.50</td><td style="padding: 7px 4px; font-family: monospace;">10.20.1.50</td><td style="padding: 7px 4px; color: #0284c7; font-weight: 600;">PostgreSQL_Sync</td><td style="padding: 7px 4px;">AF41</td><td style="padding: 7px 4px; text-align: right; font-weight: 700;">18.42 GB</td></tr>
-                    <tr class="opm-nfa-conv-row" style="border-bottom: 1px solid #f1f5f9; cursor: pointer;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'"><td style="padding: 7px 4px; font-family: monospace;">10.40.1.50</td><td style="padding: 7px 4px; font-family: monospace;">172.217.14.206</td><td style="padding: 7px 4px; color: #16a34a; font-weight: 600;">HTTPS_SSL</td><td style="padding: 7px 4px;">CS0</td><td style="padding: 7px 4px; text-align: right; font-weight: 700;">14.19 GB</td></tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 7px 4px; font-family: monospace;">10.10.1.1</td><td style="padding: 7px 4px; font-family: monospace;">10.30.1.1</td><td style="padding: 7px 4px; color: #7c3aed; font-weight: 600;">IPSec_ESP</td><td style="padding: 7px 4px;">CS6</td><td style="padding: 7px 4px; text-align: right; font-weight: 700;">9.84 GB</td></tr>
-                    <tr><td style="padding: 7px 4px; font-family: monospace;">10.20.1.10</td><td style="padding: 7px 4px; font-family: monospace;">10.20.1.50</td><td style="padding: 7px 4px; color: #ea580c; font-weight: 600;">SMBv3_Storage</td><td style="padding: 7px 4px;">AF12</td><td style="padding: 7px 4px; text-align: right; font-weight: 700;">6.12 GB</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Widget 5: Wireless Controller (WLC) Access Point Traffic & Client Density (Replica of nfa_accesspoint_sample_data.png) -->
-            <div class="opm-widget-card" style="grid-column: span 2; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">WLC Access Point Traffic &amp; Client Count (DXB-ARUBA-WLC-01)</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Wireless NetFlow Telemetry | IN / OUT Volume &amp; Drop Bytes</div>
-                </div>
-                <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-              </div>
-              <div style="padding: 12px 16px;">
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                  <thead>
-                    <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                      <th style="padding: 6px 8px;">Access Point</th>
-                      <th style="padding: 6px 8px;">Client Count</th>
-                      <th style="padding: 6px 8px; width: 45%;">Traffic (IN / OUT)</th>
-                      <th style="padding: 6px 8px; text-align: right;">Drop Bytes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${[
-                      { ap: 'AP78ba.f9a2.8fe4 (Lobby-WiFi6E)', clients: 42, inPct: 84, outPct: 68, vol: '2.84 GB', drop: '0 B' },
-                      { ap: 'AP78ba.f948.d5c0 (Exec-Floor-3)', clients: 29, inPct: 62, outPct: 48, vol: '1.92 GB', drop: '0 B' },
-                      { ap: 'AP689c.e2a6.447d (NOC-WarRoom)', clients: 19, inPct: 45, outPct: 36, vol: '1.18 GB', drop: '124 KB' }
-                    ].map(row => `
-                      <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 7px 8px; font-weight: 700; color: #0070e0;">${row.ap}</td>
-                        <td style="padding: 7px 8px; font-weight: 700; color: #1e293b;">${row.clients} Clients</td>
-                        <td style="padding: 7px 8px;">
-                          <div style="display: flex; align-items: center; gap: 10px;">
-                            <div style="flex: 1; display: flex; flex-direction: column; gap: 3px;">
-                              <div style="height: 5px; width: ${row.inPct}%; background: #49bd80; border-radius: 2px;"></div>
-                              <div style="height: 5px; width: ${row.outPct}%; background: #29c5f6; border-radius: 2px;"></div>
-                            </div>
-                            <span style="font-family: monospace; font-weight: 700; color: #0f172a; min-width: 55px; text-align: right;">${row.vol}</span>
-                          </div>
-                        </td>
-                        <td style="padding: 7px 8px; text-align: right; font-family: monospace; color: ${row.drop === '0 B' ? '#64748b' : '#dc2626'}; font-weight: 600;">${row.drop}</td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Configure NetFlow Exporter
+            </button>
           </div>
         ` : activeSub === 'ncm' ? `
-          <!-- Network Configuration Manager (NCM) Dashboard Subtab (1:1 Replica of ncm_sample_data.png) -->
-          <div style="display: flex; flex-direction: column; gap: 18px;">
-            <!-- Top Row: All Config Changes [ 1360 ] Table + Config Details & Diff Circles -->
-            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px;">
-              <!-- All Config Changes [ 1360 ] -->
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">All Config Changes [ <span style="color: #0284c7;">1360</span> ]</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Real-time Syslog Change Detection &amp; Scheduled SSH/Telnet Config Archival</div>
-                  </div>
-                  <span style="color: #64748b; font-size: 13px;">🔍 ↻ ⋮</span>
-                </div>
-                <div style="padding: 10px 14px;">
-                  <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                    <thead>
-                      <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left; background: #f8fafc;">
-                        <th style="padding: 7px 6px;">Captured on</th>
-                        <th style="padding: 7px 6px;">Host name</th>
-                        <th style="padding: 7px 6px;">IP Address</th>
-                        <th style="padding: 7px 6px;">Version</th>
-                        <th style="padding: 7px 6px;">Changed by</th>
-                        <th style="padding: 7px 6px;">Config type</th>
-                        <th style="padding: 7px 6px;">Change Type</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 7px 6px; color: #0284c7; font-family: monospace;">08 Nov 06:40:12</td>
-                        <td style="padding: 7px 6px; font-weight: 700; color: #0070e0;">DXB-CORE-SW-01</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">10.40.1.2</td>
-                        <td style="padding: 7px 6px; font-weight: 700;">14 <img src="/apiclient/fluidicv2/img/ncm/icon_editlabel.gif" style="width:11px;height:11px;vertical-align:middle;margin-left:3px;"></td>
-                        <td style="padding: 7px 6px;">admin</td>
-                        <td style="padding: 7px 6px;">Running</td>
-                        <td style="padding: 7px 6px;"><span style="color: #dc2626; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><img src="/apiclient/fluidicv2/img/ncm/unauthorized_change_ico.gif" style="width:12px;height:12px;"> Unauthorized</span></td>
-                      </tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 7px 6px; color: #0284c7; font-family: monospace;">08 Nov 05:15:00</td>
-                        <td style="padding: 7px 6px; font-weight: 700; color: #0070e0;">NY-CORE-RTR-01</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">10.10.1.1</td>
-                        <td style="padding: 7px 6px; font-weight: 700;">42 <img src="/apiclient/fluidicv2/img/ncm/icon_editlabel.gif" style="width:11px;height:11px;vertical-align:middle;margin-left:3px;"></td>
-                        <td style="padding: 7px 6px;">netops_ci</td>
-                        <td style="padding: 7px 6px;">Startup</td>
-                        <td style="padding: 7px 6px;"><span style="color: #16a34a; font-weight: 700;">Authorized</span></td>
-                      </tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 7px 6px; color: #0284c7; font-family: monospace;">08 Nov 03:30:44</td>
-                        <td style="padding: 7px 6px; font-weight: 700; color: #0070e0;">NY-PA-FW-01</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">10.10.1.4</td>
-                        <td style="padding: 7px 6px; font-weight: 700;">29 <img src="/apiclient/fluidicv2/img/ncm/icon_editlabel.gif" style="width:11px;height:11px;vertical-align:middle;margin-left:3px;"></td>
-                        <td style="padding: 7px 6px;">sec_admin</td>
-                        <td style="padding: 7px 6px;">Running</td>
-                        <td style="padding: 7px 6px;"><span style="color: #16a34a; font-weight: 700;">Authorized</span></td>
-                      </tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 7px 6px; color: #0284c7; font-family: monospace;">07 Nov 22:18:09</td>
-                        <td style="padding: 7px 6px; font-weight: 700; color: #0070e0;">LON-EDGE-RTR-01</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">10.20.1.1</td>
-                        <td style="padding: 7px 6px; font-weight: 700;">19 <img src="/apiclient/fluidicv2/img/ncm/icon_editlabel.gif" style="width:11px;height:11px;vertical-align:middle;margin-left:3px;"></td>
-                        <td style="padding: 7px 6px;">Unknown</td>
-                        <td style="padding: 7px 6px;">Running</td>
-                        <td style="padding: 7px 6px;"><span style="color: #dc2626; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><img src="/apiclient/fluidicv2/img/ncm/unauthorized_change_ico.gif" style="width:12px;height:12px;"> Unauthorized</span></td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 7px 6px; color: #0284c7; font-family: monospace;">07 Nov 19:00:02</td>
-                        <td style="padding: 7px 6px; font-weight: 700; color: #0070e0;">SG-FORTI-FW-01</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">10.30.1.4</td>
-                        <td style="padding: 7px 6px; font-weight: 700;">31 <img src="/apiclient/fluidicv2/img/ncm/icon_editlabel.gif" style="width:11px;height:11px;vertical-align:middle;margin-left:3px;"></td>
-                        <td style="padding: 7px 6px;">admin</td>
-                        <td style="padding: 7px 6px;">Running</td>
-                        <td style="padding: 7px 6px;"><span style="color: #16a34a; font-weight: 700;">Authorized</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- Config Details & Startup/Running/Baseline Diff Circles (ncm_sample_data.png) -->
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Config Details &amp; Conflict Diff Summary</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Selected Device: DXB-CORE-SW-01 (Cisco Catalyst 9500)</div>
-                  </div>
-                  <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-                </div>
-                <div style="padding: 12px 16px;">
-                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px; margin-bottom: 12px; background: #f8fafc; padding: 10px; border-radius: 4px; border: 1px solid #e2e8f0;">
-                    <div><span style="color:#64748b;">Backup Status:</span> <strong style="color:#16a34a;"><img src="/apiclient/fluidicv2/img/ncm/icon_csh_success.gif" style="width:12px;height:12px;vertical-align:middle;"> Success</strong></div>
-                    <div><span style="color:#64748b;">Policy Compliance:</span> <img src="/apiclient/fluidicv2/img/ncm/critical_ico.gif" style="width:11px;vertical-align:middle;"> <strong>3</strong> &nbsp;<img src="/apiclient/fluidicv2/img/ncm/major_ico.gif" style="width:11px;vertical-align:middle;"> <strong>5</strong> &nbsp;<img src="/apiclient/fluidicv2/img/ncm/warning_ico.gif" style="width:11px;vertical-align:middle;"> <strong>1</strong></div>
-                    <div><span style="color:#64748b;">Running Config:</span> <strong style="color:#0284c7;">v14</strong> (Baseline: <strong>v1</strong>)</div>
-                    <div><span style="color:#64748b;">Startup Config:</span> <strong style="color:#0284c7;">v13</strong> (Baseline: <strong>v1</strong>)</div>
-                  </div>
-                  <!-- Startup Running Conflict Diff + Diff with Baseline Circles -->
-                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: center;">
-                    <div style="border: 1px solid #f1f5f9; border-radius: 4px; padding: 8px;">
-                      <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 8px;">Startup Running Conflict Diff</div>
-                      <div style="display: flex; justify-content: center; gap: 10px;">
-                        <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #49bd80; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">34</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Added</div></div>
-                        <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #38bdf8; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">100</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Modified</div></div>
-                        <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #f87171; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">0</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Deleted</div></div>
-                      </div>
-                    </div>
-                    <div style="border: 1px solid #f1f5f9; border-radius: 4px; padding: 8px;">
-                      <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 8px;">Diff with Baseline</div>
-                      <div style="display: flex; justify-content: center; gap: 10px;">
-                        <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #49bd80; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">54</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Added</div></div>
-                        <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #38bdf8; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">1k</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Modified</div></div>
-                        <div><div style="width: 38px; height: 38px; border-radius: 50%; background: #f87171; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 0 auto;">7</div><div style="font-size: 9px; color: #64748b; margin-top: 3px;">Deleted</div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <!-- NCM Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
-
-            <!-- Second Row: Config Change Trend (7-Day Red Bar Chart) + Backup Summary (Dual Area Chart + 7-Day Step Timeline) -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
-              <!-- Config change trend -->
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Config change trend (Last 7 Days)</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Total Config Revisions Captured Across 16 Devices</div>
-                  </div>
-                  <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-                </div>
-                <div style="padding: 14px 16px;">
-                  <svg width="100%" height="130" viewBox="0 0 420 130">
-                    <line x1="35" y1="20" x2="400" y2="20" stroke="#f1f5f9"/>
-                    <line x1="35" y1="60" x2="400" y2="60" stroke="#f1f5f9"/>
-                    <line x1="35" y1="100" x2="400" y2="100" stroke="#e2e8f0"/>
-                    <text x="6" y="24" font-size="9" fill="#94a3b8">200</text>
-                    <text x="6" y="64" font-size="9" fill="#94a3b8">100</text>
-                    <text x="16" y="104" font-size="9" fill="#94a3b8">0</text>
-                    ${[
-                      { d: '02 Nov', h: 52, v: 130 },
-                      { d: '03 Nov', h: 36, v: 90 },
-                      { d: '04 Nov', h: 68, v: 170 },
-                      { d: '05 Nov', h: 44, v: 110 },
-                      { d: '06 Nov', h: 76, v: 192 },
-                      { d: '07 Nov', h: 60, v: 150 },
-                      { d: 'Today', h: 72, v: 184 }
-                    ].map((b, idx) => `
-                      <rect x="${55 + idx * 48}" y="${100 - b.h}" width="20" height="${b.h}" fill="#f06262" rx="2"/>
-                      <text x="${65 + idx * 48}" y="${95 - b.h}" font-size="8" font-weight="700" fill="#dc2626" text-anchor="middle">${b.v}</text>
-                      <text x="${65 + idx * 48}" y="116" font-size="9" fill="#64748b" text-anchor="middle">${b.d}</text>
-                    `).join('')}
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Backup Summary (Dual Area Chart + 7-Day Step Timeline) -->
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Backup Summary &amp; Daily Schedule Status</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Succeeded vs Failed Config Backups</div>
-                  </div>
-                  <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-                </div>
-                <div style="padding: 14px 16px;">
-                  <svg width="100%" height="95" viewBox="0 0 420 95">
-                    <polygon points="30,80 30,28 95,24 160,30 225,22 290,26 355,20 400,22 400,80" fill="rgba(73,189,128,0.28)" stroke="#49bd80" stroke-width="2"/>
-                    <polygon points="30,80 30,74 95,78 160,72 225,76 290,75 355,78 400,77 400,80" fill="rgba(248,113,113,0.35)" stroke="#f87171" stroke-width="1.5"/>
-                  </svg>
-                  <!-- 7-Day Step Dot Timeline -->
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; padding: 6px 10px; background: #f8fafc; border-radius: 4px;">
-                    ${['Today', 'Friday', 'Thursday', 'Wednesday', 'Tuesday', 'Monday'].map((day, idx) => `
-                      <div style="display: flex; align-items: center; gap: 4px; font-size: 10px; color: #334155; font-weight: 600;">
-                        <img src="/apiclient/fluidicv2/img/ncm/${idx === 3 ? 'warning_ico.gif' : 'icon_csh_success.gif'}" style="width: 11px; height: 11px;">
-                        <span>${day}</span>
-                      </div>
-                    `).join('')}
-                  </div>
-                </div>
-              </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Network Configurations Managed (NCM)</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Enroll Cisco, Juniper, HP, or Fortinet devices via SSH/Telnet to automate running vs startup configuration backups and compliance audits.
             </div>
-
-            <!-- Third Row: Compliance Status (CiscoIOSPolicy) + NIST NVD Firmware Vulnerability Scanner -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Compliance status</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Probes | Audited Devices: 16</div>
-                  </div>
-                  <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add NCM Device
+            </button>
+          </div>
+        ` : activeSub === 'firewall' ? (firewallCount === 0 ? `
+          <!-- Firewall Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Firewall Security Appliances Connected</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Forward Syslog streams (UDP 514) from Palo Alto, FortiGate, Cisco ASA, or pfSense to analyze security policies, blocked attacks, and VPN tunnels.
+            </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Firewall Appliance
+            </button>
+          </div>
+        ` : `
+          <!-- Firewall Subtab -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+              ${filteredDevices.filter(d => (d.category || '').toLowerCase().includes('firewall')).map(dev => `
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
+                  <div style="font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${dev.id})">${dev.name}</div>
+                  <div style="font-size: 11px; color: #64748b;">${dev.ip}</div>
                 </div>
-                <div style="padding: 14px 16px;">
-                  <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                    <thead>
-                      <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                        <th style="padding: 6px 4px;">Policy Name</th>
-                        <th style="padding: 6px 4px;"><img src="/apiclient/fluidicv2/img/ncm/critical_ico.gif" style="width:11px;vertical-align:middle;"> Critical</th>
-                        <th style="padding: 6px 4px;"><img src="/apiclient/fluidicv2/img/ncm/major_ico.gif" style="width:11px;vertical-align:middle;"> Major</th>
-                        <th style="padding: 6px 4px;"><img src="/apiclient/fluidicv2/img/ncm/warning_ico.gif" style="width:11px;vertical-align:middle;"> Warning</th>
-                        <th style="padding: 6px 4px;"><img src="/apiclient/fluidicv2/img/ncm/icon_csh_success.gif" style="width:11px;vertical-align:middle;"> Compliant</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 8px 4px; font-weight: 700; color: #0070e0;">CiscoIOSPolicy</td><td style="padding: 8px 4px; font-weight: 700; color: #dc2626;">23</td><td style="padding: 8px 4px; font-weight: 700; color: #ea580c;">13</td><td style="padding: 8px 4px; font-weight: 700; color: #ca8a04;">13</td><td style="padding: 8px 4px; font-weight: 700; color: #16a34a;">13</td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 8px 4px; font-weight: 700; color: #0070e0;">PCI_DSS_v4_Hardening</td><td style="padding: 8px 4px; font-weight: 700; color: #64748b;">0</td><td style="padding: 8px 4px; font-weight: 700; color: #64748b;">0</td><td style="padding: 8px 4px; font-weight: 700; color: #ca8a04;">2</td><td style="padding: 8px 4px; font-weight: 700; color: #16a34a;">16</td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 8px 4px; font-weight: 700; color: #0070e0;">HIPAA_Core_Encryption</td><td style="padding: 8px 4px; font-weight: 700; color: #64748b;">0</td><td style="padding: 8px 4px; font-weight: 700; color: #ea580c;">1</td><td style="padding: 8px 4px; font-weight: 700; color: #64748b;">0</td><td style="padding: 8px 4px; font-weight: 700; color: #16a34a;">15</td></tr>
-                      <tr><td style="padding: 8px 4px; font-weight: 700; color: #0070e0;">SOX_Audit_Trail_Policy</td><td style="padding: 8px 4px; font-weight: 700; color: #64748b;">0</td><td style="padding: 8px 4px; font-weight: 700; color: #64748b;">0</td><td style="padding: 8px 4px; font-weight: 700; color: #64748b;">0</td><td style="padding: 8px 4px; font-weight: 700; color: #16a34a;">16</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Firmware Vulnerabilities [ <span style="color: #dc2626;">67</span> ]</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Probes | Synced with NIST CVE Feed</div>
-                  </div>
-                  <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-                </div>
-                <div style="padding: 14px 16px;">
-                  <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                    <thead>
-                      <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                        <th style="padding: 6px 4px;">CVE ID</th>
-                        <th style="padding: 6px 4px;">Target OS</th>
-                        <th style="padding: 6px 4px;">CVSS</th>
-                        <th style="padding: 6px 4px;">Patch Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 7px 4px; font-weight: 700; color: #dc2626;">CVE-2023-20198</td><td style="padding: 7px 4px;">Cisco IOS-XE 17.6</td><td style="padding: 7px 4px; font-weight: 800; color: #dc2626;">10.0</td><td style="padding: 7px 4px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">PATCHED</span></td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 7px 4px; font-weight: 700; color: #ea580c;">CVE-2024-3400</td><td style="padding: 7px 4px;">PAN-OS 11.0.2</td><td style="padding: 7px 4px; font-weight: 800; color: #ea580c;">10.0</td><td style="padding: 7px 4px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">MITIGATED</span></td></tr>
-                      <tr><td style="padding: 7px 4px; font-weight: 700; color: #ca8a04;">CVE-2024-21762</td><td style="padding: 7px 4px;">FortiOS 7.4.3</td><td style="padding: 7px 4px; font-weight: 800; color: #ca8a04;">9.6</td><td style="padding: 7px 4px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">PATCHED</span></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              `).join('')}
             </div>
           </div>
-        ` : activeSub === 'firewall' ? `
-          <!-- Firewall Log Analyzer Addon Dashboard (1:1 Replica of fwa_sample_data.png & fwa_policy_fine_tune_sample_1.png) -->
-          <div style="display: flex; flex-direction: column; gap: 18px;">
-            <!-- Top Row: Top Attack with Status (10) & Top Virus with Status (5) -->
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
-              <!-- Top Attack with Status (10) -->
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Top Attack with Status (10)</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Firewalls (NY-PA-FW-01, SG-FORTI-FW-01) | Today</div>
-                  </div>
-                  <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: #64748b;">
-                    <span>Resolve DNS</span>
-                    <span style="display:inline-block;width:26px;height:14px;background:#cbd5e1;border-radius:10px;position:relative;"><span style="position:absolute;left:2px;top:2px;width:10px;height:10px;background:#fff;border-radius:50%;"></span></span>
-                    <span>↻ ⋮</span>
-                  </div>
-                </div>
-                <div style="padding: 10px 14px;">
-                  <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                    <thead>
-                      <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left; background: #f8fafc;">
-                        <th style="padding: 6px 8px;">Attack</th>
-                        <th style="padding: 6px 8px;">Status</th>
-                        <th style="padding: 6px 8px; text-align: right;">Hits</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 6px 8px; color: #0070e0; font-weight: 600;">tcp_dst_session</td><td style="padding: 6px 8px; color: #16a34a; font-weight: 600;">Permit</td><td style="padding: 6px 8px; text-align: right; font-weight: 700;">67</td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 6px 8px; color: #0070e0; font-weight: 600;">SNMP.Public.String.UDP</td><td style="padding: 6px 8px; color: #16a34a; font-weight: 600;">Permit</td><td style="padding: 6px 8px; text-align: right; font-weight: 700;">54</td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 6px 8px; color: #0070e0; font-weight: 600;">xss</td><td style="padding: 6px 8px; color: #dc2626; font-weight: 600;">deny</td><td style="padding: 6px 8px; text-align: right; font-weight: 700;">33</td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 6px 8px; color: #0070e0; font-weight: 600;">Vulnerability</td><td style="padding: 6px 8px; color: #16a34a; font-weight: 600;">Permit</td><td style="padding: 6px 8px; text-align: right; font-weight: 700;">19</td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 6px 8px; color: #0070e0; font-weight: 600;">SQLInjection</td><td style="padding: 6px 8px; color: #16a34a; font-weight: 600;">Permit</td><td style="padding: 6px 8px; text-align: right; font-weight: 700;">5</td></tr>
-                      <tr><td style="padding: 6px 8px; color: #0070e0; font-weight: 600;">ARP Poisoning</td><td style="padding: 6px 8px; color: #dc2626; font-weight: 600;">deny</td><td style="padding: 6px 8px; text-align: right; font-weight: 700;">1</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- Top Virus with Status (5) & Denied User Logons (1) -->
-              <div style="display: flex; flex-direction: column; gap: 18px;">
-                <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                      <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Top Virus with Status (5)</div>
-                      <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Gateway Anti-Virus Inspection</div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: #64748b;">
-                      <span>Resolve DNS</span>
-                      <span style="display:inline-block;width:26px;height:14px;background:#cbd5e1;border-radius:10px;position:relative;"><span style="position:absolute;left:2px;top:2px;width:10px;height:10px;background:#fff;border-radius:50%;"></span></span>
-                    </div>
-                  </div>
-                  <div style="padding: 8px 14px;">
-                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                      <thead>
-                        <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left; background: #f8fafc;">
-                          <th style="padding: 5px 8px;">Virus</th>
-                          <th style="padding: 5px 8px;">Status</th>
-                          <th style="padding: 5px 8px; text-align: right;">Hits</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0; font-weight: 600;">Malicious Websites</td><td style="padding: 5px 8px; color: #16a34a;">Permit</td><td style="padding: 5px 8px; text-align: right; font-weight: 700;">9</td></tr>
-                        <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0; font-weight: 600;">Virus_17</td><td style="padding: 5px 8px; color: #dc2626;">deny</td><td style="padding: 5px 8px; text-align: right; font-weight: 700;">1</td></tr>
-                        <tr><td style="padding: 5px 8px; color: #0070e0; font-weight: 600;">Virus_92</td><td style="padding: 5px 8px; color: #dc2626;">deny</td><td style="padding: 5px 8px; text-align: right; font-weight: 700;">1</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <!-- Denied User Logons ( 1 ) -->
-                <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Denied User Logons ( 1 )</div>
-                    <span style="color: #64748b; font-size: 11px;">VPN &amp; SSL Auth</span>
-                  </div>
-                  <div style="padding: 8px 14px;">
-                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                      <thead>
-                        <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left; background: #f8fafc;">
-                          <th style="padding: 5px 6px;">User</th>
-                          <th style="padding: 5px 6px;">Source</th>
-                          <th style="padding: 5px 6px;">Destination</th>
-                          <th style="padding: 5px 6px;">Context</th>
-                          <th style="padding: 5px 6px; text-align: right;">Hits</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr><td style="padding: 5px 6px; font-weight: 700; color: #dc2626;">Deva</td><td style="padding: 5px 6px; font-family: monospace;">112.76.3.82</td><td style="padding: 5px 6px; font-family: monospace;">10.59.11.9</td><td style="padding: 5px 6px;">AnyConnect</td><td style="padding: 5px 6px; text-align: right; font-weight: 700;">1</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+        `) : activeSub === 'oputils' ? `
+          <!-- OpUtils Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             </div>
-
-            <!-- Second Row: Allowed Websites ( 1313 ) Pie + Table & Firewall Rule Policy Optimization (Fine Tuning) -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
-              <!-- Allowed Websites ( 1313 ) -->
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Allowed Websites ( 1313 )</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Web Filtering &amp; URL Category Telemetry</div>
-                  </div>
-                  <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-                </div>
-                <div style="padding: 12px 16px; display: grid; grid-template-columns: 135px 1fr; gap: 14px; align-items: center;">
-                  <div style="text-align: center;">
-                    <svg width="115" height="115" viewBox="0 0 42 42">
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#10b981" stroke-width="8" stroke-dasharray="34 66" stroke-dashoffset="25"/>
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#06b6d4" stroke-width="8" stroke-dasharray="24 76" stroke-dashoffset="91"/>
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#f59e0b" stroke-width="8" stroke-dasharray="18 82" stroke-dashoffset="67"/>
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#ef4444" stroke-width="8" stroke-dasharray="14 86" stroke-dashoffset="49"/>
-                      <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#8b5cf6" stroke-width="8" stroke-dasharray="10 90" stroke-dashoffset="35"/>
-                    </svg>
-                  </div>
-                  <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                    <thead>
-                      <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                        <th style="padding: 5px 4px;">Host</th>
-                        <th style="padding: 5px 4px;">Hits</th>
-                        <th style="padding: 5px 4px;">% Hits</th>
-                        <th style="padding: 5px 4px; text-align: right;">Bytes (MB)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 4px; color: #0070e0;">172.217.26.174 (google)</td><td style="padding: 5px 4px;">10,837</td><td style="padding: 5px 4px;">18.92%</td><td style="padding: 5px 4px; text-align: right; font-weight: 700;">428.4</td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 4px; color: #0070e0;">204.79.197.200 (microsoft)</td><td style="padding: 5px 4px;">9,310</td><td style="padding: 5px 4px;">16.25%</td><td style="padding: 5px 4px; text-align: right; font-weight: 700;">312.8</td></tr>
-                      <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 4px; color: #0070e0;">52.94.236.248 (aws.amazon)</td><td style="padding: 5px 4px;">6,412</td><td style="padding: 5px 4px;">11.19%</td><td style="padding: 5px 4px; text-align: right; font-weight: 700;">695.1</td></tr>
-                      <tr><td style="padding: 5px 4px; color: #0070e0;">151.101.1.69 (github.com)</td><td style="padding: 5px 4px;">4,180</td><td style="padding: 5px 4px;">7.30%</td><td style="padding: 5px 4px; text-align: right; font-weight: 700;">184.2</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- Firewall Rule Management -> Policy Optimization (fwa_policy_fine_tune_sample_1.png) -->
-              <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Rule Management &rarr; Policy Optimization</div>
-                    <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Policy Anomalies | Rule Suggestion | <strong style="color:#49bd80;">Policy Fine Tuning</strong></div>
-                  </div>
-                  <button onclick="window.showToast && window.showToast('Executing Firewall Rule10 Policy Fine-Tuning Optimization...')" style="background: #49bd80; color: #fff; border: none; padding: 4px 12px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer;">Fine Tune</button>
-                </div>
-                <div style="padding: 12px 16px;">
-                  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 11px;">
-                    <span style="color: #64748b; font-weight: 600;">Rule Name:</span>
-                    <span style="border: 1px solid #cbd5e1; padding: 3px 10px; border-radius: 3px; background: #f8fafc; font-weight: 700; color: #0f172a;">Rule10 (Only allowed rules) ▾</span>
-                  </div>
-                  <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 6px;">Existing Rule &amp; Traffic Hits Breakdown</div>
-                  <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                    <thead>
-                      <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left; background: #f8fafc;">
-                        <th style="padding: 6px 6px;">Rule</th>
-                        <th style="padding: 6px 6px;">Source</th>
-                        <th style="padding: 6px 6px;">Destination</th>
-                        <th style="padding: 6px 6px;">Service</th>
-                        <th style="padding: 6px 6px;">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 7px 6px; font-weight: 700; color: #0f172a;">Rule10</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">SrcObj1 (10.10.1.0/24)</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">NetworkObj1, NetworkObj2</td>
-                        <td style="padding: 7px 6px; color: #dc2626; font-weight: 700;">Any (Over-permissive)</td>
-                        <td style="padding: 7px 6px;"><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">Allow</span></td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 7px 6px; font-weight: 700; color: #16a34a;">Suggested</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">10.10.1.15, 10.10.1.22</td>
-                        <td style="padding: 7px 6px; font-family: monospace;">172.16.10.5</td>
-                        <td style="padding: 7px 6px; color: #16a34a; font-weight: 700;">HTTPS (443), SSH (22)</td>
-                        <td style="padding: 7px 6px;"><span style="background:#e0f2fe;color:#0284c7;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;">Restrict</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No IP Subnets or Switch Port Mappings Configured</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Scan IPv4/IPv6 subnets, detect rogue MAC addresses, and map switch port interfaces using integrated OpUtils diagnostic tools.
             </div>
-          </div>
-        ` : activeSub === 'oputils' ? `
-          <!-- OpUtils IPAM & Switch Port Mapper Dashboard Subtab -->
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">IP Address Manager (IPAM) Subnet Utilization</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Probes | 4 Enterprise Subnets</div>
-                </div>
-                <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-              </div>
-              <div style="padding: 14px 16px;">
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                  <thead>
-                    <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                      <th style="padding: 6px 4px;">Subnet CIDR</th>
-                      <th style="padding: 6px 4px;">Probe Region</th>
-                      <th style="padding: 6px 4px;">Used / Total IPs</th>
-                      <th style="padding: 6px 4px;">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 7px 4px; font-family: monospace; font-weight: 700;">10.10.1.0/24</td><td style="padding: 7px 4px;">New York Primary</td><td style="padding: 7px 4px;">184 / 254 (72%)</td><td style="padding: 7px 4px; color: #16a34a; font-weight: 700;">Healthy</td></tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 7px 4px; font-family: monospace; font-weight: 700;">10.20.1.0/24</td><td style="padding: 7px 4px;">London Branch</td><td style="padding: 7px 4px;">142 / 254 (56%)</td><td style="padding: 7px 4px; color: #16a34a; font-weight: 700;">Healthy</td></tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 7px 4px; font-family: monospace; font-weight: 700;">10.30.1.0/24</td><td style="padding: 7px 4px;">Singapore APAC</td><td style="padding: 7px 4px;">118 / 254 (46%)</td><td style="padding: 7px 4px; color: #16a34a; font-weight: 700;">Healthy</td></tr>
-                    <tr><td style="padding: 7px 4px; font-family: monospace; font-weight: 700;">10.40.1.0/24</td><td style="padding: 7px 4px;">Dubai DC Core</td><td style="padding: 7px 4px;">212 / 254 (83%)</td><td style="padding: 7px 4px; color: #ea580c; font-weight: 700;">High Usage</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Switch Port Mapper & Rogue MAC Detection</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">All Probes | 192 Physical Switch Ports</div>
-                </div>
-                <span style="color: #64748b; font-size: 13px;">↻ ⋮</span>
-              </div>
-              <div style="padding: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                <div style="background:#f0fdf4;border:1px solid #bbf7d0;padding:12px;border-radius:4px;"><div style="font-size:22px;font-weight:800;color:#16a34a;">148</div><div style="font-size:11px;color:#166534;font-weight:600;">Connected Ports</div></div>
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:4px;"><div style="font-size:22px;font-weight:800;color:#0284c7;">44</div><div style="font-size:11px;color:#475569;font-weight:600;">Available Free Ports</div></div>
-                <div style="background:#f0fdf4;border:1px solid #bbf7d0;padding:12px;border-radius:4px;"><div style="font-size:22px;font-weight:800;color:#16a34a;">0</div><div style="font-size:11px;color:#166534;font-weight:600;">Rogue MAC Hosts</div></div>
-              </div>
-            </div>
-            <!-- Official ManageEngine DHCP & DNS DPI Collector Architecture Diagrams (/apiclient/fluidicv2/img/dhcp-architecture.png & dns-architecture.png) -->
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">DHCP Scope &amp; Port Mirror DPI Collector Architecture</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">DHCP Server &rarr; Switch Mirror Port &rarr; Remote Collector DPI Engine &rarr; OpManager Central</div>
-                </div>
-                <span style="color: #16a34a; font-size: 11px; font-weight: 700;">● DPI Active</span>
-              </div>
-              <div style="padding: 14px 16px; text-align: center; background: #fafbfc;">
-                <img src="/apiclient/fluidicv2/img/dhcp-architecture.png" alt="DHCP DPI Collector Architecture" style="max-width: 100%; height: 115px; object-fit: contain;">
-              </div>
-            </div>
-            <div class="opm-widget-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: #1e293b;">DNS Query Latency &amp; Port Mirror DPI Collector Architecture</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">DNS Server &rarr; Switch Mirror Port &rarr; Remote Collector DPI Engine &rarr; OpManager Central</div>
-                </div>
-                <span style="color: #0284c7; font-size: 11px; font-weight: 700;">● 1.8 ms Avg Resolution</span>
-              </div>
-              <div style="padding: 14px 16px; text-align: center; background: #fafbfc;">
-                <img src="/apiclient/fluidicv2/img/dns-architecture.png" alt="DNS DPI Collector Architecture" style="max-width: 100%; height: 115px; object-fit: contain;">
-              </div>
-            </div>
+            <button onclick="showSubnetDiscoveryModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add IP Subnet to Monitor
+            </button>
           </div>
         ` : `
           <!-- Multi-Slide Fullscreen NOC Wallboard View (noc) -->
@@ -11711,33 +10754,23 @@
             <!-- Left Business Views Tree Sidebar (Authentic ManageEngine BV Sidebar) -->
             <div style="width: 230px; flex-shrink: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
               <div style="padding: 12px 14px; background: #f5f5f5; border-bottom: 1px solid #e2e8f0; font-size: 13px; font-weight: 700; color: #212121; display: flex; justify-content: space-between; align-items: center;">
-                <span>Business Views (5)</span>
-                <span style="color: #49bd80; font-size: 15px; font-weight: 800; cursor: pointer;" title="Create Business View">+</span>
+                <span>Business Views (${state.probes.length})</span>
+                <span onclick="showAddProbeModal()" style="color: #49bd80; font-size: 15px; font-weight: 800; cursor: pointer;" title="Create Branch / Remote Probe View">+</span>
               </div>
               <div style="padding: 8px; border-bottom: 1px solid #f1f5f9;">
                 <input type="text" placeholder="Search Business View..." style="width: 100%; box-sizing: border-box; padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px;">
               </div>
               <div style="flex: 1; display: flex; flex-direction: column; font-size: 12px;">
                 <div style="padding: 10px 14px; background: #e8f5e9; border-left: 3px solid #49bd80; font-weight: 700; color: #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 12px; height: 18px;" /> Global Multi-Probe WAN</span>
-                  <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 5px; border-radius: 2px;">16</span>
+                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 12px; height: 18px;" /> Enterprise Network Topology</span>
+                  <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 5px; border-radius: 2px;">${state.devices.length}</span>
                 </div>
-                <div class="opm-topo-node" data-probe="1" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> New York Core DC</span>
-                  <span style="font-size: 10px; color: #64748b;">4 Nodes</span>
-                </div>
-                <div class="opm-topo-node" data-probe="2" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> London Branch Fabric</span>
-                  <span style="font-size: 10px; color: #64748b;">4 Nodes</span>
-                </div>
-                <div class="opm-topo-node" data-probe="3" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> Singapore Cloud VPC</span>
-                  <span style="font-size: 10px; color: #64748b;">4 Nodes</span>
-                </div>
-                <div class="opm-topo-node" data-probe="4" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #dc2626; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus1.png" style="width: 11px; height: 16px;" /> Dubai Campus Core</span>
-                  <span style="font-size: 10px; background: #fee2e2; color: #991b1b; padding: 1px 5px; border-radius: 2px;">1 Crit</span>
-                </div>
+                ${state.probes.map(pr => `
+                  <div class="opm-topo-node" data-probe="${pr.id}" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="showProbeDetailsModal(${pr.id})">
+                    <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> ${pr.name}</span>
+                    <span style="font-size: 10px; color: #64748b;">${pr.devicesCount || 0} Nodes</span>
+                  </div>
+                `).join('')}
               </div>
               <div style="padding: 12px 14px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 11px; color: #475569;">
                 <div style="font-weight: 700; color: #0f172a; margin-bottom: 6px;">Map Shortcut Legend</div>
@@ -11754,7 +10787,7 @@
               <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
                   <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Multi-Probe WAN Topology (Global Map View)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central Master (10.0.0.10) coordinating 4 distributed regional Probes across North America, Europe, Middle East & APAC.</div>
+                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central Master coordinating ${state.probes.length} distributed Remote Probes across enterprise sites.</div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #475569;">
@@ -11898,121 +10931,18 @@
             </div>
           </div>
         ` : activeSub === 'floor' ? `
-          <!-- 3D Floor Views: Isometric Server Room with Official Shipped Rack Top & Cold Aisle Textures -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">3D Datacenter Floor View - Hall 1 (Hot/Cold Aisle Containment)</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Interactive top-down & isometric rack floor layout using ManageEngine Rack Builder textures. Click any rack enclosure to open its 42U elevation.</div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 14px; font-size: 11px;">
-                <span style="display: flex; align-items: center; gap: 5px; font-weight: 700; color: #16a34a;"><img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 14px; height: 14px; border-radius: 2px;" /> Clear (6 Racks)</span>
-                <span style="display: flex; align-items: center; gap: 5px; font-weight: 700; color: #ea580c;"><img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Orange.jpg" style="width: 14px; height: 14px; border-radius: 2px;" /> Trouble (1 Rack)</span>
-                <span style="display: flex; align-items: center; gap: 5px; font-weight: 700; color: #dc2626;"><img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Red.jpg" style="width: 14px; height: 14px; border-radius: 2px;" /> Critical (1 Rack)</span>
-              </div>
+          <!-- 3D Floor Views Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            
-            <!-- Raised Floor Tile Grid Canvas -->
-            <div style="background: #e2e8f0; background-image: linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px); background-size: 36px 36px; border: 2px solid #94a3b8; border-radius: 6px; padding: 24px;">
-              
-              <!-- ROW A (North Compute & Core Switching Row) -->
-              <div style="font-size: 11px; font-weight: 800; color: #334155; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Row A — Core Switching & Compute Enclosures (42U)</div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 16px;">
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK A-01</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CLEAR</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">NY Core Routing</div>
-                  <div style="font-size: 10px; color: #64748b;">38/42U Used • 21.4°C • 6.2 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #fef2f2; border: 2px solid #dc2626; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 10px rgba(220,38,38,0.18);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #991b1b;">RACK A-02</span>
-                    <span style="font-size: 10px; background: #dc2626; color: #ffffff; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CRITICAL</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Red.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #dc2626;">DXB Core Switch (A-02)</div>
-                  <div style="font-size: 10px; color: #991b1b; font-weight: 600;">40/42U Used • 31.8°C • 8.4 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK A-03</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CLEAR</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">London Hypervisor Pod</div>
-                  <div style="font-size: 10px; color: #64748b;">34/42U Used • 20.8°C • 5.8 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK A-04</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CLEAR</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Singapore Cloud Edge</div>
-                  <div style="font-size: 10px; color: #64748b;">30/42U Used • 20.2°C • 5.1 kW</div>
-                </div>
-              </div>
-
-              <!-- COLD AISLE CONTAINMENT CORRIDOR -->
-              <div style="background: #0284c7; border-radius: 4px; padding: 8px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; color: #ffffff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <img src="/apiclient/fluidicv2/img/rack/ColdAisle.png" style="height: 22px; object-fit: contain; background: #fff; padding: 2px 6px; border-radius: 3px;" />
-                  <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.4px;">PERFORATED COLD AISLE CONTAINMENT CORRIDOR (CRAC INTAKE: 18.5°C / 45% RH)</span>
-                </div>
-                <span style="font-size: 11px; font-family: monospace; font-weight: 700;">Airflow: 14,200 CFM Nominal</span>
-              </div>
-
-              <!-- ROW B (South Storage, Database & Power Row) -->
-              <div style="font-size: 11px; font-weight: 800; color: #334155; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Row B — SAN Storage, Database Cluster & Redundant UPS Power</div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;">
-                <div class="opm-floor-rack-card" style="background: #fff7ed; border: 2px solid #ea580c; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #9a3412;">RACK B-01</span>
-                    <span style="font-size: 10px; background: #ffedd5; color: #9a3412; padding: 1px 6px; border-radius: 2px; font-weight: 700;">TROUBLE</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Orange.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #9a3412;">PostgreSQL & SQL Cluster</div>
-                  <div style="font-size: 10px; color: #9a3412;">36/42U Used • Disk 91% Warn</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #fefce8; border: 2px solid #ca8a04; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #854d0e;">RACK B-02</span>
-                    <span style="font-size: 10px; background: #fef9c3; color: #854d0e; padding: 1px 6px; border-radius: 2px; font-weight: 700;">ATTENTION</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Yellow.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #854d0e;">NetApp NVMe All-Flash SAN</div>
-                  <div style="font-size: 10px; color: #854d0e;">40/42U Used • 23.1°C • 7.4 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK B-03</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CLEAR</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Palo Alto SecOps Perimeter</div>
-                  <div style="font-size: 10px; color: #64748b;">28/42U Used • 21.0°C • 4.9 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK B-04</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">ONLINE</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Schneider Galaxy 40kVA UPS</div>
-                  <div style="font-size: 10px; color: #16a34a; font-weight: 600;">Battery 100% (42m Runtime)</div>
-                </div>
-              </div>
-
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No 3D Datacenter Floor Views Configured</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Map your physical server room floor grid, aisle containment, and rack elevations to monitor thermal and power metrics.
             </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Datacenter Rack
+            </button>
           </div>
         ` : activeSub === 'rack' ? `
           <!-- 3D Rack Views -->
@@ -12056,7 +10986,7 @@
               </div>
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="font-size: 11px; color: #4ade80; background: #064e3b; border: 1px solid #047857; padding: 3px 8px; border-radius: 4px; font-weight: 700;">
-                  ● ALL 4 PROBES ONLINE
+                  ● ALL ${state.probes.length} PROBES ONLINE
                 </div>
                 <button id="opm-worldmap-sync-all-btn" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                   Initiate Global Sync
@@ -12364,130 +11294,19 @@
       <div style="padding: 20px 24px;">
         
         ${activeSub === 'compliance' ? `
-          <!-- Authentic ManageEngine NCM Executive Summary Strip (matching ncm_sample_data.png) -->
-          <div style="display: grid; grid-template-columns: 1.1fr 1.1fr 1.4fr; gap: 16px; margin-bottom: 18px;">
-            
-            <!-- Widget 1: Startup-Running Conflict Diff (3 Circles) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px;">
-                <span style="font-size: 12px; font-weight: 700; color: #334155;">Startup-Running Conflict Diff</span>
-                <span style="font-size: 11px; color: #94a3b8; cursor: pointer;">↻</span>
-              </div>
-              <div style="display: flex; justify-content: space-around; align-items: center; text-align: center;">
-                <div>
-                  <div style="width: 50px; height: 50px; border-radius: 50%; background: #b9f6ca; color: #0f172a; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto;">34</div>
-                  <div style="font-size: 11px; color: #64748b;">Added</div>
-                </div>
-                <div>
-                  <div style="width: 50px; height: 50px; border-radius: 50%; background: #b3d4fc; color: #0f172a; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto;">100</div>
-                  <div style="font-size: 11px; color: #64748b;">Modified</div>
-                </div>
-                <div>
-                  <div style="width: 50px; height: 50px; border-radius: 50%; background: #ffcdd2; color: #0f172a; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto;">0</div>
-                  <div style="font-size: 11px; color: #64748b;">Deleted</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Widget 2: Diff with Baseline (3 Circles) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px;">
-                <span style="font-size: 12px; font-weight: 700; color: #334155;">Diff with Baseline Configuration</span>
-                <span style="font-size: 11px; color: #94a3b8; cursor: pointer;">↻</span>
-              </div>
-              <div style="display: flex; justify-content: space-around; align-items: center; text-align: center;">
-                <div>
-                  <div style="width: 50px; height: 50px; border-radius: 50%; background: #b9f6ca; color: #0f172a; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto;">54</div>
-                  <div style="font-size: 11px; color: #64748b;">Added</div>
-                </div>
-                <div>
-                  <div style="width: 50px; height: 50px; border-radius: 50%; background: #b3d4fc; color: #0f172a; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto;">1k</div>
-                  <div style="font-size: 11px; color: #64748b;">Modified</div>
-                </div>
-                <div>
-                  <div style="width: 50px; height: 50px; border-radius: 50%; background: #ffcdd2; color: #0f172a; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto;">7</div>
-                  <div style="font-size: 11px; color: #64748b;">Deleted</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Widget 3: 7-Day Backup Summary Timeline (matching ncm_sample_data.png) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px;">
-                <span style="font-size: 12px; font-weight: 700; color: #334155;">Backup Summary (7-Day Audit)</span>
-                <span style="font-size: 10px; color: #16a34a; font-weight: 700; display: flex; align-items: center; gap: 4px;">
-                  <img src="/apiclient/fluidicv2/img/ncm/authorized_change_ico.gif" style="width: 12px; height: 12px;" /> 16/16 Backed Up
-                </span>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 2px;">
-                ${[
-                  { d: '02 Nov', ok: true },
-                  { d: '03 Nov', ok: true },
-                  { d: '04 Nov', ok: true },
-                  { d: '05 Nov', ok: false },
-                  { d: '06 Nov', ok: true },
-                  { d: '07 Nov', ok: true },
-                  { d: 'Today', ok: true }
-                ].map(b => `
-                  <div style="text-align: center;">
-                    <div style="width: 28px; height: 28px; border-radius: 50%; background: ${b.ok ? '#81c784' : '#e57373'}; color: #ffffff; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px auto; font-size: 12px; font-weight: 800;">
-                      ${b.ok ? '✓' : '!'}
-                    </div>
-                    <div style="font-size: 9.5px; color: #64748b; font-weight: 600;">${b.d}</div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Compliance Scorecards -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">CIS Cisco Benchmark</div>
-                <img src="/apiclient/fluidicv2/img/ncm/violation_ico.gif" style="width: 14px; height: 14px;" />
-              </div>
-              <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">92.4%</div>
-              <div style="font-size: 11px; color: #64748b;">48 Rules Evaluated | 2 Violations</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">PCI-DSS 4.0 Standard</div>
-                <img src="/apiclient/fluidicv2/img/ncm/compliant_ico.gif" style="width: 14px; height: 14px;" />
-              </div>
-              <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">96.8%</div>
-              <div style="font-size: 11px; color: #64748b;">Firewall & Access Rules Compliant</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">SOX Section 404</div>
-                <img src="/apiclient/fluidicv2/img/ncm/compliant_ico.gif" style="width: 14px; height: 14px;" />
-              </div>
-              <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">100.0%</div>
-              <div style="font-size: 11px; color: #64748b;">Audit Logging & Access Vaults</div>
-            </div>
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">HIPAA Security Rule</div>
-                <img src="/apiclient/fluidicv2/img/ncm/compliant_ico.gif" style="width: 14px; height: 14px;" />
-              </div>
-              <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">98.2%</div>
-              <div style="font-size: 11px; color: #64748b;">Encrypted SNMPv3 & SSH Enforced</div>
-            </div>
-          </div>
-
-          <!-- Compliance Violations Table -->
+          <!-- Compliance Clean Empty State -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
-            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">All Managed Configurations Baseline Compliant</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
-              No compliance violations detected. Enroll network switches, routers, and firewalls in NCM to audit against CIS, PCI-DSS, and SOX security benchmarks.
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No NCM Device Configurations Monitored</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Enable SSH/Telnet credentials on Cisco, Juniper, HP, or Fortinet network devices to automate startup vs running config backups, compliance policy checks (CIS, PCI-DSS, HIPAA), and change detection.
             </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Network Device
+            </button>
           </div>
-        </div>
       ` : activeSub === 'changes' ? `
           <!-- Official NCM All Config Changes -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
@@ -12515,7 +11334,7 @@
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
               <span style="font-size: 14px; font-weight: 700; color: #0f172a;">Automated Daily Configuration Backups</span>
-              <span style="font-size: 11px; color: #16a34a; font-weight: 700;">● 16/16 Successful Today</span>
+              <span style="font-size: 11px; color: #16a34a; font-weight: 700;">● ${state.devices.length}/${state.devices.length} Successful Today</span>
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
               <thead>
@@ -12528,7 +11347,13 @@
                 </tr>
               </thead>
               <tbody>
-                ${state.devices.slice(0, 8).map(d => `
+                ${state.devices.length === 0 ? `
+                  <tr>
+                    <td colspan="5" style="padding: 30px; text-align: center; color: #94a3b8;">
+                      No configuration backups found. Devices enrolled in NCM will have daily automated backups listed here.
+                    </td>
+                  </tr>
+                ` : state.devices.slice(0, 8).map(d => `
                   <tr style="border-bottom: 1px solid #f1f5f9;">
                     <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;">
                       ${getDeviceTypeIcon(d.type, d.category, 16)}
@@ -13004,7 +11829,7 @@
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Mean Time to Resolve (MTTR)</div>
-              <div style="font-size: 26px; font-weight: 800; color: #0284c7; margin: 6px 0;">18m 42s</div>
+              <div style="font-size: 26px; font-weight: 800; color: #0284c7; margin: 6px 0;">${state.alarms.length === 0 ? "0m 00s" : "18m 42s"}</div>
               <div style="font-size: 11px; color: #0284c7; font-weight: 600;">12% faster than last month</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
@@ -13054,289 +11879,15 @@
             </table>
           </div>
         ` : activeSub === 'performance' ? `
-          <!-- SUBTAB: PERFORMANCE REPORTS (Includes Shipped Emerald Pie + Horizontal Bar & Traffic Table from nfa_sample_data.png) -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 14px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Conversation &amp; Application Volume Distribution (NetFlow / DPI Report)</div>
-                <div style="font-size: 11px; color: #64748b;">Showing Top 5 of 15 Conversations | Total IN Traffic: 583.48 MB</div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 14px; font-size: 11px; color: #475569;">
-                <span style="display: inline-flex; align-items: center; gap: 6px;">Resolve DNS <span style="width:26px;height:14px;background:#49bd80;border-radius:10px;position:relative;display:inline-block;"><span style="position:absolute;right:2px;top:2px;width:10px;height:10px;background:#fff;border-radius:50%;"></span></span></span>
-                <span style="display: inline-flex; align-items: center; gap: 6px;">Geolocation <span style="width:26px;height:14px;background:#cbd5e1;border-radius:10px;position:relative;display:inline-block;"><span style="position:absolute;left:2px;top:2px;width:10px;height:10px;background:#fff;border-radius:50%;"></span></span></span>
-              </div>
+          <!-- Performance Reports Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
             </div>
-            <div style="display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: center; margin-bottom: 14px;">
-              <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
-                <div style="width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(#10b981 0% 86.1%, #34d399 86.1% 94.2%, #6ee7b7 94.2% 96.4%, #a7f3d0 96.4% 98.1%, #d1fae5 98.1% 100%); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);"></div>
-                <div style="font-size: 11px; color: #334155; display: flex; flex-direction: column; gap: 4px;">
-                  <div><span style="color:#10b981;">■</span> 86.14% (172.16.1.0)</div>
-                  <div><span style="color:#34d399;">■</span> 8.06% (192.168.10.1)</div>
-                  <div><span style="color:#6ee7b7;">■</span> 2.18% (10.5.8.230)</div>
-                  <div><span style="color:#a7f3d0;">■</span> 1.72% (192.168.5.4)</div>
-                </div>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11px;">
-                <div><div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="font-family:monospace;">172.16.1.0/24 → 10.10.0.1 (ICMP/HTTPS)</span><strong>502.59 MB (86.14%)</strong></div><div style="height:10px;background:#f1f5f9;border-radius:2px;"><div style="width:86.14%;height:100%;background:#10b981;border-radius:2px;"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="font-family:monospace;">192.168.10.104 → 10.20.1.50 (UDP/DNS)</span><strong>47.02 MB (8.06%)</strong></div><div style="height:10px;background:#f1f5f9;border-radius:2px;"><div style="width:18%;height:100%;background:#34d399;border-radius:2px;"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="font-family:monospace;">10.5.8.230 → 10.40.1.1 (TCP/BGP)</span><strong>12.71 MB (2.18%)</strong></div><div style="height:10px;background:#f1f5f9;border-radius:2px;"><div style="width:9%;height:100%;background:#6ee7b7;border-radius:2px;"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="font-family:monospace;">192.168.5.4 → 10.30.1.10 (TCP/SSH)</span><strong>10.04 MB (1.72%)</strong></div><div style="height:10px;background:#f1f5f9;border-radius:2px;"><div style="width:6%;height:100%;background:#a7f3d0;border-radius:2px;"></div></div></div>
-              </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Flow Records or Application Telemetry Ingested</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 500px; margin: 0 auto;">
+              Configure your routers and switches to export NetFlow v5/v9, sFlow, or IPFIX to UDP port 2055 to view conversation distribution and application bandwidth breakdown.
             </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-            
-            <!-- Top 5 CPU Utilization -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 14px; display: flex; justify-content: space-between;">
-                <span>Top 5 Devices by CPU Utilization</span>
-                <span style="font-size: 11px; color: #64748b;">Peak / Current</span>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 12px;">
-                ${[...state.devices].sort((a,b) => b.cpu - a.cpu).slice(0, 5).map(d => `
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span style="font-weight: 700; color: #0070e0;">${d.name} (${d.category})</span>
-                      <span style="font-weight: 800; color: ${d.cpu > 90 ? '#dc2626' : d.cpu > 75 ? '#ea580c' : '#16a34a'};">${d.cpu}%</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: ${d.cpu}%; height: 100%; background: ${d.cpu > 90 ? '#dc2626' : d.cpu > 75 ? '#ea580c' : '#16a34a'};"></div>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
-            <!-- Top 5 Memory Utilization -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 14px; display: flex; justify-content: space-between;">
-                <span>Top 5 Devices by Memory Utilization</span>
-                <span style="font-size: 11px; color: #64748b;">Peak / Current</span>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 12px;">
-                ${[...state.devices].sort((a,b) => b.memory - a.memory).slice(0, 5).map(d => `
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span style="font-weight: 700; color: #0070e0;">${d.name} (${d.probe})</span>
-                      <span style="font-weight: 800; color: ${d.memory > 90 ? '#dc2626' : d.memory > 75 ? '#ea580c' : '#16a34a'};">${d.memory}%</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: ${d.memory}%; height: 100%; background: ${d.memory > 90 ? '#dc2626' : d.memory > 75 ? '#ea580c' : '#16a34a'};"></div>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
-            <!-- Top 5 High-Traffic Interfaces -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 14px;">Top 5 High-Traffic Network Interfaces</div>
-              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                <thead>
-                  <tr style="border-bottom: 1px solid #e2e8f0; text-align: left; color: #64748b;">
-                    <th style="padding: 6px 8px;">Interface</th>
-                    <th style="padding: 6px 8px;">In Traffic</th>
-                    <th style="padding: 6px 8px;">Out Traffic</th>
-                    <th style="padding: 6px 8px;">Util %</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${(state.topInterfaces || []).slice(0, 5).map(intf => `
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px; font-weight: 600; color: #0f172a;">${intf.name}<br><span style="font-size: 10px; color: #64748b;">${intf.device}</span></td>
-                      <td style="padding: 8px; font-family: monospace;">${intf.inTraffic} Mbps</td>
-                      <td style="padding: 8px; font-family: monospace;">${intf.outTraffic} Mbps</td>
-                      <td style="padding: 8px; font-weight: 700; color: ${intf.inPercent > 75 ? '#dc2626' : '#16a34a'};">${intf.inPercent}%</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Top 5 Storage Partitions -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 14px;">Top Storage Volumes by Utilization</div>
-              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                <thead>
-                  <tr style="border-bottom: 1px solid #e2e8f0; text-align: left; color: #64748b;">
-                    <th style="padding: 6px 8px;">Partition</th>
-                    <th style="padding: 6px 8px;">Device</th>
-                    <th style="padding: 6px 8px;">Total</th>
-                    <th style="padding: 6px 8px;">Used %</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${state.diskVolumes.map(vol => `
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px; font-weight: 600; color: #0f172a; font-family: monospace;">${vol.partition}</td>
-                      <td style="padding: 8px; color: #0070e0; font-weight: 600;">${vol.device}</td>
-                      <td style="padding: 8px; font-family: monospace;">${vol.total}</td>
-                      <td style="padding: 8px; font-weight: 800; color: ${vol.percent > 90 ? '#dc2626' : vol.percent > 75 ? '#ea580c' : '#16a34a'};">${vol.percent}%</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Official ManageEngine Third-Party Integrations (TPI) Ecosystem Matrix -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                <div>
-                  <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Third-Party Integrations (ITSM, SIEM, AI & Incident Collaboration)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Native ManageEngine & REST API connectors configured across all 4 Enterprise Probes.</div>
-                </div>
-                <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px;">● 12 Active Connectors</span>
-              </div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/sdp-51330b99e980f08cc4885ce39c3e0d22.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">ServiceDesk Plus</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● Auto-Ticketing Enabled</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/service-now-9e03371aa3e497a5fea07e8146b858f3.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">ServiceNow ITSM</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● CMDB & Incident Sync</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/jira-e0f400c9221dca46a135353cc6a88edb.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Atlassian Jira</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● NetOps Project Linked</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/slack-e31dc5c929f2b04c0d79dcbfbaa66340.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Slack Workspace</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● #noc-critical-alerts</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/ms-teams-169144727d3b14ac4addb8a3215ab447.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Microsoft Teams</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● Adaptive Card Webhook</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/pager-duty-0bd7d82e4a32d17c6b6613e4606e7f89.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">PagerDuty On-Call</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● P1 Escalation Active</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/log360-4ee3c637201990aca84dbcc4dde3f246.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">ManageEngine Log360</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● SIEM Syslog Forwarder</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/pam360-154a415fc176bddced131ea428ee0cdb.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">ManageEngine PAM360</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● Privileged Vault Sync</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/ollama-917fa25c886902f4ea34e9372eecad40.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Ollama Local LLM</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● On-Prem AI RCA</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv2/img/chatgpt.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">OpenAI ChatGPT</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● GenAI CLI Assistant</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv3/itom/images/tpi/virus-total-56214d7ccea9fffd0b7e97217d09f986.png" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">VirusTotal Threat Intel</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● NetFlow IP Reputation</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv2/img/Ansible-logo.svg" style="width: 28px; height: 28px; object-fit: contain;" />
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Red Hat Ansible</div>
-                      <div style="font-size: 10px; color: #16a34a; font-weight: 600;">● Playbook Automation</div>
-                    </div>
-                  </div>
-                  <span style="font-size: 10px; color: #0070e0; font-weight: 700; cursor: pointer;">Configure</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Official ManageEngine OpManager iOS & Android Mobile App Enrollment Card (/apiclient/fluidicv2/img/mobile_app/*) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: space-between; gap: 24px;">
-              <div style="flex: 1;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-                  <span style="background: #e0f2fe; color: #0284c7; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; text-transform: uppercase;">Mobile NOC Companion</span>
-                  <span style="font-size: 15px; font-weight: 800; color: #0f172a;">ManageEngine OpManager Mobile App (iOS &amp; Android)</span>
-                </div>
-                <div style="font-size: 12px; color: #475569; line-height: 1.6; margin-bottom: 12px;">
-                  Monitor your enterprise network on the go. Receive real-time push notifications for P1 Critical alarms, inspect 24-hour availability timelines, acknowledge incidents, and run Ping/Traceroute diagnostics directly from your mobile device.
-                </div>
-                <div style="display: flex; align-items: center; gap: 14px;">
-                  <img src="/apiclient/fluidicv2/img/mobile_app/apple-badge.svg" alt="Download on the App Store" style="height: 34px; cursor: pointer;" onclick="showToast('OpManager iOS App: Scan QR code to pair with Central Server 10.0.0.10:8060')">
-                  <img src="/apiclient/fluidicv2/img/mobile_app/google-badge.svg" alt="Get it on Google Play" style="height: 34px; cursor: pointer;" onclick="showToast('OpManager Android App: Scan QR code to pair with Central Server 10.0.0.10:8060')">
-                  <div style="border-left: 1px solid #cbd5e1; padding-left: 14px; display: flex; align-items: center; gap: 10px;">
-                    <img src="/apiclient/fluidicv2/img/mobile_app/opm-app-qrcode.png" alt="Mobile App QR Code" style="width: 52px; height: 52px; border: 1px solid #e2e8f0; border-radius: 4px; padding: 2px;">
-                    <div style="font-size: 10px; color: #64748b; line-height: 1.4;">
-                      <strong style="color: #0f172a; display: block;">Scan to Pair Mobile App</strong>
-                      Server: <span style="font-family: monospace;">https://10.0.0.10:8060</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <img src="/apiclient/fluidicv2/img/mobile_app/mobile-app-opm.png" alt="OpManager Mobile App Preview" style="height: 145px; object-fit: contain; flex-shrink: 0;">
-            </div>
-
           </div>
         ` : activeSub === 'mttr' ? `
           <!-- SUBTAB: ALARMS & MTTR ANALYTICS -->
@@ -13351,8 +11902,8 @@
               </div>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Incidents (30D)</div>
-                <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin: 6px 0;">142</div>
-                <div style="font-size: 11px; color: #64748b;">135 Cleared | 7 Active</div>
+                <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin: 6px 0;">${state.alarms.length}</div>
+                <div style="font-size: 11px; color: #64748b;">${state.alarms.filter(a => a.status === "Cleared").length} Cleared | ${state.alarms.filter(a => a.status !== "Cleared").length} Active</div>
               </div>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Self-Healing Automated</div>
@@ -14287,9 +12838,9 @@
               <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <span style="font-size: 13px; font-weight: 800; color: #0f172a;">Connected Monitoring Agents (Live Heartbeats)</span>
-                  <span style="font-size: 11px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 3px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
-                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #16a34a; display: inline-block;"></span>
-                    1 Agent Active
+                  <span style="font-size: 11px; background: ${(state.agents && state.agents.length > 0) ? '#dcfce7' : '#f1f5f9'}; color: ${(state.agents && state.agents.length > 0) ? '#166534' : '#64748b'}; padding: 1px 6px; border-radius: 3px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: ${(state.agents && state.agents.length > 0) ? '#16a34a' : '#94a3b8'}; display: inline-block;"></span>
+                    ${(state.agents && state.agents.length) || 0} Agent${(state.agents && state.agents.length === 1) ? '' : 's'} Active
                   </span>
                 </div>
                 <div style="font-size: 11px; color: #64748b;">Heartbeat interval: 5 seconds</div>
@@ -14308,42 +12859,47 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0f172a;">AGT-DARWIN-1-D52F</td>
-                    <td style="padding: 10px 14px;">
-                      <div style="font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;">
-                        Hussnains-MacBook-Air.local
-                        <span style="font-size: 9px; font-weight: 700; background: #f1f5f9; color: #334155; padding: 1px 5px; border-radius: 2px; border: 1px solid #cbd5e1;">MACOS HOST</span>
-                      </div>
-                      <div style="font-size: 11px; color: #64748b;">OpManager Universal Agent v12.9.203</div>
-                    </td>
-                    <td style="padding: 10px 14px; font-family: monospace; font-size: 11px; color: #334155;">darwin (arm64 / Apple Silicon)</td>
-                    <td style="padding: 10px 14px;">
-                      <span style="font-size: 11px; color: #0284c7; background: #f0f9ff; padding: 2px 6px; border-radius: 3px; font-weight: 600;">
-                        New York Data Center (Probe 1)
-                      </span>
-                    </td>
-                    <td style="padding: 10px 14px;">
-                      <div style="display: flex; flex-direction: column; gap: 2px;">
-                        <span style="font-size: 11px; font-weight: 700; color: #dc2626;">CPU: 90.0% (18 Cores)</span>
-                        <span style="font-size: 11px; color: #475569;">RAM: 97.5% (16 GB)</span>
-                      </div>
-                    </td>
-                    <td style="padding: 10px 14px;">
-                      <span style="display: inline-flex; align-items: center; gap: 5px; background: #dcfce7; color: #166534; font-weight: 700; font-size: 11px; padding: 2px 8px; border-radius: 3px;">
-                        <span style="width: 6px; height: 6px; border-radius: 50%; background: #16a34a;"></span>
-                        Online (2s ago)
-                      </span>
-                    </td>
-                    <td style="padding: 10px 14px; text-align: right;">
-                      <button id="opm-agent-test-telemetry-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                        Poll Metrics
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                  ${(!state.agents || state.agents.length === 0) ? `
+                    <tr>
+                      <td colspan="7" style="padding: 36px 14px; text-align: center; color: #94a3b8;">
+                        No agents currently connected. Run the one-line deployment script on your Linux/Windows server to onboard.
+                      </td>
+                    </tr>
+                  ` : state.agents.map(a => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0f172a;">${a.agentId}</td>
+                      <td style="padding: 10px 14px;">
+                        <div style="font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;">
+                          ${a.hostname}
+                          <span style="font-size: 9px; font-weight: 700; background: #f1f5f9; color: #334155; padding: 1px 5px; border-radius: 2px; border: 1px solid #cbd5e1;">${(a.os || 'HOST').toUpperCase()}</span>
+                        </div>
+                        <div style="font-size: 11px; color: #64748b;">OpManager Universal Agent v${a.version || '12.9.203'}</div>
+                      </td>
+                      <td style="padding: 10px 14px; font-family: monospace; font-size: 11px; color: #334155;">${a.platform || a.os}</td>
+                      <td style="padding: 10px 14px;">
+                        <span style="font-size: 11px; color: #0284c7; background: #f0f9ff; padding: 2px 6px; border-radius: 3px; font-weight: 600;">
+                          ${a.probe || 'Central Site Probe'}
+                        </span>
+                      </td>
+                      <td style="padding: 10px 14px;">
+                        <div style="display: flex; flex-direction: column; gap: 2px;">
+                          <span style="font-size: 11px; font-weight: 700; color: ${(a.metrics && a.metrics.cpu > 80) ? '#dc2626' : '#16a34a'};">CPU: ${(a.metrics && a.metrics.cpu) || 0}%</span>
+                          <span style="font-size: 11px; color: #475569;">RAM: ${(a.metrics && a.metrics.memory) || 0}%</span>
+                        </div>
+                      </td>
+                      <td style="padding: 10px 14px;">
+                        <span style="display: inline-flex; align-items: center; gap: 5px; background: #dcfce7; color: #166534; font-weight: 700; font-size: 11px; padding: 2px 8px; border-radius: 3px;">
+                          <span style="width: 6px; height: 6px; border-radius: 50%; background: #16a34a;"></span>
+                          ${a.status || 'Online'}
+                        </span>
+                      </td>
+                      <td style="padding: 10px 14px; text-align: right;">
+                        <button onclick="showDeviceSnapshotModal('${a.hostname}')" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                          Poll Metrics
+                        </button>
+                      </td>
+                    </tr>
+                  `).join('')}            </div>
           </div>
         ` : activeSub === 'credentials' ? `
           <!-- Credential Library Subtab -->
@@ -14367,21 +12923,21 @@
                   <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Enterprise SNMPv2c Community</td>
                   <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SNMP v2c</span></td>
                   <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">Community: ********** (RO)</td>
-                  <td style="padding: 10px 14px;">12 Devices</td>
+                  <td style="padding: 10px 14px;">${state.devices.length} Devices</td>
                   <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
                 </tr>
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                   <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Secure Campus SNMPv3 USM</td>
                   <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SNMP v3</span></td>
                   <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">User: opm_admin | SHA-256 / AES-256</td>
-                  <td style="padding: 10px 14px;">4 Core Routers</td>
+                  <td style="padding: 10px 14px;">${state.devices.filter(d => (d.category || "").toLowerCase().includes("router")).length} Routers</td>
                   <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
                 </tr>
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                   <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Windows Domain WMI/WinRM</td>
                   <td style="padding: 10px 14px;"><span style="background: #f3e8ff; color: #6b21a8; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">WMI / WinRM</span></td>
                   <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">CORP\svc-opmanager-wmi</td>
-                  <td style="padding: 10px 14px;">5 Windows Nodes</td>
+                  <td style="padding: 10px 14px;">${state.devices.filter(d => (d.category || "").toLowerCase().includes("server")).length} Nodes</td>
                   <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
                 </tr>
                 <tr style="border-bottom: 1px solid #f1f5f9;">
@@ -16759,28 +15315,57 @@
       .then(r => r.json())
       .then(res => {
         if (res && Array.isArray(res.devices)) {
+          const changed = state.devices.length !== res.devices.length;
           state.devices = res.devices;
           updateStatusCounters();
-          handleRoute();
+          if (changed) {
+            if (state.currentTab === 'inventory' && typeof renderInventoryView === 'function') {
+              renderInventoryView();
+            } else if (state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') {
+              renderDashboardView();
+            }
+          }
         }
       }).catch(() => {});
 
     fetch('/api/alarms')
       .then(r => r.json())
       .then(res => {
-        if (res && Array.isArray(res.rows || res.alarms)) {
-          state.alarms = res.rows || res.alarms;
+        const rows = res && (res.rows || res.alarms);
+        if (Array.isArray(rows)) {
+          const changed = state.alarms.length !== rows.length;
+          state.alarms = rows;
           updateStatusCounters();
-          handleRoute();
+          if (changed && state.currentTab === 'alarms' && typeof renderAlarmsView === 'function') {
+            renderAlarmsView();
+          }
+        }
+      }).catch(() => {});
+
+    
+    fetch('/api/agents')
+      .then(r => r.json())
+      .then(res => {
+        if (res && Array.isArray(res.agents)) {
+          const changed = (!state.agents) || (state.agents.length !== res.agents.length);
+          state.agents = res.agents;
+          if (changed && state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
+            renderSettingsView();
+          }
         }
       }).catch(() => {});
 
     fetch('/api/probes')
       .then(r => r.json())
       .then(res => {
-        if (res && Array.isArray(res.probes)) {
-          state.probes = res.probes;
+        const list = res && (res.probes || res.result);
+        if (Array.isArray(list)) {
+          const changed = state.probes.length !== list.length;
+          state.probes = list;
           updateStatusCounters();
+          if (changed && state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
+            renderSettingsView();
+          }
         }
       }).catch(() => {});
   }
@@ -16798,6 +15383,9 @@
     handleRoute();
     initWebSocketConnection();
     initContainerGuard();
+
+    // Periodic live background telemetry sync (every 8 seconds)
+    setInterval(loadBackendData, 8000);
 
     // Fast check for layout placement during Ember mount
     const mountInterval = setInterval(() => {

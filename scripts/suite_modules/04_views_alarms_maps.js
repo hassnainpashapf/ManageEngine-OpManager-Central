@@ -1098,33 +1098,23 @@
             <!-- Left Business Views Tree Sidebar (Authentic ManageEngine BV Sidebar) -->
             <div style="width: 230px; flex-shrink: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
               <div style="padding: 12px 14px; background: #f5f5f5; border-bottom: 1px solid #e2e8f0; font-size: 13px; font-weight: 700; color: #212121; display: flex; justify-content: space-between; align-items: center;">
-                <span>Business Views (5)</span>
-                <span style="color: #49bd80; font-size: 15px; font-weight: 800; cursor: pointer;" title="Create Business View">+</span>
+                <span>Business Views (${state.probes.length})</span>
+                <span onclick="showAddProbeModal()" style="color: #49bd80; font-size: 15px; font-weight: 800; cursor: pointer;" title="Create Branch / Remote Probe View">+</span>
               </div>
               <div style="padding: 8px; border-bottom: 1px solid #f1f5f9;">
                 <input type="text" placeholder="Search Business View..." style="width: 100%; box-sizing: border-box; padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px;">
               </div>
               <div style="flex: 1; display: flex; flex-direction: column; font-size: 12px;">
                 <div style="padding: 10px 14px; background: #e8f5e9; border-left: 3px solid #49bd80; font-weight: 700; color: #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 12px; height: 18px;" /> Global Multi-Probe WAN</span>
-                  <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 5px; border-radius: 2px;">16</span>
+                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 12px; height: 18px;" /> Enterprise Network Topology</span>
+                  <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 5px; border-radius: 2px;">${state.devices.length}</span>
                 </div>
-                <div class="opm-topo-node" data-probe="1" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> New York Core DC</span>
-                  <span style="font-size: 10px; color: #64748b;">4 Nodes</span>
-                </div>
-                <div class="opm-topo-node" data-probe="2" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> London Branch Fabric</span>
-                  <span style="font-size: 10px; color: #64748b;">4 Nodes</span>
-                </div>
-                <div class="opm-topo-node" data-probe="3" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> Singapore Cloud VPC</span>
-                  <span style="font-size: 10px; color: #64748b;">4 Nodes</span>
-                </div>
-                <div class="opm-topo-node" data-probe="4" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #dc2626; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus1.png" style="width: 11px; height: 16px;" /> Dubai Campus Core</span>
-                  <span style="font-size: 10px; background: #fee2e2; color: #991b1b; padding: 1px 5px; border-radius: 2px;">1 Crit</span>
-                </div>
+                ${state.probes.map(pr => `
+                  <div class="opm-topo-node" data-probe="${pr.id}" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="showProbeDetailsModal(${pr.id})">
+                    <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> ${pr.name}</span>
+                    <span style="font-size: 10px; color: #64748b;">${pr.devicesCount || 0} Nodes</span>
+                  </div>
+                `).join('')}
               </div>
               <div style="padding: 12px 14px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 11px; color: #475569;">
                 <div style="font-weight: 700; color: #0f172a; margin-bottom: 6px;">Map Shortcut Legend</div>
@@ -1141,7 +1131,7 @@
               <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
                   <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Multi-Probe WAN Topology (Global Map View)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central Master (10.0.0.10) coordinating 4 distributed regional Probes across North America, Europe, Middle East & APAC.</div>
+                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central Master coordinating ${state.probes.length} distributed Remote Probes across enterprise sites.</div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #475569;">
@@ -1285,121 +1275,18 @@
             </div>
           </div>
         ` : activeSub === 'floor' ? `
-          <!-- 3D Floor Views: Isometric Server Room with Official Shipped Rack Top & Cold Aisle Textures -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">3D Datacenter Floor View - Hall 1 (Hot/Cold Aisle Containment)</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Interactive top-down & isometric rack floor layout using ManageEngine Rack Builder textures. Click any rack enclosure to open its 42U elevation.</div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 14px; font-size: 11px;">
-                <span style="display: flex; align-items: center; gap: 5px; font-weight: 700; color: #16a34a;"><img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 14px; height: 14px; border-radius: 2px;" /> Clear (6 Racks)</span>
-                <span style="display: flex; align-items: center; gap: 5px; font-weight: 700; color: #ea580c;"><img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Orange.jpg" style="width: 14px; height: 14px; border-radius: 2px;" /> Trouble (1 Rack)</span>
-                <span style="display: flex; align-items: center; gap: 5px; font-weight: 700; color: #dc2626;"><img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Red.jpg" style="width: 14px; height: 14px; border-radius: 2px;" /> Critical (1 Rack)</span>
-              </div>
+          <!-- 3D Floor Views Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            
-            <!-- Raised Floor Tile Grid Canvas -->
-            <div style="background: #e2e8f0; background-image: linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px); background-size: 36px 36px; border: 2px solid #94a3b8; border-radius: 6px; padding: 24px;">
-              
-              <!-- ROW A (North Compute & Core Switching Row) -->
-              <div style="font-size: 11px; font-weight: 800; color: #334155; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Row A — Core Switching & Compute Enclosures (42U)</div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 16px;">
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK A-01</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CLEAR</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">NY Core Routing</div>
-                  <div style="font-size: 10px; color: #64748b;">38/42U Used • 21.4°C • 6.2 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #fef2f2; border: 2px solid #dc2626; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 10px rgba(220,38,38,0.18);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #991b1b;">RACK A-02</span>
-                    <span style="font-size: 10px; background: #dc2626; color: #ffffff; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CRITICAL</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Red.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #dc2626;">DXB Core Switch (A-02)</div>
-                  <div style="font-size: 10px; color: #991b1b; font-weight: 600;">40/42U Used • 31.8°C • 8.4 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK A-03</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CLEAR</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">London Hypervisor Pod</div>
-                  <div style="font-size: 10px; color: #64748b;">34/42U Used • 20.8°C • 5.8 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK A-04</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CLEAR</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Singapore Cloud Edge</div>
-                  <div style="font-size: 10px; color: #64748b;">30/42U Used • 20.2°C • 5.1 kW</div>
-                </div>
-              </div>
-
-              <!-- COLD AISLE CONTAINMENT CORRIDOR -->
-              <div style="background: #0284c7; border-radius: 4px; padding: 8px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; color: #ffffff;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <img src="/apiclient/fluidicv2/img/rack/ColdAisle.png" style="height: 22px; object-fit: contain; background: #fff; padding: 2px 6px; border-radius: 3px;" />
-                  <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.4px;">PERFORATED COLD AISLE CONTAINMENT CORRIDOR (CRAC INTAKE: 18.5°C / 45% RH)</span>
-                </div>
-                <span style="font-size: 11px; font-family: monospace; font-weight: 700;">Airflow: 14,200 CFM Nominal</span>
-              </div>
-
-              <!-- ROW B (South Storage, Database & Power Row) -->
-              <div style="font-size: 11px; font-weight: 800; color: #334155; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Row B — SAN Storage, Database Cluster & Redundant UPS Power</div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;">
-                <div class="opm-floor-rack-card" style="background: #fff7ed; border: 2px solid #ea580c; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #9a3412;">RACK B-01</span>
-                    <span style="font-size: 10px; background: #ffedd5; color: #9a3412; padding: 1px 6px; border-radius: 2px; font-weight: 700;">TROUBLE</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Orange.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #9a3412;">PostgreSQL & SQL Cluster</div>
-                  <div style="font-size: 10px; color: #9a3412;">36/42U Used • Disk 91% Warn</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #fefce8; border: 2px solid #ca8a04; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #854d0e;">RACK B-02</span>
-                    <span style="font-size: 10px; background: #fef9c3; color: #854d0e; padding: 1px 6px; border-radius: 2px; font-weight: 700;">ATTENTION</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Yellow.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #854d0e;">NetApp NVMe All-Flash SAN</div>
-                  <div style="font-size: 10px; color: #854d0e;">40/42U Used • 23.1°C • 7.4 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK B-03</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">CLEAR</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Palo Alto SecOps Perimeter</div>
-                  <div style="font-size: 10px; color: #64748b;">28/42U Used • 21.0°C • 4.9 kW</div>
-                </div>
-
-                <div class="opm-floor-rack-card" style="background: #ffffff; border: 2px solid #16a34a; border-radius: 6px; padding: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.06);">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #0f172a;">RACK B-04</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">ONLINE</span>
-                  </div>
-                  <img src="/apiclient/fluidicv2/img/rack/Rack_top_image_Green.jpg" style="width: 100%; height: 48px; object-fit: cover; border-radius: 3px; margin-bottom: 8px;" />
-                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Schneider Galaxy 40kVA UPS</div>
-                  <div style="font-size: 10px; color: #16a34a; font-weight: 600;">Battery 100% (42m Runtime)</div>
-                </div>
-              </div>
-
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No 3D Datacenter Floor Views Configured</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Map your physical server room floor grid, aisle containment, and rack elevations to monitor thermal and power metrics.
             </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Datacenter Rack
+            </button>
           </div>
         ` : activeSub === 'rack' ? `
           <!-- 3D Rack Views -->
@@ -1443,7 +1330,7 @@
               </div>
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="font-size: 11px; color: #4ade80; background: #064e3b; border: 1px solid #047857; padding: 3px 8px; border-radius: 4px; font-weight: 700;">
-                  ● ALL 4 PROBES ONLINE
+                  ● ALL ${state.probes.length} PROBES ONLINE
                 </div>
                 <button id="opm-worldmap-sync-all-btn" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                   Initiate Global Sync

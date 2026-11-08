@@ -62,7 +62,8 @@ router.get(['/admin/listProbes', '/api/json/admin/listProbes', '/api/probes'], (
     responseCode: 200,
     totalProbes: probes.length,
     activeProbes: probes.filter(p => p.status === 'Connected' || p.status === 'Online').length,
-    result: probes
+    result: probes,
+    probes: probes
   });
 });
 
@@ -94,6 +95,20 @@ router.post(['/api/json/enterprise/addProbe', '/api/probes'], (req, res) => {
     status: 'success',
     message: `Probe ${newProbe.name} registered successfully to Central`,
     probe: newProbe
+  });
+});
+
+// Delete remote probe
+router.post(['/api/json/enterprise/deleteProbe', '/api/probes/:id/delete'], (req, res) => {
+  const probeId = req.body.probeId || req.params.id;
+  const deleted = db.deleteProbe(probeId);
+  if (!deleted) {
+    return res.status(404).json({ status: 'error', message: `Probe ${probeId} not found` });
+  }
+  res.json({
+    status: 'success',
+    message: `Probe ${deleted.name} removed from Central`,
+    deleted
   });
 });
 

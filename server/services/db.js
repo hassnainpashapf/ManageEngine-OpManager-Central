@@ -212,12 +212,12 @@ class Database {
   }
 
   deleteDevice(id) {
-    const idx = this.data.devices.findIndex(d => d.id === id);
+    const idx = this.data.devices.findIndex(d => String(d.id) === String(id));
     if (idx !== -1) {
       const removed = this.data.devices.splice(idx, 1)[0];
       const probe = this.getProbeById(removed.probeId);
       if (probe && probe.devicesCount > 0) probe.devicesCount--;
-      this.data.alarms = this.data.alarms.filter(a => a.deviceId !== id);
+      this.data.alarms = this.data.alarms.filter(a => String(a.deviceId) !== String(id));
       this.data.central.totalDevicesCount = this.data.devices.length;
       this.save();
       return removed;

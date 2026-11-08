@@ -40,7 +40,8 @@
     ],
     alarms: [],
     topInterfaces: [],
-    diskVolumes: []
+    diskVolumes: [],
+    agents: []
   };
   state.interfaces = [];
 

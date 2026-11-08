@@ -479,28 +479,57 @@
       .then(r => r.json())
       .then(res => {
         if (res && Array.isArray(res.devices)) {
+          const changed = state.devices.length !== res.devices.length;
           state.devices = res.devices;
           updateStatusCounters();
-          handleRoute();
+          if (changed) {
+            if (state.currentTab === 'inventory' && typeof renderInventoryView === 'function') {
+              renderInventoryView();
+            } else if (state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') {
+              renderDashboardView();
+            }
+          }
         }
       }).catch(() => {});
 
     fetch('/api/alarms')
       .then(r => r.json())
       .then(res => {
-        if (res && Array.isArray(res.rows || res.alarms)) {
-          state.alarms = res.rows || res.alarms;
+        const rows = res && (res.rows || res.alarms);
+        if (Array.isArray(rows)) {
+          const changed = state.alarms.length !== rows.length;
+          state.alarms = rows;
           updateStatusCounters();
-          handleRoute();
+          if (changed && state.currentTab === 'alarms' && typeof renderAlarmsView === 'function') {
+            renderAlarmsView();
+          }
+        }
+      }).catch(() => {});
+
+    
+    fetch('/api/agents')
+      .then(r => r.json())
+      .then(res => {
+        if (res && Array.isArray(res.agents)) {
+          const changed = (!state.agents) || (state.agents.length !== res.agents.length);
+          state.agents = res.agents;
+          if (changed && state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
+            renderSettingsView();
+          }
         }
       }).catch(() => {});
 
     fetch('/api/probes')
       .then(r => r.json())
       .then(res => {
-        if (res && Array.isArray(res.probes)) {
-          state.probes = res.probes;
+        const list = res && (res.probes || res.result);
+        if (Array.isArray(list)) {
+          const changed = state.probes.length !== list.length;
+          state.probes = list;
           updateStatusCounters();
+          if (changed && state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
+            renderSettingsView();
+          }
         }
       }).catch(() => {});
   }
@@ -518,6 +547,9 @@
     handleRoute();
     initWebSocketConnection();
     initContainerGuard();
+
+    // Periodic live background telemetry sync (every 8 seconds)
+    setInterval(loadBackendData, 8000);
 
     // Fast check for layout placement during Ember mount
     const mountInterval = setInterval(() => {

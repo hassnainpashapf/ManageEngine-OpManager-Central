@@ -681,7 +681,7 @@
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">Registered Remote Probes:</span>
-              <span style="font-weight: 700;">4 / 4 Online (US, UK, SG, AE)</span>
+              <span style="font-weight: 700;">${state.probes.length} / ${state.probes.length || 1} Online</span>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">Database Engine:</span>
@@ -913,11 +913,11 @@
         else if (action === 'subnet-sweep') showSubnetDiscoveryModal();
         else if (action === 'diagnostic-tools') showNetworkToolsModal(null, 'ping');
         else if (action === 'mib-browser') showNetworkToolsModal(null, 'mib');
-        else if (action === 'add-probe') showProbeDetailsModal('new');
+        else if (action === 'add-probe') showAddProbeModal();
         else if (action === 'add-widget') showAddWidgetModal();
         else if (action === 'download-agent') {
-          window.open('/agents/OpManagerAgent.exe', '_blank');
-          showToast('Downloading OpManager Host Monitoring Agent...');
+          window.open('/downloads/OpManagerAgent.msi', '_blank');
+          showToast('Downloading OpManager Host Monitoring Agent (MSI)...');
         }
       };
     });
@@ -940,8 +940,8 @@
     pop.style.left = rect.left + 'px';
     pop.innerHTML = `
       <div style="background: #212121; color: #ffffff; padding: 10px 14px; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: space-between;">
-        <span>Select Monitoring Probe</span>
-        <span style="font-size: 10px; background: #1d824e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">4 ONLINE</span>
+        <span>Select Monitoring Probe / Branch</span>
+        <span style="font-size: 10px; background: #1d824e; padding: 1px 6px; border-radius: 3px; font-weight: 700;">${state.probes.length} ONLINE</span>
       </div>
       <div style="padding: 4px 0; font-size: 12px; max-height: 300px; overflow-y: auto;">
         <div class="opm-probe-sel-item" data-id="all" style="padding: 10px 16px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f5f9; ${state.selectedProbe === 'all' ? 'background: #eff6ff; font-weight: 700;' : ''}">
@@ -958,16 +958,26 @@
                 <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
                 <span style="color: #0f172a;">${pr.name}</span>
               </div>
-              <div style="font-size: 10px; color: #64748b; margin-left: 16px;">${pr.ip} • ${pr.latency}ms • ${pr.devicesCount} devices</div>
+              <div style="font-size: 10px; color: #64748b; margin-left: 16px;">${pr.ip} • ${pr.latency}ms • ${pr.devicesCount || 0} devices</div>
             </div>
             <span style="font-size: 10px; color: #166534; font-weight: 600;">UP</span>
           </div>
         `).join('')}
       </div>
-      <div style="background: #fafbfc; border-top: 1px solid #e2e8f0; padding: 8px 14px; text-align: center;">
-        <a href="#/settings/probes" style="font-size: 11px; color: #0070e0; text-decoration: none; font-weight: 600;">Manage Probes & Clusters →</a>
+      <div style="background: #fafbfc; border-top: 1px solid #e2e8f0; padding: 8px 14px; display: flex; justify-content: space-between; align-items: center;">
+        <button id="opm-quick-add-probe-btn" style="background: none; border: none; font-size: 11px; color: #0070e0; font-weight: 700; cursor: pointer; padding: 0;">+ Add Branch / Probe</button>
+        <a href="#/settings" onclick="state.subTabs.settings='probes'; renderSettingsView();" style="font-size: 11px; color: #64748b; text-decoration: none; font-weight: 600;">Manage Probes →</a>
       </div>
     `;
+
+    const quickAddProbeBtn = pop.querySelector('#opm-quick-add-probe-btn');
+    if (quickAddProbeBtn) {
+      quickAddProbeBtn.onclick = (e) => {
+        e.stopPropagation();
+        pop.style.display = 'none';
+        showAddProbeModal();
+      };
+    }
     pop.style.display = 'block';
 
     pop.querySelectorAll('.opm-probe-sel-item').forEach(item => {
