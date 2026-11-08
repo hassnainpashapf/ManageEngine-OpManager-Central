@@ -635,10 +635,11 @@
     }
   });
 
+  if (document.body) {
+    try { initSuite(); } catch(e) {}
+  }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSuite);
-  } else {
-    initSuite();
   }
 
 })();
