@@ -1,0 +1,10 @@
+services:
+  opmanager-central:
+    build: .
+    container_name: opmanager-central
+    ports:
+      - "8060:8060"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=8060
