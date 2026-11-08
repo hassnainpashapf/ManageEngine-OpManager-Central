@@ -395,11 +395,6 @@
           <span id="opm-footer-monitored-assets">Monitored Assets: <strong>${state.devices.length} Devices • ${state.devices.reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : 0), 0)} Interfaces</strong></span>
         </div>
         <div style="display: flex; align-items: center; gap: 14px;">
-          <span id="opm-footer-zia-btn" style="cursor: pointer; color: #a78bfa; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;" title="Launch Ask Zia AI Assistant">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            Ask Zia AI
-          </span>
-          <span style="color: #475569;">•</span>
           <span id="opm-footer-mib-btn" style="cursor: pointer; color: #cbd5e1;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">SNMP MIB Browser</span>
           <span style="color: #475569;">•</span>
           <a href="/noc" target="_blank" style="color: #cbd5e1; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">NOC Wallboard ↗</a>

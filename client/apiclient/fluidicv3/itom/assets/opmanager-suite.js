@@ -395,11 +395,6 @@
           <span id="opm-footer-monitored-assets">Monitored Assets: <strong>${state.devices.length} Devices • ${state.devices.reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : 0), 0)} Interfaces</strong></span>
         </div>
         <div style="display: flex; align-items: center; gap: 14px;">
-          <span id="opm-footer-zia-btn" style="cursor: pointer; color: #a78bfa; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;" title="Launch Ask Zia AI Assistant">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            Ask Zia AI
-          </span>
-          <span style="color: #475569;">•</span>
           <span id="opm-footer-mib-btn" style="cursor: pointer; color: #cbd5e1;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">SNMP MIB Browser</span>
           <span style="color: #475569;">•</span>
           <a href="/noc" target="_blank" style="color: #cbd5e1; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">NOC Wallboard ↗</a>
@@ -7604,105 +7599,6 @@
           </button>
         </div>
       </div>
-
-      <!-- ManageEngine OpManager 12 Collapsible Dark Executive Integrated Top Band (Tour/IntegratedDashboard.jpg replica) -->
-      ${state.topBandCollapsed ? `
-        <div style="background: #1e242c; border-bottom: 1px solid #0f172a; padding: 3px 24px; display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-size: 10px;">
-          <span>Integrated ITOM Executive Summary Band (Collapsed) • ${totalDevices} Devices • ${state.probes.length} Enterprise Probes • ${filteredAlarms.length} Alarms</span>
-          <button id="opm-toggle-topband-btn" title="Expand Executive Summary Band" style="background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #cbd5e1; font-size: 10px;">
-            <img src="/apiclient/fluidicv2/img/TopBandExpand.svg" alt="Expand" style="height: 12px;"> Expand Band
-          </button>
-        </div>
-      ` : `
-        <div style="background: #232a34; border-bottom: 1px solid #14181f; padding: 8px 20px 6px 20px; position: relative; color: #e2e8f0; box-shadow: inset 0 -2px 6px rgba(0,0,0,0.25);">
-          <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: center;">
-            <!-- 1. Overview -->
-            <div class="opm-topband-card" data-sub="overview" style="cursor: pointer; padding: 4px 10px; border-right: 1px solid #36404e; border-bottom: ${activeSub === 'overview' ? '2px solid #49bd80' : '2px solid transparent'};">
-              <div style="font-size: 11px; font-weight: 700; color: ${activeSub === 'overview' ? '#49bd80' : '#cbd5e1'}; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                <span>Overview</span>
-                <span style="font-size: 9px; color: #94a3b8;">${state.probes.length} Probes</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                ${overviewDoughnutSvg}
-                <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">${totalDevices}</strong> <span style="color: #94a3b8;">Devices</span></div>
-                  <div><strong style="color: #f87171; font-size: 11px;">${filteredAlarms.length}</strong> <span style="color: #94a3b8;">Alarms</span></div>
-                </div>
-              </div>
-            </div>
-            <!-- 2. Network -->
-            <div class="opm-topband-card" data-sub="network" style="cursor: pointer; padding: 4px 10px; border-right: 1px solid #36404e; border-bottom: ${activeSub === 'network' ? '2px solid #49bd80' : '2px solid transparent'};">
-              <div style="font-size: 11px; font-weight: 700; color: ${activeSub === 'network' ? '#49bd80' : '#cbd5e1'}; margin-bottom: 4px;">Network</div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                ${networkDoughnutSvg}
-                <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">${networkCount}</strong> <span style="color: #94a3b8;">Routers/SW</span></div>
-                  <div><strong style="color: #fbbf24; font-size: 11px;">${networkAlarms}</strong> <span style="color: #94a3b8;">Alarms</span></div>
-                </div>
-              </div>
-            </div>
-            <!-- 3. Servers -->
-            <div class="opm-topband-card" data-sub="servers" style="cursor: pointer; padding: 4px 10px; border-right: 1px solid #36404e; border-bottom: ${activeSub === 'servers' ? '2px solid #49bd80' : '2px solid transparent'};">
-              <div style="font-size: 11px; font-weight: 700; color: ${activeSub === 'servers' ? '#49bd80' : '#cbd5e1'}; margin-bottom: 4px;">Server &amp; APM</div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                ${serverDoughnutSvg}
-                <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">${serverCount}</strong> <span style="color: #94a3b8;">Servers</span></div>
-                  <div><strong style="color: #38bdf8; font-size: 11px;">0</strong> <span style="color: #94a3b8;">APM Apps</span></div>
-                </div>
-              </div>
-            </div>
-            <!-- 4. Virtualization -->
-            <div class="opm-topband-card" data-sub="virtualization" style="cursor: pointer; padding: 4px 10px; border-right: 1px solid #36404e; border-bottom: ${activeSub === 'virtualization' ? '2px solid #49bd80' : '2px solid transparent'};">
-              <div style="font-size: 11px; font-weight: 700; color: ${activeSub === 'virtualization' ? '#49bd80' : '#cbd5e1'}; margin-bottom: 4px;">Virtualization</div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <img src="/apiclient/fluidicv2/img/vmware/vCenter.png" style="width: 24px; height: 24px; object-fit: contain;">
-                <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">${virtClustersCount}</strong> <span style="color: #94a3b8;">Clusters</span></div>
-                  <div><strong style="color: #49bd80; font-size: 11px;">${virtVmsCount}</strong> <span style="color: #94a3b8;">VMs/LXC</span></div>
-                </div>
-              </div>
-            </div>
-            <!-- 5. NetFlow -->
-            <div class="opm-topband-card" data-sub="netflow" style="cursor: pointer; padding: 4px 10px; border-right: 1px solid #36404e; border-bottom: ${activeSub === 'netflow' ? '2px solid #49bd80' : '2px solid transparent'};">
-              <div style="font-size: 11px; font-weight: 700; color: ${activeSub === 'netflow' ? '#49bd80' : '#cbd5e1'}; margin-bottom: 4px;">NetFlow (NFA)</div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                ${netflowBarsHtml}
-                <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">${flowCount}</strong> <span style="color: #94a3b8;">Flows</span></div>
-                  <div><strong style="color: #38bdf8; font-size: 11px;">0.00</strong> <span style="color: #94a3b8;">Gbps</span></div>
-                </div>
-              </div>
-            </div>
-            <!-- 6. NCM -->
-            <div class="opm-topband-card" data-sub="ncm" style="cursor: pointer; padding: 4px 10px; border-right: 1px solid #36404e; border-bottom: ${activeSub === 'ncm' ? '2px solid #49bd80' : '2px solid transparent'};">
-              <div style="font-size: 11px; font-weight: 700; color: ${activeSub === 'ncm' ? '#49bd80' : '#cbd5e1'}; margin-bottom: 4px;">NCM Config</div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <img src="/apiclient/fluidicv2/img/ncm/icon_csh_success.gif" style="width: 18px; height: 18px;">
-                <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">${ncmChangesCount}</strong> <span style="color: #94a3b8;">Changes</span></div>
-                  <div><strong style="color: #f59e0b; font-size: 11px;">${ncmDriftCount}</strong> <span style="color: #94a3b8;">Drift</span></div>
-                </div>
-              </div>
-            </div>
-            <!-- 7. Firewall -->
-            <div class="opm-topband-card" data-sub="firewall" style="cursor: pointer; padding: 4px 10px; border-bottom: ${activeSub === 'firewall' ? '2px solid #49bd80' : '2px solid transparent'};">
-              <div style="font-size: 11px; font-weight: 700; color: ${activeSub === 'firewall' ? '#49bd80' : '#cbd5e1'}; margin-bottom: 4px;">Firewall (FWA)</div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">${firewallCount}</strong> <span style="color: #94a3b8;">Sites</span></div>
-                  <div><strong style="color: #f87171; font-size: 11px;">${firewallAttacksCount}</strong> <span style="color: #94a3b8;">Attacks</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Official TopBandCollapse.svg handle at bottom-center -->
-          <button id="opm-toggle-topband-btn" title="Collapse Executive Summary Band" style="position: absolute; bottom: -11px; left: 50%; transform: translateX(-50%); background: transparent; border: none; padding: 0; cursor: pointer; z-index: 10;">
-            <img src="/apiclient/fluidicv2/img/TopBandCollapse.svg" alt="Collapse" style="height: 13px; display: block;">
-          </button>
-        </div>
-      `}
 
       <div style="padding: 18px 24px 30px 24px;">
 
