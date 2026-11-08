@@ -1,6 +1,6 @@
 {
   "name": "manageengine-opmanager-central",
-  "version": "12.9.203",
+  "version": "12.9.204-GA",
   "description": "ManageEngine OpManager Central - Distributed Enterprise Network Management Suite",
   "main": "server/index.js",
   "scripts": {
