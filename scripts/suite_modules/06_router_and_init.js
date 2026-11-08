@@ -2,12 +2,19 @@
   // ROUTING ENGINE & INITIALIZATION
   // -------------------------------------------------------------
   function ensureLayoutPlacement() {
-    const h = document.getElementById('main-header');
+    ensureGlobalStyles();
+    const h = ensureMainHeader();
+    const s = ensureSubnavBreadcrumbsBar();
     let c = document.getElementById('opm-custom-suite-container');
     if (!c) {
       c = ensureOverlayContainer();
     }
-    if (h && c && h.parentNode) {
+    if (s && c && s.parentNode) {
+      if (c.parentElement === s.parentElement && c.previousElementSibling === s) {
+        return;
+      }
+      s.parentNode.insertBefore(c, s.nextSibling);
+    } else if (h && c && h.parentNode) {
       if (c.parentElement === h.parentElement && c.previousElementSibling === h) {
         return;
       }
