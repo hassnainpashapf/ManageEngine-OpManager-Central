@@ -98,7 +98,7 @@
             <div class="opm-topband-card" data-sub="overview" style="cursor: pointer; padding: 4px 10px; border-right: 1px solid #36404e; border-bottom: ${activeSub === 'overview' ? '2px solid #49bd80' : '2px solid transparent'};">
               <div style="font-size: 11px; font-weight: 700; color: ${activeSub === 'overview' ? '#49bd80' : '#cbd5e1'}; margin-bottom: 4px; display: flex; justify-content: space-between;">
                 <span>Overview</span>
-                <span style="font-size: 9px; color: #94a3b8;">4 Probes</span>
+                <span style="font-size: 9px; color: #94a3b8;">${state.probes.length} Probes</span>
               </div>
               <div style="display: flex; align-items: center; gap: 8px;">
                 <svg width="28" height="28" viewBox="0 0 36 36">
@@ -121,8 +121,8 @@
                   <circle cx="18" cy="18" r="14" fill="none" stroke="#f59e0b" stroke-width="5" stroke-dasharray="13 88" stroke-dashoffset="-75"/>
                 </svg>
                 <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">8</strong> <span style="color: #94a3b8;">Routers/SW</span></div>
-                  <div><strong style="color: #fbbf24; font-size: 11px;">3</strong> <span style="color: #94a3b8;">Alarms</span></div>
+                  <div><strong style="color: #fff; font-size: 12px;">${networkCount}</strong> <span style="color: #94a3b8;">Routers/SW</span></div>
+                  <div><strong style="color: #fbbf24; font-size: 11px;">${networkAlarms}</strong> <span style="color: #94a3b8;">Alarms</span></div>
                 </div>
               </div>
             </div>
@@ -135,8 +135,8 @@
                   <circle cx="18" cy="18" r="14" fill="none" stroke="#ef4444" stroke-width="5" stroke-dasharray="16 88" stroke-dashoffset="-72"/>
                 </svg>
                 <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">5</strong> <span style="color: #94a3b8;">Servers</span></div>
-                  <div><strong style="color: #38bdf8; font-size: 11px;">8</strong> <span style="color: #94a3b8;">APM Apps</span></div>
+                  <div><strong style="color: #fff; font-size: 12px;">${serverCount}</strong> <span style="color: #94a3b8;">Servers</span></div>
+                  <div><strong style="color: #38bdf8; font-size: 11px;">0</strong> <span style="color: #94a3b8;">APM Apps</span></div>
                 </div>
               </div>
             </div>
@@ -146,8 +146,8 @@
               <div style="display: flex; align-items: center; gap: 8px;">
                 <img src="/apiclient/fluidicv2/img/vmware/vCenter.png" style="width: 24px; height: 24px; object-fit: contain;">
                 <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">4</strong> <span style="color: #94a3b8;">Clusters</span></div>
-                  <div><strong style="color: #49bd80; font-size: 11px;">84</strong> <span style="color: #94a3b8;">VMs/LXC</span></div>
+                  <div><strong style="color: #fff; font-size: 12px;">0</strong> <span style="color: #94a3b8;">Clusters</span></div>
+                  <div><strong style="color: #49bd80; font-size: 11px;">0</strong> <span style="color: #94a3b8;">VMs/LXC</span></div>
                 </div>
               </div>
             </div>
@@ -162,8 +162,8 @@
                   <div style="width: 4px; height: 24px; background: #f59e0b;"></div>
                 </div>
                 <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">48</strong> <span style="color: #94a3b8;">Flows</span></div>
-                  <div><strong style="color: #38bdf8; font-size: 11px;">3.84</strong> <span style="color: #94a3b8;">Gbps</span></div>
+                  <div><strong style="color: #fff; font-size: 12px;">0</strong> <span style="color: #94a3b8;">Flows</span></div>
+                  <div><strong style="color: #38bdf8; font-size: 11px;">0.00</strong> <span style="color: #94a3b8;">Gbps</span></div>
                 </div>
               </div>
             </div>
@@ -173,8 +173,8 @@
               <div style="display: flex; align-items: center; gap: 8px;">
                 <img src="/apiclient/fluidicv2/img/ncm/icon_csh_success.gif" style="width: 18px; height: 18px;">
                 <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">1,360</strong> <span style="color: #94a3b8;">Changes</span></div>
-                  <div><strong style="color: #f59e0b; font-size: 11px;">1</strong> <span style="color: #94a3b8;">Drift</span></div>
+                  <div><strong style="color: #fff; font-size: 12px;">0</strong> <span style="color: #94a3b8;">Changes</span></div>
+                  <div><strong style="color: #f59e0b; font-size: 11px;">0</strong> <span style="color: #94a3b8;">Drift</span></div>
                 </div>
               </div>
             </div>
@@ -184,8 +184,8 @@
               <div style="display: flex; align-items: center; gap: 8px;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 <div style="font-size: 10px; line-height: 1.35;">
-                  <div><strong style="color: #fff; font-size: 12px;">1,313</strong> <span style="color: #94a3b8;">Sites</span></div>
-                  <div><strong style="color: #f87171; font-size: 11px;">10</strong> <span style="color: #94a3b8;">Attacks</span></div>
+                  <div><strong style="color: #fff; font-size: 12px;">0</strong> <span style="color: #94a3b8;">Sites</span></div>
+                  <div><strong style="color: #f87171; font-size: 11px;">0</strong> <span style="color: #94a3b8;">Attacks</span></div>
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Enterprise Probes</div>
               <div style="display: flex; align-items: baseline; gap: 8px;">
-                <span style="font-size: 24px; font-weight: 800; color: #16a34a;">4 / 4</span>
+                <span style="font-size: 24px; font-weight: 800; color: #16a34a;">${state.probes.length} / ${state.probes.length}</span>
                 <span style="font-size: 11px; font-weight: 600; color: #16a34a;">● Synchronized</span>
               </div>
               <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Avg Central RTT: 25.7 ms</div>
@@ -241,10 +241,10 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Peak Bandwidth Ingress</div>
               <div style="display: flex; align-items: baseline; gap: 8px;">
-                <span style="font-size: 24px; font-weight: 800; color: #0284c7;">3.84 Gbps</span>
-                <span style="font-size: 11px; font-weight: 600; color: #0284c7;">NY-PA-FW-01</span>
+                <span style="font-size: 24px; font-weight: 800; color: #0284c7;">0.00 Mbps</span>
+                <span style="font-size: 11px; font-weight: 600; color: #64748b;">No active flow</span>
               </div>
-              <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Aggregate: 9.8 Gbps Fabric</div>
+              <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Real-Time Flow Ingress</div>
             </div>
           </div>
 
@@ -283,7 +283,7 @@
                           ${pr.name}
                         </td>
                         <td style="padding: 8px; color: #475569; font-family: monospace;">${pr.ip}</td>
-                        <td style="padding: 8px; color: #334155; font-weight: 600;">${pr.devicesCount || pr.devices || 4}</td>
+                        <td style="padding: 8px; color: #334155; font-weight: 600;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
                         <td style="padding: 8px;">
                           <div style="display: flex; align-items: center; gap: 8px;">
                             <div style="width: 50px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
@@ -315,61 +315,42 @@
                 </div>
               </div>
               <div style="padding: 14px 16px;">
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Routers')} Routers (4)</span>
-                      <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                ${totalDevices === 0 ? `
+                  <div style="padding: 40px 16px; text-align: center; color: #64748b;">
+                    <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No Monitored Devices</div>
+                    <div style="font-size: 11px;">Install the OpManager agent on servers or run discovery to view categorized infrastructure health.</div>
+                  </div>
+                ` : `
+                  <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                      <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                        <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Routers')} Routers (${routerCount})</span>
+                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                      </div>
+                      <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
+                        <div style="width: 100%; background: #16a34a;"></div>
+                      </div>
                     </div>
-                    <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                      <div style="width: 100%; background: #16a34a;" title="4 Clear"></div>
+                    <div>
+                      <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                        <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Switches')} Switches (${switchCount})</span>
+                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                      </div>
+                      <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
+                        <div style="width: 100%; background: #16a34a;"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                        <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Servers')} Servers (${serverCount})</span>
+                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                      </div>
+                      <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
+                        <div style="width: 100%; background: #16a34a;"></div>
+                      </div>
                     </div>
                   </div>
-
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Switches')} Switches (4)</span>
-                      <span style="color: #dc2626; font-weight: 600;">1 Critical, 1 Attention, 2 Clear</span>
-                    </div>
-                    <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                      <div style="width: 25%; background: #dc2626;" title="1 Critical"></div>
-                      <div style="width: 25%; background: #ca8a04;" title="1 Attention"></div>
-                      <div style="width: 50%; background: #16a34a;" title="2 Clear"></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Servers')} Servers (5)</span>
-                      <span style="color: #ea580c; font-weight: 600;">1 Trouble, 4 Clear</span>
-                    </div>
-                    <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                      <div style="width: 20%; background: #ea580c;" title="1 Trouble"></div>
-                      <div style="width: 80%; background: #16a34a;" title="4 Clear"></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Firewalls')} Firewalls (2)</span>
-                      <span style="color: #ca8a04; font-weight: 600;">1 Attention, 1 Clear</span>
-                    </div>
-                    <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                      <div style="width: 50%; background: #ca8a04;" title="1 Attention"></div>
-                      <div style="width: 50%; background: #16a34a;" title="1 Clear"></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                      <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Storage')} Storage & Power (1)</span>
-                      <span style="color: #ca8a04; font-weight: 600;">1 Attention</span>
-                    </div>
-                    <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                      <div style="width: 100%; background: #ca8a04;" title="1 Attention"></div>
-                    </div>
-                  </div>
-                </div>
+                `}
               </div>
             </div>
 
@@ -716,7 +697,7 @@
                     ${state.probes.map(pr => `
                       <tr style="border-bottom: 1px solid #f8fafc;">
                         <td style="padding: 7px 8px; font-weight: 600; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
-                        <td style="padding: 7px 8px; font-weight: 700; color: #0f172a;">${pr.devicesCount || pr.devices || 4}</td>
+                        <td style="padding: 7px 8px; font-weight: 700; color: #0f172a;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
                         <td style="padding: 7px 8px; color: #64748b;">0</td>
                         <td style="padding: 7px 8px; font-family: monospace; color: #334155;">${(pr.devicesCount || pr.devices || 4) * 3}</td>
                         <td style="padding: 7px 8px;">
@@ -893,7 +874,7 @@
                       <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
                       <td style="padding: 10px 14px; font-family: monospace;">${pr.ip}</td>
                       <td style="padding: 10px 14px; color: #64748b;">${pr.location}</td>
-                      <td style="padding: 10px 14px; font-weight: 700;">${pr.devicesCount || pr.devices || 4}</td>
+                      <td style="padding: 10px 14px; font-weight: 700;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
                       <td style="padding: 10px 14px;"><span style="font-weight: 700; color: ${(pr.alarmsCount || pr.alarms || 0) > 0 ? '#dc2626' : '#16a34a'};">${pr.alarmsCount || pr.alarms || 0}</span></td>
                       <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency} ms</td>
                       <td style="padding: 10px 14px; text-align: right;"><span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 10px;">CONNECTED</span></td>
@@ -2753,7 +2734,7 @@
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #f8fafc; padding: 10px; border-radius: 4px; font-size: 12px; margin-bottom: 12px;">
                   <div>
                     <div style="color: #64748b; font-size: 11px;">Devices</div>
-                    <div style="font-weight: 700; color: #0f172a; font-size: 14px;">${pr.devicesCount || pr.devices || 4}</div>
+                    <div style="font-weight: 700; color: #0f172a; font-size: 14px;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</div>
                   </div>
                   <div>
                     <div style="color: #64748b; font-size: 11px;">Alarms</div>
