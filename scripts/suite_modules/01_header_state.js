@@ -252,18 +252,11 @@
       const probeName = activeProbe ? activeProbe.name : 'All Probes';
 
       header.innerHTML = `
-        <!-- Left: Logo & App Launcher -->
-        <div class="logo-section" style="display: flex; align-items: center; gap: 8px;">
-          <button id="opm-app-launcher-btn" aria-label="ManageEngine ITOM Suite App Switcher" style="background: transparent; border: none; padding: 6px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="#ffffff" style="opacity: 0.9;">
-              <rect x="1" y="1" width="4" height="4" rx="0.5"/><rect x="7" y="1" width="4" height="4" rx="0.5"/><rect x="13" y="1" width="4" height="4" rx="0.5"/>
-              <rect x="1" y="7" width="4" height="4" rx="0.5"/><rect x="7" y="7" width="4" height="4" rx="0.5"/><rect x="13" y="7" width="4" height="4" rx="0.5"/>
-              <rect x="1" y="13" width="4" height="4" rx="0.5"/><rect x="7" y="13" width="4" height="4" rx="0.5"/><rect x="13" y="13" width="4" height="4" rx="0.5"/>
-            </svg>
-          </button>
+        <!-- Left: Logo -->
+        <div class="logo-section" style="display: flex; align-items: center;">
           <div class="logo">
-            <a href="#/dashboard" style="display: flex; align-items: center; text-decoration: none; gap: 6px;">
-              <img src="/apiclient/fluidicv2/img/opmNewLogo.png" alt="ManageEngine OpManager" style="height: 24px; width: auto; vertical-align: middle;">
+            <a href="#/dashboard" style="display: flex; align-items: center; text-decoration: none; gap: 8px;">
+              <img src="/apiclient/fluidicv2/img/opmNewLogo.png" alt="ManageEngine OpManager" style="height: 26px; width: auto; vertical-align: middle;">
               <span style="font-size: 16px; font-weight: 600; color: #ffffff; letter-spacing: -0.2px; font-family: Lato, sans-serif;">Central</span>
               <span style="background: #49bd80; color: #ffffff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 2px; letter-spacing: 0.8px;">ENTERPRISE</span>
             </a>
@@ -299,11 +292,6 @@
             +
           </button>
 
-          <!-- Zia AI Assistant Button -->
-          <button id="opm-header-zia-btn" title="ManageEngine Zia AI Assistant (Alt+Z)" style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #ffffff; border: none; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; box-shadow: 0 1px 3px rgba(79,70,229,0.4);">
-            <span>🧠</span> Zia AI
-          </button>
-
           <!-- Bell Notifications Button -->
           <button id="opm-header-bell-btn" data-fsoqa="user-notifications" title="Active Alarms Drawer" style="background: transparent; border: none; color: #cbd5e1; font-size: 16px; cursor: pointer; position: relative; padding: 4px 6px;">
             🔔
@@ -328,14 +316,6 @@
       }
 
       // Wire header button clicks
-      const launcherBtn = header.querySelector('#opm-app-launcher-btn');
-      if (launcherBtn) {
-        launcherBtn.onclick = (e) => {
-          e.stopPropagation();
-          if (typeof showItomAppLauncherDropdown === 'function') showItomAppLauncherDropdown(launcherBtn);
-        };
-      }
-
       const searchInput = header.querySelector('#opm-header-search-input');
       if (searchInput) {
         searchInput.onclick = (e) => {
@@ -357,14 +337,6 @@
         addBtn.onclick = (e) => {
           e.stopPropagation();
           if (typeof showAddDeviceModal === 'function') showAddDeviceModal();
-        };
-      }
-
-      const ziaBtn = header.querySelector('#opm-header-zia-btn');
-      if (ziaBtn) {
-        ziaBtn.onclick = (e) => {
-          e.stopPropagation();
-          if (typeof showZiaAssistantModal === 'function') showZiaAssistantModal();
         };
       }
 
@@ -534,6 +506,7 @@
     if (bar && bar.parentNode) {
       bar.parentNode.removeChild(bar);
     }
+    document.querySelectorAll('#opm-header-subnav-bar').forEach(el => el.remove());
     return null;
   }
 

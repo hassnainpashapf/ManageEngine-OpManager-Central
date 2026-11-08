@@ -563,26 +563,6 @@
           searchBtn.parentElement.insertBefore(quickAddBtn, searchBtn);
         }
       }
-
-      // Zia AI Assistant Pill Button in Top Header (ManageEngine ITOM Copilot)
-      let headerZiaBtn = hdr.querySelector('#opm-header-zia-btn');
-      if (!headerZiaBtn) {
-        const searchBtn = hdr.querySelector('button[data-fsoqa="global-search"]');
-        if (searchBtn && searchBtn.parentElement) {
-          headerZiaBtn = document.createElement('button');
-          headerZiaBtn.id = 'opm-header-zia-btn';
-          headerZiaBtn.title = 'Ask Zia AI Assistant (Natural Language ITOM Copilot)';
-          headerZiaBtn.style.cssText = 'background: linear-gradient(135deg, #7c3aed, #4f46e5); border: none; color: #ffffff; height: 24px; border-radius: 12px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; padding: 0 9px; cursor: pointer; margin-right: 8px; box-shadow: 0 1px 3px rgba(124,58,237,0.35); transition: all 0.15s; vertical-align: middle;';
-          headerZiaBtn.innerHTML = '<span style="font-size: 12px; line-height: 1;">✨</span><span>Ask Zia</span>';
-          headerZiaBtn.onmouseenter = () => { headerZiaBtn.style.transform = 'translateY(-1px)'; headerZiaBtn.style.boxShadow = '0 3px 6px rgba(124,58,237,0.45)'; };
-          headerZiaBtn.onmouseleave = () => { headerZiaBtn.style.transform = 'none'; headerZiaBtn.style.boxShadow = '0 1px 3px rgba(124,58,237,0.35)'; };
-          headerZiaBtn.onclick = (e) => {
-            e.stopPropagation();
-            showZiaAssistantModal();
-          };
-          searchBtn.parentElement.insertBefore(headerZiaBtn, searchBtn);
-        }
-      }
     }
   }
 

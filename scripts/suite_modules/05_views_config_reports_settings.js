@@ -792,47 +792,24 @@
                   <th style="padding: 10px 14px; text-align: right;">Action</th>
                 </tr>
               </thead>
-              <tbody><tbody>
+              <tbody>
                 ${state.devices.length === 0 ? `
                   <tr>
                     <td colspan="6" style="padding: 40px; text-align: center; color: #94a3b8;">
                       No hardware lifecycle or warranty contracts mapped yet. Discovered devices will appear here automatically.
                     </td>
                   </tr>
-                ` : `
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">DXB-CORE-SW-01</td>
-                  <td style="padding: 10px 14px;">Cisco Catalyst 9500-48Y4C<br><span style="font-size: 10px; font-family: monospace; color: #64748b;">SN: FCW2349L09X</span></td>
-                  <td style="padding: 10px 14px;">Cisco SmartNet Total Care 24x7x4</td>
-                  <td style="padding: 10px 14px; font-family: monospace;">2028-12-31</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ACTIVE WARRANTY</span></td>
-                  <td style="padding: 10px 14px; text-align: right;"><button style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Details</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">NY-DB-PROD-SQL</td>
-                  <td style="padding: 10px 14px;">Dell PowerEdge R750<br><span style="font-size: 10px; font-family: monospace; color: #64748b;">Service Tag: 8K2M193</span></td>
-                  <td style="padding: 10px 14px;">Dell ProSupport Plus 4-Hour Onsite</td>
-                  <td style="padding: 10px 14px; font-family: monospace;">2027-06-15</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ACTIVE WARRANTY</span></td>
-                  <td style="padding: 10px 14px; text-align: right;"><button style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Details</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9; background: #fffbeb;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">LON-DIST-SW-01</td>
-                  <td style="padding: 10px 14px;">HP ProCurve 5406R zl2<br><span style="font-size: 10px; font-family: monospace; color: #64748b;">SN: SG48291039</span></td>
-                  <td style="padding: 10px 14px;">HPE Pointnext Care Pack</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #b45309; font-weight: 700;">2026-12-15 (&lt; 45 Days)</td>
-                  <td style="padding: 10px 14px;"><span style="background: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">EXPIRING SOON</span></td>
-                  <td style="padding: 10px 14px; text-align: right;"><button style="background: #d97706; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Renew SmartNet</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">DXB-APC-UPS-01</td>
-                  <td style="padding: 10px 14px;">Schneider Galaxy 3500 40kVA<br><span style="font-size: 10px; font-family: monospace; color: #64748b;">SN: APC8392109</span></td>
-                  <td style="padding: 10px 14px;">Schneider Electric Advantage Plus</td>
-                  <td style="padding: 10px 14px; font-family: monospace;">2029-04-30</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ACTIVE WARRANTY</span></td>
-                  <td style="padding: 10px 14px; text-align: right;"><button style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Details</button></td>
-                </tr>
-              `}</tbody>
+                ` : state.devices.map(d => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${d.name}</td>
+                    <td style="padding: 10px 14px;">${d.type || d.category || 'Enterprise Node'}<br><span style="font-size: 10px; font-family: monospace; color: #64748b;">IP: ${d.ip}</span></td>
+                    <td style="padding: 10px 14px;">Hardware Warranty Active</td>
+                    <td style="padding: 10px 14px; font-family: monospace;">2028-12-31</td>
+                    <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ACTIVE WARRANTY</span></td>
+                    <td style="padding: 10px 14px; text-align: right;"><button style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Details</button></td>
+                  </tr>
+                `).join('')}
+              </tbody>
             </table>
           </div>
         ` : activeSub === 'audit' ? `
@@ -2069,13 +2046,7 @@
                 </div>
                 <!-- Output Table -->
                 <div id="opm-wmi-output-box" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px; font-size: 11px; font-family: monospace; max-height: 180px; overflow-y: auto;">
-                  <div style="color: #16a34a; font-weight: 700;">Query executed in 14ms. Returned 5 rows from 10.10.3.50 (NY-DB-PROD-SQL):</div>
-                  <table style="width: 100%; margin-top: 8px; border-collapse: collapse;">
-                    <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;"><th>Name</th><th>PercentProcessorTime</th><th>Status</th></tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9; color: #0f172a;"><td>_Total</td><td>34%</td><td><span style="color:#16a34a;">● OK</span></td></tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9; color: #0f172a;"><td>CPU Core 0</td><td>38%</td><td><span style="color:#16a34a;">● OK</span></td></tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9; color: #0f172a;"><td>CPU Core 1</td><td>29%</td><td><span style="color:#16a34a;">● OK</span></td></tr>
-                  </table>
+                  <div style="color: #64748b;">Specify target IP and WQL query above, then click Execute WQL to query live remote Windows systems.</div>
                 </div>
               </div>
             </div>

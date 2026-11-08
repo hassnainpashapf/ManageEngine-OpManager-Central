@@ -47,6 +47,201 @@
     const networkCount = routerCount + switchCount;
     const networkAlarms = filteredAlarms.filter(a => ['Switch','Router','Network'].includes(a.category)).length;
 
+    // --- Pre-calculated clean empty states for Overview widgets ---
+    let widgetCpuBody = '';
+    if (totalDevices === 0) {
+      widgetCpuBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No CPU Telemetry Available</div><div style="font-size: 11px;">Deploy the OpManager Agent or add SNMP credentials to stream real-time processor load.</div></div>';
+    } else {
+      widgetCpuBody = `
+        <div style="display: flex; align-items: center; justify-content: space-around; gap: 4px; margin-bottom: 12px; overflow-x: auto;">
+          ${[...filteredDevices].sort((a,b) => b.cpu - a.cpu).slice(0, 3).map(d => 
+            createSpeedometerGauge(d.cpu, 'CPU Load', d.name, d.ip, 145)
+          ).join('')}
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;">
+          <tbody>
+            ${[...filteredDevices].sort((a,b) => b.cpu - a.cpu).slice(0, 4).map(d => {
+              const barColor = d.cpu >= 85 ? '#dc2626' : (d.cpu >= 70 ? '#ea580c' : '#16a34a');
+              return `
+                <tr style="border-top: 1px solid #f1f5f9;">
+                  <td style="padding: 5px 4px; font-weight: 700; color: #0070e0; cursor: pointer; display: flex; align-items: center; gap: 5px;" class="opm-device-link" data-id="${d.id}">${getDeviceTypeIcon(d.type, d.category, 14)}<span>${d.name}</span></td>
+                  <td style="padding: 5px 4px; color: #64748b;">${d.probe}</td>
+                  <td style="padding: 5px 4px; width: 45%;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div style="flex: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                        <div style="width: ${d.cpu}%; height: 100%; background: ${barColor};"></div>
+                      </div>
+                      <span style="font-weight: 800; color: ${barColor}; min-width: 38px; text-align: right;">${d.cpu.toFixed(1)}%</span>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    let widgetMemBody = '';
+    if (totalDevices === 0) {
+      widgetMemBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No Memory Telemetry Available</div><div style="font-size: 11px;">Deploy the OpManager Agent or add SNMP credentials to stream real-time RAM metrics.</div></div>';
+    } else {
+      widgetMemBody = `
+        <div style="display: flex; align-items: center; justify-content: space-around; gap: 4px; margin-bottom: 12px; overflow-x: auto;">
+          ${[...filteredDevices].sort((a,b) => b.memory - a.memory).slice(0, 3).map(d => 
+            createSpeedometerGauge(d.memory, 'RAM Load', d.name, d.ip, 145)
+          ).join('')}
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;">
+          <tbody>
+            ${[...filteredDevices].sort((a,b) => b.memory - a.memory).slice(0, 4).map(d => {
+              const barColor = d.memory >= 85 ? '#dc2626' : (d.memory >= 70 ? '#ea580c' : '#16a34a');
+              return `
+                <tr style="border-top: 1px solid #f1f5f9;">
+                  <td style="padding: 5px 4px; font-weight: 700; color: #0070e0; cursor: pointer; display: flex; align-items: center; gap: 5px;" class="opm-device-link" data-id="${d.id}">${getDeviceTypeIcon(d.type, d.category, 14)}<span>${d.name}</span></td>
+                  <td style="padding: 5px 4px; color: #64748b;">${d.probe}</td>
+                  <td style="padding: 5px 4px; width: 45%;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div style="flex: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                        <div style="width: ${d.memory}%; height: 100%; background: ${barColor};"></div>
+                      </div>
+                      <span style="font-weight: 800; color: ${barColor}; min-width: 38px; text-align: right;">${d.memory.toFixed(1)}%</span>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    let widgetIfaceBody = '';
+    if (state.topInterfaces.length === 0) {
+      widgetIfaceBody = '<tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">No network interface traffic recorded. Discovered switch/router interfaces will stream live telemetry here.</td></tr>';
+    } else {
+      widgetIfaceBody = state.topInterfaces.slice(0, 5).map((iface, idx) => {
+        const trends = [
+          [120, 150, 180, 240, 310, 380, 420],
+          [850, 890, 810, 780, 800, 840, 820],
+          [2100, 2250, 2300, 2400, 2380, 2450, 2400],
+          [1100, 1250, 1180, 1300, 1400, 1390, 1450],
+          [90, 110, 105, 120, 95, 100, 110]
+        ];
+        const spark = createSparkline(trends[idx % trends.length], 75, 22, '#0070e0');
+        return `
+          <tr style="border-bottom: 1px solid #f8fafc;">
+            <td style="padding: 6px 4px; font-weight: 700; color: #0f172a;">${iface.name}</td>
+            <td style="padding: 6px 4px; color: #0070e0; font-weight: 600;">${iface.device}</td>
+            <td style="padding: 6px 4px;">${spark}</td>
+            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #0284c7;">${iface.inTraffic}</td>
+            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #64748b;">${iface.outTraffic}</td>
+            <td style="padding: 6px 4px;">
+              <span style="font-size: 10px; font-weight: 700; padding: 2px 5px; border-radius: 2px; ${iface.status === 'UP' ? 'background: #dcfce7; color: #166534;' : 'background: #fee2e2; color: #991b1b;'}">${iface.status}</span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    let widgetDiskBody = '';
+    if (state.diskVolumes.length === 0) {
+      widgetDiskBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No Storage Volumes Monitored</div><div style="font-size: 11px;">Server partitions and storage arrays will stream capacity metrics here.</div></div>';
+    } else {
+      widgetDiskBody = state.diskVolumes.map(vol => {
+        const barColor = vol.percent >= 90 ? '#dc2626' : (vol.percent >= 75 ? '#ea580c' : '#16a34a');
+        return `
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+              <span style="font-weight: 600; color: #0f172a;">${vol.partition} <span style="font-size: 11px; color: #64748b; font-weight: 400;">(${vol.device})</span></span>
+              <span style="font-weight: 700; color: ${barColor};">${vol.used} / ${vol.total} (${vol.percent}%)</span>
+            </div>
+            <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+              <div style="width: ${vol.percent}%; height: 100%; background: ${barColor};"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    let widgetNcmBody = '';
+    if (totalDevices === 0) {
+      widgetNcmBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No NCM Devices Enrolled</div><div style="font-size: 11px;">Automated backup and configuration drift audits will activate once network devices are added.</div></div>';
+    } else {
+      widgetNcmBody = `
+        ${state.configDriftFixed ? `
+          <div style="padding: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="color: #16a34a; font-size: 18px;">✓</span>
+            <div>
+              <div style="font-size: 12px; font-weight: 700; color: #166534;">Configurations in Sync</div>
+              <div style="font-size: 11px; color: #15803d;">Startup and Running configs are identical across monitored devices.</div>
+            </div>
+          </div>
+        ` : `
+          <div style="padding: 12px; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 4px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="color: #d97706; font-size: 18px;">⚠</span>
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: #92400e;">Config Drift Detected</div>
+                <div style="font-size: 11px; color: #b45309;">Running configuration has uncommitted changes vs NVRAM startup.</div>
+              </div>
+            </div>
+            <button id="opm-dash-ncm-diff-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+              Review Diff
+            </button>
+          </div>
+        `}
+        <div style="font-size: 11px; color: #64748b; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
+            <span>Last Automated Backup Run</span>
+            <span style="font-weight: 600; color: #334155;">Today at 04:00 AM UTC (Completed)</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span>PCI-DSS 4.0 Compliance Rate</span>
+            <span style="font-weight: 600; color: #16a34a;">100% Compliant</span>
+          </div>
+        </div>
+      `;
+    }
+
+    let widgetZiaBody = '';
+    if (totalDevices === 0) {
+      widgetZiaBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #4338ca; margin-bottom: 4px;">Zia AI Telemetry Standby</div><div style="font-size: 11px;">Machine-learning anomaly correlation standby for live node telemetry.</div></div>';
+    } else {
+      widgetZiaBody = `
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: #166534;">Enterprise Anomaly Detection Engine</div>
+            <div style="font-size: 11px; color: #15803d;">All monitors operating strictly within dynamic seasonality thresholds.</div>
+          </div>
+          <span style="font-size: 11px; font-weight: 700; color: #166534; background: #dcfce7; padding: 2px 8px; border-radius: 10px;">NORMAL</span>
+        </div>
+      `;
+    }
+
+    let widgetHeatmapBody = '';
+    if (networkCount === 0) {
+      widgetHeatmapBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b; width: 100%;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No Switch Interface Telemetry</div><div style="font-size: 11px;">Real-time 48-port ifOperStatus heatmap will render once switches are discovered.</div></div>';
+    } else {
+      widgetHeatmapBody = `
+        <div style="display: flex; gap: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+          <span style="color: #16a34a; font-weight: 700; border-bottom: 2px solid #16a34a; padding-bottom: 4px;">Link Up</span>
+          <span style="color: #64748b;">Unknown (0)</span>
+          <span style="color: #dc2626; font-weight: 600;">Link Down (0)</span>
+        </div>
+      `;
+    }
+
+    let widgetSdwanBody = '';
+    if (totalDevices === 0) {
+      widgetSdwanBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b; width: 100%;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No SD-WAN Controllers Connected</div><div style="font-size: 11px;">Connect Cisco vManage or NetFlow exporters to view SD-WAN fabric and tunnel health.</div></div>';
+    } else {
+      widgetSdwanBody = `
+        <div style="padding: 10px; font-size: 11px; color: #64748b;">SD-WAN Telemetry Synchronized</div>
+      `;
+    }
+
+
     let subtabNavHtml = '';
     subtabs.forEach(st => {
       const isAct = st.id === activeSub;
@@ -411,34 +606,7 @@
                 </div>
               </div>
               <div style="padding: 12px 14px;">
-                <!-- Radial Speedometer Dials Row -->
-                <div style="display: flex; align-items: center; justify-content: space-around; gap: 4px; margin-bottom: 12px; overflow-x: auto;">
-                  ${[...filteredDevices].sort((a,b) => b.cpu - a.cpu).slice(0, 3).map(d => 
-                    createSpeedometerGauge(d.cpu, 'CPU Load', d.name, d.ip, 145)
-                  ).join('')}
-                </div>
-                <!-- Device Details Table -->
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;">
-                  <tbody>
-                    ${[...filteredDevices].sort((a,b) => b.cpu - a.cpu).slice(0, 4).map(d => {
-                      const barColor = d.cpu >= 85 ? '#dc2626' : (d.cpu >= 70 ? '#ea580c' : '#16a34a');
-                      return `
-                        <tr style="border-top: 1px solid #f1f5f9;">
-                          <td style="padding: 5px 4px; font-weight: 700; color: #0070e0; cursor: pointer; display: flex; align-items: center; gap: 5px;" class="opm-device-link" data-id="${d.id}">${getDeviceTypeIcon(d.type, d.category, 14)}<span>${d.name}</span></td>
-                          <td style="padding: 5px 4px; color: #64748b;">${d.probe}</td>
-                          <td style="padding: 5px 4px; width: 45%;">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                              <div style="flex: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                                <div style="width: ${d.cpu}%; height: 100%; background: ${barColor};"></div>
-                              </div>
-                              <span style="font-weight: 800; color: ${barColor}; min-width: 38px; text-align: right;">${d.cpu.toFixed(1)}%</span>
-                            </div>
-                          </td>
-                        </tr>
-                      `;
-                    }).join('')}
-                  </tbody>
-                </table>
+                ${widgetCpuBody}
               </div>
             </div>
 
@@ -458,34 +626,7 @@
                 </div>
               </div>
               <div style="padding: 12px 14px;">
-                <!-- Radial Speedometer Dials Row -->
-                <div style="display: flex; align-items: center; justify-content: space-around; gap: 4px; margin-bottom: 12px; overflow-x: auto;">
-                  ${[...filteredDevices].sort((a,b) => b.memory - a.memory).slice(0, 3).map(d => 
-                    createSpeedometerGauge(d.memory, 'RAM Load', d.name, d.ip, 145)
-                  ).join('')}
-                </div>
-                <!-- Device Details Table -->
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;">
-                  <tbody>
-                    ${[...filteredDevices].sort((a,b) => b.memory - a.memory).slice(0, 4).map(d => {
-                      const barColor = d.memory >= 85 ? '#dc2626' : (d.memory >= 70 ? '#ea580c' : '#16a34a');
-                      return `
-                        <tr style="border-top: 1px solid #f1f5f9;">
-                          <td style="padding: 5px 4px; font-weight: 700; color: #0070e0; cursor: pointer; display: flex; align-items: center; gap: 5px;" class="opm-device-link" data-id="${d.id}">${getDeviceTypeIcon(d.type, d.category, 14)}<span>${d.name}</span></td>
-                          <td style="padding: 5px 4px; color: #64748b;">${d.probe}</td>
-                          <td style="padding: 5px 4px; width: 45%;">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                              <div style="flex: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                                <div style="width: ${d.memory}%; height: 100%; background: ${barColor};"></div>
-                              </div>
-                              <span style="font-weight: 800; color: ${barColor}; min-width: 38px; text-align: right;">${d.memory.toFixed(1)}%</span>
-                            </div>
-                          </td>
-                        </tr>
-                      `;
-                    }).join('')}
-                  </tbody>
-                </table>
+                ${widgetMemBody}
               </div>
             </div>
 
@@ -517,28 +658,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    ${state.topInterfaces.slice(0, 5).map((iface, idx) => {
-                      const trends = [
-                        [120, 150, 180, 240, 310, 380, 420],
-                        [850, 890, 810, 780, 800, 840, 820],
-                        [2100, 2250, 2300, 2400, 2380, 2450, 2400],
-                        [1100, 1250, 1180, 1300, 1400, 1390, 1450],
-                        [90, 110, 105, 120, 95, 100, 110]
-                      ];
-                      const spark = createSparkline(trends[idx % trends.length], 75, 22, '#0070e0');
-                      return `
-                        <tr style="border-bottom: 1px solid #f8fafc;">
-                          <td style="padding: 6px 4px; font-weight: 700; color: #0f172a;">${iface.name}</td>
-                          <td style="padding: 6px 4px; color: #0070e0; font-weight: 600;">${iface.device}</td>
-                          <td style="padding: 6px 4px;">${spark}</td>
-                          <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #0284c7;">${iface.inTraffic}</td>
-                          <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #64748b;">${iface.outTraffic}</td>
-                          <td style="padding: 6px 4px;">
-                            <span style="font-size: 10px; font-weight: 700; padding: 2px 5px; border-radius: 2px; ${iface.status === 'UP' ? 'background: #dcfce7; color: #166534;' : 'background: #fee2e2; color: #991b1b;'}">${iface.status}</span>
-                          </td>
-                        </tr>
-                      `;
-                    }).join('')}
+                    ${widgetIfaceBody}
                   </tbody>
                 </table>
               </div>
@@ -558,20 +678,7 @@
               </div>
               <div style="padding: 14px 16px;">
                 <div style="display: flex; flex-direction: column; gap: 10px;">
-                  ${state.diskVolumes.map(vol => {
-                    const barColor = vol.percent >= 90 ? '#dc2626' : (vol.percent >= 75 ? '#ea580c' : '#16a34a');
-                    return `
-                      <div>
-                        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
-                          <span style="font-weight: 600; color: #0f172a;">${vol.partition} <span style="font-size: 11px; color: #64748b; font-weight: 400;">(${vol.device})</span></span>
-                          <span style="font-weight: 700; color: ${barColor};">${vol.used} / ${vol.total} (${vol.percent}%)</span>
-                        </div>
-                        <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                          <div style="width: ${vol.percent}%; height: 100%; background: ${barColor};"></div>
-                        </div>
-                      </div>
-                    `;
-                  }).join('')}
+                  ${widgetDiskBody}
                 </div>
               </div>
             </div>
@@ -589,38 +696,7 @@
                 </div>
               </div>
               <div style="padding: 14px 16px;">
-                ${state.configDriftFixed ? `
-                  <div style="padding: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                    <span style="color: #16a34a; font-size: 18px;">✓</span>
-                    <div>
-                      <div style="font-size: 12px; font-weight: 700; color: #166534;">Configurations in Sync</div>
-                      <div style="font-size: 11px; color: #15803d;">Startup and Running configs for DXB-CORE-SW-01 are identical.</div>
-                    </div>
-                  </div>
-                ` : `
-                  <div style="padding: 12px; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 4px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <span style="color: #d97706; font-size: 18px;">⚠</span>
-                      <div>
-                        <div style="font-size: 12px; font-weight: 700; color: #92400e;">Config Drift Detected: DXB-CORE-SW-01</div>
-                        <div style="font-size: 11px; color: #b45309;">Running configuration has 18 uncommitted changes vs NVRAM startup.</div>
-                      </div>
-                    </div>
-                    <button id="opm-dash-ncm-diff-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      Review Diff
-                    </button>
-                  </div>
-                `}
-                <div style="font-size: 11px; color: #64748b; display: flex; flex-direction: column; gap: 6px;">
-                  <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
-                    <span>Last Automated Backup Run</span>
-                    <span style="font-weight: 600; color: #334155;">Today at 04:00 AM UTC (16/16 Succeeded)</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between;">
-                    <span>PCI-DSS 4.0 Compliance Rate</span>
-                    <span style="font-weight: 600; color: #16a34a;">96.4% Compliant</span>
-                  </div>
-                </div>
+                ${widgetNcmBody}
               </div>
             </div>
 
@@ -638,29 +714,7 @@
                 </div>
               </div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;">
-                <div style="background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 6px; padding: 12px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-size: 12px; font-weight: 700; color: #5b21b6;">High Impact Risk on DXB-CORE-SW-01</span>
-                    <span style="font-size: 10px; font-weight: 700; background: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 2px;">98.2% Probability</span>
-                  </div>
-                  <div style="font-size: 11px; color: #4c1d95; line-height: 1.4;">
-                    Possible transit bottleneck due to recurring packet loss on GigabitEthernet0/1. BGP flapping observed from upstream ISP gateway.
-                  </div>
-                  <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 600; color: #6d28d9;">Zia Recommendation: Apply QOS rate-limiting policy</span>
-                    <button id="opm-dash-zia-action-btn" style="background: #4338ca; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      Execute Fix
-                    </button>
-                  </div>
-                </div>
-
-                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between;">
-                  <div>
-                    <div style="font-size: 11px; font-weight: 700; color: #166534;">Enterprise Anomaly Detection Engine</div>
-                    <div style="font-size: 11px; color: #15803d;">47 / 48 monitors operating strictly within dynamic seasonality thresholds.</div>
-                  </div>
-                  <span style="font-size: 11px; font-weight: 700; color: #166534; background: #dcfce7; padding: 2px 8px; border-radius: 10px;">NORMAL</span>
-                </div>
+                ${widgetZiaBody}
               </div>
             </div>
 
@@ -718,31 +772,7 @@
                 </div>
               </div>
               <div style="padding: 12px 16px;">
-                <div style="display: flex; gap: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
-                  <span style="color: #16a34a; font-weight: 700; border-bottom: 2px solid #16a34a; padding-bottom: 4px;">Link Up (45)</span>
-                  <span style="color: #64748b;">Unknown (0)</span>
-                  <span style="color: #dc2626; font-weight: 600;">Link Down (1)</span>
-                  <span style="color: #0284c7; font-weight: 600;">Link Up &amp; NoFlows (2)</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 18px;">
-                  <div style="width: 115px; text-align: center; flex-shrink: 0;">
-                    <svg width="105" height="64" viewBox="0 0 110 66">
-                      <path d="M 12 56 A 42 42 0 0 1 98 56" fill="none" stroke="#e2e8f0" stroke-width="9" stroke-linecap="round"/>
-                      <path d="M 12 56 A 42 42 0 0 1 93 38" fill="none" stroke="#49bd80" stroke-width="9" stroke-linecap="round"/>
-                      <text x="55" y="50" text-anchor="middle" font-size="20" font-weight="800" fill="#1e293b">45</text>
-                      <text x="55" y="63" text-anchor="middle" font-size="9" font-weight="600" fill="#64748b">Interfaces UP</text>
-                    </svg>
-                  </div>
-                  <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 5px; flex: 1;">
-                    ${Array.from({ length: 48 }).map((_, idx) => {
-                      const isCritical = idx === 14;
-                      const isNoFlow = idx === 29 || idx === 41;
-                      const bg = isCritical ? '#ef4444' : (isNoFlow ? '#38bdf8' : '#49bd80');
-                      const tip = isCritical ? 'DXB-CORE-SW-01 :: TenGigE1/0/1 (96% Peak / Link Alert)' : (isNoFlow ? `Port #${idx + 1} (Link Up & NoFlows)` : `Port #${idx + 1} (Link Up - Normal)`);
-                      return `<div title="${tip}" style="height: 16px; border-radius: 2px; background: ${bg}; cursor: pointer; box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);"></div>`;
-                    }).join('')}
-                  </div>
-                </div>
+                ${widgetHeatmapBody}
               </div>
             </div>
 
@@ -758,45 +788,8 @@
                   <button class="opm-widget-btn-max" data-title="SD-WAN & NetFlow Summary" title="Maximize" style="background:none;border:none;cursor:pointer;color:#64748b;padding:2px;">⋮</button>
                 </div>
               </div>
-              <div style="padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; flex: 1;">
-                  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px; text-align: center;">
-                    <img src="/apiclient/fluidicv2/img/v-manage.svg" alt="vManage" style="width: 24px; height: 24px; object-fit: contain; margin-bottom: 2px;">
-                    <div style="font-size: 13px; font-weight: 800; color: #0f172a;">1 UP</div>
-                    <div style="font-size: 9px; color: #64748b; font-weight: 700;">vManage</div>
-                  </div>
-                  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px; text-align: center;">
-                    <img src="/apiclient/fluidicv2/img/v-smart.svg" alt="vSmart" style="width: 24px; height: 24px; object-fit: contain; margin-bottom: 2px;">
-                    <div style="font-size: 13px; font-weight: 800; color: #16a34a;">2 UP</div>
-                    <div style="font-size: 9px; color: #64748b; font-weight: 700;">vSmart</div>
-                  </div>
-                  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px; text-align: center;">
-                    <img src="/apiclient/fluidicv2/img/v-bond.svg" alt="vBond" style="width: 24px; height: 24px; object-fit: contain; margin-bottom: 2px;">
-                    <div style="font-size: 13px; font-weight: 800; color: #0284c7;">2 UP</div>
-                    <div style="font-size: 9px; color: #64748b; font-weight: 700;">vBond</div>
-                  </div>
-                  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px; text-align: center;">
-                    <img src="/apiclient/fluidicv2/img/v-edge.svg" alt="vEdge" style="width: 24px; height: 24px; object-fit: contain; margin-bottom: 2px;">
-                    <div style="font-size: 13px; font-weight: 800; color: #16a34a;">8 UP</div>
-                    <div style="font-size: 9px; color: #64748b; font-weight: 700;">WAN vEdge</div>
-                  </div>
-                </div>
-                <div style="display: flex; align-items: flex-end; gap: 12px; padding-left: 12px; border-left: 1px solid #f1f5f9;">
-                  ${[
-                    { label: 'V5', count: 0, pct: 6, color: '#94a3b8' },
-                    { label: 'V9', count: 10, pct: 85, color: '#49bd80' },
-                    { label: 'NSEL', count: 4, pct: 48, color: '#38bdf8' },
-                    { label: 'sFlow', count: 2, pct: 28, color: '#f59e0b' }
-                  ].map(col => `
-                    <div style="text-align: center;">
-                      <div style="font-size: 11px; font-weight: 800; color: #1e293b; margin-bottom: 3px;">${col.count}</div>
-                      <div style="width: 8px; height: 42px; background: #e2e8f0; border-radius: 4px; margin: 0 auto; display: flex; align-items: flex-end; overflow: hidden;">
-                        <div style="width: 100%; height: ${col.pct}%; background: ${col.color};"></div>
-                      </div>
-                      <div style="font-size: 9px; color: #64748b; font-weight: 700; margin-top: 3px;">${col.label}</div>
-                    </div>
-                  `).join('')}
-                </div>
+              <div style="padding: 12px 16px;">
+                ${widgetSdwanBody}
               </div>
             </div>
 
@@ -1119,13 +1112,13 @@
                     <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
                     <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>45ms</strong> &bull; Sync: Synchronized</div>
                   </div>
-                  <div style="background: #450a0a; padding: 18px; border-radius: 6px; border: 1px solid #dc2626;">
+                  <div style="background: #0f172a; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #fca5a5; font-weight: 700;">DUBAI CORE PROBE</span>
-                      <span style="font-size: 10px; background: #7f1d1d; color: #fca5a5; padding: 1px 6px; border-radius: 2px;">DEGRADED</span>
+                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">ENTERPRISE PROBES</span>
+                      <span style="font-size: 10px; background: #064e3b; color: #6ee7b7; padding: 1px 6px; border-radius: 2px;">${totalDevices > 0 ? 'HEALTHY' : 'STANDBY'}</span>
                     </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #f87171; margin: 8px 0;">1 CRITICAL ALARM</div>
-                    <div style="font-size: 11px; color: #fecaca;">DXB-CORE-SW-01 High Contention &bull; Latency: <strong>18ms</strong></div>
+                    <div style="font-size: 26px; font-weight: 800; color: #4ade80; margin: 8px 0;">${filteredAlarms.length} ACTIVE ALARMS</div>
+                    <div style="font-size: 11px; color: #cbd5e1;">All registered probe nodes synchronized</div>
                   </div>
                 </div>
 
@@ -1392,6 +1385,69 @@
   // VIEW: INVENTORY (Devices, Interfaces, Probes, Virt, Storage)
   // -------------------------------------------------------------
   function renderInventoryView() {
+    // --- Pre-calculated clean empty states for Inventory subtabs ---
+    let invVirtContent = '';
+    const virtDevices = (state.devices || []).filter(d => ['virtualization','vm','hypervisor'].includes((d.type||'').toLowerCase()));
+    if (virtDevices.length === 0) {
+      invVirtContent = `
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Virtualization Clusters or VMs Discovered</div>
+          <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+            Discover VMware ESXi/vCenter, Proxmox VE, Hyper-V, or Nutanix AHV nodes to view virtual machine performance and datastores.
+          </div>
+          <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+            + Add Virtualization Host
+          </button>
+        </div>
+      `;
+    }
+
+    let invFwaContent = '';
+    const fwaDevices = (state.devices || []).filter(d => (d.category||'').toLowerCase().includes('firewall'));
+    if (fwaDevices.length === 0) {
+      invFwaContent = `
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: #fff7ed; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Firewall Security Rules Managed</div>
+          <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+            Connect Palo Alto, FortiGate, or Cisco ASA firewalls via Syslog or API to analyze ACL policy rules and unused access entries.
+          </div>
+          <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+            + Add Firewall Appliance
+          </button>
+        </div>
+      `;
+    }
+
+    let invStgContent = '';
+    if ((state.diskVolumes || []).length === 0) {
+      invStgContent = '<div style="padding: 40px; text-align: center; color: #94a3b8;">No storage arrays or drive partitions discovered yet.</div>';
+    } else {
+      invStgContent = state.diskVolumes.map(vol => `
+        <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-weight: 700; color: #0f172a;">${vol.partition}</div>
+            <div style="font-size: 11px; color: #64748b;">Target: ${vol.device}</div>
+          </div>
+          <div style="width: 300px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+              <span>Used: ${vol.used} of ${vol.total}</span>
+              <span style="font-weight: 700;">${vol.percent}%</span>
+            </div>
+            <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+              <div style="width: ${vol.percent}%; height: 100%; background: ${vol.percent > 90 ? '#dc2626' : '#16a34a'};"></div>
+            </div>
+          </div>
+          <span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 3px; ${vol.status === 'Clear' ? 'background: #dcfce7; color: #166534;' : 'background: #fff7ed; color: #ea580c;'}">${vol.status}</span>
+        </div>
+      `).join('');
+    }
+
     state.currentTab = 'inventory';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.inventory || 'devices';
@@ -1814,249 +1870,15 @@
             `).join('')}
           </div>
         ` : activeSub === 'virtualization' ? `
-          <!-- Virtualization Subtab (OPM/Virtualization.xml -> /Inventory/List/Virtualization/*) -->
-          <div style="display: flex; flex-direction: column; gap: 20px;">
-            
-            <!-- Virtualization KPI Strip -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0070e0;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Virtual Machines</div>
-                <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">84 VMs</div>
-                <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">82 Running • 2 Suspended</div>
-              </div>
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #16a34a;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Allocated vCPUs</div>
-                <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">348 Cores</div>
-                <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Avg Utilization: 32.4%</div>
-              </div>
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #7c3aed;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Allocated Memory (vRAM)</div>
-                <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">1.4 TB</div>
-                <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Buffer Cache: 88% Optimal</div>
-              </div>
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0284c7;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Hypervisor Clusters</div>
-                <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">4 Active</div>
-                <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">VMware, Proxmox, Nutanix, K8s</div>
-              </div>
-            </div>
-
-            <!-- Hypervisor Clusters Summary Cards -->
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
-              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; background: #ffffff; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-                <img src="/apiclient/fluidicv2/img/vmware/vCenter.png" style="width: 36px; height: 36px; object-fit: contain;">
-                <div>
-                  <div style="font-weight: 700; color: #0070e0; font-size: 13px;">VMware vCenter 8.0 - London DC</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Host: LON-MAIL-EXCH-01 (10.20.3.10) • Probe: London Branch Office</div>
-                  <div style="font-size: 12px; color: #334155; margin-top: 4px;">1 ESXi Host | 42 Guest Virtual Machines | 99.98% Uptime</div>
-                </div>
-              </div>
-              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; background: #ffffff; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-                <img src="/apiclient/fluidicv2/img/vmware/Proxmox-Node.png" style="width: 36px; height: 36px; object-fit: contain;">
-                <div>
-                  <div style="font-weight: 700; color: #0070e0; font-size: 13px;">Proxmox VE 8.1 HA Cluster - Dubai Campus</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Master: DXB-PVE-01 (10.40.5.10) • Probe: Dubai Campus Core</div>
-                  <div style="font-size: 12px; color: #334155; margin-top: 4px;">3 Quorum Nodes | 24 Guest VMs/LXC | ZFS Pool Healthy</div>
-                </div>
-              </div>
-              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; background: #ffffff; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-                <img src="/apiclient/fluidicv2/img/vmware/PrismCentral.svg" style="width: 36px; height: 36px; object-fit: contain;">
-                <div>
-                  <div style="font-weight: 700; color: #0070e0; font-size: 13px;">Nutanix AHV Prism Central - New York DC</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Controller: NY-NTNX-PRISM-01 (10.10.8.20) • Probe: New York Data Center</div>
-                  <div style="font-size: 12px; color: #334155; margin-top: 4px;">4 AHV Nodes | 10 Analytics VMs | Acropolis OS v6.5</div>
-                </div>
-              </div>
-              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; background: #ffffff; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-                <img src="/apiclient/fluidicv2/img/vmware/HostSystem.png" style="width: 36px; height: 36px; object-fit: contain;">
-                <div>
-                  <div style="font-weight: 700; color: #0070e0; font-size: 13px;">Kubernetes Container Control Plane - Singapore VPC</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Host: SG-K8S-MSTR-01 (10.30.4.10) • Probe: Singapore Cloud VPC</div>
-                  <div style="font-size: 12px; color: #334155; margin-top: 4px;">8 Microservice Pods | Containerd Runtime | K8s v1.27</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Virtual Machines Table -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="padding: 12px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 13px; font-weight: 700; color: #0f172a;">Virtual Machine Inventory &amp; Performance Telemetry</div>
-                <div style="font-size: 11px; color: #64748b;">Showing 6 of 84 Discovered Virtual Machines</div>
-              </div>
-              <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-                <thead>
-                  <tr style="background: #f1f5f9; border-bottom: 1px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
-                    <th style="padding: 10px 14px;">Virtual Machine</th>
-                    <th style="padding: 10px 14px;">Hypervisor &amp; Cluster</th>
-                    <th style="padding: 10px 14px;">Probe Scope</th>
-                    <th style="padding: 10px 14px;">Guest OS</th>
-                    <th style="padding: 10px 14px;">vCPU (Load%)</th>
-                    <th style="padding: 10px 14px;">Allocated RAM</th>
-                    <th style="padding: 10px 14px;">IP Address</th>
-                    <th style="padding: 10px 14px;">Status</th>
-                    <th style="padding: 10px 14px; text-align: right;">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 12px 14px; font-weight: 700; color: #0070e0;">lon-exch-mbx-01</td>
-                    <td style="padding: 12px 14px;">VMware ESXi 8.0<br><span style="font-size: 10px; color: #64748b;">LON-CLUSTER-01</span></td>
-                    <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">London Branch Office</span></td>
-                    <td style="padding: 12px 14px;">Windows Server 2022</td>
-                    <td style="padding: 12px 14px; font-weight: 600;">8 vCPU (42%)</td>
-                    <td style="padding: 12px 14px;">32 GB (68% used)</td>
-                    <td style="padding: 12px 14px; font-family: monospace;">10.20.3.11</td>
-                    <td style="padding: 12px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;">● RUNNING</span></td>
-                    <td style="padding: 12px 14px; text-align: right;"><button onclick="window.showToast('Rebooting guest VM lon-exch-mbx-01')" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Actions ▾</button></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 12px 14px; font-weight: 700; color: #0070e0;">lon-exch-cas-01</td>
-                    <td style="padding: 12px 14px;">VMware ESXi 8.0<br><span style="font-size: 10px; color: #64748b;">LON-CLUSTER-01</span></td>
-                    <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">London Branch Office</span></td>
-                    <td style="padding: 12px 14px;">Windows Server 2022</td>
-                    <td style="padding: 12px 14px; font-weight: 600;">4 vCPU (28%)</td>
-                    <td style="padding: 12px 14px;">16 GB (54% used)</td>
-                    <td style="padding: 12px 14px; font-family: monospace;">10.20.3.12</td>
-                    <td style="padding: 12px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;">● RUNNING</span></td>
-                    <td style="padding: 12px 14px; text-align: right;"><button onclick="window.showToast('Actions menu')" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Actions ▾</button></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 12px 14px; font-weight: 700; color: #0070e0;">pve-web-frontend-01</td>
-                    <td style="padding: 12px 14px;">Proxmox VE 8.1<br><span style="font-size: 10px; color: #64748b;">PVE-HA-CLUSTER</span></td>
-                    <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">Dubai Campus Core</span></td>
-                    <td style="padding: 12px 14px;">Debian 12 Bookworm</td>
-                    <td style="padding: 12px 14px; font-weight: 600;">4 vCPU (18%)</td>
-                    <td style="padding: 12px 14px;">8 GB (41% used)</td>
-                    <td style="padding: 12px 14px; font-family: monospace;">10.40.5.10</td>
-                    <td style="padding: 12px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;">● RUNNING</span></td>
-                    <td style="padding: 12px 14px; text-align: right;"><button onclick="window.showToast('Actions menu')" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Actions ▾</button></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 12px 14px; font-weight: 700; color: #0070e0;">ntnx-analytics-worker-01</td>
-                    <td style="padding: 12px 14px;">Nutanix AHV<br><span style="font-size: 10px; color: #64748b;">PRISM-CENTRAL-01</span></td>
-                    <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">New York Data Center</span></td>
-                    <td style="padding: 12px 14px;">RHEL 9.2 Enterprise</td>
-                    <td style="padding: 12px 14px; font-weight: 600;">16 vCPU (64%)</td>
-                    <td style="padding: 12px 14px;">64 GB (78% used)</td>
-                    <td style="padding: 12px 14px; font-family: monospace;">10.10.8.20</td>
-                    <td style="padding: 12px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;">● RUNNING</span></td>
-                    <td style="padding: 12px 14px; text-align: right;"><button onclick="window.showToast('Actions menu')" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Actions ▾</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
+          ${invVirtContent}
         ` : activeSub === 'firewall_rules' ? `
-          <!-- Firewall Rules Subtab (FWA/secondaryLevelMenuTab.xml -> /Inventory/List/LogMgmt/Rulemgmt) -->
-          <div style="display: flex; flex-direction: column; gap: 20px;">
-            
-            <!-- Firewall Rules KPI Strip -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0070e0;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Security Rules</div>
-                <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">142 Rules</div>
-                <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">Indexed across Palo Alto &amp; Fortinet</div>
-              </div>
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #16a34a;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Active Policy Rules</div>
-                <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">141 Active</div>
-                <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">99.3% Policy Efficiency</div>
-              </div>
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #dc2626;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Shadowed / Obsolete Rules</div>
-                <div style="font-size: 22px; font-weight: 800; color: #dc2626; margin-top: 4px;">1 Conflict</div>
-                <div style="font-size: 11px; color: #dc2626; margin-top: 2px;">Rule #42 completely shadowed</div>
-              </div>
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Blocked Attack Packets</div>
-                <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">84,920 pkts</div>
-                <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">Enforced at Network Perimeter</div>
-              </div>
-            </div>
-
-            <!-- Rules Table -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="padding: 12px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 13px; font-weight: 700; color: #0f172a;">Firewall Analyzer Security Policy Rule Management</div>
-                <div style="font-size: 11px; color: #64748b;">Matching route: <code>/Inventory/List/LogMgmt/Rulemgmt</code></div>
-              </div>
-              <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-                <thead>
-                  <tr style="background: #f1f5f9; border-bottom: 1px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
-                    <th style="padding: 10px 14px;">Rule ID</th>
-                    <th style="padding: 10px 14px;">Policy Name</th>
-                    <th style="padding: 10px 14px;">Firewall &amp; Probe</th>
-                    <th style="padding: 10px 14px;">Source Zone</th>
-                    <th style="padding: 10px 14px;">Destination Zone</th>
-                    <th style="padding: 10px 14px;">Service / Port</th>
-                    <th style="padding: 10px 14px;">Action</th>
-                    <th style="padding: 10px 14px;">Hit Count</th>
-                    <th style="padding: 10px 14px; text-align: right;">Optimization</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 12px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">RULE-01</td>
-                    <td style="padding: 12px 14px; font-weight: 600;">Permit-HTTPS-Inbound</td>
-                    <td style="padding: 12px 14px;">NY-PA-FW-01<br><span style="font-size: 10px; color: #64748b;">New York Data Center</span></td>
-                    <td style="padding: 12px 14px;">Untrust (WAN)</td>
-                    <td style="padding: 12px 14px;">DMZ (10.10.0.50)</td>
-                    <td style="padding: 12px 14px; font-family: monospace;">TCP/443</td>
-                    <td style="padding: 12px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-weight: 700; font-size: 10px;">PERMIT</span></td>
-                    <td style="padding: 12px 14px; font-weight: 700;">14,820,194</td>
-                    <td style="padding: 12px 14px; text-align: right;"><span style="color: #16a34a; font-size: 11px; font-weight: 600;">✓ Optimized</span></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 12px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">RULE-02</td>
-                    <td style="padding: 12px 14px; font-weight: 600;">Drop-Telnet-Inbound</td>
-                    <td style="padding: 12px 14px;">NY-PA-FW-01<br><span style="font-size: 10px; color: #64748b;">New York Data Center</span></td>
-                    <td style="padding: 12px 14px;">Any</td>
-                    <td style="padding: 12px 14px;">Internal (10.10.0.0/16)</td>
-                    <td style="padding: 12px 14px; font-family: monospace;">TCP/23</td>
-                    <td style="padding: 12px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 8px; border-radius: 3px; font-weight: 700; font-size: 10px;">DENY (DROP)</span></td>
-                    <td style="padding: 12px 14px; font-weight: 700;">84,920</td>
-                    <td style="padding: 12px 14px; text-align: right;"><span style="color: #16a34a; font-size: 11px; font-weight: 600;">✓ Enforced</span></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9; background: #fffbeb;">
-                    <td style="padding: 12px 14px; font-family: monospace; font-weight: 700; color: #dc2626;">RULE-42</td>
-                    <td style="padding: 12px 14px; font-weight: 600; color: #b45309;">Permit-DMZ-Legacy</td>
-                    <td style="padding: 12px 14px;">LON-FTNT-FW-01<br><span style="font-size: 10px; color: #64748b;">London Branch Office</span></td>
-                    <td style="padding: 12px 14px;">WAN</td>
-                    <td style="padding: 12px 14px;">DMZ</td>
-                    <td style="padding: 12px 14px; font-family: monospace;">TCP/8080</td>
-                    <td style="padding: 12px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-weight: 700; font-size: 10px;">PERMIT</span></td>
-                    <td style="padding: 12px 14px; font-weight: 700; color: #dc2626;">0 hits (90d)</td>
-                    <td style="padding: 12px 14px; text-align: right;"><button onclick="window.showToast('Recommending rule purge for #42')" style="background: #ea580c; color: #fff; border: none; padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: 700; cursor: pointer;">Shadowed (Purge)</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
+          ${invFwaContent}
         ` : `
           <!-- Storage Subtab -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
             <div style="font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Storage Arrays, Partitions & Power Infrastructure</div>
             <div style="display: flex; flex-direction: column; gap: 12px;">
-              ${state.diskVolumes.map(vol => `
-                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
-                  <div>
-                    <div style="font-weight: 700; color: #0f172a;">${vol.partition}</div>
-                    <div style="font-size: 11px; color: #64748b;">Target: ${vol.device}</div>
-                  </div>
-                  <div style="width: 300px;">
-                    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
-                      <span>Used: ${vol.used} of ${vol.total}</span>
-                      <span style="font-weight: 700;">${vol.percent}%</span>
-                    </div>
-                    <div style="height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: ${vol.percent}%; height: 100%; background: ${vol.percent > 90 ? '#dc2626' : '#16a34a'};"></div>
-                    </div>
-                  </div>
-                  <span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 3px; ${vol.status === 'Clear' ? 'background: #dcfce7; color: #166534;' : 'background: #fff7ed; color: #ea580c;'}">${vol.status}</span>
-                </div>
-              `).join('')}
+              ${invStgContent}
             </div>
           </div>
         `}

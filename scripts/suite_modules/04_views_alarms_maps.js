@@ -321,41 +321,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CRITICAL</span></td>
-                  <td style="padding: 10px 14px;"><strong>NY-CORE-RTR-01</strong><br><span style="font-size: 10px; color: #64748b;">New York Data Center</span></td>
-                  <td style="padding: 10px 14px;">BGP Neighbor 198.51.100.2</td>
-                  <td style="padding: 10px 14px; color: #334155;">BGP Session flap cleared after carrier ISP fiber re-splice</td>
-                  <td style="padding: 10px 14px; font-family: monospace;">18m 42s</td>
-                  <td style="padding: 10px 14px;">admin@opmanager</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CLEARED</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">TROUBLE</span></td>
-                  <td style="padding: 10px 14px;"><strong>LON-MAIL-EXCH-01</strong><br><span style="font-size: 10px; color: #64748b;">London Branch Office</span></td>
-                  <td style="padding: 10px 14px;">Disk Volume C:\\</td>
-                  <td style="padding: 10px 14px; color: #334155;">Volume usage normalized to 62% after automated log cleanup</td>
-                  <td style="padding: 10px 14px; font-family: monospace;">42m 10s</td>
-                  <td style="padding: 10px 14px;">Auto-cleared (Poller)</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CLEARED</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px;"><span style="background: #fef9c3; color: #854d0e; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ATTENTION</span></td>
-                  <td style="padding: 10px 14px;"><strong>SG-K8S-MSTR-01</strong><br><span style="font-size: 10px; color: #64748b;">Singapore Cloud VPC</span></td>
-                  <td style="padding: 10px 14px;">Node Memory 84%</td>
-                  <td style="padding: 10px 14px; color: #334155;">Memory usage dropped below 70% following pod eviction</td>
-                  <td style="padding: 10px 14px; font-family: monospace;">1h 05m</td>
-                  <td style="padding: 10px 14px;">johndoe</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CLEARED</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CRITICAL</span></td>
-                  <td style="padding: 10px 14px;"><strong>DXB-EDGE-RTR-01</strong><br><span style="font-size: 10px; color: #64748b;">Dubai Campus Core</span></td>
-                  <td style="padding: 10px 14px;">Power Supply 2 Failure</td>
-                  <td style="padding: 10px 14px; color: #334155;">Dual PSU redundant feed restored after maintenance window</td>
-                  <td style="padding: 10px 14px; font-family: monospace;">2h 15m</td>
-                  <td style="padding: 10px 14px;">admin@opmanager</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CLEARED</span></td>
+                <tr>
+                  <td colspan="7" style="padding: 40px; text-align: center; color: #94a3b8;">
+                    No historical alarms recorded. All monitored systems are operating normally.
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -480,32 +449,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">CRITICAL</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">15 mins ago</td>
-                  <td style="padding: 12px 14px;"><strong>DXB-CORE-SW-01</strong><br><span style="font-size: 11px; color: #dc2626;">FortyGigabitEthernet1/0/48</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">Dubai Campus Core</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">Switch Port Mapper</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">Port 48 link state FLAPPING (8 transition cycles in 3 minutes). Interface administratively down to protect STP topology.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Locate Port</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">TROUBLE</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">28 mins ago</td>
-                  <td style="padding: 12px 14px;"><strong>Subnet 10.10.3.0/24</strong><br><span style="font-size: 11px; color: #0070e0;">VLAN 30 (Prod DB)</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">New York Data Center</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">IP Address Manager</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">IP Conflict: 10.10.3.50 claimed by two distinct MAC addresses (00:50:56:B2:91:A4 vs 00:50:56:84:11:FE).</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Resolve IP</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 12px 14px;"><span style="background: #fef9c3; color: #854d0e; padding: 3px 8px; border-radius: 3px; font-weight: 700; font-size: 11px;">ATTENTION</span></td>
-                  <td style="padding: 12px 14px; color: #64748b;">2 hours ago</td>
-                  <td style="padding: 12px 14px;"><strong>LON-DIST-SW-01</strong><br><span style="font-size: 11px; color: #64748b;">FastEthernet0/12</span></td>
-                  <td style="padding: 12px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">London Branch Office</span></td>
-                  <td style="padding: 12px 14px; font-weight: 600; color: #334155;">Rogue Detection</td>
-                  <td style="padding: 12px 14px; color: #1e293b;">Unrecognized rogue device (MAC: b4:99:ba:c1:02:44) connected to switchport without 802.1X certificate. Port quarantined.</td>
-                  <td style="padding: 12px 14px; text-align: right;"><button class="opm-net-alarm-ack-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">Quarantine</button></td>
+                <tr>
+                  <td colspan="7" style="padding: 40px; text-align: center; color: #94a3b8;">
+                    No IP address conflicts, rogue MACs, or switch port flaps detected.
+                  </td>
                 </tr>
               </tbody>
             </table>
