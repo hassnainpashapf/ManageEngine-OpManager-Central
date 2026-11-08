@@ -9545,11 +9545,11 @@
     // Subtab definitions
     const subtabs = [
       { id: 'devices', name: `Devices (${state.devices.length})` },
-      { id: 'interfaces', name: 'Interfaces (48)' },
+      { id: 'interfaces', name: `Interfaces (${state.interfaces ? state.interfaces.length : 0})` },
       { id: 'probes', name: `Enterprise Probes (${state.probes.length})` },
-      { id: 'virtualization', name: 'Virtualization (84 VMs)' },
-      { id: 'firewall_rules', name: 'Firewall Rules (142)' },
-      { id: 'storage', name: 'Storage (1)' }
+      { id: 'virtualization', name: `Virtualization (${state.devices.filter(d => (d.category || '').toLowerCase().includes('virt')).length} VMs)` },
+      { id: 'firewall_rules', name: 'Firewall Rules (0)' },
+      { id: 'storage', name: `Storage (${(state.diskVolumes && state.diskVolumes.length) || 0})` }
     ];
 
     let subtabNavHtml = '';
@@ -9670,7 +9670,27 @@
                 </tr>
               </thead>
               <tbody>
-                ${list.length === 0 ? `
+                ${state.devices.length === 0 ? `
+                  <tr>
+                    <td colspan="11" style="padding: 50px 20px; text-align: center;">
+                      <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                      </div>
+                      <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Monitored Devices</div>
+                      <div style="font-size: 12px; color: #64748b; max-width: 500px; margin: 0 auto 18px auto;">
+                        OpManager Central is ready for real production monitoring. Install the real agent on your Windows or Linux servers, or add network switches/routers via SNMP.
+                      </div>
+                      <div style="display: flex; justify-content: center; gap: 10px;">
+                        <a href="/downloads/OpManagerAgent.msi" download style="background: #0070e0; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                          ⬇ Download Windows Agent (MSI)
+                        </a>
+                        <a href="/downloads/install-agent.sh" download style="background: #1e293b; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                          ⬇ Download Linux Agent (.sh)
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                ` : list.length === 0 ? `
                   <tr>
                     <td colspan="11" style="padding: 40px; text-align: center; color: #94a3b8;">
                       No devices found matching filter "${state.inventoryFilter}" and query "${state.searchQuery}".
