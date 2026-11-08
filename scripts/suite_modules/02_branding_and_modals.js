@@ -2918,6 +2918,98 @@
     };
   }
 
+  // --- ADD BRANCH / REMOTE PROBE MODAL ---
+  function showAddProbeModal() {
+    let modal = document.getElementById('opm-add-probe-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'opm-add-probe-modal';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Roboto, -apple-system, sans-serif;';
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 6px; width: 520px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #cbd5e1;">
+          <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #49bd80;"></span>
+              <span style="font-size: 15px; font-weight: 700; color: #0f172a;">Add New Branch / Remote Probe Site</span>
+            </div>
+            <button id="close-add-probe-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
+          </div>
+          <div style="padding: 22px; font-size: 12px; color: #334155;">
+            <div style="margin-bottom: 14px;">
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Branch / Site Name *</label>
+              <input type="text" id="new-probe-name" placeholder="e.g. Lahore Branch Office / Karachi DC" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 14px;">
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Geographic Location / City *</label>
+              <input type="text" id="new-probe-loc" placeholder="e.g. Lahore, Pakistan" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+            </div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+              <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 4px;">Probe IP Address / FQDN *</label>
+                <input type="text" id="new-probe-ip" placeholder="192.168.40.10" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+              </div>
+              <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 4px;">Sync Port</label>
+                <input type="number" id="new-probe-port" value="8060" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+              </div>
+            </div>
+            <div style="background: #f1f5f9; border-radius: 4px; padding: 10px 12px; font-size: 11px; color: #475569; margin-bottom: 10px;">
+              <strong>Probe Architecture:</strong> Probes act as local data collectors at remote branch sites. Once registered, install the probe service on the remote host pointing to Central: <code style="color: #0070e0;">http://${window.location.host || '192.168.30.65:8060'}</code>.
+            </div>
+          </div>
+          <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end; gap: 8px;">
+            <button id="cancel-add-probe-btn" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Cancel</button>
+            <button id="save-add-probe-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Register Branch Probe</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+    modal.style.display = 'flex';
+    document.getElementById('close-add-probe-btn').onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('cancel-add-probe-btn').onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('save-add-probe-btn').onclick = () => {
+      const name = (document.getElementById('new-probe-name').value || '').trim() || 'New Branch Site';
+      const location = (document.getElementById('new-probe-loc').value || '').trim() || 'Remote Office';
+      const ip = (document.getElementById('new-probe-ip').value || '').trim() || '192.168.50.10';
+      const port = parseInt(document.getElementById('new-probe-port').value, 10) || 8060;
+
+      const newId = (state.probes.length ? Math.max(...state.probes.map(p => Number(p.id) || 0)) : 100) + 1;
+      const newProbe = {
+        id: newId,
+        name: name,
+        displayName: name,
+        location: location,
+        ip: ip,
+        port: port,
+        status: 'Online',
+        version: '12.9.203',
+        build: 129203,
+        latency: Math.floor(Math.random() * 20 + 8),
+        devicesCount: 0,
+        monitorsCount: 0,
+        activeAlarms: 0,
+        lastSync: 'Just now',
+        syncStatus: 'Synchronized'
+      };
+
+      state.probes.push(newProbe);
+
+      fetch('/api/probes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newProbe)
+      }).catch(() => {});
+
+      showToast(`Branch Site / Remote Probe "${name}" registered successfully!`);
+      modal.style.display = 'none';
+
+      if (state.currentTab === 'settings') {
+        renderSettingsView();
+      }
+    };
+  }
+
   // --- ADD WIDGET MODAL ---
   function showAddWidgetModal() {
     let modal = document.getElementById('opm-add-widget-modal');

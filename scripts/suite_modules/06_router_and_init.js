@@ -584,6 +584,7 @@
     showAlarmDetailsDrawer,
     showGlobalSearchModal,
     showAddDeviceModal,
+    showAddProbeModal,
     showAddWidgetModal,
     handleRoute,
     showToast,

@@ -3721,6 +3721,98 @@
     };
   }
 
+  // --- ADD BRANCH / REMOTE PROBE MODAL ---
+  function showAddProbeModal() {
+    let modal = document.getElementById('opm-add-probe-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'opm-add-probe-modal';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Roboto, -apple-system, sans-serif;';
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 6px; width: 520px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #cbd5e1;">
+          <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #49bd80;"></span>
+              <span style="font-size: 15px; font-weight: 700; color: #0f172a;">Add New Branch / Remote Probe Site</span>
+            </div>
+            <button id="close-add-probe-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
+          </div>
+          <div style="padding: 22px; font-size: 12px; color: #334155;">
+            <div style="margin-bottom: 14px;">
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Branch / Site Name *</label>
+              <input type="text" id="new-probe-name" placeholder="e.g. Lahore Branch Office / Karachi DC" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 14px;">
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Geographic Location / City *</label>
+              <input type="text" id="new-probe-loc" placeholder="e.g. Lahore, Pakistan" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+            </div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+              <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 4px;">Probe IP Address / FQDN *</label>
+                <input type="text" id="new-probe-ip" placeholder="192.168.40.10" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+              </div>
+              <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 4px;">Sync Port</label>
+                <input type="number" id="new-probe-port" value="8060" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+              </div>
+            </div>
+            <div style="background: #f1f5f9; border-radius: 4px; padding: 10px 12px; font-size: 11px; color: #475569; margin-bottom: 10px;">
+              <strong>Probe Architecture:</strong> Probes act as local data collectors at remote branch sites. Once registered, install the probe service on the remote host pointing to Central: <code style="color: #0070e0;">http://${window.location.host || '192.168.30.65:8060'}</code>.
+            </div>
+          </div>
+          <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end; gap: 8px;">
+            <button id="cancel-add-probe-btn" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Cancel</button>
+            <button id="save-add-probe-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Register Branch Probe</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+    modal.style.display = 'flex';
+    document.getElementById('close-add-probe-btn').onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('cancel-add-probe-btn').onclick = () => { modal.style.display = 'none'; };
+    document.getElementById('save-add-probe-btn').onclick = () => {
+      const name = (document.getElementById('new-probe-name').value || '').trim() || 'New Branch Site';
+      const location = (document.getElementById('new-probe-loc').value || '').trim() || 'Remote Office';
+      const ip = (document.getElementById('new-probe-ip').value || '').trim() || '192.168.50.10';
+      const port = parseInt(document.getElementById('new-probe-port').value, 10) || 8060;
+
+      const newId = (state.probes.length ? Math.max(...state.probes.map(p => Number(p.id) || 0)) : 100) + 1;
+      const newProbe = {
+        id: newId,
+        name: name,
+        displayName: name,
+        location: location,
+        ip: ip,
+        port: port,
+        status: 'Online',
+        version: '12.9.203',
+        build: 129203,
+        latency: Math.floor(Math.random() * 20 + 8),
+        devicesCount: 0,
+        monitorsCount: 0,
+        activeAlarms: 0,
+        lastSync: 'Just now',
+        syncStatus: 'Synchronized'
+      };
+
+      state.probes.push(newProbe);
+
+      fetch('/api/probes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newProbe)
+      }).catch(() => {});
+
+      showToast(`Branch Site / Remote Probe "${name}" registered successfully!`);
+      modal.style.display = 'none';
+
+      if (state.currentTab === 'settings') {
+        renderSettingsView();
+      }
+    };
+  }
+
   // --- ADD WIDGET MODAL ---
   function showAddWidgetModal() {
     let modal = document.getElementById('opm-add-widget-modal');
@@ -13941,8 +14033,8 @@
 
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-                <span>Connected Enterprise Probes (4 Online)</span>
-                <button id="opm-add-probe-btn" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">+ Add Remote Probe</button>
+                <span>Connected Enterprise Probes (${state.probes.length} Online)</span>
+                <button id="opm-add-probe-btn" onclick="showAddProbeModal()" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Branch / Remote Probe</button>
               </div>
               <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                 <thead>
@@ -14143,25 +14235,38 @@
               <!-- Windows Installer Card -->
               <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
                 <div>
-                  <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Windows Agent (x64)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.203 | Size: 24.2 MB | Windows Server 2016/2019/2022</div>
-                  <a href="/agents/OpManagerAgent.exe" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download OpManagerAgent.exe
-                  </a>
+                  <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Windows Agent (x64 MSI / EXE)</div>
+                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.203 | Size: 6.9 MB | Windows Server 2016/2019/2022 / Windows 10/11</div>
+                  <div style="display: flex; gap: 8px;">
+                    <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      Download .MSI
+                    </a>
+                    <a href="/downloads/OpManagerAgent.exe" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                      Download .EXE
+                    </a>
+                  </div>
                 </div>
                 <img src="/apiclient/fluidicv2/img/DeployAgent.png" style="height: 64px; object-fit: contain; flex-shrink: 0;" />
               </div>
 
-              <!-- macOS / Linux Card -->
+              <!-- Linux / macOS Card -->
               <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
                 <div>
-                  <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">macOS / Linux Package</div>
-                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.203 | Universal Binary | macOS 12+ & Linux kernel 4.x+</div>
-                  <a href="/agents/OpManagerAgent.dmg" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download OpManagerAgent.dmg
-                  </a>
+                  <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Linux / macOS Universal Agent</div>
+                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.203 | Systemd Service &amp; Standalone Binary | Linux 64-bit &amp; macOS</div>
+                  <div style="display: flex; gap: 8px;">
+                    <a href="/downloads/install-agent.sh" download style="display: inline-flex; align-items: center; gap: 6px; background: #16a34a; color: #ffffff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      install-agent.sh
+                    </a>
+                    <a href="/downloads/OpManagerAgent-linux.tar.gz" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                      .tar.gz
+                    </a>
+                    <a href="/downloads/OpManagerAgent.dmg" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                      .dmg
+                    </a>
+                  </div>
                 </div>
                 <img src="/apiclient/fluidicv2/img/MonitoringAgents.png" style="height: 64px; object-fit: contain; flex-shrink: 0;" />
               </div>
@@ -14174,7 +14279,7 @@
                 <input type="text" id="opm-enrollment-token-input" value="OPM-CENTRAL-AUTH-TOKEN-9281-GA-129203" readonly style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 12px; background: #fff;">
                 <button id="opm-copy-token-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Copy Token</button>
               </div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 6px;">One-Line Shell Quick Deployment: <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 3px; font-family: monospace;">curl -sSL http://localhost:8060/downloads/install.sh | bash</code></div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 6px;">One-Line Linux Deployment Command: <code style="background: #e2e8f0; padding: 3px 8px; border-radius: 3px; font-family: monospace; color: #0284c7; font-weight: 600;">curl -sSL http://${window.location.host || '192.168.30.65:8060'}/downloads/install-agent.sh | bash</code></div>
             </div>
 
             <!-- Connected Monitoring Agents Table -->
@@ -16759,6 +16864,7 @@
     showAlarmDetailsDrawer,
     showGlobalSearchModal,
     showAddDeviceModal,
+    showAddProbeModal,
     showAddWidgetModal,
     handleRoute,
     showToast,
