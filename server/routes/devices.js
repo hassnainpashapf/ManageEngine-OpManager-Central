@@ -66,6 +66,15 @@ router.get(['/device/getDeviceSummary', '/device/getDeviceDetails', '/api/json/d
 router.get(['/device/listInterfaces', '/api/json/device/listInterfaces', '/device/:id/interfaces', '/api/devices/:id/interfaces'], (req, res) => {
   const deviceId = req.query.deviceId || req.params.id;
   const dev = db.getDeviceById(deviceId) || db.getDevices()[0];
+  if (!dev) {
+    return res.json({
+      status: 'success',
+      deviceId: null,
+      deviceName: 'No Devices',
+      total: 0,
+      interfaces: []
+    });
+  }
   const interfaces = dev.interfaces || [
     { name: 'GigabitEthernet0/0/1', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 340.5, outTraffic: 290.2, inPercent: 34.0, outPercent: 29.0, errors: 0 },
     { name: 'GigabitEthernet0/0/2', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 512.0, outTraffic: 480.0, inPercent: 51.2, outPercent: 48.0, errors: 0 },
@@ -139,6 +148,14 @@ router.get(['/device/getAvailabilityGraphData', '/api/json/device/getAvailabilit
 router.get(['/device/getPerformanceMonitorDetails', '/api/json/device/getPerformanceMonitorDetails'], (req, res) => {
   const deviceId = req.query.deviceId || 1;
   const dev = db.getDeviceById(deviceId) || db.getDevices()[0];
+  if (!dev) {
+    return res.json({
+      status: 'success',
+      deviceId: null,
+      deviceName: 'No Devices',
+      monitors: []
+    });
+  }
   res.json({
     status: 'success',
     deviceId: dev.id,

@@ -347,7 +347,15 @@ router.post('/api/tools/snmp-query', (req, res) => {
 // POST /api/tools/snmp-walk - SNMP WALK operation (Subtree traversal)
 router.post('/api/tools/snmp-walk', (req, res) => {
   const { ip, rootOid = '.1.3.6.1.2.1.1', community = 'public_monitor_ro', version = 'v2c' } = req.body;
-  const device = db.getDevices().find(d => d.ip === ip || d.name === ip) || db.getDevices()[0];
+  const device = db.getDevices().find(d => d.ip === ip || d.name === ip) || db.getDevices()[0] || {
+    name: ip || 'Target-Host',
+    ip: ip || '10.0.0.1',
+    vendor: 'Generic',
+    category: 'Server',
+    probeName: 'Central Site',
+    cpu: 15,
+    temperature: 30
+  };
 
   const cleanRoot = rootOid.trim();
   const matchedOids = Object.keys(MIB_TREE).filter(oid => oid.startsWith(cleanRoot));
@@ -360,11 +368,11 @@ router.post('/api/tools/snmp-walk', (req, res) => {
     let val = 'Value OK';
     if (oid === '.1.3.6.1.2.1.1.1.0') val = `${device.vendor} ${device.category} OS (${device.ip})`;
     else if (oid === '.1.3.6.1.2.1.1.5.0') val = device.name;
-    else if (oid === '.1.3.6.1.2.1.1.6.0') val = `Datacenter Rack 04 (${device.probeName})`;
+    else if (oid === '.1.3.6.1.2.1.1.6.0') val = `Datacenter Rack 04 (${device.probeName || 'Central Site'})`;
     else if (oid === '.1.3.6.1.2.1.1.3.0') val = '142 days, 18:24:09.15 (1233504915)';
     else if (oid === '.1.3.6.1.2.1.1.4.0') val = 'Enterprise NOC Team <noc@corp.enterprise>';
     else if (oid === '.1.3.6.1.2.1.1.2.0') val = '1.3.6.1.4.1.9.1.1745';
-    else if (oid === '.1.3.6.1.4.1.9.9.109.1.1.1.1.5.1') val = `${device.cpu} %`;
+    else if (oid === '.1.3.6.1.4.1.9.9.109.1.1.1.1.5.1') val = `${device.cpu || 15} %`;
     else if (oid === '.1.3.6.1.4.1.9.9.13.1.3.1.3.1') val = `${device.temperature || 35} °C`;
     else if (oid === '.1.3.6.1.2.1.2.1.0') val = '48';
     else val = `${item.name}_SAMPLE_VAL`;
@@ -390,7 +398,10 @@ router.post('/api/tools/snmp-walk', (req, res) => {
 // Switch Port Mapper Endpoint
 router.get('/api/tools/switch-ports', (req, res) => {
   const { deviceId, ip } = req.query;
-  const dev = db.getDevices().find(d => d.id === deviceId || d.ip === ip) || db.getDevices()[0];
+  const dev = db.getDevices().find(d => d.id === deviceId || d.ip === ip) || db.getDevices()[0] || {
+    name: 'Target-Switch',
+    ip: ip || '10.0.0.1'
+  };
 
   const ports = [
     { port: 'Fa0/1', alias: 'Uplink-Core-Trunk', adminStatus: 'Up', operStatus: 'Up', speed: '1 Gbps', vlan: 10, mac: '00:1E:F7:28:9A:01', ip: '10.10.0.1', type: 'Trunk (802.1Q)' },

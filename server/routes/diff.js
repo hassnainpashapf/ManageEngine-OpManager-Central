@@ -5,13 +5,15 @@ const db = require('../services/db');
 router.get('/api/ccm/diff', (req, res) => {
   const { deviceId = '1' } = req.query;
   const dev = db.getDevices().find(d => d.id === deviceId) || db.getDevices()[0];
+  const devName = dev ? dev.name : 'Device-01';
+  const devIp = dev ? dev.ip : '10.0.0.1';
 
   const runningConfig = [
     { line: 1, text: 'version 16.12', type: 'same' },
     { line: 2, text: 'service timestamps debug datetime msec', type: 'same' },
     { line: 3, text: 'service timestamps log datetime msec', type: 'same' },
     { line: 4, text: 'no service password-encryption', type: 'same' },
-    { line: 5, text: `hostname ${dev.name}`, type: 'same' },
+    { line: 5, text: `hostname ${devName}`, type: 'same' },
     { line: 6, text: '!', type: 'same' },
     { line: 7, text: 'ip routing', type: 'same' },
     { line: 8, text: 'ip domain name enterprise.corp', type: 'same' },
@@ -19,7 +21,7 @@ router.get('/api/ccm/diff', (req, res) => {
     { line: 10, text: 'snmp-server host 10.0.0.100 version 2c public_monitor_ro', type: 'added' },
     { line: 11, text: 'snmp-server enable traps', type: 'same' },
     { line: 12, text: 'interface GigabitEthernet0/0/0', type: 'same' },
-    { line: 13, text: ` ip address ${dev.ip} 255.255.255.0`, type: 'same' },
+    { line: 13, text: ` ip address ${devIp} 255.255.255.0`, type: 'same' },
     { line: 14, text: ' negotiation auto', type: 'same' },
     { line: 15, text: '!', type: 'same' },
     { line: 16, text: 'end', type: 'same' }
@@ -61,10 +63,12 @@ router.get('/api/ccm/diff', (req, res) => {
 router.post('/api/ccm/resolve-drift', (req, res) => {
   const { deviceId = '1' } = req.body;
   const dev = db.getDevices().find(d => d.id === deviceId) || db.getDevices()[0];
+  const devName = dev ? dev.name : 'Device-01';
+  const devIp = dev ? dev.ip : '10.0.0.1';
 
   res.json({
     status: 'success',
-    message: `Configuration drift resolved: 'copy running-config startup-config' executed on ${dev.name} (${dev.ip}).`,
+    message: `Configuration drift resolved: 'copy running-config startup-config' executed on ${devName} (${devIp}).`,
     syncedAt: new Date().toISOString()
   });
 });
