@@ -5,6 +5,12 @@ services:
     ports:
       - "8060:8060"
     restart: unless-stopped
+    volumes:
+      - opmanager-data:/app/server/data
     environment:
       - NODE_ENV=production
       - PORT=8060
+
+volumes:
+  opmanager-data:
+    driver: local

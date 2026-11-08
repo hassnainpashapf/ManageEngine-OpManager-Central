@@ -2,6 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Install native network utilities for authentic Ping, Traceroute, and Network Diagnostics in container
+RUN apk add --no-cache iputils iproute2 traceroute curl net-tools
+
 # Copy package files
 COPY package*.json ./
 
@@ -16,6 +19,10 @@ EXPOSE 8060
 
 ENV PORT=8060
 ENV NODE_ENV=production
+
+# Health check to ensure service readiness
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:8060/api/tools/mib-tree || exit 1
 
 # Start OpManager Central server
 CMD ["node", "server/index.js"]

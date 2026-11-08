@@ -27,11 +27,25 @@ class NetworkPoller {
   }
 
   pollCycle() {
-    const devices = db.data.devices;
+    const devices = db.data.devices || [];
     const updatedDevices = [];
 
     devices.forEach(device => {
-      // Small realistic fluctuations
+      // If device is monitored by real host agent, preserve real metrics!
+      if (device.isAgentMonitored) {
+        device.lastPolled = 'Just now';
+        updatedDevices.push({
+          id: device.id,
+          cpu: device.cpu,
+          memory: device.memory,
+          disk: device.disk,
+          responseTime: device.responseTime || 2,
+          status: device.status || 'Clear'
+        });
+        return;
+      }
+
+      // Small realistic fluctuations for SNMP/simulated nodes
       const cpuDelta = (Math.random() - 0.5) * 4;
       const memDelta = (Math.random() - 0.5) * 2;
       const pingDelta = (Math.random() - 0.5) * 2;
@@ -66,13 +80,13 @@ class NetworkPoller {
       type: 'METRIC_TICK',
       timestamp: Date.now(),
       devices: updatedDevices,
-      totalAlarms: db.data.alarms.length
+      totalAlarms: (db.data.alarms || []).length
     };
 
     this.listeners.forEach(fn => fn(payload));
 
     // Periodic live alarm toast event (every ~20s)
-    if (this.tickCount % 5 === 0 && db.data.alarms.length > 0) {
+    if (this.tickCount % 5 === 0 && db.data.alarms && db.data.alarms.length > 0) {
       const randomAlarm = db.data.alarms[Math.floor(Math.random() * db.data.alarms.length)];
       const toastPayload = {
         type: 'ALARM_TOAST',
@@ -90,7 +104,7 @@ class NetworkPoller {
           probeName: randomAlarm.probeName || randomAlarm.probe || 'Dubai Campus Core',
           time: 'Just now',
           timestamp: 'Just now',
-          technician: 'Unacknowledged'
+          technician: randomAlarm.who || 'Unacknowledged'
         }
       };
       this.listeners.forEach(fn => fn(toastPayload));

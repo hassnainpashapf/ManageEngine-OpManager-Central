@@ -19,8 +19,8 @@ router.post('/api/agent/register', (req, res) => {
   const agentRecord = {
     agentId,
     hostname,
-    displayName: `${hostname} (${os.toUpperCase()} Agent)`,
-    os,
+    displayName: `${hostname} (${(os || 'OS').toUpperCase()} Agent)`,
+    os: os || 'linux',
     platform: platform || `${os} (${arch})`,
     arch: arch || 'amd64',
     probeId: Number(probeId) || 101,
@@ -43,17 +43,20 @@ router.post('/api/agent/register', (req, res) => {
   if (!existingDev) {
     existingDev = db.addDevice({
       name: hostname,
-      displayName: `${hostname} (${os === 'windows' ? 'Windows Server' : 'macOS Host'})`,
+      displayName: `${hostname} (${os === 'windows' ? 'Windows Server' : (os === 'darwin' ? 'macOS Host' : 'Linux Node')})`,
       ip: cleanIP,
       category: 'Server',
-      type: `${os.toUpperCase()} Monitored Host`,
+      type: `${(os || 'LINUX').toUpperCase()} Monitored Host`,
       vendor: os === 'darwin' ? 'Apple Inc.' : (os === 'windows' ? 'Microsoft Corp.' : 'Linux Foundation'),
-      os: `${os.toUpperCase()} ${arch}`,
+      os: `${(os || 'Linux').toUpperCase()} ${arch || 'x64'}`,
       probeId: Number(probeId) || 101,
-      snmpVersion: 'Agent-Direct'
+      snmpVersion: 'Agent-Direct',
+      isAgentMonitored: true
     });
   } else {
     existingDev.status = 'Clear';
+    existingDev.isAgentMonitored = true;
+    db.save();
   }
 
   console.log(`[OpManager Agent] Host registered: ${hostname} [${agentId}] (OS: ${os}/${arch}) from ${cleanIP}`);
@@ -85,9 +88,9 @@ router.post('/api/agent/telemetry', (req, res) => {
   agent.status = 'Online';
   agent.lastHeartbeat = new Date().toISOString();
   agent.metrics = {
-    cpu: Number(cpuUsage ? cpuUsage.toFixed(1) : 20.0),
-    memory: Number(memoryUsage ? memoryUsage.toFixed(1) : 45.0),
-    disk: Number(diskUsage ? diskUsage.toFixed(1) : 50.0),
+    cpu: Number(cpuUsage !== undefined ? cpuUsage.toFixed(1) : 20.0),
+    memory: Number(memoryUsage !== undefined ? memoryUsage.toFixed(1) : 45.0),
+    disk: Number(diskUsage !== undefined ? diskUsage.toFixed(1) : 50.0),
     uptimeSeconds: uptimeSeconds || 0,
     interfacesCount: interfaces ? interfaces.length : 1
   };
@@ -99,6 +102,26 @@ router.post('/api/agent/telemetry', (req, res) => {
     dev.memory = Math.round(agent.metrics.memory);
     dev.disk = Math.round(agent.metrics.disk);
     dev.lastPolled = 'Just now';
+    dev.isAgentMonitored = true;
+    dev.status = 'Clear';
+    if (interfaces && Array.isArray(interfaces) && interfaces.length > 0) {
+      dev.interfaces = interfaces.map(inf => ({
+        name: inf.name || 'eth0',
+        alias: inf.alias || inf.name || 'Interface',
+        type: 'ethernetCsmacd',
+        speed: inf.speed || '1 Gbps',
+        status: inf.status || 'Up',
+        inTraffic: inf.inTraffic || 12.0,
+        outTraffic: inf.outTraffic || 18.0,
+        inUtil: 1.2,
+        outUtil: 1.8,
+        errors: 0
+      }));
+    }
+    if (topProcesses && Array.isArray(topProcesses)) {
+      dev.topProcesses = topProcesses;
+    }
+    db.save();
   }
 
   res.json({
@@ -155,6 +178,14 @@ router.get('/api/agent/downloads', (req, res) => {
         url: '/downloads/OpManagerAgent.dmg',
         type: 'Apple Disk Image (DMG) & Application Bundle',
         instructions: 'Open OpManagerAgent.dmg, drag OpManagerAgent.app to Applications, or execute install_daemon.sh.'
+      },
+      {
+        os: 'Linux',
+        platform: 'Linux x86_64 & ARM64',
+        filename: 'OpManagerAgent-linux.tar.gz',
+        url: '/downloads/OpManagerAgent-linux.tar.gz',
+        type: 'Binary & systemd Service Unit',
+        instructions: 'Extract archive and run: sudo ./OpManagerAgent -server http://<central-host>:8060'
       }
     ]
   });
