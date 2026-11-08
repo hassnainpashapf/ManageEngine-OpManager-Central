@@ -1,0 +1,3912 @@
+[
+  {
+    "name": "address-book",
+    "viewBox": "0 0 256 256",
+    "tags": "contacts,directory,roledex"
+  },
+  {
+    "name": "airplane-tilt",
+    "viewBox": "0 0 256 256",
+    "tags": "vehicles,airports,flights,flying,planes,transit,transportation,traveling,departure"
+  },
+  {
+    "name": "alarm",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,clock,schedule,events,watch"
+  },
+  {
+    "name": "align-bottom-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,flush bottom"
+  },
+  {
+    "name": "align-bottom",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,flush bottom"
+  },
+  {
+    "name": "align-center-horizontal-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,centered,middle"
+  },
+  {
+    "name": "align-center-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,centered,middle"
+  },
+  {
+    "name": "align-center-vertical-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,centered,middle"
+  },
+  {
+    "name": "align-center-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,centered,middle"
+  },
+  {
+    "name": "align-left-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,flush left"
+  },
+  {
+    "name": "align-left",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,flush left"
+  },
+  {
+    "name": "align-right-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,flush right"
+  },
+  {
+    "name": "align-right",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,flush right"
+  },
+  {
+    "name": "align-top-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,flush top"
+  },
+  {
+    "name": "align-top",
+    "viewBox": "0 0 256 256",
+    "tags": "alignment,arrangement,layout,flush top"
+  },
+  {
+    "name": "angle",
+    "viewBox": "0 0 256 256",
+    "tags": "geometry,trigonometry,degrees,radians,measurement,protractor,compass,arc"
+  },
+  {
+    "name": "ansible-circle-fill",
+    "viewBox": "0 0 24 24",
+    "tags": "ansible,automation,devops,redhat,configuration,orchestration"
+  },
+  {
+    "name": "app-window",
+    "viewBox": "0 0 256 256",
+    "tags": "windows,software,programs,applications"
+  },
+  {
+    "name": "archive",
+    "viewBox": "0 0 256 256",
+    "tags": "saved,saving,archived,archiving,archival,downloaded,downloading"
+  },
+  {
+    "name": "arrow-arc-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-arc-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-bend-double-up-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead,reply-all"
+  },
+  {
+    "name": "arrow-bend-double-up-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-bend-up-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead,reply,re"
+  },
+  {
+    "name": "arrow-bend-up-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead,forward,fwd"
+  },
+  {
+    "name": "arrow-circle-down-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-down-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-down-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-down",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-left-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-right-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-up-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-up-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-up-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-up",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-clockwise",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,redo,refreshing,rotate,spin,flip"
+  },
+  {
+    "name": "arrow-counter-clockwise",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,undo,refreshing,rotate,spin,flip"
+  },
+  {
+    "name": "arrow-down-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-down",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-fat-up",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead,shift,outlined"
+  },
+  {
+    "name": "arrow-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-down-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-down-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-down",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead,bottom"
+  },
+  {
+    "name": "arrow-line-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-up-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-up-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-up",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead,top"
+  },
+  {
+    "name": "arrow-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-square-in",
+    "viewBox": "0 0 256 256",
+    "tags": "import,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-square-out",
+    "viewBox": "0 0 256 256",
+    "tags": "export,external,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-up-left",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-up-right",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-up",
+    "viewBox": "0 0 256 256",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrows-clockwise",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,redo,refreshing,sync,synchronize,rotate,spin,flip"
+  },
+  {
+    "name": "arrows-counter-clockwise",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,undo,refreshing,rotate,spin,flip"
+  },
+  {
+    "name": "arrows-down-up",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrows-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,cursor,resize,expand,left,right"
+  },
+  {
+    "name": "arrows-in-cardinal",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,collapse,minimize,resize,shrink"
+  },
+  {
+    "name": "arrows-in-line-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,close,center,align"
+  },
+  {
+    "name": "arrows-in-line-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,close,center,align"
+  },
+  {
+    "name": "arrows-in-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,collapse,minimize,resize"
+  },
+  {
+    "name": "arrows-in",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,collapse,minimize,resize,shrink"
+  },
+  {
+    "name": "arrows-left-right",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrows-merge",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,arrowheads,join,combine"
+  },
+  {
+    "name": "arrows-out-cardinal",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,expand,fullscreen,resize,pan,move,grow"
+  },
+  {
+    "name": "arrows-out-line-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,open,split"
+  },
+  {
+    "name": "arrows-out-line-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,open,split"
+  },
+  {
+    "name": "arrows-out-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,expand,fullscreen,resize"
+  },
+  {
+    "name": "arrows-out",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,expand,fullscreen,resize,grow"
+  },
+  {
+    "name": "arrows-split",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,arrowheads,fork"
+  },
+  {
+    "name": "arrows-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,directional,pointer,cursor,resize,expand,up,down"
+  },
+  {
+    "name": "article",
+    "viewBox": "0 0 256 256",
+    "tags": "reading,writing,journals,periodicals,text,newspaper"
+  },
+  {
+    "name": "at",
+    "viewBox": "0 0 256 256",
+    "tags": "@,address,email,at symbol,commercial at,arobase"
+  },
+  {
+    "name": "backspace",
+    "viewBox": "0 0 256 256",
+    "tags": "keyboard,remove,delete"
+  },
+  {
+    "name": "bag-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "suitcase,valise,baggage,folders,portfolio"
+  },
+  {
+    "name": "bag",
+    "viewBox": "0 0 256 256",
+    "tags": "suitcase,valise,baggage,folders,portfolio"
+  },
+  {
+    "name": "bank",
+    "viewBox": "0 0 256 256",
+    "tags": "banking,checking,money,savings,deposit,withdraw,places,locations"
+  },
+  {
+    "name": "barcode",
+    "viewBox": "0 0 256 256",
+    "tags": "upc,qr,products,shopping,scanner"
+  },
+  {
+    "name": "barricade",
+    "viewBox": "0 0 256 256",
+    "tags": "construction,safety,gate"
+  },
+  {
+    "name": "battery-charging-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "battery-charging",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "battery-empty",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power,dead"
+  },
+  {
+    "name": "battery-full",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power,filled"
+  },
+  {
+    "name": "battery-high",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "battery-low",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "battery-medium",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "battery-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "battery-warning",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,power,empty,critical"
+  },
+  {
+    "name": "bell-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,calls"
+  },
+  {
+    "name": "bell-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,calls"
+  },
+  {
+    "name": "bell-ringing",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,calls"
+  },
+  {
+    "name": "bell-simple-ringing",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,calls"
+  },
+  {
+    "name": "bell-simple-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,silent,silenced,disabled"
+  },
+  {
+    "name": "bell-simple-z",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,snooze"
+  },
+  {
+    "name": "bell-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,calls"
+  },
+  {
+    "name": "bell-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,silent,silenced,ringer,calls,disabled"
+  },
+  {
+    "name": "bell-z",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,snooze"
+  },
+  {
+    "name": "bell",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,notifications,times,timer,clock,schedule,events,ringer,calls"
+  },
+  {
+    "name": "binoculars",
+    "viewBox": "0 0 256 256",
+    "tags": "telescope,glasses,search,find,explore"
+  },
+  {
+    "name": "bluetooth-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,connection,connectivity,disconnected,disabled"
+  },
+  {
+    "name": "bluetooth-x",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,connection,connectivity,disconnected,errors"
+  },
+  {
+    "name": "bluetooth",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,connection,connected,connectivity"
+  },
+  {
+    "name": "book",
+    "viewBox": "0 0 256 256",
+    "tags": "reading,reader,novel,story,library"
+  },
+  {
+    "name": "bookmark-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "reading,reader,novel,story,placeholder,favorites,favorited,library"
+  },
+  {
+    "name": "bookmark",
+    "viewBox": "0 0 256 256",
+    "tags": "reading,reader,novel,story,placeholder,favorites,favorited,library"
+  },
+  {
+    "name": "bookmarks-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "reading,reader,novel,story,placeholder,favorites,favorited,library"
+  },
+  {
+    "name": "bookmarks",
+    "viewBox": "0 0 256 256",
+    "tags": "reading,reader,novel,story,placeholder,favorites,favorited,library"
+  },
+  {
+    "name": "bounding-box",
+    "viewBox": "0 0 256 256",
+    "tags": "polygon,shapes,outline,corners,rectangle"
+  },
+  {
+    "name": "brackets-angle",
+    "viewBox": "0 0 256 256",
+    "tags": "code,angle brackets,angle braces"
+  },
+  {
+    "name": "brackets-curly",
+    "viewBox": "0 0 256 256",
+    "tags": "code,curly brackets,curly braces"
+  },
+  {
+    "name": "brackets-round",
+    "viewBox": "0 0 256 256",
+    "tags": "code,parentheses,round brackets,round braces"
+  },
+  {
+    "name": "brackets-square",
+    "viewBox": "0 0 256 256",
+    "tags": "code,square brackets,square braces,array"
+  },
+  {
+    "name": "briefcase",
+    "viewBox": "0 0 256 256",
+    "tags": "suitcase,valise,baggage,folders,portfolio"
+  },
+  {
+    "name": "broadcast",
+    "viewBox": "0 0 256 256",
+    "tags": "radio,hotspot,wifi,emit"
+  },
+  {
+    "name": "broom",
+    "viewBox": "0 0 256 256",
+    "tags": "sweeping,cleaning,brush"
+  },
+  {
+    "name": "browser",
+    "viewBox": "0 0 256 256",
+    "tags": "web browsers,windows,internet,website,webpage,chrome,edge,firefox"
+  },
+  {
+    "name": "browsers",
+    "viewBox": "0 0 256 256",
+    "tags": "web browsers,windows,internet,website,webpage,chrome,edge,firefox"
+  },
+  {
+    "name": "bug-beetle",
+    "viewBox": "0 0 256 256",
+    "tags": "debug,errors,insect,ladybug"
+  },
+  {
+    "name": "bug-droid",
+    "viewBox": "0 0 256 256",
+    "tags": "debug,errors,insect,android,google"
+  },
+  {
+    "name": "bug",
+    "viewBox": "0 0 256 256",
+    "tags": "debug,errors,insect,ladybug"
+  },
+  {
+    "name": "calculator",
+    "viewBox": "0 0 256 256",
+    "tags": "addition,sum,subtraction,difference,multiply,multiplication,product,divide,division,divisor,dividend,quotient,equals,equality,mathematics,arithmetic,+,-,±,×,÷,="
+  },
+  {
+    "name": "calendar-blank",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule,none"
+  },
+  {
+    "name": "calendar-check",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule,todo,checklist"
+  },
+  {
+    "name": "calendar-dot",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule,today"
+  },
+  {
+    "name": "calendar-dots",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule"
+  },
+  {
+    "name": "calendar-minus",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule,remove,delete"
+  },
+  {
+    "name": "calendar-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule,add"
+  },
+  {
+    "name": "calendar-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule,remove,delete,cancel. unavailable"
+  },
+  {
+    "name": "calendar-x",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule,closed,cancelled"
+  },
+  {
+    "name": "calendar",
+    "viewBox": "0 0 256 256",
+    "tags": "dates,times,events,schedule,12"
+  },
+  {
+    "name": "cards-three",
+    "viewBox": "0 0 256 256",
+    "tags": "card,slides,slideshow,windows,website,webpage,layers,stack"
+  },
+  {
+    "name": "cards",
+    "viewBox": "0 0 256 256",
+    "tags": "card,slides,slideshow,windows,website,webpage,layers"
+  },
+  {
+    "name": "caret-circle-double-down",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-double-left",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-double-right",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-double-up",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-down",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-left",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-right",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-up-down",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-up",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-double-down",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-double-left",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-double-right",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-double-up",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-down",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-left",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-line-down",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-line-left",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-line-right",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-line-up",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-right",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-up-down",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-up",
+    "viewBox": "0 0 256 256",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "certificate-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,awards,certification,degree,diploma"
+  },
+  {
+    "name": "certificate-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,awards,certification,degree,diploma"
+  },
+  {
+    "name": "certificate",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,awards,certification,degree,diploma"
+  },
+  {
+    "name": "chart-area",
+    "viewBox": "0 0 256 256",
+    "tags": "graphs,graphing,charts,statistics,histogram,analyze,analysis,line"
+  },
+  {
+    "name": "chart-bar-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "graphs,graphing,charts,statistics,histogram,analyze,analysis"
+  },
+  {
+    "name": "chart-bar",
+    "viewBox": "0 0 256 256",
+    "tags": "graphs,graphing,charts,statistics,histogram,analyze,analysis"
+  },
+  {
+    "name": "chart-donut",
+    "viewBox": "0 0 256 256",
+    "tags": "graphs,graphing,charts,statistics,analyze,analysis,circle"
+  },
+  {
+    "name": "chart-line-down",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,graphs,graphing,charts,statistics,analyze,analysis,stocks"
+  },
+  {
+    "name": "chart-line-up",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,graphs,graphing,charts,statistics,analyze,analysis,stocks"
+  },
+  {
+    "name": "chart-line",
+    "viewBox": "0 0 256 256",
+    "tags": "graphs,graphing,charts,statistics,analyze,analysis,stocks"
+  },
+  {
+    "name": "chart-pie-slice-duotone",
+    "viewBox": "0 0 16 16",
+    "tags": "*updated*,graphs,graphing,charts,statistics,circle,analyze,analysis"
+  },
+  {
+    "name": "chart-pie-slice",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,graphs,graphing,charts,statistics,circle,analyze,analysis"
+  },
+  {
+    "name": "chart-pie",
+    "viewBox": "0 0 256 256",
+    "tags": "graphs,graphing,charts,statistics,circle,analyze,analysis"
+  },
+  {
+    "name": "chart-polar",
+    "viewBox": "0 0 256 256",
+    "tags": "graphs,graphing,charts,statistics,analyze,analysis,circle"
+  },
+  {
+    "name": "chart-scatter",
+    "viewBox": "0 0 256 256",
+    "tags": "graphs,graphing,charts,statistics,analyze,analysis"
+  },
+  {
+    "name": "chat-clear-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "messages,messaging,sms,texting,comment,square,bubble,clear,reset,empty,delete"
+  },
+  {
+    "name": "chat-close-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "messages,messaging,sms,texting,comment,square,bubble,close,closed,cancelled,dismissed"
+  },
+  {
+    "name": "chat-dots-fill",
+    "viewBox": "0 0 12 12",
+    "tags": "send,sent,messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "chat-dots",
+    "viewBox": "0 0 256 256",
+    "tags": "send,sent,messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "chat-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "chat-text",
+    "viewBox": "0 0 256 256",
+    "tags": "send,sent,messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "chat-warning-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "messages,messaging,sms,texting,comment,square,bubble,alert,warning,caution,errors"
+  },
+  {
+    "name": "chat",
+    "viewBox": "0 0 256 256",
+    "tags": "send,sent,messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "chats-duotone",
+    "viewBox": "0 0 20 20",
+    "tags": "send,sent,messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "chats-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "send,sent,messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "chats",
+    "viewBox": "0 0 256 256",
+    "tags": "send,sent,messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "check-circle-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "todo,to-do,task,list,checkbox,round,ok,done,tick"
+  },
+  {
+    "name": "check-circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "todo,to-do,task,list,checkbox,round,ok,done,tick"
+  },
+  {
+    "name": "check-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "todo,to-do,task,list,checkbox,round,ok,done,tick"
+  },
+  {
+    "name": "check-fat-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "todo,to-do,task,list,checkbox,ok,done,tick"
+  },
+  {
+    "name": "check-fat",
+    "viewBox": "0 0 256 256",
+    "tags": "todo,to-do,task,list,checkbox,ok,done,tick"
+  },
+  {
+    "name": "check-square-offset",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,todo,to-do,task,list,checkbox,rectangle,ok,done,tick"
+  },
+  {
+    "name": "check-square",
+    "viewBox": "0 0 256 256",
+    "tags": "todo,to-do,task,list,checkbox,rectangle,ok,done,tick"
+  },
+  {
+    "name": "check",
+    "viewBox": "0 0 256 256",
+    "tags": "todo,to-do,task,list,checkbox,ok,done,tick"
+  },
+  {
+    "name": "checkerboard",
+    "viewBox": "0 0 256 256",
+    "tags": "crossword"
+  },
+  {
+    "name": "checks",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,todo,task,to-do,list,checkbox,ok,done,tick"
+  },
+  {
+    "name": "circle-dashed-duotone",
+    "viewBox": "0 0 16 16",
+    "tags": "missing,round,shapes,polygons"
+  },
+  {
+    "name": "circle-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "round,shapes,polygons"
+  },
+  {
+    "name": "circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "round,shapes,polygons"
+  },
+  {
+    "name": "circle",
+    "viewBox": "0 0 256 256",
+    "tags": "round,shapes,polygons"
+  },
+  {
+    "name": "circles-four",
+    "viewBox": "0 0 256 256",
+    "tags": "round,shapes,polygons,4"
+  },
+  {
+    "name": "circles-three-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "round,shapes,polygons,3,+"
+  },
+  {
+    "name": "circles-three",
+    "viewBox": "0 0 256 256",
+    "tags": "round,shapes,polygons,3,asana"
+  },
+  {
+    "name": "circuitry",
+    "viewBox": "0 0 256 256",
+    "tags": "processor,microchip,computer,circuit,electronics,motherboard"
+  },
+  {
+    "name": "clipboard-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "copy,copied,checklist"
+  },
+  {
+    "name": "clipboard-text-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "copy,copied,checklist"
+  },
+  {
+    "name": "clipboard-text",
+    "viewBox": "0 0 256 256",
+    "tags": "copy,copied,checklist"
+  },
+  {
+    "name": "clipboard",
+    "viewBox": "0 0 256 256",
+    "tags": "copy,copied,checklist"
+  },
+  {
+    "name": "clock-clockwise",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,alarm,schedule,events,restore,fast forward,update"
+  },
+  {
+    "name": "clock-countdown",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,alarm,schedule,events,watch"
+  },
+  {
+    "name": "clock-counter-clockwise",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,alarm,schedule,events,backup,rewind,history"
+  },
+  {
+    "name": "clock",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,alarm,schedule,events,watch"
+  },
+  {
+    "name": "close-circle-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "closed,cancelled,dismissed,round"
+  },
+  {
+    "name": "close-circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "closed,cancelled,dismissed,round"
+  },
+  {
+    "name": "close-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "closed,cancelled,dismissed,round"
+  },
+  {
+    "name": "close",
+    "viewBox": "0 0 256 256",
+    "tags": "close,closed,cancelled,dismissed,times,multiply,mulitplication,product,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "cloud-arrow-down",
+    "viewBox": "0 0 256 256",
+    "tags": "serverless,backup,storage,download"
+  },
+  {
+    "name": "cloud-arrow-up",
+    "viewBox": "0 0 256 256",
+    "tags": "serverless,backup,storage,upload"
+  },
+  {
+    "name": "cloud-check",
+    "viewBox": "0 0 256 256",
+    "tags": "serverless,backup,storage,sync,synchronized"
+  },
+  {
+    "name": "cloud-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "serverless,backup,storage,meteorology,cloudy,overcast"
+  },
+  {
+    "name": "cloud-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "serverless,backup,storage,meteorology,cloudy,overcast"
+  },
+  {
+    "name": "cloud-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "serverless,backup,storage,sync,disabled"
+  },
+  {
+    "name": "cloud-warning",
+    "viewBox": "0 0 256 256",
+    "tags": "serverless,backup,storage,errors"
+  },
+  {
+    "name": "cloud-x",
+    "viewBox": "0 0 256 256",
+    "tags": "serverless,backup,storage,errors"
+  },
+  {
+    "name": "cloud",
+    "viewBox": "0 0 256 256",
+    "tags": "serverless,backup,storage,meteorology,cloudy,overcast"
+  },
+  {
+    "name": "code-block",
+    "viewBox": "0 0 256 256",
+    "tags": "angle brackets,angle braces,snippets"
+  },
+  {
+    "name": "code-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "angle brackets,angle braces,snippets"
+  },
+  {
+    "name": "code",
+    "viewBox": "0 0 256 256",
+    "tags": "angle brackets,angle braces,snippets"
+  },
+  {
+    "name": "codepen-logo",
+    "viewBox": "0 0 256 256",
+    "tags": "ide,logos"
+  },
+  {
+    "name": "codesandbox-logo",
+    "viewBox": "0 0 256 256",
+    "tags": "ide,logos"
+  },
+  {
+    "name": "columns",
+    "viewBox": "0 0 256 256",
+    "tags": "2,shapes,polygons,box,stack,list,table,cards"
+  },
+  {
+    "name": "command",
+    "viewBox": "0 0 256 256",
+    "tags": "apple,keyboard,shortcut,modifier,looped square,bowen knot,saint john's arms"
+  },
+  {
+    "name": "computer-tower",
+    "viewBox": "0 0 256 256",
+    "tags": "desktop,pc,imac"
+  },
+  {
+    "name": "control",
+    "viewBox": "0 0 256 256",
+    "tags": "ctrl,key,keyboard,shortcut,caret"
+  },
+  {
+    "name": "cookie",
+    "viewBox": "0 0 256 256",
+    "tags": "privacy,dessert,food,dining"
+  },
+  {
+    "name": "copy-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "duplicated,copied,clipboard"
+  },
+  {
+    "name": "copy",
+    "viewBox": "0 0 256 256",
+    "tags": "duplicated,copied,clipboard"
+  },
+  {
+    "name": "corners-in",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,collapse,windowed,minimized"
+  },
+  {
+    "name": "corners-out",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,expand,fullscreen,maximized"
+  },
+  {
+    "name": "cpu",
+    "viewBox": "0 0 256 256",
+    "tags": "processor,microchip,computer,circuit"
+  },
+  {
+    "name": "credit-card",
+    "viewBox": "0 0 256 256",
+    "tags": "debit,visa,mastercard,money,payment,paying,purchase,swipe"
+  },
+  {
+    "name": "crop-duotone",
+    "viewBox": "0 0 16 16",
+    "tags": "photography,clip,screenshots"
+  },
+  {
+    "name": "crop",
+    "viewBox": "0 0 256 256",
+    "tags": "photography,clip,screenshots"
+  },
+  {
+    "name": "crosshair-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "geolocation,gps,aiming,targeting"
+  },
+  {
+    "name": "crosshair-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "geolocation,gps,aiming,targeting"
+  },
+  {
+    "name": "crosshair",
+    "viewBox": "0 0 256 256",
+    "tags": "geolocation,gps,aiming,targeting"
+  },
+  {
+    "name": "crown-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,king,queen,royalty,monarch,ruler,leader,chess"
+  },
+  {
+    "name": "crown-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,king,queen,royalty,monarch,ruler,leader,chess"
+  },
+  {
+    "name": "crown",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,king,queen,royalty,monarch,ruler,leader,chess"
+  },
+  {
+    "name": "cube-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "square,box,3d,volume,blocks"
+  },
+  {
+    "name": "cube-focus-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "augmented reality,ar,virual reality,vr,3d,scan"
+  },
+  {
+    "name": "cube-focus",
+    "viewBox": "0 0 256 256",
+    "tags": "augmented reality,ar,virual reality,vr,3d,scan"
+  },
+  {
+    "name": "cube-transparent",
+    "viewBox": "0 0 256 256",
+    "tags": "square,box,3d,volume,blocks,necker"
+  },
+  {
+    "name": "cube",
+    "viewBox": "0 0 256 256",
+    "tags": "square,box,3d,volume,blocks"
+  },
+  {
+    "name": "currency-circle-dollar-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "money,usd,payment,paying,purchase"
+  },
+  {
+    "name": "currency-circle-dollar",
+    "viewBox": "0 0 256 256",
+    "tags": "money,usd,payment,paying,purchase"
+  },
+  {
+    "name": "currency-dollar-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "money,usd,payment,paying,purchase"
+  },
+  {
+    "name": "currency-dollar",
+    "viewBox": "0 0 256 256",
+    "tags": "money,usd,payment,paying,purchase"
+  },
+  {
+    "name": "currency-inr",
+    "viewBox": "0 0 256 256",
+    "tags": "money,rupees,payment,paying,purchase"
+  },
+  {
+    "name": "cursor-text",
+    "viewBox": "0 0 256 256",
+    "tags": "i-beam,input,select"
+  },
+  {
+    "name": "cylinder",
+    "viewBox": "0 0 256 256",
+    "tags": "shapes,tube"
+  },
+  {
+    "name": "database",
+    "viewBox": "0 0 256 256",
+    "tags": "saved,saving,archived,archiving,archival,hard disk,storage,hdd,servers,databases"
+  },
+  {
+    "name": "desktop-duotone",
+    "viewBox": "0 0 16 16",
+    "tags": "computer,pc,imac,tower"
+  },
+  {
+    "name": "desktop-tower-duotone",
+    "viewBox": "0 0 16 16",
+    "tags": "*updated*,computer,pc,imac"
+  },
+  {
+    "name": "desktop-tower",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,computer,pc,imac"
+  },
+  {
+    "name": "desktop",
+    "viewBox": "0 0 256 256",
+    "tags": "computer,pc,imac,tower"
+  },
+  {
+    "name": "detective-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "incognito,police,law enforcement,spy,secret"
+  },
+  {
+    "name": "detective",
+    "viewBox": "0 0 256 256",
+    "tags": "incognito,police,law enforcement,spy,secret"
+  },
+  {
+    "name": "device-mobile-camera",
+    "viewBox": "0 0 256 256",
+    "tags": "cellphone,cellular"
+  },
+  {
+    "name": "device-mobile-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "cellphone,cellular"
+  },
+  {
+    "name": "device-mobile-speaker",
+    "viewBox": "0 0 256 256",
+    "tags": "cellphone,cellular"
+  },
+  {
+    "name": "device-mobile",
+    "viewBox": "0 0 256 256",
+    "tags": "cellphone,cellular"
+  },
+  {
+    "name": "device-rotate",
+    "viewBox": "0 0 256 256",
+    "tags": "orientation,landscape,portrait,spin,flip"
+  },
+  {
+    "name": "device-tablet-camera",
+    "viewBox": "0 0 256 256",
+    "tags": "cellphone,cellular,ipad,phablet"
+  },
+  {
+    "name": "device-tablet-speaker",
+    "viewBox": "0 0 256 256",
+    "tags": "cellphone,cellular,ipad,phablet"
+  },
+  {
+    "name": "device-tablet",
+    "viewBox": "0 0 256 256",
+    "tags": "cellphone,cellular,ipad,phablet"
+  },
+  {
+    "name": "devices-duotone",
+    "viewBox": "0 0 16 16",
+    "tags": "responsive,cellphone,cellular,tablet,destop"
+  },
+  {
+    "name": "devices",
+    "viewBox": "0 0 256 256",
+    "tags": "responsive,cellphone,cellular,tablet,destop"
+  },
+  {
+    "name": "diamond",
+    "viewBox": "0 0 256 256",
+    "tags": "rectangle,shapes,polygons,diamonds,suits,cards,gambling,casino,gaming"
+  },
+  {
+    "name": "diamonds-four",
+    "viewBox": "0 0 256 256",
+    "tags": "shapes,grid,component"
+  },
+  {
+    "name": "disabled-circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "disabled,forbidden,prohibited,cancelled,prevent,stop,do not enter,round"
+  },
+  {
+    "name": "discussion",
+    "viewBox": "0 0 256 256",
+    "tags": "chat,conversation,dialogue,forum,talk,thread,group,commentary,message,debate,exchange"
+  },
+  {
+    "name": "divide",
+    "viewBox": "0 0 256 256",
+    "tags": "division,divisor,dividend,quotient,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "dots-nine-bold",
+    "viewBox": "0 0 256 256",
+    "tags": "grid,circles,shapes,polygons,9"
+  },
+  {
+    "name": "dots-nine",
+    "viewBox": "0 0 256 256",
+    "tags": "grid,circles,shapes,polygons,9"
+  },
+  {
+    "name": "dots-six-vertical-bold",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,drag handle,knurling,circles,shapes,polygons,6"
+  },
+  {
+    "name": "dots-six-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,drag handle,knurling,circles,shapes,polygons,6"
+  },
+  {
+    "name": "dots-six",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,drag handle,knurling,circles,shapes,polygons,6"
+  },
+  {
+    "name": "dots-three-circle-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "menu,overflow,circles,shapes,polygons,3,ellipsis,ellipses,more"
+  },
+  {
+    "name": "dots-three-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "menu,overflow,circles,shapes,polygons,3,ellipsis,ellipses,more"
+  },
+  {
+    "name": "dots-three-outline-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "menu,overflow,circles,shapes,polygons,3,ellipsis,ellipses,more"
+  },
+  {
+    "name": "dots-three-outline",
+    "viewBox": "0 0 256 256",
+    "tags": "menu,overflow,circles,shapes,polygons,3,ellipsis,ellipses,more"
+  },
+  {
+    "name": "dots-three-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "menu,overflow,circles,shapes,polygons,3,ellipsis,ellipses,more"
+  },
+  {
+    "name": "dots-three",
+    "viewBox": "0 0 256 256",
+    "tags": "menu,overflow,circles,shapes,polygons,3,ellipsis,ellipses,more"
+  },
+  {
+    "name": "download-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,saved,saving,archived,archiving,archival,downloaded,downloading,hard drive,disk,import"
+  },
+  {
+    "name": "download",
+    "viewBox": "0 0 256 256",
+    "tags": "saved,saving,archived,archiving,archival,downloaded,downloading,hard drive,disk"
+  },
+  {
+    "name": "dresser",
+    "viewBox": "0 0 256 256",
+    "tags": "furniture,bedroom,storage,drawers,wardrobe"
+  },
+  {
+    "name": "empty",
+    "viewBox": "0 0 256 256",
+    "tags": "∅,empty set,member,mathematics,arithmetic,calculator,null"
+  },
+  {
+    "name": "envelope-simple-fill",
+    "viewBox": "0 0 12 12",
+    "tags": "mail,email,send,sent,message,post,letter"
+  },
+  {
+    "name": "envelope-simple-open",
+    "viewBox": "0 0 256 256",
+    "tags": "mail,email,send,sent,message,read,post,letter"
+  },
+  {
+    "name": "envelope-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "mail,email,send,sent,message,post,letter"
+  },
+  {
+    "name": "equals",
+    "viewBox": "0 0 256 256",
+    "tags": "=,equality,equivalent,equivalence,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "eraser",
+    "viewBox": "0 0 256 256",
+    "tags": "write,writing,editing,undo,deleted"
+  },
+  {
+    "name": "exam",
+    "viewBox": "0 0 256 256",
+    "tags": "text,examination,paper,school,grade"
+  },
+  {
+    "name": "exclamation-mark",
+    "viewBox": "0 0 256 256",
+    "tags": "!,alert,warning,caution,interjection,punctuation,symbol"
+  },
+  {
+    "name": "exclude-square",
+    "viewBox": "0 0 256 256",
+    "tags": "venn-diagram,difference,intersection"
+  },
+  {
+    "name": "exclude",
+    "viewBox": "0 0 256 256",
+    "tags": "venn-diagram,difference,intersection"
+  },
+  {
+    "name": "export",
+    "viewBox": "0 0 256 256",
+    "tags": "share,send to,arrows"
+  },
+  {
+    "name": "eye-closed",
+    "viewBox": "0 0 256 256",
+    "tags": "visible,hidden,show,hide,visibility,view,invisible,private"
+  },
+  {
+    "name": "eye-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "visible,hidden,show,hide,visibility,view,invisible,eyelashes,disabled,private"
+  },
+  {
+    "name": "eye",
+    "viewBox": "0 0 256 256",
+    "tags": "visible,hidden,show,hide,visibility,view"
+  },
+  {
+    "name": "faders-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,sliders,filters,equalizer,volume,settings,preferences"
+  },
+  {
+    "name": "faders",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,sliders,filters,equalizer,volume,settings,preferences"
+  },
+  {
+    "name": "fan",
+    "viewBox": "0 0 256 256",
+    "tags": "desk fan,air conditioning"
+  },
+  {
+    "name": "fast-forward",
+    "viewBox": "0 0 256 256",
+    "tags": "audio,music,seek,scrub,scan,ahead,skip"
+  },
+  {
+    "name": "fediverse-logo",
+    "viewBox": "0 0 256 256",
+    "tags": "social media,decentralized"
+  },
+  {
+    "name": "file-archive",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,zip,compression"
+  },
+  {
+    "name": "file-arrow-down",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,save,write,download,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "file-arrow-up",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,save,write,upload,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "file-audio",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,music,sound"
+  },
+  {
+    "name": "file-checked",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,word,microsoft,tick,checked,completed"
+  },
+  {
+    "name": "file-clear-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "documents,files,clear,reset,empty,delete"
+  },
+  {
+    "name": "file-close-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "documents,files,close,closed,cancelled,dismissed"
+  },
+  {
+    "name": "file-cloud",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,sync"
+  },
+  {
+    "name": "file-code",
+    "viewBox": "0 0 256 256",
+    "tags": "documents"
+  },
+  {
+    "name": "file-config-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,settings,setup,preferences,configuration"
+  },
+  {
+    "name": "file-csv",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,data"
+  },
+  {
+    "name": "file-dashed",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,browse,draft,open,dotted"
+  },
+  {
+    "name": "file-doc",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,word,microsoft"
+  },
+  {
+    "name": "file-edit",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,word,microsoft,editing,write"
+  },
+  {
+    "name": "file-html",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,documents,code"
+  },
+  {
+    "name": "file-image",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,pictures,photograph"
+  },
+  {
+    "name": "file-jpg",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,pictures,photograph,jpeg"
+  },
+  {
+    "name": "file-lock",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,secure,locked,private"
+  },
+  {
+    "name": "file-magnifying-glass",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,search,find,locate,browse,missing"
+  },
+  {
+    "name": "file-minus-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "documents,files,delete,write,remove,-"
+  },
+  {
+    "name": "file-minus",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,delete,write,remove,-"
+  },
+  {
+    "name": "file-pdf",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,acrobat"
+  },
+  {
+    "name": "file-plus-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "documents,files,save,write,add,new,create,+"
+  },
+  {
+    "name": "file-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,save,write,add,new,create,+"
+  },
+  {
+    "name": "file-png",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,pictures,photograph"
+  },
+  {
+    "name": "file-refresh-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,refresh,update,reload,sync,synchronized"
+  },
+  {
+    "name": "file-slash-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "documents,files,cancelled,deleted,removed,disabled,errors"
+  },
+  {
+    "name": "file-sql-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,database"
+  },
+  {
+    "name": "file-sql",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,database"
+  },
+  {
+    "name": "file-text",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,save,write"
+  },
+  {
+    "name": "file-transfer",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,save,write,exchange,flow,bidirectional"
+  },
+  {
+    "name": "file-txt",
+    "viewBox": "0 0 256 256",
+    "tags": "documents"
+  },
+  {
+    "name": "file-warning-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,alert,danger,dangerous,caution,errors"
+  },
+  {
+    "name": "file-x",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,cancelled,deleted,removed,errors"
+  },
+  {
+    "name": "file-xls",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,excel,microsoft"
+  },
+  {
+    "name": "file-zip",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,archive,compression"
+  },
+  {
+    "name": "file",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,files,save,write,page"
+  },
+  {
+    "name": "files",
+    "viewBox": "0 0 256 256",
+    "tags": "documents,open,library"
+  },
+  {
+    "name": "fingerprint",
+    "viewBox": "0 0 256 256",
+    "tags": "security,secured,authentication,authenticated,login,locked,biometrics,encrypted,encryption"
+  },
+  {
+    "name": "fire-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "flame,burning,match,lighter"
+  },
+  {
+    "name": "fire",
+    "viewBox": "0 0 256 256",
+    "tags": "flame,burning,match,lighter"
+  },
+  {
+    "name": "flag-pennant",
+    "viewBox": "0 0 256 256",
+    "tags": "flags,race,sports,team"
+  },
+  {
+    "name": "flag",
+    "viewBox": "0 0 256 256",
+    "tags": "country,countries,finished,completed,flags"
+  },
+  {
+    "name": "flame",
+    "viewBox": "0 0 256 256",
+    "tags": "fire,burning,match,lighter"
+  },
+  {
+    "name": "flashlight",
+    "viewBox": "0 0 256 256",
+    "tags": "torch,find,search,locate"
+  },
+  {
+    "name": "flask",
+    "viewBox": "0 0 256 256",
+    "tags": "beaker,science,chemistry,experiment,erlenmeyer"
+  },
+  {
+    "name": "floppy-disk",
+    "viewBox": "0 0 256 256",
+    "tags": "diskette,directory,directories,folders,documents,files,save,write"
+  },
+  {
+    "name": "folder-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders"
+  },
+  {
+    "name": "folder-lock",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,private,secure"
+  },
+  {
+    "name": "folder-minus",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,delete,write,remove,-"
+  },
+  {
+    "name": "folder-open-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,load"
+  },
+  {
+    "name": "folder-open",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,load"
+  },
+  {
+    "name": "folder-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,save,write,add,new,create,+"
+  },
+  {
+    "name": "folder-simple-dashed",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,missing,temporary,dotted"
+  },
+  {
+    "name": "folder-simple-lock",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,private,secure"
+  },
+  {
+    "name": "folder-simple-minus",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,delete,write,remove,-"
+  },
+  {
+    "name": "folder-simple-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,save,write,add,new,create,+"
+  },
+  {
+    "name": "folder-simple-star",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,favorite,starred"
+  },
+  {
+    "name": "folder-simple-user",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,personal"
+  },
+  {
+    "name": "folder-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders"
+  },
+  {
+    "name": "folder-star",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,favorite,starred"
+  },
+  {
+    "name": "folder-user",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,personal"
+  },
+  {
+    "name": "folder",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders"
+  },
+  {
+    "name": "folders",
+    "viewBox": "0 0 256 256",
+    "tags": "directory,directories,files,folders,copy,copied,duplicated"
+  },
+  {
+    "name": "frame-corners",
+    "viewBox": "0 0 256 256",
+    "tags": "expand,fullscreen,maximized,resize,windowed,capture"
+  },
+  {
+    "name": "funnel-simple-x",
+    "viewBox": "0 0 256 256",
+    "tags": "filters,refine,sorting"
+  },
+  {
+    "name": "funnel-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "filters,refine,sorting"
+  },
+  {
+    "name": "funnel-x",
+    "viewBox": "0 0 256 256",
+    "tags": "filters,refine,sorting"
+  },
+  {
+    "name": "funnel",
+    "viewBox": "0 0 256 256",
+    "tags": "filters,refine,sorting"
+  },
+  {
+    "name": "gauge",
+    "viewBox": "0 0 256 256",
+    "tags": "dashboard,meter,speed,speedometer,odometer,performance"
+  },
+  {
+    "name": "gear-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "8,settings,setup,preferences,cogs,gears,machinery,mechanical"
+  },
+  {
+    "name": "gear-fine",
+    "viewBox": "0 0 256 256",
+    "tags": "setup,preferences,cogs,gears,machinery,mechanical"
+  },
+  {
+    "name": "gear-six",
+    "viewBox": "0 0 256 256",
+    "tags": "6,settings,setup,preferences,cogs,gears,machinery,mechanical"
+  },
+  {
+    "name": "gear",
+    "viewBox": "0 0 256 256",
+    "tags": "8,settings,setup,preferences,cogs,gears,machinery,mechanical"
+  },
+  {
+    "name": "gift-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "presents,holiday,birthday"
+  },
+  {
+    "name": "gift",
+    "viewBox": "0 0 256 256",
+    "tags": "presents,holiday,birthday"
+  },
+  {
+    "name": "git-branch",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,github,vcs,source control,version control,versioning,branches"
+  },
+  {
+    "name": "git-commit",
+    "viewBox": "0 0 256 256",
+    "tags": "github,vcs,source control,version control,versioning,commits"
+  },
+  {
+    "name": "git-diff",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,github,vcs,source control,version control,versioning,difference,compare"
+  },
+  {
+    "name": "git-fork",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,github,vcs,source control,version control,versioning,split"
+  },
+  {
+    "name": "git-merge",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,github,vcs,source control,version control,versioning,split"
+  },
+  {
+    "name": "git-pull-request",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,github,vcs,source control,version control,versioning,merge request"
+  },
+  {
+    "name": "globe-hemisphere-west-duotone",
+    "viewBox": "0 0 20 20",
+    "tags": "world,earth,global,planet,circle,round,internationalization,i18n,languages,country,countries,geography,north america,south america"
+  },
+  {
+    "name": "globe-hemisphere-west",
+    "viewBox": "0 0 256 256",
+    "tags": "world,earth,global,planet,circle,round,internationalization,i18n,languages,country,countries,geography,north america,south america"
+  },
+  {
+    "name": "globe-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "world,earth,global,planet,circle,round,internationalization,i18n,languages,country,countries,geography"
+  },
+  {
+    "name": "globe-x",
+    "viewBox": "0 0 256 256",
+    "tags": "world,earth,global,planet,circle,round,internationalization,i18n,languages,country,countries,geography,internet"
+  },
+  {
+    "name": "globe",
+    "viewBox": "0 0 256 256",
+    "tags": "world,earth,global,planet,circle,round,internationalization,i18n,languages,country,countries,geography,internet"
+  },
+  {
+    "name": "gps-fix",
+    "viewBox": "0 0 256 256",
+    "tags": "geolocation,location,navigation"
+  },
+  {
+    "name": "gps-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "geolocation,location,navigation,disabled"
+  },
+  {
+    "name": "gps",
+    "viewBox": "0 0 256 256",
+    "tags": "geolocation,location,navigation"
+  },
+  {
+    "name": "gradient",
+    "viewBox": "0 0 256 256",
+    "tags": "fade,ombre,opacity"
+  },
+  {
+    "name": "grid-four",
+    "viewBox": "0 0 256 256",
+    "tags": "4,apps,applications,squares,tiles,cells,tables,tabular,spreadsheets,excel"
+  },
+  {
+    "name": "grid-nine-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "9,apps,applications,squares,tiles,cells,tables,tabular,spreadsheets,excel"
+  },
+  {
+    "name": "grid-nine",
+    "viewBox": "0 0 256 256",
+    "tags": "9,apps,applications,squares,tiles,cells,tables,tabular,spreadsheets,excel"
+  },
+  {
+    "name": "hard-drive",
+    "viewBox": "0 0 256 256",
+    "tags": "saved,saving,archived,archiving,archival,hard disk,storage,hdd,servers,databases"
+  },
+  {
+    "name": "hard-drives",
+    "viewBox": "0 0 256 256",
+    "tags": "saved,saving,archived,archiving,archival,hard disk,storage,hdd,servers,databases"
+  },
+  {
+    "name": "headphones",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,listening"
+  },
+  {
+    "name": "headset-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,listening,gaming,voice chat,microphone,headphones,support,customer-service,call-center"
+  },
+  {
+    "name": "headset",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,listening,gaming,voice chat,microphone,headphones,support,customer-service,call-center"
+  },
+  {
+    "name": "heart",
+    "viewBox": "0 0 256 256",
+    "tags": "wellness,love,healthy,like,favorites,favorited,suits,cards,gambling,casino,gaming,emoji"
+  },
+  {
+    "name": "heartbeat-duotone",
+    "viewBox": "0 0 16 16",
+    "tags": "wellness,healthy,ecg,ekg,vitals,monitor"
+  },
+  {
+    "name": "hexagon",
+    "viewBox": "0 0 256 256",
+    "tags": "6,shapes,polygons"
+  },
+  {
+    "name": "hourglass-high",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,alarms,clock,schedule,events,waiting,progress"
+  },
+  {
+    "name": "hourglass-low",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,alarms,clock,schedule,events,waiting,progress"
+  },
+  {
+    "name": "hourglass-medium",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,alarms,clock,schedule,events,waiting,progress"
+  },
+  {
+    "name": "hourglass",
+    "viewBox": "0 0 256 256",
+    "tags": "times,timer,alarms,clock,schedule,events,waiting,progress"
+  },
+  {
+    "name": "house",
+    "viewBox": "0 0 256 256",
+    "tags": "homes,buildings,places,locations"
+  },
+  {
+    "name": "identification-card",
+    "viewBox": "0 0 256 256",
+    "tags": "license,badge,credentials,nametag,user,verification"
+  },
+  {
+    "name": "image-broken-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "pictures,photographs,photography,wallpapers,gallery,landscape,missing,error,404"
+  },
+  {
+    "name": "image-square",
+    "viewBox": "0 0 256 256",
+    "tags": "pictures,photographs,photography,wallpapers,gallery,landscape"
+  },
+  {
+    "name": "image",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,pictures,photographs,photography,wallpapers,gallery,landscape"
+  },
+  {
+    "name": "images-square",
+    "viewBox": "0 0 256 256",
+    "tags": "pictures,photographs,photography,wallpapers,gallery,landscape,album"
+  },
+  {
+    "name": "images",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,pictures,photographs,photography,wallpapers,gallery,landscape,album"
+  },
+  {
+    "name": "infinity",
+    "viewBox": "0 0 256 256",
+    "tags": "infinite,lemniscate,figure-eight,mathematics,arithmetic,calculator,∞"
+  },
+  {
+    "name": "info-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "information,help,support"
+  },
+  {
+    "name": "info-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "information,help,support"
+  },
+  {
+    "name": "info-settings",
+    "viewBox": "0 0 256 256",
+    "tags": "information,help,support,settings,gear,options"
+  },
+  {
+    "name": "info",
+    "viewBox": "0 0 256 256",
+    "tags": "information,help,support"
+  },
+  {
+    "name": "intersect-square",
+    "viewBox": "0 0 256 256",
+    "tags": "venn-diagram,join,intersection"
+  },
+  {
+    "name": "invoice",
+    "viewBox": "0 0 256 256",
+    "tags": "receipt,expense,bill"
+  },
+  {
+    "name": "ip-network",
+    "viewBox": "0 0 32 32",
+    "tags": "ip,network,address,connectivity,internet,protocol,lan,wan,subnet,nodes"
+  },
+  {
+    "name": "kanban",
+    "viewBox": "0 0 256 256",
+    "tags": "scheduling,tasks,project management,process,lean,agile"
+  },
+  {
+    "name": "key-return",
+    "viewBox": "0 0 256 256",
+    "tags": "keyboard,enter"
+  },
+  {
+    "name": "key",
+    "viewBox": "0 0 256 256",
+    "tags": "padlock,security,secured,authentication,authenticated,login,locked,encrypted,encryption"
+  },
+  {
+    "name": "keyboard",
+    "viewBox": "0 0 256 256",
+    "tags": "typing,type,keys,input"
+  },
+  {
+    "name": "keyhole",
+    "viewBox": "0 0 256 256",
+    "tags": "lock,security,secured,authentication,authenticated,login,locked,encrypted,encryption,privacy,private"
+  },
+  {
+    "name": "keys-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "padlock,security,secured,authentication,authenticated,login,locked,encrypted,encryption"
+  },
+  {
+    "name": "keys",
+    "viewBox": "0 0 256 256",
+    "tags": "padlock,security,secured,authentication,authenticated,login,locked,encrypted,encryption"
+  },
+  {
+    "name": "layout",
+    "viewBox": "0 0 256 256",
+    "tags": "wireframe,sidebar,ui,interface"
+  },
+  {
+    "name": "leaf",
+    "viewBox": "0 0 256 256",
+    "tags": "plants,trees,branches,leaves,nodes,green,environmental"
+  },
+  {
+    "name": "lifebuoy-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "lifebelt,lifesaver,safety,help,support,nautical,boats,ships"
+  },
+  {
+    "name": "lifebuoy",
+    "viewBox": "0 0 256 256",
+    "tags": "lifebelt,lifesaver,safety,help,support,nautical,boats,ships"
+  },
+  {
+    "name": "lightbulb",
+    "viewBox": "0 0 256 256",
+    "tags": "flashlight,bulbs,lighting,led,energy,idea"
+  },
+  {
+    "name": "lightning",
+    "viewBox": "0 0 256 256",
+    "tags": "meteorology,stormy,thunderstorm,thunderbolt,charged,charger,charging,power,electricity,flash"
+  },
+  {
+    "name": "line-segments",
+    "viewBox": "0 0 256 256",
+    "tags": "shapes,drawing,path,pen,vector"
+  },
+  {
+    "name": "line-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "bar,pipe,|,divider. symbol"
+  },
+  {
+    "name": "link-break",
+    "viewBox": "0 0 256 256",
+    "tags": "anchor,hyperlink,hypertext,chains,chained,errors,broken"
+  },
+  {
+    "name": "link-broken-circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "anchor,hyperlink,hypertext,chains,chained,errors,broken,disconnected,unlink,chain,break,connection,lost,forbidden,round"
+  },
+  {
+    "name": "link-broken-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "anchor,hyperlink,hypertext,chains,chained,errors,broken,disconnected,unlink,chain,break,connection,lost,forbidden"
+  },
+  {
+    "name": "link-broken",
+    "viewBox": "0 0 256 256",
+    "tags": "anchor,hyperlink,hypertext,chains,chained,errors,broken,disconnected,unlink,chain,break,connection,lost,forbidden"
+  },
+  {
+    "name": "link-simple-break",
+    "viewBox": "0 0 256 256",
+    "tags": "anchor,hyperlink,hypertext,chains,chained,errors,broken"
+  },
+  {
+    "name": "link-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "anchor,hyperlink,hypertext,chains,chained"
+  },
+  {
+    "name": "link",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,anchor,hyperlink,hypertext,chains,chained"
+  },
+  {
+    "name": "list-bullets",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,ul,unordered list,bulleted list,checklist"
+  },
+  {
+    "name": "list-checks",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,checklist,todo"
+  },
+  {
+    "name": "list-dashes",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,ul,unordered list,dashed list,checklist"
+  },
+  {
+    "name": "list-magnifying-glass",
+    "viewBox": "0 0 256 256",
+    "tags": "search,find,locate,query,inspect"
+  },
+  {
+    "name": "list-numbers",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,ol,ordered list,numbered list,checklist"
+  },
+  {
+    "name": "list-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,ul,ol,unordered list,ordered list,checklist,add,+"
+  },
+  {
+    "name": "list-star",
+    "viewBox": "0 0 256 256",
+    "tags": "favorites,wishlist,liked"
+  },
+  {
+    "name": "list",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,hamburger menu,overflow menu,sidebar,3,ul,ol,unordered list,ordered list,checklist,lines"
+  },
+  {
+    "name": "lock-open",
+    "viewBox": "0 0 256 256",
+    "tags": "padlock,security,unsecured,authentication,unauthenticated,login,unlocked,unencrypted,encryption,privacy"
+  },
+  {
+    "name": "lock-simple-open",
+    "viewBox": "0 0 256 256",
+    "tags": "padlock,security,unsecured,authentication,unauthenticated,login,unlocked,unencrypted,encryption,privacy,private"
+  },
+  {
+    "name": "lock-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "padlock,security,secured,authentication,authenticated,login,locked,encrypted,encryption,privacy,private"
+  },
+  {
+    "name": "lock",
+    "viewBox": "0 0 256 256",
+    "tags": "padlock,security,secured,authentication,authenticated,login,locked,encrypted,encryption,privacy,private"
+  },
+  {
+    "name": "lockers",
+    "viewBox": "0 0 256 256",
+    "tags": "locker room,gym,storage"
+  },
+  {
+    "name": "magnifying-glass-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "search,find,locate,query,inspect"
+  },
+  {
+    "name": "magnifying-glass-minus",
+    "viewBox": "0 0 256 256",
+    "tags": "search,find,locate,query,inspect,zoom out,-"
+  },
+  {
+    "name": "magnifying-glass-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "search,find,locate,query,inspect,zoom in,+"
+  },
+  {
+    "name": "magnifying-glass",
+    "viewBox": "0 0 256 256",
+    "tags": "search,find,locate,query,inspect"
+  },
+  {
+    "name": "mailbox",
+    "viewBox": "0 0 256 256",
+    "tags": "email,letters,messaging,post"
+  },
+  {
+    "name": "map-pin-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "maps,places,markers,pins,locations,add,point of interest"
+  },
+  {
+    "name": "map-pin",
+    "viewBox": "0 0 256 256",
+    "tags": "maps,places,markers,pins,locations,poi,point of interest"
+  },
+  {
+    "name": "map-trifold",
+    "viewBox": "0 0 256 256",
+    "tags": "maps,places,locations,cartography,geography"
+  },
+  {
+    "name": "math-operations",
+    "viewBox": "0 0 256 256",
+    "tags": "addition,sum,subtraction,difference,multiply,multiplication,product,divide,division,divisor,dividend,quotient,equals,equality,mathematics,arithmetic,calculator,+,-,±,×,÷,="
+  },
+  {
+    "name": "medal",
+    "viewBox": "0 0 256 256",
+    "tags": "ribbons,winning,victory,awards,rosette"
+  },
+  {
+    "name": "megaphone-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "bullhorn,announcements,loudspeaker,broadcast"
+  },
+  {
+    "name": "megaphone",
+    "viewBox": "0 0 256 256",
+    "tags": "bullhorn,announcements,loudspeaker,broadcast"
+  },
+  {
+    "name": "menu-right",
+    "viewBox": "0 0 256 256",
+    "tags": "menu,right,right-align"
+  },
+  {
+    "name": "microphone-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "audio,recording,music,sound,podcast,studio,muted,disabled"
+  },
+  {
+    "name": "microphone",
+    "viewBox": "0 0 256 256",
+    "tags": "audio,recording,music,sound,podcast,studio"
+  },
+  {
+    "name": "minus-circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "-,subtraction,difference,mathematics,arithmetic,calculator,round"
+  },
+  {
+    "name": "minus-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "-,subtraction,difference,mathematics,arithmetic,calculator,round"
+  },
+  {
+    "name": "minus",
+    "viewBox": "0 0 256 256",
+    "tags": "-,subtraction,difference,mathematics,arithmetic,calculator,line,horizontal,divider"
+  },
+  {
+    "name": "monitor-arrow-up",
+    "viewBox": "0 0 256 256",
+    "tags": "screen,screencast,screenshare,upload,video,movie"
+  },
+  {
+    "name": "monitor-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "screen,television,tv,displays"
+  },
+  {
+    "name": "monitor-play",
+    "viewBox": "0 0 256 256",
+    "tags": "screen,television,tv,displays,screencast,video,movie"
+  },
+  {
+    "name": "monitor-pulse",
+    "viewBox": "0 0 256 256",
+    "tags": "screen,television,tv,displays,activity,heartbeat,medical,ecg,ekg,vitals,monitor,medicine"
+  },
+  {
+    "name": "monitor",
+    "viewBox": "0 0 256 256",
+    "tags": "screen,television,tv,displays"
+  },
+  {
+    "name": "moon-stars",
+    "viewBox": "0 0 256 256",
+    "tags": "night,evening,clear,sleep,snooze,night mode,dark mode,astronomy,stargazing,constellation"
+  },
+  {
+    "name": "moon-sun",
+    "viewBox": "0 0 256 256",
+    "tags": "night,evening,clear,sleep,snooze,night mode,dark mode,day,daytime,daylight,sunny,light mode"
+  },
+  {
+    "name": "moon",
+    "viewBox": "0 0 256 256",
+    "tags": "night,evening,clear,sleep,snooze,night mode,dark mode,astronomy,stargazing"
+  },
+  {
+    "name": "mountains",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,hills,outdoors,terrain,geology,adventure"
+  },
+  {
+    "name": "navigation-arrow",
+    "viewBox": "0 0 256 256",
+    "tags": "location,directions,compass,gps"
+  },
+  {
+    "name": "needle",
+    "viewBox": "0 0 256 256",
+    "tags": "sewing,thread,awl,tailor"
+  },
+  {
+    "name": "network-router",
+    "viewBox": "0 0 32 32",
+    "tags": ""
+  },
+  {
+    "name": "network-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "internet,ethernet,lan,error"
+  },
+  {
+    "name": "network-x",
+    "viewBox": "0 0 256 256",
+    "tags": "internet,ethernet,lan,disabled"
+  },
+  {
+    "name": "network",
+    "viewBox": "0 0 256 256",
+    "tags": "internet,ethernet,lan"
+  },
+  {
+    "name": "newspaper-clipping",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,reading,writing,journals,periodicals"
+  },
+  {
+    "name": "noc",
+    "viewBox": "0 0 256 256",
+    "tags": "card,slides,slideshow,windows,gallery,carousel,layers"
+  },
+  {
+    "name": "not-equals-circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "≠,equality,equivalent,equivalence,mathematics,arithmetic,calculator,round"
+  },
+  {
+    "name": "not-equals-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "≠,equality,equivalent,equivalence,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "not-equals",
+    "viewBox": "0 0 256 256",
+    "tags": "≠,equality,equivalent,equivalence,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "note-pencil",
+    "viewBox": "0 0 256 256",
+    "tags": "notes,note-taking,memorandum,post-it,reminders"
+  },
+  {
+    "name": "note",
+    "viewBox": "0 0 256 256",
+    "tags": "notes,note-taking,memorandum,post-it,reminders"
+  },
+  {
+    "name": "notebook",
+    "viewBox": "0 0 256 256",
+    "tags": "notes,note-taking,memorandum,journal,diary,logs,logbook"
+  },
+  {
+    "name": "notification",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,pip"
+  },
+  {
+    "name": "numpad",
+    "viewBox": "0 0 256 256",
+    "tags": "dialer,dialpad,call-center,telephone,landline,password,passcode"
+  },
+  {
+    "name": "nut",
+    "viewBox": "0 0 256 256",
+    "tags": "bolts,screws,machinery,tools,hexagon"
+  },
+  {
+    "name": "octagon",
+    "viewBox": "0 0 256 256",
+    "tags": "8,shapes,polygons"
+  },
+  {
+    "name": "option",
+    "viewBox": "0 0 256 256",
+    "tags": "keyboard,shortcut,modifier"
+  },
+  {
+    "name": "package",
+    "viewBox": "0 0 256 256",
+    "tags": "packages,boxes,delivery,mail,postal service,bundles,library,libraries,shipping"
+  },
+  {
+    "name": "palette",
+    "viewBox": "0 0 256 256",
+    "tags": "paint,colors,color picker,arts"
+  },
+  {
+    "name": "paper-plane-right",
+    "viewBox": "0 0 256 256",
+    "tags": "mail,email,send,sent,messages,messaging,toys,games"
+  },
+  {
+    "name": "paper-plane-tilt",
+    "viewBox": "0 0 256 256",
+    "tags": "mail,email,send,sent,messages,messaging,toys,games"
+  },
+  {
+    "name": "paperclip-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "attachments,mail,email,office"
+  },
+  {
+    "name": "paperclip",
+    "viewBox": "0 0 256 256",
+    "tags": "attachments,mail,email,office"
+  },
+  {
+    "name": "password",
+    "viewBox": "0 0 256 256",
+    "tags": "security,secured,authentication,authenticated,login,locked,encrypted,encryption"
+  },
+  {
+    "name": "path",
+    "viewBox": "0 0 256 256",
+    "tags": "transit,travel,trail,gps,navigation,route,destination,vector"
+  },
+  {
+    "name": "pause-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,resume,start,stop,round"
+  },
+  {
+    "name": "pause",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,resume,start,stop"
+  },
+  {
+    "name": "pen",
+    "viewBox": "0 0 256 256",
+    "tags": "ink,write,writing,editing,sign,signature"
+  },
+  {
+    "name": "pencil-simple-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "read-only,write,writing,editing"
+  },
+  {
+    "name": "pencil-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "write,writing,editing,sign,signature"
+  },
+  {
+    "name": "pentagon",
+    "viewBox": "0 0 256 256",
+    "tags": "shapes,polygons,5"
+  },
+  {
+    "name": "pentagram",
+    "viewBox": "0 0 256 256",
+    "tags": "star,wicca,satan,satanism,religion,spirituality,evil,magic"
+  },
+  {
+    "name": "phone-call-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "calls,calling,ringing,telephone,landline,talk"
+  },
+  {
+    "name": "phone-call",
+    "viewBox": "0 0 256 256",
+    "tags": "calls,calling,ringing,telephone,landline,talk"
+  },
+  {
+    "name": "picture-in-picture",
+    "viewBox": "0 0 256 256",
+    "tags": "pip,pop-out,minimize,maximize"
+  },
+  {
+    "name": "play-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,resume,start,round"
+  },
+  {
+    "name": "play-fill",
+    "viewBox": "0 0 12 12",
+    "tags": "music,audio,resume,start"
+  },
+  {
+    "name": "plug-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "outlet,socket,plugin,integration"
+  },
+  {
+    "name": "plug",
+    "viewBox": "0 0 256 256",
+    "tags": "outlet,socket,plugin,integration"
+  },
+  {
+    "name": "plugs",
+    "viewBox": "0 0 256 256",
+    "tags": "outlet,socket,plugin,integration,disconnected"
+  },
+  {
+    "name": "plus-circle-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "addition,sum,mathematics,arithmetic,calculator,round,+"
+  },
+  {
+    "name": "plus-circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "addition,sum,mathematics,arithmetic,calculator,round,+"
+  },
+  {
+    "name": "plus-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "addition,sum,mathematics,arithmetic,calculator,round,+"
+  },
+  {
+    "name": "plus-square",
+    "viewBox": "0 0 256 256",
+    "tags": "addition,sum,mathematics,arithmetic,calculator,+"
+  },
+  {
+    "name": "plus",
+    "viewBox": "0 0 256 256",
+    "tags": "addition,sum,mathematics,arithmetic,calculator,+"
+  },
+  {
+    "name": "poker-chip",
+    "viewBox": "0 0 256 256",
+    "tags": "chips,tokens,cards,gambling,casino"
+  },
+  {
+    "name": "polygon",
+    "viewBox": "0 0 256 256",
+    "tags": "shapes,drawing"
+  },
+  {
+    "name": "popout",
+    "viewBox": "0 0 256 256",
+    "tags": "pip,pop-out,minimize,maximize"
+  },
+  {
+    "name": "power",
+    "viewBox": "0 0 256 256",
+    "tags": "charged,charger,charging,on,off,on/off,switch,power switch"
+  },
+  {
+    "name": "presentation-chart",
+    "viewBox": "0 0 256 256",
+    "tags": "whiteboard,flipchart,graphs,graphing,charts,statistics,analyze,analysis,meeting"
+  },
+  {
+    "name": "presentation",
+    "viewBox": "0 0 256 256",
+    "tags": "whiteboard,flipchart,charts,statistics,analyze,analysis,meeting"
+  },
+  {
+    "name": "printer-duotone",
+    "viewBox": "0 0 16 16",
+    "tags": "printing"
+  },
+  {
+    "name": "printer",
+    "viewBox": "0 0 256 256",
+    "tags": "printing"
+  },
+  {
+    "name": "prohibit-inset",
+    "viewBox": "0 0 256 256",
+    "tags": "forbidden,prohibited,cancelled,prevent,stop,do not enter"
+  },
+  {
+    "name": "prohibit",
+    "viewBox": "0 0 256 256",
+    "tags": "forbidden,prohibited,cancelled,prevent,stop,do not enter"
+  },
+  {
+    "name": "projector-screen-chart",
+    "viewBox": "0 0 256 256",
+    "tags": "projection,presentation,slideshow,graphs,graphing,charts,statistics,analyze,analysis"
+  },
+  {
+    "name": "projector-screen",
+    "viewBox": "0 0 256 256",
+    "tags": "projection,presentation,slideshow,movies,charts,statistics,analyze,analysis"
+  },
+  {
+    "name": "pulse",
+    "viewBox": "0 0 256 256",
+    "tags": "activity,heartbeat,medical,ecg,ekg,vitals,monitor,medicine"
+  },
+  {
+    "name": "push-pin-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "favorites,favorited,pushpin,disabled"
+  },
+  {
+    "name": "push-pin",
+    "viewBox": "0 0 256 256",
+    "tags": "favorites,favorited,pushpin"
+  },
+  {
+    "name": "puzzle-piece-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "board game,element,component,extension,plugin"
+  },
+  {
+    "name": "puzzle-piece",
+    "viewBox": "0 0 256 256",
+    "tags": "board game,element,component,extension,plugin"
+  },
+  {
+    "name": "qr-code",
+    "viewBox": "0 0 256 256",
+    "tags": "upc,barcode,products,shopping,scanner"
+  },
+  {
+    "name": "question-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "information,help,support,questions"
+  },
+  {
+    "name": "question-mark",
+    "viewBox": "0 0 256 256",
+    "tags": "?,information,help,support,questions,punctuation,symbol"
+  },
+  {
+    "name": "question",
+    "viewBox": "0 0 256 256",
+    "tags": "information,help,support,questions"
+  },
+  {
+    "name": "radio-button",
+    "viewBox": "0 0 256 256",
+    "tags": "input,checkbox,checked"
+  },
+  {
+    "name": "receipt",
+    "viewBox": "0 0 256 256",
+    "tags": "purchase,money,clipping,expense"
+  },
+  {
+    "name": "record",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,recording,recorder,voice memo"
+  },
+  {
+    "name": "recycle",
+    "viewBox": "0 0 256 256",
+    "tags": "recycling,trash,environmental,green"
+  },
+  {
+    "name": "resize",
+    "viewBox": "0 0 256 256",
+    "tags": "maximize,expand,grow"
+  },
+  {
+    "name": "rewind",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,seek,scrub,scan,skip,back,backwards,reverse"
+  },
+  {
+    "name": "robot",
+    "viewBox": "0 0 256 256",
+    "tags": "automaton,artificial intelligence,ai"
+  },
+  {
+    "name": "rocket-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "spaceship,launch,deployment,rocketship"
+  },
+  {
+    "name": "rocket-launch-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,spaceship,flying,blastoff,deployment,rocketship"
+  },
+  {
+    "name": "rocket-launch",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,spaceship,flying,blastoff,deployment,rocketship"
+  },
+  {
+    "name": "rocket",
+    "viewBox": "0 0 256 256",
+    "tags": "spaceship,launch,deployment,rocketship"
+  },
+  {
+    "name": "router",
+    "viewBox": "0 0 256 256",
+    "tags": "network,modem,wifi,wireless,internet,access point"
+  },
+  {
+    "name": "rows-duotone",
+    "viewBox": "0 0 20 20",
+    "tags": "2,shapes,polygons,box,stack,list,table,cards"
+  },
+  {
+    "name": "rows",
+    "viewBox": "0 0 256 256",
+    "tags": "2,shapes,polygons,box,stack,list,table,cards"
+  },
+  {
+    "name": "rss-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "radio,broadcast,web feed,news,aggregator"
+  },
+  {
+    "name": "rss",
+    "viewBox": "0 0 256 256",
+    "tags": "radio,broadcast,web feed,news,aggregator"
+  },
+  {
+    "name": "scan",
+    "viewBox": "0 0 256 256",
+    "tags": "upc,barcode,products,shopping,scanner"
+  },
+  {
+    "name": "screencast",
+    "viewBox": "0 0 256 256",
+    "tags": "apple,airplay,screencasting,screen share,television,tv"
+  },
+  {
+    "name": "scroll",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,parchment,paper,script,spell,fantasy"
+  },
+  {
+    "name": "seal-check",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,verified,verification,shapes,polygons,circle-wavy"
+  },
+  {
+    "name": "seal-warning-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,unverified,verification,errors,shapes,polygons,circle-wavy"
+  },
+  {
+    "name": "seal-warning",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,unverified,verification,errors,shapes,polygons,circle-wavy"
+  },
+  {
+    "name": "seal",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,verified,verification,shapes,polygons,circle-wavy"
+  },
+  {
+    "name": "selection-all",
+    "viewBox": "0 0 256 256",
+    "tags": "marquis,select all"
+  },
+  {
+    "name": "selection-background",
+    "viewBox": "0 0 256 256",
+    "tags": "marquis"
+  },
+  {
+    "name": "settings-wrench",
+    "viewBox": "0 0 48 48",
+    "tags": "settings,setup,preferences,configuration,tools,wrench,repair,maintenance"
+  },
+  {
+    "name": "shapes-duotone",
+    "viewBox": "0 0 20 20",
+    "tags": "geometry,square,circle,triangle"
+  },
+  {
+    "name": "share-fat",
+    "viewBox": "0 0 256 256",
+    "tags": "export,send to"
+  },
+  {
+    "name": "share-network",
+    "viewBox": "0 0 256 256",
+    "tags": "send to,export"
+  },
+  {
+    "name": "shield-2-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "badge,security,secured,defense,defended,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-2",
+    "viewBox": "0 0 32 32",
+    "tags": "badge,security,secured,defense,defended,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-check-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-check-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-check",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-checkered",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-chevron",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-clear-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "badge,security,defense,authentication,guarded,locked,encrypted,encryption,clear,empty,reset"
+  },
+  {
+    "name": "shield-close-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,guarded,locked,encrypted,encryption,closed,cancelled,dismissed"
+  },
+  {
+    "name": "shield-critical",
+    "viewBox": "0 0 48 48",
+    "tags": "badge,security,defense,critical,alert,danger,severe,threat,vulnerability,risk"
+  },
+  {
+    "name": "shield-danger",
+    "viewBox": "0 0 48 48",
+    "tags": "badge,security,defense,danger,alert,warning,threat,unsafe,risk"
+  },
+  {
+    "name": "shield-discover",
+    "viewBox": "0 0 48 48",
+    "tags": "badge,security,defense,discover,scan,detect,search,find,exploration"
+  },
+  {
+    "name": "shield-gear-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption,settings,setup,preferences,configuration"
+  },
+  {
+    "name": "shield-lightning",
+    "viewBox": "0 0 48 48",
+    "tags": "badge,security,defense,lightning,bolt,power,protection,energy,fast"
+  },
+  {
+    "name": "shield-listcheck-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption,checklist,compliance,verified"
+  },
+  {
+    "name": "shield-neutral-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,guarded,locked,encrypted,encryption,neutral"
+  },
+  {
+    "name": "shield-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,unsecured,defense,undefended,authentication,unauthenticated,unguarded,unlocked,unencrypted,encryption,disabled"
+  },
+  {
+    "name": "shield-star",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shield-thumbs-up-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "badge,security,defense,authentication,guarded,locked,encrypted,encryption,like,approved,trusted,safe"
+  },
+  {
+    "name": "shield-thumbsdown-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,guarded,locked,encrypted,encryption,dislike,rejected,unsafe"
+  },
+  {
+    "name": "shield-thumbsup-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,defense,authentication,guarded,locked,encrypted,encryption,like,approved,trusted,safe"
+  },
+  {
+    "name": "shield-warning-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,unsecured,defense,undefended,authentication,unauthenticated,unguarded,unlocked,unencrypted,encryption,errors"
+  },
+  {
+    "name": "shield-warning-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,unsecured,defense,undefended,authentication,unauthenticated,unguarded,unlocked,unencrypted,encryption,errors"
+  },
+  {
+    "name": "shield-warning",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,unsecured,defense,undefended,authentication,unauthenticated,unguarded,unlocked,unencrypted,encryption,errors"
+  },
+  {
+    "name": "shield",
+    "viewBox": "0 0 256 256",
+    "tags": "badge,security,secured,defense,defended,authentication,authenticated,guarded,locked,encrypted,encryption"
+  },
+  {
+    "name": "shopping-cart-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "ecommerce,market,basket,buying,groceries,checkout,places,locations"
+  },
+  {
+    "name": "shopping-cart-simple-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "ecommerce,market,basket,buying,groceries,checkout,places,locations"
+  },
+  {
+    "name": "shopping-cart-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "ecommerce,market,basket,buying,groceries,checkout,places,locations"
+  },
+  {
+    "name": "shuffle",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,randomize,crossed"
+  },
+  {
+    "name": "sidebar-arrow-left",
+    "viewBox": "0 0 256 256",
+    "tags": "left rail,wireframe,ui,interface,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "sidebar-arrow-right",
+    "viewBox": "0 0 256 256",
+    "tags": "left rail,wireframe,ui,interface,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "sidebar-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "left rail,wireframe,ui,interface"
+  },
+  {
+    "name": "sidebar",
+    "viewBox": "0 0 256 256",
+    "tags": "left rail,wireframe,ui,interface"
+  },
+  {
+    "name": "sign-in",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,signin,login,log in,enter"
+  },
+  {
+    "name": "sign-out",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,signout,logout,log out,exit"
+  },
+  {
+    "name": "signpost",
+    "viewBox": "0 0 256 256",
+    "tags": "direction,traffic,road sign,transit,transportation"
+  },
+  {
+    "name": "siren",
+    "viewBox": "0 0 256 256",
+    "tags": "alarm,police,lights,warning"
+  },
+  {
+    "name": "sketch-logo",
+    "viewBox": "0 0 256 256",
+    "tags": "drawing,art,illustration,ui,interface,prototype,prototyping,gemstone,diamond"
+  },
+  {
+    "name": "skip-back",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,seek,scrub,scan,back,backwards,reverse,previous"
+  },
+  {
+    "name": "skip-forward",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,seek,scrub,scan,ahead,next"
+  },
+  {
+    "name": "skull-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "death,dead,kill"
+  },
+  {
+    "name": "slack-logo-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "logos,messaging"
+  },
+  {
+    "name": "sliders-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,faders,filters,equalizer,volume,settings,preferences"
+  },
+  {
+    "name": "sliders",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,faders,filters,equalizer,volume,settings,preferences"
+  },
+  {
+    "name": "slideshow-duotone",
+    "viewBox": "0 0 24 24",
+    "tags": "pictures,images,photography,gallery,carousel"
+  },
+  {
+    "name": "slideshow",
+    "viewBox": "0 0 256 256",
+    "tags": "pictures,images,photography,gallery,carousel"
+  },
+  {
+    "name": "smiley",
+    "viewBox": "0 0 256 256",
+    "tags": "face,emoji,happy,grinning,smiling"
+  },
+  {
+    "name": "sort-ascending",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,sorted,sorting,increasing,a to z,arrows,list"
+  },
+  {
+    "name": "sort-descending",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,sorted,sorting,decreasing,z to a,arrows,list"
+  },
+  {
+    "name": "sparkle",
+    "viewBox": "0 0 256 256",
+    "tags": "star,rate,ratings,favorites,favorited,ai"
+  },
+  {
+    "name": "speaker-simple-high",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,volume,sound"
+  },
+  {
+    "name": "speaker-simple-low",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,volume,sound"
+  },
+  {
+    "name": "speaker-simple-none",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,muted,volume,sound"
+  },
+  {
+    "name": "speaker-simple-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,muted,volume,sound,disabled"
+  },
+  {
+    "name": "speaker-simple-x",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,muted,volume,sound,disabled,errors"
+  },
+  {
+    "name": "speedometer",
+    "viewBox": "0 0 256 256",
+    "tags": "gauge,dashboard,meter,speed,odometer,performance"
+  },
+  {
+    "name": "spinner-gap",
+    "viewBox": "0 0 256 256",
+    "tags": "loading,loader,waiting,progress"
+  },
+  {
+    "name": "spinner",
+    "viewBox": "0 0 256 256",
+    "tags": "loading,loader,waiting,progress"
+  },
+  {
+    "name": "splunk-hexagon-fill",
+    "viewBox": "0 0 24 24",
+    "tags": "splunk,monitoring,observability,logging,siem,security,analytics"
+  },
+  {
+    "name": "square-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "4,shapes,polygons,box"
+  },
+  {
+    "name": "square-half-bottom",
+    "viewBox": "0 0 256 256",
+    "tags": "4,shapes,polygons,box,columns,sidebar,split vertical"
+  },
+  {
+    "name": "square-half",
+    "viewBox": "0 0 256 256",
+    "tags": "4,shapes,polygons,box,columns,sidebar,split vertical"
+  },
+  {
+    "name": "square-split-horizontal",
+    "viewBox": "0 0 256 256",
+    "tags": "shapes,polygons,columns"
+  },
+  {
+    "name": "square-split-vertical",
+    "viewBox": "0 0 256 256",
+    "tags": "shapes,polygons,rows"
+  },
+  {
+    "name": "squares-four-duotone",
+    "viewBox": "0 0 20 20",
+    "tags": "4,shapes,polygons,apps,applications,grid,table,microsoft,logos"
+  },
+  {
+    "name": "squares-four",
+    "viewBox": "0 0 256 256",
+    "tags": "4,shapes,polygons,apps,applications,grid,table,microsoft,logos"
+  },
+  {
+    "name": "stack-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "cards,layers"
+  },
+  {
+    "name": "stack",
+    "viewBox": "0 0 256 256",
+    "tags": "cards,layers"
+  },
+  {
+    "name": "star-and-crescent",
+    "viewBox": "0 0 256 256",
+    "tags": "islam,muslim,moon,religion,worship,symbol"
+  },
+  {
+    "name": "star-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "rate,ratings,favorites,favorited"
+  },
+  {
+    "name": "star-half",
+    "viewBox": "0 0 256 256",
+    "tags": "rate,ratings"
+  },
+  {
+    "name": "star",
+    "viewBox": "0 0 256 256",
+    "tags": "rate,ratings,favorites,favorited"
+  },
+  {
+    "name": "status-attention-dual",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,attention,warning,alert"
+  },
+  {
+    "name": "status-attention",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,attention,warning,alert"
+  },
+  {
+    "name": "status-clear-dual",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,clear,ok,normal"
+  },
+  {
+    "name": "status-clear",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,clear,ok,normal"
+  },
+  {
+    "name": "status-critical-dual",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,critical,danger,alert,error"
+  },
+  {
+    "name": "status-critical",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,critical,danger,alert,error"
+  },
+  {
+    "name": "status-down-dual",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,down,offline,unavailable"
+  },
+  {
+    "name": "status-down",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,down,offline,unavailable"
+  },
+  {
+    "name": "status-hold-dual",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,hold,online,available,healthy"
+  },
+  {
+    "name": "status-hold",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,hold,online,available,healthy"
+  },
+  {
+    "name": "status-trouble-dual",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,trouble,warning,error,issue"
+  },
+  {
+    "name": "status-trouble",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,trouble,warning,error,issue"
+  },
+  {
+    "name": "status-unmanaged-dual",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,unmanaged,unknown"
+  },
+  {
+    "name": "status-unmanaged",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,unmanaged,unknown"
+  },
+  {
+    "name": "status-up-dual",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,up,online,available,healthy"
+  },
+  {
+    "name": "status-up",
+    "viewBox": "0 0 256 256",
+    "tags": "status,health,monitoring,up,online,available,healthy"
+  },
+  {
+    "name": "sticker",
+    "viewBox": "0 0 256 256",
+    "tags": "stickers,sticker pack,labels"
+  },
+  {
+    "name": "stop-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "music,audio,round"
+  },
+  {
+    "name": "suitcase-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "briefcase,valise,baggage,folders,portfolio"
+  },
+  {
+    "name": "sun-dim",
+    "viewBox": "0 0 256 256",
+    "tags": "day,daytime,daylight,clear,sunny,sunshine,light mode,brightness,darken"
+  },
+  {
+    "name": "sun",
+    "viewBox": "0 0 256 256",
+    "tags": "day,daytime,daylight,clear,sunny,sunshine,light mode,brightness,lighten,brighten"
+  },
+  {
+    "name": "swap",
+    "viewBox": "0 0 256 256",
+    "tags": "layers,replace,exchange,reverse"
+  },
+  {
+    "name": "table-duotone",
+    "viewBox": "0 0 20 20",
+    "tags": "tables,tabular,speadsheets,excel,grid,form"
+  },
+  {
+    "name": "table",
+    "viewBox": "0 0 256 256",
+    "tags": "tables,tabular,speadsheets,excel,grid,form"
+  },
+  {
+    "name": "tag-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "tags,hashtag,labels,sale,sell,price,discount"
+  },
+  {
+    "name": "tag",
+    "viewBox": "0 0 256 256",
+    "tags": "tags,hashtag,labels,sale,sell,price,discount"
+  },
+  {
+    "name": "target",
+    "viewBox": "0 0 256 256",
+    "tags": "bullseye,radar,archery,accuracy,precision"
+  },
+  {
+    "name": "terminal-window",
+    "viewBox": "0 0 256 256",
+    "tags": "command line,cli,bash,shell,caret,console"
+  },
+  {
+    "name": "terminal",
+    "viewBox": "0 0 256 256",
+    "tags": "command line,cli,bash,shell,caret,console"
+  },
+  {
+    "name": "text-a-underline",
+    "viewBox": "0 0 256 256",
+    "tags": "typography,typeface,print,font,underscore,emphasis"
+  },
+  {
+    "name": "text-aa",
+    "viewBox": "0 0 256 256",
+    "tags": "typography,typeface,print,font"
+  },
+  {
+    "name": "text-align-center",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,typography,print,font,alignment,centered"
+  },
+  {
+    "name": "text-align-justify",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,typography,print,font,alignment,justified"
+  },
+  {
+    "name": "text-align-left",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,typography,print,font,alignment,flush left"
+  },
+  {
+    "name": "text-align-right",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,typography,print,font,alignment,flush right"
+  },
+  {
+    "name": "text-b",
+    "viewBox": "0 0 256 256",
+    "tags": "typography,typeface,print,font,bold,boldface,emphasis"
+  },
+  {
+    "name": "text-columns-duotone",
+    "viewBox": "0 0 20 20",
+    "tags": "*updated*,typography,print,font,alignment,article"
+  },
+  {
+    "name": "text-columns",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,typography,print,font,alignment,article"
+  },
+  {
+    "name": "text-indent",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,alignment,tab,menu"
+  },
+  {
+    "name": "text-italic",
+    "viewBox": "0 0 256 256",
+    "tags": "typography,typeface,print,font,slant,oblique,stress,emphasis,calligraphy"
+  },
+  {
+    "name": "text-outdent",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,alignment,tab,unindent,dedent,menu"
+  },
+  {
+    "name": "text-strikethrough",
+    "viewBox": "0 0 256 256",
+    "tags": "typography,typeface,print,font,struck,remove,delete,change"
+  },
+  {
+    "name": "text-t",
+    "viewBox": "0 0 256 256",
+    "tags": "typography,typeface,print,font"
+  },
+  {
+    "name": "text-underline",
+    "viewBox": "0 0 256 256",
+    "tags": "typography,typeface,print,font,underscore,emphasis"
+  },
+  {
+    "name": "textbox",
+    "viewBox": "0 0 256 256",
+    "tags": "input,cursor,field"
+  },
+  {
+    "name": "thermometer-cold",
+    "viewBox": "0 0 256 256",
+    "tags": "meteorology,temperature,degrees,°,celcius,centigrade,kelvin,fahrenheit"
+  },
+  {
+    "name": "thermometer-hot",
+    "viewBox": "0 0 256 256",
+    "tags": "meteorology,temperature,degrees,°,celcius,centigrade,kelvin,fahrenheit,warm"
+  },
+  {
+    "name": "thermometer-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "meteorology,temperature,degrees,°,celcius,centigrade,kelvin,fahrenheit,hot,warm,cold"
+  },
+  {
+    "name": "thermometer",
+    "viewBox": "0 0 256 256",
+    "tags": "meteorology,temperature,degrees,°,celcius,centigrade,kelvin,fahrenheit,hot,warm,cold"
+  },
+  {
+    "name": "thumbs-down-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "dislike,hate,emoji,no"
+  },
+  {
+    "name": "thumbs-down",
+    "viewBox": "0 0 256 256",
+    "tags": "dislike,hate,emoji,no"
+  },
+  {
+    "name": "thumbs-up-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "like,love,favorited,favorites,emoji,yes"
+  },
+  {
+    "name": "thumbs-up",
+    "viewBox": "0 0 256 256",
+    "tags": "like,love,favorited,favorites,emoji,yes"
+  },
+  {
+    "name": "ticket-fill",
+    "viewBox": "0 0 12 12",
+    "tags": "ticketstub,movie ticket,entry,admissions,events"
+  },
+  {
+    "name": "ticket",
+    "viewBox": "0 0 256 256",
+    "tags": "ticketstub,movie ticket,entry,admissions,events"
+  },
+  {
+    "name": "timer",
+    "viewBox": "0 0 256 256",
+    "tags": "clock,alarm,schedule,events,stopwatch,sports"
+  },
+  {
+    "name": "toggle-left",
+    "viewBox": "0 0 256 256",
+    "tags": "switch,controls,settings,preferences"
+  },
+  {
+    "name": "toggle-right",
+    "viewBox": "0 0 256 256",
+    "tags": "switch,controls,settings,preferences"
+  },
+  {
+    "name": "topbar-arrow-collapse-fill",
+    "viewBox": "0 0 32 32",
+    "tags": "collapse,hide,minimize,shrink,close section,fold,contract,topbar collapse,down arrow,arrow collapse"
+  },
+  {
+    "name": "topbar-arrow-expand-fill",
+    "viewBox": "0 0 32 32",
+    "tags": "expand,show,maximize,open section,unfold,enlarge,contract reverse,topbar expand,up arrow,arrow expand"
+  },
+  {
+    "name": "towel",
+    "viewBox": "0 0 256 256",
+    "tags": "clothing,linen,hotel,beach,pool,swimming,shower,bath"
+  },
+  {
+    "name": "traffic-cone",
+    "viewBox": "0 0 256 256",
+    "tags": "pylon,safety,transit,transportation"
+  },
+  {
+    "name": "translate",
+    "viewBox": "0 0 256 256",
+    "tags": "translation,languages,internationalization,i18n,speech"
+  },
+  {
+    "name": "trash",
+    "viewBox": "0 0 256 256",
+    "tags": "garbage,remove,delete,destroy,recycle,recycling"
+  },
+  {
+    "name": "tree-structure-duotone",
+    "viewBox": "0 0 20 20",
+    "tags": "data structures,family tree,genealogy,hierarchy,taxonomy,charts,flowchart"
+  },
+  {
+    "name": "tree-structure",
+    "viewBox": "0 0 256 256",
+    "tags": "data structures,family tree,genealogy,hierarchy,taxonomy,charts,flowchart"
+  },
+  {
+    "name": "tree-view",
+    "viewBox": "0 0 256 256",
+    "tags": "hierarchy"
+  },
+  {
+    "name": "triangle",
+    "viewBox": "0 0 256 256",
+    "tags": "3,shapes,polygons"
+  },
+  {
+    "name": "upload-simple",
+    "viewBox": "0 0 256 256",
+    "tags": "*updated*,saved,saving,archived,archiving,archival,uploaded,uploading,hard drive,disk"
+  },
+  {
+    "name": "upload",
+    "viewBox": "0 0 256 256",
+    "tags": "saved,saving,archived,archiving,archival,uploaded,uploading,hard drive,disk"
+  },
+  {
+    "name": "user-alert-duotone",
+    "viewBox": "0 0 32 32",
+    "tags": "person,users,profile,account,contact,login,alert,warning,notification,caution"
+  },
+  {
+    "name": "user-check",
+    "viewBox": "0 0 256 256",
+    "tags": "person,users,profile,account,contact,login,verified"
+  },
+  {
+    "name": "user-circle-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "person,users,profile,account,contact,login"
+  },
+  {
+    "name": "user-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "person,users,profile,account,contact,login"
+  },
+  {
+    "name": "user-focus",
+    "viewBox": "0 0 256 256",
+    "tags": "identification,biometrics,facial recognition,profile,person,account,autofocus"
+  },
+  {
+    "name": "user-list",
+    "viewBox": "0 0 256 256",
+    "tags": "person,users,profiles,accounts,members,address book"
+  },
+  {
+    "name": "user-minus",
+    "viewBox": "0 0 256 256",
+    "tags": "person,users,profile,account,contact,delete,remove,-"
+  },
+  {
+    "name": "user-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "person,users,profile,account,contact,add,create,+"
+  },
+  {
+    "name": "user",
+    "viewBox": "0 0 256 256",
+    "tags": "person,users,profile,account,contact,login"
+  },
+  {
+    "name": "users-three",
+    "viewBox": "0 0 256 256",
+    "tags": "user,group,team,community,people,profiles,accounts,contacts"
+  },
+  {
+    "name": "users",
+    "viewBox": "0 0 256 256",
+    "tags": "user,group,team,people,profiles,accounts,contacts"
+  },
+  {
+    "name": "vault",
+    "viewBox": "0 0 256 256",
+    "tags": "safe,bank,security,secured,authentication,authenticated,locked,encrypted,encryption"
+  },
+  {
+    "name": "vector-three",
+    "viewBox": "0 0 256 256",
+    "tags": "3d,xyz,cartesian,coordinates,plane,volume,dimensions,mathematics"
+  },
+  {
+    "name": "vibrate",
+    "viewBox": "0 0 256 256",
+    "tags": "audio,volume,viration,ringer,calls,silent,silenced"
+  },
+  {
+    "name": "video-duotone",
+    "viewBox": "0 0 256 256",
+    "tags": "training,course,education,tutorial"
+  },
+  {
+    "name": "video-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "training,course,education,tutorial"
+  },
+  {
+    "name": "video",
+    "viewBox": "0 0 256 256",
+    "tags": "training,course,education,tutorial"
+  },
+  {
+    "name": "wall",
+    "viewBox": "0 0 256 256",
+    "tags": "firewall,security,secured,blocks,bricks"
+  },
+  {
+    "name": "wallet",
+    "viewBox": "0 0 256 256",
+    "tags": "money,payment,paying,purchase"
+  },
+  {
+    "name": "warning-circle-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors,round"
+  },
+  {
+    "name": "warning-circle",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors,round"
+  },
+  {
+    "name": "warning-diamond-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors"
+  },
+  {
+    "name": "warning-diamond",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors"
+  },
+  {
+    "name": "warning-double-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors,double"
+  },
+  {
+    "name": "warning-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors"
+  },
+  {
+    "name": "warning-octagon-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors,8,eight"
+  },
+  {
+    "name": "warning-octagon",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors,8,eight"
+  },
+  {
+    "name": "warning",
+    "viewBox": "0 0 256 256",
+    "tags": "alert,danger,dangerous,caution,errors"
+  },
+  {
+    "name": "webhooks-logo-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "api"
+  },
+  {
+    "name": "webhooks-logo",
+    "viewBox": "0 0 256 256",
+    "tags": "api"
+  },
+  {
+    "name": "wheelchair-motion",
+    "viewBox": "0 0 256 256",
+    "tags": "handicapped,medical,disabled,differently abled,accessible,accessibility,a11y"
+  },
+  {
+    "name": "wheelchair",
+    "viewBox": "0 0 256 256",
+    "tags": "handicapped,medical,disabled,differently abled,accessible,accessibility,a11y"
+  },
+  {
+    "name": "widget-plus",
+    "viewBox": "0 0 256 256",
+    "tags": "square,rectangle,plus,add,shapes,polygons,3,+"
+  },
+  {
+    "name": "wifi-high",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,internet,network,connection,connectivity"
+  },
+  {
+    "name": "wifi-low",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,internet,network,connection,connectivity"
+  },
+  {
+    "name": "wifi-medium",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,internet,network,connection,connectivity"
+  },
+  {
+    "name": "wifi-none",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,internet,network,connection,connectivity"
+  },
+  {
+    "name": "wifi-slash",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,internet,network,connection,connectivity,disabled,disconnected"
+  },
+  {
+    "name": "wifi-x",
+    "viewBox": "0 0 256 256",
+    "tags": "wireless,internet,network,connection,connectivity,disconnected,errors"
+  },
+  {
+    "name": "windows-logo-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "microsoft,computers"
+  },
+  {
+    "name": "windows-logo",
+    "viewBox": "0 0 256 256",
+    "tags": "microsoft,computers"
+  },
+  {
+    "name": "wrench-duotone",
+    "viewBox": "0 0 12 12",
+    "tags": "settings,setup,preferences,tools,machinery,mechanical,repairs"
+  },
+  {
+    "name": "wrench-fill",
+    "viewBox": "0 0 256 256",
+    "tags": "settings,setup,preferences,tools,machinery,mechanical,repairs"
+  },
+  {
+    "name": "wrench",
+    "viewBox": "0 0 256 256",
+    "tags": "settings,setup,preferences,tools,machinery,mechanical,repairs"
+  },
+  {
+    "name": "zia",
+    "viewBox": "0 0 256 256",
+    "tags": "zia,zoho,assistant,ai,bot,intelligence,chatbot,virtual assistant,logos"
+  }
+]

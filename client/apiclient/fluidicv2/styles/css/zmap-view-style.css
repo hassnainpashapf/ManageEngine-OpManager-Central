@@ -1,0 +1,41 @@
+
+#map {
+    height: 100%;
+    background: #A0C3FF;
+}
+
+.leaflet-top{
+    left:unset;
+    bottom:25px;
+}
+
+.leaflet-left{
+    right:7px;
+    top:unset;
+}
+
+
+.marker-cluster-1{background:rgba(252,92,88,.6)}
+.marker-cluster-1 div{background:#fc5c58}
+.marker-cluster-2{background:rgba(251,175,85,.6)}
+.marker-cluster-2 div{background:#fbaf55}
+.marker-cluster-3{background:rgba(231,224,93,.6)}
+.marker-cluster-3 div{background:#e7e05d}
+.marker-cluster-4{background:rgba(173,72,173,.6)}
+.marker-cluster-4 div{background:#ad48ad}
+.marker-cluster-5{background:rgba(64,188,123,.6)}
+.marker-cluster-5 div{background:#40bc7b}
+.marker-cluster-6{background:rgba(50,126,180,.6)}
+.marker-cluster-6 div{background:#327eb4}
+.marker-cluster-7{background:rgba(127,127,127,.6)}
+.marker-cluster-7 div{background:#7f7f7f}
+
+.marker-cluster div > span{color:#fff;}
+
+.leaflet-label{
+    background: none;
+    border: none;
+}
+.leaflet-label-right:before, .leaflet-label-left:after{content:none;}
+
+.labeltext { width: auto}

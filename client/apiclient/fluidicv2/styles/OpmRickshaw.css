@@ -1,0 +1,241 @@
+/* $Id$ */
+
+.opmRickshaw_content
+{
+	width: 1200px;
+}
+.opmChart {
+	display: inline-block;
+	border: 1px solid #f0f0f0;
+}
+.opmChart path {
+	-webkit-transition: opacity 0.2s linear;
+}
+.opmChart_container {
+	position: relative;
+	display: inline-block;
+}
+.opmSlider {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+.opmSmoother {
+	margin: 5px 0 0 10px;
+	width: 90%;
+}
+.opmSide_panel {
+	padding: 0 20px 20px 10px;
+	width: 240px;
+	display: inline-block;
+	vertical-align: top;
+}
+.opmSide_panel section {
+	color: #505050;
+	font-size: 12px;
+}
+.opmSide_panel section h6 {
+	margin: 0 0 1em 0;
+	font-size: 12px;
+	font-weight: normal;
+}
+.opmSide_panel .ui-slider-horizontal {
+	height: 1px !important;
+	border-color: #e0e0e0;
+	margin-bottom: 10px;
+}
+.opmSide_panel .ui-slider-handle {
+	border-color: #a0a0a0;
+	height: 9px !important;
+	width: 9px !important;
+	top: -5px !important;
+	border-radius: 6px;
+	outline: none;
+	cursor: pointer;
+}
+.opmSliderRange
+{
+	background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;	
+/*	background: #000000; */
+}
+.opmSlider .ui-state-default,
+.opmSlider .ui-widget-content .ui-state-default .ui-state-hover
+{
+	background: #CCCCCC url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; 
+/*	background: #000000; */
+}
+.layer2Slider 
+{
+	background:#CCCCCC;width:10px;padding:0px;
+}
+.ucsSlider 
+{
+	background:#CCCCCC;width:10px;padding:0px;
+}
+#slider_map a {
+	width:10px;
+	background: #CCCCCC url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+	margin-left:-1px;
+	}
+#slider_ucs a {
+	width:10px;
+	background: #CCCCCC url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+	margin-left:-1px;
+	}
+
+.rickshaw_legend {
+	display: inline-block;
+	position: relative;
+	background: white;
+	margin-left: 0;
+	padding: 0;
+	left: 0;
+}
+.rickshaw_legend_container {
+	position: absolute;
+	right: 0;
+	bottom: 26px;
+	width: 0;
+}
+.rickshaw_legend .label {
+	color: #404040;
+}
+.rickshaw_legend .action {
+	color: black;
+	opacity: 0.5;
+}
+.rickshaw_legend ul {
+	padding: 0;
+}
+.opmRickshaw_content h1 {
+	font-family: 'Open Sans', UnDotum, Helvetica, Arial;
+	font-weight: normal;
+	font-size: 20px;
+}
+.opmRickshaw_content section {
+	border: none;
+	border-top: 1px solid #eaeaea;
+	padding: 15px 0;
+}
+.opmRickshaw_content label.disabled {
+	opacity: 0.4;
+}
+.opmRenderer_form.toggler {
+	display: block;
+	margin: 0;
+}
+.opmRenderer_form.toggler input[type=radio]:checked + label{
+	border: 1px solid #808080;
+}
+.opmRenderer_form.toggler input[type=radio] {
+	-moz-appearance: button;
+	background: white;
+	margin: 0 7px;
+	width: 20px;
+	height: 14px;
+	position: absolute;
+	visibility: hidden;
+}
+.opmRenderer_form.toggler label {
+	display: inline-block;
+	padding: 0;
+	width: 20px;
+	height: 14px;
+	text-align: center;
+	font-size: 10px;
+	color: #808080;
+	background-repeat: no-repeat;
+	position: relative;
+	margin: 0 7px;
+	cursor: pointer;
+	background-size: 20px 14px;
+}
+.opmInterpolation_form,
+.opmOffset_form {
+	vertical-align: top;
+	display: inline-block;
+}
+.opmInterpolation_form label,
+.opmOffset_form label {
+	display: block;
+	background-repeat: no-repeat;
+	background-position: 2em center;
+	cursor: pointer;
+	cursor: hand;	
+}
+.opmOffset_form label span,
+.opmInterpolation_form label span {
+	padding-left: 36px;
+}
+.areaLabel {
+	background: url(../images/om_stack.png);
+}
+.lineLabel {
+	background: url(../images/om_lines.png);
+}
+.barLabel {
+	background: url(../images/om_bar.png);
+}
+.scatterLabel {
+	background: url(../images/om_scatter.png);
+}
+.stackLabel {
+	background-image: url(../images/offset_stack.png);
+}
+.pctLabel {
+	background-image: url(../images/offset_pct.png);
+}
+.streamLabel {
+	background-image: url(../images/offset_stream.png);
+}
+.valueLabel {
+	background-image: url(../images/offset_value.png);
+}
+.cardinalLabel {
+	background-image: url(../images/interp_cardinal.png);
+}
+.linearLabel {
+	background-image: url(../images/interp_linear.png);
+}
+.stepLabel {
+	background-image: url(../images/interp_step.png);
+}
+.rickshaw_graph .detail .x_label { 
+	display: block;
+	position:absolute;
+	z-index:2;
+	opacity:1;
+	background:rgba(0,0,0,.8);
+	top:-40px;
+	color:#fff;
+	border:1px solid rgba(0,0,0,.4);
+	 }
+.zeroBorder{
+	border:0;
+}
+.ui-jqgrid tr.ui-search-toolbar th{border-top-width:0px!important;border-top-color:inherit!important;border-top-style:ridge!important}
+.ddGreen
+{
+	color: green;
+	cursor: default;
+}
+.ddGray
+{
+	color:#C2C0C0;
+	cursor: pointer;
+}
+.noDataAvailable{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: black;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+.noDataSpanText{
+    position: absolute;
+    top: 47%;
+    left: 42%;
+    font-size: 20px;
+}

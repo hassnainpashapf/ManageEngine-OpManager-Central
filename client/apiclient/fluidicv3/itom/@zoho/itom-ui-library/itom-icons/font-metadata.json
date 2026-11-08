@@ -1,0 +1,626 @@
+[
+  {
+    "name": "arrow-bend-down-left",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-bend-down-right",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-bend-left-down",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-bend-left-up",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-bend-right-down",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-bend-right-up",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-bend-up-left",
+    "tags": "directional,pointer,pointing,arrowhead,reply,re"
+  },
+  {
+    "name": "arrow-bend-up-right",
+    "tags": "directional,pointer,pointing,arrowhead,forward,fwd"
+  },
+  {
+    "name": "arrow-circle-down-fill",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-down-left-fill",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-down-right-fill",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-down",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-left-fill",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-left",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-right-fill",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-right",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-up-fill",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-up-left-fill",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-up-right-fill",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-circle-up",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-clockwise",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,redo,refreshing,rotate,spin,flip"
+  },
+  {
+    "name": "arrow-down-left",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-down-right",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-down",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-left",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-down",
+    "tags": "directional,pointer,pointing,arrowhead,bottom"
+  },
+  {
+    "name": "arrow-line-left",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-right",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-line-up",
+    "tags": "directional,pointer,pointing,arrowhead,top"
+  },
+  {
+    "name": "arrow-right",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-square-out",
+    "tags": "export,external,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-up-left",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-up-right",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrow-up",
+    "tags": "directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrows-horizontal",
+    "tags": "*updated*,directional,pointer,cursor,resize,expand,left,right"
+  },
+  {
+    "name": "arrows-left-right",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead"
+  },
+  {
+    "name": "arrows-out-cardinal",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,expand,fullscreen,resize,pan,move,grow"
+  },
+  {
+    "name": "arrows-out-simple",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,expand,fullscreen,resize"
+  },
+  {
+    "name": "arrows-out",
+    "tags": "*updated*,directional,pointer,pointing,arrowhead,expand,fullscreen,resize,grow"
+  },
+  {
+    "name": "arrows-vertical",
+    "tags": "*updated*,directional,pointer,cursor,resize,expand,up,down"
+  },
+  {
+    "name": "battery-empty",
+    "tags": "charged,charger,charging,power,dead"
+  },
+  {
+    "name": "battery-full",
+    "tags": "charged,charger,charging,power,filled"
+  },
+  {
+    "name": "battery-high",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "battery-low",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "battery-medium",
+    "tags": "charged,charger,charging,power"
+  },
+  {
+    "name": "bookmark-simple",
+    "tags": "reading,reader,novel,story,placeholder,favorites,favorited,library"
+  },
+  {
+    "name": "browsers",
+    "tags": "web browsers,windows,internet,website,webpage,chrome,edge,firefox"
+  },
+  {
+    "name": "calendar-blank",
+    "tags": "dates,times,events,schedule,none"
+  },
+  {
+    "name": "cards",
+    "tags": "card,slides,slideshow,windows,website,webpage,layers"
+  },
+  {
+    "name": "caret-circle-down",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-left",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-right",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-circle-up",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-double-down",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-double-left",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-double-right",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-double-up",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-down",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-left",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-right",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-up-down",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "caret-up",
+    "tags": "chevron,directional,pointer,pointing,arrowhead,triangle"
+  },
+  {
+    "name": "cell-signal-full",
+    "tags": "wireless,cellular,phone,mobile,network,connection,connectivity,reception,service"
+  },
+  {
+    "name": "chat-dots",
+    "tags": "send,sent,messages,messaging,sms,texting,comment,square,bubble"
+  },
+  {
+    "name": "check-circle",
+    "tags": "todo,to-do,task,list,checkbox,round,ok,done,tick"
+  },
+  {
+    "name": "check",
+    "tags": "todo,to-do,task,list,checkbox,ok,done,tick"
+  },
+  {
+    "name": "circle-dashed",
+    "tags": "missing,round,shapes,polygons"
+  },
+  {
+    "name": "circle",
+    "tags": "round,shapes,polygons"
+  },
+  {
+    "name": "clipboard",
+    "tags": "copy,copied,checklist"
+  },
+  {
+    "name": "clock",
+    "tags": "times,timer,alarm,schedule,events,watch"
+  },
+  {
+    "name": "close-circle",
+    "tags": "closed,cancelled,dismissed,round"
+  },
+  {
+    "name": "close",
+    "tags": "close,closed,cancelled,dismissed,times,multiply,mulitplication,product,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "copy-simple",
+    "tags": "duplicated,copied,clipboard"
+  },
+  {
+    "name": "copy",
+    "tags": "duplicated,copied,clipboard"
+  },
+  {
+    "name": "corners-in",
+    "tags": "*updated*,collapse,windowed,minimized"
+  },
+  {
+    "name": "corners-out",
+    "tags": "*updated*,expand,fullscreen,maximized"
+  },
+  {
+    "name": "dots-six-vertical",
+    "tags": "*updated*,drag handle,knurling,circles,shapes,polygons,6"
+  },
+  {
+    "name": "dots-six",
+    "tags": "*updated*,drag handle,knurling,circles,shapes,polygons,6"
+  },
+  {
+    "name": "eject-simple",
+    "tags": "disconnect"
+  },
+  {
+    "name": "envelope-simple-open",
+    "tags": "mail,email,send,sent,message,read,post,letter"
+  },
+  {
+    "name": "envelope-simple",
+    "tags": "mail,email,send,sent,message,post,letter"
+  },
+  {
+    "name": "equals",
+    "tags": "=,equality,equivalent,equivalence,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "exclamation-mark",
+    "tags": "!,alert,warning,caution,interjection,punctuation,symbol"
+  },
+  {
+    "name": "fast-forward",
+    "tags": "audio,music,seek,scrub,scan,ahead,skip"
+  },
+  {
+    "name": "file-csv",
+    "tags": "documents,data"
+  },
+  {
+    "name": "file-doc",
+    "tags": "documents,word,microsoft"
+  },
+  {
+    "name": "file-pdf",
+    "tags": "documents,files,acrobat"
+  },
+  {
+    "name": "file-text",
+    "tags": "documents,files,save,write"
+  },
+  {
+    "name": "file-xls",
+    "tags": "documents,excel,microsoft"
+  },
+  {
+    "name": "file-zip",
+    "tags": "documents,archive,compression"
+  },
+  {
+    "name": "flag",
+    "tags": "country,countries,finished,completed,flags"
+  },
+  {
+    "name": "floppy-disk-back",
+    "tags": "*updated*,diskette,directory,directories,folders,documents,files,save,write"
+  },
+  {
+    "name": "folder-open",
+    "tags": "directory,directories,files,folders,load"
+  },
+  {
+    "name": "folder",
+    "tags": "directory,directories,files,folders"
+  },
+  {
+    "name": "gear-six",
+    "tags": "6,settings,setup,preferences,cogs,gears,machinery,mechanical"
+  },
+  {
+    "name": "grid-nine-fill",
+    "tags": "9,apps,applications,squares,tiles,cells,tables,tabular,spreadsheets,excel"
+  },
+  {
+    "name": "grid-nine",
+    "tags": "9,apps,applications,squares,tiles,cells,tables,tabular,spreadsheets,excel"
+  },
+  {
+    "name": "heart",
+    "tags": "wellness,love,healthy,like,favorites,favorited,suits,cards,gambling,casino,gaming,emoji"
+  },
+  {
+    "name": "house",
+    "tags": "homes,buildings,places,locations"
+  },
+  {
+    "name": "image",
+    "tags": "*updated*,pictures,photographs,photography,wallpapers,gallery,landscape"
+  },
+  {
+    "name": "key",
+    "tags": "padlock,security,secured,authentication,authenticated,login,locked,encrypted,encryption"
+  },
+  {
+    "name": "lightbulb",
+    "tags": "flashlight,bulbs,lighting,led,energy,idea"
+  },
+  {
+    "name": "link-broken-circle-fill",
+    "tags": "anchor,hyperlink,hypertext,chains,chained,errors,broken,disconnected,unlink,chain,break,connection,lost,forbidden,round"
+  },
+  {
+    "name": "link-broken-fill",
+    "tags": "anchor,hyperlink,hypertext,chains,chained,errors,broken,disconnected,unlink,chain,break,connection,lost,forbidden"
+  },
+  {
+    "name": "link-broken",
+    "tags": "anchor,hyperlink,hypertext,chains,chained,errors,broken,disconnected,unlink,chain,break,connection,lost,forbidden"
+  },
+  {
+    "name": "link",
+    "tags": "*updated*,anchor,hyperlink,hypertext,chains,chained"
+  },
+  {
+    "name": "lock-simple-open",
+    "tags": "padlock,security,unsecured,authentication,unauthenticated,login,unlocked,unencrypted,encryption,privacy,private"
+  },
+  {
+    "name": "lock-simple",
+    "tags": "padlock,security,secured,authentication,authenticated,login,locked,encrypted,encryption,privacy,private"
+  },
+  {
+    "name": "magnifying-glass-minus",
+    "tags": "search,find,locate,query,inspect,zoom out,-"
+  },
+  {
+    "name": "magnifying-glass-plus",
+    "tags": "search,find,locate,query,inspect,zoom in,+"
+  },
+  {
+    "name": "magnifying-glass",
+    "tags": "search,find,locate,query,inspect"
+  },
+  {
+    "name": "minus",
+    "tags": "-,subtraction,difference,mathematics,arithmetic,calculator,line,horizontal,divider"
+  },
+  {
+    "name": "not-equals-circle-fill",
+    "tags": "≠,equality,equivalent,equivalence,mathematics,arithmetic,calculator,round"
+  },
+  {
+    "name": "not-equals-fill",
+    "tags": "≠,equality,equivalent,equivalence,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "not-equals",
+    "tags": "≠,equality,equivalent,equivalence,mathematics,arithmetic,calculator"
+  },
+  {
+    "name": "notches",
+    "tags": "textarea,resize,drag handle,knurling"
+  },
+  {
+    "name": "note",
+    "tags": "notes,note-taking,memorandum,post-it,reminders"
+  },
+  {
+    "name": "notebook",
+    "tags": "notes,note-taking,memorandum,journal,diary,logs,logbook"
+  },
+  {
+    "name": "pause",
+    "tags": "music,audio,resume,start,stop"
+  },
+  {
+    "name": "pen",
+    "tags": "ink,write,writing,editing,sign,signature"
+  },
+  {
+    "name": "pencil-simple",
+    "tags": "write,writing,editing,sign,signature"
+  },
+  {
+    "name": "pencil",
+    "tags": "write,writing,editing,sign,signature"
+  },
+  {
+    "name": "play",
+    "tags": "music,audio,resume,start"
+  },
+  {
+    "name": "plus-circle",
+    "tags": "addition,sum,mathematics,arithmetic,calculator,round,+"
+  },
+  {
+    "name": "plus",
+    "tags": "addition,sum,mathematics,arithmetic,calculator,+"
+  },
+  {
+    "name": "power",
+    "tags": "charged,charger,charging,on,off,on/off,switch,power switch"
+  },
+  {
+    "name": "printer",
+    "tags": "printing"
+  },
+  {
+    "name": "prohibit",
+    "tags": "forbidden,prohibited,cancelled,prevent,stop,do not enter"
+  },
+  {
+    "name": "push-pin-simple",
+    "tags": "favorites,favorited,pushpin"
+  },
+  {
+    "name": "push-pin",
+    "tags": "favorites,favorited,pushpin"
+  },
+  {
+    "name": "question",
+    "tags": "information,help,support,questions"
+  },
+  {
+    "name": "radio-button",
+    "tags": "input,checkbox,checked"
+  },
+  {
+    "name": "repeat",
+    "tags": "music,audio,recycle"
+  },
+  {
+    "name": "rewind",
+    "tags": "music,audio,seek,scrub,scan,skip,back,backwards,reverse"
+  },
+  {
+    "name": "rss-simple",
+    "tags": "radio,broadcast,web feed,news,aggregator"
+  },
+  {
+    "name": "scissors",
+    "tags": "*updated*,cut,snip,clipboard"
+  },
+  {
+    "name": "scroll",
+    "tags": "*updated*,parchment,paper,script,spell,fantasy"
+  },
+  {
+    "name": "shopping-cart-simple",
+    "tags": "ecommerce,market,basket,buying,groceries,checkout,places,locations"
+  },
+  {
+    "name": "shuffle",
+    "tags": "music,audio,randomize,crossed"
+  },
+  {
+    "name": "skip-back",
+    "tags": "music,audio,seek,scrub,scan,back,backwards,reverse,previous"
+  },
+  {
+    "name": "skip-forward",
+    "tags": "music,audio,seek,scrub,scan,ahead,next"
+  },
+  {
+    "name": "speaker-simple-high",
+    "tags": "music,audio,volume,sound"
+  },
+  {
+    "name": "speaker-simple-x",
+    "tags": "music,audio,muted,volume,sound,disabled,errors"
+  },
+  {
+    "name": "star",
+    "tags": "rate,ratings,favorites,favorited"
+  },
+  {
+    "name": "stop",
+    "tags": "music,audio"
+  },
+  {
+    "name": "suitcase-simple",
+    "tags": "briefcase,valise,baggage,folders,portfolio"
+  },
+  {
+    "name": "tag",
+    "tags": "tags,hashtag,labels,sale,sell,price,discount"
+  },
+  {
+    "name": "trash",
+    "tags": "garbage,remove,delete,destroy,recycle,recycling"
+  },
+  {
+    "name": "user",
+    "tags": "person,users,profile,account,contact,login"
+  },
+  {
+    "name": "video",
+    "tags": "training,course,education,tutorial"
+  },
+  {
+    "name": "warning-circle",
+    "tags": "alert,danger,dangerous,caution,errors,round"
+  },
+  {
+    "name": "warning-diamond",
+    "tags": "alert,danger,dangerous,caution,errors"
+  },
+  {
+    "name": "warning-octagon",
+    "tags": "alert,danger,dangerous,caution,errors,8,eight"
+  },
+  {
+    "name": "warning",
+    "tags": "alert,danger,dangerous,caution,errors"
+  },
+  {
+    "name": "wifi-high",
+    "tags": "wireless,internet,network,connection,connectivity"
+  },
+  {
+    "name": "wrench",
+    "tags": "settings,setup,preferences,tools,machinery,mechanical,repairs"
+  }
+]

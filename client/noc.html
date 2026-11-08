@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ManageEngine OpManager Central</title>
+  <link rel="icon" href="/apiclient/fluidicv3/itom/favicon-opm.ico" type="image/x-icon">
+  
+  <!-- Genuine ManageEngine Font & Structure Stylesheets from Product Extraction -->
+  <link rel="stylesheet" href="/apiclient/fluidicv2/styles/css/opmfonticon/opmfonticon.min.css">
+  <link rel="stylesheet" href="/css/opmanager.css">
+  <style>
+    html, body { margin: 0 !important; padding: 0 !important; background-image: none !important; }
+    #loginOverlay { display: none !important; }
+  </style>
+</head>
+<body class="dark-mode">
+
+  <!-- ManageEngine Authentic Login Screen Overlay -->
+  <div class="me-login-overlay hidden" id="loginOverlay">
+    <div class="me-login-card">
+      <div class="me-login-header">
+        <img src="/apiclient/fluidicv2/img/opmNewLogo.png" alt="ManageEngine OpManager" style="height: 36px; width: auto; margin-bottom: 8px;">
+        <div style="font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 2px;">
+          Central <span class="me-badge-central" style="background: #49bd80; color: #fff;">ENTERPRISE</span>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Unified Multi-Probe Network Management</div>
+      </div>
+
+      <div class="me-login-body">
+        <form id="loginForm">
+          <div class="form-group-me">
+            <label>Username</label>
+            <input type="text" class="form-input-me" id="loginUser" value="admin" required autocomplete="username">
+          </div>
+          <div class="form-group-me">
+            <label>Password</label>
+            <input type="password" class="form-input-me" id="loginPass" value="admin" required autocomplete="current-password">
+          </div>
+          <div class="form-group-me">
+            <label>Authentication Domain</label>
+            <select class="form-input-me" id="loginDomain">
+              <option value="Local">Local Authentication (Central Server)</option>
+              <option value="AD">Active Directory (enterprise.corp)</option>
+              <option value="SAML">Enterprise SAML 2.0 / Azure AD</option>
+            </select>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 11px;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-muted);">
+              <input type="checkbox" id="keepSignedIn" checked> Keep me signed in
+            </label>
+            <span style="color: var(--primary); cursor: pointer;" onclick="alert('Default credentials: admin / admin')">Forgot Password?</span>
+          </div>
+          <button type="submit" class="btn-me-primary" id="btnLoginSubmit" style="width: 100%; justify-content: center; padding: 8px; font-size: 13px;">
+            Sign In to OpManager Central
+          </button>
+        </form>
+        <div id="loginErrorMsg" style="margin-top: 10px; color: var(--severity-critical); font-size: 11px; text-align: center; display: none;"></div>
+      </div>
+
+      <div class="me-login-footer">
+        <div>Version 12.9.203 | Build 129203 (64-bit GA)</div>
+        <div style="margin-top: 4px;">© 2026 ZOHO Corporation. All rights reserved.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Top Header Bar (ManageEngine Brand & Central Scope) -->
+  <header class="me-header-top">
+    <!-- Brand -->
+    <div class="me-brand" style="display: flex; align-items: center; gap: 8px;">
+      <img src="/apiclient/fluidicv2/img/opmNewLogo.png" alt="ManageEngine OpManager" style="height: 26px; width: auto; filter: brightness(0) invert(1);">
+      <span style="font-size: 15px; font-weight: 600; color: #f8fafc;">Central</span>
+      <span style="background: #49bd80; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">ENTERPRISE</span>
+    </div>
+
+    <!-- Global Probe Scope Selector -->
+    <div class="me-probe-scope-box">
+      <span class="probe-scope-icon">🌐</span>
+      <select id="globalProbeSelect" class="probe-scope-select" title="Switch Global / Probe Scope">
+        <option value="all">🌐 All Enterprise Probes (4 Probes • 48 Devices)</option>
+      </select>
+    </div>
+
+    <!-- Global Search -->
+    <div class="me-header-search">
+      <input type="text" id="globalSearchInput" class="me-search-input" placeholder="Search Devices, Interfaces, Alarms...">
+      <span class="me-search-icon">🔍</span>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="me-header-right">
+      <!-- Live Status Indicator -->
+      <div class="live-indicator" title="Real-time SNMP/WMI Telemetry Stream Active">
+        <span class="live-dot"></span>
+        <span>CENTRAL LIVE</span>
+      </div>
+
+      <!-- Auto Refresh Select -->
+      <select id="autoRefreshSelect" class="btn-header-action" style="background: rgba(255,255,255,0.08); outline: none;">
+        <option value="30">Auto: 30s</option>
+        <option value="60">Auto: 1m</option>
+        <option value="300">Auto: 5m</option>
+        <option value="0">Manual</option>
+      </select>
+
+      <!-- Zia AI Assistant Button (Signature OpManager Feature) -->
+      <button class="btn-header-action zia-btn" id="btnHeaderZia" title="Zia AI Operations Assistant">
+        <span>✨ <strong>Zia AI</strong></span>
+      </button>
+
+      <!-- Alarms Bell -->
+      <div class="alarms-bell-btn" id="headerAlarmsBtn" title="Active Alarms">
+        <button class="btn-header-action">
+          <span>🚨 Alarms</span>
+          <span class="alarms-badge-pill" id="headerAlarmsBadge">7</span>
+        </button>
+      </div>
+
+      <!-- Quick Add Actions -->
+      <button class="btn-header-action" id="btnHeaderAddDevice" title="Add Monitored Device">
+        <span>+ Device</span>
+      </button>
+
+      <button class="btn-header-action" id="btnHeaderAddProbe" title="Register Remote Probe">
+        <span>+ Probe</span>
+      </button>
+
+      <!-- Agent Downloads Button -->
+      <button class="btn-header-action" id="btnHeaderDownloadAgent" title="Download Windows EXE / macOS DMG Agent">
+        <span>⬇️ <strong>Agents</strong></span>
+      </button>
+
+      <!-- Authentic SNMP MIB Browser Button -->
+      <button class="btn-header-action" id="btnHeaderMibBrowser" title="SNMP MIB Browser">
+        <span>🔬 <strong>MIB Browser</strong></span>
+      </button>
+
+      <!-- Theme Switcher -->
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light / NOC Dark Mode">
+        <span id="themeToggleIcon">☀️</span>
+      </button>
+
+      <!-- Sound Alert Toggle -->
+      <button class="btn-header-action" id="btnSoundToggle" title="Toggle ManageEngine Alarm Audio Chime">
+        <span id="soundToggleIcon">🔔</span>
+      </button>
+
+      <!-- User Profile Dropdown -->
+      <div class="me-user-menu-box">
+        <button class="btn-header-action" id="btnUserMenu" title="User Profile & Settings">
+          <span>👤 <strong>admin</strong> ▾</span>
+        </button>
+        <div class="me-user-dropdown" id="userMenuDropdown">
+          <div class="me-user-dropdown-header">
+            <div style="font-weight: 800; font-size: 13px;">Enterprise Administrator</div>
+            <div style="font-size: 10px; color: var(--text-muted);">admin@opmanager-central.enterprise.corp</div>
+          </div>
+          <div class="me-user-dropdown-item" id="menuItemAbout">
+            <span>ℹ️ About OpManager Central</span>
+          </div>
+          <div class="me-user-dropdown-item" id="menuItemLicense">
+            <span>📜 License & Probes Info</span>
+          </div>
+          <div class="me-user-dropdown-item" id="menuItemTestSound">
+            <span>🔔 Test Audio Alarm Chime</span>
+          </div>
+          <div class="me-user-dropdown-item" id="menuItemSignOut" style="border-top: 1px solid var(--border-color); color: var(--severity-critical);">
+            <span>🚪 Sign Out</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Horizontal Main Navigation Tab Bar -->
+  <nav class="me-navbar-main">
+    <ul class="me-nav-tabs" id="mainNavTabs">
+      <li class="me-tab-item active" data-tab="dashboard">
+        <span class="me-tab-icon">📊</span>
+        <span>Dashboard</span>
+      </li>
+      <li class="me-tab-item" data-tab="inventory">
+        <span class="me-tab-icon">🖥️</span>
+        <span>Inventory</span>
+      </li>
+      <li class="me-tab-item" data-tab="alarms">
+        <span class="me-tab-icon">🚨</span>
+        <span>Alarms</span>
+      </li>
+      <li class="me-tab-item" data-tab="topology">
+        <span class="me-tab-icon">🗺️</span>
+        <span>Maps & Topology</span>
+      </li>
+      <li class="me-tab-item" data-tab="probes">
+        <span class="me-tab-icon">📡</span>
+        <span>Enterprise Probes</span>
+      </li>
+      <li class="me-tab-item" data-tab="discovery">
+        <span class="me-tab-icon">🔍</span>
+        <span>Discovery</span>
+      </li>
+      <li class="me-tab-item" data-tab="ccm">
+        <span class="me-tab-icon">⚙️</span>
+        <span>Configuration (CCM)</span>
+      </li>
+      <li class="me-tab-item" data-tab="reports">
+        <span class="me-tab-icon">📈</span>
+        <span>Reports</span>
+      </li>
+      <li class="me-tab-item" data-tab="settings">
+        <span class="me-tab-icon">🔧</span>
+        <span>Settings</span>
+      </li>
+    </ul>
+
+    <div class="me-navbar-info">
+      <span id="centralStatusText">Central: <strong>10.0.0.100:8060</strong> (Primary Active)</span>
+    </div>
+  </nav>
+
+  <!-- 3. Sub-Navigation Bar (Contextual Sub-tabs / Filters) -->
+  <div class="me-subnav" id="subnavBar">
+    <ul class="me-subnav-list" id="subnavList">
+      <!-- Injected dynamically based on active main tab -->
+    </ul>
+    <div class="me-subnav-actions" id="subnavActions">
+      <!-- Context actions injected dynamically -->
+    </div>
+  </div>
+
+  <!-- 4. Main Workspace Content Area -->
+  <main class="me-workspace" id="workspaceContent">
+    <!-- Active view rendered here -->
+  </main>
+
+  <!-- ==========================================================================
+       Zia AI Operations Assistant Sliding Drawer
+       ========================================================================== -->
+  <div class="zia-drawer" id="ziaDrawer">
+    <div class="zia-drawer-header">
+      <div class="zia-title">
+        <span>✨ Zia AI Operations Assistant</span>
+        <span class="badge-me clear" style="font-size: 9px; padding: 1px 4px;">ITOM Engine</span>
+      </div>
+      <button class="modal-close-me" id="closeZiaDrawer">&times;</button>
+    </div>
+
+    <!-- Chat Message Stream -->
+    <div class="zia-chat-box" id="ziaChatBox">
+      <div class="zia-msg bot">
+        <strong>Zia AI:</strong>
+        <div>Hello <strong>admin</strong>! I am Zia, your ManageEngine IT Operations Assistant. I continuously monitor telemetry, correlation rules, and alarms across your 4 Enterprise Probes. How can I assist you?</div>
+      </div>
+    </div>
+
+    <!-- Prompt Chips -->
+    <div class="zia-chips-container">
+      <span class="zia-chip" data-query="Analyze critical alarms in enterprise network">🚨 Critical Alarms</span>
+      <span class="zia-chip" data-query="Check remote probes sync and latency">📡 Probes Latency</span>
+      <span class="zia-chip" data-query="Root cause analysis for high CPU utilization">🔥 High CPU RCA</span>
+      <span class="zia-chip" data-query="Network configuration compliance audit">🛡️ Config Compliance</span>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="zia-input-bar">
+      <input type="text" class="form-input-me" id="ziaInput" placeholder="Ask Zia about alarms, probes, devices...">
+      <button class="btn-me-primary" id="btnSendZia">Send</button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Modals
+       ========================================================================== -->
+
+  <!-- Deep Device Snapshot Modal -->
+  <div class="modal-backdrop-me" id="deviceSnapshotModal">
+    <div class="modal-dialog-me">
+      <div class="modal-header-me">
+        <div>
+          <div class="modal-title-me" id="snapDevTitle">Device Snapshot</div>
+          <div style="font-size: 11px; color: var(--text-muted);" id="snapDevSubtitle"></div>
+        </div>
+        <button class="modal-close-me" id="closeDeviceSnapshot">&times;</button>
+      </div>
+      <div class="modal-body-me" id="snapDevBody">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-primary" id="btnSnapPollNow">⚡ Poll Now</button>
+        <button class="btn-me-secondary" id="btnSnapBackupConfig">💾 Backup Config</button>
+        <button class="btn-me-secondary" id="btnSnapDrift">⚙️ Drift Diff</button>
+        <button class="btn-me-secondary" id="btnSnapTerminal">💻 CLI Terminal</button>
+        <button class="btn-me-secondary" id="btnSnapSwitchPorts">🔌 Port Mapper</button>
+        <button class="btn-me-secondary" id="btnSnapPing">📡 Ping</button>
+        <button class="btn-me-secondary" id="btnSnapTraceroute">🛣️ Traceroute</button>
+        <button class="btn-me-secondary" id="btnSnapMibBrowser">🔬 MIB Browser</button>
+        <button class="btn-me-secondary" id="closeDeviceSnapshotBottom">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLI Terminal Emulator Modal -->
+  <div class="modal-backdrop-me" id="terminalModal">
+    <div class="modal-dialog-me" style="max-width: 720px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me" id="termModalTitle">💻 Web CLI SSH Terminal (Cisco IOS)</div>
+        <button class="modal-close-me" id="closeTerminalModal">&times;</button>
+      </div>
+      <div class="modal-body-me">
+        <div class="terminal-screen" id="terminalScreenText">CORE-RTR-01# Connected to Cisco IOS Enterprise (10.10.0.1:22).
+Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.</div>
+        <div class="terminal-prompt-line">
+          <span class="terminal-prompt-lbl" id="termPromptLbl">CORE-RTR-01#</span>
+          <input type="text" class="terminal-input-field" id="terminalInput" placeholder="Enter command (e.g. show ip int br)...">
+          <button class="btn-me-primary" id="btnSendTerminalCmd">Exec</button>
+        </div>
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-secondary" id="closeTerminalBottom">Close Console</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Switch Port Mapper Modal -->
+  <div class="modal-backdrop-me" id="switchPortModal">
+    <div class="modal-dialog-me" style="max-width: 860px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me" id="switchPortTitle">🔌 Switch Port Mapper (ManageEngine Tool)</div>
+        <button class="modal-close-me" id="closeSwitchPortModal">&times;</button>
+      </div>
+      <div class="modal-body-me" id="switchPortBody">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-secondary" id="closeSwitchPortBottom">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Traceroute Modal -->
+  <div class="modal-backdrop-me" id="tracerouteModal">
+    <div class="modal-dialog-me" style="max-width: 600px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me">🛣️ Network Path Traceroute</div>
+        <button class="modal-close-me" id="closeTracerouteModal">&times;</button>
+      </div>
+      <div class="modal-body-me" id="tracerouteBody">
+        <div style="font-size: 12px; margin-bottom: 8px;">Target: <code id="traceTargetIp">10.10.0.1</code></div>
+        <div class="terminal-screen" id="tracerouteOutput" style="height: 180px;">Traceroute in progress...</div>
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-secondary" id="closeTracerouteBottom">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Remote Probe Modal -->
+  <div class="modal-backdrop-me" id="addProbeModal">
+    <div class="modal-dialog-me" style="max-width: 500px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me">Register Remote Enterprise Probe</div>
+        <button class="modal-close-me" id="closeAddProbeModal">&times;</button>
+      </div>
+      <div class="modal-body-me">
+        <form id="addProbeForm">
+          <div class="form-group-me">
+            <label>Probe Identifier / Code</label>
+            <input type="text" class="form-input-me" id="pName" placeholder="e.g. Probe-05-Tokyo" required>
+          </div>
+          <div class="form-group-me">
+            <label>Display Name</label>
+            <input type="text" class="form-input-me" id="pDisplayName" placeholder="e.g. Tokyo Data Center Hub" required>
+          </div>
+          <div class="form-group-me">
+            <label>Geographic Site Location</label>
+            <input type="text" class="form-input-me" id="pLocation" placeholder="e.g. Tokyo, Japan (APAC)">
+          </div>
+          <div class="form-group-me">
+            <label>Remote IP Address / Hostname</label>
+            <input type="text" class="form-input-me" id="pIp" placeholder="e.g. 10.60.0.10" required>
+          </div>
+          <div class="form-group-me">
+            <label>Communication Port (Default: 8060)</label>
+            <input type="number" class="form-input-me" id="pPort" value="8060">
+          </div>
+          <button type="submit" class="btn-me-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+            Establish Central-Probe Mutual Binding (eeAuthKey)
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Monitored Device Modal -->
+  <div class="modal-backdrop-me" id="addDeviceModal">
+    <div class="modal-dialog-me" style="max-width: 520px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me">Add Monitored Device</div>
+        <button class="modal-close-me" id="closeAddDeviceModal">&times;</button>
+      </div>
+      <div class="modal-body-me">
+        <form id="addDeviceForm">
+          <div class="form-group-me">
+            <label>Assign to Remote Probe</label>
+            <select class="form-input-me" id="devProbeAssign" required></select>
+          </div>
+          <div class="form-group-me">
+            <label>IP Address / DNS Hostname</label>
+            <input type="text" class="form-input-me" id="devIp" placeholder="e.g. 10.10.0.50" required>
+          </div>
+          <div class="form-group-me">
+            <label>Device Name</label>
+            <input type="text" class="form-input-me" id="devName" placeholder="e.g. CORE-RTR-02" required>
+          </div>
+          <div class="form-group-me">
+            <label>Device Category</label>
+            <select class="form-input-me" id="devCat">
+              <option value="Router">Router</option>
+              <option value="Switch">Switch</option>
+              <option value="Firewall">Firewall</option>
+              <option value="Server">Server</option>
+              <option value="Wireless">Wireless</option>
+              <option value="LoadBalancer">Load Balancer</option>
+              <option value="Storage">Storage SAN/NAS</option>
+              <option value="UPS">UPS / Power</option>
+            </select>
+          </div>
+          <div class="form-group-me">
+            <label>SNMP / WMI Credential Profile</label>
+            <select class="form-input-me" id="devCred">
+              <option value="v3">Cisco-SNMPv3-Enterprise (AuthPriv)</option>
+              <option value="v2c">Global-SNMPv2-Community (public_monitor_ro)</option>
+              <option value="wmi">Windows-Domain-Admin-WMI</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-me-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+            Initiate Real-time Polling & Inventory
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Download OpManager Agent Modal -->
+  <div class="modal-backdrop-me" id="downloadAgentModal">
+    <div class="modal-dialog-me" style="max-width: 820px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me">⬇️ Download ManageEngine OpManager Central Monitoring Agent</div>
+        <button class="modal-close-me" id="closeDownloadAgentModal">&times;</button>
+      </div>
+      <div class="modal-body-me">
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+          Deploy lightweight host monitoring agents on Windows and macOS endpoints to stream live hardware telemetry, CPU, memory, disk, network interfaces, and process health directly to Central and Remote Probes.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+          <!-- Windows Card -->
+          <div style="background: var(--bg-subnav); border: 1px solid var(--border-color); border-radius: 6px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 24px;">🪟</span>
+                <div>
+                  <div style="font-weight: 800; font-size: 13px;">Windows Agent</div>
+                  <div style="font-size: 10px; color: var(--text-muted);">Windows 10, 11, Server 2016-2025 (x64)</div>
+                </div>
+              </div>
+              <span class="badge-me clear" style="font-size: 9px;">.EXE / .ZIP</span>
+            </div>
+            <p style="font-size: 11px; margin-bottom: 12px; color: var(--text-muted);">
+              Standalone 64-bit native executable with automatic Windows Service registration via <code>sc.exe</code>.
+            </p>
+            <div style="display: flex; gap: 8px;">
+              <a href="/downloads/OpManagerAgent.exe" download class="btn-me-primary" style="flex: 1; justify-content: center; text-decoration: none;">
+                📥 OpManagerAgent.exe (7 MB)
+              </a>
+              <a href="/downloads/OpManagerAgent-Windows-x64.zip" download class="btn-me-secondary" style="text-decoration: none;" title="Download ZIP bundle with service installer">
+                📦 .ZIP
+              </a>
+            </div>
+            <div style="margin-top: 10px; background: #0f172a; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 10px; color: #38bdf8;">
+              OpManagerAgent.exe -server http://10.0.0.100:8060 -probe 101
+            </div>
+          </div>
+
+          <!-- macOS Card -->
+          <div style="background: var(--bg-subnav); border: 1px solid var(--border-color); border-radius: 6px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 24px;">🍏</span>
+                <div>
+                  <div style="font-weight: 800; font-size: 13px;">macOS Agent</div>
+                  <div style="font-size: 10px; color: var(--text-muted);">Apple Silicon (M1/M2/M3/M4) & Intel</div>
+                </div>
+              </div>
+              <span class="badge-me clear" style="font-size: 9px;">.DMG / Universal</span>
+            </div>
+            <p style="font-size: 11px; margin-bottom: 12px; color: var(--text-muted);">
+              Apple Disk Image with Universal <code>OpManagerAgent.app</code>, drag-and-drop installer, and <code>launchd</code> daemon.
+            </p>
+            <a href="/downloads/OpManagerAgent.dmg" download class="btn-me-primary" style="display: flex; justify-content: center; text-decoration: none; width: 100%;">
+              📥 OpManagerAgent.dmg (6.3 MB)
+            </a>
+            <div style="margin-top: 10px; background: #0f172a; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 10px; color: #4ade80;">
+              hdiutil attach OpManagerAgent.dmg && sudo ./install_daemon.sh
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Registered Agents Grid -->
+        <div style="border-top: 1px solid var(--border-color); padding-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="font-weight: 700; font-size: 12px;">Connected Host Agents:</div>
+            <button class="btn-me-secondary" id="btnRefreshAgentsList" style="padding: 2px 8px; font-size: 10px;">🔄 Refresh</button>
+          </div>
+          <div id="liveAgentsList" style="font-size: 11px; color: var(--text-muted);">Loading active agents...</div>
+        </div>
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-secondary" id="closeDownloadAgentBottom">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- About ManageEngine OpManager Central Modal -->
+  <div class="modal-backdrop-me" id="aboutModal">
+    <div class="modal-dialog-me" style="max-width: 620px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me">ℹ️ About ManageEngine OpManager Central</div>
+        <button class="modal-close-me" id="closeAboutModal">&times;</button>
+      </div>
+      <div class="modal-body-me">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border-color);">
+          <img src="/assets/opmanager-logo.svg" style="width: 48px; height: 48px;" alt="Logo">
+          <div>
+            <div style="font-size: 16px; font-weight: 800;">ManageEngine OpManager Central</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Version 12.9.203 (Build 129203 - 64-bit GA Edition)</div>
+            <div style="font-size: 10px; color: var(--primary); font-weight: 700; margin-top: 2px;">Central-Probe Enterprise Architecture Active</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 11px; line-height: 1.8;">
+          <div style="background: var(--bg-subnav); padding: 10px; border-radius: 4px; border: 1px solid var(--border-color);">
+            <div style="font-weight: 700; color: var(--text-muted);">LICENSE SPECIFICATIONS</div>
+            <div><strong>License Type:</strong> Enterprise Central Edition</div>
+            <div><strong>Licensed User:</strong> Global Enterprise NOC</div>
+            <div><strong>Expiry:</strong> Dec 31, 2028 (Perpetual)</div>
+            <div><strong>Monitored Devices:</strong> 48 / 10,000</div>
+          </div>
+
+          <div style="background: var(--bg-subnav); padding: 10px; border-radius: 4px; border: 1px solid var(--border-color);">
+            <div style="font-weight: 700; color: var(--text-muted);">SYSTEM & ARCHITECTURE</div>
+            <div><strong>Central Status:</strong> Active-Primary (HA)</div>
+            <div><strong>Remote Probes:</strong> 4 Probes Registered (Max: 50)</div>
+            <div><strong>Database Engine:</strong> PostgreSQL 14.2 Embedded</div>
+            <div><strong>Server Binding:</strong> 10.0.0.100:8060</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 14px; padding: 10px; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 4px; font-size: 11px;">
+          <strong>Technical Support:</strong> support@opmanager.com | <strong>Documentation:</strong> help.opmanager.com<br>
+          ManageEngine is a division of ZOHO Corporation.
+        </div>
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-secondary" id="closeAboutBottom">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Widget Catalog Modal -->
+  <div class="modal-backdrop-me" id="widgetCatalogModal">
+    <div class="modal-dialog-me" style="max-width: 640px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me">➕ Dashboard Widget Catalog (ManageEngine ITOM)</div>
+        <button class="modal-close-me" id="closeWidgetCatalogModal">&times;</button>
+      </div>
+      <div class="modal-body-me">
+        <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Toggle widgets to display on your Central Enterprise NOC view:</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;" id="widgetCatalogList">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-secondary" id="closeWidgetCatalogBottom">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authentic SNMP MIB Browser Modal -->
+  <div class="modal-backdrop-me" id="mibBrowserModal">
+    <div class="modal-dialog-me" style="max-width: 900px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me">🔬 ManageEngine SNMP MIB Browser (Enterprise Diagnostics)</div>
+        <button class="modal-close-me" id="closeMibBrowserModal">&times;</button>
+      </div>
+      <div class="modal-body-me">
+        <!-- Target IP and SNMP Settings Bar -->
+        <div class="mib-query-controls">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 11px; font-weight: 700;">Host / IP:</label>
+            <input type="text" id="mibTargetIp" class="form-input-me" value="10.0.0.1" style="width: 140px; padding: 4px 8px; font-size: 11px;">
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 11px; font-weight: 700;">Community:</label>
+            <input type="text" id="mibCommunity" class="form-input-me" value="public_monitor_ro" style="width: 130px; padding: 4px 8px; font-size: 11px;">
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 11px; font-weight: 700;">Ver:</label>
+            <select id="mibVersion" class="form-input-me" style="width: 70px; padding: 4px 6px; font-size: 11px;">
+              <option value="v2c">v2c</option>
+              <option value="v1">v1</option>
+              <option value="v3">v3</option>
+            </select>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; flex: 1;">
+            <label style="font-size: 11px; font-weight: 700;">OID:</label>
+            <input type="text" id="mibCurrentOid" class="form-input-me" value=".1.3.6.1.2.1.1.1.0" style="flex: 1; padding: 4px 8px; font-size: 11px; font-family: monospace;">
+          </div>
+          <button class="btn-me-primary" id="btnMibGet" style="padding: 4px 12px; font-size: 11px;">SNMP GET</button>
+          <button class="btn-me-secondary" id="btnMibWalk" style="padding: 4px 12px; font-size: 11px;">SNMP WALK</button>
+        </div>
+
+        <!-- MIB Layout (Tree on Left, Results on Right) -->
+        <div class="mib-browser-layout">
+          <div class="mib-tree-panel">
+            <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Standard MIB Modules</div>
+            <div id="mibTreeContainer">Loading MIB modules...</div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; overflow: hidden; background: var(--bg-subnav); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px;">
+            <div id="mibSelectedDesc" style="margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border-color); font-size: 11px; color: var(--text-muted);">
+              Select an OID from the MIB tree on the left or enter an OID to perform SNMP GET / WALK.
+            </div>
+            <div style="flex: 1; overflow-y: auto;">
+              <table class="mib-results-table">
+                <thead>
+                  <tr>
+                    <th>OID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody id="mibResultsTableBody">
+                  <tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">No SNMP data queried yet. Click "SNMP GET" or "SNMP WALK".</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-secondary" id="closeMibBrowserBottom">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Spotlight Search Modal (Ctrl+K / Cmd+K) -->
+  <div class="modal-backdrop-me" id="spotlightSearchModal">
+    <div class="modal-dialog-me" style="max-width: 680px; margin-top: 60px;">
+      <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 16px;">🔍</span>
+        <input type="text" id="spotlightInput" placeholder="Quick search devices, probes, alarms, diagnostic tools... (Press ESC to close)" style="flex: 1; background: transparent; border: none; outline: none; font-size: 13px; color: var(--text-main);">
+        <span style="font-size: 10px; color: var(--text-muted); background: var(--bg-subnav); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 4px;">ESC</span>
+      </div>
+      <div id="spotlightResultsList" style="max-height: 420px; overflow-y: auto; padding: 10px;">
+        <div style="font-size: 11px; color: var(--text-muted); text-align: center; padding: 20px;">Type device name, IP address, probe name, or tool name...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cisco IOS Running vs Startup Config Diff Modal -->
+  <div class="modal-backdrop-me" id="configDiffModal">
+    <div class="modal-dialog-me" style="max-width: 900px;">
+      <div class="modal-header-me">
+        <div class="modal-title-me">⚙️ Configuration Drift Inspector (Running vs Startup Config Diff)</div>
+        <button class="modal-close-me" id="closeConfigDiffModal">&times;</button>
+      </div>
+      <div class="modal-body-me">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: var(--bg-subnav); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border-color);">
+          <div>
+            <div style="font-weight: 800; font-size: 13px;" id="diffDevName">CORE-SW-01 (10.10.0.1)</div>
+            <div style="font-size: 10px; color: var(--text-muted);" id="diffMeta">Status: Drift Detected • 2 Added Lines, 1 Removed Line</div>
+          </div>
+          <button class="btn-me-primary" id="btnResolveDrift" style="padding: 6px 14px; font-size: 11px;">✓ Resolve Drift (Write to NVRAM)</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; height: 380px;">
+          <!-- Running Config -->
+          <div style="display: flex; flex-direction: column; background: #090d16; border: 1px solid #1e293b; border-radius: 4px; overflow: hidden;">
+            <div style="background: #111827; padding: 6px 10px; font-size: 10px; font-weight: 800; color: #38bdf8; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between;">
+              <span>ACTIVE RUNNING-CONFIG (DRAM)</span>
+              <span id="diffRunningVer" style="color: #f59e0b;">v8.1 (Unsaved)</span>
+            </div>
+            <div id="diffRunningText" style="flex: 1; overflow-y: auto; font-family: monospace; font-size: 10px; line-height: 1.6; padding: 8px;"></div>
+          </div>
+
+          <!-- Startup Config -->
+          <div style="display: flex; flex-direction: column; background: #090d16; border: 1px solid #1e293b; border-radius: 4px; overflow: hidden;">
+            <div style="background: #111827; padding: 6px 10px; font-size: 10px; font-weight: 800; color: #4ade80; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between;">
+              <span>BASELINE STARTUP-CONFIG (NVRAM)</span>
+              <span id="diffStartupVer" style="color: #94a3b8;">v8.0 (Baseline)</span>
+            </div>
+            <div id="diffStartupText" style="flex: 1; overflow-y: auto; font-family: monospace; font-size: 10px; line-height: 1.6; padding: 8px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-me">
+        <button class="btn-me-secondary" id="closeConfigDiffBottom">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real-Time Floating Alarm Toast Notifications Container -->
+  <div id="alarmToastContainer" class="me-toast-container"></div>
+
+  <!-- Core Application Scripts -->
+  <script>
+    try {
+      sessionStorage.setItem('opm_logged_in', 'true');
+      localStorage.setItem('opm_logged_in', 'true');
+      localStorage.setItem('me_opm_theme', 'dark');
+    } catch (e) {}
+  </script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

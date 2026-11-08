@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Log Viewer</title>
+	<script>
+		(function () {
+			const themeMode = localStorage.getItem('theme-mode') || 'light';
+			const isDark = themeMode === 'dark' || (themeMode === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+			if (isDark) { document.documentElement.classList.add('dark'); }
+		})();
+	</script>
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			height: 100%;
+			font-family: monospace;
+			background: #fff;
+			color: #1a1a1a;
+		}
+
+		.log-container {
+			overflow: auto;
+			height: calc(100vh - 49px);
+			position: relative;
+		}
+
+		.log-spacer {
+			position: relative;
+			width: 100%;
+		}
+
+		.log-viewport {
+			position: absolute;
+			left: 0;
+			right: 0;
+		}
+
+		.log-line {
+			white-space: pre;
+			line-height: 1.6;
+			padding: 0 8px;
+			display: grid;
+			grid-template-columns: 72px 1fr;
+			box-sizing: border-box;
+		}
+
+		.wrap .log-line {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+		}
+
+		.log-line:hover {
+			background: #f5f5f5;
+		}
+
+		.log-line:hover .line-num {
+			background: #f5f5f5;
+		}
+
+		.line-num {
+			flex-shrink: 0;
+			position: sticky;
+			left: 0;
+			color: #999;
+			text-align: right;
+			padding-right: 12px;
+			user-select: none;
+			border-right: 1px solid #ddd;
+			margin-right: 12px;
+			background: #fff;
+		}
+
+		.line-content {
+			min-width: 0;
+		}
+
+		.target-line .line-num {
+			background: #fff8d6;
+		}
+
+		.target-line {
+			background: #fff8d6;
+			border-left: 3px solid #f5a623;
+		}
+
+		mark {
+			background: #ffdd57;
+			color: #000;
+			padding: 1px 3px;
+			border-radius: 3px;
+		}
+
+		.toolbar {
+			position: sticky;
+			top: 0;
+			z-index: 1;
+			background: #f8f8f8;
+			padding: 8px 16px;
+			border-bottom: 1px solid #ddd;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.toolbar a {
+			color: #0366d6;
+			text-decoration: underline;
+		}
+
+		.toolbar-file {
+			margin-right: auto;
+			font-weight: bold;
+			font-size: 13px;
+			color: #1a1a1a;
+		}
+
+		.toolbar span {
+			color: #555;
+			font-size: 13px;
+		}
+
+		.toolbar-field {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		.toolbar label {
+			font-size: 13px;
+			color: #555;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		.toolbar input[type="text"],
+		.toolbar input[type="number"] {
+			font-size: 13px;
+			padding: 3px 8px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			outline: none;
+			background: #fff;
+			color: #1a1a1a;
+		}
+
+		.toolbar input[type="text"]:focus,
+		.toolbar input[type="number"]:focus {
+			border-color: #0366d6;
+		}
+
+		.toolbar input[type="text"] {
+			width: 220px;
+		}
+
+		.toolbar input[type="number"] {
+			width: 70px;
+			padding-right: 2px;
+		}
+
+		.nav-btn {
+			background: none;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			cursor: pointer;
+			padding: 3px 8px;
+			font-size: 13px;
+			color: #555;
+			line-height: 1;
+		}
+
+		.nav-btn:hover {
+			background: #e8e8e8;
+		}
+
+		mark.active {
+			background: #ff9632;
+			outline: 2px solid #ff9632;
+		}
+
+		.no-matches {
+			font-size: 12px;
+			color: #d32f2f;
+		}
+
+		.error-msg {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: calc(100vh - 80px);
+		}
+
+		.error-msg .error-box {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			width: 480px;
+			padding: 24px 32px;
+			border-left: 4px solid #d32f2f;
+			border-radius: 6px;
+			background: #fdf0f0;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+		}
+
+		.error-msg .error-icon {
+			flex-shrink: 0;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background: #fdecea;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 20px;
+			color: #d32f2f;
+		}
+
+		.error-msg .error-text {
+			color: #d32f2f;
+			font-size: 15px;
+			font-weight: 500;
+			line-height: 1.4;
+		}
+
+		.loading-msg {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: calc(100vh - 80px);
+			font-size: 14px;
+			color: #555;
+		}
+
+		.loading-spinner {
+			width: 18px;
+			height: 18px;
+			border: 2px solid #ccc;
+			border-top-color: #0366d6;
+			border-radius: 50%;
+			animation: spin 0.8s linear infinite;
+			margin-right: 10px;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		html.dark body {
+			background: #1e1e1e;
+			color: #d4d4d4;
+		}
+
+		html.dark .log-line:hover {
+			background: #2a2a2a;
+		}
+
+		html.dark .log-line:hover .line-num {
+			background: #2a2a2a;
+		}
+
+		html.dark .line-num {
+			color: #666;
+			border-right-color: #333;
+			background: #1e1e1e;
+		}
+
+		html.dark .target-line .line-num {
+			background: #3a3a00;
+		}
+
+		html.dark .target-line {
+			background: #3a3a00;
+			border-left-color: #ffdd57;
+		}
+
+		html.dark .toolbar {
+			background: #2d2d2d;
+			border-bottom-color: #444;
+		}
+
+		html.dark .toolbar a {
+			color: #6cb6ff;
+		}
+
+		html.dark .toolbar-file {
+			color: #d4d4d4;
+		}
+
+		html.dark .toolbar span {
+			color: #aaa;
+		}
+
+		html.dark .toolbar label {
+			color: #aaa;
+		}
+
+		html.dark .toolbar input[type="text"],
+		html.dark .toolbar input[type="number"] {
+			background: #1e1e1e;
+			color: #d4d4d4;
+			border-color: #555;
+		}
+
+		html.dark .toolbar input[type="text"]:focus,
+		html.dark .toolbar input[type="number"]:focus {
+			border-color: #6cb6ff;
+		}
+
+		html.dark .nav-btn {
+			border-color: #555;
+			color: #aaa;
+		}
+
+		html.dark .nav-btn:hover {
+			background: #3a3a3a;
+		}
+
+		html.dark .no-matches {
+			color: #ff6b6b;
+		}
+
+		html.dark .error-msg .error-box {
+			border-left-color: #ff6b6b;
+			background: #2d1a1a;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		}
+
+		html.dark .error-msg .error-icon {
+			background: #3d2020;
+			color: #ff6b6b;
+		}
+
+		html.dark .error-msg .error-text {
+			color: #ff6b6b;
+		}
+
+		html.dark .loading-msg {
+			color: #aaa;
+		}
+
+		html.dark .loading-spinner {
+			border-color: #555;
+			border-top-color: #6cb6ff;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="toolbar">
+		<span id="file-name" class="toolbar-file"></span>
+		<span id="toolbar-content"></span>
+		<span class="toolbar-field"><span id="search-label"></span> <input type="text" id="search-input"></span>
+		<span id="match-count"></span>
+		<button class="nav-btn" id="prev-match" title="Previous" aria-label="Previous match">&#8593;</button>
+		<button class="nav-btn" id="next-match" title="Next" aria-label="Next match">&#8595;</button>
+		<span class="toolbar-field"><span id="line-label"></span> <input type="number" id="line-input" min="1"
+				aria-label="Go to line"></span>
+		<label><input type="checkbox" id="wrap-toggle"> <span id="wrap-label"></span></label>
+	</div>
+	<div id="content" class="log-container"></div>
+	<script>
+		(function () {
+			const LINE_HEIGHT = 22;
+			const BUFFER_LINES = 30;
+			const WRAP_MODE_LIMIT = 100000; // Disable wrap mode for files larger than this line count to prevent performance issues
+
+			const KEYS = {
+				openRawFile: 'webclient.logs.open.raw.file',
+				search: 'webclient.label.search',
+				line: 'webclient.opm.search.line.no',
+				matchesFound: 'webclient.logs.matches.found',
+				noMatchesFound: 'webclient.logs.no.matches.found',
+				wrap: 'webclient.logs.wrap',
+				title: 'webclient.logs.viewer.title',
+				loading: 'webclient.apm.label.ping.wait.message',
+				invalidFilePath: 'webclient.logs.invalid.file.path',
+				missingFileParam: 'webclient.logs.missing.file.param',
+				failedToLoad: 'webclient.logs.failed.to.load'
+			};
+
+			const params = new URLSearchParams(window.location.search);
+			const fileParam = params.get('file');
+			const config = {
+				fileURL:  getFileURL(fileParam),
+				searchText: params.get('search'),
+				targetLine: parseInt(params.get('line'), 10) || 0,
+				locale: params.get('locale') || 'en-us'
+			};
+
+			function getFileURL(fileParam) {
+				return fileParam.includes('/AppManager/logs') ? fileParam : '/logs/' + fileParam;
+			}
+
+			// --- File path validation (security) ---
+			function isValidFilePath(path) {
+				try {
+					if (!path || !(path.startsWith('/logs/') || path.startsWith('/AppManager/logs'))) {
+						return false;
+					}
+					const normalized = new URL(path, window.location.origin);
+					const decoded = decodeURIComponent(normalized.pathname);
+					return normalized.origin === window.location.origin &&
+						(decoded.startsWith('/logs/') || decoded.startsWith('/AppManager/logs')) &&
+						!decoded.includes('..');
+				} catch (e) {
+					return false;
+				}
+			}
+
+			let invalidFilePath = false;
+			if (config.fileURL && !isValidFilePath(config.fileURL)) {
+				invalidFilePath = true;
+				config.fileURL = null;
+			}
+
+			// Validate locale: must be a known supported locale
+			if (!/^(en-us|ja-jp|de-de|fr-fr|zh-cn|zh-tw|it-it|es-es|ko-kr|ru-ru|da-dk|fi-fi|no-no|nl-nl|pl-pl|pt-br|pt-pt|sv-se|tr-tr|et-ee)$/.test(config.locale)) {
+				config.locale = 'en-us';
+			}
+
+			// --- Cached DOM elements ---
+			const els = {
+				content: document.getElementById('content'),
+				fileName: document.getElementById('file-name'),
+				toolbarContent: document.getElementById('toolbar-content'),
+				searchLabel: document.getElementById('search-label'),
+				searchInput: document.getElementById('search-input'),
+				matchCount: document.getElementById('match-count'),
+				prevMatch: document.getElementById('prev-match'),
+				nextMatch: document.getElementById('next-match'),
+				lineLabel: document.getElementById('line-label'),
+				lineInput: document.getElementById('line-input'),
+				wrapToggle: document.getElementById('wrap-toggle'),
+				wrapLabel: document.getElementById('wrap-label')
+			};
+
+			// --- State ---
+			let i18n = {};
+			let allLines = [];        // raw text lines
+			let escapedLines = [];    // HTML-escaped lines (cached)
+			let matchIndex = [];      // precomputed: [{line, offset}] for each match
+			let currentMatchIndex = -1;
+			let totalMatches = 0;
+			let activeMatchLine = -1;   // track active match line for re-highlight on scroll
+			let activeMatchOffset = -1; // track active match offset within line
+			let renderedRange = { start: -1, end: -1 };
+			let isWrapMode = false;
+			let spacerEl = null;
+			let viewportEl = null;
+			let lineDebounceTimer = null;
+			let scrollRaf = null;
+			let searchRegex = null;   // cached compiled regex
+
+			// --- Utility functions ---
+			function t(key, replacements) {
+				let text = i18n[key] || key;
+				if (replacements) {
+					Object.keys(replacements).forEach(function (k) {
+						text = text.replace('{' + k + '}', replacements[k]);
+					});
+				}
+				return text;
+			}
+
+			function escapeHtml(str) {
+				str = String(str || '');
+				return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+			}
+
+			function escapeRegExp(str) {
+				return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+			}
+
+			function showError(msg) {
+				els.content.innerHTML = '<div class="error-msg"><div class="error-box"><span class="error-icon">&#9888;</span><span class="error-text">' + escapeHtml(msg) + '</span></div></div>';
+			}
+
+			// --- Virtual Scrolling ---
+			function setupVirtualScroll() {
+				els.content.innerHTML = '';
+				spacerEl = document.createElement('div');
+				spacerEl.className = 'log-spacer';
+				viewportEl = document.createElement('div');
+				viewportEl.className = 'log-viewport';
+				spacerEl.appendChild(viewportEl);
+				els.content.appendChild(spacerEl);
+				updateSpacerHeight();
+			}
+
+			function updateSpacerHeight() {
+				spacerEl.style.height = (allLines.length * LINE_HEIGHT) + 'px';
+			}
+
+			function getVisibleRange() {
+				const scrollTop = els.content.scrollTop;
+				const containerHeight = els.content.clientHeight;
+				const startLine = Math.max(0, Math.floor(scrollTop / LINE_HEIGHT) - BUFFER_LINES);
+				const endLine = Math.min(allLines.length, Math.ceil((scrollTop + containerHeight) / LINE_HEIGHT) + BUFFER_LINES);
+				return { start: startLine, end: endLine };
+			}
+
+			function buildLineElement(i) {
+				const lineNum = i + 1;
+				const div = document.createElement('div');
+				div.className = 'log-line';
+				if (lineNum === config.targetLine) {
+					div.classList.add('target-line');
+					div.id = 'target';
+				}
+				div.setAttribute('data-line', lineNum);
+
+				const numSpan = document.createElement('span');
+				numSpan.className = 'line-num';
+				numSpan.textContent = lineNum;
+
+				const contentSpan = document.createElement('span');
+				contentSpan.className = 'line-content';
+
+				let lineHtml = escapedLines[i];
+				if (searchRegex) {
+					searchRegex.lastIndex = 0;
+					lineHtml = lineHtml.replace(searchRegex, function (m) {
+						return '<mark>' + m + '</mark>';
+					});
+				}
+				contentSpan.innerHTML = lineHtml;
+
+				div.appendChild(numSpan);
+				div.appendChild(contentSpan);
+				return div;
+			}
+
+			function renderVisibleLines() {
+				if (isWrapMode) return; // wrap mode uses full render
+
+				const range = getVisibleRange();
+
+				// Skip re-render if range hasn't changed
+				if (range.start === renderedRange.start && range.end === renderedRange.end) {
+					return;
+				}
+				renderedRange = range;
+
+				const fragment = document.createDocumentFragment();
+				for (let i = range.start; i < range.end; i++) {
+					fragment.appendChild(buildLineElement(i));
+				}
+
+				viewportEl.innerHTML = '';
+				viewportEl.appendChild(fragment);
+				viewportEl.style.transform = 'translateY(' + (range.start * LINE_HEIGHT) + 'px)';
+
+				// Re-apply active match highlight if it's in the visible range
+				if (activeMatchLine >= range.start && activeMatchLine < range.end) {
+					highlightActiveMarkInViewport(activeMatchLine, activeMatchOffset, true);
+				}
+			}
+
+			// --- Wrap mode: full render (no virtualization) ---
+			function renderAllWrappedLines() {
+				els.content.innerHTML = '';
+				viewportEl = document.createElement('div');
+				viewportEl.className = 'log-viewport';
+				viewportEl.style.position = 'relative';
+				viewportEl.style.transform = '';
+				els.content.appendChild(viewportEl);
+
+				const fragment = document.createDocumentFragment();
+				for (let i = 0; i < escapedLines.length; i++) {
+					fragment.appendChild(buildLineElement(i));
+				}
+				viewportEl.appendChild(fragment);
+				spacerEl = null;
+			}
+
+			function onScroll() {
+				if (isWrapMode) return;
+				if (scrollRaf) return;
+				scrollRaf = requestAnimationFrame(function () {
+					scrollRaf = null;
+					renderVisibleLines();
+				});
+			}
+
+			// --- Reusable helpers ---
+			function clearTargetLine() {
+				const prevTarget = viewportEl.querySelector('.target-line');
+				if (prevTarget) {
+					prevTarget.classList.remove('target-line');
+					prevTarget.removeAttribute('id');
+				}
+			}
+
+			function markTargetLine(lineNum) {
+				const lineEl = viewportEl.querySelector('[data-line="' + lineNum + '"]');
+				if (lineEl) {
+					lineEl.classList.add('target-line');
+					lineEl.id = 'target';
+				}
+			}
+
+			function scrollToLineIndex(lineIndex) {
+				if (isWrapMode) {
+					const lineEl = viewportEl.querySelector('[data-line="' + (lineIndex + 1) + '"]');
+					if (lineEl) lineEl.scrollIntoView({ block: 'center' });
+				} else {
+					const targetScrollTop = lineIndex * LINE_HEIGHT - (els.content.clientHeight / 2);
+					els.content.scrollTop = Math.max(0, targetScrollTop);
+					renderedRange = { start: -1, end: -1 };
+					renderVisibleLines();
+				}
+			}
+
+			function refreshView() {
+				els.content.removeEventListener('scroll', onScroll);
+				if (isWrapMode) {
+					renderAllWrappedLines();
+				} else {
+					setupVirtualScroll();
+					renderedRange = { start: -1, end: -1 };
+					renderVisibleLines();
+				}
+				els.content.addEventListener('scroll', onScroll);
+			}
+
+			// --- Search ---
+			function buildSearchRegex() {
+				if (config.searchText) {
+					searchRegex = new RegExp(escapeRegExp(escapeHtml(config.searchText)), 'gi');
+				} else {
+					searchRegex = null;
+				}
+			}
+
+			function buildMatchIndex() {
+				matchIndex = [];
+				totalMatches = 0;
+
+				if (!searchRegex) {
+					currentMatchIndex = -1;
+					activeMatchLine = -1;
+					activeMatchOffset = -1;
+					return;
+				}
+
+				for (let i = 0; i < escapedLines.length; i++) {
+					searchRegex.lastIndex = 0;
+					let m;
+					let localOffset = 0;
+					while ((m = searchRegex.exec(escapedLines[i])) !== null) {
+						if (m.index === searchRegex.lastIndex) { searchRegex.lastIndex++; }
+						matchIndex.push({ line: i, offset: localOffset });
+						localOffset++;
+						totalMatches++;
+					}
+				}
+
+				currentMatchIndex = totalMatches > 0 ? 0 : -1;
+			}
+
+			function performSearch() {
+				buildSearchRegex();
+				buildMatchIndex();
+
+				// Re-render with highlights
+				if (isWrapMode) {
+					renderAllWrappedLines();
+				} else {
+					renderedRange = { start: -1, end: -1 };
+					renderVisibleLines();
+				}
+
+				updateMatchCount();
+
+				if (totalMatches > 0) {
+					navigateToCurrentMatch();
+				}
+			}
+
+			function updateMatchCount() {
+				if (totalMatches === 0 && config.searchText) {
+					els.matchCount.innerHTML = '<span class="no-matches">' + escapeHtml(t(KEYS.noMatchesFound)) + '</span>';
+				} else if (totalMatches > 0) {
+					els.matchCount.textContent = (currentMatchIndex + 1) + '/' + t(KEYS.matchesFound, { count: totalMatches });
+				} else {
+					els.matchCount.textContent = '';
+				}
+			}
+
+			// --- Match navigation (O(1) using precomputed index) ---
+			function navigateMatch(direction) {
+				if (totalMatches === 0) return;
+				currentMatchIndex = (currentMatchIndex + direction + totalMatches) % totalMatches;
+				navigateToCurrentMatch();
+			}
+
+			function navigateToCurrentMatch() {
+				if (currentMatchIndex < 0 || currentMatchIndex >= matchIndex.length) return;
+
+				const match = matchIndex[currentMatchIndex];
+				const targetLineIndex = match.line;
+
+				scrollToLineIndex(targetLineIndex);
+				highlightActiveMarkInViewport(targetLineIndex, match.offset);
+
+				clearTargetLine();
+				markTargetLine(targetLineIndex + 1);
+				config.targetLine = targetLineIndex + 1;
+				els.lineInput.value = targetLineIndex + 1;
+
+				updateMatchCount();
+			}
+
+			function highlightActiveMarkInViewport(lineIndex, localIndex, skipScroll) {
+				// Track active match position for re-highlight on scroll
+				activeMatchLine = lineIndex;
+				activeMatchOffset = localIndex;
+
+				// Remove previous active
+				const prevActive = viewportEl.querySelector('mark.active');
+				if (prevActive) prevActive.classList.remove('active');
+
+				// Find the correct line element in the viewport
+				const lineEl = viewportEl.querySelector('[data-line="' + (lineIndex + 1) + '"');
+				if (!lineEl) return;
+
+				const marks = lineEl.querySelectorAll('mark');
+				if (marks[localIndex]) {
+					marks[localIndex].classList.add('active');
+					if (!skipScroll) {
+						marks[localIndex].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+					}
+				}
+			}
+
+			// --- Line navigation ---
+			function goToLine(lineNum) {
+				if (lineNum < 1 || lineNum > allLines.length) return;
+
+				clearTargetLine();
+				config.targetLine = lineNum;
+				scrollToLineIndex(lineNum - 1);
+				markTargetLine(lineNum);
+			}
+
+			// --- Rendering ---
+			function renderLogContent(text) {
+				allLines = text.split('\n');
+				escapedLines = allLines.map(escapeHtml);
+				buildSearchRegex();
+				refreshView();
+
+				if (config.searchText) {
+					buildMatchIndex();
+					updateMatchCount();
+					if (totalMatches > 0) {
+						// If a target line was specified, navigate to the first match on or after that line
+						if (config.targetLine > 0) {
+							var targetLineIndex = config.targetLine - 1;
+							var found = false;
+							for (var i = 0; i < matchIndex.length; i++) {
+								if (matchIndex[i].line >= targetLineIndex) {
+									currentMatchIndex = i;
+									found = true;
+									break;
+								}
+							}
+							if (!found) {
+								currentMatchIndex = 0;
+							}
+						}
+						navigateToCurrentMatch();
+					} else if (config.targetLine > 0) {
+						goToLine(config.targetLine);
+					}
+				} else if (config.targetLine > 0) {
+					goToLine(config.targetLine);
+				}
+			}
+
+			// --- Initialization ---
+			function initToolbar() {
+				if (config.fileURL) {
+					els.fileName.textContent = config.fileURL.split('/').pop();
+					els.toolbarContent.innerHTML = '<a href="' + escapeHtml(config.fileURL) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(t(KEYS.openRawFile)) + '</a>';
+				}
+				els.searchLabel.textContent = t(KEYS.search) + ':';
+				els.searchInput.value = config.searchText || '';
+				els.lineLabel.textContent = t(KEYS.line) + ':';
+				els.lineInput.value = config.targetLine || '';
+				els.wrapLabel.textContent = t(KEYS.wrap);
+			}
+
+			function initEvents() {
+				// Search input: Enter navigates/applies, blur only applies if changed
+				function applySearch() {
+					const val = els.searchInput.value.trim() || null;
+					if (val !== config.searchText) {
+						config.searchText = val;
+						performSearch();
+					} else if (totalMatches > 0) {
+						navigateMatch(1);
+					}
+				}
+				els.searchInput.addEventListener('keydown', function (e) {
+					if (e.key === 'Enter') { applySearch(); }
+				});
+				els.searchInput.addEventListener('blur', function () {
+					const val = els.searchInput.value.trim() || null;
+					if (val !== config.searchText) {
+						config.searchText = val;
+						performSearch();
+					}
+				});
+
+				// Line input: debounced to avoid scroll spam
+				function applyLine() {
+					const val = parseInt(els.lineInput.value, 10) || 0;
+					if (val !== config.targetLine) {
+						goToLine(val);
+					}
+				}
+				els.lineInput.addEventListener('keydown', function (e) {
+					if (e.key === 'Enter') { applyLine(); }
+				});
+				els.lineInput.addEventListener('blur', applyLine);
+				els.lineInput.addEventListener('input', function () {
+					clearTimeout(lineDebounceTimer);
+					lineDebounceTimer = setTimeout(applyLine, 400);
+				});
+
+				els.wrapToggle.addEventListener('change', function () {
+					isWrapMode = this.checked;
+
+					// Disable wrap mode for very large files
+					if (isWrapMode && allLines.length > WRAP_MODE_LIMIT) {
+						this.checked = false;
+						isWrapMode = false;
+						alert(t(KEYS.wrap) + ': disabled for large files (' + allLines.length + ' lines > ' + WRAP_MODE_LIMIT + ' limit)');
+						return;
+					}
+
+					els.content.classList.toggle('wrap', isWrapMode);
+					refreshView();
+
+					if (config.searchText && totalMatches > 0) {
+						navigateToCurrentMatch();
+					} else if (config.targetLine > 0) {
+						goToLine(config.targetLine);
+					}
+				});
+				els.prevMatch.addEventListener('click', function () { navigateMatch(-1); });
+				els.nextMatch.addEventListener('click', function () { navigateMatch(1); });
+
+				document.addEventListener('keydown', function (e) {
+					if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+						e.preventDefault();
+						els.searchInput.focus();
+						els.searchInput.select();
+					}
+				});
+			}
+
+			function fetchAndRender() {
+				document.title = t(KEYS.title);
+				initToolbar();
+				initEvents();
+
+				if (!config.fileURL) {
+					showError(invalidFilePath ? t(KEYS.invalidFilePath) : t(KEYS.missingFileParam));
+					return;
+				}
+
+				fetch(config.fileURL)
+					.then(function (response) {
+						if (!response.ok) throw new Error(t(KEYS.failedToLoad, { status: response.status }));
+						return response.text();
+					})
+					.then(renderLogContent)
+					.catch(function (err) { showError(err.message); });
+			}
+
+			// Load translations, then render
+			const DEFAULT_LOCALE = 'en-us';
+
+			function loadTranslations(locale) {
+				return fetch('/apiclient/fluidicv3/itom/translations/' + locale + '.json')
+					.then(function (r) { return r.ok ? r.json() : null; });
+			}
+
+			els.content.innerHTML = '<p class="loading-msg"><span class="loading-spinner"></span>Please wait, loading...</p>';
+			loadTranslations(config.locale)
+				.then(function (data) {
+					if (data && Object.keys(data).length > 0) {
+						return data;
+					}
+					// Locale invalid or empty — fall back to default
+					config.locale = DEFAULT_LOCALE;
+					return loadTranslations(DEFAULT_LOCALE);
+				})
+				.then(function (data) {
+					i18n = data || {};
+					els.content.innerHTML = '<p class="loading-msg"><span class="loading-spinner"></span>' + escapeHtml(t(KEYS.loading)) + '</p>';
+				})
+				.catch(function (err) { console.error('Translation load failed:', err); })
+				.then(fetchAndRender);
+		})();
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+/* <---------- custom fonts starts */
+		@font-face{font-family:'LatoBold';src:url('<%=fluidicFolderPath%>styles/css/plugins/fonts/Lato-Bold.ttf') format('truetype');font-weight:normal;font-style:normal}
+		@font-face{font-family:'LatoLight';src:url('<%=fluidicFolderPath%>styles/css/plugins/fonts/Lato-Light.ttf') format('truetype');font-weight:normal;font-style:normal}
+		@font-face{font-family:'LatoRegular';src:url('<%=fluidicFolderPath%>styles/css/plugins/fonts/Lato-Regular.ttf') format('truetype');font-weight:normal;font-style:normal}
+		@font-face{font-family:'RobotoSlabThin';src:url('<%=fluidicFolderPath%>styles/css/plugins/fonts/RobotoSlab-Thin.ttf') format('truetype');font-weight:normal;font-style:normal}
+		@font-face{font-family:'RobotoSlabLight';src:url('<%=fluidicFolderPath%>styles/css/plugins/fonts/RobotoSlab-Light.ttf') format('truetype');font-weight:normal;font-style:normal}
+		@font-face{font-family:'RobotoSlabRegular';src:url('<%=fluidicFolderPath%>styles/css/plugins/fonts/RobotoSlab-Regular.ttf') format('truetype');font-weight:normal;font-style:normal}
+		@font-face{font-family:'BitterRegular';src:url('<%=fluidicFolderPath%>styles/css/plugins/fonts/Bitter-Regular.ttf') format('truetype');font-weight:normal;font-style:normal}
+	/* custom fonts ends ----------> */
+
+
+	.GMapBox{float:left;width:auto;max-width:500px;height:auto}
+	.GMapBoxImg{float:left;padding:20px 10px 10px}
+	.GMapBoxContent{float:left;max-width:195px;padding:20px 0 10px}
+	.GMapBoxContent > div{float:left;width:100%;word-break:break-all;margin:0 0 3px}
+	.GMapBoxContent > div i{font-style:normal;color:#000}
+	.GMapBoxTitle{font:13px RobotoSlabRegular;text-decoration:underline;cursor:pointer}
+	/*This changes only for Recent alarm and notes */
+	.GMapBoxContent > div > i:first-child:after{content:' : '}
+	.GMapBoxContent > div i:first-child {font:13px LatoBold;}
+	.GMapBoxContent > div i:nth-child(2) {word-break: break-word}
+	/*This changes only for Recent alarm and notes ends...*/
+
+
+	.GMapBoxBtn{background:#45bd7f;float:right !important;width:auto !important;height:auto;font:14px LatoRegular;color:#fff;text-align:center;padding:7px 20px;margin:3px;border:0;cursor:pointer}
+	.gm-style > div:first-child > div:first-child > div > div > div > div > div{margin-top:-17px !important}
+
+	#SeverityLogViewSlide .opmForm{padding:0}
+	#SeverityLogViewSlide .notifyContent{display:block}
+	#SeverityLogViewSlide .notifyContent .notifyRow{background:#f9f9fb;height:auto;padding:15px 44px 15px 30px;border-top-color:#cecece;cursor:default}
+	#SeverityLogViewSlide .notifyContent .notifyRow:hover{background:#fff}
+	#SeverityLogViewSlide .notifyContent .notifyRow:before{background:#fff}
+	#SeverityLogViewSlide .notifyContent .notifyRow .icon-trash{width:44px;height:100%;font-size:15px;position:absolute;top: 0;right:0;transition:all .3s ease;-ms-transition:all .3s ease;-moz-transition:all .3s ease;-webkit-transition:all .3s ease;-o-transition:all .3s ease;cursor:pointer}
+	#SeverityLogViewSlide .notifyContent .notifyRow .icon-trash:before{width:15px;height:15px;margin:auto;position:absolute;top:0;right:0;bottom:0;left:0}
+	#SeverityLogViewSlide .notifyContent .notifyRow .icon-trash:hover{color:#fa5b5a}
+	#SeverityLogViewSlide .notifyContent .notifyRow .img{width:50px;height:50px;text-align:center;margin:auto;position:absolute;top:0;bottom:0;left:25px;display:table}
+	#SeverityLogViewSlide .notifyContent .notifyRow .img i{display:table-cell;vertical-align:middle}
+	#SeverityLogViewSlide .notifyContent .notifyRow .img img{max-width:40px;max-height:40px}
+	#SeverityLogViewSlide .notifyContent .notifyRow .content{float:left;width:100%;height:auto;padding:0 0 0 50px}
+	#SeverityLogViewSlide .notifyContent .notifyRow .title{width:auto;max-width:100%;height:auto;font:14px LatoRegular;color:#000;padding:0;border:0;position:static;display:inline-block;cursor:pointer}
+	#SeverityLogViewSlide .notifyContent .notifyRow .title:hover{text-decoration:underline}
+	#SeverityLogViewSlide .notifyContent .notifyRow .info:before{background:#fff}
+	#SeverityLogViewSlide .notifyContent .notifyRow .info{height:auto}
+	#SeverityLogViewSlide .notifyContent .notifyRow .info i{word-break:break-all}
+	#SeverityLogViewSlide .notifyContent .notifyRow .info i:not(:last-child):after{content:' | '}
+
+	.expandScreenPage .opmMapPage:before,.expandScreenPage .opmMapPage .slideContent{top:60px !important}
+	.expandScreenPage.slideDivIn-4 .slideContentContainer{box-shadow:none;-ms-box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;-o-box-shadow:none}
+	.expandScreenPage.slideDivIn-4 .slideContentContainer div > header{height:65px;white-space:nowrap;text-overflow:ellipsis;padding:20px 30px;overflow:hidden}
+	.expandScreenPage.slideDivIn-4 .slideContentContainer div > header i.icon-remove{top:19px}
+	.expandScreenPage.slideDivIn-4 .slideContentContainer div > section{top:65px}
+	.expandScreenPage.slideDivIn-4 .opmMapNav .icon-remove{display:none}
+	.opmMapDeviceFilter{float:right;margin:12px 0 0}
+	.opmMapDeviceFilter > div{float:left;width:34px;height:34px;text-align:center;color:#fff;margin:0 0 0 10px;border-radius:50%;position:relative;z-index:99}
+	.opmMapDeviceFilter > div:last-child{border:0}
+	.opmMapDeviceFilter > div:before{width:4px;height:10px;content:'';border:2px solid transparent;border-bottom:0;border-left:0;position:absolute;top:18px;left:38%;transform:scaleX(-1) rotate(135deg);-ms-transform:scaleX(-1) rotate(135deg);-moz-transform:scaleX(-1) rotate(135deg);-webkit-transform:scaleX(-1) rotate(135deg);transform-origin:left top;-ms-transform-origin:left top;-moz-transform-origin:left top;-webkit-transform-origin:left top}
+	.opmMapDeviceFilter > div.active:before{border-color:#fff;animation:check .3s;-moz-animation:check .3s;-webkit-animation:check .3s;-o-animation:check .3s}
+	.opmMapDeviceFilter .count{width:100%;height:100%;font-size:16px;padding:6px 0;border-radius:50%;display:block;position:relative;z-index:1;cursor:pointer;transition:all .3s ease;-ms-transition:all .3s ease;-moz-transition:all .3s ease;-webkit-transition:all .3s ease;-o-transition:all .3s ease}
+	.opmMapDeviceFilter > div:hover .count,.opmMapDeviceFilter > div.active .count{color:rgba(255,255,255,.4)}
+	.opmMapDeviceFilter .text{background:#000;width:100px;font-weight:normal;font-size:12px;letter-spacing:.9px;padding:5px;border-radius:4px;position:absolute;top:60%;left:0;opacity:0;filter:alpha(opacity=0);transition:all .3s ease .3s;-ms-transition:all .3s ease .3s;-moz-transition:all .3s ease .3s;-webkit-transition:all .3s ease .3s;-o-transition:all .3s ease .3s}
+	.opmMapDeviceFilter .text:before{background:#000;width:12px;height:10px;content:'';margin:auto;transform:rotate(-45deg);-ms-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-o-transform:rotate(-45deg);position:absolute;top:-1px;left:11px;z-index:-1}
+	.opmMapDeviceFilter .count:hover + .text{top:125%;opacity:1;filter:alpha(opacity=100)}
+	.opmMapDeviceFilter .status1{background:var(--severity-critical)}
+    .opmMapDeviceFilter .status2{background:var(--severity-trouble)}
+    .opmMapDeviceFilter .status3{background:var(--severity-attention)}
+    .opmMapDeviceFilter .status4{background:var(--severity-servicedown)}
+    .opmMapDeviceFilter .status5{background:var(--severity-clear)}
+    .opmMapDeviceFilter .status6{background:var(--severity-info)}
+    .opmMapDeviceFilter .status7{background:var(--severity-unmanaged)}
+	.opmMapDeviceSelBox{float:right;width:170px;margin:15px 50px 0 140px;border:0;position:relative;z-index:1}
+	.opmMapDeviceSelBox label{width:100px;font-size:14px;position:absolute;top:4px;right:100%}
+
+
+	.GMapBox.addDevice .GMapBoxContent{max-width:270px;padding:0 0 10px}
+	.GMapBoxContent .selBox{margin:0 0 20px}
+	.GMapBoxBtn + .GMapBoxBtn{margin-right:10px}
+	.GMapBoxContent > .selBox > div > label{float:left;margin:10px 5px 0 0}
+	.btn-grey{background:#f3f3f3;color:#000}
+
+	.opmRadioBtn{float:left;display:inline-block}
+	.opmRadioBtn + .opmRadioBtn{margin:0 10px 0 0}
+	.opmRadioBtn label:before{background:#f0f0f0;width:20px;height:20px;content:'';border:1px solid #dcdcdc;border-radius:50%;position:absolute;top:6px;left:6px}
+	.opmRadioBtn input:checked + label:after{background:#42be7f;width:12px;height:12px;content:'';border:1px solid #f0f0f0;border-radius:50%;position:absolute;top:10px;left:10px}
+
+	.opmCheckBox div,.opmRadioBtn div{float:left;min-width:35px;min-height:35px;padding:0 0 0 40px;position:relative}
+	.opmCheckBox input,.opmRadioBtn input{width:100%;height:100%;margin:0;opacity:0;filter:alpha(opcity=0);position:absolute;top:0;left:0;z-index:2;cursor:pointer}
+	.opmCheckBox label,.opmRadioBtn label{line-height:33px;z-index:0}
+	.opmCheckBox label:before{background:#f0f0f0;width:20px;height:20px;content:'';border:1px solid #dcdcdc;position:absolute;top:6px;left:6px}
+	.opmCheckBox label:after{width:4px;height:9px;content:'';border:2px solid transparent;border-bottom:0;border-left:0;position:absolute;top:17px;left:11px;transform:scaleX(-1) rotate(135deg);-ms-transform:scaleX(-1) rotate(135deg);-moz-transform:scaleX(-1) rotate(135deg);-webkit-transform:scaleX(-1) rotate(135deg);transform-origin:left top;-ms-transform-origin:left top;-moz-transform-origin:left top;-webkit-transform-origin:left top;z-index:1}
+	.opmCheckBox input:checked + label:after{border-color:#42be7f;animation:check2 .3s;-ms-animation:check2 .3s;-moz-animation:check2 .3s;-webkit-animation:check2 .3s;-o-animation:check2 .3s}
+
+	#vmaps-marker{height: 40px !important;}
+	/*.mapboxgl-popup-anchor-top,.mapboxgl-popup-anchor-top-left,.mapboxgl-popup-anchor-top-right{top:40px !important;}*/
+	.mapboxgl-marker > .vmLabel{white-space:nowrap;position:absolute;top:100%}
+	.mapboxgl-popup{max-width: auto !important;}
+	.mapsRecent-notes{display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;overflow: hidden}
+
+/* <---------- select2 starts */
+.selBox{position:relative}
+.selBox select{width:100%;height:33px}
+.selBox > div,.selBox > div .select2-container,.selBox > div .select2-container .selection,.selBox > div .select2-container .selection .select2-selection,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container{float:left;width:100% !important;height:33px}
+.selBox > div .select2-container,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container{background:#f0f0f0;text-align:left;padding:0;border:1px solid #dcdcdc;transition:all .3s ease;-ms-transition:all .3s ease;-moz-transition:all .3s ease;-webkit-transition:all .3s ease;-o-transition:all .3s ease}
+.selBox > div .select2-container:hover,.selBox > div .select2-container.select2-container--focus,.selBox > div .select2-container.select2-container--open,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container:hover,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container.select2-container--focus,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container.select2-container--open{background:#fbfbfb}
+.selBox > div .select2-container .selection,.selBox > div .select2-container .selection .select2-selection,.selBox > div .select2-container .selection .select2-selection .select2-selection__rendered,.selBox > div .select2-container .selection .select2-selection .select2-selection__arrow,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container .selection,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container .selection .select2-selection,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container .selection .select2-selection .select2-selection__rendered,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container .selection .select2-selection .select2-selection__arrow{background:none;padding:0;border:0}
+.selBox > div .select2-container .selection .select2-selection,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container .selection .select2-selection{padding:5px 30px 5px 8px;border-radius:0;position;relative}
+.selBox > div .select2-container .selection .select2-selection .select2-selection__rendered,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container .selection .select2-selection .select2-selection__rendered{width:100%;height:100%;font:14px LatoRegular;display:block}
+.selBox > div .select2-container .selection .select2-selection .select2-selection__arrow,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container .selection .select2-selection .select2-selection__arrow{width:30px;height:32px;border-left:1px solid #dcdcdc;top:-1px;right:0}
+.selBox > div .select2-container .dropdown-wrapper,.ui-jqgrid-view .ui-jqgrid-hdiv th div .select2-container .dropdown-wrapper{display:none}
+.select2-container .select2-dropdown{background:#fbfbfb;min-width:100px !important;font:14px LatoRegular;border-color:#dcdcdc;border-radius:0}
+.select2-container--default .select2-results__group{font-weight:bold;background-color:#E7E8E8}
+.select2-container--default .select2-selection--single .select2-selection__placeholder{background:none;width:100%;font:14px/20px LatoRegular;white-space:nowrap;text-overflow:ellipsis;border:0;overflow:hidden;display:block}
+/* select2 ends ----------> */

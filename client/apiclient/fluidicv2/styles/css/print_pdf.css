@@ -1,0 +1,45 @@
+@page{margin:100px 25px;size:a4 portrait;@bottom-left{content:-moz-element(pageFooter);content:element(pageFooter)}
+@top-left{content:-moz-element(pageHeader);content:element(pageHeader)}}
+#pageHeader{position:running(pageHeader);position:fixed;top:0;width:100%}
+#pageFooter{position:running(pageFooter);position:fixed;bottom:0;width:100%}
+@font-face{font-family:Lato;src:url(/apiclient/fluidicv2/styles/css/plugins/fonts/Lato-Regular.ttf);font-weight:400;font-weight:400}
+@font-face{font-family:Lato;src:url(/apiclient/fluidicv2/styles/css/plugins/fonts/Lato-Bold.ttf);font-weight:Bold;font-weight:700}
+body{font-family:Lato,sans-serif;font-size:13px;line-height:1.3}
+.mainContent{margin:16mm 10mm 30mm}
+.grey-border{-webkit-box-shadow:inset 0 0 0 1000px #454545;box-shadow:inset 0 0 0 1000px #454545;line-height:36px}
+.green-border{-webkit-box-shadow:inset 0 0 0 1000px #27a965;box-shadow:inset 0 0 0 1000px #27a965;line-height:12px}
+footer{-webkit-box-shadow:inset 0 0 0 1000px #fff;box-shadow:inset 0 0 0 1000px #fff}
+footer .grey-border{width:calc(100% - 216px);line-height:12px;float:right}
+footer .green-border{width:200px;line-height:12px;float:left}
+.product__logo{border-bottom:1px solid #d4d4d4;margin-bottom:24px}
+.product__logo svg{width:200px;margin-bottom:16px}
+.heading{border-left:4px solid #27a965;padding-left:12px;font-weight:700;font-size:20px}
+.heading.no-border{border-left:0;padding-left:0}
+table.greyGridTable{border:1px solid #d4d4d4;width:100%;text-align:left;border-collapse:collapse}
+table.greyGridTable td{border:1px solid #d4d4d4;padding:12px}
+table.greyGridTable th{border:1px solid #d4d4d4;padding:12px}
+table.greyGridTable thead{background:#fff}
+table.greyGridTable thead th{font-size:15px;font-weight:700;text-align:left}
+table.greyGridTable tfoot{font-weight:700}
+table.greyGridTable.smallTable td:first-child{width:100px}
+table.greyGridTable.smallTable td:not(:first-child){font-weight:700}
+table.greyGridTable.fullTable td:nth-child(3),table.greyGridTable.fullTable td:nth-child(4),table.greyGridTable.fullTable th:nth-child(3),table.greyGridTable.fullTable th:nth-child(4){text-align:right}
+table.greyGridTable.fullTable td:nth-child(4),table.greyGridTable.fullTable th:nth-child(4){-webkit-box-shadow:inset 0 0 0 1000px rgba(69,189,127,.12);box-shadow:inset 0 0 0 1000px rgba(69,189,127,.12)}
+table.greyGridTable.fullTable td.total{-webkit-box-shadow:inset 0 0 0 1000px rgba(69,189,127,.46);box-shadow:inset 0 0 0 1000px rgba(69,189,127,.46);color:#0c502d}
+.divTable{text-align:left;border-collapse:collapse;display:table}
+.divTable .divTableCell,.divTable .divTableHead{border:0 solid #d4d4d4;padding:4px 12px;display:table-cell}
+.divTable .divTableCell:first-child{width:120px;position:relative}
+.divTable .divTableCell:first-child:after{content:':';display:inline;position:absolute;right:0;top:0}
+.divTable .divTableBody{display:table-row-group}
+.divTable .divTableRow{display:table-row}
+.divTable .divTableHeading{display:table-header-group;display:table-header-group}
+.divTable .divTableFoot{display:table-footer-group}
+.clearfix:after{content:"";display:table;clear:both}
+.row{margin:16px 0}
+.row .grid-4{width:360px;float:left}
+.row .grid-8{width:calc(100% - 360px);float:left}
+.notes{margin-top:8px}
+.notes b{font-weight:700;margin-bottom:5px;display:block}
+.notes ul{list-style-type:decimal;padding-left:16px}
+.notes ul li{margin-bottom:5px}
+/*# sourceMappingURL=maps/print_pdf.css.map */
