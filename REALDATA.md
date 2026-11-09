@@ -1291,14 +1291,7 @@ filter; discovery with a real credential profile returns 202 with the
 resolved version, `'2c'` creates store canonical `v2c` and polls, `v1`
 creates 400); W2-3 A2-13 status casing
 + A2-07 persistent dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4
-R-01 rack crash fix (crash fix only — the "invented cabinet" scope needs
-a product decision); W2-5 `/inventory/` bare forms + 3 missing
-`/api/ncmclient` registrations — DONE by W2-5 (Phase 5, 2026-11-09, this
-clone): `/inventory/` in `LEGACY_API_PREFIXES`, 3 `/api/ncmclient/...`
-registrations added, `API.md` §11 prefixes corrected; verified live on
-:8185. Route-definition count unchanged: 232 (227 REAL, 4 HONEST-EMPTY,
-1 × 501) — the 3 registrations are path aliases, not new definitions.
-Wave 3 (triage by value): alarm
+R-01 rack crash fix — DONE (Phase 5, 2026-11-09, W2-4): crash fixed, invented cabinet replaced with a real-data-only view + honest empty state; the real Rack Builder scope still needs a product decision; W2-5 `/inventory/` bare forms + 3 missing `/api/ncmclient` registrations — DONE by W2-5 (Phase 5, 2026-11-09, this clone): `/inventory/` in `LEGACY_API_PREFIXES`, 3 `/api/ncmclient/...` registrations added, `API.md` §11 prefixes corrected; verified live on :8185. Route-definition count unchanged: 232 (227 REAL, 4 HONEST-EMPTY, 1 × 501) — the 3 registrations are path aliases, not new definitions. Wave 3 (triage by value): alarm
 notifications, compliance engine, trap parsers, reports expansion, TOTP/
 MFA, AD/LDAP/RADIUS console login, A6's 28 missing features, backup
 transports. Decisions needed: role gating for credential-library /

@@ -467,11 +467,16 @@ returns `{reachable, method, rttMs, reason}`.
 The store has no `rack_assignments` table: placements are persisted as JSON under the
 settings key `rack_assignments` (`store.getSetting` / `store.setSetting`). An assignment
 only ever references a real rack (`store.getRack`) and a real device; stale assignments
-whose device no longer exists are dropped, never rendered.
+whose device no longer exists are dropped, never rendered. Response contract (R-01,
+fixed W2-4): `units` is the rack's unit COUNT (an integer — `null` when a stored value
+is not a positive integer, never a fabricated count); placements live in `assignments[]`
+and only in-range units (1..`units`) are returned. The store holds no temperature,
+power, datacenter, probe or cooling data, so none is returned; the rack view renders
+only these fields and an honest empty state when no racks exist.
 
 | Method + path | Auth | Request | Response | Status |
 | --- | --- | --- | --- | --- |
-| `GET /api/racks/list` | Session (guard) | — | Stored racks, each enriched with its device assignments (device label, unit). Empty store → `[]`. | **REAL** |
+| `GET /api/racks/list` | Session (guard) | — | Stored racks, each with integer unit count `units` and its in-range device assignments (device label, unit, IP, status, category). Empty store → `[]`. No temperature / power / datacenter / probe / cooling fields exist. | **REAL** |
 | `POST /api/racks/create` | Session (route) | `{name, units}` (`units` = positive integer) | `201` created rack; `400` missing/invalid `name`/`units`. | **REAL** |
 | `POST /api/racks/assign` | Session (route) | `{rackId, deviceId, unit}` (all integers) | `400` missing/invalid ids/unit; `404` unknown rack or device; otherwise stores the placement under `rack_assignments` and returns it. | **REAL** |
 
@@ -1249,8 +1254,9 @@ structurally impossible in a Node build — §23.6).
   version normalization — DONE in this clone (live-proven on PORT=8182;
   see §7/§9 rows); W2-3 A2-13 status casing + A2-07 persistent
   dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4 R-01 rack crash
-  fix (crash fix only — the "invented cabinet" scope needs a product
-  decision); W2-5 `/inventory/` bare forms still 302 + the 3 missing
+  fix — DONE in this track (crash fixed, invented cabinet replaced with a
+  real-data-only view + honest empty state; the real Rack Builder scope
+  still needs a product decision); W2-5 `/inventory/` bare forms still 302 + the 3 missing
   `/api/ncmclient` registrations (`getClientServiceData`,
   `getMainMenuTabs`, `getUserPreference`) — DONE by W2-5 (Phase 5,
   2026-11-09, this clone): `/inventory/` added to
