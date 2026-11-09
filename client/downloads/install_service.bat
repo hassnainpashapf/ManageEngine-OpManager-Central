@@ -1,15 +1,11 @@
 @echo off
-title ManageEngine OpManager Central Agent Service Installer
+echo ==================================================================
+echo   ManageEngine OpManager Central - Windows Agent Service Installer
+echo ==================================================================
 cd /d "%~dp0"
-echo ==================================================================
-echo    ManageEngine OpManager Central - Background Service Installer
-echo ==================================================================
-echo.
-echo Installing OpManagerCentralAgent service...
-OpManagerAgent.exe -install
-echo.
-echo Starting service...
-net start OpManagerCentralAgent
-echo.
-echo OpManager Agent service installed and running!
+echo Registering Windows Service 'OpManagerCentralAgent'...
+"%~dp0OpManagerAgent.exe" -install
+echo Starting Service...
+sc.exe start OpManagerCentralAgent
+echo Service installation completed.
 pause

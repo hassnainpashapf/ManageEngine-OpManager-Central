@@ -179,3 +179,35 @@ func TestLogFilePath_IsExecDirBased(t *testing.T) {
 		t.Fatalf("logFilePath = %q", got)
 	}
 }
+
+// ---------------------------------------------------------------------------
+// No demo default server (Phase 5 coordinator fix)
+// ---------------------------------------------------------------------------
+
+func TestLoadConfigFromDir_NoServerConfigured(t *testing.T) {
+	execDir := t.TempDir()
+	chdir(t, t.TempDir())
+	// No config file, no env: the agent must NOT fall back to a baked-in
+	// demo address. Empty ServerURL is what main() refuses to start with.
+	cfg := loadConfigFromDir(execDir)
+	if cfg.ServerURL != "" {
+		t.Errorf("ServerURL = %q, want empty (no demo default)", cfg.ServerURL)
+	}
+}
+
+func TestLoadConfigFromDir_ServerInfoJsonWithoutServer(t *testing.T) {
+	execDir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(execDir, "OPMAgentServerInfo.json"), []byte(
+		`{"ProbeId": "101", "AuthKey": "json-key"}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	chdir(t, t.TempDir())
+
+	cfg := loadConfigFromDir(execDir)
+	if cfg.ServerURL != "" {
+		t.Errorf("ServerURL = %q, want empty (JSON named no server)", cfg.ServerURL)
+	}
+	if cfg.AuthKey != "json-key" {
+		t.Errorf("AuthKey = %q, want json-key", cfg.AuthKey)
+	}
+}

@@ -25,7 +25,11 @@ import (
 const (
 	AgentVersion    = "12.9.204-GA"
 	AgentBuild      = "20261106"
-	DefaultServer   = "http://192.168.30.65:8060"
+	// No demo default: a fresh agent with no server configured must refuse
+	// to start (see main()) instead of silently phoning a baked-in demo
+	// address. The server comes from -server, agent.conf, or the
+	// SERVER_URL environment variable.
+	DefaultServer   = ""
 	DefaultProbe    = "101"
 	DefaultInterval = 5
 )
@@ -106,7 +110,7 @@ var (
 )
 
 func main() {
-	serverFlag := flag.String("server", "", "OpManager Central Server URL (e.g. http://192.168.30.65:8060)")
+	serverFlag := flag.String("server", "", "OpManager Central Server URL (e.g. http://central.example.com:8060)")
 	probeFlag := flag.String("probe", "", "Associated Enterprise Probe Identifier (e.g. 101)")
 	keyFlag := flag.String("key", "", "Central-Probe Mutual Authorization Key")
 	intervalFlag := flag.Int("interval", 0, "Telemetry reporting interval in seconds (default: 5)")
@@ -153,6 +157,12 @@ func main() {
 	}
 
 	cfg.ServerURL = strings.TrimRight(cfg.ServerURL, "/")
+	if cfg.ServerURL == "" {
+		fmt.Fprintln(os.Stderr, "[ERROR] No Central server configured. The agent will not start without one.")
+		fmt.Fprintln(os.Stderr, "        Supply it with -server <url>, the SERVER_URL environment variable,")
+		fmt.Fprintln(os.Stderr, "        or SERVER_URL=<url> in agent.conf. There is no default server.")
+		os.Exit(1)
+	}
 	if !strings.HasPrefix(cfg.ServerURL, "http://") && !strings.HasPrefix(cfg.ServerURL, "https://") {
 		cfg.ServerURL = "http://" + cfg.ServerURL
 	}
@@ -276,7 +286,10 @@ func loadConfigFromDir(execDir string) AgentConfig {
 		if err == nil {
 			var m map[string]interface{}
 			if err := json.Unmarshal(data, &m); err == nil {
-				host := "192.168.30.65"
+				// No demo fallback host: when the JSON names no server,
+				// leave ServerURL unset so main() refuses to start with
+				// a clear error instead of phoning a baked-in address.
+				host := ""
 				port := "8060"
 				proto := "http"
 
@@ -302,7 +315,10 @@ func loadConfigFromDir(execDir string) AgentConfig {
 					proto = v
 				}
 
-				cfg.ServerURL = fmt.Sprintf("%s://%s:%s", proto, host, port)
+				if host != "" {
+					cfg.ServerURL = fmt.Sprintf("%s://%s:%s", proto, host, port)
+					logSuccess(fmt.Sprintf("Server configuration loaded from %s -> Central at %s", jp, cfg.ServerURL))
+				}
 				if v, ok := m["ProbeId"].(string); ok && v != "" {
 					cfg.ProbeID = v
 				} else if v, ok := m["ProbeID"].(string); ok && v != "" {
