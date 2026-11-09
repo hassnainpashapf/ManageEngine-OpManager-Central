@@ -99,7 +99,8 @@ router.post(['/api/json/enterprise/addProbe', '/api/probes'], (req, res) => {
 });
 
 // Delete remote probe
-router.post(['/api/json/enterprise/deleteProbe', '/api/probes/:id/delete'], (req, res) => {
+router.all(['/api/json/enterprise/deleteProbe', '/api/probes/:id/delete', '/api/probes/:id'], (req, res, next) => {
+  if (req.method !== 'POST' && req.method !== 'DELETE') return next();
   const probeId = req.body.probeId || req.params.id;
   const deleted = db.deleteProbe(probeId);
   if (!deleted) {

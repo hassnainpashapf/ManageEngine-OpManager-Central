@@ -128,11 +128,11 @@ class Database {
 
   deleteProbe(id) {
     const probeId = Number(id);
-    const idx = this.data.probes.findIndex(p => p.id === probeId);
+    const idx = this.data.probes.findIndex(p => p.id === probeId || String(p.id) === String(id));
     if (idx !== -1) {
       const removed = this.data.probes.splice(idx, 1)[0];
-      this.data.devices = this.data.devices.filter(d => d.probeId !== probeId);
-      this.data.alarms = this.data.alarms.filter(a => a.probeId !== probeId);
+      this.data.devices = this.data.devices.filter(d => d.probeId !== probeId && String(d.probeId) !== String(id));
+      this.data.alarms = this.data.alarms.filter(a => a.probeId !== probeId && String(a.probeId) !== String(id));
       this.data.central.managedProbesCount = this.data.probes.length;
       this.data.central.totalDevicesCount = this.data.devices.length;
       this.save();

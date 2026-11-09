@@ -1324,8 +1324,10 @@
                       <td style="padding: 10px 14px; font-family: monospace;">${pr.latency} ms</td>
                       <td style="padding: 10px 14px; font-weight: 600;">${pr.devicesCount} Devices</td>
                       <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">SYNCHRONIZED</span></td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-probe-diag-btn" data-id="${pr.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Diagnostics</button>
+                      <td style="padding: 10px 14px; text-align: right; white-space: nowrap;">
+                        <button class="opm-probe-diag-btn" data-id="${pr.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">Diagnostics</button>
+                        <button class="opm-probe-sync-btn" data-id="${pr.id}" data-name="${pr.name}" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">Sync</button>
+                        <button class="opm-probe-del-btn" data-id="${pr.id}" data-name="${pr.name}" style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Delete</button>
                       </td>
                     </tr>
                   `).join('')}
@@ -3154,11 +3156,38 @@
       };
     });
 
-    // Probe click
+    // Probe click & diagnostics
     container.querySelectorAll('.opm-probe-row-click, .opm-probe-diag-btn').forEach(el => {
       el.onclick = () => {
         const id = parseInt(el.getAttribute('data-id'), 10);
         showProbeDetailsModal(id);
+      };
+    });
+
+    // Probe Sync button
+    container.querySelectorAll('.opm-probe-sync-btn').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        const name = btn.getAttribute('data-name');
+        btn.disabled = true;
+        btn.textContent = 'Syncing...';
+        try {
+          await fetch(`/api/probes/${id}/sync`, { method: 'POST' });
+        } catch(e) {}
+        showToast(`Probe "${name}" telemetry synchronized with Central.`);
+        btn.disabled = false;
+        btn.textContent = 'Sync';
+      };
+    });
+
+    // Probe Delete button
+    container.querySelectorAll('.opm-probe-del-btn').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        const name = btn.getAttribute('data-name');
+        if (typeof showDeleteProbeConfirmModal === 'function') {
+          showDeleteProbeConfirmModal(id, name);
+        }
       };
     });
 

@@ -3193,14 +3193,122 @@
             <span style="color: #0284c7; font-weight: 600;">✓ ${probe.syncStatus} (${probe.lastSync})</span>
           </div>
         </div>
-        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end;">
-          <button id="probe-modal-close-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
+        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
+          <button id="probe-details-del-btn" style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer;">🗑 Delete Probe</button>
+          <div style="display: flex; gap: 8px;">
+            <button id="probe-details-sync-btn" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer;">⚡ Force Sync</button>
+            <button id="probe-modal-close-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
+          </div>
         </div>
       </div>
     `;
     modal.style.display = 'flex';
     document.getElementById('close-probe-modal-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('probe-modal-close-btn').onclick = () => { modal.style.display = 'none'; };
+
+    const delBtn = document.getElementById('probe-details-del-btn');
+    if (delBtn) {
+      delBtn.onclick = () => {
+        showDeleteProbeConfirmModal(probe.id, probe.name);
+      };
+    }
+
+    const syncBtn = document.getElementById('probe-details-sync-btn');
+    if (syncBtn) {
+      syncBtn.onclick = async () => {
+        syncBtn.disabled = true;
+        syncBtn.textContent = 'Syncing...';
+        try {
+          await fetch(`/api/probes/${probe.id}/sync`, { method: 'POST' });
+        } catch(e) {}
+        showToast(`Probe "${probe.name}" synchronized successfully.`);
+        syncBtn.disabled = false;
+        syncBtn.textContent = '⚡ Force Sync';
+      };
+    }
+  }
+
+  function showDeleteProbeConfirmModal(probeId, probeName) {
+    if (String(probeId) === '101' && (state.probes || []).length <= 1) {
+      showToast('Cannot delete Primary Central Site Probe (minimum 1 probe required).', 'error');
+      return;
+    }
+
+    let modal = document.getElementById('opm-delete-probe-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'opm-delete-probe-modal';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Roboto, -apple-system, sans-serif;';
+      document.body.appendChild(modal);
+    }
+
+    const probe = (state.probes || []).find(p => String(p.id) === String(probeId)) || { name: probeName || 'Remote Probe', id: probeId };
+
+    modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 6px; width: 480px; max-width: 95vw; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="background: #fef2f2; border-bottom: 1px solid #fecaca; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 16px;">⚠️</span>
+            <span style="font-size: 14px; font-weight: 700; color: #991b1b;">Unregister & Delete Enterprise Probe</span>
+          </div>
+          <button id="close-del-probe-btn" style="background: none; border: none; font-size: 18px; color: #991b1b; cursor: pointer;">✕</button>
+        </div>
+        <div style="padding: 20px; font-size: 12px; color: #334155; line-height: 1.6;">
+          <div style="margin-bottom: 12px;">
+            Are you sure you want to permanently unregister and delete remote probe:
+            <div style="font-weight: 700; color: #0f172a; font-size: 13px; margin-top: 4px; padding: 6px 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;">
+              ${probe.name} (IP: ${probe.ip || 'N/A'})
+            </div>
+          </div>
+          <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 4px; padding: 8px 12px; font-size: 11px; color: #92400e;">
+            <strong>Warning:</strong> Deleting this probe will remove all local data collection queues, remote collectors, and associated monitored assets assigned to this probe site.
+          </div>
+        </div>
+        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 20px; display: flex; justify-content: flex-end; gap: 8px;">
+          <button id="cancel-del-probe-btn" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Cancel</button>
+          <button id="confirm-del-probe-btn" style="background: #dc2626; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Delete Probe</button>
+        </div>
+      </div>
+    `;
+
+    modal.style.display = 'flex';
+
+    const closeHandler = () => { modal.style.display = 'none'; };
+    modal.querySelector('#close-del-probe-btn').onclick = closeHandler;
+    modal.querySelector('#cancel-del-probe-btn').onclick = closeHandler;
+
+    modal.querySelector('#confirm-del-probe-btn').onclick = async () => {
+      const confirmBtn = modal.querySelector('#confirm-del-probe-btn');
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Deleting...';
+
+      try {
+        await fetch(`/api/probes/${probeId}`, { method: 'DELETE' });
+      } catch(e) {}
+
+      // Update local state
+      state.probes = (state.probes || []).filter(p => String(p.id) !== String(probeId));
+      if (state.selectedProbe == probeId) {
+        state.selectedProbe = 'all';
+      }
+
+      if (typeof updateStatusCounters === 'function') {
+        updateStatusCounters();
+      }
+
+      showToast(`Remote Probe "${probe.name}" successfully deleted from Central.`);
+      modal.style.display = 'none';
+
+      // If probe details modal was open, close it
+      const detailsModal = document.getElementById('opm-probe-details-modal');
+      if (detailsModal) detailsModal.style.display = 'none';
+
+      if (state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
+        renderSettingsView();
+      } else if (state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') {
+        renderDashboardView();
+      }
+    };
   }
 
 
