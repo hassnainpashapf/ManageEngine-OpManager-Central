@@ -4,7 +4,6 @@ const http = require('http');
 const WebSocket = require('ws');
 const path = require('path');
 const fs = require('fs');
-const cors = require('cors');
 
 const probesRoute = require('./routes/probes');
 const devicesRoute = require('./routes/devices');
@@ -24,7 +23,170 @@ const trapsRoute = require('./routes/traps');
 const hardwareRoute = require('./routes/hardware');
 const diffRoute = require('./routes/diff');
 const poller = require('./services/poller');
-const db = require('./services/db');
+// NOTE: the old JSON store (server/services/db.js) was deleted by the store
+// track and replaced by server/services/store.js (SQLite). index.js reads
+// live data through the store API (listProbes/listDevices/listAlarms).
+const store = require('./services/store');
+
+// ---------------------------------------------------------------------------
+// Auth wiring (real-data rebuild).
+// server/services/session.js is owned by the auth track and exports
+// requireAuth, requireRole and ensureFirstAdmin. It may not have landed yet
+// while the tracks run in parallel, so load it defensively: if it is missing
+// or does not export requireAuth, every protected route fails CLOSED (401 /
+// login redirect) instead of failing open.
+// ---------------------------------------------------------------------------
+let session = null;
+try {
+  session = require('./services/session');
+} catch (err) {
+  console.error('[Auth] server/services/session.js could not be loaded (%s). Auth-guarded routes will fail closed until it lands.', err.message);
+}
+const requireAuth = (session && typeof session.requireAuth === 'function')
+  ? session.requireAuth
+  : (req, res, next) => res.status(401).json({ error: 'unauthorized', message: 'Authentication service unavailable' });
+
+function parseCookies(header) {
+  const out = {};
+  if (!header) return out;
+  header.split(';').forEach((part) => {
+    const idx = part.indexOf('=');
+    if (idx === -1) return;
+    const name = part.slice(0, idx).trim();
+    if (!name) return;
+    try { out[name] = decodeURIComponent(part.slice(idx + 1).trim()); }
+    catch (e) { out[name] = part.slice(idx + 1).trim(); }
+  });
+  return out;
+}
+
+// Validate a request the same way requireAuth does, without mounting the
+// middleware: run requireAuth against the request with a sink response and
+// report whether it called next() (authenticated) or rejected (401).
+// Used for WebSocket upgrades (no Express res exists) and for browser page
+// routes, which must redirect to /login.html instead of answering 401.
+function checkSession(req) {
+  return new Promise((resolve) => {
+    if (!session || typeof session.requireAuth !== 'function') return resolve(false);
+    let settled = false;
+    const done = (ok) => { if (!settled) { settled = true; resolve(ok); } };
+    // Some requireAuth implementations read req.cookies; populate it from the
+    // Cookie header when it is not already set (no cookie-parser in the app).
+    if (!req.cookies) {
+      try { req.cookies = parseCookies(req.headers && req.headers.cookie); }
+      catch (e) { req.cookies = {}; }
+    }
+    const sink = {
+      statusCode: 200,
+      status(code) { this.statusCode = code; return this; },
+      setHeader() {}, set() {}, getHeader() {}, removeHeader() {},
+      cookie() {}, clearCookie() {},
+      json() { done(false); return this; },
+      send() { done(false); return this; },
+      sendStatus(code) { done(code >= 200 && code < 300); return this; },
+      end() { done(false); return this; },
+      redirect() { done(false); return this; },
+    };
+    const timer = setTimeout(() => done(false), 3000);
+    if (typeof timer.unref === 'function') timer.unref();
+    try {
+      const out = session.requireAuth(req, sink, (err) => done(!err));
+      if (out && typeof out.catch === 'function') out.catch(() => done(false));
+    } catch (e) { done(false); }
+  });
+}
+
+// Page guard: serve the console only to authenticated sessions; everyone
+// else goes to the login page.
+async function requireConsoleSession(req, res, next) {
+  let ok = false;
+  try { ok = await checkSession(req); } catch (e) { ok = false; }
+  if (ok) return next();
+  return res.redirect('/login.html');
+}
+
+// Build the request shape checkSession needs from a WebSocket upgrade
+// request. The session token comes from the opm_session cookie, or from a
+// ?token= query param (folded into the cookie header); validation itself is
+// still done by requireAuth, exactly as for HTTP requests.
+function wsSessionReq(request) {
+  const headers = Object.assign({}, request.headers);
+  try {
+    const u = new URL(request.url, 'http://localhost');
+    const token = u.searchParams.get('token');
+    if (token && !/opm_session=/.test(headers.cookie || '')) {
+      headers.cookie = headers.cookie
+        ? `${headers.cookie}; opm_session=${token}`
+        : `opm_session=${token}`;
+    }
+  } catch (e) { /* keep headers as-is */ }
+  return { method: 'GET', url: request.url, headers, cookies: parseCookies(headers.cookie || '') };
+}
+
+// --- API auth guard ---------------------------------------------------------
+// Public API endpoints (no session required).
+const PUBLIC_API_ROUTES = new Set([
+  'POST /api/auth/login',
+  'POST /api/auth/setup',
+  'GET /api/auth/session', // reports its own status; must stay public
+]);
+
+// Agent telemetry ingestion. These do NOT take the user session: agents.js
+// authenticates them with its own per-agent auth-key check (SHA-256 of the
+// presented eeauthkey/authKey against the store's api_keys table or a probe
+// key hash; unknown agent or bad/missing key => 401). They are the ONLY
+// /api/* paths exempt from requireAuth besides the public auth endpoints.
+//  - POST /api/agent/register is kept exempt because the task names it, but
+//    agents.js now answers it 410 (self-registration closed; an admin
+//    enrolls agents via POST /api/agents/register, which takes requireAuth).
+//  - POST /api/agent/deregister is key-authenticated the same way as
+//    telemetry, so it is exempt on the same basis.
+// Probe sync endpoints (/api/probes/:id/sync, /api/probes/sync-all,
+// /api/json/enterprise/sync*) are NOT exempt: they perform no key check and
+// are console operations, so they stay behind requireAuth.
+const KEY_AUTH_API_ROUTES = new Set([
+  'POST /api/agent/register',
+  'POST /api/agent/telemetry',
+  'POST /api/agent/deregister',
+]);
+
+// Legacy ManageEngine paths served by the same routers without an /api
+// prefix. They are API endpoints too — leaving them open would defeat the
+// /api/* guard, since e.g. /admin/listProbes and /api/admin/listProbes are
+// the same handler. (Page routes /dashboard, /itom, / are NOT in this list;
+// only /dashboard/* JSON endpoints are.)
+const LEGACY_API_PREFIXES = [
+  '/admin/', '/alarm/', '/device/', '/enterprise/', '/fwaenterprise/',
+  '/maps/', '/ncmclient/', '/ncmcompliance/', '/ncmconfig/',
+  '/ncmdashboard/', '/ncmeol/', '/ncmreports/', '/nfaee/', '/reports/',
+  '/tab/', '/user/', '/v2/', '/dashboard/',
+];
+
+function apiPathname(req) {
+  return ((req.originalUrl || req.url || '').split('?')[0]);
+}
+
+function isApiPath(pathname) {
+  if (pathname === '/api' || pathname.startsWith('/api/')) return true;
+  if (pathname === '/client/api' || pathname.startsWith('/client/api/')) return true;
+  return LEGACY_API_PREFIXES.some((p) => pathname.startsWith(p));
+}
+
+function normalizeApiPath(pathname) {
+  return pathname
+    .replace(/^\/(client\/)?api\/json\//, '/api/')
+    .replace(/^\/client\/api\//, '/api/');
+}
+
+function apiAuthGuard(req, res, next) {
+  const pathname = apiPathname(req);
+  if (!isApiPath(pathname)) return next();
+  const key = `${req.method} ${pathname}`;
+  const normalizedKey = `${req.method} ${normalizeApiPath(pathname)}`;
+  if (PUBLIC_API_ROUTES.has(key) || PUBLIC_API_ROUTES.has(normalizedKey)) return next();
+  if (KEY_AUTH_API_ROUTES.has(key) || KEY_AUTH_API_ROUTES.has(normalizedKey)) return next();
+  return requireAuth(req, res, next);
+}
 
 const app = express();
 const server = http.createServer(app);
@@ -32,28 +194,37 @@ const server = http.createServer(app);
 // WebSocket server supporting both authentic ManageEngine /PNSHandler and /ws
 const wss = new WebSocket.Server({ noServer: true });
 
-server.on('upgrade', (request, socket, head) => {
+server.on('upgrade', async (request, socket, head) => {
   const pathname = request.url.split('?')[0];
-  if (pathname === '/PNSHandler' || pathname === '/ws') {
-    wss.handleUpgrade(request, socket, head, (ws) => {
-      wss.emit('connection', ws, request);
-    });
-  } else {
+  if (pathname !== '/PNSHandler' && pathname !== '/ws') {
     socket.destroy();
+    return;
   }
+  // WebSocket streams carry live inventory/telemetry: only authenticated
+  // sessions may upgrade. The token comes from the opm_session cookie or a
+  // ?token= query param, validated exactly like requireAuth validates it.
+  let ok = false;
+  try { ok = await checkSession(wsSessionReq(request)); } catch (e) { ok = false; }
+  if (!ok) {
+    try { socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n'); } catch (e) {}
+    socket.destroy();
+    return;
+  }
+  wss.handleUpgrade(request, socket, head, (ws) => {
+    wss.emit('connection', ws, request);
+  });
 });
 
 app.use(compression());
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.text({ type: ['text/*', 'application/xml', 'application/x-www-form-urlencoded'] }));
 
-// Set CSRF cookie on all HTTP responses
-app.use((req, res, next) => {
-  res.cookie('opmcsrfcookie', 'OPM_CENTRAL_AUTH_TOKEN_77a82b9', { path: '/' });
-  next();
-});
+// NOTE: no cors() middleware — same-origin only. The app is served from the
+// same origin as its API, so cross-origin access is not needed.
+// NOTE: the hardcoded CSRF cookie is removed entirely, with no replacement
+// cookie. (The two remaining set sites in server/routes/ncmclient.js belong
+// to that route file's owner; see report.)
 
 // Rewrite /client/api/json requests to root so that both /client/api/json/... and /api/json/... match routes
 app.use((req, res, next) => {
@@ -69,6 +240,12 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// Auth guard for every API route (all 17 route files mount below this).
+// requireAuth applies to /api/* and the legacy non-/api API prefixes, except
+// the public auth endpoints and the key-authenticated agent telemetry
+// ingestion endpoints (see PUBLIC_API_ROUTES / KEY_AUTH_API_ROUTES above).
+app.use(apiAuthGuard);
 
 // Set MIME types and caching headers for static files
 const staticOptions = {
@@ -113,8 +290,81 @@ app.get([
   '/apiclient/fluidicv3/itom',
   '/itom.html',
   '/'
-], (req, res) => {
+], requireConsoleSession, (req, res) => {
   renderItomShell(res);
+});
+
+// ---- Page / console routes (registered BEFORE the API mounts) --------
+// ncmclient.js has a router-level guard that 401s any request without
+// req.user; it is mounted at root, so it would intercept these non-API
+// routes before their own guards could run. These routes carry their
+// own guards (requireConsoleSession / requireAuth) or are public
+// (/login), so they are registered here, ahead of the mounts.
+// Route for authentic ManageEngine Fluidic client
+app.get(['/apiclient/ember/index.jsp', '/apiclient/ember', '/apiclient/fluidicv3/index.jsp'], (req, res) => {
+  res.redirect('/apiclient/fluidicv3/itom/index.html#/dashboard');
+});
+
+// Redirect classic module routes to fluidic hash routes
+app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'], (req, res) => {
+  res.redirect('/apiclient/fluidicv3/itom/index.html#' + req.originalUrl);
+});
+
+// Dedicated route for authentic ManageEngine Fluidic v3 Log Viewer files
+// (log lines expose probe/device names — authenticated sessions only).
+// Reads the tail of a REAL .log file under server/logs or
+// server/data/logs. No lines are synthesised: when the file does not exist
+// (or no logs directory exists yet) this answers 404 with an honest
+// message instead of inventing log content.
+app.get('/logs/:file', requireAuth, (req, res) => {
+  const base = path.basename(String(req.params.file || 'opmanager_server.log'));
+  const logDirs = [
+    path.join(__dirname, 'logs'),
+    path.join(__dirname, 'data', 'logs'),
+  ];
+  let found = null;
+  for (const dir of logDirs) {
+    const candidate = path.join(dir, base);
+    try {
+      if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) { found = candidate; break; }
+    } catch (e) { /* unreadable candidate — keep looking */ }
+  }
+  if (!found) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    return res.status(404).send(`Log file not found: ${base} — no such log file exists under server/logs or server/data/logs.`);
+  }
+  let content;
+  try {
+    content = fs.readFileSync(found, 'utf8');
+  } catch (e) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    return res.status(500).send(`Could not read log file: ${base}`);
+  }
+  const lines = content.split('\n');
+  if (lines.length && lines[lines.length - 1] === '') lines.pop();
+  const tail = lines.slice(-200);
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.send(tail.join('\n'));
+});
+
+// Route for authentic ManageEngine Login screen
+app.get(['/login', '/login.html'], (req, res) => {
+  res.sendFile(path.join(clientPath, 'login.html'));
+});
+
+// Dedicated route for classic NOC view
+app.get('/noc', requireConsoleSession, (req, res) => {
+  res.sendFile(path.join(clientPath, 'noc.html'));
+});
+
+// Default root redirect to authentic ManageEngine Dashboard
+app.get(['/', '/dashboard'], requireConsoleSession, (req, res) => {
+  res.redirect('/apiclient/fluidicv3/itom/index.html#/dashboard');
+});
+
+// Dedicated direct route for Ember ITOM client
+app.get('/itom', requireConsoleSession, (req, res) => {
+  res.redirect('/apiclient/fluidicv3/itom/index.html#/dashboard');
 });
 
 // Serve product home static directory directly if present (all stylesheets, images, scripts, apiclient)
@@ -131,10 +381,15 @@ app.use('/downloads', express.static(path.join(__dirname, '../client/downloads')
 
 // Mount API routes
 app.use(authRoute);
+// agentsRoute mounts BEFORE ncmclientRoute: ncmclient.js has a router-level
+// guard that 401s any request without req.user, and the agents' telemetry /
+// deregister endpoints authenticate by per-agent key (not a user session),
+// so they must reach agentsRoute before ncmclient's guard can reject them.
+// No path overlap: agentsRoute only serves /api/agent* and /api/agents*.
+app.use(agentsRoute);
 app.use(ncmclientRoute);
 app.use(toolsRoute);
 app.use(ziaRoute);
-app.use(agentsRoute);
 app.use(probesRoute);
 app.use(devicesRoute);
 app.use(alarmsRoute);
@@ -153,8 +408,8 @@ app.use((req, res, next) => {
   if (req.path.endsWith('.jsp') || req.path.endsWith('.html') || req.path.endsWith('.css') || req.path.endsWith('.js') || req.path.endsWith('.svg') || req.path.endsWith('.png') || req.path.endsWith('.ico') || req.path.endsWith('.woff') || req.path.endsWith('.woff2')) {
     return next();
   }
-  if (req.isApiRequest || req.originalUrl.startsWith('/api/') || req.originalUrl.startsWith('/client/api/') || req.path.startsWith('/api/') || req.path.startsWith('/client/') || req.path.startsWith('/v2/') || req.path.startsWith('/admin/') || req.path.startsWith('/alarm/') || req.path.startsWith('/dashboard/') || req.path.startsWith('/maps/') || req.path.startsWith('/enterprise/') || req.path.startsWith('/device/') || req.path.startsWith('/ncmclient/') || req.path.startsWith('/ipam/') || req.path.startsWith('/spm/') || req.path.startsWith('/tab/') || req.headers.accept?.includes('application/json')) {
-    return res.json({ status: 'success', result: [], rows: [] });
+  if (isApiPath(apiPathname(req))) {
+    return res.status(404).json({ error: 'not_found' });
   }
   next();
 });
@@ -167,80 +422,18 @@ app.use((req, res, next) => {
   next();
 });
 
-// Route for authentic ManageEngine Fluidic client
-app.get(['/apiclient/ember/index.jsp', '/apiclient/ember', '/apiclient/fluidicv3/index.jsp'], (req, res) => {
-  res.redirect('/apiclient/fluidicv3/itom/index.html#/dashboard');
-});
-
-// Redirect classic module routes to fluidic hash routes
-app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'], (req, res) => {
-  res.redirect('/apiclient/fluidicv3/itom/index.html#' + req.originalUrl);
-});
-
-// Dedicated route for authentic ManageEngine Fluidic v3 Log Viewer files
-app.get('/logs/:file', (req, res) => {
-  const file = req.params.file || 'opmanager_server.log';
-  const now = new Date();
-  const time = now.toISOString().replace('T', ' ').slice(0, 19);
-
-  let logs = [];
-  const db = require('./services/db');
-  const probes = (db.data && db.data.probes) || [];
-  const devices = (db.data && db.data.devices) || [];
-
-  if (file.includes('probe')) {
-    logs = probes.map((p, i) => `[${time},${String(12 + i * 133).padStart(3, '0')}] [INFO] [ProbeSyncWorker-${i+1}]: Sync handshake received from ${p.name} (${p.ip}). Latency: ${p.latency || 2}ms.`);
-    if (logs.length === 0) {
-      logs.push(`[${time},012] [INFO] [ProbeSyncWorker]: Central master operational in standby.`);
-    } else {
-      logs.push(`[${time},520] [INFO] [CCMCluster]: ${probes.length}/${probes.length} Remote Probes verified healthy. Replication delta: 0 bytes.`);
-    }
-  } else if (file.includes('poller')) {
-    if (devices.length === 0) {
-      logs = [
-        `[${time},045] [INFO]  [SnmpPollerEngine]: Standby poller idle. 0 device nodes enrolled.`,
-        `[${time},112] [INFO]  [SnmpPollerEngine]: Ready to discover network nodes via SNMP / WMI / SSH.`,
-        `[${time},310] [DEBUG] [IcmpPingDaemon]: 0 nodes probed. Network perimeter stable.`,
-        `[${time},480] [INFO]  [PollerWorkerPool]: Standby idle cycle completed in 1ms.`
-      ];
-    } else {
-      logs = devices.slice(0, 5).map((d, i) => `[${time},${String(45 + i * 67).padStart(3, '0')}] [DEBUG] [SnmpPollerEngine]: Polling node ${d.ip} (${d.name}) - Status: ${d.status || 'Clear'}.`);
-    }
-  } else {
-    logs = [
-      `[${time},001] [INFO] [OpManagerCentralServer]: Version 12.9.203 GA (Build 129203) - Enterprise Mode Active.`,
-      `[${time},080] [INFO] [ITOMEmberServer]: Client session active on /apiclient/fluidicv3/itom/.`,
-      `[${time},190] [INFO] [PNSHandler]: WebSocket notification broadcast stream active.`,
-      `[${time},260] [INFO] [PostgreSQLConnectionPool]: 12/50 pooled database connections active. Query latency: 0.8ms.`,
-      `[${time},340] [INFO] [SecurityEngine]: Central Master operational at 0 alerts.`
-    ];
-  }
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.send(logs.join('\n'));
-});
-
-// Route for authentic ManageEngine Login screen
-app.get(['/login', '/login.html'], (req, res) => {
-  res.sendFile(path.join(clientPath, 'login.html'));
-});
-
-// Dedicated route for classic NOC view
-app.get('/noc', (req, res) => {
-  res.sendFile(path.join(clientPath, 'noc.html'));
-});
-
-// Default root redirect to authentic ManageEngine Dashboard
-app.get(['/', '/dashboard'], (req, res) => {
-  res.redirect('/apiclient/fluidicv3/itom/index.html#/dashboard');
-});
-
-// Dedicated direct route for Ember ITOM client
-app.get('/itom', (req, res) => {
-  res.redirect('/apiclient/fluidicv3/itom/index.html#/dashboard');
-});
-
 // WebSocket connection handling for both ManageEngine client and NOC stream
-wss.on('connection', (ws, req) => {
+wss.on('connection', async (ws, req) => {
+  // The upgrade handler already authenticated this socket; re-verify here
+  // so a socket that somehow bypassed the upgrade check never receives
+  // data. Unauthenticated sockets are closed with code 1008.
+  let ok = false;
+  try { ok = await checkSession(wsSessionReq(req)); } catch (e) { ok = false; }
+  if (!ok) {
+    try { ws.close(1008, 'Unauthorized'); } catch (e) {}
+    return;
+  }
+
   const isPNS = req.url.includes('PNSHandler');
   console.log(`[WebSocket] Client connected via ${isPNS ? '/PNSHandler (ManageEngine ITOM)' : '/ws (NOC Stream)'}`);
 
@@ -250,13 +443,20 @@ wss.on('connection', (ws, req) => {
       itomUpdateWS: { wsId: 'WS_OPM_CENTRAL_129203' }
     }));
   } else {
-    // Send initial state for NOC subscribers
+    // Send initial state for NOC subscribers (live store data; central is
+    // the server identity, not a polled entity).
+    let initialProbes = [];
+    let initialDevices = [];
+    let initialAlarmsCount = 0;
+    try { initialProbes = store.listProbes() || []; } catch (e) { initialProbes = []; }
+    try { initialDevices = store.listDevices() || []; } catch (e) { initialDevices = []; }
+    try { initialAlarmsCount = (store.listAlarms() || []).length; } catch (e) { initialAlarmsCount = 0; }
     ws.send(JSON.stringify({
       type: 'INITIAL_STATE',
-      central: db.getCentral(),
-      probes: db.getProbes(),
-      devices: db.getDevices(),
-      alarmsCount: db.getAlarms().length,
+      central: { productName: 'ManageEngine OpManager Central', productVersion: '12.9.204-GA', buildNumber: null },
+      probes: initialProbes,
+      devices: initialDevices,
+      alarmsCount: initialAlarmsCount,
       timestamp: Date.now()
     }));
   }
@@ -292,35 +492,71 @@ setInterval(() => {
   });
 }, 3000);
 
-// Broadcast poller updates to all connected clients
-poller.onUpdate((payload) => {
-  const message = JSON.stringify(payload);
+// Broadcast poller updates to all connected clients (all connected clients
+// are authenticated — see the upgrade handler above).
+if (typeof poller.onUpdate === 'function') {
+  poller.onUpdate((payload) => {
+    const message = JSON.stringify(payload);
 
-  wss.clients.forEach(client => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(message);
-    }
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
   });
-});
-
-// Start network poller
-poller.start(4000);
+} else {
+  console.error('[Poller] poller.onUpdate is not available — live metric broadcasts are disabled.');
+}
 
 // Fallback route
-app.get('*', (req, res) => {
+app.get('*', async (req, res) => {
   if (req.path.match(/\.(png|jpe?g|gif|svg|ico|css|js|woff2?|ttf|eot|map|wav|mp3|zip|tar\.gz|msi|exe)$/i)) {
     return res.status(404).send('Resource Not Found');
   }
+  // Any other path is the console shell: serve it only to authenticated
+  // sessions, otherwise redirect to the login page.
+  let ok = false;
+  try { ok = await checkSession(req); } catch (e) { ok = false; }
+  if (!ok) return res.redirect('/login.html');
   renderItomShell(res);
 });
 
 const PORT = process.env.PORT || 8060;
 server.listen(PORT, () => {
   console.log(`================================================================`);
-  console.log(` ManageEngine OpManager Central (Version 12.9.203 GA Build 129203)`);
+  console.log(` ManageEngine OpManager Central (Version 12.9.204-GA)`);
   console.log(` Authentic Ember ITOM Root: http://localhost:${PORT}/`);
   console.log(` Direct ITOM Client: http://localhost:${PORT}/apiclient/fluidicv3/itom/index.html#/`);
   console.log(` Full NOC Overview: http://localhost:${PORT}/noc`);
-  console.log(` Central Probe Architecture: Active (${(db.data && db.data.probes ? db.data.probes.length : 1)} Enterprise Probes)`);
+  let probeCount = 0;
+  try { probeCount = (store.listProbes() || []).length; } catch (e) { probeCount = 0; }
+  console.log(` Central Probe Architecture: Active (${probeCount} Enterprise Probes)`);
   console.log(`================================================================`);
+
+  // Startup: seed the first admin (if none exists) and start the poller.
+  // Both are guarded so a failure is logged loudly but never fatal.
+  try {
+    if (session && typeof session.ensureFirstAdmin === 'function') {
+      const r = session.ensureFirstAdmin();
+      if (r && typeof r.catch === 'function') {
+        r.catch((e) => console.error('[Auth] ensureFirstAdmin FAILED (startup continues; no admin was seeded):', e && e.message ? e.message : e));
+      }
+    } else {
+      console.error('[Auth] ensureFirstAdmin NOT AVAILABLE (session service missing) — no first admin was seeded.');
+    }
+  } catch (e) {
+    console.error('[Auth] ensureFirstAdmin FAILED (startup continues; no admin was seeded):', e && e.message ? e.message : e);
+  }
+  try {
+    if (typeof poller.startPoller === 'function') {
+      poller.startPoller();
+    } else if (typeof poller.start === 'function') {
+      // Back-compat with the pre-rebuild poller API.
+      poller.start(4000);
+    } else {
+      console.error('[Poller] startPoller/start NOT AVAILABLE — poller was not started.');
+    }
+  } catch (e) {
+    console.error('[Poller] startPoller FAILED (startup continues; polling is off):', e && e.message ? e.message : e);
+  }
 });
