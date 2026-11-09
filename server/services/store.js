@@ -91,6 +91,13 @@ CREATE TABLE IF NOT EXISTS devices (
   -- seconds. Visible via GET /api/devices/:id. NULL = never polled yet.
   effective_thresholds TEXT,
   effective_poll_interval_sec INTEGER,
+  -- NCM backup (Phase 3 ncm-backup): link to the stored SSH credential used
+  -- to fetch the running config, and the SSH port (NULL = 22). The credential
+  -- itself lives in the credentials table (type 'ssh'); only its id is stored
+  -- here. NULL ssh_credential_id means "no SSH credentials configured for
+  -- this device" and backup honestly 501s instead of guessing.
+  ssh_credential_id INTEGER REFERENCES credentials(id) ON DELETE SET NULL,
+  ssh_port INTEGER,
   created_at INTEGER NOT NULL
 );
 
@@ -276,10 +283,12 @@ if (!_alarmColumns.includes('rca_status')) {
   db.exec('ALTER TABLE alarms ADD COLUMN rca_status TEXT;');
 }
 
-// Migration: device.snmp v3 credential columns (canonical schema, SHARED.md)
-// and devices.applied_template / effective_thresholds /
-// effective_poll_interval_sec were added after the initial schema, so
-// pre-existing databases need them added. ALTER-safe: only add if absent.
+// Migration: device.snmp v3 credential columns (canonical schema, SHARED.md),
+// devices.applied_template / effective_thresholds /
+// effective_poll_interval_sec, and devices.ssh_credential_id / ssh_port
+// (Phase 3 ncm-backup) were added after the initial schema, so pre-existing
+// databases need them added. ALTER-safe: only add if absent.
+// (Fresh databases get them from the CREATE TABLE above.)
 const _deviceColumns = db
   .prepare('PRAGMA table_info(devices)')
   .all()
@@ -293,6 +302,8 @@ for (const [col, type] of [
   ['applied_template', 'TEXT'],
   ['effective_thresholds', 'TEXT'],
   ['effective_poll_interval_sec', 'INTEGER'],
+  ['ssh_credential_id', 'INTEGER'],
+  ['ssh_port', 'INTEGER'],
 ]) {
   if (!_deviceColumns.includes(col)) {
     db.exec(`ALTER TABLE devices ADD COLUMN ${col} ${type};`);
@@ -441,6 +452,7 @@ const DEVICE_COLUMNS = [
   // the template-apply route; effective_* are written by the poller on
   // every poll so the values actually used are visible via the API.
   'applied_template', 'effective_thresholds', 'effective_poll_interval_sec',
+  'ssh_credential_id', 'ssh_port',
 ];
 
 const SECRET_MASK = '******';

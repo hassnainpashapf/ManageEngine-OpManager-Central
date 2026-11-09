@@ -34,6 +34,7 @@ trapReceiver.onStoredTrap((row, kind) => wsEvents.emitTrapReceived(row, kind));
 const trapsRoute = require('./routes/traps');
 const hardwareRoute = require('./routes/hardware');
 const diffRoute = require('./routes/diff');
+const ncmRoute = require('./routes/ncm'); // Phase 4 merge (p4m-ncm): canonical NCM approvals on server/services/ncm.js
 const poller = require('./services/poller');
 // NOTE: the old JSON store (server/services/db.js) was deleted by the store
 // track and replaced by server/services/store.js (SQLite). index.js reads
@@ -435,6 +436,11 @@ app.use(authRoute);
 // so they must reach agentsRoute before ncmclient's guard can reject them.
 // No path overlap: agentsRoute only serves /api/agent* and /api/agents*.
 app.use(agentsRoute);
+// ncmRoute mounts here too, for the same reason: its /api/ncm/* approvals
+// endpoints are session-authenticated by their own requireAuth, and must
+// not be intercepted by ncmclient's guard (which would 401 them before
+// their own auth runs). No path overlap with ncmclient.js (/ncmclient/*).
+app.use(ncmRoute);
 app.use(ncmclientRoute);
 app.use(toolsRoute);
 app.use(ziaRoute);
