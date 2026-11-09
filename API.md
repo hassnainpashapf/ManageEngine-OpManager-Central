@@ -331,9 +331,9 @@ in this draft and needs a final read.
 | `GET /ncmclient/listCustomViews`, `/api/json/ncmclient/listCustomViews` | Session (guard) | `{views:[]}`. | **HONEST-EMPTY** |
 | `GET /ncmclient/listCCTVView`, `/api/json/ncmclient/listCCTVView` | Session (guard) | `[]`. | **HONEST-EMPTY** |
 | `GET /ncmclient/getTabViewDetails`, `/api/json/ncmclient/getTabViewDetails` | Session (guard) | `{bvDetails:{List:[]}}`. | **HONEST-EMPTY** |
-| `GET /ncmclient/listFloors`, `/api/json/ncmclient/listFloors` | Session (guard) | `[]` — no floor data. | **HONEST-EMPTY** |
-| `GET /ncmclient/listRacks`, `/api/json/ncmclient/listRacks` | Session (guard) | Real racks from the store (see §13). | **REAL** |
-| `GET /ncmclient/getLayer2Maps`, `/api/json/ncmclient/getLayer2Maps` | Session (guard) | `[]` — no L2 topology source. | **HONEST-EMPTY** |
+| `GET /maps/listFloors`, `/api/json/maps/listFloors` | Session (guard) | `[]` — no floor data. | **HONEST-EMPTY** |
+| `GET /maps/listRacks`, `/api/json/maps/listRacks` | Session (guard) | Real racks from the store (see §13). | **REAL** |
+| `GET /maps/getLayer2Maps`, `/api/json/maps/getLayer2Maps` | Session (guard) | `[]` — no L2 topology source. | **HONEST-EMPTY** |
 | `GET /ncmclient/getSecurityScore`, `/api/json/ncmclient/getSecurityScore` | Session (guard) | All score fields `null` — no scoring engine. | **HONEST-EMPTY** |
 | `GET /ncmclient/getWebAlarmSoundFiles`, `/api/json/ncmclient/getWebAlarmSoundFiles` | Session (guard) | `[]`. | **HONEST-EMPTY** |
 | `GET /ncmclient/listCustomFields`, `/api/json/ncmclient/listCustomFields` | Session (guard) | Static labels (site / rack / owner). | **REAL** (static) |
@@ -341,15 +341,17 @@ in this draft and needs a final read.
 | `GET /ncmclient/getDeviceCategories`, `/api/json/ncmclient/getDeviceCategories` | Session (guard) | Static 5-category taxonomy (audit-accepted reference data). | **REAL** (static) |
 | `GET /ncmclient/listAllLogicalGroups`, `/api/json/ncmclient/listAllLogicalGroups` | Session (guard) | `[]` — no logical groups exist. | **HONEST-EMPTY** |
 | `GET /ncmclient/getDeviceGroupViewPreference`, `/api/json/ncmclient/getDeviceGroupViewPreference` | Session (guard) | `{preference:'tree'}` (static default). | **REAL** (static) |
-| `GET /ncmclient/getConfigConflictStatus`, `/api/json/ncmclient/getConfigConflictStatus` | Session (guard) | Computed from the device's stored running/startup configs (same source as §8). | **REAL** |
-| `GET /ncmclient/getComplianceStatus`, `/api/json/ncmclient/getComplianceStatus` | Session (guard) | All counts `0` — no compliance engine exists. | **HONEST-EMPTY** |
-| `GET /ncmclient/getconfigChangesStatus`, `/api/json/ncmclient/getconfigChangesStatus` | Session (guard) | Both counts `0` — no change log exists. | **HONEST-EMPTY** |
-| `GET /ncmclient/getFirmVulnDetails`, `/api/json/ncmclient/getFirmVulnDetails` | Session (guard) | `{totalVulnerabilities:0, cveList:[]}` — no vulnerability feed. | **HONEST-EMPTY** |
-| `GET /ncmclient/getFirmVulCveSeverityStatus`, `/api/json/ncmclient/getFirmVulCveSeverityStatus` | Session (guard) | All severity counts `0`. | **HONEST-EMPTY** |
-| `GET /ncmclient/getFirmVulDeviceSeverityStatus`, `/api/json/ncmclient/getFirmVulDeviceSeverityStatus` | Session (guard) | Both counts `0`. | **HONEST-EMPTY** |
-| `GET /ncmclient/getStartupRunningVersion`, `/api/json/ncmclient/getStartupRunningVersion` | Session (guard) | Real running-vs-startup diff for the device (versions, `driftStatus`, `conflictingLines` — `null` when no fetched pair exists). `404` unknown `deviceId`. | **REAL** |
-| `GET /ncmclient/getEolSummary`, `/api/json/ncmclient/getEolSummary` | Session (guard) | `{activeHardware: <device count>, …}` — EOL / EOS / warranty fields are `null` (no lifecycle data). | **REAL** |
-| `GET /ncmclient/getUpcomingEolDevices`, `/api/json/ncmclient/getUpcomingEolDevices` | Session (guard) | `[]` — no lifecycle data. | **HONEST-EMPTY** |
+| `GET /ncmdashboard/getConfigConflictStatus`, `/api/json/ncmdashboard/getConfigConflictStatus` | Session (guard) | Computed from the device's stored running/startup configs (same source as §8). | **REAL** |
+| `GET /ncmdashboard/getComplianceStatus`, `/api/json/ncmdashboard/getComplianceStatus` | Session (guard) | All counts `0` — no compliance engine exists. | **HONEST-EMPTY** |
+| `GET /ncmreports/getconfigChangesStatus`, `/api/json/ncmreports/getconfigChangesStatus` | Session (guard) | Both counts `0` — no change log exists. | **HONEST-EMPTY** |
+| `GET /ncmcompliance/getFirmVulnDetails`, `/api/json/ncmcompliance/getFirmVulnDetails` | Session (guard) | `{totalVulnerabilities:0, cveList:[]}` — no vulnerability feed. | **HONEST-EMPTY** |
+| `GET /ncmcompliance/getFirmVulCveSeverityStatus`, `/api/json/ncmcompliance/getFirmVulCveSeverityStatus` | Session (guard) | All severity counts `0`. | **HONEST-EMPTY** |
+| `GET /ncmcompliance/getFirmVulDeviceSeverityStatus`, `/api/json/ncmcompliance/getFirmVulDeviceSeverityStatus` | Session (guard) | Both counts `0`. | **HONEST-EMPTY** |
+| `GET /ncmconfig/getStartupRunningVersion`, `/api/json/ncmconfig/getStartupRunningVersion` | Session (guard) | Real running-vs-startup diff for the device (versions, `driftStatus`, `conflictingLines` — `null` when no fetched pair exists). `404` unknown `deviceId`. | **REAL** |
+| `GET /ncmeol/getEolSummary`, `/api/json/ncmeol/getEolSummary` | Session (guard) | `{activeHardware: <device count>, …}` — EOL / EOS / warranty fields are `null` (no lifecycle data). | **REAL** |
+| `GET /ncmeol/getUpcomingEolDevices`, `/api/json/ncmeol/getUpcomingEolDevices` | Session (guard) | `[]` — no lifecycle data. | **HONEST-EMPTY** |
+> ROUTING-1 (Phase 5): the 12 rows above were documented under a `/ncmclient/` prefix that never existed — the routes live under `/maps/`, `/ncmdashboard/`, `/ncmreports/`, `/ncmcompliance/`, `/ncmconfig/` and `/ncmeol/`. Their bare and `/api/json/...` forms were also 302-redirected to the SPA shell by the `/NCM*` catch-all in `server/index.js`; the fix lets API paths fall through to the routers (verified live: 200 + JSON on all forms).
+
 
 ## 12. `server/routes/probes.js` — 13 definitions, all REAL (phase-2: +1 `testCentralConnection`)
 

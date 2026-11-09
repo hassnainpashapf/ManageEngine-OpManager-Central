@@ -373,8 +373,26 @@ app.get(['/apiclient/ember/index.jsp', '/apiclient/ember', '/apiclient/fluidicv3
   res.redirect('/apiclient/fluidicv3/itom/index.html#/dashboard');
 });
 
-// Redirect classic module routes to fluidic hash routes
-app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'], (req, res) => {
+// Redirect classic module routes to fluidic hash routes.
+// ROUTING-1 (Phase 5): these globs are case-insensitive and also match the
+// legacy bare-path API forms sharing these prefixes — the six /ncm*
+// prefixes (/ncmclient/, /ncmcompliance/, /ncmconfig/, /ncmdashboard/,
+// /ncmeol/, /ncmreports/) plus /maps/ and /reports/. Those are real JSON
+// endpoints served by the routers mounted below (the /api/json/... form
+// reaches them via the rewrite above, which strips /api/json to the bare
+// path), so they must fall through to the mounts instead of 302ing to the
+// SPA shell. Anything else under these prefixes is a genuine classic UI
+// path and still redirects. The check is case-insensitive because Express
+// matches case-insensitively; isApiPath() itself is case-sensitive, so the
+// pathname is lowercased first. Unauthenticated API calls never reach
+// this handler: apiAuthGuard above already 401s them.
+// NOTE: /settings/ and /inventory/ bare forms hit the same collision but
+// are NOT in LEGACY_API_PREFIXES, so apiAuthGuard does not protect them
+// and they intentionally still redirect — un-redirecting them first needs
+// the auth track to add those prefixes to LEGACY_API_PREFIXES (their
+// routers have no per-route auth guard; see ROUTING-1 report).
+app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'], (req, res, next) => {
+  if (isApiPath(apiPathname(req).toLowerCase())) return next();
   res.redirect('/apiclient/fluidicv3/itom/index.html#' + req.originalUrl);
 });
 
