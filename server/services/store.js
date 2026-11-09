@@ -317,6 +317,11 @@ function listUsers() {
   );
 }
 
+function deleteUser(id) {
+  const info = db.prepare('DELETE FROM users WHERE id = ?').run(id);
+  return { deleted: info.changes };
+}
+
 // ------------------------------------------------------------- sessions ---
 
 function createSession(userId, tokenHash, expiresAt) {
@@ -925,9 +930,11 @@ function listTraps(limit) {
 module.exports = {
   // users
   createUser,
+  getUserById,
   getUserByUsername,
   updateUser,
   listUsers,
+  deleteUser,
   // sessions
   createSession,
   getSessionByTokenHash,
@@ -1016,7 +1023,7 @@ module.exports = {
   // uses store.devices.getDevice / store.configs.getLatestConfig / etc.
   // These reference the identical function objects as the flat exports
   // above; nothing was renamed or removed.
-  users: { createUser, getUserByUsername, updateUser, listUsers },
+  users: { createUser, getUserById, getUserByUsername, updateUser, listUsers, deleteUser },
   sessions: { createSession, getSessionByTokenHash, deleteSession },
   devices: {
     createDevice,

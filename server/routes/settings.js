@@ -23,6 +23,7 @@ const os = require('os');
 const path = require('path');
 const { DatabaseSync } = require('node:sqlite');
 const store = require('../services/store');
+const { hashPassword, requireRole } = require('../services/session');
 
 const router = express.Router();
 
@@ -899,18 +900,40 @@ router.get(['/api/settings/users', '/api/users/list'], (req, res) => {
   res.json({ status: 'success', users });
 });
 
-router.post(['/api/settings/users', '/api/users/add'], (req, res) => {
-  res.status(501).json({
-    status: 'error',
-    ...NOT_IMPLEMENTED('User creation requires the authentication service (hashed passwords); it is not implemented in this settings route.'),
+const MIN_PASSWORD_LENGTH = 10;
+
+router.post(['/api/settings/users', '/api/users/add'], requireRole('admin'), (req, res) => {
+  const { username, password, role } = req.body || {};
+  if (typeof username !== 'string' || username.trim().length === 0) {
+    return res.status(400).json({ status: 'error', message: 'username is required' });
+  }
+  if (typeof password !== 'string' || password.length < MIN_PASSWORD_LENGTH) {
+    return res.status(400).json({ status: 'error', message: `password must be at least ${MIN_PASSWORD_LENGTH} characters` });
+  }
+  if (store.getUserByUsername(username.trim())) {
+    return res.status(409).json({ status: 'error', message: `User '${username.trim()}' already exists` });
+  }
+  const created = store.createUser(username.trim(), hashPassword(password), role || 'Operator');
+  res.status(201).json({
+    status: 'success',
+    user: { id: created.id, username: created.username, role: created.role, createdAt: new Date(created.created_at).toISOString() },
   });
 });
 
-router.delete('/api/settings/users/:id', (req, res) => {
-  res.status(501).json({
-    status: 'error',
-    ...NOT_IMPLEMENTED('User deletion requires the authentication service; it is not implemented in this settings route.'),
-  });
+router.delete('/api/settings/users/:id', requireRole('admin'), (req, res) => {
+  const id = Number(req.params.id);
+  const target = store.getUserById(id);
+  if (!target) {
+    return res.status(404).json({ status: 'error', message: `User ${req.params.id} not found` });
+  }
+  if (req.user && String(req.user.id) === String(id)) {
+    return res.status(400).json({ status: 'error', message: 'You cannot delete your own account while logged in as it.' });
+  }
+  if (store.listUsers().length <= 1) {
+    return res.status(400).json({ status: 'error', message: 'Cannot delete the last remaining user account.' });
+  }
+  const result = store.deleteUser(id);
+  res.json({ status: 'success', message: `User '${target.username}' deleted`, deleted: result.deleted > 0 });
 });
 
 // --------------------------------------------------------------------- AD ---
