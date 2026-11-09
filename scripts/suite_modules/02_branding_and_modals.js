@@ -2252,8 +2252,8 @@
       const portName = 'GigabitEthernet0/' + i;
       const speed = i > 44 ? '10 Gbps Full' : '1000 Mbps Full';
       const mac = isUp ? ('00:1A:2B:' + (i < 10 ? '0' + i : i) + ':4C:' + (99 - i)) : '-';
-      const ip = isUp ? ('10.10.1.' + (100 + i)) : '-';
-      const hostname = isUp ? (i % 3 === 0 ? 'corp-srv-db' + i : (i % 2 === 0 ? 'workstation-ny' + i : 'ap-cisco-wifi' + i)) : '-';
+      const ip = isUp ? ('192.168.1.' + (100 + i)) : '-';
+      const hostname = isUp ? (i % 3 === 0 ? 'srv-db' + i : (i % 2 === 0 ? 'workstation-' + i : 'ap-wifi-' + i)) : '-';
       const vlan = i <= 24 ? 'VLAN 10 (Users)' : (i <= 44 ? 'VLAN 20 (Servers)' : 'VLAN 99 (Core Trunk)');
       const vendor = isUp ? (i % 4 === 0 ? 'Dell Inc.' : (i % 3 === 0 ? 'Intel Corp.' : (i % 2 === 0 ? 'Apple Inc.' : 'Cisco Systems'))) : '-';
       const status = isUp ? 'Up' : (i === 42 ? 'Admin Disabled' : 'Down');
@@ -2444,7 +2444,7 @@
               <tbody>
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                   <td style="padding: 8px 10px; font-weight: 700; color: #0284c7;">LUN_VMWARE_DS01</td>
-                  <td style="padding: 8px 10px; color: #334155;">ESXi Cluster (NY-DC4)</td>
+                  <td style="padding: 8px 10px; color: #334155;">Virtualization Cluster (Datastore 01)</td>
                   <td style="padding: 8px 10px; font-family: monospace;">8.4 TB / 12 TB (70%)</td>
                   <td style="padding: 8px 10px; font-weight: 700; color: #16a34a;">14,800</td>
                   <td style="padding: 8px 10px; font-weight: 600;">0.6 ms</td>
@@ -4281,11 +4281,11 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 5px; color: #475569;">Starting IP Address *</label>
-              <input type="text" id="disc-start-ip" value="10.10.0.1" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+              <input type="text" id="disc-start-ip" value="192.168.1.1" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
             </div>
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 5px; color: #475569;">Ending IP Address *</label>
-              <input type="text" id="disc-end-ip" value="10.10.0.16" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+              <input type="text" id="disc-end-ip" value="192.168.1.254" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
             </div>
           </div>
 
@@ -4443,7 +4443,7 @@
     }
 
     let activeTool = defaultTab;
-    const ip = targetIp || (state.devices[0] ? state.devices[0].ip : '10.10.0.1');
+    const ip = targetIp || (state.devices[0] ? state.devices[0].ip : '127.0.0.1');
 
     function renderToolsContent() {
       const container = modal.querySelector('#tools-tab-content');

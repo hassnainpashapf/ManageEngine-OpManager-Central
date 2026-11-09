@@ -41,6 +41,10 @@
     const countClr = state.alarms.filter(a => a.severity === 'Clear').length;
     const countAck = state.alarms.filter(a => a.technician && a.technician !== 'Unacknowledged').length;
     const countUnack = countAll - countAck;
+    const oputilsAlarmCount = state.alarms.filter(a => ['Switch','Router','Port','IPAM'].includes(a.category)).length;
+    const critMatches = state.alarms.filter(a => a.severity === 'Critical' && ['Routers', 'Switches', 'Switch', 'Router'].includes(a.category)).length;
+    const storageMatches = state.alarms.filter(a => (a.entity || '').toLowerCase().includes('disk')).length;
+    const unackMatches = countUnack;
 
     // Filter alarms for active subtab
     let list = state.alarms;
@@ -401,10 +405,10 @@
         <div style="padding: 20px 24px;">
           <!-- KPI Summary Strip -->
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #dc2626;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid ${oputilsAlarmCount > 0 ? '#dc2626' : '#16a34a'};">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Active Port & IP Alarms</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">3</div>
-              <div style="font-size: 11px; color: #dc2626; margin-top: 2px;">1 Link Flap Suppression</div>
+              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">${oputilsAlarmCount}</div>
+              <div style="font-size: 11px; color: ${oputilsAlarmCount > 0 ? '#dc2626' : '#16a34a'}; margin-top: 2px;">${oputilsAlarmCount === 0 ? 'All Ports & Subnets Clean' : 'Active Port Alerts'}</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">IP Address Conflict</div>
@@ -466,7 +470,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <span style="font-size: 13px; font-weight: 700; color: #0f172a;">P1 Core Infrastructure Outages</span>
-                <span style="background: #fee2e2; color: #991b1b; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">2 MATCHES</span>
+                <span style="background: ${critMatches > 0 ? '#fee2e2' : '#f1f5f9'}; color: ${critMatches > 0 ? '#991b1b' : '#64748b'}; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">${critMatches} MATCH${critMatches === 1 ? '' : 'ES'}</span>
               </div>
               <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Criteria: Severity = Critical AND Category IN (Routers, Switches)</div>
               <button class="opm-run-custom-view-btn" data-view="p1" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0070e0; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Run Filtered View</button>
@@ -475,7 +479,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Database Storage Warnings (>85%)</span>
-                <span style="background: #ffedd5; color: #9a3412; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">1 MATCH</span>
+                <span style="background: ${storageMatches > 0 ? '#ffedd5' : '#f1f5f9'}; color: ${storageMatches > 0 ? '#9a3412' : '#64748b'}; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">${storageMatches} MATCH${storageMatches === 1 ? '' : 'ES'}</span>
               </div>
               <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Criteria: Entity CONTAINS 'Disk' AND DiskUsed% > 85.0%</div>
               <button class="opm-run-custom-view-btn" data-view="storage" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0070e0; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Run Filtered View</button>
@@ -484,7 +488,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Unacknowledged Escalations (>30m)</span>
-                <span style="background: #fef2f2; color: #991b1b; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">3 MATCHES</span>
+                <span style="background: ${unackMatches > 0 ? '#fef2f2' : '#f1f5f9'}; color: ${unackMatches > 0 ? '#991b1b' : '#64748b'}; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">${unackMatches} MATCH${unackMatches === 1 ? '' : 'ES'}</span>
               </div>
               <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Criteria: Technician = 'Unacknowledged' AND Age > 30m</div>
               <button class="opm-run-custom-view-btn" data-view="unack" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0070e0; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Run Filtered View</button>

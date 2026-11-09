@@ -498,40 +498,26 @@
                 <span style="font-size: 11px; color: #64748b;">✉️ 📄 📊 ↻</span>
               </div>
               <div style="height: 150px; display: flex; align-items: flex-end; justify-content: space-around; padding: 14px 20px 14px 20px; border-bottom: 1px solid #f1f5f9;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">184,890</span>
-                  <div style="width: 42px; height: 102px; background: #12b8e6;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.0.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">112,450</span>
-                  <div style="width: 42px; height: 66px; background: #f59f42;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.40.1.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">84,210</span>
-                  <div style="width: 42px; height: 48px; background: #5c9ce6;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.2.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">62,180</span>
-                  <div style="width: 42px; height: 35px; background: #4bc076;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.1.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">41,920</span>
-                  <div style="width: 42px; height: 22px; background: #ec6b9e;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.3.50</span>
-                </div>
+                ${state.devices.slice(0, 5).map((d, idx) => {
+                  const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
+                  const color = colors[idx % colors.length];
+                  const height = Math.max(20, Math.min(110, Math.round((d.cpu || 20) * 1.2)));
+                  return `
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                      <span style="font-size: 10px; color: #475569;">${(d.responseTime || 2) * 450}</span>
+                      <div style="width: 42px; height: ${height}px; background: ${color};"></div>
+                      <span style="font-size: 10px; color: #334155; margin-top: 3px;">${d.ip}</span>
+                    </div>
+                  `;
+                }).join('')}
               </div>
               <!-- Legend + View All Link -->
               <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; font-size: 10px; color: #475569;">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #12b8e6;"></span> 10.10.0.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #f59f42;"></span> 10.40.1.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #5c9ce6;"></span> 10.10.2.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #4bc076;"></span> 10.10.1.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #ec6b9e;"></span> 10.10.3.50</span>
+                  ${state.devices.slice(0, 5).map((d, idx) => {
+                    const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
+                    return `<span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: ${colors[idx % colors.length]};"></span> ${d.ip}</span>`;
+                  }).join('')}
                 </div>
                 <span style="color: #0070e0; font-weight: 600; cursor: pointer;">View All</span>
               </div>
@@ -547,9 +533,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0;">10.10.0.1 (Te0/0/0)</td><td style="padding: 5px 8px;">142,890</td><td style="padding: 5px 8px;">38.07%</td><td style="padding: 5px 8px;">184,890.00</td><td style="padding: 5px 8px;">38.07%</td></tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0;">10.40.1.1 (Fo1/0/48)</td><td style="padding: 5px 8px;">89,120</td><td style="padding: 5px 8px;">23.15%</td><td style="padding: 5px 8px;">112,450.00</td><td style="padding: 5px 8px;">23.15%</td></tr>
-                  <tr><td style="padding: 5px 8px; color: #0070e0;">10.10.2.1 (Eth1/1)</td><td style="padding: 5px 8px;">64,410</td><td style="padding: 5px 8px;">17.34%</td><td style="padding: 5px 8px;">84,210.00</td><td style="padding: 5px 8px;">17.34%</td></tr>
+                  ${state.devices.slice(0, 3).map((d, idx) => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 5px 8px; color: #0070e0;">${d.ip} (${d.interfaces && d.interfaces[0] ? d.interfaces[0].name : 'eth0'})</td>
+                      <td style="padding: 5px 8px;">${(100 - idx * 25) * 1000}</td>
+                      <td style="padding: 5px 8px;">${(38 - idx * 10).toFixed(2)}%</td>
+                      <td style="padding: 5px 8px;">${((100 - idx * 25) * 1.25).toFixed(2)}</td>
+                      <td style="padding: 5px 8px;">${(38 - idx * 10).toFixed(2)}%</td>
+                    </tr>
+                  `).join('')}
                 </tbody>
               </table>
             </div>
@@ -561,40 +553,26 @@
                 <span style="font-size: 11px; color: #64748b;">✉️ 📄 📊 ↻</span>
               </div>
               <div style="height: 150px; display: flex; align-items: flex-end; justify-content: space-around; padding: 14px 20px 14px 20px; border-bottom: 1px solid #f1f5f9;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">264,965</span>
-                  <div style="width: 42px; height: 105px; background: #12b8e6;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.0.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">93,127</span>
-                  <div style="width: 42px; height: 52px; background: #f59f42;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.40.1.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">67,735</span>
-                  <div style="width: 42px; height: 38px; background: #5c9ce6;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.30.2.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">38,915</span>
-                  <div style="width: 42px; height: 24px; background: #4bc076;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.20.0.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">22,450</span>
-                  <div style="width: 42px; height: 15px; background: #ec6b9e;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.20.1.2</span>
-                </div>
+                ${state.devices.slice(0, 5).map((d, idx) => {
+                  const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
+                  const color = colors[idx % colors.length];
+                  const height = Math.max(20, Math.min(110, Math.round((d.memory || 25) * 1.1)));
+                  return `
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                      <span style="font-size: 10px; color: #475569;">${(d.responseTime || 2) * 580}</span>
+                      <div style="width: 42px; height: ${height}px; background: ${color};"></div>
+                      <span style="font-size: 10px; color: #334155; margin-top: 3px;">${d.ip}</span>
+                    </div>
+                  `;
+                }).join('')}
               </div>
               <!-- Legend + View All Link -->
               <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; font-size: 10px; color: #475569;">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #12b8e6;"></span> 10.10.0.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #f59f42;"></span> 10.40.1.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #5c9ce6;"></span> 10.30.2.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #4bc076;"></span> 10.20.0.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #ec6b9e;"></span> 10.20.1.2</span>
+                  ${state.devices.slice(0, 5).map((d, idx) => {
+                    const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
+                    return `<span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: ${colors[idx % colors.length]};"></span> ${d.ip}</span>`;
+                  }).join('')}
                 </div>
                 <span style="color: #0070e0; font-weight: 600; cursor: pointer;">View All</span>
               </div>
@@ -610,9 +588,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0;">10.10.0.1 (Te0/0/0)</td><td style="padding: 5px 8px;">198,420</td><td style="padding: 5px 8px;">54.38%</td><td style="padding: 5px 8px;">264,965.00</td><td style="padding: 5px 8px;">54.38%</td></tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0;">10.40.1.1 (Fo1/0/48)</td><td style="padding: 5px 8px;">74,110</td><td style="padding: 5px 8px;">19.11%</td><td style="padding: 5px 8px;">93,127.00</td><td style="padding: 5px 8px;">19.11%</td></tr>
-                  <tr><td style="padding: 5px 8px; color: #0070e0;">10.30.2.1 (Eth1/1)</td><td style="padding: 5px 8px;">51,890</td><td style="padding: 5px 8px;">13.90%</td><td style="padding: 5px 8px;">67,735.00</td><td style="padding: 5px 8px;">13.90%</td></tr>
+                  ${state.devices.slice(0, 3).map((d, idx) => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 5px 8px; color: #0070e0;">${d.ip} (${d.interfaces && d.interfaces[0] ? d.interfaces[0].name : 'eth0'})</td>
+                      <td style="padding: 5px 8px;">${(120 - idx * 30) * 1000}</td>
+                      <td style="padding: 5px 8px;">${(42 - idx * 12).toFixed(2)}%</td>
+                      <td style="padding: 5px 8px;">${((120 - idx * 30) * 1.45).toFixed(2)}</td>
+                      <td style="padding: 5px 8px;">${(42 - idx * 12).toFixed(2)}%</td>
+                    </tr>
+                  `).join('')}
                 </tbody>
               </table>
             </div>

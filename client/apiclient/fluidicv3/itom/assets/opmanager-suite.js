@@ -3156,8 +3156,8 @@
       const portName = 'GigabitEthernet0/' + i;
       const speed = i > 44 ? '10 Gbps Full' : '1000 Mbps Full';
       const mac = isUp ? ('00:1A:2B:' + (i < 10 ? '0' + i : i) + ':4C:' + (99 - i)) : '-';
-      const ip = isUp ? ('10.10.1.' + (100 + i)) : '-';
-      const hostname = isUp ? (i % 3 === 0 ? 'corp-srv-db' + i : (i % 2 === 0 ? 'workstation-ny' + i : 'ap-cisco-wifi' + i)) : '-';
+      const ip = isUp ? ('192.168.1.' + (100 + i)) : '-';
+      const hostname = isUp ? (i % 3 === 0 ? 'srv-db' + i : (i % 2 === 0 ? 'workstation-' + i : 'ap-wifi-' + i)) : '-';
       const vlan = i <= 24 ? 'VLAN 10 (Users)' : (i <= 44 ? 'VLAN 20 (Servers)' : 'VLAN 99 (Core Trunk)');
       const vendor = isUp ? (i % 4 === 0 ? 'Dell Inc.' : (i % 3 === 0 ? 'Intel Corp.' : (i % 2 === 0 ? 'Apple Inc.' : 'Cisco Systems'))) : '-';
       const status = isUp ? 'Up' : (i === 42 ? 'Admin Disabled' : 'Down');
@@ -3348,7 +3348,7 @@
               <tbody>
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                   <td style="padding: 8px 10px; font-weight: 700; color: #0284c7;">LUN_VMWARE_DS01</td>
-                  <td style="padding: 8px 10px; color: #334155;">ESXi Cluster (NY-DC4)</td>
+                  <td style="padding: 8px 10px; color: #334155;">Virtualization Cluster (Datastore 01)</td>
                   <td style="padding: 8px 10px; font-family: monospace;">8.4 TB / 12 TB (70%)</td>
                   <td style="padding: 8px 10px; font-weight: 700; color: #16a34a;">14,800</td>
                   <td style="padding: 8px 10px; font-weight: 600;">0.6 ms</td>
@@ -5185,11 +5185,11 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 5px; color: #475569;">Starting IP Address *</label>
-              <input type="text" id="disc-start-ip" value="10.10.0.1" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+              <input type="text" id="disc-start-ip" value="192.168.1.1" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
             </div>
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 5px; color: #475569;">Ending IP Address *</label>
-              <input type="text" id="disc-end-ip" value="10.10.0.16" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+              <input type="text" id="disc-end-ip" value="192.168.1.254" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
             </div>
           </div>
 
@@ -5347,7 +5347,7 @@
     }
 
     let activeTool = defaultTab;
-    const ip = targetIp || (state.devices[0] ? state.devices[0].ip : '10.10.0.1');
+    const ip = targetIp || (state.devices[0] ? state.devices[0].ip : '127.0.0.1');
 
     function renderToolsContent() {
       const container = modal.querySelector('#tools-tab-content');
@@ -9748,6 +9748,10 @@
     const countClr = state.alarms.filter(a => a.severity === 'Clear').length;
     const countAck = state.alarms.filter(a => a.technician && a.technician !== 'Unacknowledged').length;
     const countUnack = countAll - countAck;
+    const oputilsAlarmCount = state.alarms.filter(a => ['Switch','Router','Port','IPAM'].includes(a.category)).length;
+    const critMatches = state.alarms.filter(a => a.severity === 'Critical' && ['Routers', 'Switches', 'Switch', 'Router'].includes(a.category)).length;
+    const storageMatches = state.alarms.filter(a => (a.entity || '').toLowerCase().includes('disk')).length;
+    const unackMatches = countUnack;
 
     // Filter alarms for active subtab
     let list = state.alarms;
@@ -10108,10 +10112,10 @@
         <div style="padding: 20px 24px;">
           <!-- KPI Summary Strip -->
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px;">
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #dc2626;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid ${oputilsAlarmCount > 0 ? '#dc2626' : '#16a34a'};">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Active Port & IP Alarms</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">3</div>
-              <div style="font-size: 11px; color: #dc2626; margin-top: 2px;">1 Link Flap Suppression</div>
+              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">${oputilsAlarmCount}</div>
+              <div style="font-size: 11px; color: ${oputilsAlarmCount > 0 ? '#dc2626' : '#16a34a'}; margin-top: 2px;">${oputilsAlarmCount === 0 ? 'All Ports & Subnets Clean' : 'Active Port Alerts'}</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">IP Address Conflict</div>
@@ -10173,7 +10177,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <span style="font-size: 13px; font-weight: 700; color: #0f172a;">P1 Core Infrastructure Outages</span>
-                <span style="background: #fee2e2; color: #991b1b; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">2 MATCHES</span>
+                <span style="background: ${critMatches > 0 ? '#fee2e2' : '#f1f5f9'}; color: ${critMatches > 0 ? '#991b1b' : '#64748b'}; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">${critMatches} MATCH${critMatches === 1 ? '' : 'ES'}</span>
               </div>
               <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Criteria: Severity = Critical AND Category IN (Routers, Switches)</div>
               <button class="opm-run-custom-view-btn" data-view="p1" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0070e0; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Run Filtered View</button>
@@ -10182,7 +10186,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Database Storage Warnings (>85%)</span>
-                <span style="background: #ffedd5; color: #9a3412; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">1 MATCH</span>
+                <span style="background: ${storageMatches > 0 ? '#ffedd5' : '#f1f5f9'}; color: ${storageMatches > 0 ? '#9a3412' : '#64748b'}; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">${storageMatches} MATCH${storageMatches === 1 ? '' : 'ES'}</span>
               </div>
               <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Criteria: Entity CONTAINS 'Disk' AND DiskUsed% > 85.0%</div>
               <button class="opm-run-custom-view-btn" data-view="storage" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0070e0; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Run Filtered View</button>
@@ -10191,7 +10195,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Unacknowledged Escalations (>30m)</span>
-                <span style="background: #fef2f2; color: #991b1b; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">3 MATCHES</span>
+                <span style="background: ${unackMatches > 0 ? '#fef2f2' : '#f1f5f9'}; color: ${unackMatches > 0 ? '#991b1b' : '#64748b'}; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">${unackMatches} MATCH${unackMatches === 1 ? '' : 'ES'}</span>
               </div>
               <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Criteria: Technician = 'Unacknowledged' AND Age > 30m</div>
               <button class="opm-run-custom-view-btn" data-view="unack" style="width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0070e0; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Run Filtered View</button>
@@ -11636,40 +11640,26 @@
                 <span style="font-size: 11px; color: #64748b;">✉️ 📄 📊 ↻</span>
               </div>
               <div style="height: 150px; display: flex; align-items: flex-end; justify-content: space-around; padding: 14px 20px 14px 20px; border-bottom: 1px solid #f1f5f9;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">184,890</span>
-                  <div style="width: 42px; height: 102px; background: #12b8e6;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.0.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">112,450</span>
-                  <div style="width: 42px; height: 66px; background: #f59f42;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.40.1.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">84,210</span>
-                  <div style="width: 42px; height: 48px; background: #5c9ce6;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.2.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">62,180</span>
-                  <div style="width: 42px; height: 35px; background: #4bc076;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.1.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">41,920</span>
-                  <div style="width: 42px; height: 22px; background: #ec6b9e;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.3.50</span>
-                </div>
+                ${state.devices.slice(0, 5).map((d, idx) => {
+                  const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
+                  const color = colors[idx % colors.length];
+                  const height = Math.max(20, Math.min(110, Math.round((d.cpu || 20) * 1.2)));
+                  return `
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                      <span style="font-size: 10px; color: #475569;">${(d.responseTime || 2) * 450}</span>
+                      <div style="width: 42px; height: ${height}px; background: ${color};"></div>
+                      <span style="font-size: 10px; color: #334155; margin-top: 3px;">${d.ip}</span>
+                    </div>
+                  `;
+                }).join('')}
               </div>
               <!-- Legend + View All Link -->
               <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; font-size: 10px; color: #475569;">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #12b8e6;"></span> 10.10.0.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #f59f42;"></span> 10.40.1.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #5c9ce6;"></span> 10.10.2.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #4bc076;"></span> 10.10.1.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #ec6b9e;"></span> 10.10.3.50</span>
+                  ${state.devices.slice(0, 5).map((d, idx) => {
+                    const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
+                    return `<span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: ${colors[idx % colors.length]};"></span> ${d.ip}</span>`;
+                  }).join('')}
                 </div>
                 <span style="color: #0070e0; font-weight: 600; cursor: pointer;">View All</span>
               </div>
@@ -11685,9 +11675,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0;">10.10.0.1 (Te0/0/0)</td><td style="padding: 5px 8px;">142,890</td><td style="padding: 5px 8px;">38.07%</td><td style="padding: 5px 8px;">184,890.00</td><td style="padding: 5px 8px;">38.07%</td></tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0;">10.40.1.1 (Fo1/0/48)</td><td style="padding: 5px 8px;">89,120</td><td style="padding: 5px 8px;">23.15%</td><td style="padding: 5px 8px;">112,450.00</td><td style="padding: 5px 8px;">23.15%</td></tr>
-                  <tr><td style="padding: 5px 8px; color: #0070e0;">10.10.2.1 (Eth1/1)</td><td style="padding: 5px 8px;">64,410</td><td style="padding: 5px 8px;">17.34%</td><td style="padding: 5px 8px;">84,210.00</td><td style="padding: 5px 8px;">17.34%</td></tr>
+                  ${state.devices.slice(0, 3).map((d, idx) => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 5px 8px; color: #0070e0;">${d.ip} (${d.interfaces && d.interfaces[0] ? d.interfaces[0].name : 'eth0'})</td>
+                      <td style="padding: 5px 8px;">${(100 - idx * 25) * 1000}</td>
+                      <td style="padding: 5px 8px;">${(38 - idx * 10).toFixed(2)}%</td>
+                      <td style="padding: 5px 8px;">${((100 - idx * 25) * 1.25).toFixed(2)}</td>
+                      <td style="padding: 5px 8px;">${(38 - idx * 10).toFixed(2)}%</td>
+                    </tr>
+                  `).join('')}
                 </tbody>
               </table>
             </div>
@@ -11699,40 +11695,26 @@
                 <span style="font-size: 11px; color: #64748b;">✉️ 📄 📊 ↻</span>
               </div>
               <div style="height: 150px; display: flex; align-items: flex-end; justify-content: space-around; padding: 14px 20px 14px 20px; border-bottom: 1px solid #f1f5f9;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">264,965</span>
-                  <div style="width: 42px; height: 105px; background: #12b8e6;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.10.0.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">93,127</span>
-                  <div style="width: 42px; height: 52px; background: #f59f42;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.40.1.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">67,735</span>
-                  <div style="width: 42px; height: 38px; background: #5c9ce6;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.30.2.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">38,915</span>
-                  <div style="width: 42px; height: 24px; background: #4bc076;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.20.0.1</span>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                  <span style="font-size: 10px; color: #475569;">22,450</span>
-                  <div style="width: 42px; height: 15px; background: #ec6b9e;"></div>
-                  <span style="font-size: 10px; color: #334155; margin-top: 3px;">10.20.1.2</span>
-                </div>
+                ${state.devices.slice(0, 5).map((d, idx) => {
+                  const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
+                  const color = colors[idx % colors.length];
+                  const height = Math.max(20, Math.min(110, Math.round((d.memory || 25) * 1.1)));
+                  return `
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                      <span style="font-size: 10px; color: #475569;">${(d.responseTime || 2) * 580}</span>
+                      <div style="width: 42px; height: ${height}px; background: ${color};"></div>
+                      <span style="font-size: 10px; color: #334155; margin-top: 3px;">${d.ip}</span>
+                    </div>
+                  `;
+                }).join('')}
               </div>
               <!-- Legend + View All Link -->
               <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; font-size: 10px; color: #475569;">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #12b8e6;"></span> 10.10.0.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #f59f42;"></span> 10.40.1.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #5c9ce6;"></span> 10.30.2.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #4bc076;"></span> 10.20.0.1</span>
-                  <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: #ec6b9e;"></span> 10.20.1.2</span>
+                  ${state.devices.slice(0, 5).map((d, idx) => {
+                    const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
+                    return `<span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: ${colors[idx % colors.length]};"></span> ${d.ip}</span>`;
+                  }).join('')}
                 </div>
                 <span style="color: #0070e0; font-weight: 600; cursor: pointer;">View All</span>
               </div>
@@ -11748,9 +11730,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0;">10.10.0.1 (Te0/0/0)</td><td style="padding: 5px 8px;">198,420</td><td style="padding: 5px 8px;">54.38%</td><td style="padding: 5px 8px;">264,965.00</td><td style="padding: 5px 8px;">54.38%</td></tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 5px 8px; color: #0070e0;">10.40.1.1 (Fo1/0/48)</td><td style="padding: 5px 8px;">74,110</td><td style="padding: 5px 8px;">19.11%</td><td style="padding: 5px 8px;">93,127.00</td><td style="padding: 5px 8px;">19.11%</td></tr>
-                  <tr><td style="padding: 5px 8px; color: #0070e0;">10.30.2.1 (Eth1/1)</td><td style="padding: 5px 8px;">51,890</td><td style="padding: 5px 8px;">13.90%</td><td style="padding: 5px 8px;">67,735.00</td><td style="padding: 5px 8px;">13.90%</td></tr>
+                  ${state.devices.slice(0, 3).map((d, idx) => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 5px 8px; color: #0070e0;">${d.ip} (${d.interfaces && d.interfaces[0] ? d.interfaces[0].name : 'eth0'})</td>
+                      <td style="padding: 5px 8px;">${(120 - idx * 30) * 1000}</td>
+                      <td style="padding: 5px 8px;">${(42 - idx * 12).toFixed(2)}%</td>
+                      <td style="padding: 5px 8px;">${((120 - idx * 30) * 1.45).toFixed(2)}</td>
+                      <td style="padding: 5px 8px;">${(42 - idx * 12).toFixed(2)}%</td>
+                    </tr>
+                  `).join('')}
                 </tbody>
               </table>
             </div>
