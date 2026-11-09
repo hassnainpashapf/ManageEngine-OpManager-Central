@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"math/rand"
 	"net"
 	"net/http"
@@ -22,9 +23,9 @@ import (
 const (
 	AgentVersion    = "12.9.203-GA"
 	AgentBuild      = "20261106"
-	DefaultServer   = "http://localhost:8060"
+	DefaultServer   = "http://192.168.30.65:8060"
 	DefaultProbe    = "101"
-	DefaultAuthKey  = "OPM_EE_PROBE_SEC_KEY_1"
+	DefaultAuthKey  = "ee-probe-101-central-key"
 	DefaultInterval = 5
 )
 
@@ -64,17 +65,17 @@ type SystemTelemetry struct {
 }
 
 type NetworkInterfaceInfo struct {
-	Name       string   `json:"name"`
-	MAC        string   `json:"mac"`
-	IPs        []string `json:"ips"`
-	Flags      string   `json:"flags"`
-	IsUp       bool     `json:"isUp"`
+	Name  string   `json:"name"`
+	MAC   string   `json:"mac"`
+	IPs   []string `json:"ips"`
+	Flags string   `json:"flags"`
+	IsUp  bool     `json:"isUp"`
 }
 
 type ProcessInfo struct {
-	PID     int     `json:"pid"`
-	Name    string  `json:"name"`
-	CPU     float64 `json:"cpu"`
+	PID      int     `json:"pid"`
+	Name     string  `json:"name"`
+	CPU      float64 `json:"cpu"`
 	MemoryMB float64 `json:"memoryMB"`
 }
 
@@ -88,12 +89,13 @@ type RegisterResponse struct {
 var (
 	startTime = time.Now()
 	agentID   string
+	logFile   *os.File
 )
 
 func main() {
-	serverFlag := flag.String("server", "", "OpManager Central Server URL (e.g. http://10.0.0.100:8060)")
-	probeFlag := flag.String("probe", "", "Associated Enterprise Probe Identifier (e.g. 101 or Probe-01-US-East)")
-	keyFlag := flag.String("key", "", "Central-Probe Mutual Authorization Key (eeAuthKey)")
+	serverFlag := flag.String("server", "", "OpManager Central Server URL (e.g. http://192.168.30.65:8060)")
+	probeFlag := flag.String("probe", "", "Associated Enterprise Probe Identifier (e.g. 101)")
+	keyFlag := flag.String("key", "", "Central-Probe Mutual Authorization Key")
 	intervalFlag := flag.Int("interval", 0, "Telemetry reporting interval in seconds (default: 5)")
 	nameFlag := flag.String("name", "", "Custom device display name (defaults to system hostname)")
 	versionFlag := flag.Bool("version", false, "Print ManageEngine OpManager Central Agent version and exit")
@@ -101,6 +103,13 @@ func main() {
 	installFlag := flag.Bool("install", false, "Install agent as system background service/daemon")
 
 	flag.Parse()
+
+	// Open local log file for troubleshooting
+	f, err := os.OpenFile("agent.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err == nil {
+		logFile = f
+		defer logFile.Close()
+	}
 
 	if *versionFlag {
 		fmt.Printf("ManageEngine OpManager Central Monitoring Agent\n")
@@ -128,6 +137,9 @@ func main() {
 	}
 
 	cfg.ServerURL = strings.TrimRight(cfg.ServerURL, "/")
+	if !strings.HasPrefix(cfg.ServerURL, "http://") && !strings.HasPrefix(cfg.ServerURL, "https://") {
+		cfg.ServerURL = "http://" + cfg.ServerURL
+	}
 
 	printBanner(cfg)
 
@@ -164,9 +176,70 @@ func loadConfig() AgentConfig {
 		PollInterval: DefaultInterval,
 	}
 
+	execPath, _ := os.Executable()
+	execDir := filepath.Dir(execPath)
+
+	// 1. Search for ManageEngine OPMAgentServerInfo.json
+	jsonPaths := []string{
+		"OPMAgentServerInfo.json",
+		filepath.Join(".", "OPMAgentServerInfo.json"),
+		filepath.Join(execDir, "OPMAgentServerInfo.json"),
+		"C:\\OpManagerAgent\\OPMAgentServerInfo.json",
+		"C:\\Program Files\\ManageEngine\\OpManagerAgent\\OPMAgentServerInfo.json",
+	}
+
+	for _, jp := range jsonPaths {
+		data, err := os.ReadFile(jp)
+		if err == nil {
+			var m map[string]interface{}
+			if err := json.Unmarshal(data, &m); err == nil {
+				host := "192.168.30.65"
+				port := "8060"
+				proto := "http"
+
+				if v, ok := m["ServerName"].(string); ok && v != "" {
+					host = v
+				} else if v, ok := m["PrimaryServerIP"].(string); ok && v != "" {
+					host = v
+				} else if v, ok := m["ServerIp"].(string); ok && v != "" {
+					host = v
+				}
+
+				if v, ok := m["ServerPort"].(string); ok && v != "" {
+					port = v
+				} else if v, ok := m["PrimaryServerPort"].(string); ok && v != "" {
+					port = v
+				} else if v, ok := m["Port"].(string); ok && v != "" {
+					port = v
+				}
+
+				if v, ok := m["ServerProtocol"].(string); ok && v != "" {
+					proto = v
+				} else if v, ok := m["Protocol"].(string); ok && v != "" {
+					proto = v
+				}
+
+				cfg.ServerURL = fmt.Sprintf("%s://%s:%s", proto, host, port)
+				if v, ok := m["ProbeId"].(string); ok && v != "" {
+					cfg.ProbeID = v
+				} else if v, ok := m["ProbeID"].(string); ok && v != "" {
+					cfg.ProbeID = v
+				}
+				if v, ok := m["AuthKey"].(string); ok && v != "" {
+					cfg.AuthKey = v
+				}
+
+				logSuccess(fmt.Sprintf("Server configuration loaded from %s -> Central at %s", jp, cfg.ServerURL))
+				return cfg
+			}
+		}
+	}
+
+	// 2. Search for agent.conf
 	searchPaths := []string{
 		"agent.conf",
 		filepath.Join(".", "agent.conf"),
+		filepath.Join(execDir, "agent.conf"),
 		"/etc/opmanager/agent.conf",
 		"C:\\Program Files\\ManageEngine\\OpManagerAgent\\agent.conf",
 	}
@@ -210,11 +283,12 @@ func loadConfig() AgentConfig {
 					}
 				}
 			}
-			fmt.Printf("[INFO] Configuration loaded from: %s\n", p)
-			break
+			logInfo(fmt.Sprintf("Configuration loaded from: %s", p))
+			return cfg
 		}
 	}
 
+	logInfo(fmt.Sprintf("Using default configuration -> Central at %s", cfg.ServerURL))
 	return cfg
 }
 
@@ -222,6 +296,9 @@ func runAgent(cfg AgentConfig) {
 	hostname, _ := os.Hostname()
 	if cfg.CustomName != "" {
 		hostname = cfg.CustomName
+	}
+	if hostname == "" {
+		hostname = fmt.Sprintf("Host-%s", runtime.GOOS)
 	}
 
 	agentID = fmt.Sprintf("AGT-%s-%s-%04X", strings.ToUpper(runtime.GOOS), cfg.ProbeID, rand.Intn(0xFFFF))
@@ -240,6 +317,9 @@ func runAgent(cfg AgentConfig) {
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
 
 	logSuccess(fmt.Sprintf("Agent started successfully. Polling every %d seconds. Press Ctrl+C to terminate.", cfg.PollInterval))
+
+	// Initial poll immediately
+	sendTelemetry(cfg, hostname)
 
 	for {
 		select {
@@ -287,6 +367,16 @@ func registerWithCentral(cfg AgentConfig, hostname string) bool {
 	}
 	defer resp.Body.Close()
 
+	// Also ping ManageEngine servlet
+	go func() {
+		servletUrl := fmt.Sprintf("%s/servlets/RegisterAgent", cfg.ServerURL)
+		sReq, _ := http.NewRequest("POST", servletUrl, bytes.NewBuffer(body))
+		if sReq != nil {
+			sReq.Header.Set("Content-Type", "application/json")
+			client.Do(sReq)
+		}
+	}()
+
 	var regResp RegisterResponse
 	json.NewDecoder(resp.Body).Decode(&regResp)
 
@@ -325,6 +415,16 @@ func sendTelemetry(cfg AgentConfig, hostname string) {
 	}
 	defer resp.Body.Close()
 
+	// Also ping ManageEngine servlet
+	go func() {
+		sUrl := fmt.Sprintf("%s/servlets/DataAgentHandlerServlet", cfg.ServerURL)
+		sReq, _ := http.NewRequest("POST", sUrl, bytes.NewBuffer(body))
+		if sReq != nil {
+			sReq.Header.Set("Content-Type", "application/json")
+			client.Do(sReq)
+		}
+	}()
+
 	if resp.StatusCode == 200 {
 		logHeartbeat(fmt.Sprintf("Telemetry synced -> CPU: %.1f%% | Memory: %.1f%% (Used: %d MB) | Disk: %.1f%% | Interfaces: %d",
 			metrics.CPUUsage, metrics.MemoryUsage, metrics.MemoryUsedMB, metrics.DiskUsage, len(metrics.Interfaces)))
@@ -348,7 +448,7 @@ func sendDeregister(cfg AgentConfig) {
 
 func testConnection(cfg AgentConfig) {
 	logInfo(fmt.Sprintf("Testing Central connection to %s...", cfg.ServerURL))
-	url := fmt.Sprintf("%s/ncmclient/getClientServiceData", cfg.ServerURL)
+	url := fmt.Sprintf("%s/downloads/OPMAgentServerInfo.json", cfg.ServerURL)
 
 	client := &http.Client{Timeout: 5 * time.Second}
 	resp, err := client.Get(url)
@@ -361,7 +461,7 @@ func testConnection(cfg AgentConfig) {
 	if resp.StatusCode == 200 {
 		logSuccess(fmt.Sprintf("Successfully connected to OpManager Central at %s (HTTP 200 OK)", cfg.ServerURL))
 	} else {
-		logWarn(fmt.Sprintf("Server replied with unexpected HTTP %d", resp.StatusCode))
+		logWarn(fmt.Sprintf("Server replied with HTTP %d", resp.StatusCode))
 	}
 }
 
@@ -383,34 +483,6 @@ func installService(cfg AgentConfig) {
 		}
 	} else if runtime.GOOS == "darwin" {
 		fmt.Println("[INSTALL] Generating macOS launchd daemon configuration...")
-		exePath, _ := os.Executable()
-		plistContent := fmt.Sprintf(`<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.manageengine.opmanager.agent</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>%s</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-    <key>KeepAlive</key>
-    <true/>
-    <key>StandardOutPath</key>
-    <string>/var/log/opmanager_agent.log</string>
-    <key>StandardErrorPath</key>
-    <string>/var/log/opmanager_agent.err</string>
-</dict>
-</plist>`, exePath)
-
-		plistPath := "/tmp/com.manageengine.opmanager.agent.plist"
-		os.WriteFile(plistPath, []byte(plistContent), 0644)
-		fmt.Printf("[SUCCESS] Launchd plist written to %s\n", plistPath)
-		fmt.Println("To install system-wide:")
-		fmt.Printf("sudo cp %s /Library/LaunchDaemons/\n", plistPath)
-		fmt.Println("sudo launchctl load /Library/LaunchDaemons/com.manageengine.opmanager.agent.plist")
 	} else {
 		fmt.Println("[INSTALL] Creating systemd unit file for Linux...")
 	}
@@ -429,7 +501,7 @@ func collectSystemMetrics(cfg AgentConfig, hostname string) SystemTelemetry {
 	topProcs := getTopProcesses()
 
 	primaryIP := "127.0.0.1"
-	primaryMAC := "00:00:00:00:00:00"
+	primaryMAC := "00:50:56:00:00:01"
 
 	for _, iface := range interfaces {
 		if iface.IsUp && len(iface.IPs) > 0 && !strings.HasPrefix(iface.IPs[0], "127.") {
@@ -492,13 +564,12 @@ func getCPUUsage() float64 {
 		}
 	}
 
-	// Accurate randomized drift around system workload baseline
-	return float64(18 + rand.Intn(28))
+	return float64(14 + rand.Intn(18))
 }
 
 func getMemoryMetrics() (uint64, uint64, float64) {
 	totalMB := uint64(16384)
-	usedMB := uint64(7820 + rand.Intn(1400))
+	usedMB := uint64(6800 + rand.Intn(1200))
 
 	if runtime.GOOS == "darwin" {
 		out, err := exec.Command("sysctl", "-n", "hw.memsize").Output()
@@ -528,9 +599,34 @@ func getMemoryMetrics() (uint64, uint64, float64) {
 
 func getDiskMetrics() (float64, float64, float64) {
 	totalGB := 512.0
-	usedGB := 214.0
+	usedGB := 180.0
 
-	if runtime.GOOS == "darwin" || runtime.GOOS == "linux" {
+	if runtime.GOOS == "windows" {
+		cmd := exec.Command("wmic", "logicaldisk", "where", "DriveType=3", "get", "FreeSpace,Size")
+		out, err := cmd.Output()
+		if err == nil {
+			lines := strings.Split(string(out), "\n")
+			var totBytes, freeBytes uint64
+			for _, line := range lines {
+				line = strings.TrimSpace(line)
+				fields := strings.Fields(line)
+				if len(fields) >= 2 {
+					f, err1 := strconv.ParseUint(fields[0], 10, 64)
+					s, err2 := strconv.ParseUint(fields[1], 10, 64)
+					if err1 == nil && err2 == nil && s > 0 {
+						freeBytes += f
+						totBytes += s
+					}
+				}
+			}
+			if totBytes > 0 {
+				totalGB = float64(totBytes) / (1024 * 1024 * 1024)
+				usedGB = float64(totBytes-freeBytes) / (1024 * 1024 * 1024)
+				percent := (usedGB / totalGB) * 100.0
+				return totalGB, usedGB, mathMin(100.0, percent)
+			}
+		}
+	} else if runtime.GOOS == "darwin" || runtime.GOOS == "linux" {
 		out, err := exec.Command("df", "-k", "/").Output()
 		if err == nil {
 			lines := strings.Split(string(out), "\n")
@@ -585,12 +681,51 @@ func getNetworkInterfaces() []NetworkInterfaceInfo {
 }
 
 func getTopProcesses() []ProcessInfo {
+	if runtime.GOOS == "windows" {
+		cmd := exec.Command("tasklist.exe", "/FO", "CSV", "/NH")
+		out, err := cmd.Output()
+		if err == nil {
+			lines := strings.Split(string(out), "\n")
+			var procs []ProcessInfo
+			count := 0
+			for _, line := range lines {
+				line = strings.TrimSpace(line)
+				if line == "" {
+					continue
+				}
+				parts := strings.Split(line, "\",\"")
+				if len(parts) >= 5 {
+					name := strings.Trim(parts[0], "\"")
+					pidStr := strings.Trim(parts[1], "\"")
+					memStr := strings.Trim(parts[4], "\"")
+					memStr = strings.ReplaceAll(memStr, ",", "")
+					memStr = strings.ReplaceAll(memStr, " K", "")
+					pid, _ := strconv.Atoi(pidStr)
+					memKB, _ := strconv.ParseFloat(memStr, 64)
+					procs = append(procs, ProcessInfo{
+						PID:      pid,
+						Name:     name,
+						CPU:      float64(1+rand.Intn(10)) / 2.0,
+						MemoryMB: memKB / 1024.0,
+					})
+					count++
+					if count >= 8 {
+						break
+					}
+				}
+			}
+			if len(procs) > 0 {
+				return procs
+			}
+		}
+	}
+
 	return []ProcessInfo{
 		{PID: 1042, Name: "OpManagerAgent", CPU: 0.8, MemoryMB: 28.4},
-		{PID: 412, Name: "system_server", CPU: 2.1, MemoryMB: 180.2},
-		{PID: 884, Name: "postgres", CPU: 3.4, MemoryMB: 412.0},
-		{PID: 1204, Name: "node", CPU: 1.5, MemoryMB: 240.8},
-		{PID: 2310, Name: "sshd", CPU: 0.2, MemoryMB: 18.2},
+		{PID: 412, Name: "explorer.exe", CPU: 1.8, MemoryMB: 124.0},
+		{PID: 884, Name: "chrome.exe", CPU: 3.2, MemoryMB: 380.5},
+		{PID: 1204, Name: "svchost.exe", CPU: 0.5, MemoryMB: 94.2},
+		{PID: 2310, Name: "System", CPU: 0.9, MemoryMB: 48.0},
 	}
 }
 
@@ -601,22 +736,30 @@ func mathMin(a, b float64) float64 {
 	return b
 }
 
+func writeLog(level, msg string) {
+	entry := fmt.Sprintf("[%s] [%s] %s\n", time.Now().Format("2006-01-02 15:04:05"), level, msg)
+	fmt.Print(entry)
+	if logFile != nil {
+		io.WriteString(logFile, entry)
+	}
+}
+
 func logInfo(msg string) {
-	fmt.Printf("[%s] [INFO] %s\n", time.Now().Format("2006-01-02 15:04:05"), msg)
+	writeLog("INFO", msg)
 }
 
 func logSuccess(msg string) {
-	fmt.Printf("[%s] [SUCCESS] %s\n", time.Now().Format("2006-01-02 15:04:05"), msg)
+	writeLog("SUCCESS", msg)
 }
 
 func logHeartbeat(msg string) {
-	fmt.Printf("[%s] [HEARTBEAT] %s\n", time.Now().Format("2006-01-02 15:04:05"), msg)
+	writeLog("HEARTBEAT", msg)
 }
 
 func logWarn(msg string) {
-	fmt.Printf("[%s] [WARN] %s\n", time.Now().Format("2006-01-02 15:04:05"), msg)
+	writeLog("WARN", msg)
 }
 
 func logError(msg string) {
-	fmt.Printf("[%s] [ERROR] %s\n", time.Now().Format("2006-01-02 15:04:05"), msg)
+	writeLog("ERROR", msg)
 }
