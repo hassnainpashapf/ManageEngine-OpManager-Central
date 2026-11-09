@@ -19,13 +19,13 @@ machines — run it yourself using one of the paths below.
 
 | Item | Requirement | Source |
 | --- | --- | --- |
-| Node.js | v18 or higher (v20+ recommended) | `README.md`; `Dockerfile` uses `node:20-alpine` |
+| Node.js | v24 or higher | `README.md`; `Dockerfile` uses `node:24-alpine` |
 | npm | v9 or higher | `README.md` |
 | Git | any recent version | — |
 | Network | Outbound ICMP + UDP 161 to the devices you monitor; TCP 8060 inbound to the console | `server/services/poller.js`, `server/services/snmp.js` |
 
-There is **no `engines` field in `package.json`** — the Node version is a
-documented requirement, not an enforced one. `package.json` scripts:
+`package.json` declares `"engines": {"node": ">=24"}` — npm warns (it only
+errors when `engine-strict` is set) on an older Node. `package.json` scripts:
 
 ```json
 "start": "node server/index.js",
@@ -92,6 +92,31 @@ on macOS):
 > `agent_dist/macos/OpManagerAgent-amd64` (Intel). See §1.5 for the manual
 > workaround. The agent is optional — see below.
 
+**Heap size: V8, not JVM (`--max-old-space-size`).** There is no JVM in
+this build, so `POST /admin/updateJvmHeapSize` (and
+`/api/admin/updateJvmHeapSize`) always answers **501** — permanently, not
+a missing feature; no JVM heap exists to resize and no JVM metric is ever
+invented. The only heap is the Node.js (V8) heap, whose maximum old-space
+size is fixed at **process start** by the `--max-old-space-size` flag and
+cannot be changed at runtime or by any API call. To raise it, restart the
+server with the flag (value in MB):
+
+```bash
+NODE_OPTIONS=--max-old-space-size=4096 npm start
+```
+
+Docker Compose: add `- NODE_OPTIONS=--max-old-space-size=4096` under
+`environment:` in `docker-compose.yml` (§2.2); plain `docker run`: add
+`-e NODE_OPTIONS=--max-old-space-size=4096` (§2.3); Render: set
+`NODE_OPTIONS` to the same value as an environment variable (§3).
+Verified on Node v24.22.1: default `heap_size_limit` 2240 MB →
+4288 MB with `--max-old-space-size=4096` (limit ≈ flag + ~192 MB
+overhead). Live V8 heap figures are visible at
+`GET /api/admin/GetSystemInformation` (`runtime.heapTotalMB` /
+`heapUsedMB`); the limit itself is not exposed by the API — check it with
+`NODE_OPTIONS=--max-old-space-size=4096 node -e
+"console.log(require('v8').getHeapStatistics().heap_size_limit)"`.
+
 To stop everything started by `start_opmanager_central.sh`:
 
 ```bash
@@ -149,7 +174,7 @@ running.
 ### 2.1 What the `Dockerfile` does (read, not assumed)
 
 ```dockerfile
-FROM node:20-alpine
+FROM node:24-alpine
 WORKDIR /app
 RUN apk add --no-cache iputils iproute2 traceroute curl net-tools
 COPY package*.json ./
@@ -530,9 +555,10 @@ on redeploy (§3).
 3. **Render free plan has no persistent disk.** `render.yaml` documents it
    and §3 repeats it: every redeploy/restart wipes `server/data`, including
    the admin account and all devices.
-4. **No `engines` field in `package.json`.** The Node ≥ 18 requirement is
-   documented only; nothing enforces it. Running on an older Node will fail
-   in unclear ways — check with `node --version` before starting.
+4. **`engines` in `package.json` requires Node ≥ 24.** npm warns on an older
+   Node unless `engine-strict` is set. Running on Node < 24 fails at startup
+   with `ERR_UNKNOWN_BUILTIN_MODULE: node:sqlite` — check with
+   `node --version` before starting.
 5. **Trap/syslog ports (UDP 162/514) need privileges.** Binding them
    requires root or the right capability; on a plain macOS run without
    privileges the bind fails (logged, non-fatal — console unaffected).

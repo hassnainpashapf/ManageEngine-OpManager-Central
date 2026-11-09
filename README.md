@@ -2,7 +2,7 @@
 
 [![ManageEngine OpManager](https://img.shields.io/badge/ManageEngine-OpManager%20Central%20v12.9.204-GA-0070e0.svg?style=flat-square)](https://www.manageengine.com/network-monitoring/)
 [![License: Proprietary Clean Room](https://img.shields.io/badge/Clean%20Room-Reconstruction-10b981.svg?style=flat-square)](#)
-[![Node.js Version](https://img.shields.io/badge/Node.js-18%2B%20%2F%2022%2B-green.svg?style=flat-square)](https://nodejs.org/)
+[![Node.js Version](https://img.shields.io/badge/Node.js-24%2B-green.svg?style=flat-square)](https://nodejs.org/)
 [![Status](https://img.shields.io/badge/Parity-100%25%20Authentic%20GA-blueviolet.svg?style=flat-square)](#)
 
 A high-fidelity, production-grade full-stack reconstruction of **ManageEngine OpManager Central 64-bit GA (v12.9.204-GA)** — the enterprise distributed Network Management System (NMS), Network Configuration Management (NCM), NetFlow Analyzer, and IT Operations Management (ITOM) suite.
@@ -99,7 +99,7 @@ OpManager Central operates on a distributed multi-tier Central-Probe architectur
 ## 💻 Quick Start Guide
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) v18.x or higher (v20+ recommended)
+- [Node.js](https://nodejs.org/) v24.x or higher
 - `npm` v9.x or higher
 
 ### 1. Clone & Install Dependencies
@@ -115,6 +115,14 @@ npm start
 # OR using the startup script:
 ./start.sh
 ```
+
+> **Heap size (V8, not JVM):** this build runs on Node.js — there is no
+> JVM, so `POST /admin/updateJvmHeapSize` always answers **501** and can
+> never be made real. To change the heap limit, restart with
+> `NODE_OPTIONS=--max-old-space-size=4096 npm start` (value in MB; see
+> `DEPLOY.md` §1.3). Live V8 heap figures:
+> `GET /api/admin/GetSystemInformation` → `runtime.heapTotalMB` /
+> `heapUsedMB`.
 
 The server will initialize on port **8060**:
 - **Direct ITOM Web Console**: [http://localhost:8060/apiclient/fluidicv3/itom/index.html](http://localhost:8060/apiclient/fluidicv3/itom/index.html)

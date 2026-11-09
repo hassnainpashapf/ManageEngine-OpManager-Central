@@ -773,12 +773,23 @@ router.get(['/admin/GetThreadDump', '/api/admin/GetThreadDump'], (req, res) => {
 });
 
 // ------------------------------------------------------------- jvm heap ---
-// No JVM exists in this Node.js build, so there is no heap to resize.
+// STRUCTURALLY NOT IMPLEMENTABLE — this is the one 501 that can never be
+// made real. This build runs on Node.js, not Java: there is no JVM process
+// at all, so there is no JVM heap to resize. In the Java OpManager this
+// endpoint resized the running JVM's heap; here the only heap is the V8
+// heap, whose maximum old-space size is fixed at process start by the
+// --max-old-space-size flag (e.g. NODE_OPTIONS=--max-old-space-size=4096,
+// see DEPLOY.md §1.3) and cannot be changed by any API call while the
+// server is running. This endpoint therefore always answers 501 with the
+// exact reason; it never pretends to succeed and never invents a JVM
+// metric. The closest real equivalent is that startup flag, plus the live
+// V8 heap figures in GET /api/admin/GetSystemInformation
+// (runtime.heapTotalMB / heapUsedMB).
 
 router.post(['/admin/updateJvmHeapSize', '/api/admin/updateJvmHeapSize'], (req, res) => {
   res.status(501).json({
     status: 'error',
-    ...NOT_IMPLEMENTED('No JVM exists in this Node.js build; heap size cannot be changed via this endpoint.'),
+    ...NOT_IMPLEMENTED('This build runs on Node.js, not Java: no JVM process exists, so there is no JVM heap to resize. The Node.js (V8) heap size is governed by the --max-old-space-size flag at process start (e.g. NODE_OPTIONS=--max-old-space-size=4096) and cannot be changed by this API while the server is running. Restart the server with that flag to change the heap limit.'),
   });
 });
 
