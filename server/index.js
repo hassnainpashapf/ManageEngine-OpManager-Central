@@ -17,6 +17,7 @@ const toolsRoute = require('./routes/tools');
 const ziaRoute = require('./routes/zia');
 const agentsRoute = require('./routes/agents');
 const authRoute = require('./routes/auth');
+const samlRoute = require('./routes/saml');
 const racksRoute = require('./routes/racks');
 const workflowsRoute = require('./routes/workflows');
 // Phase-3 ws-events hub (server/services/wsEvents.js): producers across
@@ -152,6 +153,12 @@ const PUBLIC_API_ROUTES = new Set([
   'POST /api/auth/login',
   'POST /api/auth/setup',
   'GET /api/auth/session', // reports its own status; must stay public
+  // SAML 2.0 SP entry points: the IdP and the browser arriving from it
+  // carry no OpManager session by definition. ACS validates the signed
+  // Response itself before minting a session; metadata is public by design.
+  'GET /api/auth/saml/metadata',
+  'GET /api/auth/saml/login',
+  'POST /api/auth/saml/acs',
 ]);
 
 // Agent telemetry ingestion. These do NOT take the user session: agents.js
@@ -430,6 +437,7 @@ app.use('/downloads', express.static(path.join(__dirname, '../client/downloads')
 
 // Mount API routes
 app.use(authRoute);
+app.use(samlRoute);
 // agentsRoute mounts BEFORE ncmclientRoute: ncmclient.js has a router-level
 // guard that 401s any request without req.user, and the agents' telemetry /
 // deregister endpoints authenticate by per-agent key (not a user session),
