@@ -754,6 +754,24 @@ function raiseAlarm(alarm) {
   );
   // HE-1 (phase 5): a genuinely new alarm is a real notification event.
   notifyAlarmEvent('raised', inserted);
+  // (Phase 5, HE-3a) Real console event -> console message: every alarm
+  // actually raised records one ALERT message for the 'alarms' page, built
+  // only from the alarm's own fields. Lazy require avoids a load-time
+  // cycle (consoleMessages requires this store); best-effort so a message
+  // failure can never break alarm creation.
+  try {
+    const consoleMessages = require('./consoleMessages');
+    consoleMessages.recordMessage({
+      page: 'alarms',
+      type: 'ALERT',
+      title: inserted && inserted.severity
+        ? `${inserted.severity} alarm${inserted.source ? ` (${inserted.source})` : ''}`
+        : 'Alarm raised',
+      message: (inserted && inserted.message) || 'An alarm was raised.'
+    });
+  } catch (e) {
+    // Message recording is best-effort; the alarm itself was stored.
+  }
   return inserted;
 }
 

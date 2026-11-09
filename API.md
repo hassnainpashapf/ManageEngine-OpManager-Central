@@ -307,7 +307,7 @@ with it); a failed community is never recorded. `runId = DISC-<epoch-ms>`.
 | --- | --- | --- | --- | --- |
 | `GET /api/hardware/details` | Session (guard) | Query: `deviceId` or `ip` | Looks the device up by id or IP; then live SNMP: ENTITY-MIB (chassis / PSUs / fans / CPUs), ENTITY-SENSOR-MIB (fan RPM, temperatures with thresholds and EnvMon state), HOST-RESOURCES storage (RAM/flash, with a `ciscoMemoryPool` fallback). Response includes `deviceName`, `vendor`, `category`, `model`, `serialNumber`, `systemOid`, PSU/fan/temperature lists and RAM/flash totals; any field with no source is `null` — including `macAddress: null` (no MAC source in the store or ENTITY-MIB; not invented). `404` unknown device; `502` SNMP failure; `503` if the SNMP service cannot be loaded. | **REAL** — **OPEN O-6** (MAC source) |
 
-## 11. `server/routes/ncmclient.js` — 28 definitions: 16 REAL, 12 HONEST-EMPTY
+## 11. `server/routes/ncmclient.js` — 28 definitions: 24 REAL, 4 HONEST-EMPTY
 
 All paths have legacy `/ncmclient/...` and `/api/json/ncmclient/...` aliases.
 `getClientServiceData` builds `userMeta` from the caller's real session user
@@ -319,27 +319,44 @@ licence/rebrand data. Probe up/down in the dashboard data comes from real heartb
 freshness. The 5-category device taxonomy is static reference data (audit-accepted).
 **OPEN O-20**: the full `userMeta`/`productMeta` field list was only partially captured
 in this draft and needs a final read.
+**HE-3a (2026-11-09)**: 8 of the 9 remaining HONEST-EMPTY routes in this section
+are now REAL (see rows below); only `getLayer2Maps` stays empty, with its reason.
+Two supporting fixes landed with them: (1) `permissionsForRole` now treats role
+`'admin'` as full-access, matching `server/services/session.js` ("'admin' and
+'SuperAdmin' are treated as the same administrative role") — without it the
+seeded bootstrap admin got zero permissions here while `requireRole('admin')`
+elsewhere treated it as admin; (2) the classic-module page redirect in
+`server/index.js` (`/NCM*` etc.) matched those words anywhere in the path, so
+every `/api/json/ncmclient/...`, `/api/json/maps/...` and `/api/json/ncm*...`
+call 302'd to the SPA shell — API paths now fall through to the routers, and
+genuine page routes (`/NCM`, `/Maps`) still redirect. New shared service
+`server/services/consoleMessages.js` (settings-JSON store, capped at 200) is
+fed only by real alarms via a hook in `store.alarms.raiseAlarm()`.
+Dashboards, custom views, floors and logical groups persist as JSON arrays
+under settings keys (same convention as `racks.js` `rack_assignments`); their
+create paths are session-guarded and need the module's write permission
+(`dashboardWrite` / `inventoryWrite`), so Operator (read-only) gets 403.
 
 | Method + path | Auth | Response | Status |
 | --- | --- | --- | --- |
 | `GET /ncmclient/getClientServiceData`, `/api/json/ncmclient/getClientServiceData` | Session (guard) | `{userMeta:{…real user/role/permissions…}, productMeta, licenseMeta:null, rebrandMeta:null, mspMeta:null, …}` — probe status from heartbeat. | **REAL** |
 | `GET /ncmclient/getMainMenuTabs`, `/api/json/ncmclient/getMainMenuTabs` | Session (guard) | Tabs built from the real modules in this app and the caller's actual permissions — a tab appears only when the caller may read that module (Dashboard, Inventory, Alarms, … with sub-menu items only where the backing feature exists, e.g. no Automation tab without a configlet store). A role with no read permissions gets `[]`. | **REAL** |
 | `GET /ncmclient/getUserPreference`, `/api/json/ncmclient/getUserPreference` | Session (guard) | Static defaults `{DGroupNewView:false, theme:'itom-grey-text-theme'}` — no per-user preference store exists. | **REAL** (static) |
-| `GET /ncmclient/getDashboardList`, `/api/json/ncmclient/getDashboardList` | Session (guard) | `{defaultDashboards:[], customDashboards:[]}` — no dashboards exist. | **HONEST-EMPTY** |
+| `GET /ncmclient/getDashboardList`, `/api/json/ncmclient/getDashboardList` | Session (guard) | Array of dashboards, each with `Name` (the shape the real client consumes: it reads `dash.Name`). 2 derived defaults — `Overview` (devices / alarms / probes / config-conflict widgets, each pointing at a real endpoint in this repo) and `Network Configuration` (real NCM status endpoints) — filtered by the caller's read permissions, plus stored custom dashboards from `POST /api/json/ncmclient/createDashboard` (custom widgets must point at a real endpoint from the allowlist, else 400). | **REAL** (HE-3a) |
 | `GET /ncmclient/getAccessibilityControls`, `/api/json/ncmclient/getAccessibilityControls` | Session (guard) | Static accessibility control set. | **REAL** (static) |
-| `GET /ncmclient/getMessagesForPage`, `/api/json/ncmclient/getMessagesForPage` | Session (guard) | `{messages:[]}`. | **HONEST-EMPTY** |
-| `GET /ncmclient/listCustomViews`, `/api/json/ncmclient/listCustomViews` | Session (guard) | `{views:[]}`. | **HONEST-EMPTY** |
-| `GET /ncmclient/listCCTVView`, `/api/json/ncmclient/listCCTVView` | Session (guard) | `[]`. | **HONEST-EMPTY** |
-| `GET /ncmclient/getTabViewDetails`, `/api/json/ncmclient/getTabViewDetails` | Session (guard) | `{bvDetails:{List:[]}}`. | **HONEST-EMPTY** |
-| `GET /ncmclient/listFloors`, `/api/json/ncmclient/listFloors` | Session (guard) | `[]` — no floor data. | **HONEST-EMPTY** |
+| `GET /ncmclient/getMessagesForPage`, `/api/json/ncmclient/getMessagesForPage` | Session (guard) | Keyed by `?pageName=` (the shape the real client consumes: `response[pageName].messages.ALERT` / `.NEW`), each page's messages grouped `ALERT` / `NEW` / `INFO`. Store starts empty; entries are recorded only by real console events — currently every alarm raised through `store.alarms.raiseAlarm()` (title/message from the alarm's own fields). No pageName returns every page with stored messages, keyed the same way. | **REAL** (HE-3a) |
+| `GET /ncmclient/listCustomViews`, `/api/json/ncmclient/listCustomViews` | Session (guard) | `{views:[...]}` — only views actually created via `POST /api/json/ncmclient/createCustomView`; `deviceCount` computed live from stored devices matching the view's criteria; `?type=` filters. Empty only when none exist. | **REAL** (HE-3a) |
+| `GET /ncmclient/listCCTVView`, `/api/json/ncmclient/listCCTVView` | Session (guard) | Devices from the stored inventory whose category names a camera/NVR (`camera`/`cctv`/`nvr`/`dvr`) or whose sysDescr mentions a camera. `[]` when no such device exists. | **REAL** (HE-3a) |
+| `GET /ncmclient/getTabViewDetails`, `/api/json/ncmclient/getTabViewDetails` | Session (guard) | `{bvDetails:{List:[...]}}` — stored custom views for `?tabName=` plus, for `inventory`, one live entry per device category actually present (real counts). `virtualInventory` additionally returns `bySeverity` from real alarms and `byVirtualType:[]` (no virtualization inventory is collected). | **REAL** (HE-3a) |
+| `GET /ncmclient/listFloors`, `/api/json/ncmclient/listFloors` | Session (guard) | Only floors actually created via `POST /api/json/ncmclient/createFloor` (rackIds validated against real racks; `rackCount` computed live from racks that still exist). Empty only when none exist. | **REAL** (HE-3a) |
 | `GET /ncmclient/listRacks`, `/api/json/ncmclient/listRacks` | Session (guard) | Real racks from the store (see §13). | **REAL** |
-| `GET /ncmclient/getLayer2Maps`, `/api/json/ncmclient/getLayer2Maps` | Session (guard) | `[]` — no L2 topology source. | **HONEST-EMPTY** |
+| `GET /ncmclient/getLayer2Maps`, `/api/json/ncmclient/getLayer2Maps` | Session (guard) | `[]` — STAYS EMPTY: no LLDP/CDP neighbor collection and no MAC/ARP table collection from managed devices exists anywhere in this codebase (the poller collects interface counters and availability only). The MAC resolver in `server/routes/tools.js` reads this host's own kernel neighbor table, not managed-device topology, so using it would be invented data. | **HONEST-EMPTY** (HE-3a, reason confirmed) |
 | `GET /ncmclient/getSecurityScore`, `/api/json/ncmclient/getSecurityScore` | Session (guard) | REAL score from stored data: `score = max(0, 100 − alarmDeduction − complianceDeduction)` over open (active/acknowledged) alarms by severity and compliance verdicts; `grade` A–F, `status` Good/Fair/At Risk, full `details` breakdown. `null` with a reason when no devices are monitored. Formula + caps: HE-3b note below. | **REAL** (HE-3b, Phase 5) |
-| `GET /ncmclient/getWebAlarmSoundFiles`, `/api/json/ncmclient/getWebAlarmSoundFiles` | Session (guard) | `[]`. | **HONEST-EMPTY** |
+| `GET /ncmclient/getWebAlarmSoundFiles`, `/api/json/ncmclient/getWebAlarmSoundFiles` | Session (guard) | `[{fileName, filePath}]` — the `client/apiclient/fluidicv2/sounds` directory shipped with the client is read at runtime and every audio file in it is listed (currently `webalarm.mp3`). `[]` only if the directory holds no audio files. | **REAL** (HE-3a) |
 | `GET /ncmclient/listCustomFields`, `/api/json/ncmclient/listCustomFields` | Session (guard) | Static labels (site / rack / owner). | **REAL** (static) |
 | `GET /ncmclient/getNCMInvFilters`, `/api/json/ncmclient/getNCMInvFilters` | Session (guard) | Static default inventory filters. | **REAL** (static) |
 | `GET /ncmclient/getDeviceCategories`, `/api/json/ncmclient/getDeviceCategories` | Session (guard) | Static 5-category taxonomy (audit-accepted reference data). | **REAL** (static) |
-| `GET /ncmclient/listAllLogicalGroups`, `/api/json/ncmclient/listAllLogicalGroups` | Session (guard) | `[]` — no logical groups exist. | **HONEST-EMPTY** |
+| `GET /ncmclient/listAllLogicalGroups`, `/api/json/ncmclient/listAllLogicalGroups` | Session (guard) | Only groups actually created via `POST /api/json/ncmclient/createLogicalGroup` (deviceIds validated against real devices; `deviceCount` computed live from devices that still exist). Empty only when none exist. | **REAL** (HE-3a) |
 | `GET /ncmclient/getDeviceGroupViewPreference`, `/api/json/ncmclient/getDeviceGroupViewPreference` | Session (guard) | `{preference:'tree'}` (static default). | **REAL** (static) |
 | `GET /ncmclient/getConfigConflictStatus`, `/api/json/ncmclient/getConfigConflictStatus` | Session (guard) | Computed from the device's stored running/startup configs (same source as §8). | **REAL** |
 | `GET /ncmclient/getComplianceStatus`, `/api/json/ncmclient/getComplianceStatus` | Session (guard) | REAL: each device with a fetched running config is checked against 5 defined policies (HE-3b note below); counts Compliant (Pass) / Minor Deviation / Critical Violation, plus `devicesEvaluated`, `devicesNotEvaluated` (no running config — never counted compliant), `policies`, `perDevice` verdicts. | **REAL** (HE-3b, Phase 5) |
