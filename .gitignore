@@ -20,3 +20,5 @@ server/data/opmanager.db
 server/data/.admin-initial
 server/data/db.json
 server/data/seed.json
+server/data/opmanager.db-shm
+server/data/opmanager.db-wal
