@@ -19,6 +19,18 @@ const agentsRoute = require('./routes/agents');
 const authRoute = require('./routes/auth');
 const racksRoute = require('./routes/racks');
 const workflowsRoute = require('./routes/workflows');
+// Phase-3 ws-events hub (server/services/wsEvents.js): producers across
+// the codebase emit real-operation events here; the single onEvent
+// subscription below forwards them to all connected WebSocket clients.
+// The trap listener is registered BEFORE trapsRoute loads, because
+// traps.js starts the UDP receiver on load — registering first means no
+// datagram can arrive before the broadcast is wired.
+// NOTE (phase-4 merge M7): ws-events' own server/routes/ncm.js is NOT
+// merged here — the NCM merge agent (M6) owns the single canonical
+// routes/ncm.js, so this file mounts no ncm route.
+const wsEvents = require('./services/wsEvents');
+const trapReceiver = require('./services/trapReceiver');
+trapReceiver.onStoredTrap((row, kind) => wsEvents.emitTrapReceived(row, kind));
 const trapsRoute = require('./routes/traps');
 const hardwareRoute = require('./routes/hardware');
 const diffRoute = require('./routes/diff');
@@ -515,6 +527,29 @@ wss.on('connection', async (ws, req) => {
   });
 });
 
+// Shared WebSocket broadcast: one JSON.stringify, sent to every
+// connected, authenticated client (both /ws NOC-stream clients and
+// /PNSHandler ManageEngine clients — the poller already broadcasts
+// METRIC_TICK to both, so phase-3 events follow the same rule).
+// A send failure for one client never breaks the others.
+function broadcastWs(message) {
+  const text = typeof message === 'string' ? message : JSON.stringify(message);
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      try {
+        client.send(text);
+      } catch (e) {}
+    }
+  });
+}
+
+// Phase-3 event broadcast: every event emitted through wsEvents (template
+// applied, NCM lifecycle, HA status, trap/syslog received) is forwarded
+// here, exactly once, with its real payload. No event is ever synthesised
+// in this file — the 3s pong heartbeat below is the only timer-driven
+// frame, and it is the pre-existing ManageEngine keep-alive, not an event.
+wsEvents.onEvent((event) => broadcastWs(event));
+
 // Proactive Server-Side Heartbeat: broadcast pong response every 3 seconds to all clients
 // ensuring client-side failureCheckIntervalId never encounters a missing pong
 setInterval(() => {
@@ -532,13 +567,7 @@ setInterval(() => {
 // are authenticated — see the upgrade handler above).
 if (typeof poller.onUpdate === 'function') {
   poller.onUpdate((payload) => {
-    const message = JSON.stringify(payload);
-
-    wss.clients.forEach(client => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
+    broadcastWs(payload);
   });
 } else {
   console.error('[Poller] poller.onUpdate is not available — live metric broadcasts are disabled.');

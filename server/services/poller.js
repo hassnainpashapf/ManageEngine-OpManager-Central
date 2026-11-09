@@ -47,12 +47,36 @@
  *     defaults above for any threshold that is unset or invalid. A stored
  *     cpu_trouble >= cpu_critical is treated as a misconfiguration and
  *     both CPU values fall back to the defaults.
+ *   - A device with an applied template (device.appliedTemplate, canonical
+ *     shape { templateId, thresholds: { cpuWarn, cpuCrit, memWarn,
+ *     memCrit }, pollIntervalSec }, written by POST
+ *     /api/settings/templates/apply) uses the template's thresholds
+ *     INSTEAD of the device_thresholds row / defaults, field by field:
+ *     cpuWarn → cpu_trouble, cpuCrit → cpu_critical, memWarn →
+ *     mem_trouble (a mem warning level, which the defaults do not have),
+ *     memCrit → mem_critical. Any template field that is absent or
+ *     invalid falls back to the device_thresholds row, then the defaults.
+ *     When a template's crit lands below the lower layer's warn, the warn
+ *     is clamped to the crit (empty Trouble band; Critical still fires at
+ *     the template's crit) rather than discarding the template's crit;
+ *     a template that supplies an inverted warn/crit pair of its own
+ *     falls back to the defaults, same as a misconfigured stored row.
+ *     The resolved (effective) thresholds are stored back on the device
+ *     record (effective_thresholds) on every poll so they are visible via
+ *     GET /api/devices/:id.
  * Alarms are raised once per breach (tracked in-memory by device+source)
  * and resolved by key when the measurement recovers.
  *
  * Poll interval comes from store setting 'poll_interval_seconds'
- * (default 60 s). Devices are polled concurrently; one slow device never
- * blocks the rest. A cycle already in progress is skipped, never stacked.
+ * (default 60 s). A device with an applied template uses the template's
+ * pollIntervalSec instead (clamped to 10–3600 s). The cycle timer ticks
+ * at the shortest interval in use across managed devices, and each cycle
+ * polls only the devices whose own interval has elapsed since their last
+ * poll — so a 10 s template device is polled every ~10 s while a 60 s
+ * device is still polled every ~60 s. The effective interval is stored
+ * back on the device record (effective_poll_interval_sec) on every poll.
+ * Devices are polled concurrently; one slow device never blocks the rest.
+ * A cycle already in progress is skipped, never stacked.
  *
  * Defence in depth (this file): every device poll is wrapped so one bad
  * device can never take down the server process — pollOneDevice()
@@ -280,35 +304,171 @@ function resolvePollIntervalSeconds(store) {  try {
   return DEFAULT_POLL_INTERVAL_SECONDS;
 }
 
-// Per-device alarm thresholds. Reads the device's stored overrides from
-// store.thresholds.getDeviceThresholds and falls back to the defaults
-// (CPU_CRITICAL / CPU_TROUBLE / MEM_CRITICAL) for anything unset, missing
-// or invalid. A stored cpu_trouble >= cpu_critical is a misconfiguration:
-// both CPU values fall back to the defaults rather than evaluating
-// against an inverted pair. Never throws — on any store error the
-// defaults are used and the failure is logged.
-function resolveDeviceThresholds(store, deviceId) {
-  const defaults = { cpuCritical: CPU_CRITICAL, cpuTrouble: CPU_TROUBLE, memCritical: MEM_CRITICAL };
+// Per-device alarm thresholds. Precedence, highest first:
+//   1. the device's applied template (device.appliedTemplate — canonical
+//      shape { templateId, thresholds: { cpuWarn, cpuCrit, memWarn,
+//      memCrit }, pollIntervalSec }), field by field;
+//   2. the stored per-device overrides in the device_thresholds table;
+//   3. the defaults (CPU_CRITICAL / CPU_TROUBLE / MEM_CRITICAL).
+// A template field that is absent or invalid falls through to the next
+// layer instead of breaking the evaluation. A merged cpu_trouble >=
+// cpu_critical is a misconfiguration: both CPU values fall back to the
+// defaults (same rule as before). A merged mem_trouble >= mem_critical
+// drops just the mem warning level (the defaults have none). memTrouble
+// is null when no layer supplies a mem warning level — the pre-template
+// behaviour (mem alarms only at the critical level) is preserved.
+// Never throws — on any store error the defaults are used and the
+// failure is logged.
+// `device` is the raw store row (or a hand-built device object); when it
+// is omitted the template layer is skipped (backwards-compatible callers
+// such as GET /api/devices/:id/thresholds pass the row explicitly).
+function resolveDeviceThresholds(store, deviceId, device) {
+  const defaults = { cpuCritical: CPU_CRITICAL, cpuTrouble: CPU_TROUBLE, memCritical: MEM_CRITICAL, memTrouble: null };
+  const out = { ...defaults };
   try {
-    if (!store || !store.thresholds || typeof store.thresholds.getDeviceThresholds !== 'function') {
-      return defaults;
+    if (store && store.thresholds && typeof store.thresholds.getDeviceThresholds === 'function') {
+      const row = store.thresholds.getDeviceThresholds(deviceId);
+      if (row) {
+        const valid = (v) => typeof v === 'number' && Number.isFinite(v) && v > 0 && v <= 100;
+        if (valid(row.cpu_critical)) out.cpuCritical = row.cpu_critical;
+        if (valid(row.cpu_trouble)) out.cpuTrouble = row.cpu_trouble;
+        if (valid(row.mem_critical)) out.memCritical = row.mem_critical;
+      }
     }
-    const row = store.thresholds.getDeviceThresholds(deviceId);
-    if (!row) return defaults;
-    const valid = (v) => typeof v === 'number' && Number.isFinite(v) && v > 0 && v <= 100;
-    const out = { ...defaults };
-    if (valid(row.cpu_critical)) out.cpuCritical = row.cpu_critical;
-    if (valid(row.cpu_trouble)) out.cpuTrouble = row.cpu_trouble;
-    if (valid(row.mem_critical)) out.memCritical = row.mem_critical;
-    if (out.cpuTrouble >= out.cpuCritical) {
-      out.cpuCritical = defaults.cpuCritical;
-      out.cpuTrouble = defaults.cpuTrouble;
-    }
-    return out;
   } catch (err) {
     console.error(`[Poller] could not read thresholds for device ${deviceId}, using defaults: ${err.message}`);
-    return defaults;
   }
+  // A stored cpu_trouble >= cpu_critical is a misconfiguration: both CPU
+  // values fall back to the defaults (pre-template rule, unchanged).
+  if (out.cpuTrouble >= out.cpuCritical) {
+    out.cpuCritical = defaults.cpuCritical;
+    out.cpuTrouble = defaults.cpuTrouble;
+  }
+  // Highest-precedence layer: the applied template, field by field.
+  // A template field that is absent/invalid leaves the lower layer in
+  // place instead of breaking the evaluation. The merged pair must stay
+  // ordered (warn < crit):
+  //   - template supplies an inverted cpuWarn/cpuCrit pair -> the
+  //     template is misconfigured: both CPU values fall back to the
+  //     defaults (same rule as a misconfigured stored row);
+  //   - template supplies only cpuCrit below the lower layer's warn ->
+  //     the warn is clamped to the crit (empty Trouble band; Critical
+  //     still fires at the template's crit) instead of discarding the
+  //     template's crit or evaluating against an inverted pair;
+  //   - template supplies only cpuWarn at/above the lower layer's crit
+  //     -> the template's warn is ignored (the lower layer's warn stays).
+  //   The mem pair follows the same shape, except a dropped memWarn
+  //   leaves memTrouble null (the defaults have no mem warning level).
+  try {
+    const tpl = resolveAppliedTemplate(device);
+    if (tpl) {
+      const tw = tpl.thresholds;
+      if (tw.cpuWarn !== null && tw.cpuCrit !== null && tw.cpuWarn >= tw.cpuCrit) {
+        out.cpuCritical = defaults.cpuCritical;
+        out.cpuTrouble = defaults.cpuTrouble;
+      } else {
+        if (tw.cpuCrit !== null) {
+          out.cpuCritical = tw.cpuCrit;
+          if (out.cpuTrouble >= out.cpuCritical) out.cpuTrouble = out.cpuCritical;
+        }
+        if (tw.cpuWarn !== null && tw.cpuWarn < out.cpuCritical) out.cpuTrouble = tw.cpuWarn;
+      }
+      if (tw.memWarn !== null && tw.memCrit !== null && tw.memWarn >= tw.memCrit) {
+        // Misconfigured template mem pair: ignore both fields.
+      } else {
+        if (tw.memCrit !== null) {
+          out.memCritical = tw.memCrit;
+          if (out.memTrouble !== null && out.memTrouble >= out.memCritical) out.memTrouble = null;
+        }
+        if (tw.memWarn !== null && tw.memWarn < out.memCritical) out.memTrouble = tw.memWarn;
+      }
+    }
+  } catch (err) {
+    console.error(`[Poller] could not read applied template for device ${deviceId}, using lower-layer thresholds: ${err.message}`);
+  }
+  // Safety net: the per-field guards above always leave warn <= crit
+  // (equality is the intentional empty-Trouble-band clamp, not an error),
+  // so a strict inversion here can only come from a future code path.
+  if (out.cpuTrouble > out.cpuCritical) {
+    out.cpuCritical = defaults.cpuCritical;
+    out.cpuTrouble = defaults.cpuTrouble;
+  }
+  if (out.memTrouble !== null && out.memTrouble >= out.memCritical) {
+    out.memTrouble = null;
+  }
+  return out;
+}
+
+// Parse a device's applied template into its canonical shape, or null
+// when the device has none / it is malformed. Accepts the store row's
+// `applied_template` (JSON text) and a hand-built `appliedTemplate`
+// object. Field validation is defensive — a bad field is dropped, never
+// thrown — because this runs inside the poll path. Accepted threshold
+// aliases: canonical camelCase (cpuWarn/cpuCrit/memWarn/memCrit) and
+// snake_case (cpu_warn/cpu_crit/mem_warn/mem_crit, plus cpu_trouble /
+// cpu_critical / mem_critical for the device_thresholds naming).
+// pollIntervalSec is kept only when it is an integer in
+// [MIN_POLL_INTERVAL_SECONDS, MAX_POLL_INTERVAL_SECONDS]; anything else
+// falls back to the global poll interval.
+function resolveAppliedTemplate(device) {
+  if (!device) return null;
+  let raw = device.appliedTemplate !== undefined ? device.appliedTemplate : device.applied_template;
+  if (raw === null || raw === undefined || raw === '') return null;
+  let obj = raw;
+  if (typeof raw === 'string') {
+    try {
+      obj = JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return null;
+  const templateId = obj.templateId != null ? String(obj.templateId)
+    : (obj.templateName != null ? String(obj.templateName) : null);
+  const t = obj.thresholds && typeof obj.thresholds === 'object' && !Array.isArray(obj.thresholds)
+    ? obj.thresholds : {};
+  const num = (v) => {
+    if (typeof v === 'number' && Number.isFinite(v)) return v;
+    if (typeof v === 'string' && v.trim() !== '' && Number.isFinite(Number(v))) return Number(v);
+    return null;
+  };
+  const pick = (...keys) => {
+    for (const key of keys) {
+      const v = num(t[key]);
+      if (v !== null) return v;
+    }
+    return null;
+  };
+  const pct = (v) => (v !== null && v > 0 && v <= 100 ? v : null);
+  const thresholds = {
+    cpuWarn: pct(pick('cpuWarn', 'cpu_warn', 'cpu_trouble', 'cpuTrouble')),
+    cpuCrit: pct(pick('cpuCrit', 'cpu_crit', 'cpu_critical', 'cpuCritical')),
+    memWarn: pct(pick('memWarn', 'mem_warn', 'mem_trouble', 'memTrouble')),
+    memCrit: pct(pick('memCrit', 'mem_crit', 'mem_critical', 'memCritical')),
+  };
+  let pollIntervalSec = null;
+  const rawInterval = num(obj.pollIntervalSec !== undefined ? obj.pollIntervalSec : obj.poll_interval_sec);
+  if (rawInterval !== null && Number.isInteger(rawInterval)
+    && rawInterval >= MIN_POLL_INTERVAL_SECONDS && rawInterval <= MAX_POLL_INTERVAL_SECONDS) {
+    pollIntervalSec = rawInterval;
+  }
+  if (!templateId && Object.values(thresholds).every((v) => v === null) && pollIntervalSec === null) {
+    return null;
+  }
+  return { templateId, thresholds, pollIntervalSec };
+}
+
+// Effective poll interval for one device, in seconds: the applied
+// template's pollIntervalSec when valid, otherwise the global store
+// setting (resolvePollIntervalSeconds). Never throws.
+function resolveEffectivePollIntervalSec(store, device) {
+  try {
+    const tpl = resolveAppliedTemplate(device);
+    if (tpl && tpl.pollIntervalSec !== null) return tpl.pollIntervalSec;
+  } catch (err) {
+    console.error(`[Poller] could not read applied template for device ${device && device.id}, using global poll interval: ${err.message}`);
+  }
+  return resolvePollIntervalSeconds(store);
 }
 
 // ---------------------------------------------------------------------------
@@ -446,13 +606,17 @@ class RealPoller {
 
   // --- threshold evaluation ------------------------------------------------
   // Evaluates one device's measured CPU/memory values against that
-  // device's thresholds (stored overrides, defaults when unset) and
-  // raises/resolves the 'cpu' and 'mem' alarms. Extracted from
-  // pollOneDeviceInner so the evaluation can be exercised directly
-  // without an SNMP poll; the scheduled cycle calls it via
+  // device's thresholds (applied template > stored overrides > defaults)
+  // and raises/resolves the 'cpu' and 'mem' alarms. `device` is the store
+  // row (an id is accepted for backwards compatibility); `resolved` may
+  // carry thresholds already computed by persistEffectiveConfig so the
+  // evaluation uses exactly the values stored on the device record.
+  // Extracted from pollOneDeviceInner so the evaluation can be exercised
+  // directly without an SNMP poll; the scheduled cycle calls it via
   // pollOneDeviceInner. Returns the effective thresholds used.
-  evaluateThresholds(store, deviceId, name, ip, cpuPct, memPct) {
-    const t = resolveDeviceThresholds(store, deviceId);
+  evaluateThresholds(store, device, name, ip, cpuPct, memPct, resolved) {
+    const deviceId = device && typeof device === 'object' ? device.id : device;
+    const t = resolved || resolveDeviceThresholds(store, deviceId, device);
     if (cpuPct !== null && cpuPct !== undefined) {
       if (cpuPct > t.cpuCritical) {
         this.raiseAlarmOnce(store, deviceId, 'cpu', 'Critical',
@@ -468,11 +632,55 @@ class RealPoller {
       if (memPct > t.memCritical) {
         this.raiseAlarmOnce(store, deviceId, 'mem', 'Critical',
           `Memory ${memPct}% used on ${name} (${ip}) exceeds critical threshold ${t.memCritical}%.`);
+      } else if (t.memTrouble !== null && t.memTrouble !== undefined && memPct > t.memTrouble) {
+        // Warning level exists only when a template supplies memWarn;
+        // the defaults have no mem warning level (pre-template behaviour).
+        this.raiseAlarmOnce(store, deviceId, 'mem', 'Trouble',
+          `Memory ${memPct}% used on ${name} (${ip}) exceeds warning threshold ${t.memTrouble}%.`);
       } else {
         this.resolveAlarm(store, deviceId, 'mem');
       }
     }
     return t;
+  }
+
+  // --- effective-config persistence ----------------------------------------
+  // Resolves the thresholds + poll interval actually in effect for one
+  // device and stores them back on the device record
+  // (effective_thresholds / effective_poll_interval_sec) so they are
+  // visible via GET /api/devices/:id. Returns
+  // { thresholds, pollIntervalSec }. Never throws and never fails a poll.
+  persistEffectiveConfig(store, device) {
+    const fallback = {
+      thresholds: { cpuCritical: CPU_CRITICAL, cpuTrouble: CPU_TROUBLE, memCritical: MEM_CRITICAL, memTrouble: null },
+      pollIntervalSec: DEFAULT_POLL_INTERVAL_SECONDS,
+    };
+    if (!device || device.id === null || device.id === undefined) return fallback;
+    let resolved = fallback;
+    try {
+      resolved = {
+        thresholds: resolveDeviceThresholds(store, device.id, device),
+        pollIntervalSec: resolveEffectivePollIntervalSec(store, device),
+      };
+    } catch (err) {
+      console.error(`[Poller] could not resolve effective config for device ${device.id}: ${err.message}`);
+    }
+    try {
+      if (store.devices && typeof store.devices.updateDevice === 'function') {
+        store.devices.updateDevice(device.id, {
+          effective_thresholds: JSON.stringify({
+            cpuWarn: resolved.thresholds.cpuTrouble,
+            cpuCrit: resolved.thresholds.cpuCritical,
+            memWarn: resolved.thresholds.memTrouble,
+            memCrit: resolved.thresholds.memCritical,
+          }),
+          effective_poll_interval_sec: resolved.pollIntervalSec,
+        });
+      }
+    } catch (err) {
+      console.error(`[Poller] persistEffectiveConfig failed for ${device.id}: ${err.message}`);
+    }
+    return resolved;
   }
 
   // --- one device ----------------------------------------------------------
@@ -536,6 +744,13 @@ class RealPoller {
       this.persistPollError(store, result);
       return result;
     }
+
+    // Resolve + persist the effective config FIRST, so the thresholds and
+    // poll interval actually in effect are recorded on the device even
+    // when the poll itself fails (device Down / SNMP Error). The same
+    // resolved thresholds are used for alarm evaluation below, so the
+    // alarm and the stored effective values can never disagree.
+    const effective = this.persistEffectiveConfig(store, device);
 
     const snmpConfig = resolveSnmpConfig(device);
     const port = devicePort(device);
@@ -664,8 +879,10 @@ class RealPoller {
     }
 
     // 5. Threshold evaluation against the measured values only, using
-    //    this device's thresholds (stored overrides, defaults when unset).
-    this.evaluateThresholds(store, result.id, result.name, ip, result.cpu_pct, result.mem_used_pct);
+    //    this device's effective thresholds (applied template > stored
+    //    overrides > defaults) — the same values persistEffectiveConfig
+    //    stored on the device record above.
+    this.evaluateThresholds(store, device, result.name, ip, result.cpu_pct, result.mem_used_pct, effective.thresholds);
 
     this.persistMetrics(store, result);
     if (result.error) this.persistPollError(store, result);
@@ -688,10 +905,24 @@ class RealPoller {
         return [];
       }
       // Skip explicitly unmanaged devices (managed INTEGER 0 in the store);
-      // everything else is polled.
+      // everything else is polled — but only when its own interval has
+      // elapsed. A device with an applied template uses the template's
+      // pollIntervalSec; every other device uses the global
+      // poll_interval_seconds setting. last_polled_at is epoch ms; a
+      // device never polled (null) is always due. The cycle timer ticks
+      // at the shortest interval in use (see refreshTimer), so a 10 s
+      // template device is polled every ~10 s while a 60 s device is
+      // still polled every ~60 s.
       const managed = devices.filter((d) => !isUnmanaged(d));
+      const nowMs = Date.now();
+      const due = managed.filter((device) => {
+        const intervalSec = resolveEffectivePollIntervalSec(store, device);
+        const last = Number(device.last_polled_at);
+        if (!Number.isFinite(last) || last <= 0) return true;
+        return nowMs - last >= intervalSec * 1000;
+      });
       const settled = await Promise.allSettled(
-        managed.map((device) =>
+        due.map((device) =>
           withTimeout(
             this.pollOneDevice(device, store),
             DEVICE_POLL_TIMEOUT_MS + 10000,
@@ -746,6 +977,10 @@ class RealPoller {
         console.error(`[Retention] purge failed (data untouched): ${err.message}`);
       }
       this.broadcastTick(results);
+      // The set of intervals in use may have changed (a template was
+      // applied or removed since the timer started) — retime the cycle
+      // so the new shortest interval takes effect without a restart.
+      this.refreshTimer();
       return results;
     } catch (err) {
       // Defence in depth: the cycle itself must never reject (a store
@@ -761,9 +996,53 @@ class RealPoller {
 
   // --- lifecycle -----------------------------------------------------------
 
+  // Shortest poll interval in use across managed devices, in seconds:
+  // the minimum of the global poll_interval_seconds setting and every
+  // managed device's effective (template or global) interval. Never
+  // throws — on any store error the global setting (or default) is used.
+  computeTickSeconds(store) {
+    let tick = DEFAULT_POLL_INTERVAL_SECONDS;
+    try {
+      tick = resolvePollIntervalSeconds(store);
+      const devices = (store.devices && typeof store.devices.listDevices === 'function')
+        ? store.devices.listDevices() || [] : [];
+      for (const device of devices) {
+        if (isUnmanaged(device)) continue;
+        const iv = resolveEffectivePollIntervalSec(store, device);
+        if (Number.isFinite(iv) && iv >= MIN_POLL_INTERVAL_SECONDS && iv < tick) tick = iv;
+      }
+    } catch (err) {
+      console.error(`[Poller] could not compute tick interval, keeping ${tick}s: ${err.message}`);
+    }
+    return tick;
+  }
+
+  // Re-time the running cycle timer to the shortest interval currently in
+  // use. No-op when the timer is not running or the interval is unchanged.
+  refreshTimer() {
+    if (!this.timer) return;
+    let store = null;
+    try {
+      store = getStore();
+    } catch (err) {
+      console.error(`[Poller] could not load store for timer refresh: ${err.message}`);
+      return;
+    }
+    if (!store) return;
+    const seconds = this.computeTickSeconds(store);
+    if (seconds * 1000 === this.intervalMs) return;
+    clearInterval(this.timer);
+    this.intervalMs = seconds * 1000;
+    this.timer = setInterval(() => {
+      this.pollCycle().catch((err) => console.error(`[Poller] cycle failed: ${err.message}`));
+    }, this.intervalMs);
+    console.log(`[OpManager Poller] poll interval retimed to ${seconds}s (shortest interval in use)`);
+  }
+
   /**
    * startPoller(broadcastFn?) — begin polling on the configured interval
-   * (store setting 'poll_interval_seconds', default 60). An optional
+   * (store setting 'poll_interval_seconds', default 60), or the shortest
+   * per-device interval when a template sets one. An optional
    * broadcast function receives each cycle's real METRIC_TICK payload.
    * Runs one cycle immediately so the dashboard shows measured values
    * instead of waiting a full interval.
@@ -781,7 +1060,7 @@ class RealPoller {
     } catch (err) {
       console.error(`[Poller] could not load store, using default poll interval: ${err.message}`);
     }
-    const seconds = store ? resolvePollIntervalSeconds(store) : DEFAULT_POLL_INTERVAL_SECONDS;
+    const seconds = store ? this.computeTickSeconds(store) : DEFAULT_POLL_INTERVAL_SECONDS;
     this.intervalMs = seconds * 1000;
     this.timer = setInterval(() => {
       this.pollCycle().catch((err) => console.error(`[Poller] cycle failed: ${err.message}`));
@@ -886,4 +1165,6 @@ module.exports = poller;
 module.exports.RealPoller = RealPoller;
 module.exports.resolveDeviceThresholds = resolveDeviceThresholds;
 module.exports.resolveSnmpConfig = resolveSnmpConfig;
-module.exports.DEFAULT_THRESHOLDS = { cpuCritical: CPU_CRITICAL, cpuTrouble: CPU_TROUBLE, memCritical: MEM_CRITICAL };
+module.exports.resolveAppliedTemplate = resolveAppliedTemplate;
+module.exports.resolveEffectivePollIntervalSec = resolveEffectivePollIntervalSec;
+module.exports.DEFAULT_THRESHOLDS = { cpuCritical: CPU_CRITICAL, cpuTrouble: CPU_TROUBLE, memCritical: MEM_CRITICAL, memTrouble: null };

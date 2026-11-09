@@ -242,7 +242,14 @@ router.get(['/device/getDeviceSummary', '/device/getDeviceDetails', '/api/json/d
       assignedProbe: probeNameFor(device),
       probeId: device.probe_id === null || device.probe_id === undefined ? null : device.probe_id,
       interfacesCount: store.listInterfaces(device.id).length,
-      managed: device.managed === 1 || device.managed === true
+      managed: device.managed === 1 || device.managed === true,
+      // Template consumption: the applied template (canonical shape) and
+      // the values the poller actually used on the last poll. The raw
+      // stored columns are also on `device` (applied_template /
+      // effective_thresholds / effective_poll_interval_sec).
+      appliedTemplate: appliedTemplateOf(device),
+      effectiveThresholds: effectiveThresholds(device),
+      effectivePollIntervalSec: effectivePollIntervalSecOf(device)
     },
     activeAlarms: deviceAlarms
   });
@@ -874,20 +881,47 @@ const THRESHOLD_ALIASES = { cpuCritical: 'cpu_critical', cpuTrouble: 'cpu_troubl
 // Defaults live in the poller (single source of truth); fall back to the
 // literal values only if the poller export is unavailable.
 const THRESHOLD_DEFAULTS = (poller && poller.DEFAULT_THRESHOLDS)
-  ? { cpu_critical: poller.DEFAULT_THRESHOLDS.cpuCritical, cpu_trouble: poller.DEFAULT_THRESHOLDS.cpuTrouble, mem_critical: poller.DEFAULT_THRESHOLDS.memCritical }
-  : { cpu_critical: 90, cpu_trouble: 80, mem_critical: 90 };
+  ? { cpu_critical: poller.DEFAULT_THRESHOLDS.cpuCritical, cpu_trouble: poller.DEFAULT_THRESHOLDS.cpuTrouble, mem_critical: poller.DEFAULT_THRESHOLDS.memCritical, mem_trouble: poller.DEFAULT_THRESHOLDS.memTrouble ?? null }
+  : { cpu_critical: 90, cpu_trouble: 80, mem_critical: 90, mem_trouble: null };
 
-function effectiveThresholds(deviceId) {
+function effectiveThresholds(deviceOrId) {
+  const device = (deviceOrId && typeof deviceOrId === 'object')
+    ? deviceOrId : store.getDevice(deviceOrId);
+  const deviceId = device ? device.id : deviceOrId;
   if (poller && typeof poller.resolveDeviceThresholds === 'function') {
-    const t = poller.resolveDeviceThresholds(store, deviceId);
-    return { cpu_critical: t.cpuCritical, cpu_trouble: t.cpuTrouble, mem_critical: t.memCritical };
+    // The device row is passed so an applied template's thresholds are
+    // reflected here (template > stored overrides > defaults).
+    const t = poller.resolveDeviceThresholds(store, deviceId, device || undefined);
+    return { cpu_critical: t.cpuCritical, cpu_trouble: t.cpuTrouble, mem_critical: t.memCritical, mem_trouble: t.memTrouble ?? null };
   }
   const row = store.thresholds.getDeviceThresholds(deviceId) || {};
   return {
     cpu_critical: row.cpu_critical ?? THRESHOLD_DEFAULTS.cpu_critical,
     cpu_trouble: row.cpu_trouble ?? THRESHOLD_DEFAULTS.cpu_trouble,
     mem_critical: row.mem_critical ?? THRESHOLD_DEFAULTS.mem_critical,
+    mem_trouble: THRESHOLD_DEFAULTS.mem_trouble,
   };
+}
+
+// The device's applied template in canonical shape, or null. The poller
+// owns the parse (same function it uses for alarm evaluation), so the API
+// and the poller can never disagree about what is applied.
+function appliedTemplateOf(device) {
+  if (!device || !poller || typeof poller.resolveAppliedTemplate !== 'function') return null;
+  try {
+    return poller.resolveAppliedTemplate(device);
+  } catch {
+    return null;
+  }
+}
+
+function effectivePollIntervalSecOf(device) {
+  if (!device || !poller || typeof poller.resolveEffectivePollIntervalSec !== 'function') return null;
+  try {
+    return poller.resolveEffectivePollIntervalSec(store, device);
+  } catch {
+    return null;
+  }
 }
 
 // Validate a threshold request body. Accepts snake_case field names
@@ -935,11 +969,17 @@ router.get('/api/devices/:id/thresholds', requireAuth, requireRole('admin'), (re
     return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
   const row = store.thresholds.getDeviceThresholds(device.id);
+  const tpl = appliedTemplateOf(device);
   res.json({
     status: 'success',
     deviceId: device.id,
     customized: !!row,
-    thresholds: effectiveThresholds(device.id),
+    // Where the effective values come from: an applied template wins
+    // over stored per-device overrides, which win over the defaults.
+    source: tpl ? 'template' : (row ? 'device' : 'default'),
+    appliedTemplate: tpl,
+    effectivePollIntervalSec: effectivePollIntervalSecOf(device),
+    thresholds: effectiveThresholds(device),
     custom: row ? {
       cpu_critical: row.cpu_critical ?? null,
       cpu_trouble: row.cpu_trouble ?? null,
@@ -965,7 +1005,7 @@ router.put('/api/devices/:id/thresholds', requireAuth, requireRole('admin'), (re
   }
   // Ordering check against the merged effective values, so a partial
   // update (e.g. only cpu_trouble) cannot invert the pair.
-  const merged = { ...effectiveThresholds(device.id), ...values };
+  const merged = { ...effectiveThresholds(device), ...values };
   if (merged.cpu_trouble >= merged.cpu_critical) {
     return res.status(400).json({
       status: 'error',
@@ -979,7 +1019,7 @@ router.put('/api/devices/:id/thresholds', requireAuth, requireRole('admin'), (re
     message: `Thresholds updated for device ${device.hostname || device.ip} (${device.ip})`,
     deviceId: device.id,
     customized: true,
-    thresholds: effectiveThresholds(device.id),
+    thresholds: effectiveThresholds(device),
     custom: {
       cpu_critical: saved.cpu_critical ?? null,
       cpu_trouble: saved.cpu_trouble ?? null,
@@ -1005,7 +1045,7 @@ router.delete('/api/devices/:id/thresholds', requireAuth, requireRole('admin'), 
       : `Device ${device.hostname || device.ip} (${device.ip}) had no custom thresholds; poller defaults already apply`,
     deviceId: device.id,
     customized: false,
-    thresholds: effectiveThresholds(device.id),
+    thresholds: effectiveThresholds(device),
     defaults: { ...THRESHOLD_DEFAULTS },
   });
 });
