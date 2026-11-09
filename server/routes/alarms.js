@@ -186,8 +186,11 @@ router.get(['/alarm/summary', '/alarms/summary', '/api/json/alarms/summary', '/a
 router.get(['/alarm/getRCAData', '/api/alarm/getRCAData'], (req, res) => {
   const alarmId = req.query.alarmId || req.query.id || 'alm-1';
   const alarm = db.getAlarms().find(a => a.id === alarmId) || db.getAlarms()[0];
+  // Real ML correlation across topology/BGP/interface telemetry is out of
+  // reach without that infrastructure; this stays a labeled simulation.
   res.json({
     status: 'success',
+    simulated: true,
     alarmId: alarm?.id || alarmId,
     confidenceScore: 0.982,
     confidencePercent: '98.2%',

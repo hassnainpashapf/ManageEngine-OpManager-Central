@@ -306,6 +306,8 @@ class Database {
       name: cred.name,
       type: cred.type,
       userName: cred.userName || '',
+      password: cred.password || '',
+      enablePassword: cred.enablePassword || '',
       authProtocol: cred.authProtocol || '',
       privProtocol: cred.privProtocol || '',
       community: cred.community || '',
@@ -340,6 +342,29 @@ class Database {
     this.data.discoveryProfiles.push(newProfile);
     this.save();
     return newProfile;
+  }
+
+  // NCM real config backups (SSH-retrieved running-config snapshots)
+  addNcmBackup(deviceId, configText, meta = {}) {
+    this.data.ncmBackups = this.data.ncmBackups || [];
+    const entry = {
+      id: `bkp_${Date.now()}`,
+      deviceId: String(deviceId),
+      configText,
+      lineCount: configText.split(/\r?\n/).length,
+      byteSize: Buffer.byteLength(configText, 'utf8'),
+      takenAt: Date.now(),
+      ...meta
+    };
+    this.data.ncmBackups.unshift(entry);
+    this.data.ncmBackups = this.data.ncmBackups.slice(0, 500);
+    this.save();
+    return entry;
+  }
+
+  getNcmBackups(deviceId) {
+    this.data.ncmBackups = this.data.ncmBackups || [];
+    return this.data.ncmBackups.filter(b => b.deviceId === String(deviceId)).sort((a, b) => b.takenAt - a.takenAt);
   }
 
   // CCM Configurations

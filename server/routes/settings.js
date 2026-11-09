@@ -9,10 +9,17 @@ router.get('/api/settings/central', (req, res) => {
   });
 });
 
+// Passwords are used server-side (e.g. SSH config backups) but never echoed
+// back to the browser once stored.
+function redactCredential(cred) {
+  const { password, enablePassword, ...safe } = cred;
+  return { ...safe, password: password ? '********' : '', enablePassword: enablePassword ? '********' : '' };
+}
+
 router.get('/api/settings/credentials', (req, res) => {
   res.json({
     status: 'success',
-    credentials: db.getCredentials()
+    credentials: db.getCredentials().map(redactCredential)
   });
 });
 
@@ -25,7 +32,7 @@ router.post('/api/settings/credentials', (req, res) => {
   res.status(201).json({
     status: 'success',
     message: `Credential ${newCred.name} added to Central library`,
-    credential: newCred
+    credential: redactCredential(newCred)
   });
 });
 

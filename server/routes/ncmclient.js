@@ -579,33 +579,52 @@ router.get(['/api/json/user/getDeviceGroupViewPreference', '/user/getDeviceGroup
   res.json({ preference: 'tree' });
 });
 
+// Derives real drift from stored SSH backups instead of a fixed count.
+function computeDriftCounts() {
+  const devices = db.getDevices();
+  let synced = 0, conflicted = 0, noBackup = 0;
+  devices.forEach(d => {
+    const backups = db.getNcmBackups(d.id);
+    if (backups.length < 2) { noBackup++; return; }
+    const changed = backups[0].configText !== backups[1].configText;
+    if (changed) conflicted++; else synced++;
+  });
+  return { synced, conflicted, noBackup };
+}
+
 // Authentic ManageEngine NCM Dashboard Charts
 router.get(['/ncmdashboard/getConfigConflictStatus', '/api/ncmdashboard/getConfigConflictStatus'], (req, res) => {
+  const counts = computeDriftCounts();
   res.json({
     status: 'success',
     columns: [{ columnname: 'Type', datatype: 'ordinal' }, { columnname: 'Count', datatype: 'numeric' }],
     data: [
-      { type: 'Synchronized (No Drift)', count: 14 },
-      { type: 'Startup-Running Conflict', count: 2 }
+      { type: 'Synchronized (No Drift)', count: counts.synced },
+      { type: 'Startup-Running Conflict', count: counts.conflicted },
+      { type: 'No Backup Yet', count: counts.noBackup }
     ]
   });
 });
 
 router.get(['/ncmdashboard/getComplianceStatus', '/api/ncmdashboard/getComplianceStatus'], (req, res) => {
+  const counts = computeDriftCounts();
   res.json({
     status: 'success',
     columns: [{ columnname: 'Severity', datatype: 'ordinal' }, { columnname: 'Count', datatype: 'numeric' }],
     data: [
-      { severity: 'Compliant (Pass)', count: 12 },
-      { severity: 'Minor Deviation', count: 3 },
-      { severity: 'Critical Violation', count: 1 }
+      { severity: 'Compliant (Pass)', count: counts.synced },
+      { severity: 'Drift Detected', count: counts.conflicted },
+      { severity: 'Not Yet Backed Up', count: counts.noBackup }
     ]
   });
 });
 
+// Authorized-vs-unauthorized change attribution needs a real change-ticket/
+// maintenance-window workflow we don't have; left as labeled simulation.
 router.get(['/ncmreports/getconfigChangesStatus', '/api/ncmreports/getconfigChangesStatus'], (req, res) => {
   res.json({
     status: 'success',
+    simulated: true,
     columns: [{ columnname: 'Type', datatype: 'ordinal' }, { columnname: 'Count', datatype: 'numeric' }],
     data: [
       { type: 'Authorized Changes', count: 28 },
@@ -614,10 +633,12 @@ router.get(['/ncmreports/getconfigChangesStatus', '/api/ncmreports/getconfigChan
   });
 });
 
-// Firmware Vulnerability CVE Feeds
+// Firmware Vulnerability CVE Feeds - needs a real NVD/vendor-advisory feed
+// cross-referenced against actual device vendor/OS; left as labeled simulation.
 router.get(['/ncmcompliance/getFirmVulnDetails', '/api/ncmcompliance/getFirmVulnDetails'], (req, res) => {
   res.json({
     status: 'success',
+    simulated: true,
     totalVulnerabilities: 3,
     cveList: [
       { cveId: 'CVE-2023-20198', severity: 'Critical', score: 10.0, vendor: 'Cisco Systems', advisory: 'Cisco IOS XE Web UI Privilege Escalation', impactedDevices: 1, remediated: false },

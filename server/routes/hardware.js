@@ -21,7 +21,12 @@ router.get('/api/hardware/details', (req, res) => {
   const isRouter = devCategory.includes('router');
   const isServer = devCategory.includes('server');
 
+  // Real OIDs/SNMP can't reach chassis-level PSU/fan/thermal/RAM specs without
+  // real IPMI/iDRAC/vendor hardware MIBs we don't have access to here, so
+  // this stays a labeled simulation; only the identity fields above it come
+  // from the real polled device record.
   const hardware = {
+    simulated: true,
     deviceName: dev.name,
     ip: dev.ip,
     vendor: dev.vendor || 'Generic',
