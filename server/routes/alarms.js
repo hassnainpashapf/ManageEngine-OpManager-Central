@@ -16,8 +16,14 @@
  * (store.alarms.deleteAlarm / addNote / listNotes / setRcaStatus).
  *
  * Alarm RAISING lives in the poller (server/services/poller.js), which
- * evaluates thresholds and calls store.raiseAlarm(). This route only
- * serves and mutates stored alarms.
+ * evaluates thresholds and calls store.alarms.raiseAlarmOnce(). This route
+ * only serves and mutates stored alarms.
+ *
+ * Clear aliases (W2-3): the canonical clear handler below also answers
+ * POST /api/alarm/clearAlarm and POST /api/json/alarm/clearAlarm — the
+ * latter is the real product's AlarmApiHandler path
+ * (mapping.csv: POST /api/json/alarm/clearAlarm). Same handler, no
+ * duplicated logic.
  */
 const express = require('express');
 const router = express.Router();
@@ -238,8 +244,12 @@ router.post(['/alarm/acknowledgeAlarm', '/api/json/alarms/acknowledge', '/alarms
   });
 });
 
-// Clear alarm
-router.post(['/alarm/clearAlarm', '/api/json/alarms/clear', '/alarms/clear', '/api/alarms/:id/clear'], (req, res) => {
+// Clear alarm — one handler, four paths. /api/alarm/clearAlarm and
+// /api/json/alarm/clearAlarm are aliases of the canonical
+// /alarm/clearAlarm (real product: AlarmApiHandler
+// /api/json/alarm/clearAlarm); they share this handler, no logic is
+// duplicated.
+router.post(['/alarm/clearAlarm', '/api/alarm/clearAlarm', '/api/json/alarm/clearAlarm', '/api/json/alarms/clear', '/alarms/clear', '/api/alarms/:id/clear'], (req, res) => {
   const alarmId = parseId(req.body.alarmId || req.body.id || req.query.alarmId || req.query.id || req.params.id);
   if (alarmId === null) {
     return res.status(400).json({ status: 'error', message: 'alarmId is required' });

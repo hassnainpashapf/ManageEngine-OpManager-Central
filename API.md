@@ -251,7 +251,7 @@ against the stored hash. Unknown agent or bad key → `401`.
 | `POST /api/agent/deregister` | Agent key | `{agentId}` | `401` unknown agent / bad key. Marks the agent Offline. | **REAL** |
 | `GET /api/agent/downloads` | Session (guard) | — | Static list of agent installers, version `12.9.204-GA`, build `20261106`. | **REAL** (static reference) — **OPEN O-16**: the version was re-verified (12.9.204-GA in `agents.js:289`); whether the listed files actually exist on disk was not verified. |
 
-## 5. `server/routes/alarms.js` — 17 definitions: all REAL (phase-2: the 4 former 501s are now REAL; phase-5 HE-1: `getRCANotes` now REAL — the `alarm_notes` store was already there, the table was stale)
+## 5. `server/routes/alarms.js` — 17 definitions: all REAL (phase-2: the 4 former 501s are now REAL; phase-5 HE-1: `getRCANotes` now REAL — the `alarm_notes` store was already there, the table was stale; W2-3: clear gains `/api/alarm/clearAlarm` + `/api/json/alarm/clearAlarm` aliases on the same definition, count unchanged at 17)
 
 List endpoint is `router.all` with 6 alias paths; filters `probeId`/`severity`/`status`;
 real pagination (`page`, `pageSize` clamped 1–1000, default 200).
@@ -261,7 +261,7 @@ real pagination (`page`, `pageSize` clamped 1–1000, default 200).
 | `ALL /api/json/alarm/listAlarms`, `/api/alarms`, `/alarm/listAlarms`, `/api/alarm/listAlarms`, `/api/json/enterprise/listAlarms`, `/alarm/list` | Session (guard) | Query: `probeId`, `severity`, `status`, `page`, `pageSize` | `{page, total, totalPages, records, rows, alarms, result, …}` — the same page rows under three keys; severity counts; `acknowledgedUsers` (distinct `who` values on the page); `UnAcknowledge` count. All from the store. | **REAL** |
 | `GET /alarm/alarmProperties`, `/api/alarm/alarmProperties` | Session (guard) | Query: alarm `id` | Stored alarm's properties. `400` no id; `404` unknown id — no fallback to the first alarm. | **REAL** |
 | `POST /alarm/acknowledgeAlarm`, `/api/alarm/acknowledgeAlarm` | Session (guard) | `{id, …}` | Store-backed acknowledge; `404` unknown id. | **REAL** |
-| `POST /alarm/clearAlarm`, `/api/alarm/clearAlarm` | Session (guard) | `{id, …}` | Store-backed clear; `404` unknown id. | **REAL** |
+| `POST /alarm/clearAlarm`, `/api/alarm/clearAlarm`, `/api/json/alarm/clearAlarm` | Session (guard) | `{id, …}` | Store-backed clear; `404` unknown id. All three paths share one handler (W2-3: `/api/alarm/clearAlarm` added as an alias; `/api/json/alarm/clearAlarm` is the real product's AlarmApiHandler path). | **REAL** |
 | `POST /alarm/deleteAlarm`, `/api/alarm/deleteAlarm` | Session (guard) | `{id}` | Store-backed delete (`store.alarms.deleteAlarm`); `404` unknown alarm. Accepts `{id}` as well as `{alarmId}`. | **REAL** (phase-2: was 501) |
 | `POST /alarm/addNotes`, `/api/alarm/addNotes` | Session (guard) | `{id, note}` | Store-backed (`store.alarms.addNote`); `404` unknown alarm. | **REAL** (phase-2: was 501) |
 | `GET /alarm/summary`, `/api/alarm/summary` | Session (guard) | — | Severity counts computed from the store. | **REAL** |
@@ -781,6 +781,11 @@ REAL; only definitions that *always* refuse are counted 501.
   the failure honestly (502 / `Down` with null metrics, never invented values).
 - The poller alarm-dedupe set is in-memory per instance: alarms raised before
   a restart will not auto-resolve after it (they stay until acknowledged/cleared).
+  **FIXED (W2-3, A2-07):** dedup + escalation now live in SQLite
+  (`store.alarms.raiseAlarmOnce`, partial unique index
+  `idx_alarms_open_device_source`); a restart neither duplicates an
+  active alarm nor loses its escalation, and post-restart recovery
+  resolves via the store. Live-verified on :8183 (REALDATA.md §7.1).
 - Template `apply` records assignments; nothing consumes them yet.
 - AD test is reachability-only; SAML test validates config, not a login flow.
 - `/api/json` dead-alias pattern: `server/index.js` strips the `/api/json`
@@ -1117,8 +1122,10 @@ structurally impossible in a Node build — §23.6).
   (R-01/R-02); interfaces never shown anywhere (S-05); add/update device
   routes copy flat `snmpVersion` with no normalization.
 - **A2** (`A2-gaps.md`, 47 gaps): nothing ever notifies on alarm raise
-  (A2-28); status-casing mismatch breaks the alarm UI (A2-13); severity
-  escalation lost / restart duplicates alarms (A2-07); no notification
+  (A2-28); status-casing mismatch breaks the alarm UI (A2-13 — **FIXED
+  by W2-3**, client normalizer at the fetch boundary); severity
+  escalation lost / restart duplicates alarms (A2-07 — **FIXED by
+  W2-3**, durable SQLite upsert + partial unique index); no notification
   profiles, zero of 19 real `*Mail.html` templates (A2-27+33); reports are
   a 7-report stub vs 491 real REPORTIDs (A2-37–41).
 - **A3** (`A3-gaps.md`, 24 gaps): G-01 poller rejects `2c` (FIXED by
@@ -1173,6 +1180,29 @@ structurally impossible in a Node build — §23.6).
   403d and the session stayed valid. `POST /api/auth/logout` is now
   exempt from `requirePasswordChanged` alongside change-password
   (`server/index.js` + `server/services/session.js` comment).
+- **W2-3 alarm casing + durable dedup/escalation + clearAlarm alias**
+  (A2-13, A2-07, HE-1 note): (a) client normalises alarm status at the
+  fetch boundary (`normalizeAlarmStatus`/`normalizeAlarmRow` in
+  `client/js/app.js`) and compares case-insensitively, so the header
+  badge, per-row Ack button and Acknowledged tab work with the server's
+  lowercase statuses; `listAlarms` status/severity filters are now
+  case-insensitive server-side too. (b) Poller dedup moved from the
+  in-memory `Set` into SQLite: `store.alarms.raiseAlarmOnce` upserts
+  the open row per `(device_id, source)`, records escalation
+  (`prev_severity`/`escalated_at`/`updated_at`), and a partial unique
+  index enforces one open alarm per key; a load-time migration
+  collapses pre-existing duplicate open alarms. (c) `POST
+  /api/alarm/clearAlarm` + `POST /api/json/alarm/clearAlarm` added as
+  aliases on the existing clear handler. Live-verified on a throwaway
+  :8183 server (fresh DB): `verify-auth.sh` 11/11,
+  `verify-empty.sh` 16/16, client proof 18/18 with the shipped
+  normalizer against real API rows, restart survival (same alarm id,
+  escalation kept, no duplicate), post-restart resolve, legacy-DB
+  migration, and one fresh alarm cleared 200 per clear path. Counts
+  unchanged: alarms still 17 definitions (aliases share the handler),
+  0 FAKE, JVM heap still 501 N/A, NCM push still DRY-RUN + HUMAN-REVIEW
+  GATE. A2-14 (batch-ack capitalised local write) is fixed as a side
+  effect — local state now matches the normalised fetch state.
 
 ### 25.4 Security fixes in phase 5 (FIX-A4SEC)
 
@@ -1222,7 +1252,8 @@ structurally impossible in a Node build — §23.6).
 - **Wave 2 (scoped, spawn from `a0f2af3`):** W2-1 D-01 field mapping +
   S-05 interfaces wiring; W2-2 X-01 discovery credential + write-side
   version normalization; W2-3 A2-13 status casing + A2-07 persistent
-  dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4 R-01 rack crash
+  dedup/escalation + `/api/alarm/clearAlarm` alias (**done in the W2-3
+  clone, unmerged — see §25.3**); W2-4 R-01 rack crash
   fix (crash fix only — the "invented cabinet" scope needs a product
   decision); W2-5 `/inventory/` bare forms still 302 + the 3 missing
   `/api/ncmclient` registrations (`getClientServiceData`,

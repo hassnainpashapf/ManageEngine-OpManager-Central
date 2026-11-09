@@ -133,7 +133,15 @@ CREATE TABLE IF NOT EXISTS alarms (
   created_at INTEGER NOT NULL,
   ack_by TEXT,
   ack_at INTEGER,
-  cleared_at INTEGER
+  cleared_at INTEGER,
+  -- W2-3 (A2-07): durable dedup / escalation state. updated_at is the last
+  -- time the open row was refreshed by a re-raise; escalated_at /
+  -- prev_severity record the last move to a more severe tier (null when
+  -- the alarm never escalated). All three live in SQLite, so a restart
+  -- neither duplicates an active alarm nor loses its escalation.
+  updated_at INTEGER,
+  escalated_at INTEGER,
+  prev_severity TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_alarms_device_source ON alarms(device_id, source);
 CREATE INDEX IF NOT EXISTS idx_alarms_status ON alarms(status);
@@ -328,6 +336,83 @@ const _alarmColumns = db
   .map((c) => c.name);
 if (!_alarmColumns.includes('rca_status')) {
   db.exec('ALTER TABLE alarms ADD COLUMN rca_status TEXT;');
+}
+
+// Migration (W2-3, A2-07): alarms.updated_at / escalated_at /
+// prev_severity were added after the initial schema, so pre-existing
+// databases need them added. ALTER-safe: only add if absent.
+// (Fresh databases get them from the CREATE TABLE above.)
+for (const [col, type] of [
+  ['updated_at', 'INTEGER'],
+  ['escalated_at', 'INTEGER'],
+  ['prev_severity', 'TEXT'],
+]) {
+  if (!_alarmColumns.includes(col)) {
+    db.exec(`ALTER TABLE alarms ADD COLUMN ${col} ${type};`);
+  }
+}
+
+// Migration (W2-3, A2-07): one open alarm per (device_id, source).
+// Databases written before this change may already hold duplicate open
+// alarms for the same key (the old in-memory dedup was lost on restart
+// and raiseAlarm always inserted). Collapse those first — keep the most
+// severe, then latest, row per key and clear the rest as history — then
+// enforce the invariant with a partial unique index so no future insert
+// can duplicate an open alarm. Best-effort: a failure here is logged and
+// the server still boots, but without the index a duplicate could recur,
+// so the log line is loud on purpose.
+try {
+  db.exec('BEGIN IMMEDIATE');
+  const open = db
+    .prepare(
+      "SELECT * FROM alarms WHERE status IN ('active', 'acknowledged') ORDER BY device_id, source, created_at, id"
+    )
+    .all();
+  const byKey = new Map();
+  for (const a of open) {
+    const k = `${a.device_id ?? ''}:${a.source ?? ''}`;
+    if (!byKey.has(k)) byKey.set(k, []);
+    byKey.get(k).push(a);
+  }
+  const rankOf = (sev) => {
+    const s = typeof sev === 'string' ? sev.toLowerCase() : '';
+    if (s === 'critical') return 1;
+    if (s === 'trouble') return 2;
+    if (s === 'attention') return 3;
+    if (s === 'servicedown' || s === 'down') return 4;
+    if (s === 'clear') return 5;
+    return 99;
+  };
+  let collapsed = 0;
+  const clearStmt = db.prepare(
+    "UPDATE alarms SET status = 'cleared', cleared_at = ? WHERE id = ?"
+  );
+  for (const group of byKey.values()) {
+    if (group.length < 2) continue;
+    const sorted = [...group].sort(
+      (x, y) => rankOf(x.severity) - rankOf(y.severity)
+        || (y.created_at || 0) - (x.created_at || 0)
+        || y.id - x.id
+    );
+    for (const dup of sorted.slice(1)) {
+      clearStmt.run(now(), dup.id);
+      collapsed += 1;
+    }
+  }
+  db.exec(
+    "CREATE UNIQUE INDEX IF NOT EXISTS idx_alarms_open_device_source ON alarms(device_id, source) WHERE status IN ('active', 'acknowledged')"
+  );
+  db.exec('COMMIT');
+  if (collapsed > 0) {
+    console.error(
+      `[store] A2-07 migration: collapsed ${collapsed} duplicate open alarm(s) into history; one open alarm per (device, source) now enforced.`
+    );
+  }
+} catch (err) {
+  try { db.exec('ROLLBACK'); } catch { /* already rolled back */ }
+  console.error(
+    `[store] A2-07 migration FAILED (open-alarm dedup / unique index not enforced): ${err.message}`
+  );
 }
 
 // Migration: device.snmp v3 credential columns (canonical schema, SHARED.md),
@@ -746,10 +831,11 @@ function getAlarm(id) {
 
 function raiseAlarm(alarm) {
   const a = alarm || {};
+  const ts = now();
   const inserted = insertAndGet(
     'alarms',
-    ['device_id', 'severity', 'message', 'source', 'status', 'created_at'],
-    [a.device_id ?? null, a.severity ?? null, a.message ?? null, a.source ?? null, a.status || 'active', now()],
+    ['device_id', 'severity', 'message', 'source', 'status', 'created_at', 'updated_at'],
+    [a.device_id ?? null, a.severity ?? null, a.message ?? null, a.source ?? null, a.status || 'active', ts, ts],
     getAlarm
   );
   // HE-1 (phase 5): a genuinely new alarm is a real notification event.
@@ -779,16 +865,103 @@ function listAlarms(filter) {
   const f = filter || {};
   const where = [];
   const vals = [];
-  for (const col of ['status', 'severity', 'device_id', 'source']) {
+  for (const col of ['device_id', 'source']) {
     if (f[col] !== undefined) {
       where.push(`${col} = ?`);
       vals.push(f[col]);
+    }
+  }
+  // W2-3 (A2-13): status / severity filters are case-insensitive, so
+  // ?status=Active matches the stored lowercase 'active' (and vice
+  // versa). The stored values themselves are unchanged.
+  for (const col of ['status', 'severity']) {
+    if (f[col] !== undefined) {
+      where.push(`LOWER(${col}) = ?`);
+      vals.push(String(f[col]).toLowerCase());
     }
   }
   const limit = Math.min(Math.max(Number(f.limit) || 200, 1), 1000);
   const sql = `SELECT * FROM alarms${where.length ? ` WHERE ${where.join(' AND ')}` : ''} ORDER BY created_at DESC LIMIT ?`;
   vals.push(limit);
   return toRows(db.prepare(sql).all(...vals));
+}
+
+// Severity tier rank: 1 is the most severe. Used by the durable
+// raise-once upsert to decide whether a re-raise is an escalation.
+function severityRank(severity) {
+  const s = typeof severity === 'string' ? severity.toLowerCase() : '';
+  if (s === 'critical') return 1;
+  if (s === 'trouble') return 2;
+  if (s === 'attention') return 3;
+  if (s === 'servicedown' || s === 'down') return 4;
+  if (s === 'clear') return 5;
+  return 99;
+}
+
+// The open (active / acknowledged) alarm for one (device_id, source)
+// key, or null. The poller's dedup key lives here in SQLite — not in
+// process memory — so it survives a restart.
+function getOpenAlarmByKey(deviceId, source) {
+  return toRow(
+    db
+      .prepare(
+        "SELECT * FROM alarms WHERE device_id = ? AND source = ? AND status IN ('active', 'acknowledged') ORDER BY created_at DESC, id DESC LIMIT 1"
+      )
+      .get(deviceId, source)
+  );
+}
+
+// W2-3 (A2-07): durable raise-once. Raises the alarm only if no open
+// alarm exists for (device_id, source); otherwise it updates the live
+// row in place — severity and message always reflect the current
+// condition — and records an escalation durably (prev_severity /
+// escalated_at) when the new severity is a more severe tier. A restart
+// therefore neither duplicates an active alarm nor loses its escalation:
+// the next poll cycle re-raises into the same row, and a recovery still
+// resolves it via resolveAlarmByKey. Runs in a single BEGIN IMMEDIATE
+// transaction, so two racing raisers cannot both insert. Returns
+// { alarm, created, escalated }. Only a genuinely new alarm fires the
+// raised notification / console message (inside raiseAlarm); a refresh
+// or escalation of the same alarm does not re-notify.
+function raiseAlarmOnce(alarm) {
+  const a = alarm || {};
+  const deviceId = a.device_id ?? a.deviceId ?? null;
+  const source = a.source ?? null;
+  const severity = a.severity ?? null;
+  const message = a.message ?? null;
+  db.exec('BEGIN IMMEDIATE');
+  try {
+    const existing = getOpenAlarmByKey(deviceId, source);
+    if (!existing) {
+      const inserted = raiseAlarm({ device_id: deviceId, severity, message, source });
+      db.exec('COMMIT');
+      return { alarm: inserted, created: true, escalated: false };
+    }
+    const escalated = severityRank(severity) < severityRank(existing.severity);
+    const stamp = now();
+    if (escalated) {
+      db.prepare(
+        'UPDATE alarms SET severity = ?, message = ?, updated_at = ?, escalated_at = ?, prev_severity = ? WHERE id = ?'
+      ).run(severity, message, stamp, stamp, existing.severity ?? null, existing.id);
+    } else {
+      db.prepare(
+        'UPDATE alarms SET severity = ?, message = ?, updated_at = ? WHERE id = ?'
+      ).run(severity, message, stamp, existing.id);
+    }
+    // Belt-and-braces: if this database predates the partial unique index
+    // (or the migration failed), collapse any other open rows for the key
+    // into history so the one-open-alarm invariant still holds. These were
+    // never distinct alarms to the operator, so no cleared notification.
+    db.prepare(
+      "UPDATE alarms SET status = 'cleared', cleared_at = ? WHERE device_id = ? AND source = ? AND status IN ('active', 'acknowledged') AND id != ?"
+    ).run(stamp, deviceId, source, existing.id);
+    const updated = getAlarm(existing.id);
+    db.exec('COMMIT');
+    return { alarm: updated, created: false, escalated };
+  } catch (err) {
+    try { db.exec('ROLLBACK'); } catch { /* already rolled back */ }
+    throw err;
+  }
 }
 
 function acknowledgeAlarm(id, user) {
@@ -1492,6 +1665,8 @@ module.exports = {
   purgeOlderThan,
   // alarms
   raiseAlarm,
+  raiseAlarmOnce,
+  getOpenAlarmByKey,
   listAlarms,
   getAlarm,
   acknowledgeAlarm,
@@ -1596,6 +1771,8 @@ module.exports = {
   metrics: { insertMetric, getMetrics, getLatestMetric },
   alarms: {
     raiseAlarm,
+    raiseAlarmOnce,
+    getOpenAlarmByKey,
     listAlarms,
     getAlarm,
     acknowledgeAlarm,

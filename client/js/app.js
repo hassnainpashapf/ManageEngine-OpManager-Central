@@ -541,6 +541,42 @@
   // =========================================================================
   // API Data Loading
   // =========================================================================
+  // A2-13: the server stores alarm status lowercase ('active' /
+  // 'acknowledged' / 'cleared') while this UI was written against the
+  // capitalised forms ('Active' / 'Acknowledged' / 'Cleared') — the
+  // header badge, the per-row Ack button and the Acknowledged sub-tab
+  // all compare capitalised, so with raw rows the badge was always 0,
+  // the Ack button never rendered and the tab was always empty. The
+  // server's lowercase storage is the canonical form (every server-side
+  // comparison uses it), so the fix is at this boundary: every alarm row
+  // is normalised once, when it enters client state. The badge, tab and
+  // row comparisons below are additionally case-insensitive, so a row
+  // that reaches state by any other path still renders correctly.
+  // Unknown or missing statuses pass through untouched.
+  function normalizeAlarmStatus(status) {
+    if (typeof status !== 'string') return status ?? null;
+    const s = status.toLowerCase();
+    if (s === 'active') return 'Active';
+    if (s === 'acknowledged') return 'Acknowledged';
+    if (s === 'cleared') return 'Cleared';
+    return status;
+  }
+
+  function normalizeAlarmRow(a) {
+    if (!a || typeof a !== 'object') return a;
+    a.status = normalizeAlarmStatus(a.status);
+    a.acknowledged = a.status === 'Acknowledged';
+    return a;
+  }
+
+  // Case-insensitive alarm-status test, for the badge / tab / row
+  // comparisons. `state.alarms` rows are normalised at fetch time, so
+  // this is defence in depth, not the primary fix.
+  function alarmStatusIs(a, status) {
+    return typeof a !== 'undefined' && a !== null
+      && String(a.status || '').toLowerCase() === String(status).toLowerCase();
+  }
+
   async function fetchInitialData() {
     try {
       const [probesRes, devicesRes, alarmsRes, centralRes] = await Promise.all([
@@ -552,7 +588,7 @@
 
       state.probes = probesRes.result || probesRes.probes || [];
       state.devices = devicesRes.devices || [];
-      state.alarms = alarmsRes.alarms || [];
+      state.alarms = (alarmsRes.alarms || []).map(normalizeAlarmRow);
       state.central = centralRes.central || centralRes || {};
 
       populateProbeSelector();
@@ -591,7 +627,7 @@
   }
 
   function updateHeaderBadges() {
-    const active = state.alarms.filter(a => a.status === 'Active');
+    const active = state.alarms.filter(a => alarmStatusIs(a, 'Active'));
     DOM.headerAlarmsBadge.textContent = active.length;
     DOM.headerAlarmsBadge.style.display = active.length > 0 ? 'inline-block' : 'none';
   }
@@ -713,6 +749,7 @@
         });
         const localAlarm = state.alarms.find(a => a.id === alarm.id);
         if (localAlarm) {
+          localAlarm.status = 'Acknowledged';
           localAlarm.acknowledged = true;
           localAlarm.ackUser = (state.currentUser && state.currentUser.username) || 'admin';
         }
@@ -1010,7 +1047,7 @@
       if (state.currentSubTab === 'Critical') list = list.filter(a => a.severity === 'Critical');
       else if (state.currentSubTab === 'Trouble') list = list.filter(a => a.severity === 'Trouble');
       else if (state.currentSubTab === 'Attention') list = list.filter(a => a.severity === 'Attention');
-      else if (state.currentSubTab === 'Acknowledged') list = list.filter(a => a.status === 'Acknowledged');
+      else if (state.currentSubTab === 'Acknowledged') list = list.filter(a => alarmStatusIs(a, 'Acknowledged'));
     }
 
     if (state.searchQuery) {
@@ -2181,7 +2218,7 @@
                     <td>${fmtTime(alarm.timestamp || alarm.created_at)}</td>
                     <td><strong>${alarm.status}</strong></td>
                     <td>
-                      ${alarm.status === 'Active' ? `
+                      ${alarmStatusIs(alarm, 'Active') ? `
                         <button class="btn-me-secondary" style="padding: 2px 7px; font-size: 11px;" onclick="window.OpManager.acknowledgeAlarm('${alarm.id}')">✓ Ack</button>
                       ` : ''}
                       <button class="btn-me-secondary" style="padding: 2px 7px; font-size: 11px;" onclick="window.OpManager.clearAlarm('${alarm.id}')">✕ Clear</button>
