@@ -2,11 +2,27 @@
 set -e
 
 # ManageEngine OpManager Central Linux Agent Installer
-# Target Server: http://192.168.30.65:8060
+# Usage: install-agent.sh <server-url> <probe-id> [auth-key]
+#   server-url: URL of this Central server, e.g. http://<central-server>:8060
+#   probe-id:   id of the probe this agent reports to
+#   auth-key:   probe auth key, or set OPM_PROBE_KEY (or OPM_EE_PROBE_SEC_KEY)
+#               in the environment. The key is never hardcoded here.
 
-SERVER_URL="${1:-http://192.168.30.65:8060}"
-PROBE_ID="${2:-101}"
-AUTH_KEY="${3:-OPM_EE_PROBE_SEC_KEY_1}"
+SERVER_URL="${1:-}"
+if [ -z "$SERVER_URL" ]; then
+  echo "Error: server URL is required. Usage: $0 <server-url> <probe-id> [auth-key] (e.g. $0 http://<central-server>:8060 <probe-id>)" >&2
+  exit 1
+fi
+PROBE_ID="${2:-}"
+if [ -z "$PROBE_ID" ]; then
+  echo "Error: probe id is required. Usage: $0 <server-url> <probe-id> [auth-key]" >&2
+  exit 1
+fi
+AUTH_KEY="${3:-${OPM_PROBE_KEY:-${OPM_EE_PROBE_SEC_KEY:-}}}"
+if [ -z "$AUTH_KEY" ]; then
+  echo "Error: probe auth key is required. Pass it as the 3rd argument or set OPM_PROBE_KEY (or OPM_EE_PROBE_SEC_KEY) in the environment." >&2
+  exit 1
+fi
 INSTALL_DIR="/opt/opmanager-agent"
 
 echo "============================================================"

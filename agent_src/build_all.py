@@ -4,9 +4,11 @@ import subprocess
 import shutil
 import zipfile
 
-AGENT_SRC_DIR = "/Users/hussnainpasha/.gemini/antigravity/scratch/opmanager-central/agent_src"
-DOWNLOADS_DIR = "/Users/hussnainpasha/.gemini/antigravity/scratch/opmanager-central/client/downloads"
-DIST_DIR = "/Users/hussnainpasha/.gemini/antigravity/scratch/opmanager-central/agent_dist"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.dirname(SCRIPT_DIR)
+AGENT_SRC_DIR = SCRIPT_DIR
+DOWNLOADS_DIR = os.path.join(REPO_ROOT, "client", "downloads")
+DIST_DIR = os.path.join(REPO_ROOT, "agent_dist")
 
 os.makedirs(DOWNLOADS_DIR, exist_ok=True)
 os.makedirs(DIST_DIR, exist_ok=True)
@@ -45,11 +47,12 @@ if res.returncode != 0:
 
 print(f"[SUCCESS] Windows binary compiled: {win_exe_path} ({os.path.getsize(win_exe_path)} bytes)")
 
-# Create Windows agent.conf
+# Create Windows agent.conf (no shared default key: set the per-agent key
+# issued by OpManager Central for this host before deploying)
 win_conf = """# ManageEngine OpManager Central Agent Configuration File
 SERVER_URL=http://localhost:8060
 PROBE_ID=101
-AUTH_KEY=OPM_EE_PROBE_SEC_KEY_1
+AUTH_KEY=
 POLL_INTERVAL=5
 CUSTOM_NAME=
 """
@@ -154,7 +157,7 @@ plist_content = """<?xml version="1.0" encoding="UTF-8"?>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>12.9.203</string>
+    <string>12.9.204-GA</string>
     <key>CFBundleVersion</key>
     <string>20261106</string>
     <key>LSMinimumSystemVersion</key>
@@ -223,7 +226,7 @@ os.chmod(os.path.join(dmg_stage, "install_daemon.sh"), 0o755)
 # README.txt
 readme_content = """ManageEngine OpManager Central - Host Monitoring Agent for macOS
 ==================================================================
-Version: 12.9.203-GA (Universal Binary for Apple Silicon & Intel)
+Version: 12.9.204-GA (Universal Binary for Apple Silicon & Intel)
 Copyright (c) 2026 ZOHO Corporation. All rights reserved.
 
 INSTALLATION OPTIONS:
@@ -241,7 +244,7 @@ CONFIGURATION:
 Edit agent.conf to point to your OpManager Central host:
   SERVER_URL=http://<central-ip>:8060
   PROBE_ID=101
-  AUTH_KEY=OPM_EE_PROBE_SEC_KEY_1
+  AUTH_KEY=<per-agent key issued by OpManager Central for this host>
 """
 with open(os.path.join(dmg_stage, "README.txt"), "w") as f:
     f.write(readme_content)

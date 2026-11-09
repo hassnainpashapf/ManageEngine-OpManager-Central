@@ -2,11 +2,12 @@ package main
 
 import (
 	"bytes"
+	"crypto/rand"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
-	"math/rand"
+	"math"
 	"net"
 	"net/http"
 	"os"
@@ -14,6 +15,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
 	"syscall"
@@ -21,13 +23,18 @@ import (
 )
 
 const (
-	AgentVersion    = "12.9.203-GA"
+	AgentVersion    = "12.9.204-GA"
 	AgentBuild      = "20261106"
 	DefaultServer   = "http://192.168.30.65:8060"
 	DefaultProbe    = "101"
-	DefaultAuthKey  = "ee-probe-101-central-key"
 	DefaultInterval = 5
 )
+
+// NOTE: There is intentionally NO default auth key. The agent refuses to
+// start (and refuses -test / -install) unless an auth key is supplied via
+// the -key flag, the AUTH_KEY environment variable, or agent.conf. A key
+// compiled into the binary would be the same public "secret" on every host.
+const noData = -1.0 // sentinel for a metric that could not be measured
 
 // AgentConfig represents local agent configuration
 type AgentConfig struct {
@@ -86,6 +93,12 @@ type RegisterResponse struct {
 	Heartbeat int    `json:"heartbeat"`
 }
 
+type agentListResponse struct {
+	TotalAgents  int               `json:"totalAgents"`
+	ActiveAgents int               `json:"activeAgents"`
+	Agents       []json.RawMessage `json:"agents"`
+}
+
 var (
 	startTime = time.Now()
 	agentID   string
@@ -141,6 +154,13 @@ func main() {
 		cfg.ServerURL = "http://" + cfg.ServerURL
 	}
 
+	if cfg.AuthKey == "" {
+		fmt.Fprintln(os.Stderr, "[ERROR] No auth key configured. The agent will not start without one.")
+		fmt.Fprintln(os.Stderr, "        Supply it with -key <key>, the AUTH_KEY environment variable,")
+		fmt.Fprintln(os.Stderr, "        or AUTH_KEY=<key> in agent.conf. There is no default key.")
+		os.Exit(1)
+	}
+
 	printBanner(cfg)
 
 	if *installFlag {
@@ -165,6 +185,7 @@ func printBanner(cfg AgentConfig) {
 	fmt.Printf("[CONFIG] Central Server URL : %s\n", cfg.ServerURL)
 	fmt.Printf("[CONFIG] Target Probe ID    : %s\n", cfg.ProbeID)
 	fmt.Printf("[CONFIG] Polling Interval   : %d seconds\n", cfg.PollInterval)
+	fmt.Printf("[CONFIG] Auth Key           : configured (not shown)\n")
 	fmt.Println("------------------------------------------------------------------")
 }
 
@@ -172,7 +193,7 @@ func loadConfig() AgentConfig {
 	cfg := AgentConfig{
 		ServerURL:    DefaultServer,
 		ProbeID:      DefaultProbe,
-		AuthKey:      DefaultAuthKey,
+		AuthKey:      "",
 		PollInterval: DefaultInterval,
 	}
 
@@ -288,8 +309,69 @@ func loadConfig() AgentConfig {
 		}
 	}
 
-	logInfo(fmt.Sprintf("Using default configuration -> Central at %s", cfg.ServerURL))
+	// Environment overrides the config file (flags override these in main).
+	// SERVER_URL / PROBE_ID / AUTH_KEY are the supported variables.
+	if v := strings.TrimSpace(os.Getenv("SERVER_URL")); v != "" {
+		if !strings.HasPrefix(v, "http://") && !strings.HasPrefix(v, "https://") {
+			v = "http://" + v
+		}
+		cfg.ServerURL = v
+	}
+	if v := strings.TrimSpace(os.Getenv("PROBE_ID")); v != "" {
+		cfg.ProbeID = v
+	}
+	if v := strings.TrimSpace(os.Getenv("AUTH_KEY")); v != "" {
+		cfg.AuthKey = v
+	}
+	if v := strings.TrimSpace(os.Getenv("POLL_INTERVAL")); v != "" {
+		if i, err := strconv.Atoi(v); err == nil && i > 0 {
+			cfg.PollInterval = i
+		}
+	}
+
 	return cfg
+}
+
+// loadOrCreateAgentID returns the stable identity for this host. The ID is
+// generated once (a random UUID) and stored in agent.id next to the binary,
+// so the same host keeps the same ID across restarts instead of
+// re-registering as a different agent on every launch.
+func loadOrCreateAgentID() string {
+	exePath, err := os.Executable()
+	dir := "."
+	if err == nil {
+		dir = filepath.Dir(exePath)
+	}
+	idFile := filepath.Join(dir, "agent.id")
+
+	if data, err := os.ReadFile(idFile); err == nil {
+		if id := strings.TrimSpace(string(data)); id != "" {
+			return id
+		}
+	}
+
+	b := make([]byte, 16)
+	if _, err := rand.Read(b); err != nil {
+		logError(fmt.Sprintf("Could not generate agent ID: %v", err))
+		return ""
+	}
+	b[6] = (b[6] & 0x0f) | 0x40 // version 4
+	b[8] = (b[8] & 0x3f) | 0x80 // variant 10
+	id := fmt.Sprintf("AGT-%08x-%04x-%04x-%04x-%012x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:16])
+
+	if err := os.WriteFile(idFile, []byte(id+"\n"), 0600); err != nil {
+		// The binary's directory may be read-only; fall back to the
+		// working directory so the ID is still persisted when possible.
+		fallback := filepath.Join(".", "agent.id")
+		if err2 := os.WriteFile(fallback, []byte(id+"\n"), 0600); err2 != nil {
+			logWarn(fmt.Sprintf("Could not persist agent ID to %s or %s (%v / %v); this run will use a one-off ID.", idFile, fallback, err, err2))
+		} else {
+			logInfo(fmt.Sprintf("Agent ID created and stored in %s", fallback))
+		}
+	} else {
+		logInfo(fmt.Sprintf("Agent ID created and stored in %s", idFile))
+	}
+	return id
 }
 
 func runAgent(cfg AgentConfig) {
@@ -301,9 +383,13 @@ func runAgent(cfg AgentConfig) {
 		hostname = fmt.Sprintf("Host-%s", runtime.GOOS)
 	}
 
-	agentID = fmt.Sprintf("AGT-%s-%s-%04X", strings.ToUpper(runtime.GOOS), cfg.ProbeID, rand.Intn(0xFFFF))
+	agentID = loadOrCreateAgentID()
+	if agentID == "" {
+		logError("No stable agent ID could be created; refusing to start.")
+		os.Exit(1)
+	}
 
-	logInfo(fmt.Sprintf("Initializing host telemetry collection for '%s'...", hostname))
+	logInfo(fmt.Sprintf("Initializing host telemetry collection for '%s' (Agent ID: %s)...", hostname, agentID))
 
 	registered := registerWithCentral(cfg, hostname)
 	if !registered {
@@ -426,11 +512,20 @@ func sendTelemetry(cfg AgentConfig, hostname string) {
 	}()
 
 	if resp.StatusCode == 200 {
-		logHeartbeat(fmt.Sprintf("Telemetry synced -> CPU: %.1f%% | Memory: %.1f%% (Used: %d MB) | Disk: %.1f%% | Interfaces: %d",
-			metrics.CPUUsage, metrics.MemoryUsage, metrics.MemoryUsedMB, metrics.DiskUsage, len(metrics.Interfaces)))
+		logHeartbeat(fmt.Sprintf("Telemetry synced -> CPU: %s | Memory: %s (Used: %d MB) | Disk: %s | Interfaces: %d",
+			formatPercent(metrics.CPUUsage), formatPercent(metrics.MemoryUsage), metrics.MemoryUsedMB, formatPercent(metrics.DiskUsage), len(metrics.Interfaces)))
 	} else {
 		logWarn(fmt.Sprintf("Heartbeat rejected with status %d", resp.StatusCode))
 	}
+}
+
+// formatPercent renders a metric for the heartbeat log; noData (-1) means
+// the value could not be measured on this host, not 0%.
+func formatPercent(v float64) string {
+	if v == noData {
+		return "n/a"
+	}
+	return fmt.Sprintf("%.1f%%", v)
 }
 
 func sendDeregister(cfg AgentConfig) {
@@ -446,53 +541,218 @@ func sendDeregister(cfg AgentConfig) {
 	client.Do(req)
 }
 
+// testConnection verifies the server actually answers the agent API: it
+// performs an authenticated GET of /api/agent/list and checks the response
+// is really an OpManager agent list (JSON with an "agents" array). Any
+// other status, a non-JSON body, or a body without that shape is a failure —
+// a bare HTTP 200 from some other endpoint proves nothing.
 func testConnection(cfg AgentConfig) {
-	logInfo(fmt.Sprintf("Testing Central connection to %s...", cfg.ServerURL))
-	url := fmt.Sprintf("%s/downloads/OPMAgentServerInfo.json", cfg.ServerURL)
+	logInfo(fmt.Sprintf("Testing Central agent API at %s...", cfg.ServerURL))
+	url := fmt.Sprintf("%s/api/agent/list", cfg.ServerURL)
 
 	client := &http.Client{Timeout: 5 * time.Second}
-	resp, err := client.Get(url)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		logError(fmt.Sprintf("Connection test failed: %v", err))
+		os.Exit(1)
+	}
+	req.Header.Set("eeauthkey", cfg.AuthKey)
+
+	resp, err := client.Do(req)
 	if err != nil {
 		logError(fmt.Sprintf("Connection failed: %v", err))
-		return
+		os.Exit(1)
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode == 200 {
-		logSuccess(fmt.Sprintf("Successfully connected to OpManager Central at %s (HTTP 200 OK)", cfg.ServerURL))
-	} else {
-		logWarn(fmt.Sprintf("Server replied with HTTP %d", resp.StatusCode))
+	if resp.StatusCode != 200 {
+		logError(fmt.Sprintf("Connection test failed: server replied HTTP %d to GET %s (expected 200 with an agent list)", resp.StatusCode, url))
+		os.Exit(1)
+	}
+
+	var listResp agentListResponse
+	if err := json.NewDecoder(resp.Body).Decode(&listResp); err != nil {
+		logError(fmt.Sprintf("Connection test failed: server replied HTTP 200 but the body is not a valid agent-list response (%v)", err))
+		os.Exit(1)
+	}
+	if listResp.Agents == nil {
+		logError("Connection test failed: server replied HTTP 200 but the body has no \"agents\" array — this does not look like the OpManager agent API")
+		os.Exit(1)
+	}
+
+	logSuccess(fmt.Sprintf("Successfully connected to OpManager Central at %s: agent API answered (totalAgents=%d, activeAgents=%d)", cfg.ServerURL, listResp.TotalAgents, listResp.ActiveAgents))
+}
+
+// serviceArgs returns the command-line arguments the installed service must
+// run with, so the daemon reports to the configured server/probe with the
+// configured key instead of silently falling back to defaults.
+func serviceArgs(cfg AgentConfig) []string {
+	return []string{
+		"-server", cfg.ServerURL,
+		"-probe", cfg.ProbeID,
+		"-key", cfg.AuthKey,
+		"-interval", strconv.Itoa(cfg.PollInterval),
 	}
 }
 
+// writeAgentConf writes the effective configuration next to the binary so
+// the installed service (and a manual run) picks up the same settings.
+func writeAgentConf(cfg AgentConfig) {
+	exePath, err := os.Executable()
+	if err != nil {
+		return
+	}
+	confPath := filepath.Join(filepath.Dir(exePath), "agent.conf")
+	content := fmt.Sprintf("# ManageEngine OpManager Central Agent Configuration File\n# Written by -install on %s\nSERVER_URL=%s\nPROBE_ID=%s\nAUTH_KEY=%s\nPOLL_INTERVAL=%d\nCUSTOM_NAME=%s\n",
+		time.Now().Format("2006-01-02 15:04:05"), cfg.ServerURL, cfg.ProbeID, cfg.AuthKey, cfg.PollInterval, cfg.CustomName)
+	if err := os.WriteFile(confPath, []byte(content), 0600); err != nil {
+		logWarn(fmt.Sprintf("Could not write %s (%v); the service arguments still carry the configuration.", confPath, err))
+		return
+	}
+	fmt.Printf("[INFO] Configuration written to: %s\n", confPath)
+}
+
 func installService(cfg AgentConfig) {
+	args := serviceArgs(cfg)
+	writeAgentConf(cfg)
+
 	if runtime.GOOS == "windows" {
 		fmt.Println("[INSTALL] Registering Windows Service: OpManagerCentralAgent...")
 		exePath, _ := os.Executable()
+		binPath := fmt.Sprintf("\"%s\"", exePath)
+		for _, a := range args {
+			binPath += fmt.Sprintf(" \"%s\"", a)
+		}
 		cmd := exec.Command("sc.exe", "create", "OpManagerCentralAgent",
-			fmt.Sprintf("binPath= \"%s\"", exePath),
+			"binPath= "+binPath,
 			"start= auto",
 			"DisplayName= ManageEngine OpManager Central Agent")
 		out, err := cmd.CombinedOutput()
 		if err != nil {
 			fmt.Printf("[ERROR] sc.exe failed: %v, Output: %s\n", err, string(out))
 			fmt.Println("[NOTE] Please run Command Prompt or PowerShell as Administrator.")
-		} else {
-			fmt.Println("[SUCCESS] Windows Service 'OpManagerCentralAgent' created successfully!")
+			os.Exit(1)
+		}
+		fmt.Println("[SUCCESS] Windows Service 'OpManagerCentralAgent' created successfully!")
+		fmt.Printf("[INFO] Service command line: %s\n", binPath)
+		startCmd := exec.Command("sc.exe", "start", "OpManagerCentralAgent")
+		if out, err := startCmd.CombinedOutput(); err != nil {
+			fmt.Printf("[WARN] Service created but could not be started: %v, Output: %s\n", err, string(out))
 			fmt.Println("To start service: net start OpManagerCentralAgent")
+		} else {
+			fmt.Println("[SUCCESS] Service started.")
 		}
 	} else if runtime.GOOS == "darwin" {
 		fmt.Println("[INSTALL] Generating macOS launchd daemon configuration...")
+		exePath, _ := os.Executable()
+		var argXML strings.Builder
+		argXML.WriteString(fmt.Sprintf("        <string>%s</string>\n", exePath))
+		for _, a := range args {
+			argXML.WriteString(fmt.Sprintf("        <string>%s</string>\n", a))
+		}
+		plistContent := fmt.Sprintf(`<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.manageengine.opmanager.agent</string>
+    <key>ProgramArguments</key>
+    <array>
+%s    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/var/log/opmanager_agent.log</string>
+    <key>StandardErrorPath</key>
+    <string>/var/log/opmanager_agent.err</string>
+</dict>
+</plist>`, argXML.String())
+
+		plistName := "com.manageengine.opmanager.agent.plist"
+		plistPath := filepath.Join("/Library/LaunchDaemons", plistName)
+		if err := os.WriteFile(plistPath, []byte(plistContent), 0644); err != nil {
+			tmpPath := filepath.Join("/tmp", plistName)
+			if err2 := os.WriteFile(tmpPath, []byte(plistContent), 0644); err2 != nil {
+				fmt.Printf("[ERROR] Could not write launchd plist to %s or %s: %v / %v\n", plistPath, tmpPath, err, err2)
+				os.Exit(1)
+			}
+			fmt.Printf("[SUCCESS] Launchd plist written to %s (needs root to install system-wide)\n", tmpPath)
+			fmt.Println("To install system-wide:")
+			fmt.Printf("sudo cp %s /Library/LaunchDaemons/\n", tmpPath)
+			fmt.Println("sudo launchctl load /Library/LaunchDaemons/com.manageengine.opmanager.agent.plist")
+			return
+		}
+		fmt.Printf("[SUCCESS] Launchd plist written to %s\n", plistPath)
+		cmd := exec.Command("launchctl", "load", plistPath)
+		if out, err := cmd.CombinedOutput(); err != nil {
+			fmt.Printf("[WARN] Plist installed but launchctl load failed: %v, Output: %s\n", err, string(out))
+			fmt.Printf("Load it manually: sudo launchctl load %s\n", plistPath)
+		} else {
+			fmt.Println("[SUCCESS] Daemon loaded and started.")
+		}
 	} else {
 		fmt.Println("[INSTALL] Creating systemd unit file for Linux...")
+		exePath, _ := os.Executable()
+		var quotedArgs strings.Builder
+		for _, a := range args {
+			quotedArgs.WriteString(fmt.Sprintf(" \"%s\"", a))
+		}
+		unitContent := fmt.Sprintf(`[Unit]
+Description=ManageEngine OpManager Central Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart="%s"%s
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+`, exePath, quotedArgs.String())
+
+		unitPath := "/etc/systemd/system/opmanager-agent.service"
+		if err := os.WriteFile(unitPath, []byte(unitContent), 0644); err != nil {
+			tmpPath := "/tmp/opmanager-agent.service"
+			if err2 := os.WriteFile(tmpPath, []byte(unitContent), 0644); err2 != nil {
+				fmt.Printf("[ERROR] Could not write systemd unit to %s or %s: %v / %v\n", unitPath, tmpPath, err, err2)
+				os.Exit(1)
+			}
+			fmt.Printf("[SUCCESS] Systemd unit written to %s (needs root to install system-wide)\n", tmpPath)
+			fmt.Println("To install system-wide:")
+			fmt.Printf("sudo cp %s /etc/systemd/system/opmanager-agent.service\n", tmpPath)
+			fmt.Println("sudo systemctl daemon-reload && sudo systemctl enable --now opmanager-agent")
+			return
+		}
+		fmt.Printf("[SUCCESS] Systemd unit written to %s\n", unitPath)
+		reload := exec.Command("systemctl", "daemon-reload")
+		if out, err := reload.CombinedOutput(); err != nil {
+			fmt.Printf("[WARN] Unit installed but systemctl daemon-reload failed: %v, Output: %s\n", err, string(out))
+			fmt.Println("Run: sudo systemctl daemon-reload && sudo systemctl enable --now opmanager-agent")
+			return
+		}
+		enable := exec.Command("systemctl", "enable", "--now", "opmanager-agent")
+		if out, err := enable.CombinedOutput(); err != nil {
+			fmt.Printf("[WARN] Unit installed but enable/start failed: %v, Output: %s\n", err, string(out))
+			fmt.Println("Run: sudo systemctl enable --now opmanager-agent")
+		} else {
+			fmt.Println("[SUCCESS] Service enabled and started.")
+		}
 	}
 }
 
 // =========================================================================
 // Real Hardware & System Telemetry Collection
+//
+// Every collector below reads a real OS source. When a measurement cannot
+// be obtained on a platform, the metric is reported as noData (-1) / empty
+// rather than invented — the server must display that as "no data".
 // =========================================================================
 func collectSystemMetrics(cfg AgentConfig, hostname string) SystemTelemetry {
-	uptime := uint64(time.Since(startTime).Seconds())
+	uptime := getSystemUptimeSeconds()
 
 	cpu := getCPUUsage()
 	memTotal, memUsed, memPercent := getMemoryMetrics()
@@ -539,20 +799,143 @@ func collectSystemMetrics(cfg AgentConfig, hostname string) SystemTelemetry {
 	}
 }
 
-func getCPUUsage() float64 {
-	if runtime.GOOS == "darwin" {
-		out, err := exec.Command("sysctl", "-n", "vm.loadavg").Output()
+// getSystemUptimeSeconds returns SYSTEM uptime (time since boot), not how
+// long the agent process has been running.
+func getSystemUptimeSeconds() uint64 {
+	switch runtime.GOOS {
+	case "linux":
+		data, err := os.ReadFile("/proc/uptime")
 		if err == nil {
-			fields := strings.Fields(string(out))
-			if len(fields) >= 2 {
-				val := strings.Trim(fields[1], "{")
-				if f, err := strconv.ParseFloat(val, 64); err == nil {
-					return mathMin(100.0, f*22.5+float64(rand.Intn(10)))
+			fields := strings.Fields(string(data))
+			if len(fields) >= 1 {
+				if f, err := strconv.ParseFloat(fields[0], 64); err == nil && f >= 0 {
+					return uint64(f)
 				}
 			}
 		}
-	} else if runtime.GOOS == "windows" {
-		out, err := exec.Command("wmic", "cpu", "get", "loadpercentage").Output()
+	case "darwin":
+		out, err := exec.Command("sysctl", "-n", "kern.boottime").Output()
+		if err == nil {
+			// "{ sec = 1762650000, usec = 0 } Tue Nov  4 ..."
+			s := string(out)
+			if i := strings.Index(s, "sec = "); i >= 0 {
+				rest := s[i+len("sec = "):]
+				if j := strings.Index(rest, ","); j >= 0 {
+					if sec, err := strconv.ParseInt(strings.TrimSpace(rest[:j]), 10, 64); err == nil {
+						if u := time.Now().Unix() - sec; u > 0 {
+							return uint64(u)
+						}
+					}
+				}
+			}
+		}
+	case "windows":
+		out, err := exec.Command("powershell", "-NoProfile", "-Command",
+			"[int]([datetime]::UtcNow - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime.ToUniversalTime()).TotalSeconds").Output()
+		if err == nil {
+			if v, err := strconv.ParseInt(strings.TrimSpace(string(out)), 10, 64); err == nil && v > 0 {
+				return uint64(v)
+			}
+		}
+	}
+	logWarn("Could not determine system uptime; reporting 0")
+	return 0
+}
+
+// --- CPU -----------------------------------------------------------------
+
+type cpuTimes struct {
+	idle  uint64
+	total uint64
+}
+
+// readProcStat reads aggregate CPU times from /proc/stat (Linux).
+func readProcStat() (cpuTimes, bool) {
+	data, err := os.ReadFile("/proc/stat")
+	if err != nil {
+		return cpuTimes{}, false
+	}
+	for _, line := range strings.Split(string(data), "\n") {
+		if strings.HasPrefix(line, "cpu ") {
+			fields := strings.Fields(line)
+			if len(fields) < 5 {
+				return cpuTimes{}, false
+			}
+			var vals []uint64
+			for _, f := range fields[1:] {
+				v, err := strconv.ParseUint(f, 10, 64)
+				if err != nil {
+					return cpuTimes{}, false
+				}
+				vals = append(vals, v)
+			}
+			var total uint64
+			for _, v := range vals {
+				total += v
+			}
+			idle := vals[3] // idle
+			if len(vals) > 4 {
+				idle += vals[4] // iowait counts as idle
+			}
+			return cpuTimes{idle: idle, total: total}, true
+		}
+	}
+	return cpuTimes{}, false
+}
+
+// getCPUUsage returns real CPU utilisation (percent of total capacity).
+// Linux: two /proc/stat samples 200 ms apart. macOS: the real user+sys
+// share from `top` (100 - idle), never loadavg x an arbitrary factor.
+// Windows: the real _Total processor-time counter, wmic as fallback.
+// Returns noData (-1) when no real measurement could be obtained.
+func getCPUUsage() float64 {
+	switch runtime.GOOS {
+	case "linux":
+		a, ok1 := readProcStat()
+		if !ok1 {
+			break
+		}
+		time.Sleep(200 * time.Millisecond)
+		b, ok2 := readProcStat()
+		if !ok2 {
+			break
+		}
+		totalDelta := float64(b.total - a.total)
+		idleDelta := float64(b.idle - a.idle)
+		if totalDelta <= 0 {
+			return 0
+		}
+		return math.Min(100, math.Max(0, (totalDelta-idleDelta)/totalDelta*100))
+	case "darwin":
+		out, err := exec.Command("top", "-l", "1", "-n", "0").Output()
+		if err == nil {
+			// "CPU usage: 8.25% user, 12.10% sys, 79.64% idle"
+			for _, line := range strings.Split(string(out), "\n") {
+				if !strings.Contains(line, "CPU usage:") {
+					continue
+				}
+				for _, seg := range strings.Split(line, ",") {
+					if !strings.Contains(seg, "idle") {
+						continue
+					}
+					fields := strings.Fields(strings.TrimSpace(seg))
+					if len(fields) >= 1 {
+						if f, err := strconv.ParseFloat(strings.TrimSuffix(fields[0], "%"), 64); err == nil {
+							return math.Min(100, math.Max(0, 100-f))
+						}
+					}
+				}
+			}
+		}
+	case "windows":
+		out, err := exec.Command("powershell", "-NoProfile", "-Command",
+			"(Get-Counter '\\Processor(_Total)\\% Processor Time').CounterSamples.CookedValue").Output()
+		if err == nil {
+			if f, err := strconv.ParseFloat(strings.TrimSpace(string(out)), 64); err == nil {
+				return math.Min(100, math.Max(0, f))
+			}
+		}
+		out, err = exec.Command("wmic", "cpu", "get", "loadpercentage").Output()
 		if err == nil {
 			lines := strings.Split(string(out), "\n")
 			for _, line := range lines {
@@ -563,22 +946,92 @@ func getCPUUsage() float64 {
 			}
 		}
 	}
-
-	return float64(14 + rand.Intn(18))
+	logWarn("Could not measure CPU usage; reporting no data")
+	return noData
 }
 
-func getMemoryMetrics() (uint64, uint64, float64) {
-	totalMB := uint64(16384)
-	usedMB := uint64(6800 + rand.Intn(1200))
+// --- Memory --------------------------------------------------------------
 
-	if runtime.GOOS == "darwin" {
-		out, err := exec.Command("sysctl", "-n", "hw.memsize").Output()
+// getMemoryMetrics returns real total/used memory (MB) and used percent.
+// Linux: /proc/meminfo (MemTotal / MemAvailable). macOS: hw.memsize total
+// with used from vm_stat (total minus free+inactive+speculative pages).
+// Windows: wmic OS free/total physical memory. Returns 0, 0, noData when
+// no real measurement could be obtained.
+func getMemoryMetrics() (uint64, uint64, float64) {
+	switch runtime.GOOS {
+	case "linux":
+		data, err := os.ReadFile("/proc/meminfo")
 		if err == nil {
-			if b, err := strconv.ParseUint(strings.TrimSpace(string(out)), 10, 64); err == nil {
-				totalMB = b / (1024 * 1024)
+			var totalKB, availKB uint64
+			for _, line := range strings.Split(string(data), "\n") {
+				fields := strings.Fields(line)
+				if len(fields) < 2 {
+					continue
+				}
+				switch fields[0] {
+				case "MemTotal:":
+					totalKB, _ = strconv.ParseUint(fields[1], 10, 64)
+				case "MemAvailable:":
+					availKB, _ = strconv.ParseUint(fields[1], 10, 64)
+				}
+			}
+			if totalKB > 0 {
+				usedKB := totalKB - availKB
+				return totalKB / 1024, usedKB / 1024, float64(usedKB) / float64(totalKB) * 100.0
 			}
 		}
-	} else if runtime.GOOS == "windows" {
+	case "darwin":
+		out, err := exec.Command("sysctl", "-n", "hw.memsize").Output()
+		var totalBytes uint64
+		if err == nil {
+			totalBytes, _ = strconv.ParseUint(strings.TrimSpace(string(out)), 10, 64)
+		}
+		vmOut, vmErr := exec.Command("vm_stat").Output()
+		if totalBytes > 0 && vmErr == nil {
+			pageSize := uint64(4096)
+			var freePages, inactivePages, speculativePages uint64
+			for _, line := range strings.Split(string(vmOut), "\n") {
+				if strings.HasPrefix(line, "Mach Virtual Memory Statistics") {
+					continue
+				}
+				if strings.Contains(line, "page size of ") {
+					// "Mach Virtual Memory Statistics: (page size of 16384 bytes)"
+					if i := strings.Index(line, "page size of "); i >= 0 {
+						rest := line[i+len("page size of "):]
+						fields := strings.Fields(rest)
+						if len(fields) >= 1 {
+							if ps, err := strconv.ParseUint(fields[0], 10, 64); err == nil && ps > 0 {
+								pageSize = ps
+							}
+						}
+					}
+					continue
+				}
+				parts := strings.SplitN(line, ":", 2)
+				if len(parts) != 2 {
+					continue
+				}
+				valStr := strings.Trim(strings.TrimSpace(parts[1]), ".")
+				v, err := strconv.ParseUint(valStr, 10, 64)
+				if err != nil {
+					continue
+				}
+				switch strings.TrimSpace(parts[0]) {
+				case "Pages free":
+					freePages = v
+				case "Pages inactive":
+					inactivePages = v
+				case "Pages speculative":
+					speculativePages = v
+				}
+			}
+			availableBytes := (freePages + inactivePages + speculativePages) * pageSize
+			usedBytes := totalBytes - availableBytes
+			totalMB := totalBytes / (1024 * 1024)
+			usedMB := usedBytes / (1024 * 1024)
+			return totalMB, usedMB, float64(usedBytes) / float64(totalBytes) * 100.0
+		}
+	case "windows":
 		out, err := exec.Command("wmic", "OS", "get", "FreePhysicalMemory,TotalVisibleMemorySize").Output()
 		if err == nil {
 			fields := strings.Fields(string(out))
@@ -586,67 +1039,85 @@ func getMemoryMetrics() (uint64, uint64, float64) {
 				freeKB, _ := strconv.ParseUint(fields[2], 10, 64)
 				totalKB, _ := strconv.ParseUint(fields[3], 10, 64)
 				if totalKB > 0 {
-					totalMB = totalKB / 1024
-					usedMB = (totalKB - freeKB) / 1024
+					totalMB := totalKB / 1024
+					usedMB := (totalKB - freeKB) / 1024
+					return totalMB, usedMB, float64(usedMB) / float64(totalMB) * 100.0
 				}
 			}
 		}
 	}
-
-	percent := float64(usedMB) / float64(totalMB) * 100.0
-	return totalMB, usedMB, mathMin(100.0, percent)
+	logWarn("Could not measure memory; reporting no data")
+	return 0, 0, noData
 }
 
-func getDiskMetrics() (float64, float64, float64) {
-	totalGB := 512.0
-	usedGB := 180.0
+// --- Disk ----------------------------------------------------------------
 
+// getDiskMetrics returns real disk usage for the root filesystem on Unix
+// (via `df -k /`) and for the C: drive on Windows (via wmic
+// Win32_LogicalDisk). It never reports invented capacity. Returns
+// 0, 0, noData when no real measurement could be obtained.
+//
+// NOTE: the audit suggested syscall.Statfs for Unix, but syscall.Statfs /
+// syscall.Statfs_t do not exist in Go's syscall package on Windows, so a
+// single-file agent using them cannot cross-compile to the Windows target
+// build_all.py produces (verified: GOOS=windows build fails with
+// "undefined: syscall.Statfs"). `df` reads the same real filesystem data
+// on Unix and keeps one file building on all three platforms.
+func getDiskMetrics() (float64, float64, float64) {
 	if runtime.GOOS == "windows" {
-		cmd := exec.Command("wmic", "logicaldisk", "where", "DriveType=3", "get", "FreeSpace,Size")
-		out, err := cmd.Output()
-		if err == nil {
-			lines := strings.Split(string(out), "\n")
-			var totBytes, freeBytes uint64
-			for _, line := range lines {
-				line = strings.TrimSpace(line)
-				fields := strings.Fields(line)
-				if len(fields) >= 2 {
-					f, err1 := strconv.ParseUint(fields[0], 10, 64)
-					s, err2 := strconv.ParseUint(fields[1], 10, 64)
-					if err1 == nil && err2 == nil && s > 0 {
-						freeBytes += f
-						totBytes += s
-					}
-				}
-			}
-			if totBytes > 0 {
-				totalGB = float64(totBytes) / (1024 * 1024 * 1024)
-				usedGB = float64(totBytes-freeBytes) / (1024 * 1024 * 1024)
-				percent := (usedGB / totalGB) * 100.0
-				return totalGB, usedGB, mathMin(100.0, percent)
-			}
-		}
-	} else if runtime.GOOS == "darwin" || runtime.GOOS == "linux" {
-		out, err := exec.Command("df", "-k", "/").Output()
+		out, err := exec.Command("wmic", "logicaldisk", "where", "DeviceID='C:'", "get", "Size,FreeSpace").Output()
 		if err == nil {
 			lines := strings.Split(string(out), "\n")
 			if len(lines) >= 2 {
-				fields := strings.Fields(lines[1])
-				if len(fields) >= 4 {
-					totKB, _ := strconv.ParseFloat(fields[1], 64)
-					usedKB, _ := strconv.ParseFloat(fields[2], 64)
-					if totKB > 0 {
-						totalGB = totKB / (1024 * 1024)
-						usedGB = usedKB / (1024 * 1024)
+				headers := strings.Fields(lines[0])
+				values := strings.Fields(lines[1])
+				var sizeIdx, freeIdx = -1, -1
+				for i, h := range headers {
+					switch h {
+					case "Size":
+						sizeIdx = i
+					case "FreeSpace":
+						freeIdx = i
+					}
+				}
+				if sizeIdx >= 0 && freeIdx >= 0 && len(values) > sizeIdx && len(values) > freeIdx {
+					size, err1 := strconv.ParseFloat(values[sizeIdx], 64)
+					free, err2 := strconv.ParseFloat(values[freeIdx], 64)
+					if err1 == nil && err2 == nil && size > 0 {
+						totalGB := size / (1024 * 1024 * 1024)
+						usedGB := (size - free) / (1024 * 1024 * 1024)
+						return totalGB, usedGB, math.Min(100, usedGB/totalGB*100.0)
 					}
 				}
 			}
 		}
+		logWarn("Could not measure disk usage on Windows; reporting no data")
+		return 0, 0, noData
 	}
 
-	percent := (usedGB / totalGB) * 100.0
-	return totalGB, usedGB, mathMin(100.0, percent)
+	out, err := exec.Command("df", "-k", "/").Output()
+	if err != nil {
+		logWarn(fmt.Sprintf("Could not measure disk usage: %v; reporting no data", err))
+		return 0, 0, noData
+	}
+	lines := strings.Split(string(out), "\n")
+	if len(lines) >= 2 {
+		fields := strings.Fields(lines[1])
+		if len(fields) >= 4 {
+			totKB, err1 := strconv.ParseFloat(fields[1], 64)
+			usedKB, err2 := strconv.ParseFloat(fields[2], 64)
+			if err1 == nil && err2 == nil && totKB > 0 {
+				totalGB := totKB / (1024 * 1024)
+				usedGB := usedKB / (1024 * 1024)
+				return totalGB, usedGB, math.Min(100, usedGB/totalGB*100.0)
+			}
+		}
+	}
+	logWarn("Could not parse disk usage; reporting no data")
+	return 0, 0, noData
 }
+
+// --- Network interfaces (real; unchanged) --------------------------------
 
 func getNetworkInterfaces() []NetworkInterfaceInfo {
 	var list []NetworkInterfaceInfo
@@ -680,60 +1151,102 @@ func getNetworkInterfaces() []NetworkInterfaceInfo {
 	return list
 }
 
-func getTopProcesses() []ProcessInfo {
-	if runtime.GOOS == "windows" {
-		cmd := exec.Command("tasklist.exe", "/FO", "CSV", "/NH")
-		out, err := cmd.Output()
-		if err == nil {
-			lines := strings.Split(string(out), "\n")
-			var procs []ProcessInfo
-			count := 0
-			for _, line := range lines {
-				line = strings.TrimSpace(line)
-				if line == "" {
-					continue
-				}
-				parts := strings.Split(line, "\",\"")
-				if len(parts) >= 5 {
-					name := strings.Trim(parts[0], "\"")
-					pidStr := strings.Trim(parts[1], "\"")
-					memStr := strings.Trim(parts[4], "\"")
-					memStr = strings.ReplaceAll(memStr, ",", "")
-					memStr = strings.ReplaceAll(memStr, " K", "")
-					pid, _ := strconv.Atoi(pidStr)
-					memKB, _ := strconv.ParseFloat(memStr, 64)
-					procs = append(procs, ProcessInfo{
-						PID:      pid,
-						Name:     name,
-						CPU:      float64(1+rand.Intn(10)) / 2.0,
-						MemoryMB: memKB / 1024.0,
-					})
-					count++
-					if count >= 8 {
-						break
-					}
-				}
-			}
-			if len(procs) > 0 {
-				return procs
-			}
-		}
-	}
+// --- Processes -----------------------------------------------------------
 
-	return []ProcessInfo{
-		{PID: 1042, Name: "OpManagerAgent", CPU: 0.8, MemoryMB: 28.4},
-		{PID: 412, Name: "explorer.exe", CPU: 1.8, MemoryMB: 124.0},
-		{PID: 884, Name: "chrome.exe", CPU: 3.2, MemoryMB: 380.5},
-		{PID: 1204, Name: "svchost.exe", CPU: 0.5, MemoryMB: 94.2},
-		{PID: 2310, Name: "System", CPU: 0.9, MemoryMB: 48.0},
-	}
+type procSample struct {
+	pid      int
+	name     string
+	totalCPU uint64 // utime + stime, in clock ticks
+	rssPages int64
 }
 
-func mathMin(a, b float64) float64 {
-	if a < b {
-		return a
+// readLinuxProcs enumerates the real process table from /proc.
+func readLinuxProcs() map[int]procSample {
+	procs := make(map[int]procSample)
+	entries, err := os.ReadDir("/proc")
+	if err != nil {
+		return procs
 	}
-	return b
+	for _, e := range entries {
+		pid, err := strconv.Atoi(e.Name())
+		if err != nil || !e.IsDir() {
+			continue
+		}
+		data, err := os.ReadFile(filepath.Join("/proc", e.Name(), "stat"))
+		if err != nil {
+			continue
+		}
+		// comm is in parentheses and may contain spaces/parens; fields
+		// after the final ')' are: state ppid ... utime stime ... rss.
+		s := string(data)
+		closeIdx := strings.LastIndex(s, ")")
+		if closeIdx < 0 {
+			continue
+		}
+		name := s[strings.Index(s, "(")+1 : closeIdx]
+		fields := strings.Fields(s[closeIdx+2:])
+		// fields[0]=state, fields[11]=utime, fields[12]=stime, fields[21]=rss
+		if len(fields) < 22 {
+			continue
+		}
+		utime, err1 := strconv.ParseUint(fields[11], 10, 64)
+		stime, err2 := strconv.ParseUint(fields[12], 10, 64)
+		rss, err3 := strconv.ParseInt(fields[21], 10, 64)
+		if err1 != nil || err2 != nil || err3 != nil {
+			continue
+		}
+		procs[pid] = procSample{pid: pid, name: name, totalCPU: utime + stime, rssPages: rss}
+	}
+	return procs
+}
+
+// getTopProcesses returns the real top 5 processes by CPU. On Linux it
+// samples /proc twice (200 ms apart) and ranks by actual CPU time consumed
+// in that interval, with live PIDs and RSS memory. On macOS/Windows there
+// is no equivalent stdlib-only source in this single-file agent, so it
+// returns an empty list (honestly omitted) rather than a fabricated list.
+func getTopProcesses() []ProcessInfo {
+	if runtime.GOOS != "linux" {
+		return []ProcessInfo{}
+	}
+	before, ok := readProcStat()
+	if !ok {
+		logWarn("Could not read /proc/stat for process sampling; omitting top processes")
+		return []ProcessInfo{}
+	}
+	first := readLinuxProcs()
+	time.Sleep(200 * time.Millisecond)
+	after, ok := readProcStat()
+	if !ok {
+		return []ProcessInfo{}
+	}
+	second := readLinuxProcs()
+
+	totalDelta := float64(after.total - before.total)
+	if totalDelta <= 0 {
+		return []ProcessInfo{}
+	}
+	pageSize := uint64(os.Getpagesize())
+	var list []ProcessInfo
+	for pid, p2 := range second {
+		p1, ok := first[pid]
+		if !ok {
+			continue
+		}
+		delta := p2.totalCPU - p1.totalCPU
+		cpu := float64(delta) / totalDelta * 100.0
+		list = append(list, ProcessInfo{
+			PID:      pid,
+			Name:     p2.name,
+			CPU:      math.Min(100, math.Max(0, cpu)),
+			MemoryMB: float64(p2.rssPages) * float64(pageSize) / (1024 * 1024),
+		})
+	}
+	sort.Slice(list, func(i, j int) bool { return list[i].CPU > list[j].CPU })
+	if len(list) > 5 {
+		list = list[:5]
+	}
+	return list
 }
 
 func writeLog(level, msg string) {
