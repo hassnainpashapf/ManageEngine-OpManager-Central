@@ -101,8 +101,13 @@
  *   store.interfaces.replaceInterfaces(deviceId, rows) — rows are snake_case
  *     ({ if_index, name, descr, oper_status, in_octets, out_octets, speed })
  *   store.metrics.insertMetric(deviceId, { cpu_pct, mem_used_pct, response_ms })
- *   store.alarms.raiseAlarm({ deviceId, device_id, severity, message, source })
- *     — the store reads device_id; deviceId is also sent for the contract
+ *   store.alarms.raiseAlarmOnce({ deviceId, device_id, severity, message, source })
+ *     — DURABLE raise-once (W2-3, A2-07): upserts the open alarm row for
+ *     (device_id, source) in SQLite, updating severity/message in place
+ *     and recording escalation (prev_severity / escalated_at). The
+ *     dedup/escalation state lives in the store, not in process memory,
+ *     so a restart neither duplicates an active alarm nor loses its
+ *     escalation, and a recovery after a restart still resolves it.
  *   store.alarms.resolveAlarmByKey(deviceId, source)
  *   store.thresholds.getDeviceThresholds(deviceId) → stored per-device
  *     threshold row or null (null = use the defaults in this file)
@@ -485,9 +490,14 @@ class RealPoller {
     this.listeners = [];
     this.intervalMs = DEFAULT_POLL_INTERVAL_SECONDS * 1000;
     this.cycleRunning = false;
-    // In-memory set of active threshold alarms, keyed `${deviceId}:${source}`,
-    // so a continuing breach raises exactly one alarm instead of one per cycle.
-    this.activeAlarms = new Set();
+    // No in-memory alarm dedup state (W2-3, A2-07): the set of active
+    // threshold alarms used to live here as `this.activeAlarms`, keyed
+    // `${deviceId}:${source}`. It was lost on restart (re-raising an
+    // already-active alarm as a duplicate row, and stranding alarms
+    // whose device recovered after a restart), and it never updated the
+    // stored severity, so escalation was lost. Dedup and escalation now
+    // live in SQLite via store.alarms.raiseAlarmOnce /
+    // resolveAlarmByKey — the store is the single source of truth.
   }
 
   onUpdate(callback) {
@@ -529,28 +539,36 @@ class RealPoller {
 
   // --- alarm helpers (safe: a store alarm failure never kills the poll) ---
 
+  // Raise-once, durably (W2-3, A2-07). Delegates to
+  // store.alarms.raiseAlarmOnce, which upserts the open alarm row for
+  // (deviceId, source) in SQLite: a continuing breach refreshes the same
+  // row (severity/message track the current condition, escalation is
+  // recorded), it never inserts a duplicate, and it works identically
+  // after a restart because no state lives in this process. Returns the
+  // store's { alarm, created, escalated } result, or null on failure.
   raiseAlarmOnce(store, deviceId, source, severity, message) {
-    const key = `${deviceId}:${source}`;
-    if (this.activeAlarms.has(key)) return;
     try {
       // The store reads `device_id` (snake_case); `deviceId` is also sent
       // so the call matches the documented contract either way.
-      store.alarms.raiseAlarm({ deviceId, device_id: deviceId, severity, message, source });
-      this.activeAlarms.add(key);
+      return store.alarms.raiseAlarmOnce({ deviceId, device_id: deviceId, severity, message, source });
     } catch (err) {
       console.error(`[Poller] raiseAlarm failed for ${deviceId}/${source}: ${err.message}`);
+      return null;
     }
   }
 
+  // Resolve, durably (W2-3, A2-07). Delegates unconditionally to
+  // store.alarms.resolveAlarmByKey, which clears the open alarm row for
+  // (deviceId, source) in SQLite. There is deliberately no in-memory
+  // gate: a device that recovers after a restart must still clear the
+  // alarm raised before the restart.
   resolveAlarm(store, deviceId, source) {
-    const key = `${deviceId}:${source}`;
-    if (!this.activeAlarms.has(key)) return;
     try {
-      store.alarms.resolveAlarmByKey(deviceId, source);
+      return store.alarms.resolveAlarmByKey(deviceId, source);
     } catch (err) {
       console.error(`[Poller] resolveAlarmByKey failed for ${deviceId}/${source}: ${err.message}`);
+      return null;
     }
-    this.activeAlarms.delete(key);
   }
 
   // --- persistence helpers (safe: never let a store write kill the poll) ---

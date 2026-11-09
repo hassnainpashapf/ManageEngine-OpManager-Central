@@ -575,12 +575,33 @@ code review:
   - `mem_used_pct > 90` → **Critical** alarm, source `mem`; `≤ 90` →
     resolve `mem`.
   - Device unreachable → `Down` (device status, §6.2).
-- When a poll breaches a threshold, the poller creates **one** alarm
-  record via `store.alarms.raiseAlarm`, deduped per
-  `${deviceId}:${source}`: a continuing breach updates the existing
-  alarm (last occurrence, count) instead of creating a new one every
-  poll. Alarm toasts / WebSocket broadcasts fire only when a genuinely
-  new alarm is created (or its severity escalates) — never on a timer.
+- When a poll breaches a threshold, the poller raises **one** alarm
+  via `store.alarms.raiseAlarmOnce`, deduped durably in SQLite per
+  `(device_id, source)` (W2-3, A2-07 — the old in-memory `Set` is
+  gone): a continuing breach updates the existing open row in place —
+  severity and message always track the current condition — instead of
+  inserting a new row every poll. A move to a more severe tier is
+  recorded durably on the row (`prev_severity`, `escalated_at`,
+  `updated_at`), and a partial unique index
+  (`idx_alarms_open_device_source`) enforces at most one open alarm per
+  key. A restart therefore neither duplicates an active alarm nor loses
+  its escalation, and a recovery after a restart still resolves it
+  (`resolveAlarmByKey` reads the store, not process memory). A
+  pre-existing database with duplicate open alarms is repaired at
+  store load: the most severe (then latest) row per key is kept and the
+  rest are cleared into history before the index is created. Only a
+  genuinely new alarm fires the raised notification (HE-1); a refresh
+  or escalation of the same alarm does not re-notify, and the poller
+  emits no `ALARM_TOAST` broadcast (only `METRIC_TICK`).
+  Live-verified 2026-11-09 on :8183 (throwaway DB, real poller +
+  store code): cpu 85% → 1 Trouble row; cpu 95% → same row, Critical,
+  `prev_severity: Trouble`, `escalated_at` set; cpu 85% again → same
+  row, Trouble, escalation record kept; server restart → cpu 95%
+  again → still 1 row, same id, Critical, `escalated_at` unchanged;
+  cpu 10% → row cleared (post-restart resolve with no in-memory
+  state). Legacy-DB migration verified separately: a pre-change
+  database holding two open cpu alarms collapsed to the Critical row,
+  index + new columns created.
 - Severity set in use: Critical / Trouble / Attention / ServiceDown /
   Clear. No notification profiles are wired to thresholds in this build
   (notification settings are stored configuration, not an alerting
@@ -604,8 +625,10 @@ code review:
   clear is recorded with the recovery time, and the alarm moves to
   history. Cleared alarms are **retained** as history (the old
   `db.clearAlarm()` that deleted the row outright is gone).
-- A manual clear (`POST /alarm/clearAlarm`) marks the alarm cleared by
-  the operator, with who/when recorded. `404` unknown id.
+- A manual clear (`POST /alarm/clearAlarm`, also
+  `POST /api/alarm/clearAlarm` and `POST /api/json/alarm/clearAlarm` —
+  same handler, W2-3) marks the alarm cleared by the operator, with
+  who/when recorded. `404` unknown id.
 - **Delete vs. clear:** `POST /alarm/deleteAlarm` returns **501** — no
   delete in the store. Alarm notes (`addNotes`, `addRCANotes`) and RCA
   status changes return **501** — no notes table / no `rca_status`
@@ -752,7 +775,15 @@ delete.
   real device in this pass — no device breached a threshold during the
   live runs (all CPUs 6–26%, memory 37–62%). The evaluator code and
   dedup key are verified by read; the live raise/ack/clear cycle is
-  unproven.
+  unproven. **Update (W2-3, 2026-11-09, :8183 throwaway DB): the cycle
+  is now live-proven** — threshold evaluation through the real poller
+  raised / escalated / resolved the alarm (see §7.1), ack + clear ran
+  through the real HTTP API, and the client badge / Ack button /
+  Acknowledged tab were proven against the real rows with the shipped
+  client code (A2-13 fix). What is still unproven here is a breach
+  produced by a *live SNMP measurement* from a real device (this VM
+  blocks UDP/ICMP, §10.1); the evaluation inputs in the W2-3 run were
+  supplied to the real evaluator, not measured off the wire.
 - **Forced-password-change enforcement on non-password routes** — see
   §2.2 caveat (API.md O-1).
 - No `Math.random()` metric/discovery/alarm fabrication remains in
@@ -956,7 +987,12 @@ wmi-query / cli-query, workflows execute.
 - Live SNMP polling from this VM is blocked by the sandbox (EPERM) — real
   values need a UDP-capable host/relay (§10.1 still applies).
 - The poller alarm-dedupe set is in-memory per instance: alarms raised
-  before a restart will not auto-resolve after it.
+  before a restart will not auto-resolve after it. **FIXED (W2-3,
+  A2-07):** dedup + escalation now live in SQLite
+  (`store.alarms.raiseAlarmOnce`, partial unique index
+  `idx_alarms_open_device_source`); a restart neither duplicates an
+  active alarm nor loses its escalation, and post-restart recovery
+  resolves via the store. Live-verified on :8183, see §7.1.
 - Template `apply` records assignments; nothing consumes them yet.
 - AD test is reachability-only; SAML test validates config, not a login flow.
 - `/api/json` dead-alias pattern: `server/index.js` strips the `/api/json`
