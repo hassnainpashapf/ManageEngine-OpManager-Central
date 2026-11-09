@@ -1286,8 +1286,9 @@ route definitions were added in phase 5.
 Wave 2 (scoped): W2-1 D-01 field mapping + S-05 interfaces; W2-2 X-01
 discovery credential + write-side normalization; W2-3 A2-13 status casing
 + A2-07 persistent dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4
-R-01 rack crash fix (crash fix only — the "invented cabinet" scope needs
-a product decision); W2-5 `/inventory/` bare forms + 3 missing
+R-01 rack crash fix — DONE in this track (crash fixed, invented cabinet
+replaced with a real-data-only view + honest empty state; the real Rack
+Builder scope still needs a product decision); W2-5 `/inventory/` bare forms + 3 missing
 `/api/ncmclient` registrations. Wave 3 (triage by value): alarm
 notifications, compliance engine, trap parsers, reports expansion, TOTP/
 MFA, AD/LDAP/RADIUS console login, A6's 28 missing features, backup

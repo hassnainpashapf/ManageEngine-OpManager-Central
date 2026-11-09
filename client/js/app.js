@@ -2478,12 +2478,16 @@
     setTimeout(renderTopologyCanvas, 50);
   }
 
-  // ManageEngine 3D Datacenter Rack Visualizer
+  // Rack view (R-01/R-02, phase 5): renders ONLY racks actually stored
+  // (server/routes/racks.js) and their real device placements. There is
+  // no Rack Builder data source in this build and no temperature / power /
+  // datacenter / probe telemetry is stored, so none is rendered; with no
+  // stored racks the view is an honest empty state, not a cabinet.
   async function renderRackView() {
     DOM.workspace.innerHTML = `
       <div class="me-card" style="margin-bottom: 0;">
         <div class="me-card-header">
-          <span class="me-card-title">🖥️ 3D Datacenter Rack Visualizer (42U Standard)</span>
+          <span class="me-card-title">🖥️ Rack View</span>
         </div>
         <div class="me-card-body" style="padding: 16px;">
           <div id="rackViewContainer" class="rack-visualizer-wrap">
@@ -2496,7 +2500,7 @@
       const res = await apiJson('/api/racks/list');
       const racks = res.racks || [];
       if (!racks.length) {
-        document.getElementById('rackViewContainer').innerHTML = emptyStateHtml('No 3D Datacenter Racks Configured', 'Create 3D datacenter racks and mount servers, switches, and UPS units to visualize rack space, thermal capacity, and front/rear port connectivity.');
+        document.getElementById('rackViewContainer').innerHTML = emptyStateHtml('No racks in this build', 'Racks are not modeled in this build — there is no Rack Builder data source here. A rack only appears once one is created via the API, and only real devices can be placed in it.');
         return;
       }
       const sel = document.createElement('select');
@@ -2506,7 +2510,7 @@
       racks.forEach(r => {
         const opt = document.createElement('option');
         opt.value = r.id;
-        opt.textContent = `${r.name || r.id} (${r.units || 42}U${r.datacenter ? ' • ' + r.datacenter : ''})`;
+        opt.textContent = `${r.name || ('Rack ' + r.id)}${Number.isInteger(r.units) ? ' (' + r.units + 'U)' : ''}`;
         sel.appendChild(opt);
       });
       sel.addEventListener('change', (e) => loadRackData(e.target.value));
@@ -2525,7 +2529,7 @@
       const rack = racks.find(r => String(r.id) === String(rackId)) || racks[0];
       if (!rack) {
         const c = document.getElementById('rackViewContainer');
-        if (c) c.innerHTML = emptyStateHtml('No 3D Datacenter Racks Configured', 'Create a rack to see its layout here.');
+        if (c) c.innerHTML = emptyStateHtml('No racks in this build', 'Racks are not modeled in this build — there is no Rack Builder data source here.');
         return;
       }
       renderRackCabinet(rack);
@@ -2535,68 +2539,100 @@
     }
   }
 
+  // Renders one stored rack from the real API shape (R-01): `rack.units`
+  // is an INTEGER unit count and placements are `rack.assignments[]`
+  // ({ unit, deviceId, deviceName, deviceIp, deviceStatus,
+  // deviceCategory }). Only those fields are rendered: the rack name,
+  // its real unit count, which units hold a real device, and the stored
+  // creation time. No temperature, power, datacenter, probe, cooling,
+  // faceplate or "42U" values exist in the store, so none are shown.
   function renderRackCabinet(rack) {
     const container = document.getElementById('rackViewContainer');
     if (!container) return;
+    if (!rack || typeof rack !== 'object') {
+      container.innerHTML = emptyStateHtml('No racks in this build', 'Racks are not modeled in this build — there is no Rack Builder data source here.');
+      return;
+    }
 
-    const slotMap = {};
-    (rack.units || []).forEach(u => {
-      for (let i = 0; i < u.heightU; i++) {
-        slotMap[u.startU + i] = { unit: u, isPrimary: i === 0, offset: i };
-      }
-    });
+    // `units` is a count, not a list (R-01: (42).forEach threw TypeError).
+    const totalUnits = Number.isInteger(rack.units) && rack.units > 0 ? rack.units : null;
+    if (totalUnits === null) {
+      container.innerHTML = `<div style="color: var(--severity-critical);">Rack ${escapeHtml(rack.name || ('Rack ' + rack.id) || '')} has no unit count, so its layout cannot be shown.</div>`;
+      return;
+    }
+
+    const assignments = Array.isArray(rack.assignments) ? rack.assignments : [];
+    const byUnit = new Map();
+    for (const a of assignments) {
+      if (!a || !Number.isInteger(a.unit) || a.unit < 1 || a.unit > totalUnits) continue;
+      if (!byUnit.has(a.unit)) byUnit.set(a.unit, a);
+    }
+    const occupied = byUnit.size;
+    const utilization = ((occupied / totalUnits) * 100).toFixed(1);
+    // Device status values in this build are 'Up' / 'Down' (poller) or
+    // null when never polled; alarm-style 'Clear' / 'Trouble' map the same.
+    const statusClassFor = (s) => (s === 'Up' || s === 'Clear' ? 'clear' : (s === 'Trouble' ? 'trouble' : 'critical'));
+    const statusLabelFor = (a) => (a.deviceStatus !== undefined && a.deviceStatus !== null ? String(a.deviceStatus) : '—');
+    const deviceLabelFor = (a) => escapeHtml(a.deviceName || a.deviceIp || ('Device ' + a.deviceId));
 
     let unitsHtml = '';
-    for (let u = 42; u >= 1; u--) {
-      const slot = slotMap[u];
-      if (slot) {
-        if (slot.isPrimary) {
-          const item = slot.unit;
-          const statusClass = item.status === 'Clear' ? 'clear' : item.status === 'Trouble' ? 'trouble' : 'critical';
-          const heightPx = item.heightU * 26;
-          unitsHtml += `
-            <div class="rack-u-row" style="height: ${heightPx}px; background: #0b1329; border: 1px solid #1e293b;" onclick="window.OpManager.inspectDevice('${item.deviceId}')">
-              <div class="rack-u-label" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                <span>U${item.startU + item.heightU - 1}</span>
-                ${item.heightU > 1 ? `<span style="font-size: 8px; color: #64748b;">|</span><span>U${item.startU}</span>` : ''}
+    for (let u = totalUnits; u >= 1; u--) {
+      const placed = byUnit.get(u);
+      if (placed) {
+        const status = statusLabelFor(placed);
+        const statusClass = statusClassFor(status);
+        const ip = placed.deviceIp ? escapeHtml(String(placed.deviceIp)) : '';
+        const category = placed.deviceCategory !== undefined && placed.deviceCategory !== null ? escapeHtml(String(placed.deviceCategory)) : '';
+        const canInspect = Number.isInteger(placed.deviceId);
+        unitsHtml += `
+          <div class="rack-u-row" style="background: #0b1329; border: 1px solid #1e293b;${canInspect ? ' cursor: pointer;' : ''}"${canInspect ? ` onclick="window.OpManager.inspectDevice('${placed.deviceId}')"` : ''}>
+            <div class="rack-u-label">U${u}</div>
+            <div class="rack-device-faceplate">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="rack-led ${statusClass}" title="Status: ${escapeHtml(status)}"></span>
+                <div>
+                  <div style="font-weight: 800; font-size: 11px; color: #f8fafc;">${deviceLabelFor(placed)}</div>
+                  <div style="font-size: 9px; color: #94a3b8;">${ip}${ip && category ? ' • ' : ''}${category}</div>
+                </div>
               </div>
-              <div class="rack-device-faceplate">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span class="rack-led ${statusClass}" title="Status: ${item.status}"></span>
-                  <img src="${item.image}" class="rack-faceplate-img" alt="${item.deviceName}" onerror="this.src='/images/racks/front/DellServer_1U.png'">
-                  <div>
-                    <div style="font-weight: 800; font-size: 11px; color: #f8fafc;">${item.deviceName}</div>
-                    <div style="font-size: 9px; color: #94a3b8;">${item.type}</div>
-                  </div>
-                </div>
-                <div style="text-align: right; font-size: 10px; font-family: monospace;">
-                  <span style="color: #38bdf8; margin-right: 8px;">🌡️ ${item.temp}</span>
-                  <span style="color: #4ade80;">⚡ ${item.power}</span>
-                </div>
+              <div style="text-align: right; font-size: 10px;">
+                <span class="badge-me ${statusClass}">${escapeHtml(status)}</span>
               </div>
             </div>
-          `;
-        }
+          </div>
+        `;
       } else {
         unitsHtml += `
           <div class="rack-u-row" style="opacity: 0.6;">
             <div class="rack-u-label">U${u}</div>
             <div style="flex: 1; padding: 0 10px; font-size: 9px; color: #475569; font-style: italic;">
-              Empty Slot (${u}U)
+              Empty Slot (U${u})
             </div>
           </div>
         `;
       }
     }
 
+    const mountedList = [...byUnit.entries()].sort((a, b) => a[0] - b[0]).map(([unit, placed]) => {
+      const status = statusLabelFor(placed);
+      const statusClass = statusClassFor(status);
+      const canInspect = Number.isInteger(placed.deviceId);
+      return `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; background: var(--bg-subnav); border-radius: 4px; font-size: 10px;${canInspect ? ' cursor: pointer;' : ''}"${canInspect ? ` onclick="window.OpManager.inspectDevice('${placed.deviceId}')"` : ''}>
+          <span><strong>U${unit}:</strong> ${deviceLabelFor(placed)}${placed.deviceIp ? ' (' + escapeHtml(String(placed.deviceIp)) + ')' : ''}</span>
+          <span class="badge-me ${statusClass}">${escapeHtml(status)}</span>
+        </div>
+      `;
+    }).join('');
+
     container.innerHTML = `
       <div class="rack-cabinet-frame">
         <div class="rack-cabinet-header">
           <div style="display: flex; align-items: center; gap: 6px;">
             <span>🏢</span>
-            <span>${rack.name}</span>
+            <span>${escapeHtml(rack.name || ('Rack ' + rack.id))}</span>
           </div>
-          <span class="badge-me clear" style="font-size: 9px;">42U Enclosure</span>
+          <span class="badge-me clear" style="font-size: 9px;">${totalUnits}U</span>
         </div>
         <div class="rack-units-scroll">
           ${unitsHtml}
@@ -2606,40 +2642,21 @@
       <div class="rack-sidebar-info">
         <div class="me-card" style="margin-bottom: 0;">
           <div class="me-card-header">
-            <span class="me-card-title">📊 Rack Environment & Capacity Telemetry</span>
+            <span class="me-card-title">📊 Rack Details</span>
           </div>
           <div class="me-card-body">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-              <div style="background: var(--bg-subnav); padding: 12px; border-radius: 6px; border: 1px solid var(--border-color);">
-                <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Thermal Ambient</div>
-                <div style="font-size: 22px; font-weight: 800; color: #22c55e; margin-top: 4px;">${rack.temperature}</div>
-                <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">ASHRAE TC 9.9 Recommended</div>
-              </div>
-
-              <div style="background: var(--bg-subnav); padding: 12px; border-radius: 6px; border: 1px solid var(--border-color);">
-                <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Active Power Draw</div>
-                <div style="font-size: 22px; font-weight: 800; color: #38bdf8; margin-top: 4px;">${rack.powerDraw}</div>
-                <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Dual PDU Feed A+B Normal</div>
-              </div>
-            </div>
-
             <div style="font-size: 11px; line-height: 1.8; color: var(--text-main);">
-              <div><strong>Facility:</strong> ${rack.datacenter}</div>
-              <div><strong>Managing Probe:</strong> 📍 ${rack.probeName}</div>
-              <div><strong>Space Utilization:</strong> ${(rack.units || []).length} of 42 Units Occupied (${(((rack.units || []).length / 42) * 100).toFixed(1)}%)</div>
-              ${rack.cooling ? `<div><strong>Redundant Cooling:</strong> ${escapeHtml(String(rack.cooling))}</div>` : ''}
+              <div><strong>Units:</strong> ${totalUnits}U</div>
+              <div><strong>Space Utilization:</strong> ${occupied} of ${totalUnits} Units Occupied (${utilization}%)</div>
+              <div><strong>Created:</strong> ${escapeHtml(fmtTime(rack.created_at))}</div>
             </div>
 
             <div style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px;">
-              <div style="font-weight: 700; font-size: 11px; margin-bottom: 6px;">Mounted Devices in Rack (${(rack.units || []).length}):</div>
+              <div style="font-weight: 700; font-size: 11px; margin-bottom: 6px;">Mounted Devices in Rack (${occupied}):</div>
+              ${occupied ? `
               <div style="display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto;">
-                ${(rack.units || []).map(item => `
-                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; background: var(--bg-subnav); border-radius: 4px; font-size: 10px; cursor: pointer;" onclick="window.OpManager.inspectDevice('${item.deviceId}')">
-                    <span><strong>U${item.startU}:</strong> ${item.deviceName} (${item.category})</span>
-                    <span class="badge-me ${item.status.toLowerCase()}">${item.status}</span>
-                  </div>
-                `).join('')}
-              </div>
+                ${mountedList}
+              </div>` : `<div style="font-size: 11px; color: var(--text-muted);">No devices placed in this rack.</div>`}
             </div>
           </div>
         </div>

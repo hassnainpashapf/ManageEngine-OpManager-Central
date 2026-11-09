@@ -9,11 +9,19 @@
  * store (server/services/store.js): the list returns only racks actually
  * created, and device placements are persisted in the store too.
  *
- * Store API used (FLAT exports — the store does NOT expose a `store.racks`
- * / `store.devices` namespace, so `store.racks.createRack` would throw):
+ * Store API used (FLAT exports — `store.racks` / `store.devices` namespaces
+ * also exist in the store, but these routes use the flat functions):
  *   store.createRack({ name, units }), store.listRacks(), store.getRack(id),
  *   store.listDevices(), store.getSetting(key), store.setSetting(key, value),
  *   store.getSessionByTokenHash(hash)
+ *
+ * Response contract (R-01, phase 5): `units` is the rack's unit COUNT (an
+ * integer), NOT a list of placed units; placements live in `assignments[]`,
+ * one entry per placed REAL device ({ rackId, deviceId, unit, deviceName,
+ * deviceIp, deviceStatus, deviceCategory, assignedAt }). The store's racks
+ * table holds only { id, name, units, created_at } — there is NO
+ * temperature, power, datacenter, probe or cooling data anywhere in this
+ * build, so none is returned here and the UI must not render any.
  *
  * Placements: the store has no rack_assignments table, so assignments are
  * persisted as JSON under the settings key 'rack_assignments' via
@@ -21,13 +29,10 @@
  * real rack (store.getRack) and a real device (store.listDevices); stale
  * assignments whose device no longer exists are dropped, never rendered.
  *
- * Auth: there is no shared auth middleware in this repo yet, and
- * server/routes/auth.js still issues un-stored timestamp tokens, so no
- * session can validate until the auth track stores sessions in
- * store.sessions. POSTs validate the Bearer token against that table
- * (SHA-256 hex of the presented token, honouring sessions.expires_at)
- * and return 401 otherwise. The hardcoded `opmcsrfcookie` value is
- * deliberately NOT accepted as auth.
+ * Auth: server/routes/auth.js stores sessions in store.sessions (SHA-256
+ * hex of the presented token, honouring sessions.expires_at). POSTs
+ * validate the Bearer token against that table and return 401 otherwise.
+ * The hardcoded `opmcsrfcookie` value is deliberately NOT accepted as auth.
  */
 
 const express = require('express');
@@ -120,13 +125,24 @@ router.get('/api/racks/list', (req, res) => {
   }
   res.json({
     status: 'success',
-    racks: racks.map((r) => ({
-      id: r.id,
-      name: r.name,
-      units: r.units,
-      created_at: r.created_at,
-      assignments: byRack.get(r.id) || [],
-    })),
+    racks: racks.map((r) => {
+      // Defensive (R-01): a stored units value that is not a positive
+      // integer is surfaced as null — never a fabricated count, and never
+      // a value a consumer could mistake for a placed-units list.
+      const units = Number.isInteger(r.units) && r.units > 0 ? r.units : null;
+      // Placements outside the rack's own unit range are stale and are
+      // never rendered.
+      const placed = (byRack.get(r.id) || []).filter(
+        (a) => units !== null && Number.isInteger(a.unit) && a.unit >= 1 && a.unit <= units
+      );
+      return {
+        id: r.id,
+        name: r.name,
+        units,
+        created_at: r.created_at,
+        assignments: placed,
+      };
+    }),
   });
 });
 
