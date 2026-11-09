@@ -877,11 +877,23 @@ them is a route that always refuses.
   is proven by the area's own harness: `scripts/test-snmpv3.js`
   **17/17 PASS** when run with `node --openssl-legacy-provider`
   (see the DES note below) and `scripts/snmpv3-unit-check.js` ALL PASS.
-- Area proofs re-run at merge time (see `MERGE.md`): WinRM selftest
-  52/52; SAML selftest 33/33 + proof 16/16; LDAP local proof 16/16 +
-  test-ldap 21/21; NCM unit 9/9 + drift 12/12 + backup 26/26 +
-  test-ncm 7/7; HA unit 22/22 + two-instance E2E (standby promoted,
-  gap 15242 ms).
+- Area proofs re-run at merge time (see `MERGE.md`, M1/M5 final
+  reports received after the merge): SNMPv3 service proof 28/28 + unit
+  17/17 + `scripts/test-snmpv3.js` 17 PASS / 0 FAIL / 0 GAP + tools
+  proof 21 passed / 8 failed (all 8 are the same live-UDP EPERM sandbox
+  block as verify-p3 check 1, not code) + live v2c regression via the
+  relay vs Techub Core 192.168.30.2 (cpu 7, mem 37.6%, 42 interfaces);
+  WinRM selftest 52/52; SAML selftest 33/33 + proof 16/16; LDAP local
+  proof 16/16 + test-ldap 21/21; NCM unit 9/9 + drift 12/12 + backup
+  26/26 + test-ncm 7/7; HA unit 22/22 + live route checks 19/19 +
+  two-instance E2E (standby promoted, gap observed 13,319 ms /
+  recorded 15,054 ms) + harness `scripts/test-ha.js` final run C0–C5
+  6/6 PASS. `GET /api/ha/decisions` was confirmed present in `p4m-ha`
+  — close-out did not need to add it. Incident note (M1, disclosed, no
+  merge impact): M1 accidentally killed M5's HA standby (PID 30674)
+  with a blind `pkill` during cleanup; M5 rebuilt it and the final
+  harness run after the kill passed 6/6. Lesson: kill by exact PID
+  only, never blind `pkill`.
 - `node --check`: every `server/**/*.js` file + `client/js/app.js` +
   all 15 `client/js/p3/*.js` partials pass.
 - Fake-data grep: **0 live `Math.random()` calls** in server/client
