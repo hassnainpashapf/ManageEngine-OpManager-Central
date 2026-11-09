@@ -28,7 +28,8 @@
       quickTools: true,
       topCpu: true,
       topMem: true,
-      recentAlarms: true
+      recentAlarms: true,
+      hostAgents: true
     },
     ws: null,
     autoRefreshInterval: null,
@@ -1274,6 +1275,24 @@
           ` : ''}
         </div>
 
+        <!-- Host Agents Widget (Phase 5 DASH-1): enrolled host agents with
+             live status + last telemetry, fed by GET /api/agent/list.
+             Full-width card so the agent table (hostname, IP, CPU, memory,
+             disk, last heartbeat) is readable; the body is filled
+             asynchronously by refreshHostAgentsWidget() after this
+             innerHTML lands, and re-filled on every auto-refresh tick. -->
+        ${state.widgetsVisibility.hostAgents ? `
+          <div class="me-card" style="margin-bottom: 16px;">
+            <div class="me-card-header">
+              <span class="me-card-title">🖥️ Host Agents</span>
+              <span style="font-size: 11px; color: var(--text-muted); cursor: pointer;" onclick="window.OpManager.switchTab('inventory', 'Host Agents')">View All →</span>
+            </div>
+            <div class="me-card-body" id="hostAgentsWidgetBody" style="padding: 10px 14px;">
+              <div style="text-align: center; color: var(--text-muted); padding: 12px 0;">Loading host agents…</div>
+            </div>
+          </div>
+        ` : ''}
+
         <!-- Unified Central Alarms Live Console Widget -->
         ${state.widgetsVisibility.recentAlarms ? `
           <div class="me-card">
@@ -1318,6 +1337,10 @@
           </div>
         ` : ''}
       `;
+      // Host Agents widget body is filled async from GET /api/agent/list
+      // (refreshHostAgentsWidget); the call is a no-op when the widget is
+      // hidden or the user has navigated away.
+      refreshHostAgentsWidget();
     } else if (state.currentSubTab === 'Top 10 Performance') {
       const topCpu10 = [...devices].sort((a, b) => b.cpu - a.cpu).slice(0, 10);
       const topMem10 = [...devices].sort((a, b) => b.memory - a.memory).slice(0, 10);
@@ -1713,6 +1736,71 @@
     `;
   }
 
+  // =========================================================================
+  // DASHBOARD WIDGET: Host Agents (Phase 5 DASH-1)
+  // Fills #hostAgentsWidgetBody on the main dashboard (Overview NOC) from
+  // GET /api/agent/list — the same session-guarded endpoint Inventory ->
+  // Host Agents uses, so the dashboard shows exactly what the console
+  // knows. Called after renderDashboardView sets innerHTML, and again on
+  // every auto-refresh tick (fetchInitialData + renderCurrentView), which
+  // is the dashboard's existing refresh pattern. Rows show only what the
+  // agent actually reported: a metric never sent renders as '—', never
+  // a back-filled value. Empty store -> honest "No host agents enrolled";
+  // a failed request -> an error message, never stale or invented data.
+  // A late response is dropped when its container is no longer connected
+  // (user navigated away or the view re-rendered).
+  // =========================================================================
+  async function refreshHostAgentsWidget() {
+    const body = document.getElementById('hostAgentsWidgetBody');
+    if (!body) return;
+    let res;
+    try {
+      res = await apiJson('/api/agent/list');
+    } catch (e) {
+      if (!body.isConnected) return;
+      body.innerHTML = `<div style="text-align: center; color: var(--severity-critical); padding: 12px 0;">Couldn't load host agents — ${escapeHtml(e.message)}</div>`;
+      return;
+    }
+    if (!body.isConnected) return;
+    const agents = (res && res.agents) || [];
+    if (!agents.length) {
+      body.innerHTML = `
+        <div style="text-align: center; color: var(--text-muted); padding: 12px 0;">
+          No host agents enrolled — download the agent and install it on a server host to see live telemetry here.
+        </div>`;
+      return;
+    }
+    body.innerHTML = `
+      <div class="me-table-wrap">
+        <table class="me-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Hostname</th>
+              <th>IP Address</th>
+              <th>CPU %</th>
+              <th>Memory %</th>
+              <th>Disk %</th>
+              <th>Last Heartbeat</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${agents.map(a => `
+              <tr>
+                <td><span class="badge-me ${a.status === 'Online' ? 'clear' : (a.status === 'Pending' ? 'attention' : 'down')}">${escapeHtml(String(a.status || '—'))}</span></td>
+                <td><strong>${escapeHtml(String(a.hostname || '—'))}</strong></td>
+                <td><code>${escapeHtml(String(a.ip || '—'))}</code></td>
+                <td><span style="font-weight: 700;">${displayVal(a.metrics && a.metrics.cpu)}${a.metrics && a.metrics.cpu != null ? '%' : ''}</span></td>
+                <td><span style="font-weight: 700;">${displayVal(a.metrics && a.metrics.memory)}${a.metrics && a.metrics.memory != null ? '%' : ''}</span></td>
+                <td><span style="font-weight: 700;">${displayVal(a.metrics && a.metrics.disk)}${a.metrics && a.metrics.disk != null ? '%' : ''}</span></td>
+                <td>${fmtTime(a.lastHeartbeat || a.registeredAt)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
   function renderRcaView() {
     const critical = getFilteredAlarms().filter(a => a.severity === 'Critical' || a.severity === 'Trouble');
     const header = `
@@ -1882,6 +1970,14 @@
         </label>
         <p style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Unified stream of active alarms</p>
       </div>
+
+      <div class="me-card" style="padding: 10px; margin-bottom: 0;">
+        <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; cursor: pointer;">
+          <input type="checkbox" id="wCheckHostAgents" ${state.widgetsVisibility.hostAgents ? 'checked' : ''}>
+          <span>🖥️ Host Agents</span>
+        </label>
+        <p style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Enrolled host agents with live status and CPU / memory / disk telemetry</p>
+      </div>
     `;
 
     DOM.widgetCatalogModal.classList.add('active');
@@ -1899,6 +1995,7 @@
     updateCheck('wCheckCpu', 'topCpu');
     updateCheck('wCheckMem', 'topMem');
     updateCheck('wCheckAlarms', 'recentAlarms');
+    updateCheck('wCheckHostAgents', 'hostAgents');
   }
 
   // =========================================================================
@@ -4876,6 +4973,7 @@
     renderIpManagementView,
     renderInterfacesInventory,
     renderHostAgentsInventory,
+    refreshHostAgentsWidget,
     renderRcaView,
     renderComplianceAuditView,
     renderProbeMutualAuthView,
