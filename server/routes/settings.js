@@ -158,7 +158,13 @@ router.get('/api/settings/central', (req, res) => {
       dbType: 'SQLite (node:sqlite)',
       dbPath: DB_PATH,
       dbSizeBytes: size,
-      haStatus: null,
+      haStatus: (() => {
+        try {
+          return require('../services/ha').getStatusSummary();
+        } catch {
+          return null;
+        }
+      })(),
     },
   });
 });
