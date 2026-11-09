@@ -6,7 +6,12 @@
  * auth.md A-10/A-11). Every value below comes from the authenticated
  * session (req.user) or from server/services/store.js (SQLite). Nothing is
  * hardcoded: no fixed administrator identity, no fixed licence, no invented
- * dashboards/views/maps/scores/CVEs, and no CSRF cookie is issued here.
+ * dashboards/views/maps, no invented CVEs or EOL dates, and no CSRF cookie
+ * is issued here. The security score, compliance verdicts and config-change
+ * counts (HE-3b, Phase 5) are computed from stored rows by the engines
+ * below; the CVE severity counts and the upcoming-EOL list stay
+ * honest-empty because no vulnerability feed or lifecycle catalogue
+ * exists anywhere in the repo (see those handlers).
  *
  * Conventions:
  *  - Auth: the auth layer's requireAuth middleware (mounted in
@@ -51,6 +56,8 @@ const getSetting = (key) =>
   (store.settings ? store.settings.getSetting(key) : store.getSetting(key));
 const listRacks = () =>
   (store.racks ? store.racks.listRacks() : store.listRacks());
+const listAlarms = (filter) =>
+  (store.alarms ? store.alarms.listAlarms(filter) : store.listAlarms(filter));
 
 // ------------------------------------------------------------------ auth ---
 
@@ -271,8 +278,10 @@ router.get(['/ncmclient/getClientServiceData', '/api/json/ncmclient/getClientSer
 // dropped sub-items are NOC Views + Custom Dashboards (no dashboard
 // store), Virtualization + Storage (no such data), Custom Views (no view
 // store), 3D Floor Views (no floor store), Layer2 Maps (no LLDP/CDP
-// discovery), Compliance Audit (no compliance engine) and Configlets &
-// Automation (no configlet store). A role with no read permissions gets [].
+// discovery), Compliance Audit (a read-only compliance engine now exists
+// in this file, but no compliance UI page is wired, so no tab) and
+// Configlets & Automation (no configlet store). A role with no read
+// permissions gets [].
 router.get(['/ncmclient/getMainMenuTabs', '/api/json/ncmclient/getMainMenuTabs'], (req, res) => {
   const perms = permissionsForRole(resolveUser(req).role);
   const can = (p) => perms[p] === true;
@@ -579,11 +588,19 @@ router.get(['/maps/getLayer2Maps', '/api/maps/getLayer2Maps', '/api/json/maps/ge
   res.json([]);
 });
 
-// (N11) No security score is computed: no control (auth/MFA, TLS, patch
-// state, password policy, ...) is evaluated anywhere, so there is no
-// score, grade or verdict to report.
+// (N11) REAL (HE-3b): score computed from stored data by
+// computeSecurityScore() — open alarms by severity + compliance verdicts
+// over the monitored devices. Null with a reason when nothing is
+// monitored; the formula is documented in API.md §11.
 router.get(['/v2/admin/getSecurityScore', '/api/v2/admin/getSecurityScore', '/api/json/v2/admin/getSecurityScore', '/client/api/json/v2/admin/getSecurityScore'], (req, res) => {
-  res.json({ SecurityScore: null, score: null, grade: null, status: null });
+  const result = computeSecurityScore(listDevices() || []);
+  res.json({
+    SecurityScore: result.score,
+    score: result.score,
+    grade: result.grade,
+    status: result.status,
+    details: result.details
+  });
 });
 
 // (N12) No .wav file exists anywhere in the repo (no public/audio/
@@ -672,6 +689,308 @@ function countDiffLines(runningLines, startupLines) {
   return added + removed;
 }
 
+// ------------------------------------------- HE-3b engines (Phase 5) ---
+//
+// Shared real-data engines for the NCM dashboard widgets. Every number
+// below is computed from rows actually in the store; nothing is sampled,
+// interpolated or invented. Where a source does not exist (a CVE feed, a
+// hardware lifecycle catalogue) the route stays honest-empty and says so
+// — see getFirmVul* / getUpcomingEolDevices.
+
+// --- Compliance policies ---
+// Each policy is a pure check over a device's latest fetched RUNNING
+// config. Comment lines (Cisco '!' / MikroTik '#') are ignored. A policy
+// returns 'pass' | 'fail' | 'na' ('na' = the config carries no evidence
+// the policy applies to, e.g. no management-access lines at all for the
+// SSH-only policy); 'na' is neither a pass nor a failure. Device verdict:
+// any Critical failure -> 'Critical Violation'; otherwise any Minor
+// failure -> 'Minor Deviation'; otherwise 'Compliant (Pass)'.
+const COMPLIANCE_POLICIES = [
+  {
+    id: 'no-default-snmp-community',
+    name: 'No default SNMP community string',
+    severity: 'Critical',
+    description: 'SNMP community must not be the well-known default "public" or "private" (Cisco "snmp-server community" / MikroTik "/snmp community name=").',
+    check(lines) {
+      for (const line of lines) {
+        if (/^\s*snmp-server\s+community\s+(public|private)\b/i.test(line)) return 'fail';
+        if (/\/snmp\s+community\b[^\n]*\bname\s*=\s*(public|private)\b/i.test(line)) return 'fail';
+      }
+      return 'pass';
+    }
+  },
+  {
+    id: 'no-plaintext-password',
+    name: 'No plaintext (type-0 / untyped) password',
+    severity: 'Critical',
+    description: 'Cisco "enable password" / "username … password" must use an encrypted type (5/7/8/9); a type-0 or bare plaintext password fails. "secret" lines are always hashed and are not flagged.',
+    check(lines) {
+      for (const line of lines) {
+        const m = line.match(/^\s*(?:enable\s+password|username\s+\S+\s+password)\s+(\S+)/i);
+        if (m && !['5', '7', '8', '9'].includes(m[1])) return 'fail';
+      }
+      return 'pass';
+    }
+  },
+  {
+    id: 'ssh-only-management',
+    name: 'SSH-only management access (no Telnet)',
+    severity: 'Minor',
+    description: 'Where management-access lines exist, Telnet must not be enabled (Cisco "transport input … telnet" / "telnet-server enable" / MikroTik "/ip service set telnet disabled=no"). No management-access lines at all -> not applicable.',
+    check(lines) {
+      const hasMgmt = lines.some((l) =>
+        /transport\s+input\b/i.test(l) || /telnet-server\b/i.test(l) ||
+        /\bip\s+ssh\b/i.test(l) || /\/ip\s+service\b/i.test(l));
+      if (!hasMgmt) return 'na';
+      for (const line of lines) {
+        if (/transport\s+input\s+[^\n]*\btelnet\b/i.test(line)) return 'fail';
+        if (/^\s*telnet-server\s+enable/i.test(line)) return 'fail';
+        if (/\/ip\s+service\s+set\s+telnet\s+disabled\s*=\s*no/i.test(line)) return 'fail';
+      }
+      return 'pass';
+    }
+  },
+  {
+    id: 'ntp-configured',
+    name: 'NTP configured',
+    severity: 'Minor',
+    description: 'Device must configure an NTP server/peer (Cisco "ntp server|peer" / MikroTik "/system ntp client"). Absence fails: the fetched running config is the whole config, so absence means not configured.',
+    check(lines) {
+      return lines.some((l) =>
+        /\bntp\s+(server|peer)\b/i.test(l) || /\/system\s+ntp\s+client\b/i.test(l))
+        ? 'pass' : 'fail';
+    }
+  },
+  {
+    id: 'syslog-configured',
+    name: 'Syslog / remote logging configured',
+    severity: 'Minor',
+    description: 'Device must send logs to a remote destination (Cisco "logging host|server" / MikroTik "/system logging"). Absence fails, same reasoning as NTP.',
+    check(lines) {
+      return lines.some((l) =>
+        /^\s*logging\s+(host|server)\b/i.test(l) || /\/system\s+logging\b/i.test(l))
+        ? 'pass' : 'fail';
+    }
+  }
+];
+
+// Config lines with comments and blanks removed, for policy checks.
+function activeConfigLines(content) {
+  return splitLines(content)
+    .map((l) => l.trimEnd())
+    .filter((l) => l.trim() !== '' && !/^\s*[!#]/.test(l));
+}
+
+function policyById(id) {
+  return COMPLIANCE_POLICIES.find((p) => p.id === id) || null;
+}
+
+// Evaluate every device that has a fetched running config. Devices with
+// no running config are counted in devicesNotEvaluated and in NO verdict
+// bucket — an unevaluated device is not "compliant".
+function evaluateCompliance(devices) {
+  const policies = COMPLIANCE_POLICIES.map((p) => ({
+    id: p.id, name: p.name, severity: p.severity, description: p.description
+  }));
+  const perDevice = [];
+  let devicesEvaluated = 0;
+  let devicesNotEvaluated = 0;
+  const counts = { compliant: 0, minor: 0, critical: 0 };
+  for (const dev of devices || []) {
+    const running = latestConfigOfTypes(dev.id, RUNNING_TYPES);
+    if (!running || running.content == null) {
+      devicesNotEvaluated += 1;
+      continue;
+    }
+    devicesEvaluated += 1;
+    const lines = activeConfigLines(running.content);
+    const failures = [];
+    const results = {};
+    for (const p of COMPLIANCE_POLICIES) {
+      const r = p.check(lines);
+      results[p.id] = r;
+      if (r === 'fail') failures.push(p.id);
+    }
+    const hasCritical = failures.some((id) => {
+      const p = policyById(id);
+      return p && p.severity === 'Critical';
+    });
+    const hasMinor = failures.some((id) => {
+      const p = policyById(id);
+      return p && p.severity === 'Minor';
+    });
+    const verdict = hasCritical
+      ? 'Critical Violation'
+      : (hasMinor ? 'Minor Deviation' : 'Compliant (Pass)');
+    if (hasCritical) counts.critical += 1;
+    else if (hasMinor) counts.minor += 1;
+    else counts.compliant += 1;
+    perDevice.push({
+      deviceId: dev.id,
+      device: deviceLabel(dev),
+      verdict,
+      failures,
+      results
+    });
+  }
+  return { counts, perDevice, devicesEvaluated, devicesNotEvaluated, policies };
+}
+
+// --- Config-change counts ---
+// The configs table IS the change history: every fetched config is a
+// backup row. A "change detected" is a consecutive pair of fetches of the
+// same device + config_type whose content differs (ordered oldest first;
+// ties broken by row id). No approval, schedule or author is recorded for
+// a fetched config, so no detected change can be shown to be authorised.
+function countConfigChanges() {
+  const devices = listDevices() || [];
+  let backupsTaken = 0;
+  let changesDetected = 0;
+  const perDevice = [];
+  for (const dev of devices) {
+    const rows = (getConfigs(dev.id) || []).filter((r) => r && r.content != null);
+    const byType = new Map();
+    for (const r of rows) {
+      if (!byType.has(r.config_type)) byType.set(r.config_type, []);
+      byType.get(r.config_type).push(r);
+    }
+    let devBackups = 0;
+    let devChanges = 0;
+    for (const list of byType.values()) {
+      const ordered = [...list].sort(
+        (a, b) => (a.fetched_at - b.fetched_at) || (a.id - b.id)
+      );
+      devBackups += ordered.length;
+      for (let i = 1; i < ordered.length; i++) {
+        if (ordered[i].content !== ordered[i - 1].content) devChanges += 1;
+      }
+    }
+    backupsTaken += devBackups;
+    changesDetected += devChanges;
+    if (devBackups > 0) {
+      perDevice.push({
+        deviceId: dev.id,
+        device: deviceLabel(dev),
+        backups: devBackups,
+        changesDetected: devChanges
+      });
+    }
+  }
+  return { backupsTaken, changesDetected, devicesWithBackups: perDevice.length, perDevice };
+}
+
+// --- Firmware inventory ---
+// No firmware-version column exists in the store; the version is derived
+// from the device's polled sysDescr (stored by discovery/poller from a
+// real SNMP GET) with conservative patterns. A sysDescr with no matching
+// token yields firmwareVersion null — never a guessed version. The
+// "Hardware Version" token is explicitly NOT a firmware version.
+const FIRMWARE_VERSION_PATTERNS = [
+  /(?<!hardware\s)\bVersion\s+([A-Za-z0-9][A-Za-z0-9()._+\-]*)/i, // Cisco IOS "Version 12.2(55)SE9"
+  /\bFirmware(?:\s+Version)?\s*[:=]\s*([^\s,;]+)/i,
+  /\bRouterOS\s+v?([0-9][0-9A-Za-z.]*)/i,
+  /\bSW\s+Version\s+([^\s,;]+)/i,
+  /\bSoftware\s+Version\s+([^\s,;]+)/i
+];
+
+function extractFirmwareVersion(sysDescr) {
+  if (!sysDescr) return null;
+  const text = String(sysDescr);
+  for (const re of FIRMWARE_VERSION_PATTERNS) {
+    const m = text.match(re);
+    if (m && m[1]) return m[1];
+  }
+  return null;
+}
+
+function buildFirmwareInventory(devices) {
+  return (devices || []).map((dev) => {
+    const firmwareVersion = extractFirmwareVersion(dev.sys_descr);
+    return {
+      deviceId: dev.id,
+      device: deviceLabel(dev),
+      ip: dev.ip || null,
+      vendor: dev.vendor || null,
+      model: dev.model || null,
+      sysDescr: dev.sys_descr || null,
+      firmwareVersion,
+      // Where the version came from; null when no version token exists.
+      firmwareVersionSource: firmwareVersion == null ? null : 'sysDescr'
+    };
+  });
+}
+
+// --- Security score ---
+// FORMULA (all inputs real, from this store):
+//   score = max(0, 100 - alarmDeduction - complianceDeduction)
+//   alarmDeduction      = min(criticalOpen * 10, 40) + min(troubleOpen * 5, 20)
+//                         + min(attentionOpen * 3, 15) + min(serviceDownOpen * 3, 15)
+//                         + min(otherOpen * 1, 5)
+//     where "open" = alarm status 'active' or 'acknowledged' (cleared
+//     alarms are history, not current risk); severities are the poller's
+//     own strings (Critical / Trouble / Attention / ServiceDown / Down).
+//   complianceDeduction = min(criticalViolationDevices * 5, 25)
+//                         + min(minorDeviationDevices * 2, 10)
+//     from evaluateCompliance() above; unevaluated devices contribute 0.
+//   grade: A >= 90, B >= 80, C >= 70, D >= 60, F < 60.
+//   status: 'Good' >= 80, 'Fair' 60-79, 'At Risk' < 60.
+// With zero devices monitored there is nothing to score: score/grade/
+// status are null (a 100 for an empty estate would be a lie).
+function computeSecurityScore(devices) {
+  const monitored = (devices || []).length;
+  const open = (listAlarms({ limit: 1000 }) || [])
+    .filter((a) => a.status === 'active' || a.status === 'acknowledged');
+  const bySeverity = { critical: 0, trouble: 0, attention: 0, serviceDown: 0, other: 0 };
+  for (const a of open) {
+    const s = String(a.severity || '').toLowerCase();
+    if (s === 'critical') bySeverity.critical += 1;
+    else if (s === 'trouble') bySeverity.trouble += 1;
+    else if (s === 'attention') bySeverity.attention += 1;
+    else if (s === 'servicedown' || s === 'down') bySeverity.serviceDown += 1;
+    else bySeverity.other += 1;
+  }
+  const compliance = evaluateCompliance(devices);
+  const alarmDeduction = Math.min(bySeverity.critical * 10, 40)
+    + Math.min(bySeverity.trouble * 5, 20)
+    + Math.min(bySeverity.attention * 3, 15)
+    + Math.min(bySeverity.serviceDown * 3, 15)
+    + Math.min(bySeverity.other * 1, 5);
+  const complianceDeduction = Math.min(compliance.counts.critical * 5, 25)
+    + Math.min(compliance.counts.minor * 2, 10);
+  const details = {
+    devicesMonitored: monitored,
+    openAlarms: { total: open.length, ...bySeverity },
+    compliance: {
+      devicesEvaluated: compliance.devicesEvaluated,
+      devicesNotEvaluated: compliance.devicesNotEvaluated,
+      compliant: compliance.counts.compliant,
+      minorDeviation: compliance.counts.minor,
+      criticalViolation: compliance.counts.critical
+    },
+    deductions: {
+      alarms: alarmDeduction,
+      compliance: complianceDeduction,
+      total: alarmDeduction + complianceDeduction
+    },
+    formula: 'score = max(0, 100 - alarmDeduction - complianceDeduction); alarmDeduction = min(critical*10,40)+min(trouble*5,20)+min(attention*3,15)+min(serviceDown*3,15)+min(other*1,5) over open (active/acknowledged) alarms; complianceDeduction = min(criticalViolationDevices*5,25)+min(minorDeviationDevices*2,10); grade A>=90 B>=80 C>=70 D>=60 F<60; status Good>=80 Fair 60-79 At Risk<60',
+    reason: null
+  };
+  if (monitored === 0) {
+    details.reason = 'No devices monitored — nothing to score (score/grade/status are null, not 100).';
+    return { score: null, grade: null, status: null, details };
+  }
+  const score = Math.max(0, 100 - alarmDeduction - complianceDeduction);
+  const grade = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  const status = score >= 80 ? 'Good' : score >= 60 ? 'Fair' : 'At Risk';
+  return { score, grade, status, details };
+}
+
+// No vulnerability feed exists anywhere in the repo (no CVE data file,
+// no feed URL, no stored CVE rows — the MIB index only names OID
+// descriptors such as ncmFwvCveid). Until one is added, every CVE
+// aggregate is honestly 0 ("none known", not "none exist").
+const NO_VULN_FEED_REASON = 'No vulnerability feed is configured or bundled: no CVE data exists anywhere in the repo, so no CVE can be matched against the firmware inventory. Counts of 0 mean "none known", not "none exist".';
+
 // (N13) Counts computed from real startup-vs-running comparisons over
 // configs actually fetched into the store. A device with no fetched pair
 // is counted in neither bucket; with no configs at all both counts are 0.
@@ -699,45 +1018,74 @@ router.get(['/ncmdashboard/getConfigConflictStatus', '/api/ncmdashboard/getConfi
   });
 });
 
-// (N14) No compliance engine exists: no rule is ever evaluated against
-// any fetched config, so zero devices are measured compliant and zero
-// violations are measured. 0/0/0 is the honest count, not 12/3/1.
+// (N14) REAL (HE-3b): each device with a fetched running config is
+// checked against COMPLIANCE_POLICIES (default SNMP community, plaintext
+// password, SSH-only management, NTP, syslog); verdicts are evidence-only
+// and devices with no running config are counted separately as not
+// evaluated, never as compliant. Policy definitions: API.md §11.
 router.get(['/ncmdashboard/getComplianceStatus', '/api/ncmdashboard/getComplianceStatus'], (req, res) => {
+  const result = evaluateCompliance(listDevices() || []);
   res.json({
     status: 'success',
     columns: [{ columnname: 'Severity', datatype: 'ordinal' }, { columnname: 'Count', datatype: 'numeric' }],
     data: [
-      { severity: 'Compliant (Pass)', count: 0 },
-      { severity: 'Minor Deviation', count: 0 },
-      { severity: 'Critical Violation', count: 0 }
-    ]
+      { severity: 'Compliant (Pass)', count: result.counts.compliant },
+      { severity: 'Minor Deviation', count: result.counts.minor },
+      { severity: 'Critical Violation', count: result.counts.critical }
+    ],
+    devicesEvaluated: result.devicesEvaluated,
+    devicesNotEvaluated: result.devicesNotEvaluated,
+    policies: result.policies,
+    perDevice: result.perDevice
   });
 });
 
-// (N15) No config-change audit log exists (no change history is recorded
-// anywhere), so no change can be classified authorised or unauthorised.
+// (N15) REAL (HE-3b): counts from the configs table, which IS the change
+// history (every fetch is a backup row; a change is a consecutive pair of
+// fetches of the same device + type whose content differs). Authorized
+// stays 0: the NCM approval gate is dry-run only and nothing is ever
+// pushed to a device, so no detected change can be tied to an authorised
+// change — every detected diff arrived out-of-band and is therefore
+// unscheduled. See API.md §11.
 router.get(['/ncmreports/getconfigChangesStatus', '/api/ncmreports/getconfigChangesStatus'], (req, res) => {
+  const result = countConfigChanges();
   res.json({
     status: 'success',
     columns: [{ columnname: 'Type', datatype: 'ordinal' }, { columnname: 'Count', datatype: 'numeric' }],
     data: [
       { type: 'Authorized Changes', count: 0 },
-      { type: 'Unauthorized / Unscheduled', count: 0 }
-    ]
+      { type: 'Unauthorized / Unscheduled', count: result.changesDetected }
+    ],
+    backupsTaken: result.backupsTaken,
+    changesDetected: result.changesDetected,
+    devicesWithBackups: result.devicesWithBackups,
+    perDevice: result.perDevice
   });
 });
 
-// (N16) No firmware inventory is collected and no CVE feed is queried, so
-// there are no vulnerability findings to report.
+// (N16) REAL firmware inventory, HONEST-EMPTY vulnerabilities (HE-3b):
+// firmware rows are the real discovered devices (model + firmware version
+// as extracted from the polled sysDescr; null where no version token
+// exists). No CVE feed exists, so no CVE can be matched: totalVulnera-
+// bilities is 0 ("none known", not "none exist") and cveList is [].
 router.get(['/ncmcompliance/getFirmVulnDetails', '/api/ncmcompliance/getFirmVulnDetails'], (req, res) => {
+  const devices = listDevices() || [];
+  const firmwareInventory = buildFirmwareInventory(devices);
   res.json({
     status: 'success',
     totalVulnerabilities: 0,
-    cveList: []
+    cveList: [],
+    vulnerabilityFeed: null,
+    reason: NO_VULN_FEED_REASON,
+    firmwareInventory,
+    devicesInventoried: firmwareInventory.length,
+    devicesWithFirmwareVersion: firmwareInventory.filter((d) => d.firmwareVersion != null).length
   });
 });
 
-// (N17) Severity counts aggregated from the (empty) CVE result above.
+// (N17) HONEST-EMPTY (HE-3b): severity counts aggregate the CVE result
+// above, and there is no CVE result — no vulnerability feed exists. The
+// real firmware inventory is in getFirmVulnDetails, not here.
 router.get(['/ncmcompliance/getFirmVulCveSeverityStatus', '/api/ncmcompliance/getFirmVulCveSeverityStatus'], (req, res) => {
   res.json({
     status: 'success',
@@ -746,20 +1094,24 @@ router.get(['/ncmcompliance/getFirmVulCveSeverityStatus', '/api/ncmcompliance/ge
       { severity: 'High', count: 0 },
       { severity: 'Medium', count: 0 },
       { severity: 'Low', count: 0 }
-    ]
+    ],
+    vulnerabilityFeed: null,
+    reason: NO_VULN_FEED_REASON
   });
 });
 
-// (N18) Per-device vulnerability state is unknown: no device is known
-// vulnerable (0) and none is verified patched (0). The old code also had
-// a latent crash here — it referenced `devices` without defining it.
+// (N18) HONEST-EMPTY (HE-3b): no device can be called vulnerable or
+// verified patched without a CVE feed / patched-baseline to check
+// against. 0 vulnerable = none known; 0 patched = none verified patched.
 router.get(['/ncmcompliance/getFirmVulDeviceSeverityStatus', '/api/ncmcompliance/getFirmVulDeviceSeverityStatus'], (req, res) => {
   res.json({
     status: 'success',
     data: [
       { severity: 'Vulnerable Devices', count: 0 },
       { severity: 'Patched Devices', count: 0 }
-    ]
+    ],
+    vulnerabilityFeed: null,
+    reason: NO_VULN_FEED_REASON
   });
 });
 
@@ -834,10 +1186,16 @@ router.get(['/ncmeol/getEolSummary', '/api/ncmeol/getEolSummary'], (req, res) =>
   });
 });
 
+// (N21) HONEST-EMPTY (HE-3b): no hardware lifecycle source exists —
+// devices store no purchase/warranty/EOL dates and no vendor EOL/EOS
+// catalogue is bundled in the repo — so no EOL date can be reported.
+// Inventing one would be fake data.
 router.get(['/ncmeol/getUpcomingEolDevices', '/api/ncmeol/getUpcomingEolDevices'], (req, res) => {
   res.json({
     status: 'success',
-    devices: []
+    devices: [],
+    lifecycleSource: null,
+    reason: 'No hardware lifecycle source exists: devices store no purchase/warranty/EOL dates and no vendor EOL/EOS catalogue is bundled in the repo, so no EOL date can be reported.'
   });
 });
 
