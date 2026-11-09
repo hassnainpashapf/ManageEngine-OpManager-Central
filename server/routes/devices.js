@@ -822,47 +822,283 @@ router.get('/api/json/device/categories', (req, res) => {
 // -------------------------------------------------------------
 // VIRTUALIZATION INVENTORY (OPM/Virtualization.xml -> /Inventory/List/Virtualization/*)
 // -------------------------------------------------------------
-const VIRTUAL_MACHINES = [];
+// -------------------------------------------------------------
+// VIRTUALIZATION INVENTORY (OPM/Virtualization.xml -> /Inventory/List/Virtualization/*)
+// REAL (Phase 5 HE-2): derived from the stored device inventory — a
+// device is a hypervisor host when its stored identity says so:
+//   - sysObjectID enterprise 6876 (VMware; ESXi hosts report
+//     1.3.6.1.4.1.6876.4.1), or
+//   - sysDescr keywords: esxi / vmware / hyper-v / hyperv / kvm /
+//     qemu / proxmox / xen / nutanix, or
+//   - stored vendor VMware / Nutanix (with a matching sysDescr).
+// LIMIT (honest, not a gap to paper over): the poller collects only
+// sysDescr/sysObjectID/sysUpTime/CPU/memory/interfaces — it polls NO
+// VM MIB table (no vmwVmTable, no Hyper-V MIB, no hrSWRun guest
+// enumeration). Guest VMs therefore cannot be enumerated from any
+// stored data: every host reports vms: [] and vmCount 0, and
+// summary.totalVMs / totalVCPUs / totalMemoryTB stay 0. That is the
+// absence of VM rows, not a claim of zero VMs. When no stored device
+// is a hypervisor host, the endpoint returns the honest empty with
+// the exact reason below. No VM is ever invented.
+// -------------------------------------------------------------
+const HYPERVISOR_ENTERPRISE = { 6876: 'vmware' };
+
+function classifyHypervisor(device) {
+  const oid = String(device.sys_object_id || '');
+  const descr = String(device.sys_descr || '').toLowerCase();
+  const vendor = String(device.vendor || '').toLowerCase();
+  const oidMatch = oid.match(/^\.?1\.3\.6\.1\.4\.1\.(\d+)/);
+  if (oidMatch && HYPERVISOR_ENTERPRISE[oidMatch[1]]) return HYPERVISOR_ENTERPRISE[oidMatch[1]];
+  if (/hyper[-\s]?v/.test(descr)) return 'hyperv';
+  if (/\besxi\b|vmware/.test(descr) || vendor === 'vmware') return 'vmware';
+  if (/proxmox/.test(descr) || vendor === 'proxmox') return 'proxmox';
+  if (/nutanix|ahv/.test(descr) || vendor === 'nutanix') return 'nutanix';
+  if (/\bkvm\b|\bqemu\b/.test(descr)) return 'kvm';
+  if (/\bxen\b/.test(descr)) return 'xen';
+  return null;
+}
+
+const VIRTUALIZATION_NO_HOST_REASON = 'No virtualization host in the device store: no discovered device has a VMware/Hyper-V/KVM/Proxmox/Nutanix/Xen sysObjectID, sysDescr, or vendor. Guest VMs are never enumerated — the poller collects no VM MIB tables (no vmwVmTable, Hyper-V MIB, or hrSWRun guest data), so per-host VM lists are empty even when a host is present.';
 
 router.get(['/api/inventory/virtualization', '/inventory/virtualization'], (req, res) => {
   const { type = 'all', probeId } = req.query;
-  let list = VIRTUAL_MACHINES;
-  if (type !== 'all') {
-    list = list.filter(v => v.type === type.toLowerCase());
+  const devices = store.listDevices(probeId !== undefined ? { probe_id: probeId } : {});
+  const hosts = [];
+  for (const device of devices) {
+    const hypervisorType = classifyHypervisor(device);
+    if (!hypervisorType) continue;
+    if (type !== 'all' && hypervisorType !== String(type).toLowerCase()) continue;
+    hosts.push({
+      id: device.id,
+      deviceId: device.id,
+      ip: device.ip,
+      hostname: device.hostname || device.sys_name || null,
+      name: device.hostname || device.sys_name || device.ip,
+      type: hypervisorType,
+      vendor: device.vendor || null,
+      sysObjectId: device.sys_object_id || null,
+      sysDescr: device.sys_descr || null,
+      status: device.status || null,
+      probeId: device.probe_id ?? null,
+      lastPolledAt: device.last_polled_at ?? null,
+      // No VM MIB is polled, so guest VMs cannot be listed (see header).
+      vmCount: 0,
+      vms: []
+    });
   }
-  if (probeId) {
-    list = list.filter(v => v.probeId == probeId);
+  const hypervisors = { vmware: 0, hyperv: 0, kvm: 0, proxmox: 0, nutanix: 0, xen: 0, containers: 0 };
+  for (const h of hosts) {
+    if (Object.prototype.hasOwnProperty.call(hypervisors, h.type)) hypervisors[h.type] += 1;
   }
 
   res.json({
     status: 'success',
-    total: list.length,
-    vmsCount: list.length,
-    vms: list,
+    total: hosts.length,
+    hostsCount: hosts.length,
+    hosts,
+    // Back-compat shape: `vms` is the (unenumerable) guest-VM list.
+    vmsCount: 0,
+    vms: [],
     summary: {
-      totalVMs: list.length,
+      totalHosts: hosts.length,
+      totalVMs: 0,
       totalVCPUs: 0,
       totalMemoryTB: 0,
-      hypervisors: {
-        vmware: 0,
-        proxmox: 0,
-        nutanix: 0,
-        containers: 0
-      }
-    }
+      hypervisors
+    },
+    source: 'stored device identity (sysObjectID/sysDescr/vendor); no VM MIB is polled, so guest VMs are not enumerated',
+    reason: hosts.length ? null : VIRTUALIZATION_NO_HOST_REASON
   });
 });
 
 // -------------------------------------------------------------
 // FIREWALL POLICY RULES INVENTORY (FWA/secondaryLevelMenuTab.xml -> /Inventory/List/LogMgmt/Rulemgmt)
+// REAL (Phase 5 HE-2): derived from the stored NCM configs
+// (configs table, latest running config per device — same source as
+// the CCM diff). Two real config dialects are parsed, line by line,
+// and every returned rule carries its verbatim source line so
+// nothing is lost in the parse:
+//   - Cisco IOS ACLs: `access-list <id|name> <permit|deny> ...` and
+//     `ip access-list [extended|standard] <name>` blocks whose body
+//     lines start with permit/deny.
+//   - pfSense config.xml: `<rule>` blocks (action/protocol/source
+//     address/destination address/description/interface).
+// A rule is only ever a line/block that is really in a stored
+// config. When no config is stored, or no stored config contains a
+// parseable rule, the endpoint returns the honest empty with the
+// exact reason below. No rule is ever invented.
 // -------------------------------------------------------------
-const FIREWALL_RULES = [];
+const FW_RUNNING_TYPES = ['running', 'running-config'];
+const FW_NO_CONFIG_REASON = 'No device configuration is stored in the NCM store (configs table is empty) — no firewall rule can be derived. Fetch a running config first (NCM backup).';
+
+const fwGetConfigs = (deviceId, type) =>
+  (store.configs ? store.configs.getConfigs(deviceId, type) : store.getConfigs(deviceId, type));
+const fwGetLatestConfig = (deviceId, type) =>
+  (store.configs ? store.configs.getLatestConfig(deviceId, type) : store.getLatestConfig(deviceId, type));
+
+function fwLatestConfigOfTypes(deviceId, types) {
+  for (const type of types) {
+    const row = fwGetLatestConfig(deviceId, type);
+    if (row) return row;
+  }
+  return null;
+}
+
+const FW_PROTOCOLS = new Set(['ip', 'tcp', 'udp', 'icmp', 'gre', 'esp', 'ah', 'ospf', 'eigrp', 'igmp', 'sctp']);
+
+// Best-effort field split of one Cisco extended-ACL rule body:
+// "<action> <protocol> <source...> <destination...> [options]".
+// `host x` and `x <wildcard-mask>` pairs are kept together; anything
+// not understood is left in `raw` (never dropped, never guessed).
+function parseCiscoAclFields(body) {
+  const tokens = body.trim().split(/\s+/);
+  const action = tokens[0] || null;
+  let rest = tokens.slice(1);
+  let protocol = null;
+  if (rest.length && FW_PROTOCOLS.has(rest[0].toLowerCase())) {
+    protocol = rest[0].toLowerCase();
+    rest = rest.slice(1);
+  }
+  const takeAddress = (toks) => {
+    if (!toks.length) return { address: null, rest: toks };
+    if (toks[0].toLowerCase() === 'any') return { address: 'any', rest: toks.slice(1) };
+    if (toks[0].toLowerCase() === 'host' && toks[1]) return { address: `host ${toks[1]}`, rest: toks.slice(2) };
+    if (toks[0].toLowerCase() === 'object-group' && toks[1]) return { address: `object-group ${toks[1]}`, rest: toks.slice(2) };
+    if (toks.length >= 2 && /^\d+\.\d+\.\d+\.\d+$/.test(toks[0]) && /^\d+\.\d+\.\d+\.\d+$/.test(toks[1])) {
+      return { address: `${toks[0]} ${toks[1]}`, rest: toks.slice(2) };
+    }
+    return { address: toks[0], rest: toks.slice(1) };
+  };
+  const src = takeAddress(rest);
+  const dst = takeAddress(src.rest);
+  return { action, protocol, source: src.address, destination: dst.address, options: dst.rest.length ? dst.rest.join(' ') : null };
+}
+
+function parseCiscoAclConfig(content, device, configRow) {
+  const rules = [];
+  const lines = String(content || '').split(/\r?\n/);
+  let blockName = null;
+  lines.forEach((rawLine, idx) => {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('!')) {
+      if (!line) blockName = null;
+      return;
+    }
+    const blockMatch = line.match(/^ip access-list (?:extended|standard) (\S+)/i);
+    if (blockMatch) {
+      blockName = blockMatch[1];
+      return;
+    }
+    // A non-indented top-level line ends an access-list block.
+    if (blockName && !/^\s/.test(rawLine)) blockName = null;
+    let body = null;
+    let acl = blockName;
+    const numbered = line.match(/^access-list\s+(\S+)\s+(permit|deny)\b(.*)$/i);
+    if (numbered) {
+      acl = numbered[1];
+      body = `${numbered[2]}${numbered[3] || ''}`;
+    } else if (blockName && /^(permit|deny)\b/i.test(line)) {
+      body = line;
+    }
+    if (!body) return;
+    const fields = parseCiscoAclFields(body);
+    rules.push({
+      id: `${device.id}:${configRow.id}:${idx + 1}`,
+      deviceId: device.id,
+      deviceIp: device.ip,
+      deviceName: device.hostname || device.sys_name || device.ip,
+      source: 'ncm-config',
+      vendor: 'cisco',
+      configType: configRow.config_type || null,
+      configId: configRow.id,
+      fetchedAt: configRow.fetched_at ?? null,
+      acl: acl || null,
+      action: fields.action,
+      protocol: fields.protocol,
+      sourceAddress: fields.source,
+      destinationAddress: fields.destination,
+      options: fields.options,
+      description: null,
+      raw: line
+    });
+  });
+  return rules;
+}
+
+function fwXmlTag(block, tag) {
+  const m = block.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`, 'i'));
+  return m ? m[1].trim() : null;
+}
+
+function fwXmlAddress(block, side) {
+  const m = block.match(new RegExp(`<${side}>([\\s\\S]*?)</${side}>`, 'i'));
+  if (!m) return null;
+  const inner = m[1];
+  const addr = fwXmlTag(inner, 'address');
+  if (addr) return addr;
+  if (/<any\s*\/>/.test(inner)) return 'any';
+  return null;
+}
+
+function parsePfSenseConfig(content, device, configRow) {
+  const rules = [];
+  const text = String(content || '');
+  if (!/<pfsense>/i.test(text) && !/<rule>/i.test(text)) return rules;
+  const blocks = text.match(/<rule>([\s\S]*?)<\/rule>/gi) || [];
+  blocks.forEach((block, idx) => {
+    const action = fwXmlTag(block, 'action');
+    if (!action) return;
+    rules.push({
+      id: `${device.id}:${configRow.id}:pfsense-${idx + 1}`,
+      deviceId: device.id,
+      deviceIp: device.ip,
+      deviceName: device.hostname || device.sys_name || device.ip,
+      source: 'ncm-config',
+      vendor: 'pfsense',
+      configType: configRow.config_type || null,
+      configId: configRow.id,
+      fetchedAt: configRow.fetched_at ?? null,
+      acl: null,
+      action: action.toLowerCase(),
+      protocol: fwXmlTag(block, 'protocol'),
+      sourceAddress: fwXmlAddress(block, 'source'),
+      destinationAddress: fwXmlAddress(block, 'destination'),
+      options: fwXmlTag(block, 'interface') ? `interface ${fwXmlTag(block, 'interface')}` : null,
+      description: fwXmlTag(block, 'descr'),
+      raw: block.replace(/\s+/g, ' ').trim()
+    });
+  });
+  return rules;
+}
 
 router.get(['/api/inventory/firewall-rules', '/inventory/firewall-rules'], (req, res) => {
+  const devices = store.listDevices({});
+  const rules = [];
+  let configsParsed = 0;
+  let devicesWithConfigs = 0;
+  for (const device of devices) {
+    const configRow = fwLatestConfigOfTypes(device.id, FW_RUNNING_TYPES)
+      || (fwGetConfigs(device.id).length ? fwGetConfigs(device.id)[0] : null);
+    if (!configRow || !configRow.content) continue;
+    devicesWithConfigs += 1;
+    configsParsed += 1;
+    rules.push(...parseCiscoAclConfig(configRow.content, device, configRow));
+    rules.push(...parsePfSenseConfig(configRow.content, device, configRow));
+  }
+  let reason = null;
+  if (configsParsed === 0) {
+    reason = FW_NO_CONFIG_REASON;
+  } else if (rules.length === 0) {
+    reason = `${configsParsed} stored config(s) from ${devicesWithConfigs} device(s) were parsed; none contains a parseable firewall rule (Cisco access-list or pfSense <rule> block).`;
+  }
   res.json({
     status: 'success',
-    totalRules: FIREWALL_RULES.length,
-    rules: FIREWALL_RULES
+    totalRules: rules.length,
+    rules,
+    configsParsed,
+    devicesWithConfigs,
+    source: 'stored NCM running configs (configs table); each rule carries its verbatim source line',
+    reason
   });
 });
 
