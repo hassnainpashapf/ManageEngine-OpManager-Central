@@ -402,11 +402,14 @@ app.get(['/apiclient/ember/index.jsp', '/apiclient/ember', '/apiclient/fluidicv3
 // matches case-insensitively; isApiPath() itself is case-sensitive, so the
 // pathname is lowercased first. Unauthenticated API calls never reach
 // this handler: apiAuthGuard above already 401s them.
-// NOTE: /settings/ and /inventory/ bare forms hit the same collision but
-// are NOT in LEGACY_API_PREFIXES, so apiAuthGuard does not protect them
-// and they intentionally still redirect — un-redirecting them first needs
-// the auth track to add those prefixes to LEGACY_API_PREFIXES (their
-// routers have no per-route auth guard; see ROUTING-1 report).
+// NOTE: /inventory/ bare forms hit the same collision but are NOT in
+// LEGACY_API_PREFIXES, so apiAuthGuard does not protect them and they
+// intentionally still redirect — un-redirecting them first needs the auth
+// track to add that prefix to LEGACY_API_PREFIXES (its router has no
+// per-route auth guard; see ROUTING-1 report). /settings/ was in the same
+// position but FIX-A4SEC (Phase 5) added '/settings/' (and '/support/') to
+// LEGACY_API_PREFIXES and guarded the settings routes, so /settings/ API
+// paths now fall through above like the others.
 app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'], (req, res, next) => {
   if (isApiPath(apiPathname(req).toLowerCase())) return next();
   res.redirect('/apiclient/fluidicv3/itom/index.html#' + req.originalUrl);
