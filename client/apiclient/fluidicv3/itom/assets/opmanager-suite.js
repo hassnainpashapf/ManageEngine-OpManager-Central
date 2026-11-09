@@ -666,7 +666,7 @@
       }
       return 'maps';
     }
-    if (mainSeg === 'configuration' || mainSeg.includes('ncm') || mainSeg.includes('compliance')) {
+    if (mainSeg === 'configuration' || mainSeg === 'config' || mainSeg.startsWith('config') || mainSeg.includes('ncm') || mainSeg.includes('compliance')) {
       if (subSeg && state.subTabs) {
         state.subTabs.configuration = subSeg;
       }
@@ -3892,57 +3892,92 @@
       `;
       document.body.appendChild(modal);
     }
+    // Ensure probe select is up-to-date with current probes
+    const probeSelect = modal.querySelector('#new-dev-probe');
+    if (probeSelect && state.probes && state.probes.length > 0) {
+      probeSelect.innerHTML = state.probes.map(p => `<option value="${p.id}">${p.name} (${p.location || p.ip})</option>`).join('');
+    }
+
     modal.style.display = 'flex';
     document.getElementById('close-add-dev-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('cancel-add-dev-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('save-add-dev-btn').onclick = () => {
-      const ip = document.getElementById('new-dev-ip').value.trim() || '10.50.1.' + Math.floor(Math.random() * 200 + 10);
-      const probeId = parseInt(document.getElementById('new-dev-probe').value, 10) || 1;
-      const targetProbe = state.probes.find(p => p.id === probeId) || state.probes[0];
-      const snmpProfile = document.getElementById('new-dev-snmp').value;
+    document.getElementById('save-add-dev-btn').onclick = async () => {
+      const saveBtn = document.getElementById('save-add-dev-btn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Discovering...';
 
-      const newId = state.devices.length + 1;
+      const ipInput = document.getElementById('new-dev-ip');
+      const ip = (ipInput ? ipInput.value.trim() : '') || '192.168.30.' + Math.floor(Math.random() * 150 + 20);
+      const probeId = parseInt(document.getElementById('new-dev-probe')?.value, 10) || 101;
+      const targetProbe = (state.probes || []).find(p => p.id === probeId || String(p.id) === String(probeId)) || (state.probes && state.probes[0]) || { id: 101, name: 'Central-Probe-01' };
+      const snmpProfile = document.getElementById('new-dev-snmp')?.value || 'Enterprise SNMP v2c';
+
+      const newId = (state.devices ? state.devices.length : 0) + 1;
+      const devName = 'SW-CORE-' + ip.split('.').slice(2).join('-');
+      const startupCfg = `! Cisco IOS Software, Catalyst L3 Switch Software (CAT9K_IOSXE), Version 17.3.4a\n!\nhostname ${devName}\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nservice password-encryption\n!\nboot-start-marker\nboot-end-marker\n!\naaa new-model\n!\nip domain name corp.internal\nip name-server 192.168.30.254\n!\nspanning-tree mode rapid-pvst\n!\ninterface GigabitEthernet0/1\n description Primary Core Trunk to Datacenter\n switchport mode trunk\n switchport trunk allowed vlan 10,20,30\n!\ninterface Vlan1\n ip address ${ip} 255.255.255.0\n no shutdown\n!\nline con 0\nline vty 0 4\n transport input ssh\n!\nend`;
+      const runningCfg = startupCfg + `\ninterface GigabitEthernet0/2\n description Access Port (Vlan 20)\n switchport access vlan 20\n switchport mode access\n! [Unsaved drift detected in RAM]`;
+
       const newDev = {
         id: newId,
-        name: 'NODE-' + ip.replace(/\./g, '-'),
+        name: devName,
         ip: ip,
         category: 'Switches',
-        type: 'Managed SNMP Host (' + snmpProfile.split(' ')[1] + ')',
+        type: 'Managed Cisco Catalyst L3 Switch (' + (snmpProfile.includes('v3') ? 'v3' : 'v2c') + ')',
         vendor: 'Cisco Systems',
         probe: targetProbe.name,
         probeId: targetProbe.id,
         status: 'Clear',
-        cpu: Math.floor(Math.random() * 30 + 15),
-        memory: Math.floor(Math.random() * 35 + 25),
+        cpu: Math.floor(Math.random() * 25 + 15),
+        memory: Math.floor(Math.random() * 30 + 25),
         disk: 28.0,
         temp: 31,
-        responseTime: Math.floor(Math.random() * 20 + 8),
+        responseTime: Math.floor(Math.random() * 15 + 4),
         availability: '100.0%',
-        serial: 'SNMP-' + Math.floor(Math.random() * 899999 + 100000),
-        osVersion: 'Enterprise Agent Monitored',
+        serial: 'CAT9K-' + Math.floor(Math.random() * 899999 + 100000),
+        osVersion: 'Cisco IOS-XE 17.3.4a',
         lastBackup: 'Just now',
+        startupConfig: startupCfg,
+        runningConfig: runningCfg,
+        ncmConfigured: true,
         interfaces: [
-          { name: 'GigabitEthernet0/1', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 140.2, outTraffic: 120.5, errors: 0 }
+          { name: 'GigabitEthernet0/1', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 140.2, outTraffic: 120.5, errors: 0 },
+          { name: 'GigabitEthernet0/2', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 42.1, outTraffic: 31.8, errors: 0 }
         ]
       };
 
+      if (!state.devices) state.devices = [];
       state.devices.unshift(newDev);
-      targetProbe.devices++;
-      targetProbe.devicesCount++;
+
+      if (targetProbe) {
+        targetProbe.devices = (targetProbe.devices || 0) + 1;
+        targetProbe.devicesCount = (targetProbe.devicesCount || 0) + 1;
+      }
 
       // Send to server
-      fetch('/api/devices', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newDev)
-      }).catch(() => {});
+      try {
+        await fetch('/api/devices', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newDev)
+        });
+      } catch (e) {}
 
-      showToast(`Device ${newDev.name} (${ip}) successfully discovered and added!`);
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Discover & Add';
       modal.style.display = 'none';
+      if (ipInput) ipInput.value = '';
 
-      if (state.currentTab === 'inventory') {
+      if (typeof updateStatusCounters === 'function') {
+        updateStatusCounters();
+      }
+
+      showToast(`Device ${newDev.name} (${ip}) successfully discovered and enrolled into NCM!`);
+
+      if (state.currentTab === 'configuration' && typeof renderConfigurationView === 'function') {
+        renderConfigurationView();
+      } else if (state.currentTab === 'inventory' && typeof renderInventoryView === 'function') {
         renderInventoryView();
-      } else if (state.currentTab === 'dashboard') {
+      } else if (state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') {
         renderDashboardView();
       }
     };
@@ -11709,82 +11744,346 @@
 
       <div style="padding: 20px 24px;">
         
-        ${activeSub === 'compliance' ? `
-          <!-- Compliance Clean Empty State -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        ${(() => {
+          const hasDevices = state.devices && state.devices.length > 0;
+          const primaryDev = hasDevices ? state.devices[0] : { name: 'SW-CORE-01', ip: '192.168.30.1', probe: (state.probes && state.probes[0]?.name) || 'Central-Probe-01' };
+
+          const renderCleanEmptyState = (title, subtitle) => `
+            <!-- NCM Clean Zero State -->
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">${title || 'No Devices Configured for NCM'}</div>
+              <div style="font-size: 12px; color: #64748b; max-width: 520px; margin: 0 auto 20px auto; line-height: 1.6;">
+                ${subtitle || 'All demo device configurations have been cleared. Once you discover Cisco, HP, Fortinet, or Juniper network devices, automated configuration backups, compliance audits, and live drift diffs will display here.'}
+              </div>
+              <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                <button id="opm-cfg-add-dev-btn" onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+                  + Add Network Device
+                </button>
+                <button id="opm-cfg-provision-sample-btn" style="display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+                  ⚡ Provision Cisco Core Switch (Instant Demo)
+                </button>
+              </div>
             </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No NCM Device Configurations Monitored</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
-              Enable SSH/Telnet credentials on Cisco, Juniper, HP, or Fortinet network devices to automate startup vs running config backups, compliance policy checks (CIS, PCI-DSS, HIPAA), and change detection.
-            </div>
-            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Add Network Device
-            </button>
-          </div>
-      ` : activeSub === 'changes' ? `
-          <!-- Official NCM All Config Changes -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Configuration Changes Detected</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
-              All startup and running configurations across managed devices are in-sync with 0 bytes drift.
-            </div>
-          </div>
-        ` : activeSub === 'vulnerability' ? `
-          <!-- Firmware Vulnerability Subtab -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">Zero Known CVE Vulnerabilities</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
-              NIST NVD database feed synchronized. All running firmware builds across monitored nodes are secure and patched.
-            </div>
-          </div>
-        ` : activeSub === 'backups' ? `
-          <!-- Config Backups Subtab -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-              <span style="font-size: 14px; font-weight: 700; color: #0f172a;">Automated Daily Configuration Backups</span>
-              <span style="font-size: 11px; color: #16a34a; font-weight: 700;">● ${state.devices.length}/${state.devices.length} Successful Today</span>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                  <th style="padding: 8px 12px;">Device</th>
-                  <th style="padding: 8px 12px;">Probe</th>
-                  <th style="padding: 8px 12px;">Last Backup</th>
-                  <th style="padding: 8px 12px;">Config Size</th>
-                  <th style="padding: 8px 12px;">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${state.devices.length === 0 ? `
-                  <tr>
-                    <td colspan="5" style="padding: 30px; text-align: center; color: #94a3b8;">
-                      No configuration backups found. Devices enrolled in NCM will have daily automated backups listed here.
-                    </td>
-                  </tr>
-                ` : state.devices.slice(0, 8).map(d => `
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;">
-                      ${getDeviceTypeIcon(d.type, d.category, 16)}
-                      <span>${d.name}</span>
-                    </td>
-                    <td style="padding: 8px 12px; color: #64748b;">${d.probe}</td>
-                    <td style="padding: 8px 12px; color: #475569;">${d.lastBackup}</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">42.8 KB</td>
-                    <td style="padding: 8px 12px;"><span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">SUCCESS</span></td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        ` : `
+          `;
+
+          if (activeSub === 'compliance') {
+            if (!hasDevices) {
+              return renderCleanEmptyState(
+                'No Devices Configured for NCM',
+                'All demo device configurations have been cleared. Once you discover Cisco, HP, Fortinet, or Juniper network devices, automated configuration backups, compliance audits, and live drift diffs will display here.'
+              );
+            }
+
+            const isDriftFixed = Boolean(state.configDriftFixed);
+            const isPwdRemediated = state.remediatedRules && state.remediatedRules['pwd'];
+            const isSnmpRemediated = state.remediatedRules && state.remediatedRules['snmp'];
+
+            return `
+              <!-- Compliance Executive Summary KPI Cards -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">CIS Cisco IOS Hardening</span>
+                    <span style="font-size: 10px; background: #fef3c7; color: #92400e; font-weight: 800; padding: 2px 6px; border-radius: 3px;">AUDIT ACTIVE</span>
+                  </div>
+                  <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">${isPwdRemediated ? '100.0%' : '85.7%'}</div>
+                  <div style="font-size: 11px; color: ${isPwdRemediated ? '#16a34a' : '#d97706'}; margin-top: 4px; font-weight: 600;">
+                    ${isPwdRemediated ? '✔ All 14 Benchmark Rules Passed' : '⚠ 12 Passed &bull; 2 Critical Violations'}
+                  </div>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">PCI-DSS 4.0 Standard</span>
+                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">ENFORCED</span>
+                  </div>
+                  <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">${isSnmpRemediated ? '100.0%' : '88.0%'}</div>
+                  <div style="font-size: 11px; color: ${isSnmpRemediated ? '#16a34a' : '#ea580c'}; margin-top: 4px; font-weight: 600;">
+                    ${isSnmpRemediated ? '✔ Requirement 2.1 Compliant' : '⚠ Default SNMP Community Violation'}
+                  </div>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">HIPAA Security §164.312</span>
+                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">PASS</span>
+                  </div>
+                  <div style="font-size: 26px; font-weight: 800; color: #166534; margin-top: 8px;">100.0%</div>
+                  <div style="font-size: 11px; color: #16a34a; margin-top: 4px; font-weight: 600;">✔ SSH v2 & Audit Logs Encrypted</div>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">SOX Section 404</span>
+                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">VERIFIED</span>
+                  </div>
+                  <div style="font-size: 26px; font-weight: 800; color: #166534; margin-top: 8px;">94.1%</div>
+                  <div style="font-size: 11px; color: #16a34a; margin-top: 4px; font-weight: 600;">✔ Syslog Trail Forwarding Active</div>
+                </div>
+              </div>
+
+              <!-- Active Compliance Policy Violations Table -->
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 20px;">
+                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
+                  <span>Active Compliance Policy Violations & Audits</span>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
+                  </div>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                  <thead>
+                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                      <th style="padding: 10px 14px;">Rule Name</th>
+                      <th style="padding: 10px 14px;">Standard</th>
+                      <th style="padding: 10px 14px;">Target Device</th>
+                      <th style="padding: 10px 14px;">Severity</th>
+                      <th style="padding: 10px 14px;">Status</th>
+                      <th style="padding: 10px 14px; text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Service Password Encryption Disabled (service password-encryption)</td>
+                      <td style="padding: 10px 14px; color: #64748b;">CIS Cisco IOS 1.2</td>
+                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
+                      <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CRITICAL</span></td>
+                      <td style="padding: 10px 14px;">
+                        ${isPwdRemediated ? '<span style="color: #16a34a; font-weight: 700;">● Compliant</span>' : '<span style="color: #dc2626; font-weight: 700;">● Non-Compliant</span>'}
+                      </td>
+                      <td style="padding: 10px 14px; text-align: right;">
+                        ${isPwdRemediated ? '<span style="color: #16a34a; font-weight: 700;">✔ Remediated</span>' : '<button class="opm-remediate-btn" data-rule="pwd" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Execute Fixlet</button>'}
+                      </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">SNMP Community String 'public' in use</td>
+                      <td style="padding: 10px 14px; color: #64748b;">PCI-DSS 4.0 (Req 2.1)</td>
+                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
+                      <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">MAJOR</span></td>
+                      <td style="padding: 10px 14px;">
+                        ${isSnmpRemediated ? '<span style="color: #16a34a; font-weight: 700;">● Compliant</span>' : '<span style="color: #ea580c; font-weight: 700;">● Non-Compliant</span>'}
+                      </td>
+                      <td style="padding: 10px 14px; text-align: right;">
+                        ${isSnmpRemediated ? '<span style="color: #16a34a; font-weight: 700;">✔ Remediated</span>' : '<button class="opm-remediate-btn" data-rule="snmp" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Execute Fixlet</button>'}
+                      </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">SSH Protocol Version 2 Mandatory (ip ssh version 2)</td>
+                      <td style="padding: 10px 14px; color: #64748b;">HIPAA Security §164.312</td>
+                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
+                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">LOW</span></td>
+                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 700;">● Compliant</td>
+                      <td style="padding: 10px 14px; text-align: right;"><span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Verified</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Syslog Audit Trail Forwarding Enabled (logging host 192.168.30.65)</td>
+                      <td style="padding: 10px 14px; color: #64748b;">SOX Section 404</td>
+                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
+                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">LOW</span></td>
+                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 700;">● Compliant</td>
+                      <td style="padding: 10px 14px; text-align: right;"><span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Verified</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Live NCM Config Drift Diff Section -->
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Live NCM Config Drift Diff: ${primaryDev.name} (${primaryDev.ip})</div>
+                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Startup-Config (NVRAM Baseline) vs Running-Config (Live Active RAM)</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; ${isDriftFixed ? 'background: #dcfce7; color: #166534;' : 'background: #fef3c7; color: #92400e;'}">
+                      ${isDriftFixed ? '● 0 Unsaved Drifts (Synchronized)' : '● 1 Unsaved Drift in RAM'}
+                    </span>
+                    <button id="opm-open-diff-comparator-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Compare Revisions ↗</button>
+                    ${!isDriftFixed ? '<button id="opm-save-running-startup-btn" style="background: #16a34a; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Save to Startup (NVRAM)</button>' : '<button id="opm-recheck-drift-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Recheck Drift</button>'}
+                  </div>
+                </div>
+
+                <div style="background: #0f172a; border-radius: 6px; padding: 14px; font-family: monospace; font-size: 11px; line-height: 1.6; color: #e2e8f0; overflow-x: auto;">
+                  <div style="color: #64748b;">! Cisco IOS-XE Dynamic Configuration Drift Telemetry</div>
+                  <div style="color: #64748b;">! Target: ${primaryDev.name} &bull; Probe: ${primaryDev.probe || 'Central-Probe-01'}</div>
+                  <div>hostname ${primaryDev.name}</div>
+                  <div>!</div>
+                  ${isDriftFixed ? `
+                    <div style="color: #34d399;">+ service password-encryption  ! [Persisted to NVRAM]</div>
+                    <div style="color: #34d399;">+ interface Vlan100  ! [Committed to Startup]</div>
+                    <div style="color: #34d399;">+  description Management VLAN (Committed)</div>
+                  ` : `
+                    <div style="color: #f87171;">- service password-encryption  [NVRAM Baseline]</div>
+                    <div style="color: #fbbf24;">+ no service password-encryption  [Drift in RAM]</div>
+                    <div>!</div>
+                    <div style="color: #38bdf8;">+ interface Vlan100  ! [Uncommitted dynamic change]</div>
+                    <div style="color: #38bdf8;">+  description Management VLAN (Unsaved)</div>
+                  `}
+                  <div>interface GigabitEthernet0/1</div>
+                  <div> switchport mode trunk</div>
+                  <div> switchport trunk allowed vlan 10,20,30</div>
+                  <div>!</div>
+                  <div>end</div>
+                </div>
+              </div>
+            `;
+          }
+
+          if (activeSub === 'changes') {
+            if (!hasDevices) {
+              return renderCleanEmptyState(
+                'No Configuration Changes Recorded',
+                'All demo device configurations have been cleared. Network device configuration revisions, syslog audit events, and commit diffs will appear here once network devices are discovered.'
+              );
+            }
+
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
+                  <span>Automated Configuration Change Audit Trail (${state.devices.length} Managed Nodes)</span>
+                  <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                  <thead>
+                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                      <th style="padding: 10px 14px;">Timestamp</th>
+                      <th style="padding: 10px 14px;">Device</th>
+                      <th style="padding: 10px 14px;">Probe</th>
+                      <th style="padding: 10px 14px;">Author / Terminal</th>
+                      <th style="padding: 10px 14px;">Change Description</th>
+                      <th style="padding: 10px 14px;">Drift Type</th>
+                      <th style="padding: 10px 14px; text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 10px 14px; color: #64748b; font-family: monospace;">Just now</td>
+                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
+                      <td style="padding: 10px 14px; color: #64748b;">${primaryDev.probe || 'Central-Probe-01'}</td>
+                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">admin via SSH (vty0)</td>
+                      <td style="padding: 10px 14px; color: #334155;">Modified interface GigabitEthernet0/1 VLAN encapsulation</td>
+                      <td style="padding: 10px 14px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">RUNNING != STARTUP</span></td>
+                      <td style="padding: 10px 14px; text-align: right;">
+                        <button class="opm-open-diff-comparator-btn" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">View Diff</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            `;
+          }
+
+          if (activeSub === 'vulnerability') {
+            if (!hasDevices) {
+              return renderCleanEmptyState(
+                'Zero Firmware CVE Vulnerabilities',
+                'NIST NVD database feed synchronized. All running firmware builds across monitored nodes are secure and patched.'
+              );
+            }
+
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
+                  <span>NIST NVD Live Security Advisory Feed (Managed Network Nodes)</span>
+                  <span style="background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">● 2 CVE Advisories Active</span>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                  <thead>
+                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                      <th style="padding: 10px 14px;">CVE ID</th>
+                      <th style="padding: 10px 14px;">CVSS Score</th>
+                      <th style="padding: 10px 14px;">Target Device</th>
+                      <th style="padding: 10px 14px;">Running Firmware</th>
+                      <th style="padding: 10px 14px;">Advisory Summary</th>
+                      <th style="padding: 10px 14px; text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 10px 14px; font-weight: 700; font-family: monospace; color: #dc2626;">CVE-2023-20198</td>
+                      <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 10px; padding: 2px 6px; border-radius: 3px;">10.0 CRITICAL</span></td>
+                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
+                      <td style="padding: 10px 14px; font-family: monospace;">Cisco IOS-XE 17.3.4a</td>
+                      <td style="padding: 10px 14px; color: #334155;">Cisco IOS XE Software Web UI Privilege Escalation</td>
+                      <td style="padding: 10px 14px; text-align: right;">
+                        <button class="opm-cve-remed-btn" data-cve="CVE-2023-20198" style="background: #dc2626; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Apply Mitigation Fixlet</button>
+                      </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 10px 14px; font-weight: 700; font-family: monospace; color: #ea580c;">CVE-2023-20273</td>
+                      <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 800; font-size: 10px; padding: 2px 6px; border-radius: 3px;">7.2 HIGH</span></td>
+                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
+                      <td style="padding: 10px 14px; font-family: monospace;">Cisco IOS-XE 17.3.4a</td>
+                      <td style="padding: 10px 14px; color: #334155;">Cisco IOS XE Software Web UI Command Injection</td>
+                      <td style="padding: 10px 14px; text-align: right;">
+                        <button class="opm-cve-remed-btn" data-cve="CVE-2023-20273" style="background: #ea580c; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Advisory Details</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            `;
+          }
+
+          if (activeSub === 'backups') {
+            if (!hasDevices) {
+              return renderCleanEmptyState(
+                'No Configuration Backups Found',
+                'No configuration backups found. Devices enrolled in NCM will have daily automated backups listed here.'
+              );
+            }
+
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                  <span style="font-size: 14px; font-weight: 700; color: #0f172a;">Automated Daily Configuration Backups</span>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; color: #16a34a; font-weight: 700;">● ${state.devices.length}/${state.devices.length} Successful Today</span>
+                    <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
+                  </div>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                  <thead>
+                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                      <th style="padding: 10px 12px;">Device</th>
+                      <th style="padding: 10px 12px;">Probe</th>
+                      <th style="padding: 10px 12px;">Last Backup</th>
+                      <th style="padding: 10px 12px;">Config Size</th>
+                      <th style="padding: 10px 12px;">Status</th>
+                      <th style="padding: 10px 12px; text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${state.devices.map(d => `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 10px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;">
+                          ${typeof getDeviceTypeIcon === 'function' ? getDeviceTypeIcon(d.type, d.category, 16) : '🖧'}
+                          <span>${d.name}</span>
+                        </td>
+                        <td style="padding: 10px 12px; color: #64748b;">${d.probe || 'Central-Probe-01'}</td>
+                        <td style="padding: 10px 12px; color: #475569;">${d.lastBackup || 'Just now'}</td>
+                        <td style="padding: 10px 12px; font-family: monospace;">42.8 KB</td>
+                        <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">SUCCESS</span></td>
+                        <td style="padding: 10px 12px; text-align: right; white-space: nowrap;">
+                          <button class="opm-cfg-backup-single-btn" data-id="${d.id}" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">Backup Now</button>
+                          <button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">View Config</button>
+                          <button class="opm-cfg-download-config-btn" data-id="${d.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Download</button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            `;
+          }
+
+          // Workflows is returned below
+          return '';
+        })()}
+
+        ${activeSub === 'workflows' ? `
           <!-- IT Automation Workflows Subtab (with Official ManageEngine Workflow Action Palette Icons) -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -11903,7 +12202,7 @@
               </div>
             </div>
           </div>
-        `}
+        ` : ''}
       </div>
     `;
 
@@ -11915,14 +12214,65 @@
       };
     });
 
-        const compBtn = container.querySelector('#opm-open-diff-comparator-btn');
-    if (compBtn) {
-      compBtn.onclick = () => {
-        if (typeof showNcmVersionCompareModal === 'function') {
-          showNcmVersionCompareModal(state.devices[0]);
+    // Provision Sample Cisco Core Switch Button (Instant Demo Node)
+    const provBtn = container.querySelector('#opm-cfg-provision-sample-btn');
+    if (provBtn) {
+      provBtn.onclick = async () => {
+        provBtn.disabled = true;
+        provBtn.textContent = 'Provisioning...';
+        const sampleDev = {
+          name: 'SW-CORE-01',
+          ip: '192.168.30.1',
+          category: 'Switches',
+          type: 'Managed Cisco Catalyst 9300 L3 Switch (v2c)',
+          vendor: 'Cisco Systems',
+          probe: (state.probes && state.probes[0]?.name) || 'Central-Probe-01',
+          probeId: (state.probes && state.probes[0]?.id) || 101,
+          status: 'Clear',
+          cpu: 24,
+          memory: 38,
+          disk: 28.0,
+          temp: 31,
+          responseTime: 3,
+          availability: '100.0%',
+          serial: 'CAT9300-K9-89218',
+          osVersion: 'Cisco IOS-XE 17.3.4a',
+          lastBackup: 'Just now',
+          startupConfig: `! Cisco IOS Software, Catalyst L3 Switch Software (CAT9K_IOSXE), Version 17.3.4a\nhostname SW-CORE-01\nservice password-encryption\ninterface GigabitEthernet0/1\n switchport mode trunk\ninterface Vlan1\n ip address 192.168.30.1 255.255.255.0\nline vty 0 4\n transport input ssh\nend`,
+          runningConfig: `! Cisco IOS Software, Catalyst L3 Switch Software (CAT9K_IOSXE), Version 17.3.4a\nhostname SW-CORE-01\nno service password-encryption\ninterface GigabitEthernet0/1\n switchport mode trunk\ninterface Vlan1\n ip address 192.168.30.1 255.255.255.0\ninterface Vlan100\n description Management VLAN\nline vty 0 4\n transport input ssh\nend`,
+          ncmConfigured: true,
+          interfaces: [
+            { name: 'GigabitEthernet0/1', admin: 'UP', oper: 'UP', speed: '10 Gbps', inTraffic: 240.5, outTraffic: 198.2, errors: 0 },
+            { name: 'GigabitEthernet0/2', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 45.1, outTraffic: 28.6, errors: 0 }
+          ]
+        };
+        try {
+          await fetch('/api/devices', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(sampleDev)
+          });
+        } catch(e) {}
+        if (!state.devices) state.devices = [];
+        state.devices.unshift(sampleDev);
+        if (state.probes && state.probes[0]) {
+          state.probes[0].devices = (state.probes[0].devices || 0) + 1;
+          state.probes[0].devicesCount = (state.probes[0].devicesCount || 0) + 1;
         }
+        if (typeof updateStatusCounters === 'function') updateStatusCounters();
+        showToast('Sample Cisco Catalyst 9300 L3 Core Switch provisioned into NCM!');
+        renderConfigurationView();
       };
     }
+
+    // Open Diff Comparator buttons
+    container.querySelectorAll('#opm-open-diff-comparator-btn, .opm-open-diff-comparator-btn').forEach(btn => {
+      btn.onclick = () => {
+        if (typeof showNcmVersionCompareModal === 'function') {
+          showNcmVersionCompareModal(state.devices ? state.devices[0] : null);
+        }
+      };
+    });
 
     // Save running to startup button
     const saveBtn = container.querySelector('#opm-save-running-startup-btn');
@@ -11939,7 +12289,7 @@
     if (recheckBtn) {
       recheckBtn.onclick = () => {
         state.configDriftFixed = false;
-        showToast('Config drift simulation reset.');
+        showToast('Config drift simulation scan completed.');
         renderConfigurationView();
       };
     }
@@ -11947,11 +12297,73 @@
     // Remediate button: opens ManageEngine NCM Policy Remediation Fixlet
     container.querySelectorAll('.opm-remediate-btn').forEach(btn => {
       btn.onclick = () => {
+        const ruleType = btn.getAttribute('data-rule') || 'pwd';
+        const targetDev = (state.devices && state.devices[0]) || { name: 'SW-CORE-01', ip: '192.168.30.1', probe: 'Central-Probe-01' };
+        
+        if (!state.remediatedRules) state.remediatedRules = {};
+        state.remediatedRules[ruleType] = true;
+
         if (typeof showNcmRemediationModal === 'function') {
-          showNcmRemediationModal('Cisco IOS Golden Baseline (SSH v2 & Password Encryption)', state.devices[0]);
+          showNcmRemediationModal(ruleType === 'snmp' ? 'PCI-DSS 4.0 (Req 2.1) Default Community String' : 'CIS Cisco IOS 1.2 Service Password Encryption', targetDev);
         } else {
-          showToast('Compliance remediation script executed via SSH.');
+          showToast(`Compliance remediation fixlet executed via SSH on ${targetDev.name}.`);
         }
+        renderConfigurationView();
+      };
+    });
+
+    // CVE Remediation button
+    container.querySelectorAll('.opm-cve-remed-btn').forEach(btn => {
+      btn.onclick = () => {
+        const cve = btn.getAttribute('data-cve') || 'CVE-2023-20198';
+        const targetDev = (state.devices && state.devices[0]) || { name: 'SW-CORE-01', ip: '192.168.30.1', probe: 'Central-Probe-01' };
+        if (typeof showNcmRemediationModal === 'function') {
+          showNcmRemediationModal(`${cve} NIST Security Patch & ACL Mitigation`, targetDev);
+        } else {
+          showToast(`Applied mitigation ACL fixlet for ${cve} on ${targetDev.name}.`);
+        }
+      };
+    });
+
+    // Backup single device button
+    container.querySelectorAll('.opm-cfg-backup-single-btn').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        const dev = (state.devices || []).find(d => String(d.id) === String(id));
+        if (dev) {
+          dev.lastBackup = 'Just now';
+          showToast(`Automated configuration backup completed for ${dev.name} via SSH.`);
+          renderConfigurationView();
+        }
+      };
+    });
+
+    // View config button
+    container.querySelectorAll('.opm-cfg-view-config-btn').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        const dev = (state.devices || []).find(d => String(d.id) === String(id));
+        if (typeof showNcmVersionCompareModal === 'function') {
+          showNcmVersionCompareModal(dev || (state.devices && state.devices[0]));
+        }
+      };
+    });
+
+    // Download config button
+    container.querySelectorAll('.opm-cfg-download-config-btn').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        const dev = (state.devices || []).find(d => String(d.id) === String(id)) || (state.devices && state.devices[0]) || { name: 'device' };
+        const text = dev.runningConfig || dev.startupConfig || `! Cisco IOS Software\nversion 17.3.4a\nhostname ${dev.name}\nend`;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${dev.name}_running_config_${new Date().toISOString().slice(0, 10)}.cfg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showToast(`Downloaded running configuration archive for ${dev.name}`);
       };
     });
 
@@ -11959,7 +12371,20 @@
     const bkpAllBtn = container.querySelector('#opm-cfg-backup-all-btn');
     if (bkpAllBtn) {
       bkpAllBtn.onclick = () => {
-        showToast('Triggered automated configuration backup across all 16 devices.');
+        const devCount = (state.devices || []).length;
+        if (devCount === 0) {
+          showToast('No devices enrolled in NCM. Add a network device first.', 'warning');
+          return;
+        }
+        bkpAllBtn.disabled = true;
+        bkpAllBtn.textContent = 'Backing up...';
+        setTimeout(() => {
+          (state.devices || []).forEach(d => { d.lastBackup = 'Just now'; });
+          bkpAllBtn.disabled = false;
+          bkpAllBtn.textContent = `Backup All Now (${devCount})`;
+          showToast(`Triggered automated configuration backup across all ${devCount} devices.`);
+          renderConfigurationView();
+        }, 500);
       };
     }
 
@@ -15562,7 +15987,7 @@
           return null;
         };
 
-        const routesToRegister = ['settings', 'maps', 'configuration', 'reports', 'dashboard', 'inventory'];
+        const routesToRegister = ['settings', 'maps', 'configuration', 'config', 'reports', 'dashboard', 'inventory'];
         routesToRegister.forEach(r => {
           const modRoute = 'itom/routes/' + r;
           const modTpl = 'itom/templates/' + r;
@@ -15917,11 +16342,16 @@
     renderSettingsView,
     showDeviceSnapshotModal,
     showProbeDetailsModal,
+    showDeleteProbeConfirmModal,
     showAboutModal,
-    showZiaAIModal,
+    showZiaAIModal: (typeof showZiaAssistantModal !== 'undefined' ? showZiaAssistantModal : function(){}),
+    showZiaAssistantModal,
     showTrapViewerModal,
     showColumnChooserModal,
     showSubnetDiscoveryModal,
+    showNetworkDiscoveryModal: (typeof showSubnetDiscoveryModal !== 'undefined' ? showSubnetDiscoveryModal : function(){}),
+    showNewDiscoveryRuleModal,
+    showAddDiscoveryRuleModal: (typeof showNewDiscoveryRuleModal !== 'undefined' ? showNewDiscoveryRuleModal : function(){}),
     showNetworkToolsModal,
     showServiceDeskIncidentModal,
     showReportPdfModal,
@@ -15934,6 +16364,9 @@
     showIpSlaVoipModal,
     showScheduleDowntimeModal,
     showNewWorkflowModal,
+    showNewTemplateModal,
+    showTemplateDetailsModal,
+    showApplyTemplateModal,
     showSwitchPortMapperModal,
     showStorageArrayModal,
     showSslCertificateModal,
@@ -15946,7 +16379,7 @@
     showNdrForensicsModal,
     playAlarmChime,
     openAlarmDrawer,
-    showAlarmDrawer: (typeof openAlarmDrawer !== 'undefined' ? openAlarmDrawer : showAlarmDetailsDrawer),
+    showAlarmDrawer: (typeof openAlarmDrawer !== 'undefined' ? openAlarmDrawer : (typeof showAlarmDetailsDrawer !== 'undefined' ? showAlarmDetailsDrawer : function(){})),
     showAlarmDetailsDrawer,
     showGlobalSearchModal,
     showAddDeviceModal,
@@ -15958,6 +16391,21 @@
     applyNocDarkTheme,
     updateBreadcrumbs
   };
+
+  // Expose directly on window for all inline onclick="..." attributes across the DOM
+  Object.assign(window, window.OpManagerSuite);
+  window.showAddDeviceModal = showAddDeviceModal;
+  window.showAddProbeModal = showAddProbeModal;
+  window.showProbeDetailsModal = showProbeDetailsModal;
+  window.showDeviceSnapshotModal = showDeviceSnapshotModal;
+  window.showToast = showToast;
+  window.renderConfigurationView = renderConfigurationView;
+  window.renderDashboardView = renderDashboardView;
+  window.renderInventoryView = renderInventoryView;
+  window.renderAlarmsView = renderAlarmsView;
+  window.renderMapsView = renderMapsView;
+  window.renderReportsView = renderReportsView;
+  window.renderSettingsView = renderSettingsView;
 
   // Event Listeners
   window.addEventListener('hashchange', handleRoute);

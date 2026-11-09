@@ -666,7 +666,7 @@
       }
       return 'maps';
     }
-    if (mainSeg === 'configuration' || mainSeg.includes('ncm') || mainSeg.includes('compliance')) {
+    if (mainSeg === 'configuration' || mainSeg === 'config' || mainSeg.startsWith('config') || mainSeg.includes('ncm') || mainSeg.includes('compliance')) {
       if (subSeg && state.subTabs) {
         state.subTabs.configuration = subSeg;
       }

@@ -240,7 +240,7 @@
           return null;
         };
 
-        const routesToRegister = ['settings', 'maps', 'configuration', 'reports', 'dashboard', 'inventory'];
+        const routesToRegister = ['settings', 'maps', 'configuration', 'config', 'reports', 'dashboard', 'inventory'];
         routesToRegister.forEach(r => {
           const modRoute = 'itom/routes/' + r;
           const modTpl = 'itom/templates/' + r;
@@ -595,11 +595,16 @@
     renderSettingsView,
     showDeviceSnapshotModal,
     showProbeDetailsModal,
+    showDeleteProbeConfirmModal,
     showAboutModal,
-    showZiaAIModal,
+    showZiaAIModal: (typeof showZiaAssistantModal !== 'undefined' ? showZiaAssistantModal : function(){}),
+    showZiaAssistantModal,
     showTrapViewerModal,
     showColumnChooserModal,
     showSubnetDiscoveryModal,
+    showNetworkDiscoveryModal: (typeof showSubnetDiscoveryModal !== 'undefined' ? showSubnetDiscoveryModal : function(){}),
+    showNewDiscoveryRuleModal,
+    showAddDiscoveryRuleModal: (typeof showNewDiscoveryRuleModal !== 'undefined' ? showNewDiscoveryRuleModal : function(){}),
     showNetworkToolsModal,
     showServiceDeskIncidentModal,
     showReportPdfModal,
@@ -612,6 +617,9 @@
     showIpSlaVoipModal,
     showScheduleDowntimeModal,
     showNewWorkflowModal,
+    showNewTemplateModal,
+    showTemplateDetailsModal,
+    showApplyTemplateModal,
     showSwitchPortMapperModal,
     showStorageArrayModal,
     showSslCertificateModal,
@@ -624,7 +632,7 @@
     showNdrForensicsModal,
     playAlarmChime,
     openAlarmDrawer,
-    showAlarmDrawer: (typeof openAlarmDrawer !== 'undefined' ? openAlarmDrawer : showAlarmDetailsDrawer),
+    showAlarmDrawer: (typeof openAlarmDrawer !== 'undefined' ? openAlarmDrawer : (typeof showAlarmDetailsDrawer !== 'undefined' ? showAlarmDetailsDrawer : function(){})),
     showAlarmDetailsDrawer,
     showGlobalSearchModal,
     showAddDeviceModal,
@@ -636,6 +644,21 @@
     applyNocDarkTheme,
     updateBreadcrumbs
   };
+
+  // Expose directly on window for all inline onclick="..." attributes across the DOM
+  Object.assign(window, window.OpManagerSuite);
+  window.showAddDeviceModal = showAddDeviceModal;
+  window.showAddProbeModal = showAddProbeModal;
+  window.showProbeDetailsModal = showProbeDetailsModal;
+  window.showDeviceSnapshotModal = showDeviceSnapshotModal;
+  window.showToast = showToast;
+  window.renderConfigurationView = renderConfigurationView;
+  window.renderDashboardView = renderDashboardView;
+  window.renderInventoryView = renderInventoryView;
+  window.renderAlarmsView = renderAlarmsView;
+  window.renderMapsView = renderMapsView;
+  window.renderReportsView = renderReportsView;
+  window.renderSettingsView = renderSettingsView;
 
   // Event Listeners
   window.addEventListener('hashchange', handleRoute);
