@@ -74,6 +74,18 @@ CREATE TABLE IF NOT EXISTS devices (
   uptime_ticks INTEGER,
   response_ms REAL,
   last_polled_at INTEGER,
+  -- Applied device template (canonical shape, JSON text):
+  -- { templateId, thresholds: { cpuWarn, cpuCrit, memWarn, memCrit },
+  --   pollIntervalSec }. Written by POST /api/settings/templates/apply,
+  --   read by the poller (server/services/poller.js). NULL = no template.
+  applied_template TEXT,
+  -- Effective values the poller actually used on the last poll, written
+  -- by the poller itself: effective_thresholds is JSON
+  -- { cpuWarn, cpuCrit, memWarn, memCrit } (null memWarn = no mem warning
+  -- level) and effective_poll_interval_sec is the per-device cycle in
+  -- seconds. Visible via GET /api/devices/:id. NULL = never polled yet.
+  effective_thresholds TEXT,
+  effective_poll_interval_sec INTEGER,
   created_at INTEGER NOT NULL
 );
 
@@ -259,6 +271,19 @@ if (!_alarmColumns.includes('rca_status')) {
   db.exec('ALTER TABLE alarms ADD COLUMN rca_status TEXT;');
 }
 
+// Migration: devices.applied_template / effective_thresholds /
+// effective_poll_interval_sec were added after the initial schema, so
+// pre-existing databases need them added. ALTER-safe: only add if absent.
+const _deviceColumns = db
+  .prepare('PRAGMA table_info(devices)')
+  .all()
+  .map((c) => c.name);
+for (const col of ['applied_template', 'effective_thresholds', 'effective_poll_interval_sec']) {
+  if (!_deviceColumns.includes(col)) {
+    db.exec(`ALTER TABLE devices ADD COLUMN ${col} ${col === 'effective_poll_interval_sec' ? 'INTEGER' : 'TEXT'};`);
+  }
+}
+
 function now() {
   return Date.now();
 }
@@ -395,6 +420,10 @@ const DEVICE_COLUMNS = [
   'model', 'category', 'snmp_community', 'snmp_version', 'probe_id',
   'managed', 'status', 'cpu_pct', 'mem_used_pct', 'uptime_ticks',
   'response_ms', 'last_polled_at',
+  // Template consumption (poller-owned): applied_template is written by
+  // the template-apply route; effective_* are written by the poller on
+  // every poll so the values actually used are visible via the API.
+  'applied_template', 'effective_thresholds', 'effective_poll_interval_sec',
 ];
 
 function getDevice(id) {

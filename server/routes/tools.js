@@ -45,6 +45,12 @@ const TRACEROUTE_BIN = process.platform === 'darwin'
   ? resolveBinary(['/usr/sbin/traceroute', '/usr/bin/traceroute', 'traceroute'])
   : resolveBinary(['/usr/bin/traceroute', '/bin/traceroute', 'traceroute']);
 
+// Neighbor-table readers for the MAC resolver (ip/arp binaries may live in
+// /sbin or /usr/sbin on minimal installs; resolveBinary falls back to the
+// bare command name so execFile still tries $PATH).
+const IP_NEIGH_BIN = resolveBinary(['/sbin/ip', '/usr/sbin/ip', '/bin/ip', '/usr/bin/ip', 'ip']);
+const ARP_BIN = resolveBinary(['/usr/sbin/arp', '/sbin/arp', '/usr/bin/arp', 'arp']);
+
 // Real TCP Ping Fallback for environments lacking raw ICMP socket privileges (e.g. unprivileged Docker)
 function tcpPing(address, port = 80, timeoutMs = 2000) {
   return new Promise((resolve) => {
@@ -630,7 +636,10 @@ router.get(['/api/tools/switch-ports', '/api/tools/spm'], (req, res) => {
 // Sources, in order:
 //   1. Stored interface rows (store.listInterfaces) whose stored IP is the
 //      target — real data collected by the poller.
-//   2. This host's ARP cache (/proc/net/arp on Linux) — real kernel data.
+//   2. This host's ARP/neighbor table — `ip neigh show`, then `arp -a`,
+//      then /proc/net/arp on Linux — real kernel data, merged in that
+//      preference order. An empty/unreadable table is an honest miss that
+//      names the methods tried; it is never an error and never faked.
 //   3. Live SNMPv2c (read-only): the target's own MAC via ipAddrTable ->
 //      ifPhysAddress, then ipNetToMediaTable / ipNetToPhysicalTable on the
 //      target and on managed devices (or an explicit `via` device).
@@ -647,6 +656,13 @@ const IP_NET_TO_MEDIA_TABLE = '1.3.6.1.2.1.4.22.1.2'; // ipNetToMediaPhysAddress
 const IP_NET_TO_PHYSICAL_TABLE = '1.3.6.1.2.1.4.35.1.4'; // ipNetToPhysicalPhysAddress
 const IP_ADDR_TABLE_IF_INDEX = '1.3.6.1.2.1.4.20.1.2'; // ipAdEntIfIndex
 const IF_PHYS_ADDRESS = '1.3.6.1.2.1.2.2.1.6'; // ifPhysAddress
+// Forwarding-database tables (MAC -> switch port). Q-BRIDGE-MIB first,
+// BRIDGE-MIB as fallback — see snmpFdbLookup() for why both are needed.
+const DOT1Q_TP_FDB_PORT = '1.3.6.1.2.1.17.7.1.2.2.1.2'; // dot1qTpFdbPort
+const DOT1D_TP_FDB_PORT = '1.3.6.1.2.1.17.4.3.1.2'; // dot1dTpFdbPort
+const DOT1D_BASE_PORT_IF_INDEX = '1.3.6.1.2.1.17.1.4.1.2'; // dot1dBasePortIfIndex
+const IF_NAME = '1.3.6.1.2.1.31.1.1.1.1'; // ifName
+const IF_DESCR = '1.3.6.1.2.1.2.2.1.2'; // ifDescr
 
 let netSnmpLib = null;
 function loadNetSnmp() {
@@ -671,6 +687,9 @@ function formatMac(value) {
   }
   if (typeof value === 'string') {
     const clean = value.trim().toLowerCase();
+    // An all-zero "MAC" (e.g. an incomplete /proc/net/arp row) is not a
+    // hardware address — never report it as one.
+    if (/^(00[:-]){5}00$/.test(clean)) return null;
     if (/^([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$/.test(clean)) return clean.replace(/-/g, ':');
     const hex = clean.replace(/[^0-9a-f]/g, '');
     if (hex.length === 12 && !/^0{12}$/.test(hex)) return hex.match(/../g).join(':');
@@ -679,23 +698,106 @@ function formatMac(value) {
   return null;
 }
 
-// This host's ARP cache (Linux /proc/net/arp): Map ip -> { mac, device }.
-// Empty map on non-Linux hosts or an unreadable table — never an error.
-function readHostArpCache() {
+// This host's ARP/neighbor table, read from every source this OS offers,
+// in preference order — `ip neigh show`, `arp -a`, /proc/net/arp (Linux).
+// Returns { entries, methodsTried } where entries is a Map
+// ip -> { mac, device, state, via } and methodsTried records, per method,
+// how many entries it contributed (and the error when it was unavailable).
+// Sources are merged (first source wins per IP); an empty map is an honest
+// empty result — no readable source, or a genuinely empty table — never an
+// error. The caller reports it as a miss with the methods tried.
+// Only rows with a real, non-zero hardware address are kept: FAILED /
+// INCOMPLETE neighbor states and 00:00:00:00:00:00 rows carry no MAC.
+
+// One `ip neigh show` line:
+//   198.19.0.1 dev host0 lladdr da:c1:a4:cd:33:62 DELAY
+// IPv6 lines are skipped (mac-resolve targets are IPv4 only).
+function parseIpNeighLine(line) {
+  const m = String(line || '').trim().match(/^(\d{1,3}(?:\.\d{1,3}){3})\s+dev\s+(\S+)\s+lladdr\s+([0-9a-fA-F:.-]{17})(?:\s+(\S+))?/);
+  if (!m) return null;
+  const mac = formatMac(m[3]);
+  if (!mac) return null;
+  const state = (m[4] || '').toUpperCase();
+  if (state === 'FAILED' || state === 'INCOMPLETE') return null;
+  return { ip: m[1], mac, device: m[2], state: state || null };
+}
+
+// One `arp -a` line (Linux net-tools and macOS/BSD agree on this shape):
+//   hatch-egress-proxy (198.19.0.1) at da:c1:a4:cd:33:62 [ether] on host0
+//   ? (192.168.1.1) at aa:bb:cc:dd:ee:ff [ether] on en0
+// Incomplete entries print "(incomplete)" instead of a MAC and match nothing.
+function parseArpALine(line) {
+  const m = String(line || '').match(/\((\d{1,3}(?:\.\d{1,3}){3})\)\s+at\s+([0-9a-fA-F:.-]{17})(?:\s+\[ether\])?\s+on\s+(\S+)/);
+  if (!m) return null;
+  const mac = formatMac(m[2]);
+  if (!mac) return null;
+  return { ip: m[1], mac, device: m[3], state: null };
+}
+
+// /proc/net/arp rows (header line skipped). Flags 0x2 means the entry is
+// complete; anything else with a zero MAC is dropped by formatMac anyway.
+function parseProcNetArp(text) {
   const out = new Map();
-  try {
-    const text = fs.readFileSync('/proc/net/arp', 'utf8');
-    for (const line of text.split('\n').slice(1)) {
-      const parts = line.trim().split(/\s+/);
-      if (parts.length >= 6 && /^\d{1,3}(\.\d{1,3}){3}$/.test(parts[0])) {
-        const mac = formatMac(parts[3]);
-        if (mac) out.set(parts[0], { mac, device: parts[5] });
-      }
+  for (const line of String(text || '').split('\n').slice(1)) {
+    const parts = line.trim().split(/\s+/);
+    if (parts.length >= 6 && /^\d{1,3}(\.\d{1,3}){3}$/.test(parts[0])) {
+      const mac = formatMac(parts[3]);
+      if (mac) out.set(parts[0], { mac, device: parts[5], state: parts[2] === '0x2' ? 'COMPLETE' : null });
     }
-  } catch (e) {
-    // No ARP table available on this host; the caller treats it as a miss.
   }
   return out;
+}
+
+async function readHostArpCache() {
+  const entries = new Map();
+  const methodsTried = [];
+  const add = (row, via) => {
+    if (!row || !row.ip || !row.mac) return;
+    if (!entries.has(row.ip)) entries.set(row.ip, { mac: row.mac, device: row.device || null, state: row.state || null, via });
+  };
+
+  // 1. `ip neigh show` — the live kernel neighbor table (Linux).
+  try {
+    const { stdout } = await run(IP_NEIGH_BIN, ['neigh', 'show'], { timeout: 3000 });
+    let n = 0;
+    for (const line of String(stdout || '').split('\n')) {
+      const row = parseIpNeighLine(line);
+      if (row) { add(row, 'ip neigh'); n++; }
+    }
+    methodsTried.push({ method: 'ip neigh show', entries: n });
+  } catch (e) {
+    methodsTried.push({ method: 'ip neigh show', entries: 0, error: e.message });
+  }
+
+  // 2. `arp -a` — present on Linux/macOS/BSD; fills gaps if `ip` is missing.
+  try {
+    const { stdout } = await run(ARP_BIN, ['-a'], { timeout: 3000 });
+    let n = 0;
+    for (const line of String(stdout || '').split('\n')) {
+      const row = parseArpALine(line);
+      if (row) { add(row, 'arp -a'); n++; }
+    }
+    methodsTried.push({ method: 'arp -a', entries: n });
+  } catch (e) {
+    methodsTried.push({ method: 'arp -a', entries: 0, error: e.message });
+  }
+
+  // 3. /proc/net/arp — Linux kernel table file; last resort.
+  try {
+    const text = fs.readFileSync('/proc/net/arp', 'utf8');
+    const before = entries.size;
+    for (const row of parseProcNetArp(text).values()) add(row, '/proc/net/arp');
+    methodsTried.push({ method: '/proc/net/arp', entries: entries.size - before });
+  } catch (e) {
+    methodsTried.push({ method: '/proc/net/arp', entries: 0, error: e.message });
+  }
+
+  return { entries, methodsTried };
+}
+
+// One-line human summary of how the ARP cache was read, for 404s and UI.
+function arpMethodsSummary(methodsTried) {
+  return (methodsTried || []).map((m) => `${m.method}: ${m.entries} ${m.entries === 1 ? 'entry' : 'entries'}${m.error ? ` (unavailable: ${m.error})` : ''}`).join('; ');
 }
 
 // Raw net-snmp GET: varbind values are returned untouched (Buffers stay
@@ -821,13 +923,20 @@ async function snmpArpLookup(viaAddress, targetIp, community) {
     const ifIndex = Number(vb.oid.slice(IP_NET_TO_MEDIA_TABLE.length + 1, vb.oid.length - suffix.length));
     return { found: true, mac, ifIndex: Number.isInteger(ifIndex) ? ifIndex : null, table: 'ipNetToMediaTable' };
   }
+  // ipNetToPhysicalTable is NOT implemented on every agent (this estate's
+  // C3560 answers "No Such Instance" for it), so a failed walk here is a
+  // plain miss for that table, not a lookup failure: the ipNetToMedia walk
+  // above already proved the host answers SNMP, so a transport fault here
+  // is not the likely cause. The miss is recorded in `note`, never as an
+  // error, so callers do not mistake "table not supported" for "host down".
+  let rows2;
   try {
-    rows = await snmpRawWalk(viaAddress, community, IP_NET_TO_PHYSICAL_TABLE);
+    rows2 = await snmpRawWalk(viaAddress, community, IP_NET_TO_PHYSICAL_TABLE);
   } catch (err) {
-    return { found: false, error: `SNMP walk of ipNetToPhysicalTable on ${viaAddress} failed: ${err.message}` };
+    return { found: false, error: null, note: `ipNetToPhysicalTable not available on ${viaAddress} (${err.message})` };
   }
   const suffix2 = `.1.${targetIp}`;
-  for (const vb of rows) {
+  for (const vb of rows2) {
     if (!vb.oid.endsWith(suffix2) || vb.error) continue;
     const mac = formatMac(vb.value);
     if (!mac) continue;
@@ -835,6 +944,181 @@ async function snmpArpLookup(viaAddress, targetIp, community) {
     return { found: true, mac, ifIndex: Number.isInteger(ifIndex) ? ifIndex : null, table: 'ipNetToPhysicalTable' };
   }
   return { found: false, error: null };
+}
+
+// ---------------------------------------------------------------------------
+// MAC -> switch port via the forwarding database (Q-BRIDGE-MIB then
+// BRIDGE-MIB). LIVE FINDING (Techub Core 192.168.30.2, Cisco C3560, IOS
+// 12.2(58)SE1, community 'public', verified 2026-11-09): the Q-BRIDGE-MIB
+// dot1qTpFdbTable is NOT exposed by this switch — a walk of
+// dot1qTpFdbPort returns "No Such Object", with a plain community and
+// with Cisco community-string indexing (public@1, public@10); public@30
+// and public@60 get no response at all. The BRIDGE-MIB dot1dTpFdbTable
+// DOES answer (52 rows live). So a Q-BRIDGE-only implementation returns
+// nothing on this estate: try dot1qTpFdbTable first (it is the right
+// per-VLAN table on switches that implement it), then fall back to
+// dot1dTpFdbTable, and never probe community@<vlan> blindly — only when
+// the caller supplies a VLAN, because a wrong @<vlan> stalls the lookup
+// on a timeout. Row OIDs: dot1qTpFdbPort ...1.2.2.1.2.<vlan>.<6 MAC
+// octets as decimals>; dot1dTpFdbPort ...4.3.1.2.<6 MAC octets>. The
+// value in both is the bridge port number; 0 means "learned but no
+// port" (RFC 4188) and is skipped. dot1dBasePortIfIndex.<bridgePort>
+// maps the bridge port to an ifIndex, and ifName.<ifIndex> (fallback
+// ifDescr) gives the port label (e.g. Gi0/1).
+// ---------------------------------------------------------------------------
+
+// Decimal-octet OID suffix for a canonical MAC, e.g.
+// b8:ca:3a:71:0f:c5 -> '184.202.58.113.15.197'. Null when not a 6-byte MAC.
+function macOidSuffix(mac) {
+  const clean = String(mac || '').toLowerCase().replace(/[^0-9a-f]/g, '');
+  if (clean.length !== 12) return null;
+  return clean.match(/../g).map((h) => parseInt(h, 16)).join('.');
+}
+
+// Resolve one bridge port number on one device to { ifIndex, interface }
+// via dot1dBasePortIfIndex + ifName (falling back to ifDescr). Nulls when
+// the mapping is absent — never invented. { ifIndex?, interface?, error? }
+// error is set only when the SNMP GET itself failed.
+async function snmpBridgePortToInterface(address, community, bridgePort) {
+  let got;
+  try {
+    got = await snmpRawGet(address, community, [`${DOT1D_BASE_PORT_IF_INDEX}.${bridgePort}`]);
+  } catch (err) {
+    return { ifIndex: null, interface: null, error: `SNMP GET of dot1dBasePortIfIndex.${bridgePort} on ${address} failed: ${err.message}` };
+  }
+  const vb = got[0];
+  const ifIndex = vb && !vb.error && vb.value !== null && vb.value !== undefined ? Number(vb.value) : NaN;
+  if (!Number.isInteger(ifIndex) || ifIndex < 0) return { ifIndex: null, interface: null, error: null };
+  let name = null;
+  for (const oid of [`${IF_NAME}.${ifIndex}`, `${IF_DESCR}.${ifIndex}`]) {
+    try {
+      const res = await snmpRawGet(address, community, [oid]);
+      const v = res[0];
+      if (v && !v.error && v.value !== null && v.value !== undefined) {
+        const s = Buffer.isBuffer(v.value) ? v.value.toString('utf8') : String(v.value);
+        if (s.trim()) { name = s.trim(); break; }
+      }
+    } catch (_e) {
+      // ifName missing: try ifDescr next; both missing leaves null.
+    }
+  }
+  return { ifIndex, interface: name, error: null };
+}
+
+// MAC -> port on ONE device. { found, mac, vlan?, bridgePort?, ifIndex?,
+// interface?, table?, device?, note? } — `note` records which tables were
+// tried and why each missed; it is diagnostics, never an error, because a
+// table the agent does not implement is a miss, not a failure.
+async function snmpFdbLookup(viaAddress, mac, community, vlan) {
+  const suffix = macOidSuffix(mac);
+  if (!suffix) return { found: false, error: null, note: 'not a 6-byte MAC address' };
+  const notes = [];
+
+  // 1. Q-BRIDGE-MIB dot1qTpFdbTable: plain community first, then (only
+  // when the caller supplied a valid VLAN) community@<vlan> for Cisco
+  // community-string indexing.
+  const communities = [community];
+  if (vlan !== undefined && vlan !== null && String(vlan).trim() !== '') {
+    const v = Number(vlan);
+    if (Number.isInteger(v) && v >= 1 && v <= 4094) communities.push(`${community}@${v}`);
+  }
+  for (const comm of communities) {
+    let rows;
+    try {
+      rows = await snmpRawWalk(viaAddress, comm, DOT1Q_TP_FDB_PORT);
+    } catch (err) {
+      notes.push(`dot1qTpFdbTable walk (${comm === community ? 'plain community' : 'community@' + vlan}) failed: ${err.message}`);
+      continue;
+    }
+    let matched = false;
+    for (const vb of rows) {
+      const rest = vb.oid.slice(DOT1Q_TP_FDB_PORT.length + 1); // '<vlan>.<mac octets>'
+      if (!rest.endsWith(`.${suffix}`)) continue;
+      matched = true;
+      const vlanPart = rest.slice(0, rest.length - suffix.length - 1);
+      const vlanId = Number(vlanPart);
+      const bridgePort = Number(vb.value);
+      if (!Number.isInteger(vlanId) || !Number.isInteger(bridgePort) || bridgePort <= 0) {
+        notes.push(`dot1qTpFdbTable row for ${formatMac(mac)} has no usable port (VLAN ${vlanPart}, bridge port ${vb.value})`);
+        continue;
+      }
+      const mapped = await snmpBridgePortToInterface(viaAddress, community, bridgePort);
+      if (mapped.error) {
+        notes.push(`dot1qTpFdbTable hit (VLAN ${vlanId}, bridge port ${bridgePort}) but ${mapped.error}`);
+        continue;
+      }
+      return {
+        found: true, mac: formatMac(mac), vlan: vlanId, bridgePort,
+        ifIndex: mapped.ifIndex, interface: mapped.interface,
+        table: 'dot1qTpFdbTable', device: viaAddress, note: notes.join('; ') || null
+      };
+    }
+    if (!matched) notes.push(`dot1qTpFdbTable: no row for ${formatMac(mac)} (${comm === community ? 'plain community' : 'community@' + vlan})`);
+  }
+
+  // 2. BRIDGE-MIB dot1dTpFdbTable fallback (the table this estate's
+  // C3560 actually implements). Row OID is base + .<6 MAC octets>.
+  let rows;
+  try {
+    rows = await snmpRawWalk(viaAddress, community, DOT1D_TP_FDB_PORT);
+  } catch (err) {
+    notes.push(`dot1dTpFdbTable walk failed: ${err.message}`);
+    return { found: false, error: null, note: notes.join('; ') };
+  }
+  for (const vb of rows) {
+    const rest = vb.oid.slice(DOT1D_TP_FDB_PORT.length + 1);
+    if (rest !== suffix) continue;
+    const bridgePort = Number(vb.value);
+    if (!Number.isInteger(bridgePort) || bridgePort <= 0) {
+      notes.push(`dot1dTpFdbTable row for ${formatMac(mac)} has no usable port (bridge port ${vb.value})`);
+      continue;
+    }
+    const mapped = await snmpBridgePortToInterface(viaAddress, community, bridgePort);
+    if (mapped.error) {
+      notes.push(`dot1dTpFdbTable hit (bridge port ${bridgePort}) but ${mapped.error}`);
+      continue;
+    }
+    return {
+      found: true, mac: formatMac(mac), vlan: null, bridgePort,
+      ifIndex: mapped.ifIndex, interface: mapped.interface,
+      table: 'dot1dTpFdbTable', device: viaAddress, note: notes.join('; ') || null
+    };
+  }
+  notes.push(`dot1dTpFdbTable: no row for ${formatMac(mac)}`);
+  return { found: false, error: null, note: notes.join('; ') };
+}
+
+// Switch-port step for mac-resolve (merged handler): given a resolved MAC,
+// search the forwarding database on the ARP-hit device first (it
+// demonstrably holds the MAC), then the explicit `via` device / every
+// managed device. Returns { port, portNote } — port is null when no FDB
+// row exists; the MAC answer is still returned.
+async function resolveFdbPort(mac, comm, viaTargets, arpViaIp, vlanNum) {
+  const fdbDevices = [];
+  if (arpViaIp) fdbDevices.push(arpViaIp);
+  for (const ip of viaTargets) if (!fdbDevices.includes(ip)) fdbDevices.push(ip);
+  let port = null;
+  let portNote = null;
+  for (const fdbIp of fdbDevices) {
+    const hit = await snmpFdbLookup(fdbIp, mac, comm, vlanNum);
+    if (hit.found) {
+      port = {
+        device: fdbIp,
+        table: hit.table,
+        vlan: hit.vlan ?? null,
+        bridgePort: hit.bridgePort,
+        ifIndex: hit.ifIndex,
+        interface: hit.interface
+      };
+      portNote = hit.note || null;
+      break;
+    }
+    portNote = (portNote ? `${portNote}; ` : '') + `fdb@${fdbIp}: ${hit.error || hit.note || 'MAC not in forwarding database'}`;
+  }
+  if (!fdbDevices.length) {
+    portNote = 'no managed device or via device to query for a switch port';
+  }
+  return { port, portNote };
 }
 
 // ---------------------------------------------------------------------------
@@ -886,25 +1170,160 @@ router.post('/api/tools/cli-query', (req, res) => {
 });
 
 // ADDRESS RESOLVER & MAC TOOL — real, read-only, multi-source (see above).
-// POST /api/tools/mac-resolve { target, community?, via? }
+// POST /api/tools/mac-resolve { target, community?, via?, all?, vlan? }
 //   target: IPv4 or managed-device name (required). community: SNMPv2c
 //   community for the live-SNMP sources (default 'public'). via: IP or
-//   managed-device name of a device whose ARP table to search; without it,
-//   every managed device's ARP table is tried. Success: 200 with the real
-//   MAC and the source that supplied it. Nothing found: honest 404 listing
-//   every source tried. Unresolvable target/via: 422.
+//   managed-device name of a device whose ARP table / FDB to search;
+//   without it, every managed device's ARP table is tried. all: when true,
+//   EVERY source is tried (no first-hit short-circuit) and the response
+//   carries a per-source `results` array, so a UI can show each source's
+//   outcome. vlan: optional VLAN id (1-4094) for the FDB community@<vlan>
+//   walk; invalid vlan is a 400. Success: 200 with the real MAC, the
+//   source that supplied it, and `port` (the switch port from the
+//   forwarding database, or null when no FDB row exists).
+//   Nothing found: honest 404 listing every source tried.
+//   Unresolvable target/via: 422.
+//
+// Per-source attempt helpers. Each returns a uniform result object:
+//   { source, found, mac?, device?, deviceName?, ifIndex?, interface?,
+//     state?, table?, arpMethod?, arpEntries?, arpMethods?, result? }
+// `result` is the human-readable miss reason (only when found is false).
+// A hit's `mac` is always a real value from that source — never guessed.
+async function tryStoredInterface(address) {
+  try {
+    for (const dev of safeListDevices()) {
+      let ifaces = [];
+      try { ifaces = store.listInterfaces(dev.id) || []; } catch (e) { ifaces = []; }
+      const row = ifaces.find((i) => i && i.ip === address && formatMac(i.mac));
+      if (row) {
+        return {
+          source: 'stored-interface', found: true, mac: formatMac(row.mac),
+          device: dev.ip || null, deviceName: dev.sys_name || dev.hostname || null,
+          ifIndex: row.if_index ?? null, interface: row.name || row.descr || null
+        };
+      }
+    }
+    return { source: 'stored-interface', found: false, result: 'no stored interface row has this IP' };
+  } catch (e) {
+    return { source: 'stored-interface', found: false, result: `store error: ${e.message}` };
+  }
+}
+
+async function tryHostArpCache(address) {
+  const { entries, methodsTried } = await readHostArpCache();
+  const summary = arpMethodsSummary(methodsTried);
+  const base = { source: 'host-arp-cache', arpEntries: entries.size, arpMethods: summary };
+  if (entries.has(address)) {
+    const hit = entries.get(address);
+    return {
+      ...base, found: true, mac: hit.mac,
+      device: null, deviceName: null, ifIndex: null, interface: hit.device,
+      state: hit.state || null, arpMethod: hit.via || null
+    };
+  }
+  return {
+    ...base, found: false,
+    result: entries.size
+      ? `no entry for this IP (cache holds ${entries.size} ${entries.size === 1 ? 'entry' : 'entries'})`
+      : `ARP cache empty or unreadable on this host (${summary})`
+  };
+}
+
+async function trySnmpOwnMac(address, comm) {
+  const own = await snmpOwnMac(address, comm);
+  if (own.found) {
+    return {
+      source: 'snmp-if-table', found: true, mac: own.mac,
+      device: address, deviceName: null, ifIndex: own.ifIndex, interface: null
+    };
+  }
+  return { source: 'snmp-if-table', found: false, result: own.error || 'target has no ipAddrTable row for this IP (or no ifPhysAddress)' };
+}
+
+async function trySnmpArpTables(address, comm, viaTargets) {
+  const results = [];
+  for (const viaIp of viaTargets) {
+    const hit = await snmpArpLookup(viaIp, address, comm);
+    if (hit.found) {
+      results.push({
+        source: `snmp-arp-table@${viaIp}`, found: true, mac: hit.mac,
+        device: viaIp, deviceName: null, ifIndex: hit.ifIndex, interface: null, table: hit.table
+      });
+    } else {
+      results.push({ source: `snmp-arp-table@${viaIp}`, found: false, result: hit.error || hit.note || 'no ARP entry for this IP' });
+    }
+  }
+  if (!viaTargets.length) {
+    results.push({ source: 'snmp-arp-table', found: false, result: 'no managed device or via device to query' });
+  }
+  return results;
+}
+
+// Success detail fields for a per-source hit (drops nulls the old shape
+// never carried, keeps the exact fields the old first-hit answers had).
+function hitDetail(hit) {
+  const detail = {
+    device: hit.device ?? null,
+    deviceName: hit.deviceName ?? null,
+    ifIndex: hit.ifIndex ?? null,
+    interface: hit.interface ?? null
+  };
+  if (hit.table) detail.table = hit.table;
+  if (hit.state) detail.state = hit.state;
+  if (hit.arpMethod) { detail.arpMethod = hit.arpMethod; detail.arpEntries = hit.arpEntries; }
+  return detail;
+}
+
 router.post('/api/tools/mac-resolve', async (req, res) => {
-  const { target = '127.0.0.1', community = 'public', via } = req.body || {};
+  const { target = '127.0.0.1', community = 'public', via, all = false, vlan } = req.body || {};
   if (!target || typeof target !== 'string' || !target.trim()) {
     return res.status(400).json({ status: 'error', message: 'A target IP address (or managed device name) is required.' });
+  }
+  // mac-verify: vlan is validated up front (1-4094, else 400). It is only
+  // used for Cisco community-string indexing (community@<vlan>) in the
+  // Q-BRIDGE FDB walk — never probed blindly.
+  let vlanNum = null;
+  if (vlan !== undefined && vlan !== null && String(vlan).trim() !== '') {
+    vlanNum = Number(vlan);
+    if (!Number.isInteger(vlanNum) || vlanNum < 1 || vlanNum > 4094) {
+      return res.status(400).json({ status: 'error', message: `Invalid vlan '${vlan}'. Expected a VLAN id between 1 and 4094.` });
+    }
   }
   const { requested, address } = await resolveSnmpTarget(target.trim());
   if (!address) {
     return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
   }
   const comm = typeof community === 'string' && community.trim() ? community.trim() : 'public';
-  const attempts = [];
-  const answer = (mac, source, detail) => res.json({
+  const wantAll = all === true || all === 'true';
+  // Resolve the `via` device up front: the same device list feeds both
+  // the ARP-table search (3b) and the FDB search (4). A bad `via` does
+  // NOT 422 here — mac-arp's rule stands: it 422s only once the earlier
+  // sources have missed (see step 3b below). Early hits still get their
+  // FDB port from the managed devices, with the via failure noted.
+  let viaTargets = [];
+  let viaError = null;
+  if (via !== undefined && via !== null && String(via).trim() !== '') {
+    const v = await resolveSnmpTarget(String(via).trim());
+    if (!v.address) {
+      viaError = `Could not resolve 'via' device '${v.requested}' to an IPv4 address.`;
+    } else {
+      viaTargets = [v.address];
+    }
+  } else {
+    for (const dev of safeListDevices()) {
+      if (dev.ip && dev.ip !== address) viaTargets.push(dev.ip);
+    }
+  }
+  // FDB port for a resolved MAC (step 4, mac-verify). arpViaIp is the
+  // device whose ARP table supplied the MAC (step 3b only); earlier hits
+  // pass null. A bad `via` means no FDB target was resolved — port stays
+  // null and the note says why.
+  const withPort = async (mac, arpViaIp) => {
+    if (viaError) return { port: null, portNote: viaError };
+    return resolveFdbPort(mac, comm, viaTargets, arpViaIp, vlanNum);
+  };
+  const results = [];
+  const answer = (mac, source, detail, extra) => res.json({
     status: 'success',
     target: requested,
     resolvedIp: address,
@@ -913,85 +1332,75 @@ router.post('/api/tools/mac-resolve', async (req, res) => {
     vendorNote: 'No OUI/vendor database is bundled with this server, so vendor is not inferred.',
     source,
     ...detail,
+    ...(extra || {}),
     timestamp: new Date().toISOString()
   });
+  const attempts = () => results.map((r) => ({
+    source: r.source,
+    result: r.found ? `found ${r.mac}` : (r.result || 'no match')
+  }));
 
   // 1. Stored interface rows whose stored IP is the target.
-  try {
-    let hit = null;
-    for (const dev of safeListDevices()) {
-      let ifaces = [];
-      try { ifaces = store.listInterfaces(dev.id) || []; } catch (e) { ifaces = []; }
-      const row = ifaces.find((i) => i && i.ip === address && formatMac(i.mac));
-      if (row) { hit = { dev, row }; break; }
-    }
-    if (hit) {
-      return answer(formatMac(hit.row.mac), 'stored-interface', {
-        device: hit.dev.ip || null,
-        deviceName: hit.dev.sys_name || hit.dev.hostname || null,
-        ifIndex: hit.row.if_index ?? null,
-        interface: hit.row.name || hit.row.descr || null
-      });
-    }
-    attempts.push({ source: 'stored-interface', result: 'no stored interface row has this IP' });
-  } catch (e) {
-    attempts.push({ source: 'stored-interface', result: `store error: ${e.message}` });
+  const stored = await tryStoredInterface(address);
+  results.push(stored);
+  if (!wantAll && stored.found) {
+    const fdb = await withPort(stored.mac, null);
+    return answer(stored.mac, stored.source, hitDetail(stored), { port: fdb.port, portNote: fdb.portNote });
   }
 
-  // 2. This host's ARP cache.
-  const arp = readHostArpCache();
-  if (arp.has(address)) {
-    const hit = arp.get(address);
-    return answer(hit.mac, 'host-arp-cache', {
-      device: null,
-      deviceName: null,
-      ifIndex: null,
-      interface: hit.device
-    });
+  // 2. This host's ARP/neighbor table (ip neigh / arp -a / /proc/net/arp).
+  const arp = await tryHostArpCache(address);
+  results.push(arp);
+  if (!wantAll && arp.found) {
+    const fdb = await withPort(arp.mac, null);
+    return answer(arp.mac, arp.source, hitDetail(arp), { port: fdb.port, portNote: fdb.portNote });
   }
-  attempts.push({ source: 'host-arp-cache', result: 'no entry in this host ARP cache' });
 
   // 3a. The target's own MAC via live SNMP (ipAddrTable -> ifPhysAddress).
-  const own = await snmpOwnMac(address, comm);
-  if (own.found) {
-    return answer(own.mac, 'snmp-if-table', {
-      device: address,
-      deviceName: null,
-      ifIndex: own.ifIndex,
-      interface: null
-    });
+  const own = await trySnmpOwnMac(address, comm);
+  results.push(own);
+  if (!wantAll && own.found) {
+    const fdb = await withPort(own.mac, null);
+    return answer(own.mac, own.source, hitDetail(own), { port: fdb.port, portNote: fdb.portNote });
   }
-  attempts.push({ source: 'snmp-if-table', result: own.error || 'target has no ipAddrTable row for this IP (or no ifPhysAddress)' });
 
   // 3b. ARP tables: an explicit `via` device, else every managed device.
-  const viaTargets = [];
-  if (via !== undefined && via !== null && String(via).trim() !== '') {
-    const v = await resolveSnmpTarget(String(via).trim());
-    if (!v.address) {
-      return res.status(422).json({ status: 'error', message: `Could not resolve 'via' device '${v.requested}' to an IPv4 address.` });
-    }
-    viaTargets.push(v.address);
-  } else {
-    for (const dev of safeListDevices()) {
-      if (dev.ip && dev.ip !== address) viaTargets.push(dev.ip);
-    }
+  // (Kept after sources 1–3, as before: a bad `via` is a 422 only once the
+  // earlier sources have missed.)
+  if (viaError) {
+    return res.status(422).json({ status: 'error', message: viaError });
   }
-  for (const viaIp of viaTargets) {
-    const hit = await snmpArpLookup(viaIp, address, comm);
-    if (hit.found) {
-      return answer(hit.mac, 'snmp-arp-table', {
-        device: viaIp,
-        deviceName: null,
-        ifIndex: hit.ifIndex,
-        interface: null,
-        table: hit.table
-      });
-    }
-    attempts.push({ source: `snmp-arp-table@${viaIp}`, result: hit.error || 'no ARP entry for this IP' });
+  const arpTables = await trySnmpArpTables(address, comm, viaTargets);
+  results.push(...arpTables);
+  const found = results.find((r) => r.found);
+
+  // 4. Switch port for the resolved MAC via the forwarding database
+  // (mac-verify). The ARP-hit device is tried first — it demonstrably
+  // holds the MAC — then the explicit `via` device / every managed
+  // device. `port` is null when no FDB row exists; the MAC answer is
+  // still returned.
+  let fdb = { port: null, portNote: null };
+  if (found) {
+    const arpViaIp = (found.source && found.source.startsWith('snmp-arp-table@') && found.device)
+      ? found.device : null;
+    fdb = await withPort(found.mac, arpViaIp);
   }
-  if (!viaTargets.length) {
-    attempts.push({ source: 'snmp-arp-table', result: 'no managed device or via device to query' });
+
+  if (wantAll) {
+    if (found) return answer(found.mac, found.source, hitDetail(found), { results, port: fdb.port, portNote: fdb.portNote });
+    return res.status(404).json({
+      status: 'error',
+      error: 'mac_not_found',
+      message: `No MAC address was found for ${requested} (${address}) in any available source; nothing was fabricated.`,
+      target: requested,
+      resolvedIp: address,
+      sourcesTried: attempts(),
+      results,
+      timestamp: new Date().toISOString()
+    });
   }
+
+  if (found) return answer(found.mac, found.source, hitDetail(found), { port: fdb.port, portNote: fdb.portNote });
 
   return res.status(404).json({
     status: 'error',
@@ -999,9 +1408,91 @@ router.post('/api/tools/mac-resolve', async (req, res) => {
     message: `No MAC address was found for ${requested} (${address}) in any available source; nothing was fabricated.`,
     target: requested,
     resolvedIp: address,
+    sourcesTried: attempts(),
+    timestamp: new Date().toISOString()
+  });
+});
+
+// MAC -> SWITCH PORT — direct lookup by MAC address, no IP needed (mac-verify).
+// POST /api/tools/mac-port { mac, community?, via?, vlan? }
+//   mac: MAC address in any common form (aa:bb:cc:dd:ee:ff,
+//   aa-bb-cc-dd-ee-ff, or aabbccddeeff) — required. community: SNMPv2c
+//   community (default 'public'). via: IP or managed-device name of the
+//   switch whose FDB to search; without it, every managed device is
+//   tried. vlan: optional VLAN id (1-4094), see mac-resolve. Success:
+//   200 with the bridge port, ifIndex and interface label. Nothing
+//   found: honest 404 listing every device tried. Bad MAC / vlan: 400.
+//   Unresolvable via: 422.
+router.post('/api/tools/mac-port', async (req, res) => {
+  const { mac, community = 'public', via, vlan } = req.body || {};
+  if (!mac || typeof mac !== 'string' || !mac.trim()) {
+    return res.status(400).json({ status: 'error', message: 'A MAC address is required.' });
+  }
+  const cleanMac = formatMac(mac.trim());
+  if (!cleanMac) {
+    return res.status(400).json({ status: 'error', message: `'${mac.trim()}' is not a valid 6-byte MAC address (expected aa:bb:cc:dd:ee:ff, aa-bb-cc-dd-ee-ff, or aabbccddeeff).` });
+  }
+  let vlanNum = null;
+  if (vlan !== undefined && vlan !== null && String(vlan).trim() !== '') {
+    vlanNum = Number(vlan);
+    if (!Number.isInteger(vlanNum) || vlanNum < 1 || vlanNum > 4094) {
+      return res.status(400).json({ status: 'error', message: `Invalid vlan '${vlan}'. Expected a VLAN id between 1 and 4094.` });
+    }
+  }
+  const comm = typeof community === 'string' && community.trim() ? community.trim() : 'public';
+  const attempts = [];
+  let viaTargets = [];
+  if (via !== undefined && via !== null && String(via).trim() !== '') {
+    const v = await resolveSnmpTarget(String(via).trim());
+    if (!v.address) {
+      return res.status(422).json({ status: 'error', message: `Could not resolve 'via' device '${v.requested}' to an IPv4 address.` });
+    }
+    viaTargets = [v.address];
+  } else {
+    for (const dev of safeListDevices()) {
+      if (dev.ip) viaTargets.push(dev.ip);
+    }
+  }
+  if (!viaTargets.length) {
+    return res.status(404).json({
+      status: 'error',
+      error: 'mac_port_not_found',
+      message: `No switch port was found for MAC ${cleanMac}: no managed device or via device to query.`,
+      mac: cleanMac,
+      sourcesTried: [{ source: 'fdb', result: 'no managed device or via device to query' }],
+      timestamp: new Date().toISOString()
+    });
+  }
+  for (const viaIp of viaTargets) {
+    const hit = await snmpFdbLookup(viaIp, cleanMac, comm, vlanNum);
+    if (hit.found) {
+      return res.json({
+        status: 'success',
+        mac: cleanMac,
+        device: viaIp,
+        table: hit.table,
+        vlan: hit.vlan ?? null,
+        bridgePort: hit.bridgePort,
+        ifIndex: hit.ifIndex,
+        interface: hit.interface,
+        note: hit.note || null,
+        timestamp: new Date().toISOString()
+      });
+    }
+    attempts.push({ source: `fdb@${viaIp}`, result: hit.error || hit.note || 'MAC not in forwarding database' });
+  }
+  return res.status(404).json({
+    status: 'error',
+    error: 'mac_port_not_found',
+    message: `No switch port was found for MAC ${cleanMac} in any forwarding database queried; nothing was fabricated.`,
+    mac: cleanMac,
     sourcesTried: attempts,
     timestamp: new Date().toISOString()
   });
 });
+
+// Test hooks (no production effect): the ARP parsers and the multi-source
+// reader, so a node smoke test can prove them without HTTP.
+router.macArpHelpers = { formatMac, parseIpNeighLine, parseArpALine, parseProcNetArp, readHostArpCache, arpMethodsSummary, macOidSuffix, snmpFdbLookup };
 
 module.exports = router;

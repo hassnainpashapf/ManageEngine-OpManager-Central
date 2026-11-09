@@ -26,6 +26,7 @@ const tls = require('tls');
 const { DatabaseSync } = require('node:sqlite');
 const store = require('../services/store');
 const retention = require('../services/retention');
+const wsEvents = require('../services/wsEvents');
 const { hashPassword } = require('../services/session');
 
 const router = express.Router();
@@ -196,10 +197,23 @@ router.post('/api/settings/credentials', (req, res) => {
 // XML library), so vendor entries can never be edited or deleted here.
 // Operator-created templates live in a separate local write store —
 // settings key 'templates.custom' (SQLite, via store.settings) — and are
-// merged into every read, marked custom:true. Template-to-device
-// assignments likewise live in settings key 'templates.assignments'
-// (device id -> { deviceId, templateName, appliedAt }); nothing else in
-// this build consumes assignments yet, and the response says so.
+// merged into every read, marked custom:true. Custom templates may carry
+// thresholds ({ cpuWarn, cpuCrit, memWarn, memCrit }, percentages) and a
+// pollIntervalSec (seconds, 10–3600); vendor index entries carry neither
+// (the XML library has no threshold data), so a vendor template applies
+// with null fields unless the apply call supplies overrides.
+// Applying a template (POST /api/settings/templates/apply) resolves those
+// values into the device's canonical appliedTemplate —
+// { templateId, thresholds: { cpuWarn, cpuCrit, memWarn, memCrit },
+//   pollIntervalSec } (SHARED.md) — and persists it on the device row
+// (devices.applied_template, JSON text). The assignment is ALSO recorded
+// in settings key 'templates.assignments' (device id -> { deviceId,
+// templateName, appliedTemplate, appliedAt }) as the audit trail.
+// GET /api/settings/templates/applied/:deviceId returns the stored
+// appliedTemplate plus the effective values (template fields over the
+// per-device threshold overrides over the poller defaults, and the
+// template interval over the global poll interval), resolved by the same
+// rules the poller uses (see effectiveForDevice below).
 // findBySysOid also matches the two sysOidMap files themselves, so
 // sysOid lookups filter to type devicetemplate/vendor.
 
@@ -264,6 +278,264 @@ function templateAssignments() {
 function saveTemplateAssignments(map) {
   putStored('templates.assignments', map);
   return map;
+}
+
+// --- Applied-template resolution (canonical shape, SHARED.md) ---
+// The poller is the consumer of device.appliedTemplate and the single
+// source of truth for the default thresholds and the lower resolution
+// layers (per-device overrides, global poll interval). It is required
+// lazily (same pattern as loadTemplateIndex) so this router still loads
+// if the service is absent; the literal defaults below are used only
+// then. NOTE: this build's poller (ff51df6) does not yet read
+// appliedTemplate — the tpl-consume track adds that. Until it lands, the
+// effective values returned here are what the poller WILL use once it
+// does, resolved by exactly the rules its resolveDeviceThresholds uses
+// for the lower layers plus the template overlay documented in its
+// header. Reconcile with poller.resolveAppliedTemplate when it lands:
+// the route should then call it instead of parseAppliedTemplate.
+const TEMPLATE_DEFAULTS = { cpuCritical: 90, cpuTrouble: 80, memCritical: 90, memTrouble: null };
+const DEFAULT_POLL_INTERVAL_SECONDS = 60;
+const MIN_POLL_INTERVAL_SECONDS = 10;
+const MAX_POLL_INTERVAL_SECONDS = 3600;
+
+function loadPoller() {
+  try {
+    return require('../services/poller');
+  } catch (err) {
+    if (err && err.code === 'MODULE_NOT_FOUND') return null;
+    throw err;
+  }
+}
+
+/** Parse one threshold value: a finite number (or numeric string) in (0, 100], else null. */
+function parsePct(value) {
+  if (typeof value === 'number' && Number.isFinite(value)) return value;
+  if (typeof value === 'string' && value.trim() !== '' && Number.isFinite(Number(value))) return Number(value);
+  return null;
+}
+
+// Canonical camelCase plus the device_thresholds snake_case aliases.
+const THRESHOLD_KEY_CANON = {
+  cpuWarn: 'cpuWarn', cpu_warn: 'cpuWarn', cpu_trouble: 'cpuWarn', cpuTrouble: 'cpuWarn',
+  cpuCrit: 'cpuCrit', cpu_crit: 'cpuCrit', cpu_critical: 'cpuCrit', cpuCritical: 'cpuCrit',
+  memWarn: 'memWarn', mem_warn: 'memWarn', mem_trouble: 'memWarn', memTrouble: 'memWarn',
+  memCrit: 'memCrit', mem_crit: 'memCrit', mem_critical: 'memCrit', memCritical: 'memCrit',
+};
+
+/** First unknown key in a thresholds object, or null. Non-objects are not checked here (see isThresholdsObject). */
+function unknownThresholdKey(input) {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) return null;
+  for (const k of Object.keys(input)) {
+    if (!Object.prototype.hasOwnProperty.call(THRESHOLD_KEY_CANON, k)) return k;
+  }
+  return null;
+}
+
+/** True when a supplied thresholds value is not a plain object (null, string, array, ...). */
+function isBadThresholdsValue(input) {
+  return input !== undefined && (input === null || typeof input !== 'object' || Array.isArray(input));
+}
+
+/**
+ * Parse a thresholds object into canonical { cpuWarn, cpuCrit, memWarn,
+ * memCrit } (null = absent). Accepts canonical camelCase plus the
+ * device_thresholds snake_case aliases. Returns { thresholds, error } —
+ * error names the first field whose EXPLICITLY supplied value is not a
+ * percentage in (0, 100]; absent fields are null, never an error.
+ */
+function parseThresholdsInput(input) {
+  const src = (input && typeof input === 'object' && !Array.isArray(input)) ? input : {};
+  const pick = (...keys) => {
+    for (const key of keys) {
+      if (src[key] !== undefined && src[key] !== null) return { key, value: src[key] };
+    }
+    return { key: null, value: undefined };
+  };
+  const fields = [
+    ['cpuWarn', 'cpuWarn', 'cpu_warn', 'cpu_trouble', 'cpuTrouble'],
+    ['cpuCrit', 'cpuCrit', 'cpu_crit', 'cpu_critical', 'cpuCritical'],
+    ['memWarn', 'memWarn', 'mem_warn', 'mem_trouble', 'memTrouble'],
+    ['memCrit', 'memCrit', 'mem_crit', 'mem_critical', 'memCritical'],
+  ];
+  const thresholds = { cpuWarn: null, cpuCrit: null, memWarn: null, memCrit: null };
+  for (const [canonical, ...aliases] of fields) {
+    const { key, value } = pick(...aliases);
+    if (key === null) continue;
+    const parsed = parsePct(value);
+    if (parsed === null || parsed <= 0 || parsed > 100) {
+      return { thresholds: null, error: `threshold '${key}' must be a percentage greater than 0 and at most 100` };
+    }
+    thresholds[canonical] = parsed;
+  }
+  return { thresholds, error: null };
+}
+
+/**
+ * Parse a poll interval: an integer in [10, 3600] seconds, else null.
+ * Returns { pollIntervalSec, error } — error when an EXPLICITLY supplied
+ * value is not such an integer; absent input is null, never an error.
+ */
+function parsePollIntervalInput(value) {
+  if (value === undefined || value === null || value === '') return { pollIntervalSec: null, error: null };
+  const n = typeof value === 'number' ? value : (typeof value === 'string' && value.trim() !== '' ? Number(value) : NaN);
+  if (!Number.isInteger(n) || n < MIN_POLL_INTERVAL_SECONDS || n > MAX_POLL_INTERVAL_SECONDS) {
+    return { pollIntervalSec: null, error: `pollIntervalSec must be an integer between ${MIN_POLL_INTERVAL_SECONDS} and ${MAX_POLL_INTERVAL_SECONDS} seconds` };
+  }
+  return { pollIntervalSec: n, error: null };
+}
+
+/** Thresholds carried by a template object itself (null fields = absent). */
+function templateThresholds(template) {
+  if (!template || typeof template !== 'object') return { cpuWarn: null, cpuCrit: null, memWarn: null, memCrit: null };
+  const { thresholds } = parseThresholdsInput(template.thresholds);
+  return thresholds || { cpuWarn: null, cpuCrit: null, memWarn: null, memCrit: null };
+}
+
+/** Poll interval carried by a template object itself (null = absent).
+ * Reads pollIntervalSec / poll_interval_sec first, then the vendor
+ * template's `poll` field (e.g. "300s") — tpl-consume's fallback, kept
+ * so vendor templates still carry their interval into an apply. */
+function templatePollInterval(template) {
+  if (!template || typeof template !== 'object') return null;
+  const { pollIntervalSec } = parsePollIntervalInput(
+    template.pollIntervalSec !== undefined ? template.pollIntervalSec : template.poll_interval_sec,
+  );
+  if (pollIntervalSec !== null) return pollIntervalSec;
+  if (template.poll === null || template.poll === undefined) return null;
+  if (typeof template.poll === 'number' && Number.isFinite(template.poll)) {
+    const n = Math.floor(template.poll);
+    return n >= MIN_POLL_INTERVAL_SECONDS && n <= MAX_POLL_INTERVAL_SECONDS ? n : null;
+  }
+  const m = /^\s*(\d+)\s*s?\s*$/i.exec(String(template.poll));
+  if (!m) return null;
+  const n = Number(m[1]);
+  return n >= MIN_POLL_INTERVAL_SECONDS && n <= MAX_POLL_INTERVAL_SECONDS ? n : null;
+}
+
+/**
+ * Resolve the canonical appliedTemplate for an apply call. Precedence,
+ * field by field: explicit overrides in the apply body, then the
+ * template's own fields. Returns { appliedTemplate, error } — error is
+ * a 400 message when an explicitly supplied value is invalid or the
+ * merged warn/crit pair is inverted (warn >= crit with both present).
+ */
+function resolveAppliedTemplate(template, body) {
+  if (isBadThresholdsValue(body && body.thresholds)) {
+    return { appliedTemplate: null, error: 'thresholds must be an object' };
+  }
+  const unknown = unknownThresholdKey(body && body.thresholds);
+  if (unknown !== null) {
+    return { appliedTemplate: null, error: `Unknown threshold field: ${unknown}` };
+  }
+  const bodyThresholds = parseThresholdsInput(body && body.thresholds);
+  if (bodyThresholds.error) return { appliedTemplate: null, error: bodyThresholds.error };
+  const bodyInterval = parsePollIntervalInput(body && (body.pollIntervalSec !== undefined ? body.pollIntervalSec : body.poll_interval_sec));
+  if (bodyInterval.error) return { appliedTemplate: null, error: bodyInterval.error };
+  const fromTemplate = templateThresholds(template);
+  const thresholds = {
+    cpuWarn: bodyThresholds.thresholds.cpuWarn ?? fromTemplate.cpuWarn,
+    cpuCrit: bodyThresholds.thresholds.cpuCrit ?? fromTemplate.cpuCrit,
+    memWarn: bodyThresholds.thresholds.memWarn ?? fromTemplate.memWarn,
+    memCrit: bodyThresholds.thresholds.memCrit ?? fromTemplate.memCrit,
+  };
+  if (thresholds.cpuWarn !== null && thresholds.cpuCrit !== null && thresholds.cpuWarn >= thresholds.cpuCrit) {
+    return { appliedTemplate: null, error: 'cpuWarn must be below cpuCrit' };
+  }
+  if (thresholds.memWarn !== null && thresholds.memCrit !== null && thresholds.memWarn >= thresholds.memCrit) {
+    return { appliedTemplate: null, error: 'memWarn must be below memCrit' };
+  }
+  const pollIntervalSec = bodyInterval.pollIntervalSec ?? templatePollInterval(template);
+  return {
+    appliedTemplate: { templateId: template.id || template.name, thresholds, pollIntervalSec },
+    error: null,
+  };
+}
+
+/** Parse a stored device row's applied_template (JSON text) into the canonical object, or null. */
+function parseStoredAppliedTemplate(device) {
+  if (!device) return null;
+  const raw = device.appliedTemplate !== undefined ? device.appliedTemplate : device.applied_template;
+  if (raw === null || raw === undefined || raw === '') return null;
+  let obj = raw;
+  if (typeof raw === 'string') {
+    try { obj = JSON.parse(raw); } catch { return null; }
+  }
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return null;
+  const { thresholds } = parseThresholdsInput(obj.thresholds);
+  const { pollIntervalSec } = parsePollIntervalInput(
+    obj.pollIntervalSec !== undefined ? obj.pollIntervalSec : obj.poll_interval_sec,
+  );
+  const templateId = obj.templateId != null ? String(obj.templateId)
+    : (obj.templateName != null ? String(obj.templateName) : null);
+  if (!templateId && Object.values(thresholds).every((v) => v === null) && pollIntervalSec === null) return null;
+  return { templateId, thresholds, pollIntervalSec };
+}
+
+/** Global poll interval from the store setting, default 60 s, clamped to 10–3600 s. */
+function globalPollIntervalSec() {
+  try {
+    const raw = store.getSetting('poll_interval_seconds');
+    const seconds = Number(raw && typeof raw === 'object' ? raw.value : raw);
+    if (Number.isFinite(seconds) && seconds >= MIN_POLL_INTERVAL_SECONDS && seconds <= MAX_POLL_INTERVAL_SECONDS) {
+      return Math.floor(seconds);
+    }
+  } catch { /* fall through to the default */ }
+  return DEFAULT_POLL_INTERVAL_SECONDS;
+}
+
+/**
+ * Effective values for a device: the applied template's fields, then the
+ * per-device threshold overrides / poller defaults, field by field.
+ * Same rules as the poller: a merged cpu_trouble >= cpu_critical falls
+ * both back to the defaults; a merged mem_trouble >= mem_critical drops
+ * just the mem warning level (the defaults have none).
+ * Returns { thresholds: { cpuWarn, cpuCrit, memWarn, memCrit }, pollIntervalSec }.
+ */
+function effectiveForDevice(device, appliedTemplate) {
+  const poller = loadPoller();
+  const defaults = (poller && poller.DEFAULT_THRESHOLDS)
+    ? {
+      cpuCritical: poller.DEFAULT_THRESHOLDS.cpuCritical,
+      cpuTrouble: poller.DEFAULT_THRESHOLDS.cpuTrouble,
+      memCritical: poller.DEFAULT_THRESHOLDS.memCritical,
+      memTrouble: poller.DEFAULT_THRESHOLDS.memTrouble ?? null,
+    }
+    : { ...TEMPLATE_DEFAULTS };
+  let base = { ...defaults };
+  try {
+    if (poller && typeof poller.resolveDeviceThresholds === 'function') {
+      const t = poller.resolveDeviceThresholds(store, device.id);
+      base = {
+        cpuCritical: t.cpuCritical,
+        cpuTrouble: t.cpuTrouble,
+        memCritical: t.memCritical,
+        memTrouble: t.memTrouble ?? null,
+      };
+    }
+  } catch { /* lower layers unavailable; defaults stand */ }
+  const tpl = appliedTemplate || parseStoredAppliedTemplate(device);
+  if (tpl) {
+    if (tpl.thresholds.cpuCrit !== null) base.cpuCritical = tpl.thresholds.cpuCrit;
+    if (tpl.thresholds.cpuWarn !== null) base.cpuTrouble = tpl.thresholds.cpuWarn;
+    if (tpl.thresholds.memCrit !== null) base.memCritical = tpl.thresholds.memCrit;
+    if (tpl.thresholds.memWarn !== null) base.memTrouble = tpl.thresholds.memWarn;
+  }
+  if (base.cpuTrouble >= base.cpuCritical) {
+    base.cpuCritical = defaults.cpuCritical;
+    base.cpuTrouble = defaults.cpuTrouble;
+  }
+  if (base.memTrouble !== null && base.memTrouble >= base.memCritical) {
+    base.memTrouble = null;
+  }
+  return {
+    thresholds: {
+      cpuWarn: base.cpuTrouble,
+      cpuCrit: base.cpuCritical,
+      memWarn: base.memTrouble,
+      memCrit: base.memCritical,
+    },
+    pollIntervalSec: (tpl && tpl.pollIntervalSec !== null) ? tpl.pollIntervalSec : globalPollIntervalSec(),
+  };
 }
 
 /** Device templates only: drop the sysOidMap files findBySysOid also matches. */
@@ -342,6 +614,29 @@ router.post('/api/settings/templates', (req, res) => {
       message: `A custom template named '${name}' already exists.`,
     });
   }
+  const parsedThresholds = parseThresholdsInput(body.thresholds);
+  if (isBadThresholdsValue(body.thresholds)) {
+    return res.status(400).json({ status: 'error', message: 'thresholds must be an object' });
+  }
+  const unknownKey = unknownThresholdKey(body.thresholds);
+  if (unknownKey !== null) {
+    return res.status(400).json({ status: 'error', message: `Unknown threshold field: ${unknownKey}` });
+  }
+  if (parsedThresholds.error) {
+    return res.status(400).json({ status: 'error', message: parsedThresholds.error });
+  }
+  const parsedInterval = parsePollIntervalInput(body.pollIntervalSec !== undefined ? body.pollIntervalSec : body.poll_interval_sec);
+  if (parsedInterval.error) {
+    return res.status(400).json({ status: 'error', message: parsedInterval.error });
+  }
+  if (parsedThresholds.thresholds.cpuWarn !== null && parsedThresholds.thresholds.cpuCrit !== null
+    && parsedThresholds.thresholds.cpuWarn >= parsedThresholds.thresholds.cpuCrit) {
+    return res.status(400).json({ status: 'error', message: 'cpuWarn must be below cpuCrit' });
+  }
+  if (parsedThresholds.thresholds.memWarn !== null && parsedThresholds.thresholds.memCrit !== null
+    && parsedThresholds.thresholds.memWarn >= parsedThresholds.thresholds.memCrit) {
+    return res.status(400).json({ status: 'error', message: 'memWarn must be below memCrit' });
+  }
   const created = {
     name,
     vendor: body.vendor != null ? String(body.vendor) : null,
@@ -351,6 +646,11 @@ router.post('/api/settings/templates', (req, res) => {
     monitors: Array.isArray(body.monitors) ? body.monitors.map(String) : [],
     category: body.category != null ? String(body.category) : null,
     osType: body.osType != null ? String(body.osType) : null,
+    // Thresholds + poll interval the template carries into an apply
+    // (canonical shape). Null fields mean "no value set": the apply
+    // falls through to the per-device overrides / defaults.
+    thresholds: parsedThresholds.thresholds,
+    pollIntervalSec: parsedInterval.pollIntervalSec,
     file: null,
     custom: true,
     createdAt: new Date().toISOString(),
@@ -404,6 +704,45 @@ router.put('/api/settings/templates/:id', (req, res) => {
       updated[key] = body[key].map(String);
     }
   }
+  if (body.thresholds !== undefined) {
+    if (isBadThresholdsValue(body.thresholds)) {
+      return res.status(400).json({ status: 'error', message: 'thresholds must be an object' });
+    }
+    const unknownKey = unknownThresholdKey(body.thresholds);
+    if (unknownKey !== null) {
+      return res.status(400).json({ status: 'error', message: `Unknown threshold field: ${unknownKey}` });
+    }
+    const parsed = parseThresholdsInput(body.thresholds);
+    if (parsed.error) {
+      return res.status(400).json({ status: 'error', message: parsed.error });
+    }
+    // Merge: only the fields supplied change; the rest keep their value
+    // (or null). An explicitly null field clears that threshold.
+    const merged = { ...(updated.thresholds || { cpuWarn: null, cpuCrit: null, memWarn: null, memCrit: null }) };
+    for (const [k, v] of Object.entries(body.thresholds || {})) {
+      const canon = THRESHOLD_KEY_CANON[k];
+      if (v === null) { merged[canon] = null; continue; }
+      const pct = parsePct(v);
+      if (pct === null || pct <= 0 || pct > 100) {
+        return res.status(400).json({ status: 'error', message: `threshold '${k}' must be a percentage greater than 0 and at most 100` });
+      }
+      merged[canon] = pct;
+    }
+    if (merged.cpuWarn !== null && merged.cpuCrit !== null && merged.cpuWarn >= merged.cpuCrit) {
+      return res.status(400).json({ status: 'error', message: 'cpuWarn must be below cpuCrit' });
+    }
+    if (merged.memWarn !== null && merged.memCrit !== null && merged.memWarn >= merged.memCrit) {
+      return res.status(400).json({ status: 'error', message: 'memWarn must be below memCrit' });
+    }
+    updated.thresholds = merged;
+  }
+  if (body.pollIntervalSec !== undefined || body.poll_interval_sec !== undefined) {
+    const parsed = parsePollIntervalInput(body.pollIntervalSec !== undefined ? body.pollIntervalSec : body.poll_interval_sec);
+    if (parsed.error) {
+      return res.status(400).json({ status: 'error', message: parsed.error });
+    }
+    updated.pollIntervalSec = parsed.pollIntervalSec;
+  }
   updated.updatedAt = new Date().toISOString();
   list[pos] = updated;
   saveCustomTemplates(list);
@@ -415,10 +754,18 @@ router.put('/api/settings/templates/:id', (req, res) => {
   });
 });
 
-// Apply a template to a device: records a real assignment in the local
-// store (settings key 'templates.assignments'). The device and the
-// template must both exist. No poller consumes assignments yet — the
-// response says so — but the assignment itself is real, persisted state.
+// Apply a template to a device: resolves the template's thresholds +
+// poll interval into the device's canonical appliedTemplate
+// ({ templateId, thresholds: { cpuWarn, cpuCrit, memWarn, memCrit },
+//   pollIntervalSec }) and persists it on the device row
+// (devices.applied_template). The device and the template must both
+// exist (404 otherwise). Explicit thresholds / pollIntervalSec in the
+// request body override the template's own values, field by field.
+// The assignment is also recorded in the local store (settings key
+// 'templates.assignments') as the audit trail. The response returns the
+// stored appliedTemplate plus the effective values (template fields over
+// the per-device threshold overrides over the poller defaults, and the
+// template interval over the global poll interval).
 router.post('/api/settings/templates/apply', (req, res) => {
   const idx = templateIndexOr501(res);
   if (!idx) return;
@@ -447,22 +794,132 @@ router.post('/api/settings/templates/apply', (req, res) => {
       message: `Device not found: ${deviceId}`,
     });
   }
+  const { appliedTemplate, error } = resolveAppliedTemplate(template, body);
+  if (error) {
+    return res.status(400).json({ status: 'error', message: error });
+  }
+  const updatedDevice = store.updateDevice(deviceId, { applied_template: JSON.stringify(appliedTemplate) });
+  if (!updatedDevice) {
+    return res.status(500).json({ status: 'error', message: `Failed to persist the applied template on device ${deviceId}` });
+  }
+  const effective = effectiveForDevice(updatedDevice, appliedTemplate);
   const map = templateAssignments();
   const assignment = {
     deviceId,
     deviceIp: device.ip || null,
     deviceHostname: device.hostname || device.sys_name || null,
     templateName: template.name,
+    templateId: appliedTemplate.templateId,
     custom: Boolean(template.custom),
+    appliedTemplate,
     appliedAt: new Date().toISOString(),
   };
   map[String(deviceId)] = assignment;
   saveTemplateAssignments(map);
-  auditLog('settings.template.apply', { deviceId, templateName: template.name });
+  auditLog('settings.template.apply', { deviceId, templateName: template.name, templateId: appliedTemplate.templateId });
+  // Phase-3 ws-events: broadcast the real apply, with the device and the
+  // effective thresholds / poll interval as resolved at apply time (the
+  // merged `effective` above already overlays the template on the
+  // per-device overrides / defaults). Emitted after the assignment is
+  // persisted, so a client that reads back the assignment sees exactly
+  // what the event describes.
+  let customized = false;
+  try {
+    customized = Boolean(store.thresholds && typeof store.thresholds.getDeviceThresholds === 'function' && store.thresholds.getDeviceThresholds(deviceId));
+  } catch (e) { customized = false; }
+  wsEvents.emitTemplateApplied({
+    device: { id: device.id, ip: device.ip || null, hostname: device.hostname || device.sys_name || null },
+    templateName: template.name,
+    custom: Boolean(template.custom),
+    appliedAt: assignment.appliedAt,
+    thresholds: effective.thresholds,
+    customized,
+    pollIntervalSec: effective.pollIntervalSec,
+  });
   res.json({
     status: 'success',
-    message: `Template '${template.name}' applied to device ${deviceId}. Assignment is recorded; no poller consumes template assignments yet.`,
+    message: `Template '${template.name}' applied to device ${deviceId}.`,
     assignment,
+    appliedTemplate,
+    effective,
+  });
+});
+
+// Remove a template from a device (tpl-consume): clears
+// devices.applied_template and the recorded assignment, so the poller
+// falls back to the device's stored thresholds (if any) and then the
+// defaults, and to the global poll interval, from the next poll.
+router.delete('/api/settings/templates/apply/:deviceId', (req, res) => {
+  const deviceId = Number(req.params.deviceId);
+  if (!Number.isInteger(deviceId)) {
+    return res.status(400).json({ status: 'error', message: 'deviceId is required' });
+  }
+  const device = store.getDevice(deviceId);
+  if (!device) {
+    return res.status(404).json({
+      status: 'error',
+      error: 'not_found',
+      message: `Device not found: ${deviceId}`,
+    });
+  }
+  const hadTemplate = Boolean(device.applied_template);
+  try {
+    store.devices.updateDevice(deviceId, { applied_template: null });
+  } catch (err) {
+    return res.status(500).json({
+      status: 'error',
+      message: `Template could not be removed from device ${deviceId}: ${err.message}`,
+    });
+  }
+  const map = templateAssignments();
+  delete map[String(deviceId)];
+  saveTemplateAssignments(map);
+  auditLog('settings.template.unapply', { deviceId });
+  res.json({
+    status: 'success',
+    message: hadTemplate
+      ? `Template removed from device ${deviceId}; poller defaults (or the device's stored thresholds) apply from the next poll.`
+      : `Device ${deviceId} had no template applied; poller defaults already apply.`,
+    deviceId,
+    hadTemplate,
+    appliedTemplate: null,
+  });
+});
+
+// The device's effective applied template: the stored appliedTemplate
+// plus the effective thresholds / poll interval (template fields over
+// the per-device overrides over the poller defaults). 404 when the
+// device does not exist; appliedTemplate is null when no template has
+// been applied (effective values then come from the overrides/defaults
+// alone). Registered before /:name so 'applied' is not read as a name.
+router.get('/api/settings/templates/applied/:deviceId', (req, res) => {
+  const idx = templateIndexOr501(res);
+  if (!idx) return;
+  const deviceId = Number(req.params.deviceId);
+  if (!Number.isInteger(deviceId)) {
+    return res.status(400).json({ status: 'error', message: 'deviceId must be an integer' });
+  }
+  const device = store.getDevice(deviceId);
+  if (!device) {
+    return res.status(404).json({
+      status: 'error',
+      error: 'not_found',
+      message: `Device not found: ${deviceId}`,
+    });
+  }
+  const appliedTemplate = parseStoredAppliedTemplate(device);
+  const effective = effectiveForDevice(device, appliedTemplate);
+  const template = appliedTemplate && appliedTemplate.templateId
+    ? findTemplateAnywhere(appliedTemplate.templateId)
+    : null;
+  res.json({
+    status: 'success',
+    deviceId: device.id,
+    deviceIp: device.ip || null,
+    deviceHostname: device.hostname || device.sys_name || null,
+    appliedTemplate,
+    template: template || null,
+    effective,
   });
 });
 
@@ -1233,9 +1690,29 @@ router.post('/api/settings/failover', (req, res) => {
     return res.status(400).json({ status: 'error', message: 'Failover configuration object is required' });
   }
   const stored = getStored('failover');
-  const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...req.body };
+  const prev = (stored && typeof stored === 'object' ? stored : {});
+  const merged = { ...prev, ...req.body };
   putStored('failover', merged);
   auditLog('settings.failover.save', { mode: merged.mode || null });
+  // Phase-3 ws-events: HA_STATUS only when the save actually changes the
+  // role/mode or the standby peer — a no-op re-save of the same config is
+  // not a status change and emits nothing.
+  const prevPeer = prev.secondary && prev.secondary.ip ? `${prev.secondary.ip}:${prev.secondary.port || ''}` : null;
+  const nextPeer = merged.secondary && merged.secondary.ip ? `${merged.secondary.ip}:${merged.secondary.port || ''}` : null;
+  if (prev.role !== merged.role || prev.mode !== merged.mode || prevPeer !== nextPeer) {
+    wsEvents.emitHaStatus({
+      role: merged.role == null ? null : merged.role,
+      previousRole: prev.role == null ? null : prev.role,
+      mode: merged.mode == null ? null : merged.mode,
+      peer: merged.secondary && merged.secondary.ip
+        ? { ip: merged.secondary.ip, port: merged.secondary.port == null ? null : merged.secondary.port }
+        : null,
+      reachable: null,
+      latencyMs: null,
+      configured: Boolean(merged.secondary && merged.secondary.ip),
+      reason: 'config-saved',
+    });
+  }
   res.json({ status: 'success', message: 'Failover configuration saved.', failover: merged });
 });
 
@@ -1254,6 +1731,19 @@ router.post(['/api/settings/failover/test', '/settings/testFailoverHeartbeat'], 
   const finish = (payload) => {
     if (done) return;
     done = true;
+    // Phase-3 ws-events: the heartbeat test IS a real peer-liveness
+    // probe — broadcast its actual outcome (reachable + latency) as an
+    // HA_STATUS event, before answering the HTTP caller.
+    wsEvents.emitHaStatus({
+      role: (fo && fo.role) == null ? null : fo.role,
+      previousRole: null,
+      mode: (fo && fo.mode) == null ? null : fo.mode,
+      peer: { ip: secondary.ip, port: Number(port) },
+      reachable: payload.reachable === true,
+      latencyMs: payload.latencyMs == null ? null : payload.latencyMs,
+      configured: true,
+      reason: 'heartbeat-test',
+    });
     res.json(payload);
   };
   const socket = net.connect({ host: secondary.ip, port: Number(port), timeout: 3000 });
