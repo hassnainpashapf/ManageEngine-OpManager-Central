@@ -1,74 +1,195 @@
+'use strict';
+/**
+ * Workflows — real-data rebuild.
+ *
+ * Audit items fixed (audit/ncm-traps-zia.md, workflows section):
+ *  - W1: the three hardcoded workflows with invented run history (relative
+ *    "ago" timestamps and fixed execution counts) are deleted. Workflows
+ *    come ONLY from the store: the list is empty until an admin creates
+ *    one via POST /api/workflows/create. No workflow is seeded.
+ *  - W2: POST /api/workflows/execute no longer claims success with
+ *    fabricated step logs while executing nothing. This server has no
+ *    workflow step executor (no SSH/WMI/CLI runner, no service-restart
+ *    or notification sender), so execution returns an honest 501
+ *    { error: 'not_implemented' } and runs nothing. An unknown
+ *    workflowId returns 404 instead of silently running the first
+ *    workflow in the list.
+ *
+ * Execution attempts are recorded honestly: a refused (501) attempt is
+ * persisted via saveWorkflowRun with status 'not_implemented' and real
+ * timestamps, so there is an audit trail of attempts. It is NOT counted
+ * as an execution — executionCount / lastExecuted in the list response
+ * are derived only from runs with a real execution status ('success',
+ * 'completed', 'failed'), so they stay 0 / null until a real step
+ * executor exists and actually runs a workflow.
+ *
+ * Field mapping: the store's workflows table has only id, name,
+ * steps_json and created_at. Fields with no backing column (status,
+ * trigger, scope) are returned as null, never invented; steps is []
+ * when a workflow has none. lastExecuted is an epoch-ms timestamp (or
+ * null), not a relative string. Response-shape changes vs the old
+ * hardcoded route: id is now the integer store id (was a 'WF-00n'
+ * string), lastExecuted is epoch ms or null (was a relative string),
+ * status/trigger/scope are null, and created_at is included.
+ */
+
 const express = require('express');
+
 const router = express.Router();
+const store = require('../services/store');
+const { requireAuth, requireRole } = require('../services/session');
 
-const WORKFLOWS = [
-  {
-    id: 'WF-001',
-    name: 'Auto-Remediate High CPU on Critical Server',
-    status: 'Active',
-    trigger: 'Alarm: CPU Utilization > 90% for 5 mins',
-    scope: 'All Windows & Linux Servers',
-    lastExecuted: '12 minutes ago',
-    executionCount: 24,
-    steps: [
-      { order: 1, action: 'Check Top Process by CPU via WMI/SSH', target: 'Triggered Host' },
-      { order: 2, action: 'Restart Associated Windows Service / Process', target: 'spoolsv.exe / httpd' },
-      { order: 3, action: 'Log Audit Trail in Central NOC & Dispatch Email', target: 'NOC On-Call Team' }
-    ]
-  },
-  {
-    id: 'WF-002',
-    name: 'Central Probe Failover & Re-sync',
-    status: 'Active',
-    trigger: 'Probe Status: Heartbeat Missed > 60 seconds',
-    scope: 'All Distributed Probes',
-    lastExecuted: '2 hours ago',
-    executionCount: 5,
-    steps: [
-      { order: 1, action: 'Send Diagnostic ICMP & TCP Ping from Central', target: 'Probe Host IP' },
-      { order: 2, action: 'Trigger Failover Heartbeat Ping to Standby Probe', target: 'Secondary Poller' },
-      { order: 3, action: 'Generate Critical Alarm in Central Console', target: 'Alarm System' }
-    ]
-  },
-  {
-    id: 'WF-003',
-    name: 'Switch Port Security Auto-Lockout',
-    status: 'Active',
-    trigger: 'SNMP Trap: Port Security Violation (MAC Flap)',
-    scope: 'All Cisco Access Switches',
-    lastExecuted: '1 day ago',
-    executionCount: 8,
-    steps: [
-      { order: 1, action: 'Execute CLI: shutdown interface', target: 'Switch Port Mapper' },
-      { order: 2, action: 'Take Configuration Snapshot via NCM', target: 'CCM Archive' },
-      { order: 3, action: 'Notify SecOps Team with Port & MAC details', target: 'Security Operations' }
-    ]
+// Store contract: store.workflows.createWorkflow, listWorkflows,
+// saveWorkflowRun, listWorkflowRuns. (The store also exposes flat
+// aliases of the same functions; the namespaced form is used here,
+// with the flat store as a fallback so the route keeps working if
+// the store is ever loaded without its namespaces.)
+const workflows = store.workflows || store;
+
+// Run statuses that represent a workflow that actually executed.
+// 'not_implemented' is a refused attempt, not an execution.
+const EXECUTED_STATUSES = new Set(['success', 'completed', 'failed']);
+
+function parseSteps(stepsJson) {
+  if (Array.isArray(stepsJson)) return stepsJson;
+  if (typeof stepsJson !== 'string' || stepsJson.length === 0) return [];
+  try {
+    const parsed = JSON.parse(stepsJson);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
   }
-];
+}
 
-router.get('/api/workflows/list', (req, res) => {
-  res.json({
-    status: 'success',
-    workflows: WORKFLOWS
-  });
+function toWorkflow(row, runs) {
+  const executed = (runs || []).filter((r) => EXECUTED_STATUSES.has(r.status));
+  const startedAts = executed
+    .map((r) => r.started_at)
+    .filter((t) => Number.isFinite(t));
+  return {
+    id: row.id,
+    name: row.name ?? null,
+    status: null,
+    trigger: null,
+    scope: null,
+    lastExecuted: startedAts.length ? Math.max(...startedAts) : null,
+    executionCount: executed.length,
+    steps: parseSteps(row.steps_json),
+    created_at: row.created_at ?? null,
+  };
+}
+
+// GET /api/workflows/list — workflows from the store only; [] when none exist.
+router.get('/api/workflows/list', async (req, res, next) => {
+  try {
+    const rows = await workflows.listWorkflows();
+    const out = [];
+    for (const row of rows || []) {
+      const runs = await workflows.listWorkflowRuns(row.id);
+      out.push(toWorkflow(row, runs));
+    }
+    res.json({ status: 'success', workflows: out });
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.post('/api/workflows/execute', (req, res) => {
-  const { workflowId } = req.body;
-  const wf = WORKFLOWS.find(w => w.id === workflowId) || WORKFLOWS[0];
+// POST /api/workflows/create — admin only. The only way a workflow comes
+// into existence; the store starts empty.
+router.post(
+  '/api/workflows/create',
+  requireAuth,
+  requireRole('admin'),
+  async (req, res, next) => {
+    try {
+      const body = req.body || {};
+      if (typeof body.name !== 'string' || body.name.trim().length === 0) {
+        return res.status(400).json({
+          status: 'error',
+          error: 'invalid_request',
+          message: 'name is required and must be a non-empty string',
+        });
+      }
+      let steps = [];
+      if (body.steps !== undefined) {
+        if (!Array.isArray(body.steps)) {
+          return res.status(400).json({
+            status: 'error',
+            error: 'invalid_request',
+            message: 'steps must be an array',
+          });
+        }
+        for (const step of body.steps) {
+          if (!step || typeof step !== 'object' || Array.isArray(step)) {
+            return res.status(400).json({
+              status: 'error',
+              error: 'invalid_request',
+              message: 'each step must be an object',
+            });
+          }
+        }
+        steps = body.steps;
+      }
+      const created = await workflows.createWorkflow({
+        name: body.name.trim(),
+        steps,
+      });
+      return res.status(201).json({
+        status: 'success',
+        workflow: toWorkflow(created, []),
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
-  res.json({
-    status: 'success',
-    message: `Workflow "${wf.name}" executed successfully across target infrastructure.`,
-    executedAt: new Date().toISOString(),
-    logs: [
-      `[${new Date().toLocaleTimeString()}] Trigger matched: ${wf.trigger}`,
-      `[${new Date().toLocaleTimeString()}] Step 1 complete: ${wf.steps[0].action}`,
-      `[${new Date().toLocaleTimeString()}] Step 2 complete: ${wf.steps[1].action}`,
-      `[${new Date().toLocaleTimeString()}] Step 3 complete: ${wf.steps[2].action}`,
-      `[${new Date().toLocaleTimeString()}] Workflow execution completed with Exit Code 0 (Success)`
-    ]
-  });
+// POST /api/workflows/execute — honest 501: no step executor exists on
+// this server, so nothing is run and no step output is fabricated.
+// Unknown workflowId -> 404; missing workflowId -> 400.
+router.post('/api/workflows/execute', async (req, res, next) => {
+  try {
+    const { workflowId } = req.body || {};
+    if (workflowId === undefined || workflowId === null || workflowId === '') {
+      return res.status(400).json({
+        status: 'error',
+        error: 'invalid_request',
+        message: 'workflowId is required',
+      });
+    }
+    const rows = await workflows.listWorkflows();
+    const wf = (rows || []).find((w) => String(w.id) === String(workflowId));
+    if (!wf) {
+      return res.status(404).json({
+        status: 'error',
+        error: 'not_found',
+        message: `Workflow ${workflowId} not found`,
+      });
+    }
+    const startedAt = Date.now();
+    const message =
+      `Workflow execution is not implemented: this server has no step ` +
+      `executor (no SSH/WMI/CLI runner), so workflow "${wf.name}" ` +
+      `(id ${wf.id}) was not run and no step was executed.`;
+    // Record the refused attempt with real timestamps; status
+    // 'not_implemented' is excluded from executionCount / lastExecuted.
+    await workflows.saveWorkflowRun({
+      workflow_id: wf.id,
+      status: 'not_implemented',
+      log: message,
+      started_at: startedAt,
+      finished_at: Date.now(),
+    });
+    return res.status(501).json({
+      status: 'error',
+      error: 'not_implemented',
+      message,
+      workflowId: wf.id,
+      logs: [message],
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
