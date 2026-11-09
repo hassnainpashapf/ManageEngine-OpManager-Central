@@ -10,7 +10,8 @@
     "start": "node server/index.js",
     "dev": "node server/index.js",
     "build": "node scripts/rebuild_bundle.js",
-    "test": "node --check server/index.js && node --check server/services/store.js"
+    "test": "node --check server/index.js && node --check server/services/store.js",
+    "ldap:test-server": "node scripts/ldap-test-server.js"
   },
   "dependencies": {
     "@node-saml/node-saml": "5.2.0",
@@ -19,6 +20,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "fast-xml-parser": "^5.12.0",
+    "ldapjs": "^3.0.7",
     "net-snmp": "^3.29.2",
     "ssh2": "^1.17.0",
     "ws": "^8.18.0",

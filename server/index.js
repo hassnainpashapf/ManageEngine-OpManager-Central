@@ -36,6 +36,7 @@ const trapsRoute = require('./routes/traps');
 const hardwareRoute = require('./routes/hardware');
 const diffRoute = require('./routes/diff');
 const ncmRoute = require('./routes/ncm'); // Phase 4 merge (p4m-ncm): canonical NCM approvals on server/services/ncm.js
+const adRoute = require('./routes/ad');
 const poller = require('./services/poller');
 // NOTE: the old JSON store (server/services/db.js) was deleted by the store
 // track and replaced by server/services/store.js (SQLite). index.js reads
@@ -458,6 +459,7 @@ app.use(alarmsRoute);
 app.use(discoveryRoute);
 app.use(ccmRoute);
 app.use(settingsRoute);
+app.use(adRoute);
 app.use(reportsRoute);
 app.use(racksRoute);
 app.use(workflowsRoute);

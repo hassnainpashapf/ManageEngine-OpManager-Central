@@ -1,0 +1,59 @@
+{
+  "track": "ldap-proof",
+  "generatedAt": "2026-11-09T08:03:02.590Z",
+  "mode": "external",
+  "server": "ldap://127.0.0.1:13390",
+  "suffix": "dc=opm-test,dc=local",
+  "note": "External directory supplied via LDAP_PROOF_URL at runtime. No production AD was contacted by this run unless the operator pointed it there.",
+  "checks": [
+    {
+      "name": "external testConnection bindOk",
+      "ok": true,
+      "detail": "usersFound=4 groupsFound=3 latencyMs=371"
+    },
+    {
+      "name": "external user search returns entries",
+      "ok": true,
+      "detail": "usersFound=4 sample=cn=opm-svc,ou=users,dc=opm-test,dc=local,cn=test.admin,ou=users,dc=opm-test,dc=local,cn=test.user1,ou=users,dc=opm-test,dc=local,cn=test.user2,ou=users,dc=opm-test,dc=local"
+    },
+    {
+      "name": "external group search returns entries",
+      "ok": true,
+      "detail": "groupsFound=3 sample=cn=opm-admins,ou=groups,dc=opm-test,dc=local,cn=opm-operators,ou=groups,dc=opm-test,dc=local,cn=opm-readonly,ou=groups,dc=opm-test,dc=local"
+    },
+    {
+      "name": "external wrong-password bind fails with LDAP 49",
+      "ok": true,
+      "detail": "LdapAuthError code=49"
+    },
+    {
+      "name": "external authenticateUser test.admin with correct password",
+      "ok": true,
+      "detail": "dn=cn=test.admin,ou=users,dc=opm-test,dc=local; groups=opm-admins"
+    }
+  ],
+  "passed": 5,
+  "failed": 0,
+  "testConnection": {
+    "url": "ldap://127.0.0.1:13390",
+    "bindDn": "cn=opm-svc,ou=users,dc=opm-test,dc=local",
+    "baseDn": "dc=opm-test,dc=local",
+    "bindOk": true,
+    "usersFound": 4,
+    "groupsFound": 3,
+    "latencyMs": 371,
+    "error": null,
+    "errorCode": null,
+    "sampleUserDns": [
+      "cn=opm-svc,ou=users,dc=opm-test,dc=local",
+      "cn=test.admin,ou=users,dc=opm-test,dc=local",
+      "cn=test.user1,ou=users,dc=opm-test,dc=local",
+      "cn=test.user2,ou=users,dc=opm-test,dc=local"
+    ],
+    "sampleGroupDns": [
+      "cn=opm-admins,ou=groups,dc=opm-test,dc=local",
+      "cn=opm-operators,ou=groups,dc=opm-test,dc=local",
+      "cn=opm-readonly,ou=groups,dc=opm-test,dc=local"
+    ]
+  }
+}

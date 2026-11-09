@@ -27,6 +27,7 @@ const { DatabaseSync } = require('node:sqlite');
 const store = require('../services/store');
 const retention = require('../services/retention');
 const wsEvents = require('../services/wsEvents');
+const ldapSvc = require('../services/ldap');
 const { hashPassword } = require('../services/session');
 
 const router = express.Router();
@@ -105,6 +106,20 @@ function publicCopy(obj) {
 function hasSecret(obj) {
   if (!obj || typeof obj !== 'object') return false;
   return Object.keys(obj).some((k) => SECRET_KEY.test(k));
+}
+
+/**
+ * Strip secret-bearing keys before PERSISTING an object. The bind
+ * password is never stored: callers supply it per call (test body /
+ * x-ldap-bind-password header) or via the LDAP_BIND_PASSWORD env var.
+ */
+function stripSecrets(obj) {
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return obj;
+  const out = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (!SECRET_KEY.test(k)) out[k] = v;
+  }
+  return out;
 }
 
 /** Real SQLite stats: table count + total rows across all tables. */
@@ -1946,79 +1961,122 @@ router.get('/api/settings/auth/ad', (req, res) => {
 
 router.post('/api/settings/auth/ad', (req, res) => {
   const stored = getStored('auth.ad');
-  const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
+  // The bind password is NEVER persisted: strip every secret-bearing
+  // key before writing, even if the caller sent one.
+  const merged = stripSecrets({ ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) });
   putStored('auth.ad', merged);
   auditLog('settings.ad.save', { domainName: merged.domainName || null });
   res.json({ status: 'success', message: 'Active Directory configuration saved.', ad: publicCopy(merged) });
 });
 
-router.post('/api/settings/auth/ad/test', (req, res) => {
-  const stored = getStored('auth.ad');
-  const body = req.body || {};
-  const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...body };
-  const host = merged.domainController || merged.host;
-  if (!host) {
-    return res.status(501).json({
+// ------------------------------------------------- canonical LDAP settings --
+// Canonical store object per SHARED.md: settings.ldap = { url, bindDn,
+// baseDn, groupBase, userFilter, groupFilter }. The bind password is
+// NEVER part of this object — it is supplied per call or via the
+// LDAP_BIND_PASSWORD environment variable.
+const DEFAULT_LDAP = {
+  url: null,
+  bindDn: null,
+  baseDn: null,
+  groupBase: null,
+  userFilter: null,
+  groupFilter: null,
+};
+
+router.get('/api/settings/auth/ldap', (req, res) => {
+  const stored = getStored('settings.ldap');
+  const merged = { ...DEFAULT_LDAP, ...(stored && typeof stored === 'object' ? stored : {}) };
+  res.json({ status: 'success', ldap: publicCopy(merged) });
+});
+
+router.post('/api/settings/auth/ldap', (req, res) => {
+  const stored = getStored('settings.ldap');
+  // Strip secret-bearing keys: a bind password sent in the body is used
+  // by the caller only for this request and is never persisted.
+  const merged = stripSecrets({ ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) });
+  putStored('settings.ldap', merged);
+  auditLog('settings.ldap.save', { url: merged.url || null, baseDn: merged.baseDn || null });
+  res.json({ status: 'success', message: 'LDAP configuration saved.', ldap: publicCopy(merged) });
+});
+
+router.post('/api/settings/auth/ad/test', async (req, res) => {
+  // REAL bind + base search via server/services/ldap.js (ldapjs, real
+  // LDAP wire protocol). Call-time fields win over stored settings:
+  // url (or legacy domainController/port/ssl), bindDn (or bindUser),
+  // password (or bindPassword), baseDn. The password is used for this
+  // one bind only — it is never stored, never logged, never echoed.
+  let cfg;
+  try {
+    cfg = ldapSvc.resolveLdapConfig({
+      storedLdap: getStored('settings.ldap'),
+      storedAd: getStored('auth.ad'),
+      body: req.body || {},
+    });
+  } catch (err) {
+    return res.status(err.status || 400).json({
       status: 'error',
-      ...NOT_IMPLEMENTED('No domain controller is configured (no domainController in stored settings or request body), so there is nothing to test.'),
+      error: err.code || 'LDAP_INVALID_URL',
+      message: err.message,
     });
   }
-  const port = Number(merged.port) || (merged.ssl ? 636 : 389);
-  const t0 = Date.now();
-  let done = false;
-  const finish = (payload) => {
-    if (done) return;
-    done = true;
-    res.json(payload);
-  };
-  // Real TCP connect to the domain controller. This build has no LDAP
-  // client library, so the check verifies reachability only — it does
-  // NOT perform an LDAP bind, and the response says so explicitly.
-  const socket = net.connect({ host: String(host), port, timeout: 5000 });
-  socket.on('connect', () => {
-    const latencyMs = Date.now() - t0;
-    socket.destroy();
-    auditLog('settings.ad.test', { host: String(host), port, reachable: true });
-    finish({
+  if (!cfg.url) {
+    return res.status(501).json({
+      status: 'error',
+      ...NOT_IMPLEMENTED('No LDAP server is configured (no url in settings.ldap, and no domainController in stored settings or request body), so there is nothing to test.'),
+    });
+  }
+  if (!cfg.bindDn) {
+    return res.status(400).json({
+      status: 'error',
+      error: 'missing_bind_dn',
+      message: 'No bind DN supplied: set settings.ldap.bindDn or pass bindDn in the request body.',
+    });
+  }
+  if (!cfg.password) {
+    return res.status(400).json({
+      status: 'error',
+      error: 'bind_password_required',
+      message: 'No bind password supplied: pass password in the request body (used for this test only, never stored) or set the LDAP_BIND_PASSWORD environment variable.',
+    });
+  }
+  try {
+    const result = await ldapSvc.testBind(cfg, cfg.password);
+    auditLog('settings.ad.test', { host: result.host, port: result.port, reachable: true, ldapBindVerified: true });
+    return res.json({
       status: 'success',
-      message: `TCP connect to domain controller ${host}:${port} succeeded in ${latencyMs} ms. LDAP bind was NOT verified: no LDAP client is available in this build.`,
+      message: `LDAP bind as ${result.bindDn} succeeded against ${result.host}:${result.port} in ${result.latencyMs} ms; base search on ${result.baseDn} returned ${result.entriesFound} entr${result.entriesFound === 1 ? 'y' : 'ies'}.`,
       testedAt: new Date().toISOString(),
       statusCheck: 'OK',
-      host: String(host),
-      port,
+      host: result.host,
+      port: result.port,
+      tls: result.tls,
+      url: result.url,
+      bindDn: result.bindDn,
+      baseDn: result.baseDn,
       reachable: true,
-      latencyMs,
-      ldapBindVerified: false,
-      note: 'Reachability only. Bind verification requires an LDAP client and bind credentials, neither of which exists in this build.',
+      latencyMs: result.latencyMs,
+      ldapBindVerified: true,
+      entriesFound: result.entriesFound,
+      rootEntry: result.rootEntry,
     });
-  });
-  socket.on('timeout', () => {
-    socket.destroy();
-    finish({
+  } catch (err) {
+    const status = err.status || 502;
+    auditLog('settings.ad.test', { host: cfg.host, port: cfg.port, reachable: Boolean(err.reachable), ldapBindVerified: false });
+    return res.status(status).json({
       status: 'error',
-      message: `TCP connect to domain controller ${host}:${port} timed out.`,
+      error: err.code || 'ldap_error',
+      message: err.message,
       testedAt: new Date().toISOString(),
       statusCheck: 'FAILED',
-      host: String(host),
-      port,
-      reachable: false,
-      latencyMs: Date.now() - t0,
+      host: cfg.host,
+      port: cfg.port,
+      tls: cfg.tls,
+      url: cfg.url,
+      reachable: Boolean(err.reachable),
+      latencyMs: null,
       ldapBindVerified: false,
     });
-  });
-  socket.on('error', (err) => {
-    finish({
-      status: 'error',
-      message: `TCP connect to domain controller ${host}:${port} failed: ${err.message}`,
-      testedAt: new Date().toISOString(),
-      statusCheck: 'FAILED',
-      host: String(host),
-      port,
-      reachable: false,
-      latencyMs: Date.now() - t0,
-      ldapBindVerified: false,
-    });
-  });
+  }
 });
 
 // ------------------------------------------------------------------- SAML ---

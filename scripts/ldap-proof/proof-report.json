@@ -1,0 +1,58 @@
+{
+  "track": "ldap-proof",
+  "client": "server/services/ldap.js (canonical, Phase 4 merge M3)",
+  "generatedAt": "2026-11-09T11:32:32.029Z",
+  "mode": "local",
+  "server": "ldap://127.0.0.1:13389",
+  "suffix": "dc=opm-test,dc=local",
+  "note": "Local ldapjs test server (real LDAP on the wire). All data is TEST data under dc=opm-test,dc=local; passwords were random per-run values held in memory only and are not in this report.",
+  "checks": [
+    {
+      "name": "service bind as cn=opm-svc",
+      "ok": true,
+      "detail": "bound to ldap://127.0.0.1:13389; latencyMs=157; entriesFound=1"
+    },
+    {
+      "name": "user search returns real entries incl. 3 seeded test users",
+      "ok": true,
+      "detail": "sAMAccountNames=opm-svc,test.admin,test.user1,test.user2; test.admin mail=test.admin@opm-test.local"
+    },
+    {
+      "name": "group search returns 3 seeded groups",
+      "ok": true,
+      "detail": "cns=opm-admins,opm-operators,opm-readonly"
+    },
+    {
+      "name": "membership: test.admin -> opm-admins",
+      "ok": true,
+      "detail": "groups=opm-admins"
+    },
+    {
+      "name": "membership: test.user2 -> opm-operators + opm-readonly",
+      "ok": true,
+      "detail": "groups=opm-operators,opm-readonly"
+    },
+    {
+      "name": "wrong-password service bind fails with LDAP 49",
+      "ok": true,
+      "detail": "LdapError status=401 code=LDAP_INVALID_CREDENTIALS"
+    },
+    {
+      "name": "authenticateUser test.admin with correct password",
+      "ok": true,
+      "detail": "dn=cn=test.admin,ou=users,dc=opm-test,dc=local; groups=opm-admins"
+    },
+    {
+      "name": "authenticateUser test.admin with wrong password fails LDAP 49",
+      "ok": true,
+      "detail": "LdapError status=401 code=LDAP_INVALID_CREDENTIALS"
+    },
+    {
+      "name": "testConnection reports bindOk + counts",
+      "ok": true,
+      "detail": "bindOk=true usersFound=4 groupsFound=3 latencyMs=45"
+    }
+  ],
+  "passed": 9,
+  "failed": 0
+}
