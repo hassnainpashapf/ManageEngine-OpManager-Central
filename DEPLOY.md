@@ -92,6 +92,31 @@ on macOS):
 > `agent_dist/macos/OpManagerAgent-amd64` (Intel). See §1.5 for the manual
 > workaround. The agent is optional — see below.
 
+**Heap size: V8, not JVM (`--max-old-space-size`).** There is no JVM in
+this build, so `POST /admin/updateJvmHeapSize` (and
+`/api/admin/updateJvmHeapSize`) always answers **501** — permanently, not
+a missing feature; no JVM heap exists to resize and no JVM metric is ever
+invented. The only heap is the Node.js (V8) heap, whose maximum old-space
+size is fixed at **process start** by the `--max-old-space-size` flag and
+cannot be changed at runtime or by any API call. To raise it, restart the
+server with the flag (value in MB):
+
+```bash
+NODE_OPTIONS=--max-old-space-size=4096 npm start
+```
+
+Docker Compose: add `- NODE_OPTIONS=--max-old-space-size=4096` under
+`environment:` in `docker-compose.yml` (§2.2); plain `docker run`: add
+`-e NODE_OPTIONS=--max-old-space-size=4096` (§2.3); Render: set
+`NODE_OPTIONS` to the same value as an environment variable (§3).
+Verified on Node v24.22.1: default `heap_size_limit` 2240 MB →
+4288 MB with `--max-old-space-size=4096` (limit ≈ flag + ~192 MB
+overhead). Live V8 heap figures are visible at
+`GET /api/admin/GetSystemInformation` (`runtime.heapTotalMB` /
+`heapUsedMB`); the limit itself is not exposed by the API — check it with
+`NODE_OPTIONS=--max-old-space-size=4096 node -e
+"console.log(require('v8').getHeapStatistics().heap_size_limit)"`.
+
 To stop everything started by `start_opmanager_central.sh`:
 
 ```bash

@@ -116,6 +116,14 @@ npm start
 ./start.sh
 ```
 
+> **Heap size (V8, not JVM):** this build runs on Node.js — there is no
+> JVM, so `POST /admin/updateJvmHeapSize` always answers **501** and can
+> never be made real. To change the heap limit, restart with
+> `NODE_OPTIONS=--max-old-space-size=4096 npm start` (value in MB; see
+> `DEPLOY.md` §1.3). Live V8 heap figures:
+> `GET /api/admin/GetSystemInformation` → `runtime.heapTotalMB` /
+> `heapUsedMB`.
+
 The server will initialize on port **8060**:
 - **Direct ITOM Web Console**: [http://localhost:8060/apiclient/fluidicv3/itom/index.html](http://localhost:8060/apiclient/fluidicv3/itom/index.html)
 - **NOC Wallboard View**: [http://localhost:8060/noc](http://localhost:8060/noc)
