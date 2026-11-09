@@ -103,6 +103,23 @@ function publicCopy(obj) {
   return out;
 }
 
+/**
+ * Public view of a stored credential-library row (audit L2 fix, close-out
+ * 2026-11-09): the SNMP community string is a credential — it is never
+ * returned. `communityConfigured` says only whether one is stored.
+ * The community itself stays stored server-side (the poller / credential
+ * test read the raw row); only API responses are masked. No client code
+ * reads `community` from this endpoint (the UI shows name/protocol only).
+ */
+function publicCredential(c) {
+  const out = publicCopy(c);
+  if (out && typeof out === 'object') {
+    out.communityConfigured = Boolean(c && c.community);
+    out.community = null;
+  }
+  return out;
+}
+
 function hasSecret(obj) {
   if (!obj || typeof obj !== 'object') return false;
   return Object.keys(obj).some((k) => SECRET_KEY.test(k));
@@ -190,7 +207,7 @@ router.get('/api/settings/central', (req, res) => {
 router.get('/api/settings/credentials', (req, res) => {
   res.json({
     status: 'success',
-    credentials: store.listCredentials().map((c) => publicCopy(c)),
+    credentials: store.listCredentials().map((c) => publicCredential(c)),
   });
 });
 
@@ -204,7 +221,7 @@ router.post('/api/settings/credentials', (req, res) => {
   res.status(201).json({
     status: 'success',
     message: `Credential ${created.name} added to Central library`,
-    credential: publicCopy(created),
+    credential: publicCredential(created),
   });
 });
 
@@ -2108,6 +2125,12 @@ router.get('/api/settings/auth/saml', (req, res) => {
   const out = publicCopy(merged);
   out.certificate = null;
   out.certificateConfigured = Boolean(stored && stored.certificate);
+  // Audit L3 fix (close-out 2026-11-09): the SP private key is never
+  // returned — same pattern as the certificate above. The service reads
+  // it from env/file only and ignores any stored spKey, so masking the
+  // response changes no behaviour.
+  out.spKey = null;
+  out.spKeyConfigured = Boolean(stored && stored.spKey);
   res.json({ status: 'success', saml: out });
 });
 
@@ -2172,6 +2195,9 @@ router.post('/api/settings/auth/saml', (req, res) => {
   const out = publicCopy(merged);
   out.certificate = null;
   out.certificateConfigured = Boolean(merged.certificate);
+  // Audit L3 fix (close-out 2026-11-09): never return the SP private key.
+  out.spKey = null;
+  out.spKeyConfigured = Boolean(merged.spKey);
   res.json({ status: 'success', message: 'SAML 2.0 Single Sign-On settings saved.', saml: out });
 });
 
@@ -2807,7 +2833,11 @@ router.post('/api/settings/rebrand', (req, res) => {
 router.get('/api/settings/ssl', (req, res) => {
   const stored = getStored('ssl');
   if (stored && typeof stored === 'object') {
-    res.json({ status: 'success', ssl: { ...stored, effectiveHttps: false } });
+    // Audit L4 fix (close-out 2026-11-09): the TLS private key is never
+    // returned. The certificate is public key material (sent to every TLS
+    // peer) and is kept, so the UI can still show which cert is on file.
+    const { privateKey: _dropped, ...rest } = stored;
+    res.json({ status: 'success', ssl: { ...rest, privateKey: null, privateKeyConfigured: Boolean(stored.privateKey), effectiveHttps: false } });
     return;
   }
   res.json({
@@ -2829,10 +2859,12 @@ router.post('/api/settings/ssl', (req, res) => {
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
   putStored('ssl', merged);
   auditLog('settings.ssl.save', { httpsEnabled: Boolean(merged.httpsEnabled) });
+  // Audit L4 fix (close-out 2026-11-09): never return the private key.
+  const { privateKey: _dropped, ...rest } = merged;
   res.json({
     status: 'success',
     message: 'SSL / TLS settings saved. Note: this server runs plain HTTP; saving settings does not enable HTTPS by itself.',
-    ssl: { ...merged, effectiveHttps: false },
+    ssl: { ...rest, privateKey: null, privateKeyConfigured: Boolean(merged.privateKey), effectiveHttps: false },
   });
 });
 
