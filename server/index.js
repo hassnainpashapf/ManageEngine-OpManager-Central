@@ -70,6 +70,24 @@ app.use((req, res, next) => {
   next();
 });
 
+// Real session enforcement: every JSON API call (except login) must carry a
+// valid bearer token issued by /api/auth/login. Previously nothing checked
+// this server-side; the client only kept a cosmetic localStorage flag.
+const sessions = require('./services/sessions');
+const PUBLIC_API_PATHS = new Set(['/api/auth/login']);
+app.use((req, res, next) => {
+  if (!req.isApiRequest || PUBLIC_API_PATHS.has(req.url.split('?')[0])) {
+    return next();
+  }
+  const token = sessions.extractToken(req);
+  const session = sessions.validateToken(token);
+  if (!session) {
+    return res.status(401).json({ status: 'error', message: 'Authentication required. Please log in again.' });
+  }
+  req.session = session;
+  next();
+});
+
 // Set MIME types and caching headers for static files
 const staticOptions = {
   setHeaders: (res, filePath) => {

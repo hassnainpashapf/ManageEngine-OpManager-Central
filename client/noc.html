@@ -718,12 +718,10 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
 
   <!-- Core Application Scripts -->
   <script>
-    try {
-      sessionStorage.setItem('opm_logged_in', 'true');
-      localStorage.setItem('opm_logged_in', 'true');
-      localStorage.setItem('me_opm_theme', 'dark');
-    } catch (e) {}
+    window.OPM_INLINE_LOGIN = true; // this page has its own login overlay, see app.js
+    try { localStorage.setItem('me_opm_theme', 'dark'); } catch (e) {}
   </script>
+  <script src="/js/auth-guard.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>

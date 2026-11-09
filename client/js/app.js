@@ -243,7 +243,7 @@
   // Authentication & Session Management
   // =========================================================================
   function initAuth() {
-    const loggedIn = sessionStorage.getItem('opm_logged_in') || localStorage.getItem('opm_logged_in');
+    const loggedIn = (sessionStorage.getItem('opm_logged_in') || localStorage.getItem('opm_logged_in')) && localStorage.getItem('opm_auth_token');
     if (!loggedIn) {
       DOM.loginOverlay.classList.remove('hidden');
     } else {
@@ -268,6 +268,8 @@
 
         if (res.status === 'success') {
           sessionStorage.setItem('opm_logged_in', 'true');
+          localStorage.setItem('opm_auth_token', res.token);
+          localStorage.setItem('opm_auth_user', JSON.stringify(res.user));
           if (keep) {
             localStorage.setItem('opm_logged_in', 'true');
           }
@@ -286,8 +288,14 @@
     });
 
     DOM.menuItemSignOut.addEventListener('click', () => {
+      const token = localStorage.getItem('opm_auth_token');
+      if (token) {
+        fetch('/api/auth/logout', { method: 'POST', headers: { Authorization: 'Bearer ' + token } }).catch(() => {});
+      }
       sessionStorage.removeItem('opm_logged_in');
       localStorage.removeItem('opm_logged_in');
+      localStorage.removeItem('opm_auth_token');
+      localStorage.removeItem('opm_auth_user');
       DOM.userMenuDropdown.classList.remove('active');
       DOM.loginOverlay.classList.remove('hidden');
     });
