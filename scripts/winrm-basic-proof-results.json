@@ -1,0 +1,41 @@
+{
+  "startedAt": "2026-11-09T11:28:55.476Z",
+  "cases": [
+    {
+      "id": "5",
+      "title": "neither NTLM nor Basic offered -> AUTH_FAILED",
+      "outcome": "pass",
+      "detail": "runWql threw AUTH_FAILED: WinRM: 127.0.0.1:36313 did not offer NTLM authentication (401 without WWW-Authenticate: NTLM)."
+    },
+    {
+      "id": "1",
+      "title": "HTTP + allowUnencrypted + correct creds -> success",
+      "outcome": "pass",
+      "detail": "count=1, row={\"__class\":\"Win32_OperatingSystem\",\"Caption\":\"ProofOS\",\"Name\":\"PROOF-PC\"}."
+    },
+    {
+      "id": "2",
+      "title": "HTTP Basic without allowUnencrypted -> refused, nothing sent",
+      "outcome": "pass",
+      "detail": "runWql threw AUTH_FAILED; listener saw a Basic Authorization header: false (must be false)."
+    },
+    {
+      "id": "3",
+      "title": "HTTPS + useHttps + correct creds -> success",
+      "outcome": "pass",
+      "detail": "count=1, row={\"__class\":\"Win32_OperatingSystem\",\"Caption\":\"ProofOS\",\"Name\":\"PROOF-PC\"} (transport derived from useHttps, default port overridden by explicit port)."
+    },
+    {
+      "id": "4",
+      "title": "HTTPS + wrong password -> AUTH_FAILED",
+      "outcome": "pass",
+      "detail": "runWql threw AUTH_FAILED: WinRM: authentication failed for user \"proofuser\" on 127.0.0.1:39159 (server rejected the Basic credentials — check user."
+    }
+  ],
+  "finishedAt": "2026-11-09T11:28:55.992Z",
+  "summary": {
+    "pass": 5,
+    "fail": 0,
+    "skipped": 0
+  }
+}

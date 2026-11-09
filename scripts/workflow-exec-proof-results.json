@@ -1,0 +1,71 @@
+{
+  "startedAt": "2026-11-09T11:27:58.641Z",
+  "cases": [
+    {
+      "id": "9",
+      "title": "Execute without a session -> 401 (admin-only)",
+      "outcome": "pass",
+      "detail": "POST /api/workflows/execute without a session -> HTTP 401 (expected 401)."
+    },
+    {
+      "id": "1",
+      "title": "cli dig executes for real",
+      "outcome": "pass",
+      "detail": "workflow 1: HTTP 200, body status=success, step0 ok=true exitCode=0 stdout=\"198.18.42.236\" in 194ms."
+    },
+    {
+      "id": "2",
+      "title": "cli rm refused (allow-list)",
+      "outcome": "pass",
+      "detail": "workflow 2: HTTP 200, body status=failed, step0 error=\"runner: command not allowed: \\\"rm\\\"\"."
+    },
+    {
+      "id": "3+6",
+      "title": "ssh refusal fails honestly; later step skipped",
+      "outcome": "pass",
+      "detail": "workflow 3: HTTP 200, failedStepIndex=1, step0 ok=true, step1 error=\"runner: SSH failed: connect ECONNREFUSED 127.0.0.1:2222\" in 50ms, step2 status=skipped."
+    },
+    {
+      "id": "4",
+      "title": "wmi step without credentials fails honestly",
+      "outcome": "pass",
+      "detail": "workflow 4: HTTP 200, step0 error=\"wmi step 0 has no credentials: supply { \\\"username\\\", \\\"password\\\" } for step 0 in the per-execution \\\"credentials\\\" map (never stored)\"."
+    },
+    {
+      "id": "5",
+      "title": "wmi step to a closed port fails UNREACHABLE",
+      "outcome": "pass",
+      "detail": "workflow 5: HTTP 200, step0 error=\"WinRM UNREACHABLE: WinRM: cannot reach 127.0.0.1:5985 (ECONNREFUSED: connect ECONNREFUSED 127.0.0.1:5985)\" in 7ms."
+    },
+    {
+      "id": "7a",
+      "title": "stored credential refused at create (400, never stored)",
+      "outcome": "pass",
+      "detail": "create -> HTTP 400, message=\"step 0 stores a credential field (\\\"password\\\"): credentials must not be stored in workflow steps; supply them per exec; workflow stored: false (must be false)."
+    },
+    {
+      "id": "7b",
+      "title": "executor refuses a pre-existing stored-credential row",
+      "outcome": "pass",
+      "detail": "workflow 6: HTTP 200, step0 error=\"step stores a credential field (\\\"password\\\"): credentials must not be stored in workflow steps; supply them per execution\"."
+    },
+    {
+      "id": "8",
+      "title": "zero steps -> 400 with no run; unknown id -> 404",
+      "outcome": "pass",
+      "detail": "zero-step execute -> HTTP 400; runs for workflow 7: 0; unknown id 99999 -> HTTP 404."
+    },
+    {
+      "id": "10",
+      "title": "no credential echoed in any response",
+      "outcome": "pass",
+      "detail": "swept 20 collected response bodies for the runtime test password: 0 hits."
+    }
+  ],
+  "finishedAt": "2026-11-09T11:28:00.172Z",
+  "summary": {
+    "pass": 10,
+    "fail": 0,
+    "blocked": 0
+  }
+}
