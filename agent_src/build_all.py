@@ -14,6 +14,11 @@ os.makedirs(DOWNLOADS_DIR, exist_ok=True)
 os.makedirs(DIST_DIR, exist_ok=True)
 
 env_base = os.environ.copy()
+# The agent is a Go module now (agent_src/go.mod) with its Windows service
+# dependency (golang.org/x/sys/windows/svc) vendored in agent_src/vendor,
+# so builds stay offline: GOPROXY=off + -mod=vendor. Builds use package
+# mode ("go build .") instead of "go build main.go" so the build-tagged
+# service files (service_windows.go / service_other.go) are included.
 env_base["GOPROXY"] = "off"
 
 print("==================================================================")
@@ -34,7 +39,7 @@ env_win["GOOS"] = "windows"
 env_win["GOARCH"] = "amd64"
 
 res = subprocess.run(
-    ["go", "build", "-ldflags", "-s -w", "-o", win_exe_path, "main.go"],
+    ["go", "build", "-mod=vendor", "-ldflags", "-s -w", "-o", win_exe_path, "."],
     cwd=AGENT_SRC_DIR,
     env=env_win,
     capture_output=True,
@@ -111,12 +116,12 @@ bin_universal = os.path.join(mac_dist, "OpManagerAgent")
 env_mac_arm = env_base.copy()
 env_mac_arm["GOOS"] = "darwin"
 env_mac_arm["GOARCH"] = "arm64"
-subprocess.run(["go", "build", "-ldflags", "-s -w", "-o", bin_arm64, "main.go"], cwd=AGENT_SRC_DIR, env=env_mac_arm, check=True)
+subprocess.run(["go", "build", "-mod=vendor", "-ldflags", "-s -w", "-o", bin_arm64, "."], cwd=AGENT_SRC_DIR, env=env_mac_arm, check=True)
 
 env_mac_intel = env_base.copy()
 env_mac_intel["GOOS"] = "darwin"
 env_mac_intel["GOARCH"] = "amd64"
-subprocess.run(["go", "build", "-ldflags", "-s -w", "-o", bin_amd64, "main.go"], cwd=AGENT_SRC_DIR, env=env_mac_intel, check=True)
+subprocess.run(["go", "build", "-mod=vendor", "-ldflags", "-s -w", "-o", bin_amd64, "."], cwd=AGENT_SRC_DIR, env=env_mac_intel, check=True)
 
 # Combine into Universal Binary
 subprocess.run(["lipo", "-create", bin_arm64, bin_amd64, "-output", bin_universal], check=True)
