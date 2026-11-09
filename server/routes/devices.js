@@ -1,20 +1,115 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../services/db');
+const store = require('../services/store');
+const poller = require('../services/poller');
+
+// ---------------------------------------------------------------------------
+// Real-data rebuild (2026-11-09): every value on this route comes from the
+// SQLite store, a real ICMP ping, a real SNMP GET, or the real poller.
+// Unknown data is reported as null / [] / 'Unknown' — never invented.
+// Audit items fixed: D1–D9 (see ~/workspace/opm-check/real-data/audit/
+// poller-metrics.md). Live SNMP values that prove the poller path are in
+// ~/workspace/opm-check/real-data/recon/techub-switches-snmp.md (all 8
+// Techub Cisco switches + pfSense answer SNMPv2c community `public`).
+//
+// NOTE: ../services/snmp and ../services/ping are delivered by parallel
+// workstreams. They are required lazily inside the handlers so this router
+// still loads (and the server still boots) until they land; a handler that
+// needs one returns an honest 503 instead of fake data when it is absent.
+// ---------------------------------------------------------------------------
+
+// Lazily load a parallel-workstream service module. Returns the module or
+// null when it has not landed yet — never throws at router load time.
+function loadService(name) {
+  try {
+    return require(`../services/${name}`);
+  } catch (err) {
+    if (err && err.code === 'MODULE_NOT_FOUND') return null;
+    throw err;
+  }
+}
+
+function serviceUnavailable(res, name, endpoint) {
+  return res.status(503).json({
+    status: 'error',
+    message: `${endpoint} requires the ${name} service (server/services/${name}.js), which is not available yet — no measurement was taken and no result was fabricated.`
+  });
+}
+
+function findDevice(req) {
+  const deviceId = req.query.deviceId || req.params.id || req.body.deviceId;
+  if (deviceId === undefined || deviceId === null || deviceId === '') return { id: null, device: null };
+  const device = store.getDevice(deviceId);
+  return { id: deviceId, device: device || null };
+}
+
+function toIso(ms) {
+  if (ms === null || ms === undefined) return null;
+  const d = new Date(Number(ms));
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
+}
+
+function probeNameFor(device) {
+  if (!device || device.probe_id === null || device.probe_id === undefined) return null;
+  try {
+    const probe = store.getProbe(device.probe_id);
+    return probe ? probe.name || null : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+// Availability from the real metrics table.
+// A metric row records one real poll attempt: response_ms non-null means the
+// poll answered (up); a null response_ms means the poll attempt failed
+// (down). Buckets with no recorded polls report null — absence of history
+// is not evidence of 100% uptime.
+function computeAvailability(deviceId, hours) {
+  const windowHours = hours || 24;
+  const since = Date.now() - windowHours * 3600 * 1000;
+  const rows = store.getMetrics(deviceId, { since, limit: 10000 });
+  const now = Date.now();
+  const history = [];
+  let totalUp = 0;
+  let totalSamples = 0;
+  for (let i = windowHours; i >= 0; i--) {
+    const bucketStart = now - i * 3600 * 1000;
+    const bucketEnd = bucketStart + 3600 * 1000;
+    const samples = rows.filter((r) => r.ts >= bucketStart && r.ts < bucketEnd);
+    const up = samples.filter((r) => r.response_ms !== null && r.response_ms !== undefined).length;
+    const total = samples.length;
+    totalUp += up;
+    totalSamples += total;
+    history.push({
+      timestamp: new Date(bucketStart).toISOString(),
+      availability: total === 0 ? null : Math.round((up / total) * 1000) / 10,
+      downtimeMinutes: total === 0 ? null : Math.round(((total - up) / total) * 60 * 10) / 10,
+      samples: total
+    });
+  }
+  return {
+    overallAvailability: totalSamples === 0 ? null : Math.round((totalUp / totalSamples) * 1000) / 10,
+    history
+  };
+}
 
 // OpManager Standard API: list devices with optional probe/category/status filters
 router.get(['/device/listDevices', '/device/list', '/api/json/device/list', '/api/devices'], (req, res) => {
   const { probeId, category, status, search } = req.query;
-  let devices = db.getDevices(probeId, category, status);
+  const filter = {};
+  if (probeId !== undefined) filter.probe_id = probeId;
+  if (category !== undefined) filter.category = category;
+  if (status !== undefined) filter.status = status;
+  let devices = store.listDevices(filter);
 
   if (search) {
-    const q = search.toLowerCase();
-    devices = devices.filter(d => 
-      d.name.toLowerCase().includes(q) || 
-      d.displayName.toLowerCase().includes(q) ||
-      d.ip.includes(q) ||
-      d.vendor.toLowerCase().includes(q) ||
-      d.category.toLowerCase().includes(q)
+    const q = String(search).toLowerCase();
+    devices = devices.filter((d) =>
+      (d.ip && d.ip.includes(q)) ||
+      (d.hostname && d.hostname.toLowerCase().includes(q)) ||
+      (d.sys_name && d.sys_name.toLowerCase().includes(q)) ||
+      (d.vendor && d.vendor.toLowerCase().includes(q)) ||
+      (d.category && d.category.toLowerCase().includes(q))
     );
   }
 
@@ -26,229 +121,555 @@ router.get(['/device/listDevices', '/device/list', '/api/json/device/list', '/ap
 });
 
 // Device Summary / Details
+// D8 fixed: no invented fallbacks — serial, OS version, disk and availability
+// are null when unknown; CPU/memory/latency come from the stored device row
+// (last real poll values, null until the first real poll).
 router.get(['/device/getDeviceSummary', '/device/getDeviceDetails', '/api/json/device/getDeviceDetails', '/api/devices/:id'], (req, res) => {
-  const deviceId = req.query.deviceId || req.params.id;
-  const device = db.getDeviceById(deviceId);
+  const { device } = findDevice(req);
   if (!device) {
-    return res.status(404).json({ status: 'error', message: `Device ${deviceId} not found` });
+    return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
 
-  // Also include device active alarms
-  const deviceAlarms = db.getAlarms(null).filter(a => a.deviceId === device.id);
+  const deviceAlarms = store.listAlarms({ device_id: device.id, status: 'active' });
+  const availability = computeAvailability(device.id, 24);
 
   res.json({
     status: 'success',
     device,
     deviceSummary: {
-      name: device.name,
+      name: device.hostname || device.sys_name || null,
       ipAddress: device.ip,
-      category: device.category,
-      type: device.type,
-      vendor: device.vendor,
-      osVersion: device.osVersion || 'Enterprise Release',
-      serialNumber: device.serial || 'ME-SNMP-9281',
-      status: device.status,
-      availability: device.availability || '99.98%',
-      cpuUtilization: device.cpu,
-      memoryUtilization: device.memory,
-      diskUtilization: device.disk || 38.5,
-      responseTime: device.responseTime || 12,
-      lastPolled: device.lastPolled || 'Just now',
-      assignedProbe: device.probeName,
-      probeId: device.probeId,
-      interfacesCount: (device.interfaces || []).length || 3
+      category: device.category || null,
+      type: device.model || null,
+      model: device.model || null,
+      vendor: device.vendor || null,
+      sysDescr: device.sys_descr || null,
+      sysName: device.sys_name || null,
+      osVersion: null,
+      serialNumber: null,
+      status: device.status || null,
+      availability: availability.overallAvailability,
+      cpuUtilization: device.cpu_pct === null || device.cpu_pct === undefined ? null : device.cpu_pct,
+      memoryUtilization: device.mem_used_pct === null || device.mem_used_pct === undefined ? null : device.mem_used_pct,
+      diskUtilization: null,
+      responseTime: device.response_ms === null || device.response_ms === undefined ? null : device.response_ms,
+      lastPolled: toIso(device.last_polled_at),
+      assignedProbe: probeNameFor(device),
+      probeId: device.probe_id === null || device.probe_id === undefined ? null : device.probe_id,
+      interfacesCount: store.listInterfaces(device.id).length,
+      managed: device.managed === 1 || device.managed === true
     },
     activeAlarms: deviceAlarms
   });
 });
 
 // List Interfaces for a Device
+// D7 fixed: returns ONLY interfaces actually discovered via SNMP and stored
+// for this device. Empty array when none — never invented interfaces/traffic.
 router.get(['/device/listInterfaces', '/api/json/device/listInterfaces', '/device/:id/interfaces', '/api/devices/:id/interfaces'], (req, res) => {
-  const deviceId = req.query.deviceId || req.params.id;
-  const dev = db.getDeviceById(deviceId) || db.getDevices()[0];
-  if (!dev) {
-    return res.json({
-      status: 'success',
-      deviceId: null,
-      deviceName: 'No Devices',
-      total: 0,
-      interfaces: []
-    });
+  const { device } = findDevice(req);
+  if (!device) {
+    return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
-  const interfaces = dev.interfaces || [
-    { name: 'GigabitEthernet0/0/1', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 340.5, outTraffic: 290.2, inPercent: 34.0, outPercent: 29.0, errors: 0 },
-    { name: 'GigabitEthernet0/0/2', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 512.0, outTraffic: 480.0, inPercent: 51.2, outPercent: 48.0, errors: 0 },
-    { name: 'TenGigabitEthernet1/0/1', admin: 'UP', oper: 'UP', speed: '10 Gbps', inTraffic: 1420.0, outTraffic: 1100.0, inPercent: 14.2, outPercent: 11.0, errors: 0 }
-  ];
+  const rows = store.listInterfaces(device.id);
+  const interfaces = rows.map((r) => ({
+    ifIndex: r.if_index,
+    name: r.name || null,
+    descr: r.descr || null,
+    admin: null,
+    oper: r.oper_status || null,
+    speed: r.speed === null || r.speed === undefined ? null : r.speed,
+    inOctets: r.in_octets === null || r.in_octets === undefined ? null : r.in_octets,
+    outOctets: r.out_octets === null || r.out_octets === undefined ? null : r.out_octets,
+    // Traffic rates are computed from counter deltas over successive real
+    // polls; no rate history exists yet, so these are null, not 0.
+    inTraffic: null,
+    outTraffic: null,
+    inPercent: null,
+    outPercent: null,
+    errors: null
+  }));
   res.json({
     status: 'success',
-    deviceId: dev.id,
-    deviceName: dev.name,
+    deviceId: device.id,
+    deviceName: device.hostname || device.sys_name || device.ip,
     total: interfaces.length,
     interfaces
   });
 });
 
 // Live Ping Response
-router.get(['/device/getPingResponse', '/api/json/device/getPingResponse'], (req, res) => {
-  const ip = req.query.ip || (db.getDevices()[0]?.ip) || '127.0.0.1';
+// D1 fixed: performs REAL pings (4 echo attempts via the ping service) and
+// returns the measured loss/RTTs and verbatim-style output. Nothing canned.
+router.get(['/device/getPingResponse', '/api/json/device/getPingResponse'], async (req, res) => {
+  const pingSvc = loadService('ping');
+  if (!pingSvc) return serviceUnavailable(res, 'ping', 'getPingResponse');
+
+  let ip = req.query.ip || null;
+  if (!ip) {
+    const { device } = findDevice(req);
+    if (device) ip = device.ip;
+  }
+  if (!ip) {
+    return res.status(400).json({ status: 'error', message: 'No IP supplied (ip query parameter or deviceId required)' });
+  }
+
+  const attempts = 4;
+  const rtts = [];
+  const lines = [];
+  for (let i = 0; i < attempts; i++) {
+    let ms = null;
+    try {
+      ms = await pingSvc.pingMs(ip);
+    } catch (err) {
+      ms = null;
+    }
+    if (ms === null || ms === undefined) {
+      lines.push(`Request timed out.`);
+    } else {
+      rtts.push(Number(ms));
+      lines.push(`Reply from ${ip}: bytes=32 time=${Number(ms)}ms`);
+    }
+  }
+  const received = rtts.length;
+  const lost = attempts - received;
+  const packetLoss = `${Math.round((lost / attempts) * 100)}%`;
+  const minRtt = received ? Math.min(...rtts) : null;
+  const maxRtt = received ? Math.max(...rtts) : null;
+  const avgRtt = received ? Math.round((rtts.reduce((a, b) => a + b, 0) / received) * 10) / 10 : null;
+
+  const output = [
+    ...lines,
+    '',
+    `Ping statistics for ${ip}:`,
+    `    Packets: Sent = ${attempts}, Received = ${received}, Lost = ${lost} (${packetLoss} loss),`,
+    received
+      ? 'Approximate round trip times in milli-seconds:\n' +
+        `    Minimum = ${minRtt}ms, Maximum = ${maxRtt}ms, Average = ${avgRtt}ms`
+      : 'Approximate round trip times in milli-seconds:\n    Minimum = n/a, Maximum = n/a, Average = n/a (no replies received)'
+  ].join('\n');
+
   res.json({
-    status: 'success',
+    status: received > 0 ? 'success' : 'error',
     ip,
-    packetLoss: '0%',
-    packetsTransmitted: 4,
-    packetsReceived: 4,
-    minRtt: 10,
-    avgRtt: 12,
-    maxRtt: 15,
-    ttl: 64,
-    output: `Reply from ${ip}: bytes=32 time=12ms TTL=64\nReply from ${ip}: bytes=32 time=11ms TTL=64\nReply from ${ip}: bytes=32 time=13ms TTL=64\nReply from ${ip}: bytes=32 time=12ms TTL=64\n\nPing statistics for ${ip}:\n    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),\nApproximate round trip times in milli-seconds:\n    Minimum = 10ms, Maximum = 15ms, Average = 12ms`
+    packetLoss,
+    packetsTransmitted: attempts,
+    packetsReceived: received,
+    minRtt,
+    avgRtt,
+    maxRtt,
+    ttl: null,
+    output
   });
 });
 
 // Test Credentials
-router.post(['/device/testCredential', '/api/json/device/testCredential'], (req, res) => {
-  const { ip, credentialType, community, username } = req.body;
-  res.json({
-    status: 'success',
-    message: `SNMP Credential validation passed for ${ip || 'target node'} (RFC 1213-MIB responded OK).`,
-    result: 'SUCCESS',
-    latencyMs: 14
-  });
+// D2 fixed: performs a REAL SNMP GET (sysDescr/sysName via snmp.getSystemInfo)
+// against the target with the supplied community and reports SUCCESS only
+// when the device actually answers. Latency is measured, not fixed.
+router.post(['/device/testCredential', '/api/json/device/testCredential'], async (req, res) => {
+  const snmp = loadService('snmp');
+  if (!snmp) return serviceUnavailable(res, 'snmp', 'testCredential');
+
+  const { ip: bodyIp, credentialType, community: bodyCommunity, username, deviceId } = req.body || {};
+  let ip = bodyIp || null;
+  let community = bodyCommunity || null;
+  if ((!ip || !community) && deviceId) {
+    const device = store.getDevice(deviceId);
+    if (device) {
+      if (!ip) ip = device.ip;
+      if (!community) community = device.snmp_community || null;
+    }
+  }
+  if (!ip) {
+    return res.status(400).json({ status: 'error', message: 'No target IP supplied' });
+  }
+  if (!community) {
+    return res.json({
+      status: 'success',
+      result: 'FAILURE',
+      message: `SNMP credential validation failed for ${ip}: no community supplied and none stored for the device.`,
+      latencyMs: null
+    });
+  }
+
+  const started = Date.now();
+  try {
+    const info = await snmp.getSystemInfo(ip, community);
+    const latencyMs = Date.now() - started;
+    if (!info) {
+      return res.json({
+        status: 'success',
+        result: 'FAILURE',
+        message: `SNMP credential validation failed for ${ip}: no response using the supplied community.`,
+        latencyMs
+      });
+    }
+    return res.json({
+      status: 'success',
+      message: `SNMP credential validation passed for ${ip} (RFC 1213-MIB responded OK).`,
+      result: 'SUCCESS',
+      latencyMs,
+      sysDescr: info.sysDescr ?? info.sys_descr ?? info.sysdesc ?? null,
+      sysName: info.sysName ?? info.sys_name ?? info.sysname ?? null
+    });
+  } catch (err) {
+    return res.json({
+      status: 'success',
+      result: 'FAILURE',
+      message: `SNMP credential validation failed for ${ip}: ${err && err.message ? err.message : 'SNMP request failed'}.`,
+      latencyMs: Date.now() - started
+    });
+  }
 });
 
 // Set Managed / Unmanaged
+// D9 fixed: persists the managed flag on the device record via
+// store.updateDevice and returns the stored state.
 router.post(['/device/setManaged', '/api/json/device/setManaged'], (req, res) => {
-  const { deviceId, managed } = req.body;
+  const { deviceId, managed } = req.body || {};
+  if (deviceId === undefined || deviceId === null || deviceId === '') {
+    return res.status(400).json({ status: 'error', message: 'deviceId is required' });
+  }
+  const device = store.getDevice(deviceId);
+  if (!device) {
+    return res.status(404).json({ status: 'error', message: `Device ${deviceId} not found` });
+  }
+  const updated = store.updateDevice(deviceId, { managed: managed ? 1 : 0 });
+  const isManaged = updated ? (updated.managed === 1 || updated.managed === true) : !!managed;
   res.json({
     status: 'success',
-    message: `Management state updated for device ${deviceId || 'selected nodes'}: ${managed ? 'Managed' : 'Unmanaged'}`
+    message: `Management state updated for device ${deviceId}: ${isManaged ? 'Managed' : 'Unmanaged'}`,
+    deviceId: updated ? updated.id : deviceId,
+    managed: isManaged
   });
 });
 
 // Availability Graph Data
+// D3 fixed: computed from the real metrics table (per-hour availability from
+// real poll outcomes). Buckets with no recorded polls report null, not
+// 100.0%; overallAvailability is null when there is no history at all.
 router.get(['/device/getAvailabilityGraphData', '/api/json/device/getAvailabilityGraphData'], (req, res) => {
-  const data = [];
-  const now = Date.now();
-  for (let i = 24; i >= 0; i--) {
-    data.push({
-      timestamp: new Date(now - i * 3600 * 1000).toISOString(),
-      availability: 100.0,
-      downtimeMinutes: 0
-    });
+  const deviceId = req.query.deviceId || req.params.id;
+  if (deviceId === undefined || deviceId === null || deviceId === '') {
+    return res.status(400).json({ status: 'error', message: 'deviceId is required' });
   }
+  const device = store.getDevice(deviceId);
+  if (!device) {
+    return res.status(404).json({ status: 'error', message: `Device ${deviceId} not found` });
+  }
+  const { overallAvailability, history } = computeAvailability(device.id, 24);
   res.json({
     status: 'success',
-    overallAvailability: 99.98,
-    history: data
+    deviceId: device.id,
+    overallAvailability,
+    history
   });
 });
 
 // Performance Monitor Details
+// D4 fixed: CPU/memory/latency come from the latest real metric row (or the
+// device row's last real poll values); bandwidth is null with status
+// 'Unknown' — no interface traffic-rate history exists yet, so no value is
+// invented. Monitors with no data report 'Unknown', not 'Clear'.
 router.get(['/device/getPerformanceMonitorDetails', '/api/json/device/getPerformanceMonitorDetails'], (req, res) => {
-  const deviceId = req.query.deviceId || 1;
-  const dev = db.getDeviceById(deviceId) || db.getDevices()[0];
-  if (!dev) {
-    return res.json({
-      status: 'success',
-      deviceId: null,
-      deviceName: 'No Devices',
-      monitors: []
-    });
+  const { device } = findDevice(req);
+  if (!device) {
+    return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
+  const latest = store.getLatestMetric(device.id);
+  const cpu = latest && latest.cpu_pct !== null && latest.cpu_pct !== undefined
+    ? latest.cpu_pct : device.cpu_pct;
+  const memory = latest && latest.mem_used_pct !== null && latest.mem_used_pct !== undefined
+    ? latest.mem_used_pct : device.mem_used_pct;
+  const latency = latest && latest.response_ms !== null && latest.response_ms !== undefined
+    ? latest.response_ms : device.response_ms;
+
+  const statusFor = (value, threshold, criticalLabel) => {
+    if (value === null || value === undefined) return 'Unknown';
+    return value > threshold ? criticalLabel : 'Clear';
+  };
+
   res.json({
     status: 'success',
-    deviceId: dev.id,
-    deviceName: dev.name,
+    deviceId: device.id,
+    deviceName: device.hostname || device.sys_name || device.ip,
     monitors: [
-      { name: 'CPU Utilization', current: dev.cpu, unit: '%', threshold: 90, status: dev.cpu > 90 ? 'Critical' : 'Clear' },
-      { name: 'Memory Utilization', current: dev.memory, unit: '%', threshold: 85, status: dev.memory > 85 ? 'Trouble' : 'Clear' },
-      { name: 'Interface Inbound Bandwidth', current: '1.42 Gbps', unit: 'Gbps', threshold: '5.0 Gbps', status: 'Clear' },
-      { name: 'ICMP Latency', current: dev.responseTime || 12, unit: 'ms', threshold: 50, status: 'Clear' }
+      { name: 'CPU Utilization', current: cpu === null || cpu === undefined ? null : cpu, unit: '%', threshold: 90, status: statusFor(cpu, 90, 'Critical') },
+      { name: 'Memory Utilization', current: memory === null || memory === undefined ? null : memory, unit: '%', threshold: 85, status: statusFor(memory, 85, 'Trouble') },
+      { name: 'Interface Inbound Bandwidth', current: null, unit: 'Mbps', threshold: null, status: 'Unknown' },
+      { name: 'ICMP Latency', current: latency === null || latency === undefined ? null : latency, unit: 'ms', threshold: 50, status: statusFor(latency, 50, 'Trouble') }
     ]
   });
 });
 
 // Add Device
+// Stores ONLY what was supplied (IP, name, category, probe, community) with
+// metrics null until the first real poll — no random CPU/memory/disk, no
+// placeholder MAC, no fixed interface traffic.
 router.post(['/api/json/device/add', '/api/devices'], (req, res) => {
-  const { ip, name, category, probeId } = req.body;
+  const { ip, name, category, probeId, community, snmpCommunity, snmpVersion, version } = req.body || {};
   if (!ip) {
     return res.status(400).json({ status: 'error', message: 'Device IP is required' });
   }
-  const newDevice = db.addDevice(req.body);
+  const existing = store.getDeviceByIp(ip);
+  if (existing) {
+    return res.status(409).json({ status: 'error', message: `Device with IP ${ip} already exists`, device: existing });
+  }
+  const fields = { ip };
+  if (name !== undefined) fields.hostname = name;
+  if (category !== undefined) fields.category = category;
+  if (probeId !== undefined && probeId !== null && probeId !== '') fields.probe_id = probeId;
+  const suppliedCommunity = community !== undefined ? community : snmpCommunity;
+  if (suppliedCommunity !== undefined) fields.snmp_community = suppliedCommunity;
+  const suppliedVersion = snmpVersion !== undefined ? snmpVersion : version;
+  if (suppliedVersion !== undefined) fields.snmp_version = suppliedVersion;
+  let newDevice;
+  try {
+    newDevice = store.createDevice(fields);
+  } catch (err) {
+    return res.status(400).json({ status: 'error', message: `Could not add device: ${err && err.message ? err.message : 'store error'}` });
+  }
+  const probeName = probeNameFor(newDevice);
   res.status(201).json({
     status: 'success',
-    message: `Device ${newDevice.name} (${newDevice.ip}) added and assigned to ${newDevice.probeName}`,
+    message: `Device ${newDevice.hostname || newDevice.ip} (${newDevice.ip}) added${probeName ? ` and assigned to ${probeName}` : ''}`,
     device: newDevice
   });
 });
 
 // Delete Device
 router.post(['/api/json/device/delete', '/api/devices/:id/delete'], (req, res) => {
-  const deviceId = req.body.deviceId || req.params.id;
-  const deleted = db.deleteDevice(deviceId);
-  if (!deleted) {
+  const deviceId = (req.body && req.body.deviceId) || req.params.id;
+  if (deviceId === undefined || deviceId === null || deviceId === '') {
+    return res.status(400).json({ status: 'error', message: 'deviceId is required' });
+  }
+  const device = store.getDevice(deviceId);
+  if (!device) {
     return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
+  store.deleteDevice(deviceId);
   res.json({
     status: 'success',
-    message: `Device ${deleted.name} removed from inventory`,
-    deleted
+    message: `Device ${device.hostname || device.ip} removed from inventory`,
+    deleted: device
   });
 });
 
 // Poll Device Immediately (Manual / Live SNMP Trigger)
-router.post(['/api/json/device/pollNow', '/api/devices/:id/poll-now'], (req, res) => {
-  const deviceId = req.body.deviceId || req.query.deviceId || req.params.id;
-  const dev = db.getDeviceById(deviceId);
-  if (!dev) {
+// D5 fixed: delegates to the real poller (poller.pollDeviceNow) and returns
+// its real result. No simulated fetch, no random RTT/CPU/memory.
+router.post(['/api/json/device/pollNow', '/api/devices/:id/poll-now'], async (req, res) => {
+  const deviceId = (req.body && req.body.deviceId) || req.query.deviceId || req.params.id;
+  const device = deviceId ? store.getDevice(deviceId) : null;
+  if (!device) {
     return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
-
-  // Simulate instant SNMP / ICMP fetch
-  dev.responseTime = Math.floor(Math.random() * 15) + 8;
-  dev.cpu = Math.min(98, Math.max(8, Math.round(dev.cpu + (Math.random() - 0.5) * 6)));
-  dev.memory = Math.min(95, Math.max(15, Math.round(dev.memory + (Math.random() - 0.5) * 4)));
-  dev.lastPolled = 'Just now';
-
-  res.json({
-    status: 'success',
-    message: `Device ${dev.name} (${dev.ip}) polled successfully via ${dev.probeName || 'Dallas-Probe-01'} (SNMP v2c OK, Latency: ${dev.responseTime}ms)`,
-    device: dev,
-    polledAt: new Date().toISOString()
-  });
+  if (typeof poller.pollDeviceNow !== 'function') {
+    return res.status(503).json({
+      status: 'error',
+      message: 'pollNow requires poller.pollDeviceNow (server/services/poller.js), which is not available yet — no poll was performed and no values were fabricated.'
+    });
+  }
+  try {
+    const result = await poller.pollDeviceNow(device.id);
+    const refreshed = store.getDevice(device.id);
+    // pollDeviceNow returns no `success` field: failure is signalled by
+    // result.status (only 'Up' means the poll succeeded — 'Down',
+    // 'SNMP Error', 'Poll failed: <reason>') and result.error. The old
+    // check on result.success === false could never fire, so failed polls
+    // were reported as successes.
+    const pollFailed = !result || result.status !== 'Up';
+    if (pollFailed) {
+      const reason = (result && result.error) || (result && result.status) || 'poll failed';
+      return res.status(502).json({
+        status: 'error',
+        message: `Poll of device ${device.hostname || device.ip} (${device.ip}) failed: ${reason}`,
+        device: refreshed || device,
+        poll: result === undefined ? null : result,
+        polledAt: new Date().toISOString()
+      });
+    }
+    res.json({
+      status: 'success',
+      message: (result && result.message) || `Device ${device.hostname || device.ip} (${device.ip}) polled successfully`,
+      device: refreshed || device,
+      poll: result === undefined ? null : result,
+      polledAt: new Date().toISOString()
+    });
+  } catch (err) {
+    res.status(502).json({
+      status: 'error',
+      message: `Poll of device ${device.hostname || device.ip} (${device.ip}) failed: ${err && err.message ? err.message : 'poll error'}`,
+      device: store.getDevice(device.id) || device,
+      polledAt: new Date().toISOString()
+    });
+  }
 });
 
 // Test Active Monitors (Ping, SNMP, WMI, Ports)
-router.get(['/api/json/device/testMonitors', '/api/devices/:id/test-monitors'], (req, res) => {
-  const deviceId = req.query.deviceId || req.params.id;
-  const dev = db.getDeviceById(deviceId);
-  if (!dev) {
+// D6 fixed: every monitor runs a REAL check — ICMP via the ping service,
+// sysDescr/CPU/memory/interfaces via real SNMP GETs — and reports
+// Success/Failed/Unknown with measured RTTs and real returned values.
+// Temperature has no real source in the SNMP service API, so it reports
+// 'Unknown' with a null value instead of an invented 34°C.
+router.get(['/api/json/device/testMonitors', '/api/devices/:id/test-monitors'], async (req, res) => {
+  const { device } = findDevice(req);
+  if (!device) {
     return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
+  const pingSvc = loadService('ping');
+  if (!pingSvc) return serviceUnavailable(res, 'ping', 'testMonitors');
+  const snmp = loadService('snmp');
+  if (!snmp) return serviceUnavailable(res, 'snmp', 'testMonitors');
+
+  const ip = device.ip;
+  const community = (req.query && req.query.community) || device.snmp_community || null;
+  const monitors = [];
+
+  // ICMP Ping Echo — real ping.
+  let pingMs = null;
+  let pingError = null;
+  try {
+    pingMs = await pingSvc.pingMs(ip);
+  } catch (err) {
+    pingError = err && err.message ? err.message : 'ping failed';
+  }
+  const pingOk = pingMs !== null && pingMs !== undefined;
+  monitors.push({
+    name: 'ICMP Ping Echo',
+    protocol: 'ICMP',
+    status: pingOk ? 'Success' : 'Failed',
+    roundTripMs: pingOk ? Number(pingMs) : null,
+    packetLoss: pingOk ? '0%' : '100%',
+    ...(pingOk ? {} : { error: pingError || 'No ICMP reply received' })
+  });
+
+  // SNMP monitors — real GETs; all fail honestly when no community is known.
+  if (!community) {
+    const noCommunity = 'No SNMP community supplied or stored for this device';
+    monitors.push(
+      { name: 'SNMP RFC1213-MIB sysDescr', protocol: 'SNMP v2c', status: 'Failed', roundTripMs: null, value: null, error: noCommunity },
+      { name: 'HOST-RESOURCES-MIB hrProcessorLoad', protocol: 'SNMP v2c', status: 'Failed', roundTripMs: null, value: null, error: noCommunity },
+      { name: 'HOST-RESOURCES-MIB hrStorageUsed', protocol: 'SNMP v2c', status: 'Failed', roundTripMs: null, value: null, error: noCommunity },
+      { name: 'IF-MIB ifOperStatus', protocol: 'SNMP v2c', status: 'Failed', roundTripMs: null, value: null, error: noCommunity }
+    );
+  } else {
+    // sysDescr — real SNMP GET.
+    let sysInfo = null;
+    let sysRtt = null;
+    let sysError = null;
+    try {
+      const started = Date.now();
+      sysInfo = await snmp.getSystemInfo(ip, community);
+      sysRtt = Date.now() - started;
+    } catch (err) {
+      sysError = err && err.message ? err.message : 'SNMP request failed';
+    }
+    const sysDescr = sysInfo ? (sysInfo.sysDescr ?? sysInfo.sys_descr ?? sysInfo.sysdesc ?? null) : null;
+    monitors.push({
+      name: 'SNMP RFC1213-MIB sysDescr',
+      protocol: 'SNMP v2c',
+      status: sysInfo ? 'Success' : 'Failed',
+      roundTripMs: sysInfo ? sysRtt : null,
+      value: sysDescr,
+      ...(sysInfo ? {} : { error: sysError || 'No SNMP response' })
+    });
+
+    // CPU + memory — one real SNMP GET serves both monitors.
+    let cpuMem = null;
+    let cpuMemRtt = null;
+    let cpuMemError = null;
+    try {
+      const started = Date.now();
+      cpuMem = await snmp.getCpuMem(ip, community);
+      cpuMemRtt = Date.now() - started;
+    } catch (err) {
+      cpuMemError = err && err.message ? err.message : 'SNMP request failed';
+    }
+    const cpuPct = cpuMem ? (cpuMem.cpu ?? cpuMem.cpuPct ?? cpuMem.cpu_pct ?? null) : null;
+    const memPct = cpuMem ? (cpuMem.memUsedPct ?? cpuMem.memory ?? cpuMem.mem_used_pct ?? cpuMem.memPct ?? null) : null;
+    monitors.push({
+      name: 'HOST-RESOURCES-MIB hrProcessorLoad',
+      protocol: 'SNMP v2c',
+      status: cpuMem && cpuPct !== null && cpuPct !== undefined ? 'Success' : 'Failed',
+      roundTripMs: cpuMem ? cpuMemRtt : null,
+      value: cpuPct === null || cpuPct === undefined ? null : `${cpuPct}%`,
+      ...(cpuMem ? {} : { error: cpuMemError || 'No SNMP response' })
+    });
+    monitors.push({
+      name: 'HOST-RESOURCES-MIB hrStorageUsed',
+      protocol: 'SNMP v2c',
+      status: cpuMem && memPct !== null && memPct !== undefined ? 'Success' : 'Failed',
+      roundTripMs: cpuMem ? cpuMemRtt : null,
+      value: memPct === null || memPct === undefined ? null : `${memPct}%`,
+      ...(cpuMem ? {} : { error: cpuMemError || 'No SNMP response' })
+    });
+
+    // Interface operational status — real SNMP interface walk.
+    let ifaces = null;
+    let ifRtt = null;
+    let ifError = null;
+    try {
+      const started = Date.now();
+      ifaces = await snmp.getInterfaces(ip, community);
+      ifRtt = Date.now() - started;
+    } catch (err) {
+      ifError = err && err.message ? err.message : 'SNMP request failed';
+    }
+    if (ifaces) {
+      const up = ifaces.filter((i) => {
+        const s = i.oper_status ?? i.operStatus ?? i.oper;
+        return s === 'up' || s === 'UP' || s === 1 || s === '1';
+      }).length;
+      monitors.push({
+        name: 'IF-MIB ifOperStatus',
+        protocol: 'SNMP v2c',
+        status: 'Success',
+        roundTripMs: ifRtt,
+        value: `${up} / ${ifaces.length} interfaces operational UP`
+      });
+    } else {
+      monitors.push({
+        name: 'IF-MIB ifOperStatus',
+        protocol: 'SNMP v2c',
+        status: 'Failed',
+        roundTripMs: null,
+        value: null,
+        error: ifError || 'No SNMP response'
+      });
+    }
+  }
+
+  // Temperature — no real source in the SNMP service API (no envmon call),
+  // so it is honestly Unknown rather than an invented 34°C.
+  monitors.push({
+    name: 'CISCO-ENVMON-MIB ciscoEnvMonTemperatureStatusValue',
+    protocol: 'SNMP v2c',
+    status: 'Unknown',
+    roundTripMs: null,
+    value: null,
+    error: 'No temperature sensor reading available from the SNMP service'
+  });
 
   res.json({
     status: 'success',
-    device: dev.name,
-    ip: dev.ip,
-    monitors: [
-      { name: 'ICMP Ping Echo', protocol: 'ICMP', status: 'Success', roundTripMs: dev.responseTime || 12, packetLoss: '0%' },
-      { name: 'SNMP RFC1213-MIB sysDescr', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 16, value: `${dev.vendor} IOS Software, Version ${dev.osVersion || '16.12'}` },
-      { name: 'HOST-RESOURCES-MIB hrProcessorLoad', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 14, value: `${dev.cpu}%` },
-      { name: 'HOST-RESOURCES-MIB hrStorageUsed', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 18, value: `${dev.memory}% (${Math.round((dev.memory / 100) * 32)} GB / 32 GB)` },
-      { name: 'IF-MIB ifOperStatus', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 22, value: '3 / 3 interfaces operational UP' },
-      { name: 'CISCO-ENVMON-MIB ciscoEnvMonTemperatureStatusValue', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 20, value: `${dev.temperature || 34}°C (Normal)` }
-    ]
+    device: device.hostname || device.sys_name || device.ip,
+    ip: device.ip,
+    monitors
   });
 });
 
 // Device categories summary
 router.get('/api/json/device/categories', (req, res) => {
   const { probeId } = req.query;
-  const devices = db.getDevices(probeId);
+  const filter = {};
+  if (probeId !== undefined) filter.probe_id = probeId;
+  const devices = store.listDevices(filter);
   const counts = {};
-  devices.forEach(d => {
-    counts[d.category] = (counts[d.category] || 0) + 1;
+  devices.forEach((d) => {
+    const key = d.category || 'Uncategorized';
+    counts[key] = (counts[key] || 0) + 1;
   });
   res.json({
     status: 'success',

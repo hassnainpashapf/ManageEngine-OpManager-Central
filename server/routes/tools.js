@@ -1,12 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../services/db');
+// NOTE: server/services/db.js was removed by the parallel datastore track
+// and replaced by the SQLite store (services/store.js). This router follows
+// the same convention as the other routes: store.listDevices() and
+// store.listInterfaces(deviceId). Device rows carry hostname/sys_name/ip
+// (no `name`, no inline `interfaces`).
+const store = require('../services/store');
 const { execFile } = require('node:child_process');
 const { lookup } = require('node:dns/promises');
 const { promisify } = require('node:util');
 const net = require('node:net');
 const fs = require('node:fs');
 const run = promisify(execFile);
+
+// SNMP service (built by the parallel SNMP-engine track). Loaded lazily so
+// this router still loads if the service file is not present yet; the SNMP
+// endpoints then answer 502 instead of crashing the whole server.
+let snmpService = null;
+function loadSnmpService() {
+  if (snmpService) return snmpService;
+  try {
+    snmpService = require('../services/snmp');
+  } catch (e) {
+    return null;
+  }
+  return snmpService;
+}
 
 // Helper to find valid system binaries across macOS, Debian, Ubuntu, and Alpine
 function resolveBinary(candidates) {
@@ -175,45 +194,65 @@ router.post(['/api/tools/ping', '/tools/ping'], (req, res) => {
 });
 
 // POST /api/tools/traceroute - Real Cross-Platform Traceroute
+// Uses the real system traceroute (tracert on Windows) when available. When
+// the binary cannot run or produces no usable output, the error is reported
+// honestly (502 via diagnose) — no fabricated hops, no invented RTT, and
+// destinationResponded is only true when a hop actually replies from the
+// destination address.
 router.post(['/api/tools/traceroute', '/tools/traceroute'], (req, res) => {
   return diagnose(req, res, async (address) => {
     const maxHops = 15;
+    const isWindows = process.platform === 'win32';
+    const bin = isWindows ? resolveBinary(['tracert']) : TRACEROUTE_BIN;
+    const tracerouteArgs = isWindows
+      ? ['-d', '-h', String(maxHops), '-w', '1000', address]
+      : ['-n', '-m', String(maxHops), '-q', '1', '-w', '1', address];
+
     let output = '';
-
     try {
-      const isDarwin = process.platform === 'darwin';
-      const tracerouteArgs = isDarwin
-        ? ['-n', '-m', String(maxHops), '-q', '1', '-w', '1', address]
-        : ['-n', '-m', String(maxHops), '-q', '1', '-w', '1', address];
-
-      const resRun = await run(TRACEROUTE_BIN, tracerouteArgs, { timeout: 20000 });
-      output = resRun.stdout;
+      const resRun = await run(bin, tracerouteArgs, { timeout: 20000 });
+      output = resRun.stdout || '';
     } catch (err) {
       if (err.stdout && err.stdout.trim().length > 10) {
         output = err.stdout;
       } else {
-        // Fallback realistic hops if raw socket prohibited
-        output = `traceroute to ${address} (${address}), ${maxHops} hops max, 52 byte packets\n` +
-          ` 1  10.0.0.1  1.124 ms\n` +
-          ` 2  192.168.1.1  3.450 ms\n` +
-          ` 3  * * *\n` +
-          ` 4  ${address}  14.281 ms\n`;
+        throw new Error(`traceroute failed: ${(err.message || 'no output').trim()} (binary: ${bin})`);
       }
     }
 
-    const hops = Array.from(output.matchAll(/^\s*(\d+)\s+(?:(\d+(?:\.\d+){3})\s+([\d.]+ ms)|\*)/gm), match => ({
-      hop: Number(match[1]),
-      ip: match[2] || '*',
-      hostname: match[2] || 'No reply',
-      rtt1: match[3] || '*',
-      rtt2: '',
-      rtt3: ''
-    }));
+    let hops = [];
+    if (isWindows) {
+      // tracert: "  1    <1 ms    <1 ms    <1 ms  192.168.1.1" or "* * * Request timed out."
+      hops = Array.from(
+        output.matchAll(/^\s*(\d+)\s+((?:<\d+|\d+) ms|\*)\s+(?:(?:<\d+|\d+) ms|\*)\s+(?:(?:<\d+|\d+) ms|\*)\s+(\S+).*$/gm),
+        (match) => {
+          const last = match[3];
+          const isIp = /^\d+(?:\.\d+){3}$/.test(last);
+          return {
+            hop: Number(match[1]),
+            ip: isIp ? last : '*',
+            hostname: isIp ? last : 'No reply',
+            rtt1: match[2] === '*' ? '*' : `${match[2]}`,
+            rtt2: '',
+            rtt3: ''
+          };
+        }
+      );
+    } else {
+      hops = Array.from(output.matchAll(/^\s*(\d+)\s+(?:(\d+(?:\.\d+){3})\s+([\d.]+ ms)|\*)/gm), match => ({
+        hop: Number(match[1]),
+        ip: match[2] || '*',
+        hostname: match[2] || 'No reply',
+        rtt1: match[3] || '*',
+        rtt2: '',
+        rtt3: ''
+      }));
+    }
 
     return {
       maxHops,
-      hops: hops.length > 0 ? hops : [{ hop: 1, ip: address, hostname: address, rtt1: '12.4 ms', rtt2: '', rtt3: '' }],
-      destinationResponded: hops.some(hop => hop.ip === address) || true,
+      hops,
+      destinationResponded: hops.some(hop => hop.ip === address),
       output
     };
   });
@@ -241,153 +280,283 @@ router.post(['/api/tools/port-check', '/tools/port-check'], async (req, res) => 
   });
 });
 
-// Authentic ManageEngine SNMP MIB Tree Catalog
-const MIB_MODULES = [
-  {
-    name: 'RFC1213-MIB (MIB-II)',
-    oids: [
-      { oid: '.1.3.6.1.2.1.1.1.0', name: 'sysDescr.0', type: 'OCTET STRING', access: 'read-only', desc: 'Hardware & OS description' },
-      { oid: '.1.3.6.1.2.1.1.2.0', name: 'sysObjectID.0', type: 'OBJECT IDENTIFIER', access: 'read-only', desc: 'Vendor authoritative identification OID' },
-      { oid: '.1.3.6.1.2.1.1.3.0', name: 'sysUpTime.0', type: 'TimeTicks', access: 'read-only', desc: 'Time since network management portion was re-initialized' },
-      { oid: '.1.3.6.1.2.1.1.4.0', name: 'sysContact.0', type: 'OCTET STRING', access: 'read-write', desc: 'Identification of the contact person for this managed node' },
-      { oid: '.1.3.6.1.2.1.1.5.0', name: 'sysName.0', type: 'OCTET STRING', access: 'read-write', desc: 'Fully-qualified administrative name for this node' },
-      { oid: '.1.3.6.1.2.1.1.6.0', name: 'sysLocation.0', type: 'OCTET STRING', access: 'read-write', desc: 'Physical location of this node (e.g. Rack/Room)' },
-      { oid: '.1.3.6.1.2.1.1.7.0', name: 'sysServices.0', type: 'INTEGER', access: 'read-only', desc: 'Value indicating the set of services that this entity offers' },
-      { oid: '.1.3.6.1.2.1.2.1.0', name: 'ifNumber.0', type: 'INTEGER', access: 'read-only', desc: 'Total network interfaces present' }
-    ]
-  },
-  {
-    name: 'CISCO-STACK-MIB',
-    oids: [
-      { oid: '.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1', name: 'cpmCPUTotal5secRev.1', type: 'Gauge32', access: 'read-only', desc: 'Overall CPU busy percentage in the last 5-second period' },
-      { oid: '.1.3.6.1.4.1.9.9.109.1.1.1.1.4.1', name: 'cpmCPUTotal1minRev.1', type: 'Gauge32', access: 'read-only', desc: 'Overall CPU busy percentage in the last 1-minute period' },
-      { oid: '.1.3.6.1.4.1.9.9.109.1.1.1.1.5.1', name: 'cpmCPUTotal5minRev.1', type: 'Gauge32', access: 'read-only', desc: 'Overall CPU busy percentage in the last 5-minute period' },
-      { oid: '.1.3.6.1.4.1.9.9.13.1.3.1.3.1', name: 'ciscoEnvMonTemperatureValue.1', type: 'Gauge32', access: 'read-only', desc: 'Chassis intake temperature in degrees Celsius' },
-      { oid: '.1.3.6.1.4.1.9.9.13.1.3.1.6.1', name: 'ciscoEnvMonTemperatureState.1', type: 'INTEGER', access: 'read-only', desc: 'Status: normal(1), warning(2), critical(3)' }
-    ]
-  },
-  {
-    name: 'HOST-RESOURCES-MIB',
-    oids: [
-      { oid: '.1.3.6.1.2.1.25.1.1.0', name: 'hrSystemUptime.0', type: 'TimeTicks', access: 'read-only', desc: 'Uptime of host system kernel' },
-      { oid: '.1.3.6.1.2.1.25.1.2.0', name: 'hrSystemDate.0', type: 'DateAndTime', access: 'read-only', desc: 'Host real-time clock timestamp' },
-      { oid: '.1.3.6.1.2.1.25.1.5.0', name: 'hrSystemNumUsers.0', type: 'Gauge32', access: 'read-only', desc: 'Number of active interactive user sessions' },
-      { oid: '.1.3.6.1.2.1.25.1.6.0', name: 'hrSystemProcesses.0', type: 'Gauge32', access: 'read-only', desc: 'Number of active system processes loaded' },
-      { oid: '.1.3.6.1.2.1.25.2.2.0', name: 'hrMemorySize.0', type: 'Integer32', access: 'read-only', desc: 'Amount of physical RAM in KBytes' }
-    ]
-  },
-  {
-    name: 'IF-MIB (Interfaces)',
-    oids: [
-      { oid: '.1.3.6.1.2.1.2.2.1.1.1', name: 'ifIndex.1', type: 'INTEGER', access: 'read-only', desc: 'Unique interface index 1' },
-      { oid: '.1.3.6.1.2.1.2.2.1.2.1', name: 'ifDescr.1', type: 'OCTET STRING', access: 'read-only', desc: 'GigabitEthernet0/0/0' },
-      { oid: '.1.3.6.1.2.1.2.2.1.3.1', name: 'ifType.1', type: 'INTEGER', access: 'read-only', desc: 'ethernetCsmacd(6)' },
-      { oid: '.1.3.6.1.2.1.2.2.1.5.1', name: 'ifSpeed.1', type: 'Gauge32', access: 'read-only', desc: '1000000000 bps (1 Gbps)' },
-      { oid: '.1.3.6.1.2.1.2.2.1.8.1', name: 'ifOperStatus.1', type: 'INTEGER', access: 'read-only', desc: 'up(1)' }
-    ]
+// ---------------------------------------------------------------------------
+// MIB tree — served from the pre-built index at server/data/mibs/index.json
+// via server/services/mibIndex.js (built by the MIB-index track from the
+// real MIB files on disk). No parsing happens here and no OID catalogue is
+// hardcoded: module names and OID definitions come from the index file.
+// The index stores OIDs WITHOUT a leading dot; this router re-adds it so
+// the response shape matches the previous parser output (".1.3.6.1...").
+// The index carries no SYNTAX / MAX-ACCESS / DESCRIPTION data, so `type`,
+// `access` and `desc` are null/empty here — never invented.
+// ---------------------------------------------------------------------------
+const mibIndex = require('../services/mibIndex');
+
+const MIB_INDEX_SOURCE = 'server/data/mibs/index.json';
+
+// Shape one indexed module ({ module, file, oids: [{ name, oid }] }) into
+// the mib-tree response shape ({ name, file, oids: [{ oid, name, type,
+// access, desc }] }). Entries with no resolved numeric OID (oid: null)
+// are skipped, as the old parser skipped unresolvable OIDs.
+function formatMibModule(mod) {
+  const oids = mod.oids
+    .filter((o) => o.oid)
+    .map((o) => ({ oid: `.${o.oid}`, name: o.name, type: null, access: null, desc: '' }))
+    .sort((a, b) => (a.oid < b.oid ? -1 : a.oid > b.oid ? 1 : 0));
+  return { name: mod.module, file: mod.file, oids };
+}
+
+let mibTreeCache = null;
+
+// Load the index and format it once (the index file is static at runtime).
+// A missing/unreadable index is reported via `error` instead of throwing,
+// the way the old parser reported an unreadable MIB directory in
+// `parseErrors`, so the endpoint can still answer honestly.
+function loadMibTree() {
+  if (mibTreeCache) return mibTreeCache;
+  try {
+    const index = mibIndex.loadIndex();
+    mibTreeCache = {
+      modules: index.modules.map(formatMibModule),
+      generatedAt: index.generatedAt || null,
+      totalModules: index.totalModules,
+      error: null
+    };
+  } catch (e) {
+    mibTreeCache = { modules: [], generatedAt: null, totalModules: 0, error: e.message };
   }
-];
+  return mibTreeCache;
+}
 
-// Flat OID map for quick lookup
-const MIB_TREE = {};
-MIB_MODULES.forEach(m => {
-  m.oids.forEach(o => {
-    MIB_TREE[o.oid] = o;
-  });
-});
+// Resolve a numeric OID to its MIB name via mibIndex.searchOid().
+// searchOid() does prefix matching and returns EVERY match with its module
+// attached (the same OID/name can exist in several vendor MIBs), so filter
+// to exact OID matches only. If the exact matches disagree on the name,
+// the OID is ambiguous and no name is returned — never pick one silently.
+// Scalar instances carry a trailing .0 (e.g. sysDescr.0); the index holds
+// the object OID without it, so retry without the .0.
+function lookupMibOid(oid) {
+  const clean = String(oid).replace(/^\./, '');
+  const candidates = [clean];
+  if (clean.endsWith('.0')) candidates.push(clean.slice(0, -2));
+  for (const cand of candidates) {
+    let matches;
+    try {
+      matches = mibIndex.searchOid(cand, undefined, 1000);
+    } catch (e) {
+      return null;
+    }
+    const exact = matches.filter((m) => m.oid === cand);
+    if (!exact.length) continue;
+    const names = [...new Set(exact.map((m) => m.name))];
+    if (names.length !== 1) return null;
+    return { oid: `.${cand}`, name: names[0], type: null, access: null, desc: null, module: exact[0].module };
+  }
+  return null;
+}
 
-// GET /api/tools/mib-tree - Return full MIB tree structure
+// GET /api/tools/mib-tree - MIB tree from the pre-built index.
+// Optional ?module=<name> returns only that module (404 if not found).
 router.get('/api/tools/mib-tree', (req, res) => {
+  const onlyModule = typeof req.query?.module === 'string' ? req.query.module.trim() : '';
+  if (onlyModule) {
+    let found = null;
+    try {
+      found = mibIndex.getModule(onlyModule);
+    } catch (e) {
+      return res.status(502).json({ status: 'error', message: `MIB index unavailable: ${e.message}` });
+    }
+    if (!found) {
+      return res.status(404).json({ status: 'error', message: `MIB module '${onlyModule}' not found among the MIB files on disk.` });
+    }
+    const module = formatMibModule(found);
+    const tree = loadMibTree();
+    return res.json({ status: 'success', source: MIB_INDEX_SOURCE, modules: [module], totalOids: module.oids.length, parsedAt: tree.generatedAt });
+  }
+  const tree = loadMibTree();
   res.json({
     status: 'success',
-    modules: MIB_MODULES
+    source: MIB_INDEX_SOURCE,
+    modules: tree.modules,
+    totalOids: tree.modules.reduce((n, m) => n + m.oids.length, 0),
+    filesParsed: tree.totalModules,
+    parseErrors: tree.error ? [tree.error] : [],
+    parsedAt: tree.generatedAt
   });
 });
 
-// POST /api/tools/snmp-query - SNMP GET operation
-router.post('/api/tools/snmp-query', (req, res) => {
-  let { ip, oid = '.1.3.6.1.2.1.1.1.0', community = 'public_monitor_ro', version = 'v2c' } = req.body;
-  oid = oid.trim();
+// ---------------------------------------------------------------------------
+// Real SNMP query / walk via server/services/snmp.js.
+// ---------------------------------------------------------------------------
+const SNMP_TYPE_NAMES = {
+  1: 'BOOLEAN', 2: 'INTEGER', 3: 'BIT STRING', 4: 'OCTET STRING', 5: 'NULL',
+  6: 'OBJECT IDENTIFIER', 64: 'IpAddress', 65: 'Counter32', 66: 'Gauge32',
+  67: 'TimeTicks', 68: 'Opaque', 70: 'Counter64', 128: 'NoSuchObject',
+  129: 'NoSuchInstance', 130: 'EndOfMibView'
+};
 
-  const found = MIB_TREE[oid] || {
-    name: `iso.org.dod.internet.mgmt.mib-2.${oid.replace(/^\./, '')}`,
-    type: 'OCTET STRING',
-    desc: 'Generic Enterprise SNMP OID'
-  };
+// Normalise whatever shape the SNMP service returns (array of varbinds, or
+// an oid->value map) into [{ oid, type, value, error }]. Never invents a
+// value: a varbind the agent reports as an error stays an error.
+function normalizeVarbinds(raw) {
+  const list = Array.isArray(raw)
+    ? raw
+    : (raw && typeof raw === 'object'
+      ? Object.entries(raw).map(([oid, value]) => ({ oid, value }))
+      : []);
+  return list.map((vb) => {
+    if (!vb || typeof vb !== 'object') return { oid: null, type: null, value: vb ?? null, error: null };
+    let value = vb.value !== undefined ? vb.value : (vb.val !== undefined ? vb.val : null);
+    if (Buffer.isBuffer(value)) value = value.toString('utf8');
+    // The SNMP service already returns a typeName string; fall back to
+    // mapping the numeric net-snmp ObjectType code.
+    let type = null;
+    if (typeof vb.typeName === 'string' && vb.typeName) type = vb.typeName;
+    else if (typeof vb.type === 'number') type = SNMP_TYPE_NAMES[vb.type] || `TYPE_${vb.type}`;
+    else if (typeof vb.type === 'string') type = vb.type;
+    const err = vb.error || vb.errorStatus ||
+      (typeof type === 'string' && (type === 'NoSuchObject' || type === 'NoSuchInstance' || type === 'EndOfMibView') ? type : null);
+    return { oid: vb.oid ? String(vb.oid) : null, type, value, error: err || null };
+  });
+}
 
-  const device = db.getDevices().find(d => d.ip === ip || d.name === ip);
-  let value = `SNMP_${version.toUpperCase()}_VALUE_OK[${oid}]`;
+// Resolve the requested target: a managed-device hostname/sys_name from
+// inventory maps to its stored IP; a bare IPv4 passes through; anything
+// else is DNS-resolved.
+function safeListDevices() {
+  try {
+    return store.listDevices() || [];
+  } catch (e) {
+    return [];
+  }
+}
 
-  if (device) {
-    if (oid === '.1.3.6.1.2.1.1.1.0') value = `${device.vendor} ${device.category} OS Enterprise Edition (${device.ip})`;
-    else if (oid === '.1.3.6.1.2.1.1.5.0') value = device.name;
-    else if (oid === '.1.3.6.1.2.1.1.6.0') value = `Primary DC Rack 04, Slot U18 (${device.probeName})`;
-    else if (oid === '.1.3.6.1.4.1.9.9.109.1.1.1.1.5.1') value = `${device.cpu} %`;
-    else if (oid === '.1.3.6.1.4.1.9.9.13.1.3.1.3.1') value = `${device.temperature || 35} °C`;
-    else if (oid === '.1.3.6.1.4.1.9.9.13.1.3.1.6.1') value = 'normal(1)';
-    else if (oid === '.1.3.6.1.2.1.25.2.2.0') value = `${device.memory * 1024 * 1024 || 33554432} KBytes`;
-    else if (oid === '.1.3.6.1.2.1.2.1.0') value = '48';
-    else if (oid === '.1.3.6.1.2.1.1.3.0') value = '142 days, 18:24:09.15 (1233504915)';
+async function resolveSnmpTarget(ip) {
+  const requested = String(ip).trim();
+  const dev = safeListDevices().find((d) => d.hostname === requested || d.sys_name === requested || d.ip === requested);
+  if (dev && dev.ip) return { requested, address: dev.ip };
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(requested)) return { requested, address: requested };
+  try {
+    const { address } = await lookup(requested, { family: 4 });
+    return { requested, address };
+  } catch (e) {
+    return { requested, address: null };
+  }
+}
+
+function snmpServiceUnavailable(res) {
+  return res.status(502).json({
+    status: 'error',
+    error: 'snmp_unavailable',
+    message: 'SNMP service is not available on this server (server/services/snmp.js could not be loaded).'
+  });
+}
+
+// POST /api/tools/snmp-query - Real SNMP GET operation
+router.post('/api/tools/snmp-query', async (req, res) => {
+  const { ip, oid = '.1.3.6.1.2.1.1.1.0', community = 'public_monitor_ro', version = 'v2c' } = req.body || {};
+  if (!ip || typeof ip !== 'string' || !ip.trim()) {
+    return res.status(400).json({ status: 'error', message: 'A target ip (or managed device name) is required.' });
+  }
+  const cleanOid = String(oid).trim().replace(/^\./, '');
+  if (!/^(\d+\.)*\d+$/.test(cleanOid)) {
+    return res.status(400).json({ status: 'error', message: `Invalid OID '${cleanOid}'. Expected a numeric dotted OID.` });
+  }
+  const ver = String(version || 'v2c').toLowerCase();
+  if (ver !== 'v1' && ver !== 'v2c' && ver !== '2c') {
+    return res.status(501).json({
+      status: 'error',
+      error: 'not_implemented',
+      message: `SNMP ${version} is not supported by this endpoint: the SNMP service only carries community-based v1/v2c credentials, so no v3 authentication/privacy can be performed.`
+    });
+  }
+  const snmp = loadSnmpService();
+  if (!snmp || typeof snmp.snmpGet !== 'function') return snmpServiceUnavailable(res);
+
+  const { requested, address } = await resolveSnmpTarget(ip);
+  if (!address) {
+    return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
   }
 
+  let varbinds;
+  try {
+    varbinds = await snmp.snmpGet(address, community, [cleanOid]);
+  } catch (err) {
+    return res.status(502).json({ status: 'error', message: `SNMP GET to ${address} failed: ${err.message}` });
+  }
+  const vb = normalizeVarbinds(varbinds)[0];
+  if (!vb || !vb.oid) {
+    return res.status(502).json({ status: 'error', message: `SNMP GET to ${address} returned no varbind for ${cleanOid}.` });
+  }
+  if (vb.error) {
+    return res.status(502).json({ status: 'error', message: `SNMP error for ${cleanOid} on ${address}: ${vb.error}` });
+  }
+
+  const info = lookupMibOid(cleanOid);
   res.json({
     status: 'success',
-    target: ip || '10.0.0.1',
+    target: requested,
+    resolvedIp: address,
     community: '******',
-    version,
-    oid,
-    name: found.name,
-    type: found.type,
-    description: found.desc,
-    value,
+    version: ver,
+    oid: cleanOid,
+    name: info ? info.name : null,
+    type: vb.type || (info ? info.type : null),
+    description: info ? info.desc : null,
+    value: vb.value,
     timestamp: new Date().toISOString()
   });
 });
 
-// POST /api/tools/snmp-walk - SNMP WALK operation (Subtree traversal)
-router.post('/api/tools/snmp-walk', (req, res) => {
-  const { ip, rootOid = '.1.3.6.1.2.1.1', community = 'public_monitor_ro', version = 'v2c' } = req.body;
-  const device = db.getDevices().find(d => d.ip === ip || d.name === ip) || db.getDevices()[0] || {
-    name: ip || 'Target-Host',
-    ip: ip || '10.0.0.1',
-    vendor: 'Generic',
-    category: 'Server',
-    probeName: 'Central Site',
-    cpu: 15,
-    temperature: 30
-  };
-
-  const cleanRoot = rootOid.trim();
-  const matchedOids = Object.keys(MIB_TREE).filter(oid => oid.startsWith(cleanRoot));
-  const results = [];
-
-  const candidateList = matchedOids.length > 0 ? matchedOids : Object.keys(MIB_TREE).slice(0, 8);
-
-  candidateList.forEach(oid => {
-    const item = MIB_TREE[oid];
-    let val = 'Value OK';
-    if (oid === '.1.3.6.1.2.1.1.1.0') val = `${device.vendor} ${device.category} OS (${device.ip})`;
-    else if (oid === '.1.3.6.1.2.1.1.5.0') val = device.name;
-    else if (oid === '.1.3.6.1.2.1.1.6.0') val = `Datacenter Rack 04 (${device.probeName || 'Central Site'})`;
-    else if (oid === '.1.3.6.1.2.1.1.3.0') val = '142 days, 18:24:09.15 (1233504915)';
-    else if (oid === '.1.3.6.1.2.1.1.4.0') val = 'Enterprise NOC Team <noc@corp.enterprise>';
-    else if (oid === '.1.3.6.1.2.1.1.2.0') val = '1.3.6.1.4.1.9.1.1745';
-    else if (oid === '.1.3.6.1.4.1.9.9.109.1.1.1.1.5.1') val = `${device.cpu || 15} %`;
-    else if (oid === '.1.3.6.1.4.1.9.9.13.1.3.1.3.1') val = `${device.temperature || 35} °C`;
-    else if (oid === '.1.3.6.1.2.1.2.1.0') val = '48';
-    else val = `${item.name}_SAMPLE_VAL`;
-
-    results.push({
-      oid,
-      name: item.name,
-      type: item.type,
-      value: val
+// POST /api/tools/snmp-walk - Real SNMP WALK operation (subtree traversal)
+router.post('/api/tools/snmp-walk', async (req, res) => {
+  const { ip, rootOid = '.1.3.6.1.2.1.1', community = 'public_monitor_ro', version = 'v2c' } = req.body || {};
+  if (!ip || typeof ip !== 'string' || !ip.trim()) {
+    return res.status(400).json({ status: 'error', message: 'A target ip (or managed device name) is required.' });
+  }
+  const cleanRoot = String(rootOid).trim().replace(/^\./, '');
+  if (!/^(\d+\.)*\d+$/.test(cleanRoot)) {
+    return res.status(400).json({ status: 'error', message: `Invalid root OID '${cleanRoot}'. Expected a numeric dotted OID.` });
+  }
+  const ver = String(version || 'v2c').toLowerCase();
+  if (ver !== 'v1' && ver !== 'v2c' && ver !== '2c') {
+    return res.status(501).json({
+      status: 'error',
+      error: 'not_implemented',
+      message: `SNMP ${version} is not supported by this endpoint: the SNMP service only carries community-based v1/v2c credentials, so no v3 authentication/privacy can be performed.`
     });
-  });
+  }
+  const snmp = loadSnmpService();
+  if (!snmp || typeof snmp.snmpWalk !== 'function') return snmpServiceUnavailable(res);
+
+  const { requested, address } = await resolveSnmpTarget(ip);
+  if (!address) {
+    return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
+  }
+
+  let raw;
+  try {
+    raw = await snmp.snmpWalk(address, community, cleanRoot);
+  } catch (err) {
+    return res.status(502).json({ status: 'error', message: `SNMP walk of ${cleanRoot} on ${address} failed: ${err.message}` });
+  }
+
+  const results = normalizeVarbinds(raw)
+    .filter((vb) => vb.oid && !vb.error)
+    .map((vb) => {
+      const info = lookupMibOid(vb.oid);
+      return {
+        oid: vb.oid,
+        name: info ? info.name : null,
+        type: vb.type || (info ? info.type : null),
+        value: vb.value
+      };
+    });
 
   res.json({
     status: 'success',
-    target: ip || device.ip,
+    target: requested,
+    resolvedIp: address,
     rootOid: cleanRoot,
     count: results.length,
     results,
@@ -395,37 +564,60 @@ router.post('/api/tools/snmp-walk', (req, res) => {
   });
 });
 
-// Switch Port Mapper Endpoint
+// Switch Port Mapper Endpoint (reads the real interface rows stored for
+// the device; unknown fields are null, never invented).
 router.get(['/api/tools/switch-ports', '/api/tools/spm'], (req, res) => {
   const { deviceId, ip } = req.query;
-  const devices = db.getDevices();
-  const dev = devices.find(d => d.id === deviceId || d.ip === ip) || devices[0];
+  const devices = safeListDevices();
+  // An explicitly supplied deviceId/ip that matches no stored device is an
+  // honest 404 — never silently answer with another device's ports. With no
+  // id/ip supplied at all, fall back to the first device (same default as
+  // diff.js / ncmclient.js / hardware.js).
+  const explicit = (deviceId !== undefined && deviceId !== '') || (ip !== undefined && ip !== '');
+  const dev = devices.find(d => String(d.id) === String(deviceId) || d.ip === ip || d.hostname === ip || d.sys_name === ip)
+    || (explicit ? undefined : devices[0]);
+  if (explicit && !dev) {
+    return res.status(404).json({
+      status: 'error',
+      error: 'device not found',
+      deviceId: deviceId ?? null,
+      ip: ip ?? null
+    });
+  }
   if (!dev) {
     return res.json({
       status: 'success',
       device: 'No Managed Switch',
-      ip: '127.0.0.1',
+      ip: null,
       totalPorts: 0,
       activePorts: 0,
       ports: []
     });
   }
 
-  const ports = (dev.interfaces || []).map((iface, idx) => ({
-    port: iface.name || `Fa0/${idx + 1}`,
-    alias: iface.description || 'Monitored Interface',
-    adminStatus: iface.status === 'Down' ? 'Down' : 'Up',
-    operStatus: iface.status === 'Down' ? 'Down' : 'Up',
-    speed: iface.speed || '1 Gbps',
-    vlan: iface.vlan || 1,
-    mac: iface.mac || '--',
-    ip: iface.ip || dev.ip,
-    type: iface.type || 'Access'
-  }));
+  let storedIfaces = [];
+  try { storedIfaces = store.listInterfaces(dev.id) || []; } catch (e) { storedIfaces = []; }
+  const deviceName = dev.sys_name || dev.hostname || dev.ip;
+  const ports = storedIfaces.map((iface) => {
+    const operUp = String(iface.oper_status || '').toLowerCase() === 'up';
+    return {
+      // Port label uses only real stored data: ifName, else ifDescr, else the
+      // real ifIndex — never a synthesized Fa0/N-style name.
+      port: iface.name || iface.descr || (iface.if_index !== undefined && iface.if_index !== null ? String(iface.if_index) : null),
+      alias: iface.descr || null,
+      adminStatus: operUp ? 'Up' : 'Down',
+      operStatus: operUp ? 'Up' : 'Down',
+      speed: iface.speed ?? null,
+      vlan: iface.vlan ?? null,
+      mac: iface.mac ?? null,
+      ip: iface.ip || dev.ip,
+      type: iface.type || null
+    };
+  });
 
   res.json({
     status: 'success',
-    device: dev.name,
+    device: deviceName,
     ip: dev.ip,
     totalPorts: ports.length,
     activePorts: ports.filter(p => p.operStatus === 'Up').length,
@@ -433,155 +625,62 @@ router.get(['/api/tools/switch-ports', '/api/tools/spm'], (req, res) => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// Outside-scope canned endpoints (audit E1–E4). There is no real backend for
+// any of these in this server — no SSH/Telnet session runner, no WMI/WinRM
+// client, no ARP/MAC-table source — so they answer an honest 501 instead of
+// returning canned template output. Paths are unchanged.
+// ---------------------------------------------------------------------------
+
 // Interactive Web CLI Terminal Command Executor
 router.post('/api/tools/terminal-exec', (req, res) => {
-  const devices = db.getDevices();
-  const dev = devices.find(d => d.name === req.body.hostname || d.ip === req.body.hostname) || devices[0];
-  const hostname = dev ? dev.name : (req.body.hostname || 'Enterprise-Node');
-  const targetIp = dev ? dev.ip : '127.0.0.1';
-  const { command = '' } = req.body;
-  const cmd = command.trim().toLowerCase();
-
-  let output = '';
-  if (cmd === 'show ip interface brief' || cmd === 'show ip int br' || cmd === 'sh ip int br' || cmd === 'show ip int') {
-    output = `
-Interface              IP-Address      OK? Method Status                Protocol
-GigabitEthernet0/0/0   ${targetIp}      YES manual up                    up      
-GigabitEthernet0/0/1   unassigned      YES unset  administratively down down    
-Loopback0              127.0.0.1       YES NVRAM  up                    up      
-    `.trim();
-  } else if (cmd === 'show version' || cmd === 'sh ver') {
-    output = `
-Cisco IOS Software, C3850 Software (CAT3K_CAA-UNIVERSALK9-M), Version 16.12.4, RELEASE SOFTWARE (fc2)
-Technical Support: http://www.cisco.com/techsupport
-Compiled Fri 17-Jul-20 23:22 by prod_rel_team
-
-ROM: IOS-XE ROMMON
-BOOTLDR: CAT3K_CAA Boot Loader (CAT3K_CAA-HBOOT-M) Version 16.12.4
-
-CORE-RTR-01 uptime is 142 days, 18 hours, 24 minutes
-Uptime for this control processor is 142 days, 18 hours, 26 minutes
-System returned to ROM by reload
-System image file is "flash:cat3k_caa-universalk9.16.12.04.SPA.bin"
-Last reload reason: Power-on
-    `.trim();
-  } else if (cmd.startsWith('ping')) {
-    const target = cmd.split(' ')[1] || '10.0.0.1';
-    output = `
-Type escape sequence to abort.
-Sending 5, 100-byte ICMP Echos to ${target}, timeout is 2 seconds:
-!!!!!
-Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms
-    `.trim();
-  } else if (cmd === 'show running-config' || cmd === 'sh run') {
-    output = `
-Building configuration...
-
-Current configuration : 2142 bytes
-!
-version 16.12
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-!
-hostname ${hostname}
-!
-ip routing
-!
-snmp-server community public_monitor_ro RO
-snmp-server enable traps
-snmp-server host 10.0.0.100 version 2c public_monitor_ro
-!
-end
-    `.trim();
-  } else {
-    output = `% Invalid input detected at '^' marker.\nSupported commands: show ip int br, show version, show running-config, ping <ip>`;
-  }
-
-  res.json({
-    status: 'success',
-    hostname,
-    command,
-    output,
-    prompt: `${hostname}#`
+  return res.status(501).json({
+    status: 'error',
+    error: 'not_implemented',
+    message: 'Terminal execution is not implemented: no safe allow-listed command runner (SSH/Telnet session) exists on this server, so no command is executed and no output is fabricated.',
+    hostname: req.body?.hostname ?? null,
+    command: req.body?.command ?? null,
+    timestamp: new Date().toISOString()
   });
 });
 
 // WMI QUERY TOOL
 router.post('/api/tools/wmi-query', (req, res) => {
-  const { host = '127.0.0.1', namespace = 'root\\cimv2', query = 'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor' } = req.body;
-
-  let records = [];
-  if (query.toLowerCase().includes('operatingsystem')) {
-    records = [
-      { Caption: 'Microsoft Windows Server 2022 Datacenter', Version: '10.0.20348', TotalVisibleMemorySize: '67041280 KB', FreePhysicalMemory: '28419200 KB', LastBootUpTime: '2026-10-18T04:12:00.000000+000' }
-    ];
-  } else if (query.toLowerCase().includes('logicaldisk')) {
-    records = [
-      { DeviceID: 'C:', VolumeName: 'System', FileSystem: 'NTFS', Size: '214748364800', FreeSpace: '112589990684' }
-    ];
-  } else {
-    records = [
-      { Name: '_Total', PercentProcessorTime: '18' },
-      { Name: '0', PercentProcessorTime: '22' },
-      { Name: '1', PercentProcessorTime: '14' }
-    ];
-  }
-
-  res.json({
-    status: 'success',
+  const { host = '127.0.0.1', namespace = 'root\\cimv2', query = 'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor' } = req.body || {};
+  return res.status(501).json({
+    status: 'error',
+    error: 'not_implemented',
+    message: 'WMI query is not implemented: no WMI/WinRM client exists on this server, so no query is executed against the host.',
     host,
     namespace,
     query,
-    count: records.length,
-    records,
-    executionTimeMs: 14,
     timestamp: new Date().toISOString()
   });
 });
 
 // CLI QUERY TOOL
 router.post('/api/tools/cli-query', (req, res) => {
-  const { host = '127.0.0.1', protocol = 'SSHv2', command = 'show version' } = req.body;
-  const cmd = command.trim().toLowerCase();
-
-  let resultOutput = '';
-  if (cmd === 'show version' || cmd === 'sh ver') {
-    resultOutput = `Cisco IOS XE Software, Version 17.09.04a\nUptime is 184 days, 14 hours, 22 minutes\nSystem image file is "bootflash:cat9k_iosxe.17.09.04a.SPA.bin"`;
-  } else if (cmd.includes('interface') || cmd.includes('int')) {
-    resultOutput = `Port      Name               Status       Vlan       Duplex  Speed Type\nTe1/0/1   Uplink-Core        connected    trunk      full    10G   10GBase-LR`;
-  } else if (cmd.includes('route') || cmd.includes('ip route')) {
-    resultOutput = `Gateway of last resort is 192.168.1.1 to network 0.0.0.0\n\nS*    0.0.0.0/0 [1/0] via 192.168.1.1\nC     192.168.1.0/24 is directly connected, Vlan1`;
-  } else {
-    resultOutput = `Command executed successfully on ${host} via ${protocol}:\n${command}\nExit Code: 0 (OK)`;
-  }
-
-  res.json({
-    status: 'success',
+  const { host = '127.0.0.1', protocol = 'SSHv2', command = 'show version' } = req.body || {};
+  return res.status(501).json({
+    status: 'error',
+    error: 'not_implemented',
+    message: 'CLI query is not implemented: no SSH session runner exists on this server, so no command is executed against the host.',
     host,
     protocol,
     command,
-    output: resultOutput,
     timestamp: new Date().toISOString()
   });
 });
 
 // ADDRESS RESOLVER & MAC TOOL
 router.post('/api/tools/mac-resolve', (req, res) => {
-  const { target = '127.0.0.1' } = req.body;
-  const dev = db.getDevices().find(d => d.ip === target || d.name === target);
-  res.json({
-    status: 'success',
+  const { target = '127.0.0.1' } = req.body || {};
+  return res.status(501).json({
+    status: 'error',
+    error: 'not_implemented',
+    message: 'MAC resolution is not implemented: no ARP table or SNMP ipNetToMediaTable source is wired to this endpoint, so no MAC/vendor/port is returned.',
     target,
-    ipAddress: target,
-    macAddress: dev ? (dev.mac || '00:50:56:00:00:01') : 'Dynamic ARP Pending',
-    vendor: dev ? (dev.vendor || 'Discovered Host') : 'Standard Interface',
-    deviceType: dev ? dev.type : 'Monitored Node',
-    switchName: dev ? dev.name : 'Central Gateway',
-    port: dev ? ((dev.interfaces && dev.interfaces[0] && dev.interfaces[0].name) || 'eth0') : 'eth0',
-    vlan: 1,
-    status: 'Active (Dynamic ARP)',
-    lastSeen: 'Just now'
+    timestamp: new Date().toISOString()
   });
 });
 
