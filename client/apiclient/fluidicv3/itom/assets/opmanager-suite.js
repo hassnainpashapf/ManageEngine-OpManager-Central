@@ -636,16 +636,51 @@
   // Route Resolver
   function resolveTabFromHash() {
     const hash = window.location.hash || '#/dashboard';
-    const lower = hash.toLowerCase();
+    const clean = hash.replace(/^#\/?/, '');
+    const parts = clean.split('/').filter(Boolean);
+    const mainSeg = (parts[0] || 'dashboard').toLowerCase();
+    const subSeg = (parts[1] || '').toLowerCase();
+
     // Prioritize Settings explicitly so #/settings always resolves to settings view
-    if (lower.startsWith('#/settings') || lower === '#/settings' || lower.includes('/settings') || lower.includes('setting') || lower.includes('admin') || lower.includes('probe')) {
+    if (mainSeg === 'settings' || mainSeg.includes('setting') || mainSeg.includes('admin') || mainSeg.includes('probe')) {
+      if (subSeg && state.subTabs) {
+        state.subTabs.settings = subSeg;
+      }
       return 'settings';
     }
-    if (lower.includes('inventory') || lower.includes('/device') || lower.includes('/interface')) return 'inventory';
-    if (lower.includes('alarm')) return 'alarms';
-    if (lower.includes('map') || lower.includes('businessview') || lower.includes('rack') || lower.includes('floor')) return 'maps';
-    if (lower.includes('configuration') || lower.includes('ncm') || lower.includes('compliance')) return 'configuration';
-    if (lower.includes('report')) return 'reports';
+    if (mainSeg === 'inventory' || mainSeg.includes('device') || mainSeg.includes('interface')) {
+      if (subSeg && state.subTabs) {
+        state.subTabs.inventory = subSeg;
+      }
+      return 'inventory';
+    }
+    if (mainSeg === 'alarms' || mainSeg.includes('alarm')) {
+      if (subSeg && state.subTabs) {
+        state.subTabs.alarms = subSeg;
+      }
+      return 'alarms';
+    }
+    if (mainSeg === 'maps' || mainSeg.includes('map') || mainSeg.includes('businessview') || mainSeg.includes('rack') || mainSeg.includes('floor')) {
+      if (subSeg && state.subTabs) {
+        state.subTabs.maps = subSeg;
+      }
+      return 'maps';
+    }
+    if (mainSeg === 'configuration' || mainSeg.includes('ncm') || mainSeg.includes('compliance')) {
+      if (subSeg && state.subTabs) {
+        state.subTabs.configuration = subSeg;
+      }
+      return 'configuration';
+    }
+    if (mainSeg === 'reports' || mainSeg.includes('report')) {
+      if (subSeg && state.subTabs) {
+        state.subTabs.reports = subSeg;
+      }
+      return 'reports';
+    }
+    if (subSeg && state.subTabs) {
+      state.subTabs.dashboard = subSeg;
+    }
     return 'dashboard';
   }
 
