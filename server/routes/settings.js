@@ -28,9 +28,16 @@ const store = require('../services/store');
 const retention = require('../services/retention');
 const wsEvents = require('../services/wsEvents');
 const ldapSvc = require('../services/ldap');
-const { hashPassword } = require('../services/session');
+const { hashPassword, requireAuth, requireRole } = require('../services/session');
 
 const router = express.Router();
+
+// A4 G-03: admin-only mutations use this pair (same pattern as the NCM
+// approval routes in server/routes/ncm.js). The global apiAuthGuard
+// already requires a valid session on /api/* paths; requireRole('admin')
+// is what was missing — any authenticated Operator/Viewer could save
+// admin settings and manage users. Reads stay session-only.
+const ADMIN = [requireAuth, requireRole('admin')];
 
 const DB_PATH =
   process.env.OPMANAGER_DB_PATH ||
@@ -1053,7 +1060,7 @@ router.get('/api/settings/license', (req, res) => {
   });
 });
 
-router.post('/api/settings/license/apply', (req, res) => {
+router.post('/api/settings/license/apply', ADMIN, (req, res) => {
   const { licenseXml, keyString } = req.body || {};
   if (!licenseXml && !keyString) {
     return res.status(400).json({ status: 'error', message: 'licenseXml or keyString is required' });
@@ -1199,7 +1206,7 @@ router.get(['/admin/getAPIKey', '/api/admin/getAPIKey'], (req, res) => {
   });
 });
 
-router.post(['/admin/regenerateAPIKey', '/api/admin/regenerateAPIKey'], (req, res) => {
+router.post(['/admin/regenerateAPIKey', '/api/admin/regenerateAPIKey'], ADMIN, (req, res) => {
   const { id, name } = req.body || {};
   const plain = `opm_${crypto.randomBytes(32).toString('base64url')}`;
   const hash = crypto.createHash('sha256').update(plain).digest('hex');
@@ -1281,7 +1288,7 @@ router.get(['/admin/GetThreadDump', '/api/admin/GetThreadDump'], (req, res) => {
 // V8 heap figures in GET /api/admin/GetSystemInformation
 // (runtime.heapTotalMB / heapUsedMB).
 
-router.post(['/admin/updateJvmHeapSize', '/api/admin/updateJvmHeapSize'], (req, res) => {
+router.post(['/admin/updateJvmHeapSize', '/api/admin/updateJvmHeapSize'], ADMIN, (req, res) => {
   res.status(501).json({
     status: 'error',
     ...NOT_IMPLEMENTED('This build runs on Node.js, not Java: no JVM process exists, so there is no JVM heap to resize. The Node.js (V8) heap size is governed by the --max-old-space-size flag at process start (e.g. NODE_OPTIONS=--max-old-space-size=4096) and cannot be changed by this API while the server is running. Restart the server with that flag to change the heap limit.'),
@@ -1484,11 +1491,11 @@ function mailSettingsPublic() {
   return out;
 }
 
-router.get(['/api/settings/mail', '/settings/getMailServer'], (req, res) => {
+router.get(['/api/settings/mail', '/settings/getMailServer'], requireAuth, (req, res) => {
   res.json({ status: 'success', settings: mailSettingsPublic() });
 });
 
-router.post(['/api/settings/mail', '/settings/saveMailServer'], (req, res) => {
+router.post(['/api/settings/mail', '/settings/saveMailServer'], ADMIN, (req, res) => {
   const stored = getStored('mail');
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
   putStored('mail', merged);
@@ -1651,7 +1658,7 @@ function smtpConversation(cfg) {
   });
 }
 
-router.post(['/api/settings/mail/test', '/settings/testMailServer'], async (req, res) => {
+router.post(['/api/settings/mail/test', '/settings/testMailServer'], ADMIN, async (req, res) => {
   const stored = getStored('mail');
   const body = req.body || {};
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...body };
@@ -1730,11 +1737,11 @@ function failoverPublic() {
   };
 }
 
-router.get(['/api/settings/failover', '/settings/getFailoverStatus'], (req, res) => {
+router.get(['/api/settings/failover', '/settings/getFailoverStatus'], requireAuth, (req, res) => {
   res.json({ status: 'success', failover: failoverPublic() });
 });
 
-router.post('/api/settings/failover', (req, res) => {
+router.post('/api/settings/failover', ADMIN, (req, res) => {
   if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
     return res.status(400).json({ status: 'error', message: 'Failover configuration object is required' });
   }
@@ -1765,7 +1772,7 @@ router.post('/api/settings/failover', (req, res) => {
   res.json({ status: 'success', message: 'Failover configuration saved.', failover: merged });
 });
 
-router.post(['/api/settings/failover/test', '/settings/testFailoverHeartbeat'], (req, res) => {
+router.post(['/api/settings/failover/test', '/settings/testFailoverHeartbeat'], ADMIN, (req, res) => {
   const fo = getStored('failover');
   const secondary = fo && fo.secondary;
   const port = (fo && fo.heartbeatPort) || (secondary && secondary.port) || null;
@@ -1868,7 +1875,7 @@ router.get(['/api/settings/users', '/api/users/list'], (req, res) => {
   res.json({ status: 'success', users });
 });
 
-router.post(['/api/settings/users', '/api/users/add'], (req, res) => {
+router.post(['/api/settings/users', '/api/users/add'], ADMIN, (req, res) => {
   const body = req.body || {};
   const username = String(body.username || '').trim();
   const password = body.password;
@@ -1913,7 +1920,7 @@ router.post(['/api/settings/users', '/api/users/add'], (req, res) => {
   });
 });
 
-router.delete('/api/settings/users/:id', (req, res) => {
+router.delete('/api/settings/users/:id', ADMIN, (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id)) {
     return res.status(400).json({ status: 'error', message: 'User id must be an integer' });
@@ -1982,7 +1989,7 @@ router.get('/api/settings/auth/ad', (req, res) => {
   res.json({ status: 'success', ad: out });
 });
 
-router.post('/api/settings/auth/ad', (req, res) => {
+router.post('/api/settings/auth/ad', ADMIN, (req, res) => {
   const stored = getStored('auth.ad');
   // The bind password is NEVER persisted: strip every secret-bearing
   // key before writing, even if the caller sent one.
@@ -2012,7 +2019,7 @@ router.get('/api/settings/auth/ldap', (req, res) => {
   res.json({ status: 'success', ldap: publicCopy(merged) });
 });
 
-router.post('/api/settings/auth/ldap', (req, res) => {
+router.post('/api/settings/auth/ldap', ADMIN, (req, res) => {
   const stored = getStored('settings.ldap');
   // Strip secret-bearing keys: a bind password sent in the body is used
   // by the caller only for this request and is never persisted.
@@ -2022,7 +2029,7 @@ router.post('/api/settings/auth/ldap', (req, res) => {
   res.json({ status: 'success', message: 'LDAP configuration saved.', ldap: publicCopy(merged) });
 });
 
-router.post('/api/settings/auth/ad/test', async (req, res) => {
+router.post('/api/settings/auth/ad/test', ADMIN, async (req, res) => {
   // REAL bind + base search via server/services/ldap.js (ldapjs, real
   // LDAP wire protocol). Call-time fields win over stored settings:
   // url (or legacy domainController/port/ssl), bindDn (or bindUser),
@@ -2186,7 +2193,7 @@ function fillFromParsedMetadata(merged, parsed) {
   return filled;
 }
 
-router.post('/api/settings/auth/saml', (req, res) => {
+router.post('/api/settings/auth/saml', ADMIN, (req, res) => {
   const stored = getStored('auth.saml');
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
   putStored('auth.saml', merged);
@@ -2387,7 +2394,7 @@ function extractAuthnRequestId(samlRequest) {
   }
 }
 
-router.post('/api/settings/auth/saml/test', async (req, res) => {
+router.post('/api/settings/auth/saml/test', ADMIN, async (req, res) => {
   const stored = getStored('auth.saml');
   const body = req.body || {};
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...body };
@@ -2595,7 +2602,7 @@ router.get('/api/settings/proxy', (req, res) => {
   res.json({ status: 'success', proxy: out });
 });
 
-router.post('/api/settings/proxy', (req, res) => {
+router.post('/api/settings/proxy', ADMIN, (req, res) => {
   const stored = getStored('proxy');
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
   putStored('proxy', merged);
@@ -2603,7 +2610,7 @@ router.post('/api/settings/proxy', (req, res) => {
   res.json({ status: 'success', message: 'Proxy server configuration saved.', proxy: publicCopy(merged) });
 });
 
-router.post('/api/settings/proxy/test', (req, res) => {
+router.post('/api/settings/proxy/test', ADMIN, (req, res) => {
   const stored = getStored('proxy');
   const host = (req.body && req.body.host) || (stored && stored.host);
   const port = (req.body && req.body.port) || (stored && stored.port);
@@ -2795,7 +2802,7 @@ router.get('/api/settings/system', (req, res) => {
   });
 });
 
-router.post('/api/settings/system', (req, res) => {
+router.post('/api/settings/system', ADMIN, (req, res) => {
   const stored = getStored('system');
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
   putStored('system', merged);
@@ -2818,7 +2825,7 @@ router.get('/api/settings/rebrand', (req, res) => {
   });
 });
 
-router.post('/api/settings/rebrand', (req, res) => {
+router.post('/api/settings/rebrand', ADMIN, (req, res) => {
   const stored = getStored('rebrand');
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
   putStored('rebrand', merged);
@@ -2854,7 +2861,7 @@ router.get('/api/settings/ssl', (req, res) => {
   });
 });
 
-router.post('/api/settings/ssl', (req, res) => {
+router.post('/api/settings/ssl', ADMIN, (req, res) => {
   const stored = getStored('ssl');
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
   putStored('ssl', merged);
@@ -2868,7 +2875,7 @@ router.post('/api/settings/ssl', (req, res) => {
   });
 });
 
-router.post('/api/settings/ssl/test', (req, res) => {
+router.post('/api/settings/ssl/test', ADMIN, (req, res) => {
   const stored = getStored('ssl');
   const body = req.body || {};
   const host = body.host || (stored && stored.host);

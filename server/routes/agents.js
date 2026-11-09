@@ -24,6 +24,7 @@
  */
 const express = require('express');
 const crypto = require('node:crypto');
+const os = require('node:os');
 const router = express.Router();
 const store = require('../services/store');
 
@@ -31,11 +32,14 @@ const store = require('../services/store');
 // landed yet when this file is loaded: fail CLOSED, never open, so the
 // admin-only registration endpoint stays unavailable instead of unguarded.
 let requireAuth;
+let requireRole;
 try {
   const session = require('../services/session');
   requireAuth = session && session.requireAuth;
+  requireRole = session && session.requireRole;
 } catch (err) {
   requireAuth = null;
+  requireRole = null;
 }
 if (typeof requireAuth !== 'function') {
   requireAuth = (req, res, next) =>
@@ -45,37 +49,110 @@ if (typeof requireAuth !== 'function') {
         'Authentication service unavailable: server/services/session.js has not landed yet. Agent registration is disabled until the auth service is present.',
     });
 }
+if (typeof requireRole !== 'function') {
+  // Factory shape mirrors session.requireRole(role): returns middleware.
+  requireRole = () => (req, res, next) =>
+    res.status(503).json({
+      status: 'error',
+      message:
+        'Authentication service unavailable: server/services/session.js has not landed yet. Admin-only routes are disabled until the auth service is present.',
+    });
+}
 
 // ManageEngine OpManager Server Configuration for Windows/macOS/Linux Agents
 // (origin/main: the real Windows agent reads this to find Central.)
-const serverInfoData = {
-  PrimaryHostServer: "192.168.30.65",
-  PrimaryServerIP: "192.168.30.65",
-  PrimaryServerPort: "8060",
-  ServerProtocol: "http",
-  SecondaryHostServer: "",
-  SecondaryServerIP: "",
-  SecondaryServerPort: "",
-  SecondaryServerProtocol: "",
-  DR_PrimaryHostServer: "",
-  DR_PrimaryServerIP: "",
-  DR_SecondaryHostServer: "",
-  DR_SecondaryServerIP: "",
-  NATPort1: "8060",
-  NATPort2: "",
-  ServerName: "192.168.30.65",
-  ServerPort: "8060",
-  ServerIp: "192.168.30.65",
-  Port: "8060",
-  Protocol: "http",
-  customerid: "OPM_ENTERPRISE_KEY_129203",
-  CustomerId: "OPM_ENTERPRISE_KEY_129203",
-  AuthKey: "ee-probe-101-central-key",
-  ProbeName: "Central-Probe-01",
-  ProbeId: "101"
-};
+//
+// A4 G-27 fix: this used to be a hardcoded constant (fixed LAN IP,
+// probe name/id, customer ID, static auth key) served with NO
+// authentication at six paths. It is now derived at request time from
+// the live runtime and the store, and the endpoint is authenticated
+// (a console session or a valid agent/probe key — see the handler).
+// No static key is ever served: there is no per-install key to
+// publish. Agents authenticate with the one-time key issued at admin
+// registration (POST /api/agents/register); probes with their own
+// stored key hash. customerid is null: no validated licence/customer
+// identity exists in this build, so none is claimed.
+// NOTE: the static copies that used to ship under client/ and
+// client/downloads/ were removed with this fix — express.static mounts
+// before this router and would otherwise keep serving the old
+// hardcoded file unauthenticated at the same paths.
+const SERVER_PORT = Number(process.env.PORT) || 8060;
+
+function primaryIPv4() {
+  for (const addrs of Object.values(os.networkInterfaces())) {
+    for (const a of addrs || []) {
+      if (a.family === 'IPv4' && !a.internal) return a.address;
+    }
+  }
+  return null;
+}
+
+// Live Central identity for the agent bootstrap file. Primary host is
+// this server's first non-internal IPv4 (its real listen address),
+// falling back to the OS hostname and then the request host; the port
+// is the port this process actually listens on; the probe is the first
+// registered probe in the store (null when none is registered —
+// nothing is invented); the secondary is the stored failover peer
+// when one is configured, else empty. This build serves plain HTTP.
+function buildServerInfo(req) {
+  const host = primaryIPv4() || os.hostname() || (req && req.hostname) || null;
+  const port = String(SERVER_PORT);
+  let probe = null;
+  try {
+    const probes = typeof store.listProbes === 'function' ? store.listProbes() : [];
+    if (Array.isArray(probes) && probes.length > 0) probe = probes[0];
+  } catch {
+    probe = null;
+  }
+  let secondaryIp = '';
+  let secondaryPort = '';
+  try {
+    const raw = typeof store.getSetting === 'function' ? store.getSetting('failover') : null;
+    const fo = raw ? JSON.parse(raw) : null;
+    if (fo && fo.secondary && fo.secondary.ip) {
+      secondaryIp = String(fo.secondary.ip);
+      secondaryPort = fo.secondary.port != null ? String(fo.secondary.port) : '';
+    }
+  } catch {
+    // No stored failover peer: secondary stays empty.
+  }
+  return {
+    PrimaryHostServer: host,
+    PrimaryServerIP: host,
+    PrimaryServerPort: port,
+    ServerProtocol: 'http',
+    SecondaryHostServer: secondaryIp,
+    SecondaryServerIP: secondaryIp,
+    SecondaryServerPort: secondaryPort,
+    SecondaryServerProtocol: secondaryIp ? 'http' : '',
+    DR_PrimaryHostServer: '',
+    DR_PrimaryServerIP: '',
+    DR_SecondaryHostServer: '',
+    DR_SecondaryServerIP: '',
+    NATPort1: port,
+    NATPort2: '',
+    ServerName: host,
+    ServerPort: port,
+    ServerIp: host,
+    Port: port,
+    Protocol: 'http',
+    customerid: null,
+    CustomerId: null,
+    ProbeName: probe ? (probe.name ?? null) : null,
+    ProbeId: probe ? String(probe.id) : null,
+  };
+}
+
+function serveServerInfo(req, res) {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.json(buildServerInfo(req));
+}
 
 // 1. Direct Server Info Configuration Endpoints (read by OpManagerAgent.exe)
+// Authenticated: a valid agent one-time key / probe key (the agent
+// bootstrap flow) or a console session. Unauthenticated callers get
+// 401 — this file used to be public.
 router.get([
   '/OPMAgentServerInfo.json',
   '/downloads/OPMAgentServerInfo.json',
@@ -83,99 +160,37 @@ router.get([
   '/api/agent/serverinfo',
   '/agent/serverinfo',
   '/servlets/AgentServerInfo'
-], (req, res) => {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.json(serverInfoData);
+], (req, res, next) => {
+  if (authenticateAnyAgentKey(req)) return serveServerInfo(req, res);
+  return requireAuth(req, res, (err) => {
+    if (err) return next(err);
+    return serveServerInfo(req, res);
+  });
 });
 
 // 2. ManageEngine OpManager Agent Registration Servlets
+// A4 G-01 fix: self-registration through these servlet aliases is
+// CLOSED, exactly like POST /api/agent/register below (410). The old
+// handler registered any agentId/hostname with no auth and auto-created
+// a device row, bypassing the deliberately closed API path. Agents are
+// enrolled by an admin via POST /api/agents/register, which issues the
+// one-time key. The Go agent's legacy first-try to this servlet gets
+// the same 410 refusal — never a registration.
 router.all(['/servlets/RegisterAgent', '/servlets/AgentRegisterServlet'], (req, res) => {
-  let body = req.body || {};
-  if (typeof body === 'string') {
-    try {
-      body = JSON.parse(body);
-    } catch(e) {
-      try {
-        const q = new URLSearchParams(body);
-        body = Object.fromEntries(q.entries());
-      } catch(e2) {
-        body = {};
-      }
-    }
-  }
-
-  const clientIP = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1').replace('::ffff:', '');
-  const agentIP = body.ipAddress || body.ip || body.IP_ADDRESS || clientIP;
-  const agentId = body.agentId || body.AGENT_ID || body.agent_id || `AGT-${Date.now()}`;
-  const hostname = body.hostname || body.HOSTNAME || body.computerName || body.COMPUTER_NAME || body.hostName || `Windows-Host-${agentIP.replace(/\./g, '-')}`;
-  const os = (body.os || body.osName || body.OS_NAME || 'windows').toLowerCase();
-  const platform = body.platform || body.osVersion || body.OS_VERSION || (os.includes('win') ? 'Windows 10/11 / Server 2022' : 'Linux x86_64');
-  const probeId = Number(body.probeId || body.PROBE_ID || 101);
-
-  // Store-backed (rewired from the old in-memory Map + JSON db service,
-  // which the real-data branch deleted). No hardcoded metrics: an agent
-  // that has not reported telemetry yet is Pending with null metrics,
-  // exactly as admin registration does. The agentIP override
-  // (body.ipAddress / body.ip / body.IP_ADDRESS) is preserved.
-  store.agents.registerAgent({
-    agent_id: agentId,
-    hostname,
-    ip: agentIP,
-    status: 'Pending',
-    cpu_pct: null,
-    mem_pct: null,
-    disk_pct: null,
-  });
-
-  // Auto add device in Central Inventory (store-backed). The device is
-  // created with null status/metrics — never back-filled with
-  // plausible-looking values — and an existing device is left untouched:
-  // telemetry never forces status 'Clear' or a 'Just now' timestamp.
-  // probe_id is only set when that probe actually exists in the store.
-  let dev = null;
-  try {
-    dev = store.devices.getDeviceByIp(agentIP);
-    if (!dev) {
-      const probe = store.probes.getProbe(probeId);
-      dev = store.devices.createDevice({
-        hostname,
-        ip: agentIP,
-        category: 'Servers',
-        vendor: os.includes('win') ? 'Microsoft Corp.' : 'Linux Foundation',
-        sys_descr: platform,
-        probe_id: probe ? probe.id : null,
-        snmp_version: 'Agent-Direct',
-        managed: 1,
-        status: null,
-        cpu_pct: null,
-        mem_used_pct: null,
-        response_ms: null,
-        last_polled_at: null,
-      });
-    }
-  } catch (e) {
-    // Device inventory is ancillary to agent registration; log and
-    // continue so the servlet still answers the agent.
-    console.error('[OpManager Agent Servlet] device upsert failed:', e && e.message ? e.message : e);
-    dev = null;
-  }
-
-  console.log(`[OpManager Agent Servlet] Successfully registered ${hostname} (${clientIP}) via /servlets/RegisterAgent`);
-
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  res.status(200).json({
-    status: 'success',
-    code: '1000',
-    message: 'Agent registered successfully',
-    agentId,
-    heartbeatInterval: 30,
-    probeId,
-    deviceId: dev ? dev.id : null
+  return res.status(410).json({
+    status: 'error',
+    message:
+      'Agent self-registration is disabled. An administrator must register the agent first via POST /api/agents/register and give it the issued one-time key.',
   });
 });
 
 // 3. ManageEngine Periodic Telemetry & Heartbeat Servlets
+// A4 G-02 fix: the same key gate as POST /api/agent/telemetry. The old
+// handler auto-created unknown agents on first telemetry and marked
+// them Online with no auth, contradicting this file's own header rule.
+// Unknown agentId or missing/wrong key => 401; nothing is created and
+// no status is recorded. Enrolled agents present their one-time key
+// (eeauthkey header or authKey body field, as the Go agent sends).
 router.all(['/servlets/DataAgentHandlerServlet', '/servlets/StatusUpdateServlet'], (req, res) => {
   let body = req.body || {};
   if (typeof body === 'string') {
@@ -191,27 +206,18 @@ router.all(['/servlets/DataAgentHandlerServlet', '/servlets/StatusUpdateServlet'
     }
   }
 
-  const clientIP = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1').replace('::ffff:', '');
-  const agentId = body.agentId || body.AGENT_ID || 'AGT-DEFAULT';
-  const hostname = body.hostname || body.HOSTNAME || body.computerName || `Windows-Host-${clientIP}`;
+  const agentId = body.agentId || body.AGENT_ID || null;
+  if (!agentId) {
+    return res.status(400).json({ status: 'error', message: 'agentId is required' });
+  }
 
-  // Store-backed (rewired from the in-memory Map + JSON db). An unknown
-  // agent is created on first telemetry, as the servlet always did — the
-  // Windows agent cannot enroll via the admin API. Only metrics the agent
-  // actually sent are stored; anything missing keeps the last real value
-  // (null when never reported). Telemetry never touches device records:
-  // no forced status 'Clear', no 'Just now' timestamps.
-  let agent = store.agents.getAgent(agentId);
+  const agent = store.agents.getAgent(agentId);
   if (!agent) {
-    agent = store.agents.registerAgent({
-      agent_id: agentId,
-      hostname,
-      ip: clientIP,
-      status: 'Pending',
-      cpu_pct: null,
-      mem_pct: null,
-      disk_pct: null,
-    });
+    return res.status(401).json({ status: 'error', message: 'Unknown agent: register first via POST /api/agents/register' });
+  }
+
+  if (!authenticateAgent(req, agentId)) {
+    return res.status(401).json({ status: 'error', message: 'Invalid or missing agent auth key' });
   }
 
   const cpu = realNumber(body.cpu ?? body.cpuUsage ?? body.CPU);
@@ -367,7 +373,7 @@ function agentView(row) {
 // keys for this agent are revoked.
 // POST /api/agents/register (requires a logged-in admin session)
 // ---------------------------------------------------------------------------
-router.post('/api/agents/register', requireAuth, (req, res) => {
+router.post('/api/agents/register', requireAuth, requireRole('admin'), (req, res) => {
   const { agentId, hostname, ip } = req.body || {};
 
   if (!agentId || !hostname) {

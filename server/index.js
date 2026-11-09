@@ -188,6 +188,12 @@ const KEY_AUTH_API_ROUTES = new Set([
   'POST /api/agent/telemetry',
   'POST /api/agent/deregister',
   'GET /api/agent/list',
+  // GET /api/agent/serverinfo: same basis as /api/agent/list — the
+  // server-info endpoint is key-or-session authenticated inside
+  // agents.js (a valid agent/probe key or a console session). Without
+  // this exemption the guard would 401 every key-only caller before
+  // the router's own check could run. (A4 G-27 fix.)
+  'GET /api/agent/serverinfo',
   // HA peer endpoints (Phase 4 merge p4m-ha): no user session exists
   // between two servers, so they authenticate with the shared peer
   // secret instead (header x-ha-peer-secret, env OPM_HA_PEER_SECRET).
@@ -217,6 +223,16 @@ const LEGACY_API_PREFIXES = [
   '/maps/', '/ncmclient/', '/ncmcompliance/', '/ncmconfig/',
   '/ncmdashboard/', '/ncmeol/', '/ncmreports/', '/nfaee/', '/reports/',
   '/tab/', '/user/', '/v2/', '/dashboard/',
+  // '/settings/' and '/support/' are console API routes too (mail /
+  // failover settings, support logs/SIF). Without them the guard never
+  // runs requireAuth for those paths: POSTs fell through to
+  // ncmclient's fail-closed router guard and 401d even for a valid
+  // admin session, while GETs were answered by the page redirect —
+  // so the legacy mail/failover settings paths were dead, not merely
+  // unauthenticated (ROUTING-1, verified live). Listing them here
+  // restores session auth for them; the per-route admin role check
+  // still lives on the handlers themselves.
+  '/settings/', '/support/',
 ];
 
 function apiPathname(req) {

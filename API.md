@@ -99,16 +99,32 @@ session; **Public** = no auth (only the three auth bootstrap endpoints).
   `requireRole` treats `admin` and `SuperAdmin` as equivalent; anything else → 403.
 - **Global guard.** `apiAuthGuard` (mounted before all 17 routers) applies `requireAuth`
   to every `/api/*` and `/client/api/*` path and to the legacy prefixes
-  `/admin/ /alarm/ /device/ /enterprise/ /fwaenterprise/ /maps/ /ncmclient/ /ncmcompliance/ /ncmconfig/ /ncmdashboard/ /ncmeol/ /ncmreports/ /nfaee/ /reports/ /tab/ /user/ /v2/ /dashboard/`
+  `/admin/ /alarm/ /device/ /enterprise/ /fwaenterprise/ /maps/ /ncmclient/ /ncmcompliance/ /ncmconfig/ /ncmdashboard/ /ncmeol/ /ncmreports/ /nfaee/ /reports/ /tab/ /user/ /v2/ /dashboard/ /settings/ /support/`
   (legacy `/api/json/...` paths are normalised to `/api/...` first). **Most routes rely on
-  this guard, not on per-route middleware.**
+  this guard, not on per-route middleware.** `/settings/` and `/support/` joined the list
+  with the A4SEC fix (ROUTING-1): their POSTs previously bypassed the guard entirely and
+  died in ncmclient's fail-closed guard, 401ing even for a valid admin session.
 - **Public (guard-exempt).** `POST /api/auth/login`, `POST /api/auth/setup`, and
   `GET /api/auth/session` (the last is guard-exempt but still carries route-level
   `requireAuth`, so it 401s without a session and reports its own status with one).
-- **Key-auth exempt (no user session).** `POST /api/agent/register` and
-  `POST /api/agent/telemetry` only. They authenticate with a per-agent key
-  (`eeauthkey` or `x-agent-key` header; SHA-256 compared against the stored hash).
-  Probe sync endpoints are **not** exempt — they are console operations behind the session guard.
+- **Key-auth exempt (no user session).** `POST /api/agent/register`, `POST /api/agent/telemetry`,
+  `POST /api/agent/deregister`, `GET /api/agent/list`, and `GET /api/agent/serverinfo`. They
+  authenticate with a per-agent key (`eeauthkey` or `x-agent-key` header, or the `authKey`
+  body field; SHA-256 compared against the stored hash) or, for `list`/`serverinfo`, a console
+  session instead. `GET /api/agent/serverinfo` additionally requires that key-or-session auth
+  inside its handler (A4 G-27). Probe sync endpoints are **not** exempt — they are console
+  operations behind the session guard.
+- **Admin-only mutations (A4 G-03).** User management and admin-settings mutations carry
+  route-level `requireRole('admin')` (same `ADMIN = [requireAuth, requireRole('admin')]`
+  pattern as the NCM approval routes): `POST`/`DELETE /api/settings/users`, `POST
+  /api/settings/auth/ad|ldap`, `POST /api/settings/auth/ad/test`, `POST /api/settings/auth/saml`,
+  `POST /api/settings/auth/saml/test`, `POST /api/settings/mail` (+`/settings/saveMailServer`),
+  `POST /api/settings/mail/test`, `POST /api/settings/proxy` (+test), `POST /api/settings/failover`
+  (+test), `POST /api/settings/license/apply`, `POST /admin/regenerateAPIKey`,
+  `POST /admin/updateJvmHeapSize`, `POST /api/settings/system|rebrand|ssl` (+ssl test),
+  `POST /api/settings/ha` (+test), `POST /api/ha/failover/test`, `POST /api/agents/register`,
+  probe add/delete. An authenticated Operator/Viewer gets `403 {error:'forbidden'}` on these;
+  reads stay session-only.
   > Note: a comment in `server/index.js` still says agents.js "only reads authKey and never
   > validates it (audit A1)". That comment is **stale**: `agents.js` now hash-compares the
   > key (`authenticateAgent`). The comment needs updating, the behaviour is correct.
@@ -210,7 +226,10 @@ against the stored hash. Unknown agent or bad key → `401`.
 
 | Method + path | Auth | Request | Response | Status |
 | --- | --- | --- | --- | --- |
-| `POST /api/agents/register` | Session (route) | `{agentId, hostname}` (both required) | `200 {status:'success', agent:{…}, authKey:<one-time key>, …}` — the key is shown **once**; prior keys for the agent are deleted first. `400` if `agentId`/`hostname` missing. | **REAL** |
+| `POST /api/agents/register` | Admin session (route: `requireAuth` + `requireRole('admin')`) | `{agentId, hostname}` (both required) | `200 {status:'success', agent:{…}, authKey:<one-time key>, …}` — the key is shown **once**; prior keys for the agent are deleted first. `400` if `agentId`/`hostname` missing. Operator/Viewer → `403`. | **REAL** |
+| `GET /OPMAgentServerInfo.json`, `/downloads/OPMAgentServerInfo.json`, `/agents/OPMAgentServerInfo.json`, `/api/agent/serverinfo`, `/agent/serverinfo`, `/servlets/AgentServerInfo` | Agent/probe key **or** console session (route) | — | Live Central identity derived at request time (primary host = server's first non-internal IPv4, port = listen port, probe = first registered probe or `null`, secondary = stored failover peer or empty, `customerid: null`). No static key is served. Unauthenticated → `401`. The static copies under `client/` and `client/downloads/` were removed with this fix. | **REAL** |
+| `ALL /servlets/RegisterAgent`, `/servlets/AgentRegisterServlet` | Closed (refusal) | any | `410` — self-registration is disabled; agents must be registered by an admin via `POST /api/agents/register`. Nothing is registered and no device row is created. | **REAL** (deliberate refusal) |
+| `ALL /servlets/DataAgentHandlerServlet`, `/servlets/StatusUpdateServlet` | Agent key (same gate as `/api/agent/telemetry`) | `{agentId, …metrics}` | `401` unknown agent / bad or missing key (nothing is created, nothing is marked Online). Known agent + valid key → `200 {ack:true}` and telemetry is recorded. | **REAL** |
 | `POST /api/agent/register` | Key-auth exempt (guard) | any | `410` — self-registration is disabled; agents must be registered by an admin via `POST /api/agents/register`. | **REAL** (deliberate refusal) |
 | `POST /api/agent/telemetry` | Agent key | `{agentId, …metrics}` (`cpu_pct`/`mem_pct`/`disk_pct`/`latency_ms`, etc.) | `401` unknown agent / bad key. Only fields actually sent are stored; absent fields keep their last real value or stay `null` — never invented. Agent status derived from heartbeat freshness. | **REAL** |
 | `GET /api/agent/list`, `GET /api/agents` | Session (guard) | — | Stored agents (`agentView` rows) with `{totalAgents, activeAgents, …}`. Empty store → empty list. | **REAL** |
@@ -367,9 +386,9 @@ returns `{reachable, method, rttMs, reason}`.
 | `GET /api/json/enterprise/getDECommunicationStatus`, `/api/probes/de-status` | Session (guard) | — | Real ping per probe; `unknown` when there are no probes. | **REAL** |
 | `GET /api/probes` | Session (guard) | — | `{totalProbes, activeProbes, result, probes}` (admin list). | **REAL** |
 | `GET /api/json/enterprise/getProbeDetails`, `/api/probes/:id` | Session (guard) | Path/query: probe id | The probe plus only the devices/alarms attributed to it. | **REAL** |
-| `POST /api/json/enterprise/addProbe`, `/api/probes` | Session (guard) | `{name, ip, port?}` (default port when absent/invalid) | `400` missing name/ip or invalid host; `409` a probe already exists for that IP; `502` if the probe is not reachable (`{reachable:false, method, reason}` — nothing is registered). On success `201 {status:'success', message, probe:<publicProbe>, authKey:<hex, shown once>, authKeyNote:'Store this key on the probe now — it is shown only once and cannot be recovered from Central.', verified:{reachable:true, rttMs, method}}`. Only the SHA-256 hash of the key is stored; measured latency is saved on the probe row. | **REAL** |
+| `POST /api/json/enterprise/addProbe`, `/api/probes` | Admin session (guard + route `requireRole('admin')`) | `{name, ip, port?}` (default port when absent/invalid) | `400` missing name/ip or invalid host; `409` a probe already exists for that IP; `502` if the probe is not reachable (`{reachable:false, method, reason}` — nothing is registered). On success `201 {status:'success', message, probe:<publicProbe>, authKey:<hex, shown once>, authKeyNote:'Store this key on the probe now — it is shown only once and cannot be recovered from Central.', verified:{reachable:true, rttMs, method}}`. Only the SHA-256 hash of the key is stored; measured latency is saved on the probe row. | **REAL** |
 | `POST /api/probes/:id/heartbeat`, `/api/json/enterprise/probeHeartbeat` | Probe key | `{probeId?, authKey\|auth_key}` (body) or `x-probe-auth-key` header; optional numeric metrics `cpu_pct`/`mem_pct`/`disk_pct`/`latency_ms` (also accepts `cpu`/`memory`/`disk` aliases) | `400` bad probe id; `404` unknown probe; `401` missing key, probe has no registered key, or key hash mismatch (SHA-256, `timingSafeEqual`). On success updates `last_heartbeat_at` and stores only the numeric metrics sent; anything missing stays `null`. `{status:'success', message, probe:<publicProbe>}`. | **REAL** |
-| `POST /api/json/enterprise/deleteProbe`, `/api/probes/:id/delete` | Session (guard) | `{probeId}` / path id | Deletes the stored probe row. | **REAL** |
+| `POST /api/json/enterprise/deleteProbe`, `/api/probes/:id/delete` | Admin session for POST/DELETE (route `requireRole('admin')`); GET passes through to details | `{probeId}` / path id | Deletes the stored probe row. Operator/Viewer → `403` on POST/DELETE. | **REAL** |
 | `POST /api/json/enterprise/syncDataFromProbe`, `/api/probes/:id/sync` | Session (guard) | `{probeId}` / path id | `400` bad id; `404` unknown probe; `502` if the probe is unreachable by ping (message names the method/reason and the heartbeat status). On success `{status:'success', message:'… N device(s), M active alarm(s) reconciled from the store', …}` and updates `latency_ms` when reachable. **No data is actually pulled from the probe** — the counts are Central's own stored devices/alarms for that probe. | **REAL** (with caveat) — **OPEN O-17** |
 | `POST /api/json/enterprise/syncAllProbes`, `/api/probes/sync-all` | Session (guard) | — | Same per-probe ping-check + store counts; `{status:'success'|'partial', message:'X of N Enterprise Probe(s) synchronized; … failed', results:[…]}`. | **REAL** (with caveat) — **OPEN O-17** |
 
@@ -432,47 +451,47 @@ All settings routes are behind the session guard unless noted.
 | `POST /dashboard/hideNotifications`, `/api/dashboard/hideNotifications` | Reports `{hidden:0}`. | **REAL** |
 | `GET /admin/getBasicLicenseDetails`, `/api/admin/getBasicLicenseDetails` | All limits / expiry / add-ons `null`, `status:'Unlicensed'` unless a licence record is stored. | **REAL** |
 | `GET /api/settings/license` | Stored licence record (or the unlicensed nulls above). | **REAL** |
-| `POST /api/settings/license/apply` | `400` if neither `licenseXml` nor `keyString` is supplied; otherwise stores the SHA-256 fingerprint of the supplied key/XML with `status:'Unvalidated'` — it never claims the licence was validated. | **REAL** |
+| `POST /api/settings/license/apply` | Admin-only (`requireRole('admin')`). `400` if neither `licenseXml` nor `keyString` is supplied; otherwise stores the SHA-256 fingerprint of the supplied key/XML with `status:'Unvalidated'` — it never claims the licence was validated. | **REAL** |
 | `GET /admin/getSearchResult`, `/api/admin/getSearchResult` | Searches stored devices, probes and alarms for the query string. | **REAL** |
 | `GET /admin/getNewFeatures`, `/api/admin/getNewFeatures` | `{build, releaseDate:null, features:[]}`. | **HONEST-EMPTY** |
 | `GET /admin/GetOpManagerSettings`, `/api/admin/GetOpManagerSettings` | Real host IP/port, `protocol:'HTTP'`; replication / trap / syslog fields `null` (not configured). | **REAL** |
 | `GET /admin/GetSystemInformation`, `/api/admin/GetSystemInformation`, `/admin/getSystemInfo` | Real `os` module data + `process.memoryUsage()` (platform, CPU, memory, uptime). | **REAL** |
 | `GET /admin/getDBInfo`, `/api/admin/getDBInfo` | Real SQLite stats: DB file size, table count, total records across all tables (read-only connection). | **REAL** |
 | `GET /admin/getAPIKey`, `/api/admin/getAPIKey` | `{apiKey:null, keys:[…stored key records, hashes only…]}` — the plain key is never returned here. | **REAL** |
-| `POST /admin/regenerateAPIKey`, `/api/admin/regenerateAPIKey` | Generates `opm_` + 32 random bytes (base64url), stores only its SHA-256 hash, rotates the key with the given `id` or creates one under the given `name`; returns the plain key **once** (`{status:'success', apiKey:<plain>, id, name, created_at, …}`); `404` if the `id` to rotate does not exist. | **REAL** |
+| `POST /admin/regenerateAPIKey`, `/api/admin/regenerateAPIKey` | Admin-only (`requireRole('admin')`). Generates `opm_` + 32 random bytes (base64url), stores only its SHA-256 hash, rotates the key with the given `id` or creates one under the given `name`; returns the plain key **once** (`{status:'success', apiKey:<plain>, id, name, created_at, …}`); `404` if the `id` to rotate does not exist. | **REAL** |
 | `GET /admin/GetThreadDump`, `/api/admin/GetThreadDump` | Node runtime data: handles, requests, memory, CPU, uptime. `activeThreads`/`peakThreads`/`threadDump` are `null` with the note "no JVM" — this is Node, not Java. | **REAL** |
-| `POST /admin/updateJvmHeapSize`, `/api/admin/updateJvmHeapSize` | `501` — structurally impossible, permanently: this build runs on Node.js, not Java, so no JVM process exists and there is no JVM heap to resize. The V8 heap limit is set only at process start by `--max-old-space-size` (e.g. `NODE_OPTIONS=--max-old-space-size=4096`, see `DEPLOY.md` §1.3); live V8 heap figures are in `GET /api/admin/GetSystemInformation` (`runtime.heapTotalMB` / `heapUsedMB`, `jvmInfo: null`). | **501** |
+| `POST /admin/updateJvmHeapSize`, `/api/admin/updateJvmHeapSize` | Admin-only (`requireRole('admin')`, then `501`) — structurally impossible, permanently: this build runs on Node.js, not Java, so no JVM process exists and there is no JVM heap to resize. The V8 heap limit is set only at process start by `--max-old-space-size` (e.g. `NODE_OPTIONS=--max-old-space-size=4096`, see `DEPLOY.md` §1.3); live V8 heap figures are in `GET /api/admin/GetSystemInformation` (`runtime.heapTotalMB` / `heapUsedMB`, `jvmInfo: null`). | **501** |
 | `GET /api/support/logs`, `/support/logs` | Reads the real `.log` file tail under `server/logs` or `server/data/logs`; `404` if no log file exists; `lines` clamped 1–1000. | **REAL** |
 | `GET /api/support/sif`, `/support/generateSIF` | `404` if no log files exist; otherwise builds a real SIF zip (stored-zip of the log files) on disk and returns `{fileName:'OpManager_Central_SIF_<stamp>.zip', fileSizeBytes, fileSize, downloadPath:'/api/support/sif/download/<fileName>', …}`. | **REAL** |
 | `GET /api/support/sif/download/:file` | Serves the generated `.zip` from the SIF directory; `404` if missing / not a `.zip`. | **REAL** |
-| `GET /api/settings/mail`, `/settings/getMailServer` | Stored mail settings (secrets redacted). | **REAL** |
-| `POST /api/settings/mail`, `/settings/saveMailServer` | Persists mail settings; returns the redacted copy. | **REAL** |
-| `POST /api/settings/mail/test`, `/settings/testMailServer` | Real SMTP test against the configured mail server; `501` when no mail server is configured (nothing to test). | **REAL** (phase-2: was 501; conditional 501) |
-| `GET /api/settings/failover`, `/settings/getFailoverStatus` | Stored failover config; single node by default. | **REAL** |
-| `POST /api/settings/failover` | Persists failover config; `400` if no config object is supplied. | **REAL** |
-| `POST /api/settings/failover/test`, `/settings/testFailoverHeartbeat` | Real TCP connect to the configured standby when one is set; `501` when no standby is configured. | **REAL** (conditional) |
+| `GET /api/settings/mail`, `/settings/getMailServer` | Session (guard; the `/settings/` variant is also route-guarded). Stored mail settings (secrets redacted). | **REAL** |
+| `POST /api/settings/mail`, `/settings/saveMailServer` | Admin-only (`requireRole('admin')`). Persists mail settings; returns the redacted copy. | **REAL** |
+| `POST /api/settings/mail/test`, `/settings/testMailServer` | Admin-only (`requireRole('admin')`). Real SMTP test against the configured mail server; `501` when no mail server is configured (nothing to test). | **REAL** (phase-2: was 501; conditional 501) |
+| `GET /api/settings/failover`, `/settings/getFailoverStatus` | Session (guard; the `/settings/` variant is also route-guarded). Stored failover config; single node by default. | **REAL** |
+| `POST /api/settings/failover` | Admin-only (`requireRole('admin')`). Persists failover config; `400` if no config object is supplied. | **REAL** |
+| `POST /api/settings/failover/test`, `/settings/testFailoverHeartbeat` | Admin-only (`requireRole('admin')`). Real TCP connect to the configured standby when one is set; `501` when no standby is configured. | **REAL** (conditional) |
 | `GET /api/settings/users`, `/api/users/list` | Real store users: `{…, mfa:false, lastLogin:null, mustChangePassword}` (flag from the user row). | **REAL** |
-| `POST /api/settings/users`, `/api/users/add` | Real user creation (store-backed). | **REAL** (phase-2: was 501) |
-| `DELETE /api/settings/users/:id` | Real user deletion (store-backed). | **REAL** (phase-2: was 501) |
+| `POST /api/settings/users`, `/api/users/add` | Admin-only (`requireRole('admin')`). Real user creation (store-backed). | **REAL** (phase-2: was 501) |
+| `DELETE /api/settings/users/:id` | Admin-only (`requireRole('admin')`). Real user deletion (store-backed). | **REAL** (phase-2: was 501) |
 | `GET /api/settings/auth/ad` | Stored AD config; `bindPasswordConfigured` boolean only (password never returned). | **REAL** |
-| `POST /api/settings/auth/ad` | Persists AD config; returns the redacted copy. | **REAL** |
-| `POST /api/settings/auth/ad/test` | Real reachability test against the configured domain controller; `501` when no DC is configured. Reachability-only, not an LDAP bind. | **REAL** (phase-2: was 501; conditional 501) |
+| `POST /api/settings/auth/ad` | Admin-only (`requireRole('admin')`). Persists AD config; returns the redacted copy. | **REAL** |
+| `POST /api/settings/auth/ad/test` | Admin-only (`requireRole('admin')`). Real reachability test against the configured domain controller; `501` when no DC is configured. Reachability-only, not an LDAP bind. | **REAL** (phase-2: was 501; conditional 501) |
 | `GET /api/settings/auth/saml` | Stored SAML config; certificate never returned, `certificateConfigured` boolean only. | **REAL** |
-| `POST /api/settings/auth/saml` | Persists SAML config; returns the redacted copy. | **REAL** |
-| `POST /api/settings/auth/saml/test` | Real SAML config validation; `501` when no SAML configuration is stored. Validates config, not a login flow. | **REAL** (phase-2: was 501; conditional 501) |
+| `POST /api/settings/auth/saml` | Admin-only (`requireRole('admin')`). Persists SAML config; returns the redacted copy. | **REAL** |
+| `POST /api/settings/auth/saml/test` | Admin-only (`requireRole('admin')`). Real SAML config validation; `501` when no SAML configuration is stored. Validates config, not a login flow. | **REAL** (phase-2: was 501; conditional 501) |
 | `GET /api/settings/proxy` | Stored proxy config; `passwordConfigured` boolean only. | **REAL** |
-| `POST /api/settings/proxy` | Persists proxy config; returns the redacted copy. | **REAL** |
-| `POST /api/settings/proxy/test` | Real HEAD request through the configured proxy when one is set; `501` when no proxy is configured. | **REAL** (conditional) |
+| `POST /api/settings/proxy` | Admin-only (`requireRole('admin')`). Persists proxy config; returns the redacted copy. | **REAL** |
+| `POST /api/settings/proxy/test` | Admin-only (`requireRole('admin')`). Real HEAD request through the configured proxy when one is set; `501` when no proxy is configured. | **REAL** (conditional) |
 | `GET /api/settings/db` | SQLite stats + backup history + backup schedule (from the store). | **REAL** |
 | `POST /api/settings/db/backup` | Real `VACUUM INTO` to a `.db` file; returns the real file size + SHA-256; `500` on failure. | **REAL** |
 | `POST /api/settings/db/vacuum` | Real `VACUUM` + `ANALYZE`; returns measured `durationMs` / `reclaimedBytes`. | **REAL** |
 | `GET /api/settings/system` | Stored system settings; hostname/port are the real values, `monitoringThreads:null`. | **REAL** |
-| `POST /api/settings/system` | Persists system settings. | **REAL** |
+| `POST /api/settings/system` | Admin-only (`requireRole('admin')`). Persists system settings. | **REAL** |
 | `GET /api/settings/rebrand` | Stored rebrand values (all `null` when unset). | **REAL** |
-| `POST /api/settings/rebrand` | Persists rebrand values. | **REAL** |
+| `POST /api/settings/rebrand` | Admin-only (`requireRole('admin')`). Persists rebrand values. | **REAL** |
 | `GET /api/settings/ssl` | Plain HTTP in this build: `effectiveHttps:false`; stored SSL values returned as-is. | **REAL** |
-| `POST /api/settings/ssl` | Persists SSL settings (values stored as supplied; nothing is validated or applied — the server still serves plain HTTP). | **REAL** |
-| `POST /api/settings/ssl/test` | Real certificate verification against the configured TLS target / stored certificate; `501` when no target is configured. | **REAL** (phase-2: was 501; conditional 501) |
+| `POST /api/settings/ssl` | Admin-only (`requireRole('admin')`). Persists SSL settings (values stored as supplied; nothing is validated or applied — the server still serves plain HTTP). | **REAL** |
+| `POST /api/settings/ssl/test` | Admin-only (`requireRole('admin')`). Real certificate verification against the configured TLS target / stored certificate; `501` when no target is configured. | **REAL** (phase-2: was 501; conditional 501) |
 
 ## 16. `server/routes/tools.js` — 11 definitions: 8 REAL, 3 × 501 (phase-2: mac-resolve now REAL)
 
