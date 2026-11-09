@@ -1546,10 +1546,63 @@ router.get('/api/settings/auth/saml', (req, res) => {
   res.json({ status: 'success', saml: out });
 });
 
+/**
+ * Mirror the settings shape into the canonical record (store key
+ * 'saml', per SHARED.md `settings.saml`): the routes shape
+ * { idpEntityId, idpSsoUrl, spAcsUrl, jitProvisioning, defaultRole,
+ * certificate } plus the SHARED.md fields { idpMetadataUrl,
+ * idpMetadataXml, spEntityId, spCert } where present. The SP private
+ * key is NEVER stored here: SHARED.md says spKey comes via runtime
+ * env/file, and server/services/saml.js deliberately ignores any
+ * spKey found in the store. Only public material (entity IDs, URLs,
+ * certificates) is mirrored.
+ */
+function mirrorSamlCanonical(merged) {
+  putStored('saml', {
+    idpMetadataUrl: merged.idpMetadataUrl || null,
+    idpMetadataXml: merged.idpMetadataXml || null,
+    spEntityId: merged.spEntityId || null,
+    spCert: merged.spCert || null,
+    idpEntityId: merged.idpEntityId || null,
+    idpSsoUrl: merged.idpSsoUrl || null,
+    idpCert: merged.certificate || null,
+    spAcsUrl: merged.spAcsUrl || null,
+    enabled: Boolean(merged.enabled),
+    jitProvisioning: merged.jitProvisioning !== undefined ? merged.jitProvisioning : null,
+    defaultRole: merged.defaultRole || null,
+  });
+}
+
+/**
+ * Fill missing IdP fields from parsed metadata (Phase 4 merge: the
+ * settings /test endpoint persists what it parses, so a metadata-URL-
+ * or metadata-XML-only config becomes a complete stored config).
+ * Only fills fields that are empty in `merged`; returns the filled
+ * field names. `parsed` is a parseIdpMetadata()/loadIdpMetadata()
+ * result ({ idpEntityId, idpSsoUrl, signingCerts: [pem...] }).
+ */
+function fillFromParsedMetadata(merged, parsed) {
+  const filled = [];
+  if (parsed && parsed.idpEntityId && !merged.idpEntityId) {
+    merged.idpEntityId = parsed.idpEntityId;
+    filled.push('idpEntityId');
+  }
+  if (parsed && parsed.idpSsoUrl && !merged.idpSsoUrl) {
+    merged.idpSsoUrl = parsed.idpSsoUrl;
+    filled.push('idpSsoUrl');
+  }
+  if (parsed && Array.isArray(parsed.signingCerts) && parsed.signingCerts.length > 0 && !merged.certificate) {
+    merged.certificate = parsed.signingCerts[0];
+    filled.push('certificate');
+  }
+  return filled;
+}
+
 router.post('/api/settings/auth/saml', (req, res) => {
   const stored = getStored('auth.saml');
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...(req.body || {}) };
   putStored('auth.saml', merged);
+  mirrorSamlCanonical(merged);
   auditLog('settings.saml.save', { enabled: Boolean(merged.enabled) });
   const out = publicCopy(merged);
   out.certificate = null;
@@ -1646,12 +1699,110 @@ function inspectCertificate(pem) {
   }
 }
 
+/** Lazy-load the SAML service (same defensive pattern as server/routes/saml.js). */
+function loadSamlService() {
+  try {
+    return require('../services/saml');
+  } catch (err) {
+    if (err && err.code === 'MODULE_NOT_FOUND') return null;
+    throw err;
+  }
+}
+
+/**
+ * Verify the signature chain of IdP signing certificates with the real
+ * X.509 parser: each cert must parse, be in date, and its signature must
+ * verify against its issuer — its own public key when self-signed, or
+ * the issuer certificate from the same set. A cert whose issuer is not
+ * in the set fails with 'issuer not available' (the chain cannot be
+ * completed from the metadata alone); that is reported, not papered over.
+ */
+function checkCertChain(pems) {
+  const perCert = [];
+  if (!pems || pems.length === 0) {
+    return { passed: true, detail: 'no IdP signing certificates to check (skipped)', perCert };
+  }
+  const parsed = [];
+  for (const pem of pems) {
+    try {
+      parsed.push(new crypto.X509Certificate(pem));
+    } catch (err) {
+      perCert.push({ subject: null, parsed: false, error: err.message, chainVerified: false, passed: false });
+    }
+  }
+  let allOk = perCert.length === 0;
+  for (const cert of parsed) {
+    const now = new Date();
+    const expired = now > new Date(cert.validTo);
+    const notYetValid = now < new Date(cert.validFrom);
+    const selfSigned = cert.subject === cert.issuer;
+    let chainVerified = false;
+    let chainDetail = null;
+    try {
+      if (selfSigned) {
+        chainVerified = cert.verify(cert.publicKey);
+        chainDetail = chainVerified ? 'self-signed, signature verifies with own key' : 'self-signed, signature does NOT verify';
+      } else {
+        const issuer = parsed.find((c) => c.subject === cert.issuer);
+        if (!issuer) {
+          chainDetail = 'issuer certificate not available in the metadata set — chain cannot be completed';
+        } else {
+          chainVerified = cert.verify(issuer.publicKey);
+          chainDetail = chainVerified ? 'signature verifies against issuer certificate' : 'signature does NOT verify against issuer certificate';
+        }
+      }
+    } catch (err) {
+      chainDetail = `chain verification error: ${err.message}`;
+    }
+    const ok = !expired && !notYetValid && chainVerified;
+    if (!ok) allOk = false;
+    perCert.push({
+      subject: cert.subject,
+      issuer: cert.issuer,
+      validFrom: cert.validFrom,
+      validTo: cert.validTo,
+      expired,
+      notYetValid,
+      selfSigned,
+      chainVerified,
+      chainDetail,
+      fingerprint256: cert.fingerprint256,
+      passed: ok,
+    });
+  }
+  const okCount = perCert.filter((c) => c.passed).length;
+  return {
+    passed: allOk && perCert.length > 0,
+    detail: `${okCount}/${perCert.length} IdP signing certificate(s) in date with a verified signature chain`,
+    perCert,
+  };
+}
+
+/** Extract the AuthnRequest ID from a (possibly deflated) SAMLRequest value. */
+function extractAuthnRequestId(samlRequest) {
+  if (!samlRequest) return null;
+  try {
+    const raw = Buffer.from(samlRequest, 'base64');
+    let xml;
+    try {
+      xml = require('zlib').inflateRawSync(raw).toString('utf8');
+    } catch {
+      xml = raw.toString('utf8');
+    }
+    const m = /<samlp:AuthnRequest[^>]*\bID="([^"]+)"/.exec(xml) || /\bID="([^"]+)"/.exec(xml);
+    return m ? m[1] : null;
+  } catch {
+    return null;
+  }
+}
+
 router.post('/api/settings/auth/saml/test', async (req, res) => {
   const stored = getStored('auth.saml');
   const body = req.body || {};
   const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...body };
   const hasAnyConfig = Boolean(
-    merged.idpEntityId || merged.idpSsoUrl || merged.spAcsUrl || merged.certificate || merged.enabled,
+    merged.idpEntityId || merged.idpSsoUrl || merged.spAcsUrl || merged.certificate || merged.enabled
+      || merged.idpMetadataUrl || merged.idpMetadataXml || merged.spEntityId,
   );
   if (!hasAnyConfig) {
     return res.status(501).json({
@@ -1659,9 +1810,11 @@ router.post('/api/settings/auth/saml/test', async (req, res) => {
       ...NOT_IMPLEMENTED('No SAML configuration is stored, so there is nothing to validate.'),
     });
   }
-  // Real checks on the stored configuration. This validates the config
-  // and (when an IdP URL is set) that IdP metadata is fetchable; it does
-  // NOT perform a SAML login flow, and the response says so.
+  // Full validation: required fields, stored certificate, IdP metadata
+  // (parse + TLS-verified fetch), certificate chain, and a real test
+  // AuthnRequest build. This validates the configuration end to end; it
+  // does NOT perform a SAML login flow (no user assertion is exchanged),
+  // and the response says so.
   const checks = [];
   const required = ['idpEntityId', 'idpSsoUrl'];
   for (const field of required) {
@@ -1683,27 +1836,151 @@ router.post('/api/settings/auth/saml/test', async (req, res) => {
     checks.push({ check: 'certificate', passed: true, detail: 'no certificate stored (skipped)' });
   }
   if (merged.idpSsoUrl) {
+    // The SSO URL is a login endpoint, not a metadata document: reachability
+    // is the honest check here (any HTTP response proves the IdP answers).
     const fetched = await fetchUrl(String(merged.idpSsoUrl), 5000);
     checks.push({
-      check: 'idpMetadataFetch',
-      passed: Boolean(fetched.ok && fetched.looksLikeMetadata),
-      detail: fetched.ok
-        ? `HTTP ${fetched.statusCode}, ${fetched.bytes} bytes${fetched.looksLikeMetadata ? ', contains EntityDescriptor' : ', does NOT look like SAML metadata'}`
-        : `fetch failed: ${fetched.error || `HTTP ${fetched.statusCode}`}`,
+      check: 'idpSsoReachable',
+      passed: fetched.statusCode != null,
+      detail: fetched.statusCode != null
+        ? `HTTP ${fetched.statusCode}, ${fetched.bytes} bytes`
+        : `fetch failed: ${fetched.error || 'no response'}`,
       fetch: fetched,
     });
   }
+
+  const saml = loadSamlService();
+  // Phase 4 merge: values parsed from IdP metadata during this test
+  // are PERSISTED into the stored config (only fields that were
+  // empty), so a metadata-URL/XML-only config becomes complete.
+  const persistedFromMetadata = [];
+  if (!saml) {
+    checks.push({
+      check: 'samlService',
+      passed: false,
+      detail: 'server/services/saml.js is missing: metadata parsing, certificate chain validation and the test AuthnRequest build are unavailable.',
+    });
+  } else {
+    // loadSamlConfig reads the IdP cert as `idpCert`; the settings shape
+    // stores it as `certificate` — map it so an unstored body value is
+    // validated too (stored values are also picked up from the store).
+    let cfg = saml.loadSamlConfig({ ...merged, idpCert: merged.certificate || merged.idpCert || null });
+    // 1. Stored IdP metadata XML parses.
+    if (merged.idpMetadataXml) {
+      try {
+        const parsed = saml.parseIdpMetadata(String(merged.idpMetadataXml));
+        persistedFromMetadata.push(...fillFromParsedMetadata(merged, parsed));
+        checks.push({
+          check: 'idpMetadataParse',
+          passed: Boolean(parsed.idpEntityId && parsed.idpSsoUrl && parsed.signingCerts.length > 0),
+          detail: `entityID ${parsed.idpEntityId || '(none)'}, SSO ${parsed.idpSsoUrl || '(none)'} (${parsed.idpSsoBinding || 'no binding'}), ${parsed.signingCerts.length} signing cert(s)`,
+          metadata: { idpEntityId: parsed.idpEntityId, idpSsoUrl: parsed.idpSsoUrl, idpSsoBinding: parsed.idpSsoBinding, signingCertCount: parsed.signingCerts.length },
+        });
+      } catch (err) {
+        checks.push({ check: 'idpMetadataParse', passed: false, detail: `stored IdP metadata XML does not parse: ${err.message}` });
+      }
+    } else {
+      checks.push({ check: 'idpMetadataParse', passed: true, detail: 'no IdP metadata XML stored (skipped)' });
+    }
+    // 2. IdP metadata URL fetches over verified TLS and parses.
+    if (merged.idpMetadataUrl) {
+      try {
+        const loaded = await saml.loadIdpMetadata(String(merged.idpMetadataUrl));
+        persistedFromMetadata.push(...fillFromParsedMetadata(merged, loaded));
+        checks.push({
+          check: 'idpMetadataFetch',
+          passed: Boolean(loaded.idpEntityId && loaded.idpSsoUrl && loaded.signingCerts.length > 0),
+          detail: `HTTP ${loaded.statusCode}, ${loaded.bytes} bytes; entityID ${loaded.idpEntityId || '(none)'}, SSO ${loaded.idpSsoUrl || '(none)'}, ${loaded.signingCerts.length} signing cert(s)`,
+          metadata: { idpEntityId: loaded.idpEntityId, idpSsoUrl: loaded.idpSsoUrl, idpSsoBinding: loaded.idpSsoBinding, signingCertCount: loaded.signingCerts.length },
+        });
+      } catch (err) {
+        checks.push({ check: 'idpMetadataFetch', passed: false, detail: `IdP metadata fetch/parse failed: ${err.message}` });
+      }
+    } else {
+      checks.push({ check: 'idpMetadataFetch', passed: true, detail: 'no IdP metadata URL stored (skipped)' });
+    }
+    // Rebuild the config AFTER the metadata fills above, so the chain
+    // and AuthnRequest checks below validate the filled config (a
+    // metadata-only config must prove login-ready in this same test).
+    cfg = saml.loadSamlConfig({ ...merged, idpCert: merged.certificate || merged.idpCert || null });
+    // 3. Certificate chain: every IdP signing cert in date with a
+    // signature that verifies against its issuer.
+    const chain = checkCertChain(cfg.idpCerts || []);
+    checks.push({
+      check: 'certificateChain',
+      passed: chain.passed,
+      detail: chain.detail,
+      certs: chain.perCert,
+    });
+    // 4. A real test AuthnRequest builds against the merged config, in a
+    // throwaway cache so the test never pollutes the login request cache.
+    if (cfg.issues.length > 0) {
+      checks.push({ check: 'authnRequestBuild', passed: false, detail: `config is not login-ready: ${cfg.issues.join('; ')}` });
+    } else {
+      try {
+        const { InMemoryCacheProvider } = require('@node-saml/node-saml');
+        const testClient = saml.createSamlClient(cfg, { cacheProvider: new InMemoryCacheProvider({ keyExpirationPeriodMs: 8 * 60 * 60 * 1000 }) });
+        const login = await saml.getLoginUrl(testClient, '/');
+        const u = new URL(login.url);
+        const requestId = extractAuthnRequestId(u.searchParams.get('SAMLRequest'));
+        checks.push({
+          check: 'authnRequestBuild',
+          passed: true,
+          detail: `AuthnRequest built${requestId ? ` (ID ${requestId})` : ''}; redirect target ${u.protocol}//${u.host}${u.pathname}`,
+          idpRedirectHost: `${u.protocol}//${u.host}`,
+          authnRequestId: requestId,
+        });
+      } catch (err) {
+        checks.push({ check: 'authnRequestBuild', passed: false, detail: `AuthnRequest build failed: ${err.message}` });
+      }
+    }
+  }
+
+  // Persist any metadata-derived values filled in above (only the
+  // fields that were empty — a /test never overwrites a value the
+  // admin set by hand, and never saves other unsubmitted body fields).
+  if (persistedFromMetadata.length > 0) {
+    const toPersist = {};
+    for (const field of persistedFromMetadata) toPersist[field] = merged[field];
+    const newStored = { ...(stored && typeof stored === 'object' ? stored : {}), ...toPersist };
+    putStored('auth.saml', newStored);
+    mirrorSamlCanonical(newStored);
+    auditLog('settings.saml.test.persist', { fields: persistedFromMetadata.join(',') });
+  }
+
+  // The required/certificate checks above ran on the pre-fill config.
+  // If metadata parsing filled those fields during this test, the
+  // checks must reflect the config as it now stands (filled values
+  // are already persisted above, so this is not papering over a gap).
+  if (persistedFromMetadata.length > 0) {
+    for (const c of checks) {
+      if (c.check.startsWith('required:')) {
+        const field = c.check.slice('required:'.length);
+        if (merged[field]) { c.passed = true; c.detail = `${String(merged[field])} (from IdP metadata)`; }
+      }
+      if (c.check === 'certificate' && merged.certificate) {
+        const info = inspectCertificate(merged.certificate);
+        c.passed = info.parsed && !info.expired && !info.notYetValid;
+        c.detail = info.parsed
+          ? `${info.subject} (valid ${info.validFrom} to ${info.validTo}; from IdP metadata)`
+          : `unparsable: ${info.error}`;
+        c.certificate = info.parsed ? info : null;
+      }
+    }
+  }
+
   const allPassed = checks.every((c) => c.passed);
   auditLog('settings.saml.test', { passed: allPassed, checks: checks.map((c) => `${c.check}:${c.passed}`).join(',') });
   res.json({
     status: allPassed ? 'success' : 'error',
     message: allPassed
-      ? 'SAML configuration validated: required fields present, stored certificate parses and is in date, IdP metadata fetchable.'
+      ? 'SAML configuration fully validated: required fields present, certificates parse, are in date and chain-verify, IdP metadata parses/fetches, and a test AuthnRequest builds.'
       : 'SAML configuration validation failed: see checks.',
     testedAt: new Date().toISOString(),
     statusCheck: allPassed ? 'OK' : 'FAILED',
     checks,
-    note: 'This validates the stored SAML configuration and IdP metadata reachability. It does not perform a SAML login flow.',
+    persistedFromMetadata,
+    note: 'Full validation of the stored SAML configuration (metadata parse + certificate chain check + test AuthnRequest build). It does not perform a SAML login flow: no user assertion is exchanged.' + (persistedFromMetadata.length > 0 ? ` Values parsed from IdP metadata were saved into the stored config: ${persistedFromMetadata.join(', ')}.` : ''),
   });
 });
 
