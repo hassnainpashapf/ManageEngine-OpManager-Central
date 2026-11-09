@@ -26,6 +26,15 @@ const PING_DEADLINE_SECONDS = 2;
 const PING_EXEC_TIMEOUT_MS = 5000;
 const TCP_CONNECT_TIMEOUT_MS = 2000;
 
+// BSD/macOS ping's -W takes MILLISECONDS; Linux iputils' -W takes SECONDS.
+// Passing the raw seconds value as -W on macOS sets a ~2ms deadline, which
+// silently drops the "time=" line for any host slower than that (i.e. almost
+// every real host) -- the ping still "succeeds" (exit 0) but looks
+// unreachable. This previously caused real discovery/polling to report 0
+// reachable hosts on macOS even against devices confirmed to be up.
+const IS_DARWIN = process.platform === 'darwin';
+const PING_DEADLINE_ARG = IS_DARWIN ? String(PING_DEADLINE_SECONDS * 1000) : String(PING_DEADLINE_SECONDS);
+
 /**
  * pingMs(ip) → ms (number) or null.
  * Runs the system ping binary once and parses `time=xx ms` from stdout.
@@ -37,7 +46,7 @@ function pingMs(ip) {
     if (!ip || typeof ip !== 'string') return resolve(null);
     execFile(
       'ping',
-      ['-c', String(PING_COUNT), '-W', String(PING_DEADLINE_SECONDS), ip],
+      ['-c', String(PING_COUNT), '-W', PING_DEADLINE_ARG, ip],
       { timeout: PING_EXEC_TIMEOUT_MS },
       (error, stdout) => {
         if (error || !stdout) return resolve(null);
