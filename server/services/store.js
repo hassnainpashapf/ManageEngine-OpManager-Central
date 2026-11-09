@@ -66,6 +66,11 @@ CREATE TABLE IF NOT EXISTS devices (
   category TEXT,
   snmp_community TEXT,
   snmp_version TEXT,
+  snmp_v3_user TEXT,
+  snmp_v3_auth_protocol TEXT,
+  snmp_v3_auth_pass TEXT,
+  snmp_v3_priv_protocol TEXT,
+  snmp_v3_priv_pass TEXT,
   probe_id INTEGER REFERENCES probes(id) ON DELETE SET NULL,
   managed INTEGER NOT NULL DEFAULT 1,
   status TEXT,
@@ -259,6 +264,25 @@ if (!_alarmColumns.includes('rca_status')) {
   db.exec('ALTER TABLE alarms ADD COLUMN rca_status TEXT;');
 }
 
+// Migration: device.snmp v3 credential columns (canonical schema, SHARED.md)
+// were added after the initial schema, so pre-existing databases need them.
+// ALTER-safe: only add the ones that are absent.
+const _deviceColumns = db
+  .prepare('PRAGMA table_info(devices)')
+  .all()
+  .map((c) => c.name);
+for (const [col, type] of [
+  ['snmp_v3_user', 'TEXT'],
+  ['snmp_v3_auth_protocol', 'TEXT'],
+  ['snmp_v3_auth_pass', 'TEXT'],
+  ['snmp_v3_priv_protocol', 'TEXT'],
+  ['snmp_v3_priv_pass', 'TEXT'],
+]) {
+  if (!_deviceColumns.includes(col)) {
+    db.exec(`ALTER TABLE devices ADD COLUMN ${col} ${type};`);
+  }
+}
+
 function now() {
   return Date.now();
 }
@@ -392,10 +416,76 @@ function deleteSession(tokenHash) {
 
 const DEVICE_COLUMNS = [
   'ip', 'hostname', 'sys_name', 'sys_descr', 'sys_object_id', 'vendor',
-  'model', 'category', 'snmp_community', 'snmp_version', 'probe_id',
+  'model', 'category', 'snmp_community', 'snmp_version',
+  'snmp_v3_user', 'snmp_v3_auth_protocol', 'snmp_v3_auth_pass',
+  'snmp_v3_priv_protocol', 'snmp_v3_priv_pass', 'probe_id',
   'managed', 'status', 'cpu_pct', 'mem_used_pct', 'uptime_ticks',
   'response_ms', 'last_polled_at',
 ];
+
+const SECRET_MASK = '******';
+
+// Canonical device.snmp shape (SHARED.md) built from a stored row, with
+// every credential secret masked. Use this for ALL API responses that
+// carry a device row — raw rows (getDevice/listDevices) keep the real
+// secrets server-side for the poller / tools routes, and must never be
+// sent to a client unmasked.
+//   { version: 'v2c'|'v3', community: '******'|null,
+//     v3: { user, authProtocol, authPass: '******'|null,
+//           privProtocol, privPass: '******'|null } | null }
+// v3 is null when no v3 user is stored; the pass fields are masked
+// whenever a value is stored, null when nothing is stored.
+function snmpForResponse(row) {
+  if (!row) return null;
+  const hasV3 = !!(row.snmp_v3_user || row.snmp_v3_auth_protocol || row.snmp_v3_auth_pass
+    || row.snmp_v3_priv_protocol || row.snmp_v3_priv_pass);
+  return {
+    version: row.snmp_version || null,
+    community: row.snmp_community ? SECRET_MASK : null,
+    v3: hasV3 ? {
+      user: row.snmp_v3_user || null,
+      authProtocol: row.snmp_v3_auth_protocol || null,
+      authPass: row.snmp_v3_auth_pass ? SECRET_MASK : null,
+      privProtocol: row.snmp_v3_priv_protocol || null,
+      privPass: row.snmp_v3_priv_pass ? SECRET_MASK : null,
+    } : null,
+  };
+}
+
+// publicDevice(row) → a copy safe to send in an API response: the
+// canonical `snmp` object above, and the raw secret columns removed so a
+// passphrase can never leak through a forgotten field. Non-secret columns
+// pass through unchanged. Returns null for a null row.
+function publicDevice(row) {
+  if (!row) return null;
+  const out = { ...row, snmp: snmpForResponse(row) };
+  delete out.snmp_community;
+  delete out.snmp_v3_auth_pass;
+  delete out.snmp_v3_priv_pass;
+  return out;
+}
+
+// snmpFromRow(row) → the RAW canonical snmp object for server-side use
+// (tools routes falling back to a device's stored credentials, the
+// poller). NEVER send its result in an API response — it carries the
+// real passphrases. Returns null when the device stores no SNMP creds.
+function snmpFromRow(row) {
+  if (!row) return null;
+  const hasV3 = !!(row.snmp_v3_user || row.snmp_v3_auth_protocol || row.snmp_v3_auth_pass
+    || row.snmp_v3_priv_protocol || row.snmp_v3_priv_pass);
+  if (!row.snmp_community && !row.snmp_version && !hasV3) return null;
+  return {
+    version: row.snmp_version || null,
+    community: row.snmp_community || null,
+    v3: hasV3 ? {
+      user: row.snmp_v3_user || null,
+      authProtocol: row.snmp_v3_auth_protocol || null,
+      authPass: row.snmp_v3_auth_pass || null,
+      privProtocol: row.snmp_v3_priv_protocol || null,
+      privPass: row.snmp_v3_priv_pass || null,
+    } : null,
+  };
+}
 
 function getDevice(id) {
   return toRow(db.prepare('SELECT * FROM devices WHERE id = ?').get(id));
@@ -1056,6 +1146,9 @@ module.exports = {
   updateDevice,
   updateDeviceMetrics,
   deleteDevice,
+  publicDevice,
+  snmpFromRow,
+  snmpForResponse,
   // device thresholds
   getDeviceThresholds,
   setDeviceThresholds,
@@ -1148,6 +1241,9 @@ module.exports = {
     updateDevice,
     updateDeviceMetrics,
     deleteDevice,
+    publicDevice,
+    snmpFromRow,
+    snmpForResponse,
   },
   thresholds: { getDeviceThresholds, setDeviceThresholds, deleteDeviceThresholds },
   interfaces: { replaceInterfaces, listInterfaces },

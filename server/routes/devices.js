@@ -37,6 +37,90 @@ function serviceUnavailable(res, name, endpoint) {
   });
 }
 
+// ---------------------------------------------------------------------------
+// device.snmp (canonical shape, SHARED.md):
+//   snmp: { version: 'v2c'|'v3', community,
+//           v3: { user, authProtocol: 'md5'|'sha', authPass,
+//                 privProtocol: 'des'|'aes', privPass } }
+// Map a request body's `snmp` object onto the flat store columns
+// (snmp_version / snmp_community / snmp_v3_*). `existing` is the stored
+// device row for updates (partial v3 objects merge over stored values
+// before validation); null for creates. Returns { fields } or { error }
+// (a 400 message). The real passphrases go to the store only — every
+// response in this router goes through store.publicDevice, which masks
+// them, so they never reach a client.
+function snmpBodyToFields(body, existing) {
+  const b = body || {};
+  const snmpObj = b.snmp;
+  if (snmpObj === undefined || snmpObj === null) return { fields: {} };
+  if (typeof snmpObj !== 'object' || Array.isArray(snmpObj)) {
+    return { error: 'snmp must be an object { version, community, v3: { user, authProtocol, authPass, privProtocol, privPass } }.' };
+  }
+  const fields = {};
+  if (snmpObj.version !== undefined) {
+    const v = String(snmpObj.version).trim().toLowerCase();
+    const norm = v === '2c' ? 'v2c' : v;
+    if (norm !== 'v2c' && norm !== 'v3') {
+      return { error: `Invalid snmp.version '${snmpObj.version}': expected 'v2c' or 'v3' (SNMPv1 is not supported).` };
+    }
+    fields.snmp_version = norm;
+  }
+  if (snmpObj.community !== undefined) fields.snmp_community = snmpObj.community;
+  if (snmpObj.v3 !== undefined) {
+    if (snmpObj.v3 === null) {
+      // Explicit null clears the stored v3 credentials.
+      fields.snmp_v3_user = null;
+      fields.snmp_v3_auth_protocol = null;
+      fields.snmp_v3_auth_pass = null;
+      fields.snmp_v3_priv_protocol = null;
+      fields.snmp_v3_priv_pass = null;
+    } else {
+      if (typeof snmpObj.v3 !== 'object' || Array.isArray(snmpObj.v3)) {
+        return { error: 'snmp.v3 must be an object { user, authProtocol, authPass, privProtocol, privPass }.' };
+      }
+      // Merge partial updates over the stored v3 set, then validate the
+      // merged set so e.g. changing only privPass keeps the stored auth.
+      const stored = existing && store.snmpFromRow ? (store.snmpFromRow(existing) || {}) : {};
+      const merged = { ...(stored.v3 || {}), ...snmpObj.v3 };
+      const snmpSvc = loadService('snmp');
+      if (snmpSvc && typeof snmpSvc.validateV3 === 'function') {
+        let creds;
+        try {
+          creds = snmpSvc.validateV3(merged);
+        } catch (err) {
+          return { error: (err && err.message) || String(err) };
+        }
+        fields.snmp_v3_user = creds.user;
+        fields.snmp_v3_auth_protocol = creds.authProtocol;
+        fields.snmp_v3_auth_pass = creds.authPass;
+        fields.snmp_v3_priv_protocol = creds.privProtocol;
+        fields.snmp_v3_priv_pass = creds.privPass;
+      } else {
+        // SNMP service not loaded: minimal shape check only (protocol
+        // names + user); full validation happens when the service loads
+        // and the credentials are actually used.
+        if (typeof merged.user !== 'string' || !merged.user.trim()) {
+          return { error: 'SNMPv3 user is required (snmp.v3.user must be a non-empty string).' };
+        }
+        if (merged.authProtocol !== undefined && merged.authProtocol !== null
+          && !['md5', 'sha'].includes(String(merged.authProtocol).toLowerCase())) {
+          return { error: `Invalid SNMPv3 authProtocol '${merged.authProtocol}': expected 'md5' or 'sha'.` };
+        }
+        if (merged.privProtocol !== undefined && merged.privProtocol !== null
+          && !['des', 'aes'].includes(String(merged.privProtocol).toLowerCase())) {
+          return { error: `Invalid SNMPv3 privProtocol '${merged.privProtocol}': expected 'des' or 'aes'.` };
+        }
+        fields.snmp_v3_user = merged.user;
+        fields.snmp_v3_auth_protocol = merged.authProtocol !== undefined ? merged.authProtocol : null;
+        fields.snmp_v3_auth_pass = merged.authPass !== undefined ? merged.authPass : null;
+        fields.snmp_v3_priv_protocol = merged.privProtocol !== undefined ? merged.privProtocol : null;
+        fields.snmp_v3_priv_pass = merged.privPass !== undefined ? merged.privPass : null;
+      }
+    }
+  }
+  return { fields };
+}
+
 function findDevice(req) {
   const deviceId = req.query.deviceId || req.params.id || req.body.deviceId;
   if (deviceId === undefined || deviceId === null || deviceId === '') return { id: null, device: null };
@@ -117,7 +201,7 @@ router.get(['/device/listDevices', '/device/list', '/api/json/device/list', '/ap
   res.json({
     status: 'success',
     total: devices.length,
-    devices
+    devices: devices.map((d) => store.publicDevice(d))
   });
 });
 
@@ -136,7 +220,7 @@ router.get(['/device/getDeviceSummary', '/device/getDeviceDetails', '/api/json/d
 
   res.json({
     status: 'success',
-    device,
+    device: store.publicDevice(device),
     deviceSummary: {
       name: device.hostname || device.sys_name || null,
       ipAddress: device.ip,
@@ -407,7 +491,10 @@ router.get(['/device/getPerformanceMonitorDetails', '/api/json/device/getPerform
 // Add Device
 // Stores ONLY what was supplied (IP, name, category, probe, community) with
 // metrics null until the first real poll — no random CPU/memory/disk, no
-// placeholder MAC, no fixed interface traffic.
+// placeholder MAC, no fixed interface traffic. A canonical `snmp` object
+// ({ version, community, v3: {...} }) is accepted and persisted to the
+// flat snmp_* columns (see snmpBodyToFields); the response device is
+// masked via store.publicDevice, so no credential secret is returned.
 router.post(['/api/json/device/add', '/device/add', '/api/devices'], (req, res) => {
   const { ip, name, category, probeId, community, snmpCommunity, snmpVersion, version } = req.body || {};
   if (!ip) {
@@ -415,7 +502,7 @@ router.post(['/api/json/device/add', '/device/add', '/api/devices'], (req, res) 
   }
   const existing = store.getDeviceByIp(ip);
   if (existing) {
-    return res.status(409).json({ status: 'error', message: `Device with IP ${ip} already exists`, device: existing });
+    return res.status(409).json({ status: 'error', message: `Device with IP ${ip} already exists`, device: store.publicDevice(existing) });
   }
   const fields = { ip };
   if (name !== undefined) fields.hostname = name;
@@ -425,6 +512,11 @@ router.post(['/api/json/device/add', '/device/add', '/api/devices'], (req, res) 
   if (suppliedCommunity !== undefined) fields.snmp_community = suppliedCommunity;
   const suppliedVersion = snmpVersion !== undefined ? snmpVersion : version;
   if (suppliedVersion !== undefined) fields.snmp_version = suppliedVersion;
+  const snmpMapped = snmpBodyToFields(req.body, null);
+  if (snmpMapped.error) {
+    return res.status(400).json({ status: 'error', message: snmpMapped.error });
+  }
+  Object.assign(fields, snmpMapped.fields);
   let newDevice;
   try {
     newDevice = store.createDevice(fields);
@@ -435,7 +527,49 @@ router.post(['/api/json/device/add', '/device/add', '/api/devices'], (req, res) 
   res.status(201).json({
     status: 'success',
     message: `Device ${newDevice.hostname || newDevice.ip} (${newDevice.ip}) added${probeName ? ` and assigned to ${probeName}` : ''}`,
-    device: newDevice
+    device: store.publicDevice(newDevice)
+  });
+});
+
+// Update Device — ADMIN-ONLY (canonical merge: tools' merge/clear
+// semantics under the ui track's admin gate). Partial update of a stored
+// device: name, category, probeId, community / snmpCommunity,
+// snmpVersion / version, and the canonical `snmp` object (same shape as
+// add; a partial snmp.v3 merges over the stored v3 set, snmp.v3: null
+// clears the stored v3 credentials). v3 values are validated (400 on bad
+// protocol names, missing user, short passphrases) before anything is
+// persisted. The response device is masked via store.publicDevice —
+// credential secrets are never returned.
+router.put('/api/devices/:id', requireAuth, requireRole('admin'), (req, res) => {
+  const deviceId = req.params.id;
+  const device = store.getDevice(deviceId);
+  if (!device) {
+    return res.status(404).json({ status: 'error', message: 'Device not found' });
+  }
+  const { name, category, probeId, community, snmpCommunity, snmpVersion, version } = req.body || {};
+  const fields = {};
+  if (name !== undefined) fields.hostname = name;
+  if (category !== undefined) fields.category = category;
+  if (probeId !== undefined && probeId !== null && probeId !== '') fields.probe_id = probeId;
+  const suppliedCommunity = community !== undefined ? community : snmpCommunity;
+  if (suppliedCommunity !== undefined) fields.snmp_community = suppliedCommunity;
+  const suppliedVersion = snmpVersion !== undefined ? snmpVersion : version;
+  if (suppliedVersion !== undefined) fields.snmp_version = suppliedVersion;
+  const snmpMapped = snmpBodyToFields(req.body, device);
+  if (snmpMapped.error) {
+    return res.status(400).json({ status: 'error', message: snmpMapped.error });
+  }
+  Object.assign(fields, snmpMapped.fields);
+  let updated;
+  try {
+    updated = store.updateDevice(deviceId, fields);
+  } catch (err) {
+    return res.status(400).json({ status: 'error', message: `Could not update device: ${err && err.message ? err.message : 'store error'}` });
+  }
+  res.json({
+    status: 'success',
+    message: `Device ${updated.hostname || updated.ip} (${updated.ip}) updated`,
+    device: store.publicDevice(updated)
   });
 });
 
@@ -453,7 +587,7 @@ router.post(['/api/json/device/delete', '/api/devices/:id/delete'], (req, res) =
   res.json({
     status: 'success',
     message: `Device ${device.hostname || device.ip} removed from inventory`,
-    deleted: device
+    deleted: store.publicDevice(device)
   });
 });
 
@@ -486,7 +620,7 @@ router.post(['/api/json/device/pollNow', '/device/pollNow', '/api/devices/:id/po
       return res.status(502).json({
         status: 'error',
         message: `Poll of device ${device.hostname || device.ip} (${device.ip}) failed: ${reason}`,
-        device: refreshed || device,
+        device: store.publicDevice(refreshed || device),
         poll: result === undefined ? null : result,
         polledAt: new Date().toISOString()
       });
@@ -494,7 +628,7 @@ router.post(['/api/json/device/pollNow', '/device/pollNow', '/api/devices/:id/po
     res.json({
       status: 'success',
       message: (result && result.message) || `Device ${device.hostname || device.ip} (${device.ip}) polled successfully`,
-      device: refreshed || device,
+      device: store.publicDevice(refreshed || device),
       poll: result === undefined ? null : result,
       polledAt: new Date().toISOString()
     });
@@ -502,7 +636,7 @@ router.post(['/api/json/device/pollNow', '/device/pollNow', '/api/devices/:id/po
     res.status(502).json({
       status: 'error',
       message: `Poll of device ${device.hostname || device.ip} (${device.ip}) failed: ${err && err.message ? err.message : 'poll error'}`,
-      device: store.getDevice(device.id) || device,
+      device: store.publicDevice(store.getDevice(device.id) || device),
       polledAt: new Date().toISOString()
     });
   }
