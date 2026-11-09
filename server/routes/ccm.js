@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const store = require('../services/store');
+const sshclient = require('../services/sshclient');
 
 // NOTE: server/services/store.js currently exports its functions flat
 // (getDevice, listDevices, getConfigs, getProbe, listProbes). The
@@ -13,6 +14,8 @@ const listDevices = () =>
   (store.devices ? store.devices.listDevices() : store.listDevices());
 const getConfigs = (deviceId) =>
   (store.configs ? store.configs.getConfigs(deviceId) : store.getConfigs(deviceId));
+const saveConfig = (deviceId, configType, content) =>
+  (store.configs ? store.configs.saveConfig(deviceId, configType, content) : store.saveConfig(deviceId, configType, content));
 const getProbe = (id) =>
   (store.probes ? store.probes.getProbe(id) : store.getProbe(id));
 
@@ -119,12 +122,12 @@ router.post(['/api/json/enterprise/pushCentralConfig', '/api/ccm/push'], (req, r
   });
 });
 
-// POST /api/ccm/backup-device + /api/ccm/backup — no config retrieval path
-// exists (the poller only refreshes metrics; there is no SSH/TFTP/SNMP
-// config fetch anywhere in server/), so a fresh backup cannot be taken.
-// Unknown device IDs return 404; known devices get an honest 501 — never
-// a success for an invented fallback device or invented line/size counts.
-router.post(['/api/ccm/backup-device', '/api/ccm/backup'], (req, res) => {
+// POST /api/ccm/backup-device + /api/ccm/backup — real SSH "show
+// running-config" / "show startup-config" pull, stored via store.configs.
+// Unknown device IDs return 404; a missing credential or a real connect/auth
+// failure returns an honest error — never a success for data that wasn't
+// actually fetched.
+router.post(['/api/ccm/backup-device', '/api/ccm/backup'], async (req, res) => {
   const deviceId = (req.body || {}).deviceId;
   if (deviceId === undefined || deviceId === null || deviceId === '') {
     return res.status(400).json({ status: 'error', message: 'deviceId is required' });
@@ -134,7 +137,7 @@ router.post(['/api/ccm/backup-device', '/api/ccm/backup'], (req, res) => {
     return res.status(404).json({
       status: 'error',
       message: `Device ${deviceId} not found`,
-      deviceId: deviceId,
+      deviceId,
       deviceName: null,
       ip: null,
       revision: null,
@@ -144,20 +147,57 @@ router.post(['/api/ccm/backup-device', '/api/ccm/backup'], (req, res) => {
       fileSize: null
     });
   }
+  if (!dev.ip) {
+    return res.status(400).json({ status: 'error', message: `Device ${deviceLabel(dev)} has no IP address on file` });
+  }
 
-  return res.status(501).json({
-    status: 'error',
-    error: 'not_implemented',
-    message: 'Configuration backup is not implemented: no SSH/TFTP/SNMP config retrieval path exists, so no configuration was fetched from the device and no backup was written.',
-    deviceId: dev.id,
-    deviceName: deviceLabel(dev),
-    ip: dev.ip || null,
-    revision: null,
-    backupTime: null,
-    complianceStatus: null,
-    linesCount: null,
-    fileSize: null
-  });
+  const cred = sshclient.findSshCredential(store);
+  if (!cred || !cred.username || !cred.password) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'No SSH/CLI credential with a username and password is configured in the Credential Library. Add one under Settings > Credentials before running a backup.'
+    });
+  }
+
+  try {
+    const [runningRaw, startupRaw] = await Promise.all([
+      sshclient.runShowCommand(dev.ip, cred, 'show running-config'),
+      sshclient.runShowCommand(dev.ip, cred, 'show startup-config').catch(() => null)
+    ]);
+
+    const runningConfig = sshclient.cleanConfigOutput(runningRaw, 'show running-config');
+    if (!runningConfig) {
+      throw new Error('Device returned an empty response to "show running-config"');
+    }
+    const runningRow = saveConfig(dev.id, 'running', runningConfig);
+
+    let startupRow = null;
+    if (startupRaw) {
+      const startupConfig = sshclient.cleanConfigOutput(startupRaw, 'show startup-config');
+      if (startupConfig) startupRow = saveConfig(dev.id, 'startup', startupConfig);
+    }
+
+    const lineCount = runningConfig.split(/\r?\n/).length;
+    const byteSize = Buffer.byteLength(runningConfig, 'utf8');
+
+    res.json({
+      status: 'success',
+      message: `Running configuration${startupRow ? ' and startup configuration' : ''} successfully backed up for ${deviceLabel(dev)} (${dev.ip}) via SSH`,
+      deviceId: dev.id,
+      deviceName: deviceLabel(dev),
+      ip: dev.ip,
+      configId: runningRow.id,
+      backupTime: toIso(runningRow.fetched_at),
+      linesCount: lineCount,
+      fileSize: `${(byteSize / 1024).toFixed(1)} KB`,
+      startupCaptured: Boolean(startupRow)
+    });
+  } catch (err) {
+    res.status(502).json({
+      status: 'error',
+      message: `SSH backup failed for ${deviceLabel(dev)} (${dev.ip}): ${err.message}`
+    });
+  }
 });
 
 module.exports = router;
