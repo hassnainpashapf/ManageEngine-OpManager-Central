@@ -65,8 +65,9 @@ router.all(['/servlets/RegisterAgent', '/servlets/AgentRegisterServlet'], (req, 
   }
 
   const clientIP = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1').replace('::ffff:', '');
+  const agentIP = body.ipAddress || body.ip || body.IP_ADDRESS || clientIP;
   const agentId = body.agentId || body.AGENT_ID || body.agent_id || `AGT-${Date.now()}`;
-  const hostname = body.hostname || body.HOSTNAME || body.computerName || body.COMPUTER_NAME || body.hostName || `Windows-Host-${clientIP.replace(/\./g, '-')}`;
+  const hostname = body.hostname || body.HOSTNAME || body.computerName || body.COMPUTER_NAME || body.hostName || `Windows-Host-${agentIP.replace(/\./g, '-')}`;
   const os = (body.os || body.osName || body.OS_NAME || 'windows').toLowerCase();
   const platform = body.platform || body.osVersion || body.OS_VERSION || (os.includes('win') ? 'Windows 10/11 / Server 2022' : 'Linux x86_64');
   const probeId = Number(body.probeId || body.PROBE_ID || 101);
@@ -79,7 +80,7 @@ router.all(['/servlets/RegisterAgent', '/servlets/AgentRegisterServlet'], (req, 
     platform,
     arch: 'x64',
     probeId,
-    ip: clientIP,
+    ip: agentIP,
     version: body.agentVersion || body.AGENT_VERSION || '12.9.203-GA',
     status: 'Online',
     registeredAt: new Date().toISOString(),
@@ -94,12 +95,12 @@ router.all(['/servlets/RegisterAgent', '/servlets/AgentRegisterServlet'], (req, 
   registeredAgents.set(agentId, agentRecord);
 
   // Auto add / update device in Central Inventory
-  let dev = db.getDevices().find(d => d.ip === clientIP || d.name === hostname);
+  let dev = db.getDevices().find(d => d.ip === agentIP || d.name === hostname);
   if (!dev) {
     dev = db.addDevice({
       name: hostname,
       displayName: `${hostname} (${os.includes('win') ? 'Windows Workstation/Server' : 'Remote Host'})`,
-      ip: clientIP,
+      ip: agentIP,
       category: 'Servers',
       type: os.includes('win') ? 'Windows Server' : 'Linux Node',
       vendor: os.includes('win') ? 'Microsoft Corp.' : 'Linux Foundation',
