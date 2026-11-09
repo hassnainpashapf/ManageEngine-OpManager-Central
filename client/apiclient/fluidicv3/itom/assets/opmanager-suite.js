@@ -11567,29 +11567,6 @@
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.configuration || 'compliance';
 
-    if (state.devices.length === 0) {
-      container.innerHTML = `
-        <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 12px 24px;">
-          <span style="font-size: 14px; font-weight: 700; color: #1e293b;">Network Configuration &amp; Compliance Management (NCM)</span>
-        </div>
-        <div style="padding: 60px 20px; text-align: center; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; margin: 24px;">
-          <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No Devices Configured for NCM</div>
-          <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 20px auto; line-height: 1.5;">
-            All demo device configurations have been cleared. Once you discover Cisco, HP, Fortinet, or Juniper network devices, automated configuration backups, compliance audits, and live drift diffs will display here.
-          </div>
-          <div style="display: flex; justify-content: center; gap: 10px;">
-            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Add Network Device
-            </button>
-          </div>
-        </div>
-      `;
-      return;
-    }
-
     const subtabs = [
       { id: 'compliance', name: 'Compliance' },
       { id: 'changes', name: 'Config Changes & Drift' },
