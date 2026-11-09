@@ -9,7 +9,11 @@ RUN apk add --no-cache iputils iproute2 traceroute curl net-tools
 COPY package*.json ./
 
 # Install production dependencies
-RUN npm ci --only=production
+# NOTE: npm install (not npm ci) — ssh2's optional native deps
+# (cpu-features, nan) have no resolved entries in package-lock.json,
+# and npm ci hard-fails on that (EUSAGE). npm install tolerates them;
+# ssh2 works without them.
+RUN npm install --omit=dev
 
 # Copy project files (.dockerignore excludes .git, node_modules, scripts,
 # docs, and the runtime/seed data files — no seed.json, db.json, SQLite DB,
