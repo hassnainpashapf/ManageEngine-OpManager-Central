@@ -27,6 +27,94 @@ const SESSION_COOKIE = 'opm_session';
 const SESSION_TTL_MS = 8 * 60 * 60 * 1000; // 8 hours
 const MIN_PASSWORD_LENGTH = 10;
 
+// ---------------------------------------------------------------------------
+// Login brute-force protection (gap B).
+//
+// Per-account AND per-IP counting: N failed logins inside a window locks
+// that account (and that IP) for a lockout period. The lockout is checked
+// BEFORE password verification, so a correct password presented during a
+// lockout is still refused — there is no bypass. Every attempt (success,
+// failure, locked) is written to the store's audit_log via
+// store.audit.log; a failed audit write never breaks login. Counters live
+// in memory (they reset if the server restarts); audit rows are the
+// durable record. Thresholds are env-overridable so tests can use a short
+// window without touching the production defaults (5 failures in 15 min
+// -> locked for 15 min).
+// ---------------------------------------------------------------------------
+function envPositiveInt(name, fallback) {
+  const value = Number(process.env[name]);
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
+}
+
+const LOGIN_MAX_ATTEMPTS = envPositiveInt('OPM_LOGIN_MAX_ATTEMPTS', 5);
+const LOGIN_ATTEMPT_WINDOW_MS = envPositiveInt(
+  'OPM_LOGIN_ATTEMPT_WINDOW_MS',
+  15 * 60 * 1000
+);
+const LOGIN_LOCKOUT_MS = envPositiveInt('OPM_LOGIN_LOCKOUT_MS', 15 * 60 * 1000);
+
+// key -> { failures: [epoch ms, ...], lockedUntil: epoch ms (0 = not locked) }
+const loginAttempts = { account: new Map(), ip: new Map() };
+
+function clientIp(req) {
+  const raw = req.ip || (req.socket && req.socket.remoteAddress) || 'unknown';
+  return String(raw).replace(/^::ffff:/, '');
+}
+
+function pruneAttempts(map, key, now) {
+  const record = map.get(key);
+  if (!record) return null;
+  record.failures = record.failures.filter((t) => now - t < LOGIN_ATTEMPT_WINDOW_MS);
+  if (record.failures.length === 0 && !(record.lockedUntil && record.lockedUntil > now)) {
+    map.delete(key);
+    return null;
+  }
+  return record;
+}
+
+function lockedUntilFor(map, key, now) {
+  const record = pruneAttempts(map, key, now);
+  return record && record.lockedUntil && record.lockedUntil > now ? record.lockedUntil : 0;
+}
+
+function recordFailedAttempt(map, key, now) {
+  let record = pruneAttempts(map, key, now);
+  if (!record) {
+    record = { failures: [], lockedUntil: 0 };
+    map.set(key, record);
+  }
+  record.failures.push(now);
+  if (record.failures.length >= LOGIN_MAX_ATTEMPTS) {
+    record.lockedUntil = now + LOGIN_LOCKOUT_MS;
+  }
+  return record;
+}
+
+function clearAttempts(map, key) {
+  map.delete(key);
+}
+
+/** Best-effort audit write: never throws, never breaks login. */
+function auditLogin(action, username, ip, detail) {
+  try {
+    const store = getStore();
+    if (store.audit && typeof store.audit.log === 'function') {
+      store.audit.log(username || null, action, { ip, ...(detail || {}) });
+    }
+  } catch {
+    // Audit logging must never fail a login attempt.
+  }
+}
+
+function lockedResponse(res, lockedUntil) {
+  const retryAfterSeconds = Math.max(1, Math.ceil((lockedUntil - Date.now()) / 1000));
+  res.set('Retry-After', String(retryAfterSeconds));
+  return res.status(429).json({
+    error: 'too many failed login attempts; try again later',
+    retryAfterSeconds,
+  });
+}
+
 // Store access is lazy: the store service is built in parallel to the same
 // contract (store.users / store.sessions). Nothing here requires it at load.
 let cachedStore = null;
@@ -198,12 +286,47 @@ router.post('/api/auth/login', async (req, res, next) => {
     ) {
       return res.status(401).json({ error: 'invalid credentials' });
     }
+    const now = Date.now();
+    const ip = clientIp(req);
+    // Lockout is checked BEFORE password verification and applies even to
+    // correct credentials: there is no bypass around it.
+    const lockedUntil = Math.max(
+      lockedUntilFor(loginAttempts.account, username, now),
+      lockedUntilFor(loginAttempts.ip, ip, now)
+    );
+    if (lockedUntil > now) {
+      auditLogin('login.locked', username, ip, {
+        lockedUntil: new Date(lockedUntil).toISOString(),
+      });
+      return lockedResponse(res, lockedUntil);
+    }
     const store = getStore();
     const user = await store.users.getUserByUsername(username);
     if (!user || !verifyPassword(password, storedHash(user))) {
+      const accountRecord = recordFailedAttempt(loginAttempts.account, username, now);
+      const ipRecord = recordFailedAttempt(loginAttempts.ip, ip, now);
+      const newlyLockedUntil = Math.max(
+        accountRecord.lockedUntil || 0,
+        ipRecord.lockedUntil || 0
+      );
+      if (newlyLockedUntil > now) {
+        auditLogin('login.locked', username, ip, {
+          lockedUntil: new Date(newlyLockedUntil).toISOString(),
+          failedAttempts: LOGIN_MAX_ATTEMPTS,
+        });
+        return lockedResponse(res, newlyLockedUntil);
+      }
       // Generic failure: never reveal whether the user exists.
+      auditLogin('login.failed', username, ip, {
+        failedAttempts: accountRecord.failures.length,
+      });
       return res.status(401).json({ error: 'invalid credentials' });
     }
+    // Success: clear the counters so a legitimate login is never punished
+    // for earlier failures.
+    clearAttempts(loginAttempts.account, username);
+    clearAttempts(loginAttempts.ip, ip);
+    auditLogin('login.success', username, ip, {});
     await issueSession(res, req, user);
     // Best-effort last-login stamp; a store that rejects the field must
     // never fail an otherwise successful login.

@@ -45,6 +45,16 @@ try {
 const requireAuth = (session && typeof session.requireAuth === 'function')
   ? session.requireAuth
   : (req, res, next) => res.status(401).json({ error: 'unauthorized', message: 'Authentication service unavailable' });
+// Must-change-password guard (server/services/session.js): a session flagged
+// must-change may only call the password-change route and the session/status
+// route; every other API route 403s until the password is changed. If the
+// session service is missing requirePasswordChanged, fail CLOSED (403) — a
+// flag that cannot be verified must never be treated as cleared. (When the
+// session service itself is missing, requireAuth above already 401s, so
+// this fallback is only reached with a stale session.js.)
+const requirePasswordChanged = (session && typeof session.requirePasswordChanged === 'function')
+  ? session.requirePasswordChanged
+  : (req, res, next) => res.status(403).json({ error: 'password change required', message: 'Authentication service unavailable' });
 
 function parseCookies(header) {
   const out = {};
@@ -141,6 +151,12 @@ const PUBLIC_API_ROUTES = new Set([
 //    enrolls agents via POST /api/agents/register, which takes requireAuth).
 //  - POST /api/agent/deregister is key-authenticated the same way as
 //    telemetry, so it is exempt on the same basis.
+//  - GET /api/agent/list is exempt because the Go agent's -test flow GETs
+//    it with only its eeauthkey. agents.js enforces the key check itself
+//    (valid agent one-time key or probe key hash, else a valid admin
+//    session for console callers) — the route is never open. Missing or
+//    wrong key and no session => 401. GET /api/agents stays session-only
+//    (not exempt) as the console alias.
 // Probe sync endpoints (/api/probes/:id/sync, /api/probes/sync-all,
 // /api/json/enterprise/sync*) are NOT exempt: they perform no key check and
 // are console operations, so they stay behind requireAuth.
@@ -148,6 +164,15 @@ const KEY_AUTH_API_ROUTES = new Set([
   'POST /api/agent/register',
   'POST /api/agent/telemetry',
   'POST /api/agent/deregister',
+  'GET /api/agent/list',
+]);
+
+// Password-change route: the ONLY session-authenticated API route a
+// must-change-password session may call (besides GET /api/auth/session,
+// already public-exempt above). It must stay reachable or a flagged
+// session could never clear its own flag.
+const PASSWORD_CHANGE_ROUTES = new Set([
+  'POST /api/auth/change-password',
 ]);
 
 // Legacy ManageEngine paths served by the same routers without an /api
@@ -185,7 +210,18 @@ function apiAuthGuard(req, res, next) {
   const normalizedKey = `${req.method} ${normalizeApiPath(pathname)}`;
   if (PUBLIC_API_ROUTES.has(key) || PUBLIC_API_ROUTES.has(normalizedKey)) return next();
   if (KEY_AUTH_API_ROUTES.has(key) || KEY_AUTH_API_ROUTES.has(normalizedKey)) return next();
-  return requireAuth(req, res, next);
+  // The password-change route still needs a valid session, but must not be
+  // blocked by the must-change guard — it is the way out of the flag.
+  if (PASSWORD_CHANGE_ROUTES.has(key) || PASSWORD_CHANGE_ROUTES.has(normalizedKey)) {
+    return requireAuth(req, res, next);
+  }
+  // Every other API route: valid session AND no pending forced password
+  // change. requireAuth sets req.user; requirePasswordChanged answers 403
+  // while that user is flagged must-change-password.
+  return requireAuth(req, res, (err) => {
+    if (err) return next(err);
+    return requirePasswordChanged(req, res, next);
+  });
 }
 
 const app = express();
@@ -316,7 +352,7 @@ app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'],
 // server/data/logs. No lines are synthesised: when the file does not exist
 // (or no logs directory exists yet) this answers 404 with an honest
 // message instead of inventing log content.
-app.get('/logs/:file', requireAuth, (req, res) => {
+app.get('/logs/:file', requireAuth, requirePasswordChanged, (req, res) => {
   const base = path.basename(String(req.params.file || 'opmanager_server.log'));
   const logDirs = [
     path.join(__dirname, 'logs'),
@@ -560,3 +596,29 @@ server.listen(PORT, () => {
     console.error('[Poller] startPoller FAILED (startup continues; polling is off):', e && e.message ? e.message : e);
   }
 });
+
+// Graceful shutdown: checkpoint the WAL into opmanager.db and close the
+// database before exiting, so sessions (and all other state) survive a
+// restart in the main .db file alone instead of depending on the -wal
+// sidecar. Without this, a SIGTERM/SIGINT stop left every recent write —
+// including the session row created at login — only in the -wal file.
+// All store writes are synchronous (node:sqlite DatabaseSync), so no
+// in-flight DB write can be half-done when this runs. The handler is
+// idempotent and never blocks the exit: a checkpoint failure is logged
+// and the process still exits.
+let shuttingDown = false;
+function gracefulShutdown(signal) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  console.log(`[Shutdown] ${signal} received — checkpointing database...`);
+  try {
+    if (store && typeof store.checkpointAndClose === 'function') {
+      store.checkpointAndClose();
+    }
+  } catch (e) {
+    console.error('[Shutdown] database checkpoint failed:', e && e.message ? e.message : e);
+  }
+  process.exit(0);
+}
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));

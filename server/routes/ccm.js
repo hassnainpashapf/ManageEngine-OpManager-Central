@@ -76,7 +76,13 @@ router.get('/api/ccm/configs', (req, res) => {
 // transport, no acknowledgement handling anywhere in server/), so a push
 // cannot be performed. Honest 501 instead of rewriting a local status
 // string and claiming probes acknowledged it.
-router.post(['/api/json/enterprise/pushCentralConfig', '/api/ccm/push'], (req, res) => {
+// NOTE: the '/enterprise/pushCentralConfig' entry is the legacy alias in
+// its post-rewrite form — server/index.js strips the '/api/json' prefix
+// before routing, so the literal '/api/json/enterprise/pushCentralConfig'
+// entry below can never match on its own (verified live: it 404'd before
+// this alias was added). The literal entry is kept for consistency with
+// the sibling route files, which list both forms.
+router.post(['/api/json/enterprise/pushCentralConfig', '/enterprise/pushCentralConfig', '/api/ccm/push'], (req, res) => {
   const { configurationType, targetProbeId } = req.body || {};
   if (!configurationType) {
     return res.status(400).json({ status: 'error', message: 'configurationType is required' });

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const store = require('../services/store');
 const poller = require('../services/poller');
+const { requireAuth, requireRole } = require('../services/session');
 
 // ---------------------------------------------------------------------------
 // Real-data rebuild (2026-11-09): every value on this route comes from the
@@ -407,7 +408,7 @@ router.get(['/device/getPerformanceMonitorDetails', '/api/json/device/getPerform
 // Stores ONLY what was supplied (IP, name, category, probe, community) with
 // metrics null until the first real poll — no random CPU/memory/disk, no
 // placeholder MAC, no fixed interface traffic.
-router.post(['/api/json/device/add', '/api/devices'], (req, res) => {
+router.post(['/api/json/device/add', '/device/add', '/api/devices'], (req, res) => {
   const { ip, name, category, probeId, community, snmpCommunity, snmpVersion, version } = req.body || {};
   if (!ip) {
     return res.status(400).json({ status: 'error', message: 'Device IP is required' });
@@ -459,7 +460,7 @@ router.post(['/api/json/device/delete', '/api/devices/:id/delete'], (req, res) =
 // Poll Device Immediately (Manual / Live SNMP Trigger)
 // D5 fixed: delegates to the real poller (poller.pollDeviceNow) and returns
 // its real result. No simulated fetch, no random RTT/CPU/memory.
-router.post(['/api/json/device/pollNow', '/api/devices/:id/poll-now'], async (req, res) => {
+router.post(['/api/json/device/pollNow', '/device/pollNow', '/api/devices/:id/poll-now'], async (req, res) => {
   const deviceId = (req.body && req.body.deviceId) || req.query.deviceId || req.params.id;
   const device = deviceId ? store.getDevice(deviceId) : null;
   if (!device) {
@@ -721,6 +722,157 @@ router.get(['/api/inventory/firewall-rules', '/inventory/firewall-rules'], (req,
     status: 'success',
     totalRules: FIREWALL_RULES.length,
     rules: FIREWALL_RULES
+  });
+});
+
+// -------------------------------------------------------------
+// PER-DEVICE ALARM THRESHOLDS (admin only)
+// The poller evaluates CPU/memory against these values; a device with
+// no stored row uses the poller defaults (cpu_critical 90, cpu_trouble
+// 80, mem_critical 90). Stored values are percentages: each must be a
+// number > 0 and <= 100, and cpu_trouble must be below cpu_critical
+// (checked against the merged effective values, so a partial update
+// cannot create an inverted pair).
+// -------------------------------------------------------------
+const THRESHOLD_FIELDS = ['cpu_critical', 'cpu_trouble', 'mem_critical'];
+const THRESHOLD_ALIASES = { cpuCritical: 'cpu_critical', cpuTrouble: 'cpu_trouble', memCritical: 'mem_critical' };
+
+// Defaults live in the poller (single source of truth); fall back to the
+// literal values only if the poller export is unavailable.
+const THRESHOLD_DEFAULTS = (poller && poller.DEFAULT_THRESHOLDS)
+  ? { cpu_critical: poller.DEFAULT_THRESHOLDS.cpuCritical, cpu_trouble: poller.DEFAULT_THRESHOLDS.cpuTrouble, mem_critical: poller.DEFAULT_THRESHOLDS.memCritical }
+  : { cpu_critical: 90, cpu_trouble: 80, mem_critical: 90 };
+
+function effectiveThresholds(deviceId) {
+  if (poller && typeof poller.resolveDeviceThresholds === 'function') {
+    const t = poller.resolveDeviceThresholds(store, deviceId);
+    return { cpu_critical: t.cpuCritical, cpu_trouble: t.cpuTrouble, mem_critical: t.memCritical };
+  }
+  const row = store.thresholds.getDeviceThresholds(deviceId) || {};
+  return {
+    cpu_critical: row.cpu_critical ?? THRESHOLD_DEFAULTS.cpu_critical,
+    cpu_trouble: row.cpu_trouble ?? THRESHOLD_DEFAULTS.cpu_trouble,
+    mem_critical: row.mem_critical ?? THRESHOLD_DEFAULTS.mem_critical,
+  };
+}
+
+// Validate a threshold request body. Accepts snake_case field names
+// (cpu_critical, cpu_trouble, mem_critical) and camelCase aliases.
+// Returns { values, errors }; values holds only the valid fields.
+function parseThresholdInput(body) {
+  const values = {};
+  const errors = [];
+  const input = (body && typeof body === 'object' && !Array.isArray(body)) ? body : {};
+  for (const [key, raw] of Object.entries(input)) {
+    const field = THRESHOLD_ALIASES[key] || key;
+    if (!THRESHOLD_FIELDS.includes(field)) {
+      errors.push(`unknown field '${key}' (expected one of: ${THRESHOLD_FIELDS.join(', ')})`);
+      continue;
+    }
+    const num = typeof raw === 'number' ? raw
+      : (typeof raw === 'string' && raw.trim() !== '' ? Number(raw) : NaN);
+    if (!Number.isFinite(num)) {
+      errors.push(`'${field}' must be a number (got ${JSON.stringify(raw)})`);
+      continue;
+    }
+    if (num <= 0 || num > 100) {
+      errors.push(`'${field}' must be > 0 and <= 100 (got ${num})`);
+      continue;
+    }
+    values[field] = num;
+  }
+  return { values, errors };
+}
+
+function auditThresholdChange(req, device, action, detail) {
+  try {
+    const user = req.user && req.user.username ? req.user.username : null;
+    store.audit.log(user, action, { deviceId: device.id, ip: device.ip, ...detail });
+  } catch (err) {
+    console.error(`[devices] threshold audit log failed: ${err.message}`);
+  }
+}
+
+// GET /api/devices/:id/thresholds — effective thresholds for a device,
+// plus whether they are customized or the poller defaults.
+router.get('/api/devices/:id/thresholds', requireAuth, requireRole('admin'), (req, res) => {
+  const device = store.getDevice(req.params.id);
+  if (!device) {
+    return res.status(404).json({ status: 'error', message: 'Device not found' });
+  }
+  const row = store.thresholds.getDeviceThresholds(device.id);
+  res.json({
+    status: 'success',
+    deviceId: device.id,
+    customized: !!row,
+    thresholds: effectiveThresholds(device.id),
+    custom: row ? {
+      cpu_critical: row.cpu_critical ?? null,
+      cpu_trouble: row.cpu_trouble ?? null,
+      mem_critical: row.mem_critical ?? null,
+    } : { cpu_critical: null, cpu_trouble: null, mem_critical: null },
+    defaults: { ...THRESHOLD_DEFAULTS },
+  });
+});
+
+// PUT /api/devices/:id/thresholds — set (partially or fully) a device's
+// thresholds. Merges with any previously stored values.
+router.put('/api/devices/:id/thresholds', requireAuth, requireRole('admin'), (req, res) => {
+  const device = store.getDevice(req.params.id);
+  if (!device) {
+    return res.status(404).json({ status: 'error', message: 'Device not found' });
+  }
+  const { values, errors } = parseThresholdInput(req.body);
+  if (errors.length) {
+    return res.status(400).json({ status: 'error', message: errors.join('; ') });
+  }
+  if (!Object.keys(values).length) {
+    return res.status(400).json({ status: 'error', message: 'No threshold fields supplied (cpu_critical, cpu_trouble, mem_critical)' });
+  }
+  // Ordering check against the merged effective values, so a partial
+  // update (e.g. only cpu_trouble) cannot invert the pair.
+  const merged = { ...effectiveThresholds(device.id), ...values };
+  if (merged.cpu_trouble >= merged.cpu_critical) {
+    return res.status(400).json({
+      status: 'error',
+      message: `cpu_trouble (${merged.cpu_trouble}) must be less than cpu_critical (${merged.cpu_critical})`,
+    });
+  }
+  const saved = store.thresholds.setDeviceThresholds(device.id, values);
+  auditThresholdChange(req, device, 'device.thresholds.update', { set: values });
+  res.json({
+    status: 'success',
+    message: `Thresholds updated for device ${device.hostname || device.ip} (${device.ip})`,
+    deviceId: device.id,
+    customized: true,
+    thresholds: effectiveThresholds(device.id),
+    custom: {
+      cpu_critical: saved.cpu_critical ?? null,
+      cpu_trouble: saved.cpu_trouble ?? null,
+      mem_critical: saved.mem_critical ?? null,
+    },
+    defaults: { ...THRESHOLD_DEFAULTS },
+  });
+});
+
+// DELETE /api/devices/:id/thresholds — remove a device's custom
+// thresholds; the poller defaults apply again from the next evaluation.
+router.delete('/api/devices/:id/thresholds', requireAuth, requireRole('admin'), (req, res) => {
+  const device = store.getDevice(req.params.id);
+  if (!device) {
+    return res.status(404).json({ status: 'error', message: 'Device not found' });
+  }
+  const removed = store.thresholds.deleteDeviceThresholds(device.id);
+  auditThresholdChange(req, device, 'device.thresholds.reset', { removed: removed.deleted });
+  res.json({
+    status: 'success',
+    message: removed.deleted
+      ? `Custom thresholds removed for device ${device.hostname || device.ip} (${device.ip}); poller defaults apply`
+      : `Device ${device.hostname || device.ip} (${device.ip}) had no custom thresholds; poller defaults already apply`,
+    deviceId: device.id,
+    customized: false,
+    thresholds: effectiveThresholds(device.id),
+    defaults: { ...THRESHOLD_DEFAULTS },
   });
 });
 

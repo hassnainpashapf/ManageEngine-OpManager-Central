@@ -29,6 +29,14 @@ fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 const db = new DatabaseSync(DB_PATH);
 db.exec('PRAGMA journal_mode = WAL;');
 db.exec('PRAGMA foreign_keys = ON;');
+// Sessions (and all other state) must survive a server restart, not just a
+// graceful one: WAL's default synchronous=NORMAL only guarantees a commit
+// survives a *process* crash, not an OS/host crash, and without a checkpoint
+// every recent write — including the session row created at login — lives
+// only in the -wal sidecar, not in opmanager.db itself. FULL makes each
+// commit fsync before the caller returns, so a login's session row is
+// durable the moment the login response is sent.
+db.exec('PRAGMA synchronous = FULL;');
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS users (
@@ -204,6 +212,19 @@ CREATE TABLE IF NOT EXISTS settings (
   value TEXT
 );
 
+-- Per-device alarm thresholds. A row exists only when an admin has
+-- customized the device; absence means "use the poller's defaults"
+-- (CPU critical 90, CPU trouble 80, memory critical 90). A column is
+-- NULL when that one threshold was never customized, so a partial
+-- customization keeps the default for the rest.
+CREATE TABLE IF NOT EXISTS device_thresholds (
+  device_id INTEGER PRIMARY KEY REFERENCES devices(id) ON DELETE CASCADE,
+  cpu_critical REAL,
+  cpu_trouble REAL,
+  mem_critical REAL,
+  updated_at INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS audit_log (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user TEXT,
@@ -240,6 +261,36 @@ if (!_alarmColumns.includes('rca_status')) {
 
 function now() {
   return Date.now();
+}
+
+/**
+ * Checkpoint the WAL into the main database file and close the connection.
+ * Called by the server's SIGTERM/SIGINT shutdown handler so that after a
+ * normal stop/restart all state — including sessions — lives in
+ * opmanager.db itself and no longer depends on the -wal sidecar surviving
+ * alongside it (a backup, copy, or redeploy that moves only the .db file
+ * would otherwise lose every write since the last checkpoint). The
+ * checkpoint is best-effort (it reports busy if another connection is
+ * mid-transaction) and the close is best-effort (unfinalized prepared
+ * statements can make close() throw); either way the caller exits right
+ * after, so a failure here must never hang shutdown. Returns true when
+ * the checkpoint ran without error.
+ */
+function checkpointAndClose() {
+  let ok = false;
+  try {
+    db.exec('PRAGMA wal_checkpoint(TRUNCATE);');
+    ok = true;
+  } catch {
+    ok = false;
+  }
+  try {
+    db.close();
+  } catch {
+    // Best-effort: the process is exiting and the checkpoint above is
+    // what makes the data durable.
+  }
+  return ok;
 }
 
 function toRow(r) {
@@ -417,6 +468,41 @@ function deleteDevice(id) {
   }
 }
 
+// ------------------------------------------------- device thresholds ---
+// Per-device alarm thresholds (see schema comment on device_thresholds).
+// setDeviceThresholds merges: only the fields supplied are changed, the
+// rest keep their previously stored value (or NULL = poller default).
+// Range/ordering validation lives in the API route, not here.
+
+function getDeviceThresholds(deviceId) {
+  return toRow(db.prepare('SELECT * FROM device_thresholds WHERE device_id = ?').get(deviceId));
+}
+
+function setDeviceThresholds(deviceId, fields) {
+  const f = fields || {};
+  const existing = getDeviceThresholds(deviceId) || {};
+  const merged = {
+    cpu_critical: f.cpu_critical !== undefined ? f.cpu_critical : existing.cpu_critical ?? null,
+    cpu_trouble: f.cpu_trouble !== undefined ? f.cpu_trouble : existing.cpu_trouble ?? null,
+    mem_critical: f.mem_critical !== undefined ? f.mem_critical : existing.mem_critical ?? null,
+  };
+  db.prepare(
+    `INSERT INTO device_thresholds (device_id, cpu_critical, cpu_trouble, mem_critical, updated_at)
+     VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT(device_id) DO UPDATE SET
+       cpu_critical = excluded.cpu_critical,
+       cpu_trouble = excluded.cpu_trouble,
+       mem_critical = excluded.mem_critical,
+       updated_at = excluded.updated_at`
+  ).run(deviceId, merged.cpu_critical, merged.cpu_trouble, merged.mem_critical, now());
+  return getDeviceThresholds(deviceId);
+}
+
+function deleteDeviceThresholds(deviceId) {
+  const info = db.prepare('DELETE FROM device_thresholds WHERE device_id = ?').run(deviceId);
+  return { deleted: info.changes };
+}
+
 // ----------------------------------------------------------- interfaces ---
 
 function replaceInterfaces(deviceId, rows) {
@@ -567,6 +653,34 @@ function setRcaStatus(alarmId, status) {
   if (!getAlarm(alarmId)) return null;
   db.prepare('UPDATE alarms SET rca_status = ? WHERE id = ?').run(status ?? null, alarmId);
   return getAlarm(alarmId);
+}
+
+// ------------------------------------------------------- data retention ---
+// Gap E: retention enforcement. Deletes time-series rows (metrics) and
+// resolved alarm history (alarms with status 'cleared') older than the
+// cutoff. Active / acknowledged alarms are LIVE state, not history — they
+// are NEVER purged here; their surviving count is reported so callers can
+// say so honestly. alarm_notes of purged alarms go with them via the
+// ON DELETE CASCADE foreign key (PRAGMA foreign_keys = ON, above).
+// Parameterised DELETEs only, on the store's own connection.
+function purgeOlderThan(cutoffMs) {
+  const cutoff = Number(cutoffMs);
+  if (!Number.isFinite(cutoff)) {
+    throw new Error('purgeOlderThan: cutoff must be a finite epoch-ms number');
+  }
+  const metrics = db.prepare('DELETE FROM metrics WHERE ts < ?').run(cutoff);
+  const alarms = db
+    .prepare("DELETE FROM alarms WHERE created_at < ? AND status = 'cleared'")
+    .run(cutoff);
+  const kept = db
+    .prepare("SELECT COUNT(*) AS n FROM alarms WHERE created_at < ? AND status != 'cleared'")
+    .get(cutoff);
+  return {
+    metricsDeleted: metrics.changes,
+    alarmsDeleted: alarms.changes,
+    activeAlarmsKept: kept ? kept.n : 0,
+    cutoffMs: cutoff,
+  };
 }
 
 // --------------------------------------------------------------- probes ---
@@ -923,6 +1037,8 @@ function listTraps(limit) {
 // --------------------------------------------------------------- exports ---
 
 module.exports = {
+  // store lifecycle
+  checkpointAndClose,
   // users
   createUser,
   getUserByUsername,
@@ -940,6 +1056,10 @@ module.exports = {
   updateDevice,
   updateDeviceMetrics,
   deleteDevice,
+  // device thresholds
+  getDeviceThresholds,
+  setDeviceThresholds,
+  deleteDeviceThresholds,
   // interfaces
   replaceInterfaces,
   listInterfaces,
@@ -947,6 +1067,8 @@ module.exports = {
   insertMetric,
   getMetrics,
   getLatestMetric,
+  // retention (gap E)
+  purgeOlderThan,
   // alarms
   raiseAlarm,
   listAlarms,
@@ -1027,6 +1149,7 @@ module.exports = {
     updateDeviceMetrics,
     deleteDevice,
   },
+  thresholds: { getDeviceThresholds, setDeviceThresholds, deleteDeviceThresholds },
   interfaces: { replaceInterfaces, listInterfaces },
   metrics: { insertMetric, getMetrics, getLatestMetric },
   alarms: {

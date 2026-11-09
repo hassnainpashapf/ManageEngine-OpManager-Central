@@ -8,6 +8,13 @@
  *    real SNMP GET of sysDescr/sysObjectID (snmp.getSystemInfo) with the
  *    supplied community. Only hosts that actually answer are returned or
  *    created as devices. No sample catalog, no random selection.
+ *    ICMP and SNMP are INDEPENDENT evidence: when ping fails or is
+ *    unavailable (ICMP-less / sandboxed environment), the SNMP identity
+ *    check is still attempted, and a host that answers SNMP is
+ *    discovered with response_ms null (no ICMP measurement was made —
+ *    never a fabricated number). discoverHost returns null only when
+ *    BOTH probes fail, and logs which step failed so a run's history
+ *    shows the real reason instead of a silent found_count 0.
  *  - D3: discovered devices are created with cpu_pct / mem_used_pct null
  *    until a real poll measures them. response_ms is the measured ICMP
  *    round-trip time; uptime_ticks is the real sysUpTime when SNMP
@@ -292,21 +299,58 @@ router.get('/api/discovery/history', (req, res) => {
 
 /**
  * discoverHost(ip, opts) → stored device row, or null when the host
- * did not answer the ICMP sweep. A host that answers ping but not SNMP
- * is still discovered (category 'unknown', sysDescr null) — ping and
- * SNMP health are separate states (OID reference §7).
+ * answered NEITHER the ICMP probe NOR the SNMP identity check.
+ * ICMP and SNMP are independent evidence, not a chain:
+ *  - ping answers, SNMP fails → host is real, SNMP data is not;
+ *    discovered (category 'unknown', sysDescr null) with the measured
+ *    response_ms.
+ *  - ping fails/unavailable (ICMP blocked, sandbox without raw
+ *    sockets), SNMP answers → host is real; discovered with
+ *    response_ms null — no ICMP measurement was made, never a guess.
+ *  - BOTH fail → null. The failure is logged with the step that
+ *    failed (ping unavailable vs SNMP failed) so the run's history
+ *    shows the real reason; a null is never silently "host down"
+ *    on ICMP alone, because ICMP failure alone proves nothing about
+ *    the host.
  */
 async function discoverHost(ip, opts) {
   const rtt = await ping.pingMs(ip);
-  if (rtt === null) return null;
+  if (rtt === null) {
+    // ICMP gave no measurement — the host may still be up and SNMP-
+    // reachable (ICMP-less environment), so SNMP is still attempted.
+    console.warn(`[Discovery] ${ip}: ICMP ping failed/unavailable — attempting SNMP anyway`);
+  }
 
   let info = null;
+  let snmpError = null;
   try {
     info = await snmp.getSystemInfo(ip, opts.community);
   } catch (e) {
-    // SNMP down / wrong community / SNMP disabled — host is real,
-    // SNMP data is not. Record that, never a guess.
+    // SNMP down / wrong community / SNMP disabled / host unreachable.
+    // Record the error, never a guess.
+    snmpError = e;
     info = null;
+  }
+
+  if (rtt === null && info === null) {
+    // Neither probe answered: host down, unreachable, or both protocols
+    // blocked from here. Both failures are on the record, so the run's
+    // history says why — not just a silent found_count 0.
+    console.warn(
+      `[Discovery] ${ip}: not discovered — ICMP ping failed and SNMP failed` +
+        (snmpError ? ` (${snmpError.message || snmpError})` : '')
+    );
+    return null;
+  }
+
+  if (info === null) {
+    console.warn(
+      `[Discovery] ${ip}: ICMP answered (${rtt} ms) but SNMP failed` +
+        (snmpError ? ` (${snmpError.message || snmpError})` : '') +
+        ' — discovered without SNMP data'
+    );
+  } else if (rtt === null) {
+    console.log(`[Discovery] ${ip}: discovered via SNMP (ICMP ping unavailable)`);
   }
 
   const sysDescr = info ? info.sysDescr : null;
@@ -338,6 +382,8 @@ async function discoverHost(ip, opts) {
     cpu_pct: null,
     mem_used_pct: null,
     uptime_ticks: sysUpTime,
+    // Measured ICMP round-trip time, or null when ICMP did not answer
+    // (host discovered via SNMP) — never a fabricated number.
     response_ms: rtt,
     last_polled_at: null
   });
@@ -373,6 +419,9 @@ async function runSweep({ rangeLabel, ips, community, probeId }) {
       discoverHost(ip, { community, probeId })
     );
     found = results.filter((d) => d !== null);
+    console.log(
+      `[Discovery] sweep ${rangeLabel}: ${found.length} of ${ips.length} host(s) discovered`
+    );
     store.saveDiscoveryRun({
       range: rangeLabel,
       found_count: found.length,
@@ -381,6 +430,9 @@ async function runSweep({ rangeLabel, ips, community, probeId }) {
       status: 'completed'
     });
   } catch (e) {
+    console.error(
+      `[Discovery] sweep ${rangeLabel} failed: ${e && e.message ? e.message : e}`
+    );
     try {
       store.saveDiscoveryRun({
         range: rangeLabel,

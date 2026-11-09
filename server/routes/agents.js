@@ -290,6 +290,28 @@ function authenticateAgent(req, agentId) {
   return null;
 }
 
+// Validate a key presented WITHOUT an agentId. The agent list test
+// (GET /api/agent/list, what the Go agent's -test flow calls) carries no
+// agentId, so there is no per-agent key to match against: accept any
+// agent one-time key (an api_keys row named `agent:<agentId>`) or any
+// registered probe's key hash, exactly as authenticateAgent does for a
+// known agentId. General settings API keys (any other api_keys name) do
+// NOT unlock this route. Returns an auth descriptor or null.
+function authenticateAnyAgentKey(req) {
+  const key = presentedKey(req);
+  if (!key) return null;
+  const keyHash = hashKey(key);
+  const apiKey = store.apiKeys.getApiKeyByHash(keyHash);
+  if (apiKey && typeof apiKey.name === 'string' && apiKey.name.startsWith('agent:')) {
+    return { type: 'agent', agentId: apiKey.name.slice('agent:'.length) };
+  }
+  const probe = store.probes.getProbeByKeyHash(keyHash);
+  if (probe) {
+    return { type: 'probe', probeId: probe.id };
+  }
+  return null;
+}
+
 // A finite real number, or null when the agent did not send one.
 // Non-numeric / non-finite values are treated as "not sent", never coerced
 // into a plausible-looking default.
@@ -444,7 +466,7 @@ router.post('/api/agent/telemetry', (req, res) => {
 
 // List all registered agents, with their last real telemetry (null fields
 // when never reported) and staleness-derived status.
-router.get(['/api/agent/list', '/api/agents'], (req, res) => {
+function listAgentsResponse(req, res) {
   const rows = store.agents.listAgents();
   const agents = rows.map(agentView);
   res.json({
@@ -453,6 +475,24 @@ router.get(['/api/agent/list', '/api/agents'], (req, res) => {
     activeAgents: agents.filter((a) => a.status === 'Online').length,
     agents,
   });
+}
+
+// Console alias: session-only (NOT in KEY_AUTH_API_ROUTES, so the guard
+// applies requireAuth before this handler runs).
+router.get('/api/agents', (req, res) => {
+  listAgentsResponse(req, res);
+});
+
+// Agent list test endpoint (GET /api/agent/list). This path IS exempt from
+// the guard's requireAuth (see KEY_AUTH_API_ROUTES in server/index.js),
+// because the Go agent's -test flow calls it with only its eeauthkey —
+// but it is never open: a valid agent one-time key or probe key hash is
+// required, and a console caller with a valid admin session is accepted
+// instead (the UI calls this same path). Missing/wrong key AND no session
+// => 401 from requireAuth.
+router.get('/api/agent/list', (req, res, next) => {
+  if (authenticateAnyAgentKey(req)) return listAgentsResponse(req, res);
+  return requireAuth(req, res, () => listAgentsResponse(req, res));
 });
 
 // Deregister / Stop — agent-authenticated; unknown agents or bad keys => 401.

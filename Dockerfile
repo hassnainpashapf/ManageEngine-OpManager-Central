@@ -28,7 +28,7 @@ ENV NODE_ENV=production
 
 # Health check to ensure service readiness
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:8060/api/tools/mib-tree || exit 1
+  CMD curl -f http://localhost:8060/login.html || exit 1
 
 # Start OpManager Central server
 CMD ["node", "server/index.js"]

@@ -33,12 +33,10 @@ done
 
 # 3. Start Native Host Monitoring Agent
 echo "-> Starting OpManager Host Monitoring Agent (AGT-DARWIN-1-D52F)..."
-# Agent binary: Linux build on Linux, macOS build on Darwin.
-case "$(uname -s)" in
-  Linux)  AGENT_BIN="./agent_src/OpManagerAgent-linux-amd64" ;;
-  Darwin) AGENT_BIN="./agent_src/OpManagerAgent" ;;
-  *)      AGENT_BIN="./agent_src/OpManagerAgent-linux-amd64" ;;
-esac
+# Agent binary: macOS build on Darwin (per-arch), Linux build elsewhere.
+# Shared selection logic — see scripts/select_agent_bin.sh.
+. "$DIR/scripts/select_agent_bin.sh"
+AGENT_BIN="$(select_agent_bin)"
 if [ -f "$AGENT_BIN" ]; then
   nohup "$AGENT_BIN" -server http://localhost:8060 -probe 1 -interval 5 > agent.log 2>&1 &
   AGENT_PID=$!

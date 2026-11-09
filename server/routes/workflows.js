@@ -31,6 +31,21 @@
  * hardcoded route: id is now the integer store id (was a 'WF-00n'
  * string), lastExecuted is epoch ms or null (was a relative string),
  * status/trigger/scope are null, and created_at is included.
+ *
+ * Phase-2 501 triage (2026-11-09): the file's only 501 was
+ * POST /api/workflows/execute (OPEN O-12). It stays 501 — see the
+ * route comment; there is still no step executor. Three REAL routes
+ * were added from stored data only, no execution is claimed:
+ *  - GET /api/workflows/:id — one stored workflow + its stored runs.
+ *  - GET /api/workflows/:id/runs — the stored run history for a
+ *    workflow (including refused 'not_implemented' attempts).
+ *  - POST /api/workflows/validate — checks a workflow definition
+ *    against exactly the rules POST /api/workflows/create enforces,
+ *    without persisting or executing anything.
+ * A dry-run endpoint was NOT added: with no step schema and no
+ * executor, a dry-run could only repeat create-time validation and
+ * could not say whether any step would succeed — reporting that as
+ * a dry-run result would be misleading.
  */
 
 const express = require('express');
@@ -79,6 +94,64 @@ function toWorkflow(row, runs) {
   };
 }
 
+// A stored workflow_run row, exactly as stored — no invented fields.
+// 'not_implemented' rows are refused execute attempts, shown with their
+// real status so the audit trail is visible instead of hidden.
+function toRun(row) {
+  return {
+    id: row.id,
+    workflow_id: row.workflow_id,
+    status: row.status ?? null,
+    log: row.log ?? null,
+    started_at: row.started_at ?? null,
+    finished_at: row.finished_at ?? null,
+  };
+}
+
+// The store exposes no namespaced getWorkflow (store.workflows has only
+// createWorkflow, listWorkflows, saveWorkflowRun, listWorkflowRuns), so
+// a single workflow is found by scanning the list. Unknown or
+// non-numeric ids resolve to null and the caller returns 404, the same
+// convention POST /api/workflows/execute uses for an unknown workflowId.
+async function findWorkflow(id) {
+  const rows = await workflows.listWorkflows();
+  return (rows || []).find((w) => String(w.id) === String(id)) || null;
+}
+
+// Validate a workflow definition against exactly the rules
+// POST /api/workflows/create enforces. Returns { errors, name, steps }.
+// This is a pure check: it never persists, executes, or invents a
+// step schema — steps have no defined action/type contract on this
+// server, so beyond "array of objects" nothing more can honestly be
+// asserted about them.
+function validateDefinition(body) {
+  const errors = [];
+  let name = null;
+  let steps = [];
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return { errors: ['request body must be a JSON object'], name, steps };
+  }
+  if (typeof body.name !== 'string' || body.name.trim().length === 0) {
+    errors.push('name is required and must be a non-empty string');
+  } else {
+    name = body.name.trim();
+  }
+  if (body.steps !== undefined) {
+    if (!Array.isArray(body.steps)) {
+      errors.push('steps must be an array');
+    } else {
+      for (const step of body.steps) {
+        if (!step || typeof step !== 'object' || Array.isArray(step)) {
+          errors.push('each step must be an object');
+          break;
+        }
+      }
+      if (errors.length === 0) steps = body.steps;
+    }
+  }
+  return { errors, name, steps };
+}
+
 // GET /api/workflows/list — workflows from the store only; [] when none exist.
 router.get('/api/workflows/list', async (req, res, next) => {
   try {
@@ -93,6 +166,83 @@ router.get('/api/workflows/list', async (req, res, next) => {
     next(err);
   }
 });
+
+// GET /api/workflows/:id — one stored workflow plus its stored runs.
+// Unknown id -> 404 (same convention as POST /api/workflows/execute).
+router.get('/api/workflows/:id', async (req, res, next) => {
+  try {
+    const wf = await findWorkflow(req.params.id);
+    if (!wf) {
+      return res.status(404).json({
+        status: 'error',
+        error: 'not_found',
+        message: `Workflow ${req.params.id} not found`,
+      });
+    }
+    const runs = await workflows.listWorkflowRuns(wf.id);
+    return res.json({
+      status: 'success',
+      workflow: toWorkflow(wf, runs),
+      runs: (runs || []).map(toRun),
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// GET /api/workflows/:id/runs — stored run history for a workflow, most
+// recent first (store order). Includes refused 'not_implemented'
+// attempts with their real status; they are not executions.
+// Unknown id -> 404.
+router.get('/api/workflows/:id/runs', async (req, res, next) => {
+  try {
+    const wf = await findWorkflow(req.params.id);
+    if (!wf) {
+      return res.status(404).json({
+        status: 'error',
+        error: 'not_found',
+        message: `Workflow ${req.params.id} not found`,
+      });
+    }
+    const runs = await workflows.listWorkflowRuns(wf.id);
+    return res.json({
+      status: 'success',
+      workflowId: wf.id,
+      runs: (runs || []).map(toRun),
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/workflows/validate — admin only (same as create: this is
+// the pre-create check). Validates a workflow definition against
+// exactly the rules POST /api/workflows/create enforces, without
+// persisting or executing anything. Always 200 when authenticated:
+// { valid, errors, workflow } — valid:false carries the same messages
+// create would return as 400, so the caller can show them without
+// treating validation as a transport error.
+router.post(
+  '/api/workflows/validate',
+  requireAuth,
+  requireRole('admin'),
+  async (req, res, next) => {
+    try {
+      const { errors, name, steps } = validateDefinition(req.body);
+      if (errors.length > 0) {
+        return res.json({ status: 'success', valid: false, errors, workflow: null });
+      }
+      return res.json({
+        status: 'success',
+        valid: true,
+        errors: [],
+        workflow: { name, steps },
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 // POST /api/workflows/create — admin only. The only way a workflow comes
 // into existence; the store starts empty.
@@ -147,6 +297,15 @@ router.post(
 // POST /api/workflows/execute — honest 501: no step executor exists on
 // this server, so nothing is run and no step output is fabricated.
 // Unknown workflowId -> 404; missing workflowId -> 400.
+// Phase-2 triage (2026-11-09): stays 501. Blocker — there is no step
+// executor (no SSH/WMI/CLI runner, no notification sender) and
+// workflow steps have no defined action/type schema, so no step can
+// be carried out for real; building a runner that acts on live
+// devices is a design decision (API.md OPEN O-12), not a triage fix.
+// A dry-run was also not added: without a step schema or an executor
+// it could not say whether any step would succeed. Even a workflow
+// with zero steps is refused rather than reported "successful", so
+// no execution is ever claimed where none happened.
 router.post('/api/workflows/execute', async (req, res, next) => {
   try {
     const { workflowId } = req.body || {};

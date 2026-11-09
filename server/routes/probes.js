@@ -241,6 +241,9 @@ function probeDevicesAndAlarms(probeId) {
 // GET details route below.)
 router.all(['/api/json/enterprise/deleteProbe', '/api/probes/:id/delete', '/api/probes/:id'], (req, res, next) => {
   if (req.method !== 'POST' && req.method !== 'DELETE') return next();
+  // '/api/probes/sync-all' also matches '/api/probes/:id' (:id = 'sync-all');
+  // this route is registered first, so let the sync-all handler below own it.
+  if (req.params.id === 'sync-all') return next();
   const probeId = parseProbeId((req.body && req.body.probeId) || req.params.id);
   if (probeId === null) {
     return res.status(400).json({ status: 'error', message: 'Invalid probe id' });
@@ -407,7 +410,7 @@ router.get(['/enterprise/getProbeDetails', '/api/json/enterprise/getProbeDetails
 // must prove the host is up, otherwise nothing is registered (502). The
 // auth key is a fresh random value; only its SHA-256 hash is stored, and
 // the key itself is shown exactly once in this response.
-router.post(['/api/json/enterprise/addProbe', '/api/probes'], async (req, res) => {
+router.post(['/api/json/enterprise/addProbe', '/enterprise/addProbe', '/api/probes'], async (req, res) => {
   const { name, ip } = req.body || {};
   const portRaw = req.body && req.body.port !== undefined ? Number(req.body.port) : DEFAULT_PROBE_PORT;
   const port = Number.isInteger(portRaw) && portRaw >= 1 && portRaw <= 65535 ? portRaw : DEFAULT_PROBE_PORT;
@@ -449,6 +452,48 @@ router.post(['/api/json/enterprise/addProbe', '/api/probes'], async (req, res) =
     authKey,
     authKeyNote: 'Store this key on the probe now — it is shown only once and cannot be recovered from Central.',
     verified: { reachable: true, rttMs: check.rttMs, method: check.method },
+  });
+});
+
+// POST /api/json/enterprise/testCentralConnection — probe link test.
+// (Close-out fix 2026-11-09: the UI's testProbeConnection calls this path,
+// but no route existed for it — it 404'd. It is a real check, not a stub:
+// the probe row is looked up, its IP is pinged with the same ICMP/TCP
+// probe addProbe uses for verification, and the measured latency (or the
+// honest failure reason) is returned. Nothing is invented: an unreachable
+// probe reports status 'error' with latency null.)
+router.post(['/api/json/enterprise/testCentralConnection', '/enterprise/testCentralConnection'], async (req, res) => {
+  const probeId = parseProbeId((req.body && (req.body.probeId || req.body.id)) || req.query.probeId);
+  if (probeId === null) {
+    return res.status(400).json({ status: 'error', message: 'probeId is required' });
+  }
+  const probe = store.getProbe(probeId);
+  if (!probe) {
+    return res.status(404).json({ status: 'error', message: `Probe ${probeId} not found`, probeId, latency: null });
+  }
+  const check = await pingMs(probe.ip);
+  if (!check.reachable) {
+    return res.json({
+      status: 'error',
+      probeId: probe.id,
+      name: probe.name ?? null,
+      ip: probe.ip,
+      reachable: false,
+      latency: null,
+      heartbeatStatus: deriveStatus(probe),
+      message: `Probe ${probe.name || probe.ip} is not reachable (${check.method}: ${check.reason || 'no response'})`,
+    });
+  }
+  res.json({
+    status: 'success',
+    probeId: probe.id,
+    name: probe.name ?? null,
+    ip: probe.ip,
+    reachable: true,
+    latency: check.rttMs,
+    method: check.method,
+    heartbeatStatus: deriveStatus(probe),
+    message: `Connected to probe ${probe.name || probe.ip} (${check.method}, ${check.rttMs} ms)`,
   });
 });
 
@@ -499,7 +544,7 @@ router.post(['/api/probes/:id/heartbeat', '/api/json/enterprise/probeHeartbeat']
 // devices/alarms actually attributed to it in the store, and record the
 // measured latency. If the probe is unreachable and its heartbeat is not
 // fresh, the sync FAILS (502) and nothing is stamped as synced.
-router.post(['/api/json/enterprise/syncDataFromProbe', '/api/probes/:id/sync'], async (req, res) => {
+router.post(['/enterprise/syncDataFromProbe', '/api/json/enterprise/syncDataFromProbe', '/api/probes/:id/sync'], async (req, res) => {
   const probeId = parseProbeId((req.body && req.body.probeId) || req.params.id);
   if (probeId === null) {
     return res.status(400).json({ status: 'error', message: 'Invalid probe id' });
@@ -548,7 +593,7 @@ router.post(['/api/json/enterprise/syncDataFromProbe', '/api/probes/:id/sync'], 
 // Sync all probes at once. Each probe is pinged and reconciled
 // individually; the response reports per-probe outcomes, never a blanket
 // "all synchronized".
-router.post(['/api/json/enterprise/syncAllProbes', '/api/probes/sync-all'], async (req, res) => {
+router.post(['/enterprise/syncAllProbes', '/api/json/enterprise/syncAllProbes', '/api/probes/sync-all'], async (req, res) => {
   const probes = store.listProbes();
   const results = [];
   for (const probe of probes) {

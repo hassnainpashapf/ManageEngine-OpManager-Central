@@ -221,8 +221,8 @@ router.get(['/alarm/alarmProperties', '/api/alarm/alarmProperties'], (req, res) 
 });
 
 // Acknowledge alarm
-router.post(['/alarm/acknowledgeAlarm', '/api/json/alarms/acknowledge', '/api/alarms/:id/acknowledge'], (req, res) => {
-  const alarmId = parseId(req.body.alarmId || req.query.alarmId || req.params.id);
+router.post(['/alarm/acknowledgeAlarm', '/api/json/alarms/acknowledge', '/alarms/acknowledge', '/api/alarms/:id/acknowledge'], (req, res) => {
+  const alarmId = parseId(req.body.alarmId || req.body.id || req.query.alarmId || req.query.id || req.params.id);
   if (alarmId === null) {
     return res.status(400).json({ status: 'error', message: 'alarmId is required' });
   }
@@ -239,8 +239,8 @@ router.post(['/alarm/acknowledgeAlarm', '/api/json/alarms/acknowledge', '/api/al
 });
 
 // Clear alarm
-router.post(['/alarm/clearAlarm', '/api/json/alarms/clear', '/api/alarms/:id/clear'], (req, res) => {
-  const alarmId = parseId(req.body.alarmId || req.query.alarmId || req.params.id);
+router.post(['/alarm/clearAlarm', '/api/json/alarms/clear', '/alarms/clear', '/api/alarms/:id/clear'], (req, res) => {
+  const alarmId = parseId(req.body.alarmId || req.body.id || req.query.alarmId || req.query.id || req.params.id);
   if (alarmId === null) {
     return res.status(400).json({ status: 'error', message: 'alarmId is required' });
   }
@@ -257,8 +257,8 @@ router.post(['/alarm/clearAlarm', '/api/json/alarms/clear', '/api/alarms/:id/cle
 
 // Delete alarm — backed by store.alarms.deleteAlarm. The store returns
 // false when no alarm with that id exists, which is a 404 here.
-router.post(['/alarm/deleteAlarm', '/api/json/alarms/delete', '/api/alarms/:id/delete'], (req, res) => {
-  const alarmId = parseId((req.body && req.body.alarmId) || req.query.alarmId || req.params.id);
+router.post(['/alarm/deleteAlarm', '/api/json/alarms/delete', '/alarms/delete', '/api/alarms/:id/delete'], (req, res) => {
+  const alarmId = parseId((req.body && (req.body.alarmId || req.body.id)) || req.query.alarmId || req.params.id);
   if (alarmId === null) {
     return res.status(400).json({ status: 'error', message: 'alarmId is required' });
   }
@@ -274,7 +274,7 @@ router.post(['/alarm/deleteAlarm', '/api/json/alarms/delete', '/api/alarms/:id/d
 
 // Add Notes to Alarm — backed by store.alarms.addNote, which returns null
 // when the alarm does not exist.
-router.post(['/alarm/addNotes', '/api/json/alarms/addNotes'], (req, res) => {
+router.post(['/alarm/addNotes', '/api/json/alarms/addNotes', '/alarms/addNotes'], (req, res) => {
   const alarmId = parseId((req.body && (req.body.alarmId || req.body.id)) || req.query.alarmId);
   if (alarmId === null) {
     return res.status(400).json({ status: 'error', message: 'alarmId is required' });

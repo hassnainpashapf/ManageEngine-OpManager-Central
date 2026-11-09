@@ -27,10 +27,16 @@
  *   - No IP configured / store unavailable / poll timeout → status
  *     'Poll failed: <reason>', stored as-is, never papered over.
  *
- * Thresholds (measured values only):
- *   - cpu_pct > 90 → Critical alarm source 'cpu'; 80 < cpu_pct <= 90 →
- *     Trouble alarm source 'cpu'; cpu_pct <= 80 → resolve 'cpu'.
+ * Thresholds (measured values only; per-device overrides in the store):
+ *   - Defaults: cpu_pct > 90 → Critical alarm source 'cpu'; 80 < cpu_pct
+ *     <= 90 → Trouble alarm source 'cpu'; cpu_pct <= 80 → resolve 'cpu'.
  *   - mem_used_pct > 90 → Critical alarm source 'mem'; <= 90 → resolve 'mem'.
+ *   - An admin can set per-device thresholds via
+ *     PUT /api/devices/:id/thresholds (stored in the device_thresholds
+ *     table); resolveDeviceThresholds() reads them and falls back to the
+ *     defaults above for any threshold that is unset or invalid. A stored
+ *     cpu_trouble >= cpu_critical is treated as a misconfiguration and
+ *     both CPU values fall back to the defaults.
  * Alarms are raised once per breach (tracked in-memory by device+source)
  * and resolved by key when the measurement recovers.
  *
@@ -64,6 +70,8 @@
  *   store.alarms.raiseAlarm({ deviceId, device_id, severity, message, source })
  *     — the store reads device_id; deviceId is also sent for the contract
  *   store.alarms.resolveAlarmByKey(deviceId, source)
+ *   store.thresholds.getDeviceThresholds(deviceId) → stored per-device
+ *     threshold row or null (null = use the defaults in this file)
  *   store.settings.getSetting(key) → raw stored value (string) or null
  * This module lazy-requires the store so it still loads before store.js
  * exists, and fails loudly with a clear error if a poll is attempted
@@ -162,8 +170,7 @@ function isUnmanaged(device) {
     || device.isManaged === false;
 }
 
-function resolvePollIntervalSeconds(store) {
-  try {
+function resolvePollIntervalSeconds(store) {  try {
     let raw = null;
     if (store.settings && typeof store.settings.getSetting === 'function') {
       raw = store.settings.getSetting('poll_interval_seconds');
@@ -177,6 +184,37 @@ function resolvePollIntervalSeconds(store) {
     console.error(`[Poller] could not read poll_interval_seconds, using default: ${err.message}`);
   }
   return DEFAULT_POLL_INTERVAL_SECONDS;
+}
+
+// Per-device alarm thresholds. Reads the device's stored overrides from
+// store.thresholds.getDeviceThresholds and falls back to the defaults
+// (CPU_CRITICAL / CPU_TROUBLE / MEM_CRITICAL) for anything unset, missing
+// or invalid. A stored cpu_trouble >= cpu_critical is a misconfiguration:
+// both CPU values fall back to the defaults rather than evaluating
+// against an inverted pair. Never throws — on any store error the
+// defaults are used and the failure is logged.
+function resolveDeviceThresholds(store, deviceId) {
+  const defaults = { cpuCritical: CPU_CRITICAL, cpuTrouble: CPU_TROUBLE, memCritical: MEM_CRITICAL };
+  try {
+    if (!store || !store.thresholds || typeof store.thresholds.getDeviceThresholds !== 'function') {
+      return defaults;
+    }
+    const row = store.thresholds.getDeviceThresholds(deviceId);
+    if (!row) return defaults;
+    const valid = (v) => typeof v === 'number' && Number.isFinite(v) && v > 0 && v <= 100;
+    const out = { ...defaults };
+    if (valid(row.cpu_critical)) out.cpuCritical = row.cpu_critical;
+    if (valid(row.cpu_trouble)) out.cpuTrouble = row.cpu_trouble;
+    if (valid(row.mem_critical)) out.memCritical = row.mem_critical;
+    if (out.cpuTrouble >= out.cpuCritical) {
+      out.cpuCritical = defaults.cpuCritical;
+      out.cpuTrouble = defaults.cpuTrouble;
+    }
+    return out;
+  } catch (err) {
+    console.error(`[Poller] could not read thresholds for device ${deviceId}, using defaults: ${err.message}`);
+    return defaults;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -310,6 +348,37 @@ class RealPoller {
     // ('Poll failed: <reason>' / 'Down' / 'SNMP Error'), so it is only
     // logged here — never silently dropped, never stored in a wrong column.
     console.error(`[Poller] poll failed for ${result.name} (${result.ip || result.id}): ${result.error}`);
+  }
+
+  // --- threshold evaluation ------------------------------------------------
+  // Evaluates one device's measured CPU/memory values against that
+  // device's thresholds (stored overrides, defaults when unset) and
+  // raises/resolves the 'cpu' and 'mem' alarms. Extracted from
+  // pollOneDeviceInner so the evaluation can be exercised directly
+  // without an SNMP poll; the scheduled cycle calls it via
+  // pollOneDeviceInner. Returns the effective thresholds used.
+  evaluateThresholds(store, deviceId, name, ip, cpuPct, memPct) {
+    const t = resolveDeviceThresholds(store, deviceId);
+    if (cpuPct !== null && cpuPct !== undefined) {
+      if (cpuPct > t.cpuCritical) {
+        this.raiseAlarmOnce(store, deviceId, 'cpu', 'Critical',
+          `CPU ${cpuPct}% on ${name} (${ip}) exceeds critical threshold ${t.cpuCritical}% (5-min average).`);
+      } else if (cpuPct > t.cpuTrouble) {
+        this.raiseAlarmOnce(store, deviceId, 'cpu', 'Trouble',
+          `CPU ${cpuPct}% on ${name} (${ip}) exceeds warning threshold ${t.cpuTrouble}% (5-min average).`);
+      } else {
+        this.resolveAlarm(store, deviceId, 'cpu');
+      }
+    }
+    if (memPct !== null && memPct !== undefined) {
+      if (memPct > t.memCritical) {
+        this.raiseAlarmOnce(store, deviceId, 'mem', 'Critical',
+          `Memory ${memPct}% used on ${name} (${ip}) exceeds critical threshold ${t.memCritical}%.`);
+      } else {
+        this.resolveAlarm(store, deviceId, 'mem');
+      }
+    }
+    return t;
   }
 
   // --- one device ----------------------------------------------------------
@@ -474,26 +543,9 @@ class RealPoller {
       result.error = ifacesSettled.reason ? ifacesSettled.reason.message : 'Interface poll failed';
     }
 
-    // 5. Threshold evaluation against the measured values only.
-    if (result.cpu_pct !== null) {
-      if (result.cpu_pct > CPU_CRITICAL) {
-        this.raiseAlarmOnce(store, result.id, 'cpu', 'Critical',
-          `CPU ${result.cpu_pct}% on ${result.name} (${ip}) exceeds critical threshold ${CPU_CRITICAL}% (5-min average).`);
-      } else if (result.cpu_pct > CPU_TROUBLE) {
-        this.raiseAlarmOnce(store, result.id, 'cpu', 'Trouble',
-          `CPU ${result.cpu_pct}% on ${result.name} (${ip}) exceeds warning threshold ${CPU_TROUBLE}% (5-min average).`);
-      } else {
-        this.resolveAlarm(store, result.id, 'cpu');
-      }
-    }
-    if (result.mem_used_pct !== null) {
-      if (result.mem_used_pct > MEM_CRITICAL) {
-        this.raiseAlarmOnce(store, result.id, 'mem', 'Critical',
-          `Memory ${result.mem_used_pct}% used on ${result.name} (${ip}) exceeds critical threshold ${MEM_CRITICAL}%.`);
-      } else {
-        this.resolveAlarm(store, result.id, 'mem');
-      }
-    }
+    // 5. Threshold evaluation against the measured values only, using
+    //    this device's thresholds (stored overrides, defaults when unset).
+    this.evaluateThresholds(store, result.id, result.name, ip, result.cpu_pct, result.mem_used_pct);
 
     this.persistMetrics(store, result);
     if (result.error) this.persistPollError(store, result);
@@ -556,6 +608,23 @@ class RealPoller {
       const results = settled
         .filter((r) => r.status === 'fulfilled')
         .map((r) => r.value);
+      // Gap E — data retention enforcement: purge metrics rows and cleared
+      // alarm history older than the configured retention (days). Runs
+      // once per cycle, after the fresh poll values are stored, so only
+      // genuinely old rows are ever removed. Unconfigured retention deletes
+      // nothing. A purge failure is logged and leaves data untouched; it
+      // must never fail the poll cycle.
+      try {
+        const retention = require('./retention');
+        const purge = retention.purgeOldData(store);
+        if (purge && purge.configured && (purge.metricsDeleted || purge.alarmsDeleted)) {
+          console.log(
+            `[Retention] purged ${purge.metricsDeleted} metric row(s) and ${purge.alarmsDeleted} cleared alarm(s) older than ${purge.retentionDays} day(s); ${purge.activeAlarmsKept} old active/acknowledged alarm(s) kept.`
+          );
+        }
+      } catch (err) {
+        console.error(`[Retention] purge failed (data untouched): ${err.message}`);
+      }
       this.broadcastTick(results);
       return results;
     } catch (err) {
@@ -695,3 +764,5 @@ const poller = new RealPoller();
 // shadow the method with a wrapper that calls itself (infinite recursion).
 module.exports = poller;
 module.exports.RealPoller = RealPoller;
+module.exports.resolveDeviceThresholds = resolveDeviceThresholds;
+module.exports.DEFAULT_THRESHOLDS = { cpuCritical: CPU_CRITICAL, cpuTrouble: CPU_TROUBLE, memCritical: MEM_CRITICAL };

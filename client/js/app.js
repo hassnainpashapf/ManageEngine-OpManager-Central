@@ -2205,22 +2205,52 @@
       const res = await fetch('/api/traps/list').then(r => r.json());
       const tbody = document.getElementById('trapsTableBody');
       if (res.status === 'success' && res.traps && tbody) {
-        tbody.innerHTML = res.traps.map(trap => {
-          const varbindsStr = trap.varbinds.map(v => `${v.name} = ${v.value}`).join(' | ');
-          return `
+        // Real rows from /api/traps/list are the stored columns
+        // { id, source_ip, oid, value, received_at }; `value` is the JSON
+        // string of parsed varbinds [{ oid, value }]. The previous code
+        // read fake-shape fields (trap.varbinds, trap.severity,
+        // trap.trapName, trap.deviceName, trap.probeName, trap.time) that
+        // this API never returns, so trap.varbinds.map threw on the first
+        // real trap and the view showed "Failed to load traps".
+        const TRAP_NAMES = {
+          '1.3.6.1.6.3.1.1.5.1': 'coldStart',
+          '1.3.6.1.6.3.1.1.5.2': 'warmStart',
+          '1.3.6.1.6.3.1.1.5.3': 'linkDown',
+          '1.3.6.1.6.3.1.1.5.4': 'linkUp',
+          '1.3.6.1.6.3.1.1.5.5': 'authenticationFailure',
+          '1.3.6.1.6.3.1.1.5.6': 'egpNeighborLoss',
+        };
+        const TRAP_SEVERITY = {
+          '1.3.6.1.6.3.1.1.5.3': 'Critical',
+          '1.3.6.1.6.3.1.1.5.5': 'Critical',
+          '1.3.6.1.6.3.1.1.5.6': 'Critical',
+        };
+        if (res.traps.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color: var(--text-muted);">No traps received yet — the receiver listens on UDP 162.</td></tr>`;
+        } else {
+          tbody.innerHTML = res.traps.map(trap => {
+            let varbinds = [];
+            try { varbinds = JSON.parse(trap.value || '[]'); } catch (_) { varbinds = []; }
+            const varbindsStr = Array.isArray(varbinds) && varbinds.length > 0
+              ? varbinds.map(v => `${v.oid} = ${v.value}`).join(' | ')
+              : (typeof trap.value === 'string' ? trap.value : '');
+            const severity = TRAP_SEVERITY[trap.oid] || 'Clear';
+            const trapName = TRAP_NAMES[trap.oid] || trap.oid || 'unknown';
+            return `
             <tr>
-              <td><span class="badge-me ${trap.severity.toLowerCase()}">${trap.severity}</span></td>
-              <td><strong>${trap.trapName}</strong></td>
-              <td><code>${trap.trapOid}</code></td>
-              <td><strong>${trap.deviceName}</strong> (${trap.sourceIp})</td>
-              <td>📍 ${trap.probeName}</td>
-              <td style="max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 10px; color: var(--text-muted);" title="${varbindsStr}">
-                ${varbindsStr}
+              <td><span class="badge-me ${severity.toLowerCase()}">${severity}</span></td>
+              <td><strong>${escapeHtml(trapName)}</strong></td>
+              <td><code>${escapeHtml(trap.oid || '')}</code></td>
+              <td><strong>${escapeHtml(trap.source_ip || '')}</strong></td>
+              <td>📍 Central (direct)</td>
+              <td style="max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 10px; color: var(--text-muted);" title="${escapeHtml(varbindsStr)}">
+                ${escapeHtml(varbindsStr)}
               </td>
-              <td style="font-size: 11px; color: var(--text-muted);">${trap.time}</td>
+              <td style="font-size: 11px; color: var(--text-muted);">${escapeHtml(trap.received_at || '')}</td>
             </tr>
           `;
-        }).join('');
+          }).join('');
+        }
       }
     } catch (e) {
       const tbody = document.getElementById('trapsTableBody');
@@ -2267,20 +2297,31 @@
       const res = await fetch('/api/syslog/list').then(r => r.json());
       const tbody = document.getElementById('syslogTableBody');
       if (res.status === 'success' && res.messages && tbody) {
-        tbody.innerHTML = res.messages.map(log => {
-          const sevClass = log.severity === 'CRITICAL' || log.severity === 'ALERT' ? 'critical' : log.severity === 'WARNING' ? 'trouble' : 'clear';
-          return `
+        // Real rows from /api/syslog/list are the stored columns
+        // { id, source_ip, oid, value, received_at }; `value` is the
+        // message text. The previous code read fake-shape fields
+        // (log.time, log.host, log.ip, log.probe, log.facility,
+        // log.severity, log.message) that this API never returns, so
+        // every cell rendered "undefined". Facility/severity are not
+        // stored by the receiver (see server/routes/traps.js), so they
+        // honestly render as '—' rather than invented values.
+        if (res.messages.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color: var(--text-muted);">No syslog messages received yet — the receiver listens on UDP 514.</td></tr>`;
+        } else {
+          tbody.innerHTML = res.messages.map(log => {
+            return `
             <tr>
-              <td style="font-family: monospace; font-size: 11px;">${log.time}</td>
-              <td><strong>${log.host}</strong></td>
-              <td><code>${log.ip}</code></td>
-              <td>📍 ${log.probe}</td>
-              <td><span style="font-size: 10px; font-weight: 700; color: #a855f7;">${log.facility}</span></td>
-              <td><span class="badge-me ${sevClass}">${log.severity}</span></td>
-              <td style="font-family: monospace; font-size: 11px; color: #f8fafc;">${log.message}</td>
+              <td style="font-family: monospace; font-size: 11px;">${escapeHtml(log.received_at || '')}</td>
+              <td><strong>${escapeHtml(log.source_ip || '')}</strong></td>
+              <td><code>${escapeHtml(log.source_ip || '')}</code></td>
+              <td>📍 Central (direct)</td>
+              <td><span style="font-size: 10px; font-weight: 700; color: #a855f7;">—</span></td>
+              <td><span class="badge-me clear">—</span></td>
+              <td style="font-family: monospace; font-size: 11px; color: #f8fafc;">${escapeHtml(log.value || '')}</td>
             </tr>
           `;
-        }).join('');
+          }).join('');
+        }
       }
     } catch (e) {
       const tbody = document.getElementById('syslogTableBody');
@@ -4490,25 +4531,61 @@
   // Probe & Alarm Operations
   // =========================================================================
   async function syncProbe(probeId) {
+    const knownProbe = (state.probes || []).find((p) => String(p.id) === String(probeId));
+    const probeLabel = knownProbe ? (knownProbe.displayName || knownProbe.name || 'Remote Probe') : 'Remote Probe';
     try {
-      const res = await fetch('/api/json/enterprise/syncDataFromProbe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ probeId })
-      }).then(r => r.json());
+      // apiJson throws on any non-2xx with the server's own message, so an
+      // HTTP 404/502 from the sync endpoint can no longer fall through to
+      // a success toast. Raw fetch() would not throw on those statuses.
+      // NOTE: this calls /api/probes/:id/sync, NOT the legacy
+      // /api/json/enterprise/syncDataFromProbe URL: server/index.js rewrites
+      // /api/json/* to its legacy form (/enterprise/syncDataFromProbe) and
+      // no POST route exists for that rewritten path, so the legacy URL
+      // always answers 404 {"error":"not_found"} (verified live). Both URLs
+      // are registered on the same handler in server/routes/probes.js; this
+      // one is the reachable half. The legacy URL needs a server-side fix
+      // (register the legacy path or exempt it from the rewrite).
+      const res = await apiJson(`/api/probes/${probeId}/sync`, { method: 'POST' });
 
+      // The single-probe endpoint only returns 'success' or 'error', but a
+      // 'partial' status is handled honestly too (never as a success), and
+      // any other non-success status is a failure, not a success.
+      if (res.status && res.status !== 'success' && res.status !== 'partial') {
+        showAlarmToast({
+          id: `sync-${probeId}-${Date.now()}`,
+          severity: 'Critical',
+          deviceName: res.probe?.displayName || probeLabel,
+          ip: res.probe?.ip || knownProbe?.ip || 'Probe',
+          probeName: res.probe?.name || knownProbe?.name || 'Enterprise Probe',
+          message: res.message || `Probe sync failed for ${probeLabel}.`
+        });
+        return;
+      }
+      const partial = res.status === 'partial';
       showAlarmToast({
         id: `sync-${probeId}-${Date.now()}`,
-        severity: 'Clear',
-        deviceName: res.probe?.displayName || 'Remote Probe',
-        ip: res.probe?.ip || 'Probe',
-        probeName: res.probe?.name || 'Enterprise Probe',
-        message: res.message || 'Probe data synchronized successfully with Central.'
+        severity: partial ? 'Attention' : 'Clear',
+        deviceName: res.probe?.displayName || probeLabel,
+        ip: res.probe?.ip || knownProbe?.ip || 'Probe',
+        probeName: res.probe?.name || knownProbe?.name || 'Enterprise Probe',
+        message: partial
+          ? (res.message || `Probe sync partially completed for ${probeLabel}.`)
+          : (res.message || 'Probe data synchronized successfully with Central.')
       });
       await fetchInitialData();
       renderCurrentView();
     } catch (e) {
-      alert('Sync failed: ' + e.message);
+      // Real failure: a Critical (red) toast carrying the server's own
+      // error (e.g. "Probe 999999 not found"), never a success toast, and
+      // no data refresh presented as if the sync had succeeded.
+      showAlarmToast({
+        id: `sync-${probeId}-${Date.now()}`,
+        severity: 'Critical',
+        deviceName: probeLabel,
+        ip: knownProbe?.ip || 'Probe',
+        probeName: knownProbe?.name || 'Enterprise Probe',
+        message: `Probe sync failed: ${e.message || 'Unknown error'}`
+      });
     }
   }
 
@@ -4517,9 +4594,15 @@
       const res = await apiJson('/api/json/enterprise/syncAllProbes', { method: 'POST' });
       await fetchInitialData();
       renderCurrentView();
-      showToastMessage(res.message || `Sync completed for ${state.probes.length} probe(s).`, 'Clear');
+      if (res.status === 'partial') {
+        showToastMessage(res.message || `Sync partially completed: ${res.synced || 0} of ${res.totalProbes || state.probes.length} probe(s) synchronized.`, 'Attention');
+      } else if (res.status === 'success') {
+        showToastMessage(res.message || `Sync completed for ${state.probes.length} probe(s).`, 'Clear');
+      } else {
+        showToastMessage(res.message || 'Probe sync failed.', 'Critical');
+      }
     } catch (e) {
-      alert('Sync failed: ' + e.message);
+      showToastMessage('Sync failed: ' + e.message, 'Critical');
     }
   }
 

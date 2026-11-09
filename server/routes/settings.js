@@ -18,11 +18,15 @@ const express = require('express');
 const crypto = require('crypto');
 const fs = require('fs');
 const http = require('http');
+const https = require('https');
 const net = require('net');
 const os = require('os');
 const path = require('path');
+const tls = require('tls');
 const { DatabaseSync } = require('node:sqlite');
 const store = require('../services/store');
+const retention = require('../services/retention');
+const { hashPassword } = require('../services/session');
 
 const router = express.Router();
 
@@ -183,12 +187,19 @@ router.post('/api/settings/credentials', (req, res) => {
 });
 
 // ----------------------------------------------------------- templates ---
-// Read-only device-template catalogue: server/services/templateIndex.js
-// over server/data/templates/index.json — 562 real entries parsed from
-// the on-disk vendor XML template library (7,602 sysOIDs). The index is
+// Device-template catalogue: server/services/templateIndex.js over
+// server/data/templates/index.json — 562 real entries parsed from the
+// on-disk vendor XML template library (7,602 sysOIDs). The index is
 // required lazily (same pattern as server/routes/devices.js loadService)
 // so this router still loads if the service has not landed; reads then
-// honestly 501. There is NO write store, so POST/PUT/apply stay 501.
+// honestly 501. The vendor index itself is READ-ONLY (generated from the
+// XML library), so vendor entries can never be edited or deleted here.
+// Operator-created templates live in a separate local write store —
+// settings key 'templates.custom' (SQLite, via store.settings) — and are
+// merged into every read, marked custom:true. Template-to-device
+// assignments likewise live in settings key 'templates.assignments'
+// (device id -> { deviceId, templateName, appliedAt }); nothing else in
+// this build consumes assignments yet, and the response says so.
 // findBySysOid also matches the two sysOidMap files themselves, so
 // sysOid lookups filter to type devicetemplate/vendor.
 
@@ -213,6 +224,48 @@ function templateIndexOr501(res) {
   return idx;
 }
 
+/** Operator-created templates, persisted in the settings store. */
+function listCustomTemplates() {
+  const stored = getStored('templates.custom');
+  return Array.isArray(stored) ? stored : [];
+}
+
+function saveCustomTemplates(list) {
+  putStored('templates.custom', list);
+  return list;
+}
+
+function normTemplateName(v) {
+  return String(v == null ? '' : v).trim().toLowerCase();
+}
+
+function findCustomTemplate(name) {
+  const wanted = normTemplateName(name);
+  if (!wanted) return null;
+  return listCustomTemplates().find((t) => normTemplateName(t.name) === wanted) || null;
+}
+
+/** Vendor index entries plus operator-created templates (marked custom:true). */
+function allTemplates(filter) {
+  const idx = loadTemplateIndex();
+  const vendor = idx ? idx.listTemplates(filter || {}) : [];
+  return [...listCustomTemplates(), ...vendor];
+}
+
+function findTemplateAnywhere(name) {
+  return findCustomTemplate(name) || (loadTemplateIndex() && loadTemplateIndex().getTemplate(name)) || null;
+}
+
+function templateAssignments() {
+  const stored = getStored('templates.assignments');
+  return stored && typeof stored === 'object' && !Array.isArray(stored) ? stored : {};
+}
+
+function saveTemplateAssignments(map) {
+  putStored('templates.assignments', map);
+  return map;
+}
+
 /** Device templates only: drop the sysOidMap files findBySysOid also matches. */
 function deviceTemplates(entries) {
   return (entries || []).filter((t) => t.type === 'devicetemplate' || t.type === 'vendor');
@@ -221,8 +274,8 @@ function deviceTemplates(entries) {
 router.get('/api/settings/templates', (req, res) => {
   const idx = templateIndexOr501(res);
   if (!idx) return;
-  const templates = idx.listTemplates({ vendor: req.query.vendor, type: req.query.type });
-  res.json({ status: 'success', templates, count: templates.length, total: idx.loadIndex().length });
+  const templates = allTemplates({ vendor: req.query.vendor, type: req.query.type });
+  res.json({ status: 'success', templates, count: templates.length, total: allTemplates({}).length });
 });
 
 function templatesBySysOid(req, res) {
@@ -232,7 +285,17 @@ function templatesBySysOid(req, res) {
   if (!String(sysOid).trim()) {
     return res.status(400).json({ status: 'error', message: 'sysOid query parameter is required' });
   }
-  const templates = deviceTemplates(idx.findBySysOid(sysOid));
+  const wanted = String(sysOid).trim();
+  const normOid = (o) => {
+    const s = String(o == null ? '' : o).trim();
+    return s.startsWith('.') ? s : `.${s}`;
+  };
+  const fromIndex = deviceTemplates(idx.findBySysOid(sysOid));
+  const fromCustom = listCustomTemplates().filter((t) => {
+    const oids = [...(Array.isArray(t.sysOids) ? t.sysOids : []), t.sysOid].filter(Boolean);
+    return oids.some((o) => normOid(o) === normOid(wanted));
+  });
+  const templates = [...fromCustom, ...fromIndex];
   res.json({ status: 'success', sysOid: String(sysOid), templates, count: templates.length });
 }
 
@@ -243,7 +306,7 @@ router.get('/api/settings/templates/by-sysoid/:oid', templatesBySysOid);
 router.get('/api/settings/templates/:name', (req, res) => {
   const idx = templateIndexOr501(res);
   if (!idx) return;
-  const template = idx.getTemplate(req.params.name);
+  const template = findTemplateAnywhere(req.params.name);
   if (!template) {
     return res.status(404).json({
       status: 'error',
@@ -255,16 +318,152 @@ router.get('/api/settings/templates/:name', (req, res) => {
   res.json({ status: 'success', template });
 });
 
+// Create an operator template in the local write store. Vendor index
+// entries are read-only and a name collision with one is a 409.
 router.post('/api/settings/templates', (req, res) => {
-  res.status(501).json({ status: 'error', ...NOT_IMPLEMENTED(TEMPLATES_UNAVAILABLE) });
+  const idx = templateIndexOr501(res);
+  if (!idx) return;
+  const body = req.body || {};
+  const name = String(body.name || '').trim();
+  if (!name) {
+    return res.status(400).json({ status: 'error', message: 'Template name is required' });
+  }
+  if (idx.getTemplate(name)) {
+    return res.status(409).json({
+      status: 'error',
+      error: 'conflict',
+      message: `A vendor template named '${name}' already exists; vendor templates are read-only.`,
+    });
+  }
+  if (findCustomTemplate(name)) {
+    return res.status(409).json({
+      status: 'error',
+      error: 'conflict',
+      message: `A custom template named '${name}' already exists.`,
+    });
+  }
+  const created = {
+    name,
+    vendor: body.vendor != null ? String(body.vendor) : null,
+    sysOid: body.sysOid != null ? String(body.sysOid) : null,
+    sysOids: Array.isArray(body.sysOids) ? body.sysOids.map(String) : [],
+    type: body.type != null ? String(body.type) : 'devicetemplate',
+    monitors: Array.isArray(body.monitors) ? body.monitors.map(String) : [],
+    category: body.category != null ? String(body.category) : null,
+    osType: body.osType != null ? String(body.osType) : null,
+    file: null,
+    custom: true,
+    createdAt: new Date().toISOString(),
+  };
+  const list = listCustomTemplates();
+  list.push(created);
+  saveCustomTemplates(list);
+  auditLog('settings.template.create', { name: created.name });
+  res.status(201).json({
+    status: 'success',
+    message: `Custom device template '${created.name}' created in the local template store.`,
+    template: created,
+  });
 });
 
+// Update an operator template. Vendor index entries are read-only (409);
+// unknown names 404. The template name itself is immutable.
 router.put('/api/settings/templates/:id', (req, res) => {
-  res.status(501).json({ status: 'error', ...NOT_IMPLEMENTED(TEMPLATES_UNAVAILABLE) });
+  const idx = templateIndexOr501(res);
+  if (!idx) return;
+  const id = decodeURIComponent(req.params.id || '');
+  if (idx.getTemplate(id)) {
+    return res.status(409).json({
+      status: 'error',
+      error: 'conflict',
+      message: `Vendor template '${id}' is read-only; only operator-created templates can be updated.`,
+    });
+  }
+  const list = listCustomTemplates();
+  const pos = list.findIndex((t) => normTemplateName(t.name) === normTemplateName(id));
+  if (pos === -1) {
+    return res.status(404).json({
+      status: 'error',
+      error: 'not_found',
+      message: `Custom device template not found: ${id}`,
+    });
+  }
+  const body = req.body || {};
+  if (body.name != null && normTemplateName(body.name) !== normTemplateName(id)) {
+    return res.status(400).json({ status: 'error', message: 'Template name cannot be changed' });
+  }
+  const updated = { ...list[pos] };
+  for (const key of ['vendor', 'sysOid', 'type', 'category', 'osType']) {
+    if (body[key] !== undefined) updated[key] = body[key] == null ? null : String(body[key]);
+  }
+  for (const key of ['sysOids', 'monitors']) {
+    if (body[key] !== undefined) {
+      if (!Array.isArray(body[key])) {
+        return res.status(400).json({ status: 'error', message: `${key} must be an array` });
+      }
+      updated[key] = body[key].map(String);
+    }
+  }
+  updated.updatedAt = new Date().toISOString();
+  list[pos] = updated;
+  saveCustomTemplates(list);
+  auditLog('settings.template.update', { name: updated.name });
+  res.json({
+    status: 'success',
+    message: `Custom device template '${updated.name}' updated.`,
+    template: updated,
+  });
 });
 
+// Apply a template to a device: records a real assignment in the local
+// store (settings key 'templates.assignments'). The device and the
+// template must both exist. No poller consumes assignments yet — the
+// response says so — but the assignment itself is real, persisted state.
 router.post('/api/settings/templates/apply', (req, res) => {
-  res.status(501).json({ status: 'error', ...NOT_IMPLEMENTED(TEMPLATES_UNAVAILABLE) });
+  const idx = templateIndexOr501(res);
+  if (!idx) return;
+  const body = req.body || {};
+  const templateName = String(body.templateName || body.template || body.name || '').trim();
+  const deviceId = body.deviceId != null ? Number(body.deviceId) : (body.device != null ? Number(body.device) : NaN);
+  if (!templateName) {
+    return res.status(400).json({ status: 'error', message: 'templateName is required' });
+  }
+  if (!Number.isInteger(deviceId)) {
+    return res.status(400).json({ status: 'error', message: 'deviceId is required' });
+  }
+  const template = findTemplateAnywhere(templateName);
+  if (!template) {
+    return res.status(404).json({
+      status: 'error',
+      error: 'not_found',
+      message: `Device template not found: ${templateName}`,
+    });
+  }
+  const device = store.getDevice(deviceId);
+  if (!device) {
+    return res.status(404).json({
+      status: 'error',
+      error: 'not_found',
+      message: `Device not found: ${deviceId}`,
+    });
+  }
+  const map = templateAssignments();
+  const assignment = {
+    deviceId,
+    deviceIp: device.ip || null,
+    deviceHostname: device.hostname || device.sys_name || null,
+    templateName: template.name,
+    custom: Boolean(template.custom),
+    appliedAt: new Date().toISOString(),
+  };
+  map[String(deviceId)] = assignment;
+  saveTemplateAssignments(map);
+  auditLog('settings.template.apply', { deviceId, templateName: template.name });
+  res.json({
+    status: 'success',
+    message: `Template '${template.name}' applied to device ${deviceId}. Assignment is recorded; no poller consumes template assignments yet.`,
+    assignment,
+  });
 });
 
 // --------------------------------------------------- mail configured? ---
@@ -791,8 +990,219 @@ router.post(['/api/settings/mail', '/settings/saveMailServer'], (req, res) => {
   res.json({ status: 'success', message: 'Mail server settings saved.', settings: mailSettingsPublic() });
 });
 
-router.post(['/api/settings/mail/test', '/settings/testMailServer'], (req, res) => {
-  res.status(501).json({ status: 'error', message: 'SMTP delivery is not connected in this local build.' });
+/**
+ * Real SMTP test: speaks SMTP over a live TCP (or TLS) connection to the
+ * configured mail host — greeting, EHLO, optional STARTTLS / AUTH LOGIN,
+ * MAIL FROM, RCPT TO, DATA — and reports every step's real reply code.
+ * Nothing is faked: a step that fails returns its real SMTP reply, and
+ * the test only reports success when the server actually accepted the
+ * message (250 after DATA's terminating dot).
+ */
+function smtpConversation(cfg) {
+  return new Promise((resolve) => {
+    const steps = [];
+    const record = (step, code, reply) => steps.push({ step, code: code == null ? null : Number(code), reply: reply == null ? null : String(reply).trim() });
+    const finish = (ok, message, failedStep) => resolve({ ok, message, steps, failedStep: failedStep || null });
+    const timeoutMs = 10000;
+    const host = cfg.host;
+    const port = Number(cfg.port) || (String(cfg.security || '').toUpperCase() === 'TLS' ? 465 : 25);
+    const useImplicitTls = String(cfg.security || '').toUpperCase() === 'TLS' || String(cfg.security || '').toUpperCase() === 'SSL' || port === 465;
+
+    let socket = null;
+    let buffer = '';
+    let currentLines = [];
+    const queuedReplies = [];
+    const waiters = [];
+    let ended = false;
+    let started = false;
+
+    const onData = (chunk) => {
+      buffer += chunk.toString('utf8');
+      drain();
+    };
+    // An SMTP reply is complete when a line arrives as "<code><space>..."
+    // (lines "<code>-..." are multiline continuations). Only complete
+    // replies are handed to waiters; partial lines stay buffered.
+    function drain() {
+      for (;;) {
+        const idx = buffer.indexOf('\n');
+        if (idx === -1) return;
+        const line = buffer.slice(0, idx).replace(/\r$/, '');
+        buffer = buffer.slice(idx + 1);
+        const m = /^(\d{3})([ -])(.*)$/.exec(line);
+        if (!m) continue;
+        currentLines.push({ code: Number(m[1]), text: m[3], raw: line });
+        if (m[2] === ' ') {
+          const reply = currentLines;
+          currentLines = [];
+          if (waiters.length) waiters.shift()(reply);
+          else queuedReplies.push(reply);
+        }
+      }
+    }
+
+    function readReply() {
+      return new Promise((resReply) => {
+        if (queuedReplies.length) {
+          resReply(queuedReplies.shift());
+          return;
+        }
+        waiters.push(resReply);
+      });
+    }
+    async function send(cmd, step) {
+      socket.write(`${cmd}\r\n`);
+      const lines = await readReply();
+      const last = lines[lines.length - 1];
+      record(step, last.code, lines.map((l) => l.raw).join(' / '));
+      return last.code;
+    }
+
+    const onError = (err) => {
+      if (ended) return;
+      ended = true;
+      record('connect', null, err.message);
+      finish(false, `SMTP test failed: ${err.message}`, 'connect');
+    };
+
+    const run = async () => {
+      try {
+        const greet = await readReply();
+        const g = greet[greet.length - 1];
+        record('greeting', g.code, greet.map((l) => l.raw).join(' / '));
+        if (g.code !== 220) return finish(false, `SMTP greeting rejected: ${g.raw}`, 'greeting');
+
+        const ehloCode = await send(`EHLO ${os.hostname()}`, 'ehlo');
+        if (ehloCode !== 250) return finish(false, `EHLO rejected by ${host}:${port}`, 'ehlo');
+
+        const wantStartTls = String(cfg.security || '').toUpperCase() === 'STARTTLS';
+        if (wantStartTls && !useImplicitTls) {
+          const tlsCode = await send('STARTTLS', 'starttls');
+          if (tlsCode !== 220) return finish(false, 'STARTTLS rejected by the server', 'starttls');
+          socket.removeListener('data', onData);
+          const upgraded = tls.connect({ socket, servername: host, rejectUnauthorized: false });
+          socket = upgraded;
+          buffer = '';
+          currentLines = [];
+          socket.on('data', onData);
+          socket.on('error', onError);
+          socket.setTimeout(timeoutMs, () => socket.destroy(new Error('SMTP connection timed out')));
+          const ehlo2 = await send(`EHLO ${os.hostname()}`, 'ehlo-tls');
+          if (ehlo2 !== 250) return finish(false, 'EHLO after STARTTLS rejected', 'ehlo-tls');
+        }
+
+        if (cfg.authEnabled && cfg.username) {
+          const authCode = await send('AUTH LOGIN', 'auth');
+          if (authCode !== 334) return finish(false, 'AUTH LOGIN rejected by the server', 'auth');
+          const uCode = await send(Buffer.from(String(cfg.username), 'utf8').toString('base64'), 'auth-username');
+          if (uCode !== 334) return finish(false, 'SMTP username rejected', 'auth-username');
+          const pCode = await send(Buffer.from(String(cfg.password || ''), 'utf8').toString('base64'), 'auth-password');
+          if (pCode !== 235) return finish(false, 'SMTP authentication failed (bad username/password)', 'auth-password');
+        }
+
+        const fromCode = await send(`MAIL FROM:<${cfg.from}>`, 'mail-from');
+        if (fromCode !== 250) return finish(false, `MAIL FROM rejected for <${cfg.from}>`, 'mail-from');
+        const rcptCode = await send(`RCPT TO:<${cfg.to}>`, 'rcpt-to');
+        if (rcptCode !== 250) return finish(false, `RCPT TO rejected for <${cfg.to}>`, 'rcpt-to');
+        const dataCode = await send('DATA', 'data');
+        if (dataCode !== 354) return finish(false, 'DATA rejected by the server', 'data');
+        const body = [
+          `From: ${cfg.from}`,
+          `To: ${cfg.to}`,
+          'Subject: OpManager Central — SMTP test',
+          'Content-Type: text/plain; charset=utf-8',
+          '',
+          'This is a test message sent by the OpManager Central mail-server test.',
+          `Sent at ${new Date().toISOString()} from ${os.hostname()}.`,
+          '.',
+          '',
+        ].join('\r\n');
+        socket.write(body);
+        const bodyLines = await readReply();
+        const b = bodyLines[bodyLines.length - 1];
+        record('message', b.code, bodyLines.map((l) => l.raw).join(' / '));
+        if (b.code !== 250) return finish(false, 'Message body rejected by the server', 'message');
+        try { await send('QUIT', 'quit'); } catch { /* best effort */ }
+        return finish(true, `Test mail accepted by ${host}:${port} (250 after DATA).`, null);
+      } catch (err) {
+        if (!ended) {
+          ended = true;
+          finish(false, `SMTP test failed: ${err.message}`, null);
+        }
+      }
+    };
+
+    const connectOpts = { host, port, timeout: timeoutMs };
+    socket = useImplicitTls
+      ? tls.connect({ ...connectOpts, servername: host, rejectUnauthorized: false })
+      : net.connect(connectOpts);
+    socket.on('data', onData);
+    socket.on('timeout', () => socket.destroy(new Error('SMTP connection timed out')));
+    socket.on('error', onError);
+    const startOnce = () => { if (!started) { started = true; run(); } };
+    socket.on('connect', startOnce);
+    socket.on('secureConnect', startOnce);
+  });
+}
+
+router.post(['/api/settings/mail/test', '/settings/testMailServer'], async (req, res) => {
+  const stored = getStored('mail');
+  const body = req.body || {};
+  const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...body };
+  const host = merged.host || merged.smtpHost;
+  if (!host) {
+    return res.status(501).json({
+      status: 'error',
+      ...NOT_IMPLEMENTED('No mail server is configured (no host in stored settings or request body), so there is nothing to test.'),
+    });
+  }
+  const from = merged.fromAddress || merged.adminEmail || merged.from || 'opmanager@localhost';
+  const to = body.to || merged.adminEmail || merged.to;
+  if (!to) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'A recipient is required: pass "to" in the request body or store adminEmail in the mail settings.',
+    });
+  }
+  const cfg = {
+    host: String(host),
+    port: merged.port,
+    security: merged.security,
+    authEnabled: Boolean(merged.authEnabled),
+    username: merged.username,
+    // Password is taken from the stored settings (never echoed back) or
+    // the request body for this one test only.
+    password: body.password || merged.password || merged.authPassword || '',
+    from: String(from),
+    to: String(to),
+  };
+  const result = await smtpConversation(cfg);
+  auditLog('settings.mail.test', { host: cfg.host, port: cfg.port || null, ok: result.ok });
+  if (result.ok) {
+    return res.json({
+      status: 'success',
+      message: result.message,
+      testedAt: new Date().toISOString(),
+      statusCheck: 'OK',
+      host: cfg.host,
+      port: Number(cfg.port) || null,
+      from: cfg.from,
+      to: cfg.to,
+      steps: result.steps,
+    });
+  }
+  return res.json({
+    status: 'error',
+    message: result.message,
+    testedAt: new Date().toISOString(),
+    statusCheck: 'FAILED',
+    host: cfg.host,
+    port: Number(cfg.port) || null,
+    from: cfg.from,
+    to: cfg.to,
+    failedStep: result.failedStep,
+    steps: result.steps,
+  });
 });
 
 // --------------------------------------------------------------- failover ---
@@ -878,11 +1288,17 @@ router.post(['/api/settings/failover/test', '/settings/testFailoverHeartbeat'], 
 
 // ------------------------------------------------------------------ users ---
 // Real users come from the store (store.users.listUsers). There is no AD /
-// SAML / MFA flow in this build, and user creation (hashed passwords) belongs
-// to the authentication service, so create/delete honestly refuse.
+// SAML / MFA flow in this build. Local user creation/deletion IS real:
+// passwords are hashed with the same scrypt service the auth routes use
+// (server/services/session.js), the plaintext is never stored or echoed,
+// and admin-created accounts must change their password on first login.
 
-router.get(['/api/settings/users', '/api/users/list'], (req, res) => {
-  const users = store.listUsers().map((u) => ({
+const MIN_PASSWORD_LENGTH = 10;
+const VALID_ROLES = ['admin', 'operator', 'viewer', 'superadmin'];
+
+function publicUser(u) {
+  if (!u) return null;
+  return {
     id: u.id,
     username: u.username,
     name: u.username,
@@ -895,21 +1311,113 @@ router.get(['/api/settings/users', '/api/users/list'], (req, res) => {
     mfa: false,
     mustChangePassword: Boolean(u.must_change_password),
     createdAt: u.created_at ? new Date(u.created_at).toISOString() : null,
-  }));
+  };
+}
+
+function normalizeRole(role) {
+  if (role == null || role === '') return 'Operator';
+  const r = String(role).trim().toLowerCase();
+  if (!VALID_ROLES.includes(r)) return null;
+  if (r === 'admin') return 'admin';
+  if (r === 'superadmin') return 'SuperAdmin';
+  if (r === 'viewer') return 'Viewer';
+  return 'Operator';
+}
+
+router.get(['/api/settings/users', '/api/users/list'], (req, res) => {
+  const users = store.listUsers().map(publicUser);
   res.json({ status: 'success', users });
 });
 
 router.post(['/api/settings/users', '/api/users/add'], (req, res) => {
-  res.status(501).json({
-    status: 'error',
-    ...NOT_IMPLEMENTED('User creation requires the authentication service (hashed passwords); it is not implemented in this settings route.'),
+  const body = req.body || {};
+  const username = String(body.username || '').trim();
+  const password = body.password;
+  if (!username) {
+    return res.status(400).json({ status: 'error', message: 'username is required' });
+  }
+  if (typeof password !== 'string' || password.length < MIN_PASSWORD_LENGTH) {
+    return res.status(400).json({
+      status: 'error',
+      message: `password must be at least ${MIN_PASSWORD_LENGTH} characters`,
+    });
+  }
+  const role = normalizeRole(body.role);
+  if (role === null) {
+    return res.status(400).json({
+      status: 'error',
+      message: `role must be one of: ${VALID_ROLES.join(', ')}`,
+    });
+  }
+  if (store.getUserByUsername(username)) {
+    return res.status(409).json({
+      status: 'error',
+      error: 'conflict',
+      message: `A user named '${username}' already exists.`,
+    });
+  }
+  let created;
+  try {
+    created = store.users.createUser(username, hashPassword(password), role);
+  } catch (err) {
+    return res.status(500).json({ status: 'error', message: `User creation failed: ${err.message}` });
+  }
+  // Admin-created accounts must change the password on first login.
+  try {
+    created = store.users.updateUser(created.id, { must_change_password: 1 }) || created;
+  } catch { /* the account itself was created; the flag is best-effort */ }
+  auditLog('settings.user.create', { id: created.id, username: created.username, role: created.role });
+  res.status(201).json({
+    status: 'success',
+    message: `User ${created.username} created. They must change their password on first login.`,
+    user: publicUser(created),
   });
 });
 
 router.delete('/api/settings/users/:id', (req, res) => {
-  res.status(501).json({
-    status: 'error',
-    ...NOT_IMPLEMENTED('User deletion requires the authentication service; it is not implemented in this settings route.'),
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) {
+    return res.status(400).json({ status: 'error', message: 'User id must be an integer' });
+  }
+  const target = store.listUsers().find((u) => u.id === id);
+  if (!target) {
+    return res.status(404).json({ status: 'error', error: 'not_found', message: `User not found: ${id}` });
+  }
+  if (req.user && req.user.id === id) {
+    return res.status(403).json({ status: 'error', message: 'You cannot delete your own account.' });
+  }
+  const isAdmin = (r) => String(r || '').toLowerCase() === 'admin' || String(r || '').toLowerCase() === 'superadmin';
+  if (isAdmin(target.role)) {
+    const adminCount = store.listUsers().filter((u) => isAdmin(u.role)).length;
+    if (adminCount <= 1) {
+      return res.status(403).json({
+        status: 'error',
+        message: `Cannot delete '${target.username}': the last remaining admin account cannot be removed.`,
+      });
+    }
+  }
+  // The store service has no deleteUser export, so the delete runs here
+  // against the same SQLite file (same pattern as the DB backup route,
+  // which opens its own DatabaseSync connection). The user's sessions
+  // are revoked in the same step.
+  let conn = null;
+  try {
+    conn = new DatabaseSync(DB_PATH);
+    conn.prepare('DELETE FROM sessions WHERE user_id = ?').run(id);
+    const info = conn.prepare('DELETE FROM users WHERE id = ?').run(id);
+    if (info.changes === 0) {
+      return res.status(404).json({ status: 'error', error: 'not_found', message: `User not found: ${id}` });
+    }
+  } catch (err) {
+    return res.status(500).json({ status: 'error', message: `User deletion failed: ${err.message}` });
+  } finally {
+    if (conn) conn.close();
+  }
+  auditLog('settings.user.delete', { id, username: target.username });
+  res.json({
+    status: 'success',
+    message: `User ${target.username} deleted; their sessions were revoked.`,
+    deleted: { id: target.id, username: target.username },
   });
 });
 
@@ -944,12 +1452,80 @@ router.post('/api/settings/auth/ad', (req, res) => {
 });
 
 router.post('/api/settings/auth/ad/test', (req, res) => {
-  res.status(501).json({ status: 'error', message: 'LDAP verification is not connected in this local build.' });
+  const stored = getStored('auth.ad');
+  const body = req.body || {};
+  const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...body };
+  const host = merged.domainController || merged.host;
+  if (!host) {
+    return res.status(501).json({
+      status: 'error',
+      ...NOT_IMPLEMENTED('No domain controller is configured (no domainController in stored settings or request body), so there is nothing to test.'),
+    });
+  }
+  const port = Number(merged.port) || (merged.ssl ? 636 : 389);
+  const t0 = Date.now();
+  let done = false;
+  const finish = (payload) => {
+    if (done) return;
+    done = true;
+    res.json(payload);
+  };
+  // Real TCP connect to the domain controller. This build has no LDAP
+  // client library, so the check verifies reachability only — it does
+  // NOT perform an LDAP bind, and the response says so explicitly.
+  const socket = net.connect({ host: String(host), port, timeout: 5000 });
+  socket.on('connect', () => {
+    const latencyMs = Date.now() - t0;
+    socket.destroy();
+    auditLog('settings.ad.test', { host: String(host), port, reachable: true });
+    finish({
+      status: 'success',
+      message: `TCP connect to domain controller ${host}:${port} succeeded in ${latencyMs} ms. LDAP bind was NOT verified: no LDAP client is available in this build.`,
+      testedAt: new Date().toISOString(),
+      statusCheck: 'OK',
+      host: String(host),
+      port,
+      reachable: true,
+      latencyMs,
+      ldapBindVerified: false,
+      note: 'Reachability only. Bind verification requires an LDAP client and bind credentials, neither of which exists in this build.',
+    });
+  });
+  socket.on('timeout', () => {
+    socket.destroy();
+    finish({
+      status: 'error',
+      message: `TCP connect to domain controller ${host}:${port} timed out.`,
+      testedAt: new Date().toISOString(),
+      statusCheck: 'FAILED',
+      host: String(host),
+      port,
+      reachable: false,
+      latencyMs: Date.now() - t0,
+      ldapBindVerified: false,
+    });
+  });
+  socket.on('error', (err) => {
+    finish({
+      status: 'error',
+      message: `TCP connect to domain controller ${host}:${port} failed: ${err.message}`,
+      testedAt: new Date().toISOString(),
+      statusCheck: 'FAILED',
+      host: String(host),
+      port,
+      reachable: false,
+      latencyMs: Date.now() - t0,
+      ldapBindVerified: false,
+    });
+  });
 });
 
 // ------------------------------------------------------------------- SAML ---
-// No SAML library, IdP, or login flow exists in this build. Settings persist;
-// the test honestly refuses instead of faking a validation.
+// No SAML library, IdP login flow, or login flow exists in this build.
+// Settings persist; the test validates the stored configuration for real
+// (required fields, stored certificate parsed with crypto.X509Certificate,
+// IdP metadata fetched over HTTPS when an IdP URL is set) and says
+// plainly that it does not perform a SAML login flow.
 
 const DEFAULT_SAML = {
   enabled: false,
@@ -981,10 +1557,153 @@ router.post('/api/settings/auth/saml', (req, res) => {
   res.json({ status: 'success', message: 'SAML 2.0 Single Sign-On settings saved.', saml: out });
 });
 
-router.post('/api/settings/auth/saml/test', (req, res) => {
-  res.status(501).json({
-    status: 'error',
-    ...NOT_IMPLEMENTED('SAML validation is not connected in this local build: no IdP metadata fetch or certificate verification is implemented.'),
+/**
+ * Fetch a URL over HTTPS and report the real status code plus whether the
+ * body looks like SAML IdP metadata. The peer certificate is inspected
+ * (not blindly trusted): rejectUnauthorized is off for the fetch itself
+ * because a test endpoint must report what the IdP serves, but the
+ * result reports whether the certificate was authorized.
+ */
+function fetchUrl(urlString, timeoutMs) {
+  return new Promise((resolve) => {
+    let url;
+    try {
+      url = new URL(urlString);
+    } catch (err) {
+      resolve({ ok: false, error: `Invalid URL: ${err.message}` });
+      return;
+    }
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+      resolve({ ok: false, error: `Unsupported URL protocol: ${url.protocol}` });
+      return;
+    }
+    const lib = url.protocol === 'https:' ? https : http;
+    const req = lib.get(
+      url,
+      { timeout: timeoutMs || 5000, rejectUnauthorized: false },
+      (resp) => {
+        let size = 0;
+        const chunks = [];
+        resp.on('data', (c) => {
+          size += c.length;
+          if (size <= 1024 * 1024) chunks.push(c);
+        });
+        resp.on('end', () => {
+          const body = Buffer.concat(chunks).toString('utf8');
+          let certInfo = null;
+          try {
+            const sock = resp.socket;
+            if (sock && typeof sock.getPeerCertificate === 'function') {
+              const cert = sock.getPeerCertificate();
+              if (cert && Object.keys(cert).length) {
+                certInfo = {
+                  subject: cert.subject ? cert.subject.CN || JSON.stringify(cert.subject) : null,
+                  issuer: cert.issuer ? cert.issuer.CN || JSON.stringify(cert.issuer) : null,
+                  validFrom: cert.valid_from || null,
+                  validTo: cert.valid_to || null,
+                  authorized: typeof sock.authorized === 'boolean' ? sock.authorized : null,
+                  authorizationError: sock.authorizationError ? String(sock.authorizationError) : null,
+                };
+              }
+            }
+          } catch { /* cert detail is best-effort */ }
+          resolve({
+            ok: resp.statusCode >= 200 && resp.statusCode < 300,
+            statusCode: resp.statusCode,
+            contentType: resp.headers['content-type'] || null,
+            bytes: size,
+            looksLikeMetadata: /EntityDescriptor/.test(body),
+            bodyPreview: body.slice(0, 200),
+            certificate: certInfo,
+          });
+        });
+      },
+    );
+    req.on('timeout', () => req.destroy(new Error('Request timed out')));
+    req.on('error', (err) => resolve({ ok: false, error: err.message }));
+  });
+}
+
+/** Parse a stored PEM certificate with the real X.509 parser. */
+function inspectCertificate(pem) {
+  try {
+    const cert = new crypto.X509Certificate(pem);
+    const now = new Date();
+    const validTo = new Date(cert.validTo);
+    return {
+      parsed: true,
+      subject: cert.subject,
+      issuer: cert.issuer,
+      validFrom: cert.validFrom,
+      validTo: cert.validTo,
+      expired: now > validTo,
+      notYetValid: now < new Date(cert.validFrom),
+      fingerprint256: cert.fingerprint256,
+      serialNumber: cert.serialNumber,
+    };
+  } catch (err) {
+    return { parsed: false, error: err.message };
+  }
+}
+
+router.post('/api/settings/auth/saml/test', async (req, res) => {
+  const stored = getStored('auth.saml');
+  const body = req.body || {};
+  const merged = { ...(stored && typeof stored === 'object' ? stored : {}), ...body };
+  const hasAnyConfig = Boolean(
+    merged.idpEntityId || merged.idpSsoUrl || merged.spAcsUrl || merged.certificate || merged.enabled,
+  );
+  if (!hasAnyConfig) {
+    return res.status(501).json({
+      status: 'error',
+      ...NOT_IMPLEMENTED('No SAML configuration is stored, so there is nothing to validate.'),
+    });
+  }
+  // Real checks on the stored configuration. This validates the config
+  // and (when an IdP URL is set) that IdP metadata is fetchable; it does
+  // NOT perform a SAML login flow, and the response says so.
+  const checks = [];
+  const required = ['idpEntityId', 'idpSsoUrl'];
+  for (const field of required) {
+    const present = Boolean(merged[field]);
+    checks.push({ check: `required:${field}`, passed: present, detail: present ? String(merged[field]) : 'missing' });
+  }
+  if (merged.certificate) {
+    const info = inspectCertificate(merged.certificate);
+    const passed = info.parsed && !info.expired && !info.notYetValid;
+    checks.push({
+      check: 'certificate',
+      passed,
+      detail: info.parsed
+        ? `${info.subject} (valid ${info.validFrom} to ${info.validTo}${info.expired ? '; EXPIRED' : ''}${info.notYetValid ? '; NOT YET VALID' : ''})`
+        : `unparsable: ${info.error}`,
+      certificate: info.parsed ? info : null,
+    });
+  } else {
+    checks.push({ check: 'certificate', passed: true, detail: 'no certificate stored (skipped)' });
+  }
+  if (merged.idpSsoUrl) {
+    const fetched = await fetchUrl(String(merged.idpSsoUrl), 5000);
+    checks.push({
+      check: 'idpMetadataFetch',
+      passed: Boolean(fetched.ok && fetched.looksLikeMetadata),
+      detail: fetched.ok
+        ? `HTTP ${fetched.statusCode}, ${fetched.bytes} bytes${fetched.looksLikeMetadata ? ', contains EntityDescriptor' : ', does NOT look like SAML metadata'}`
+        : `fetch failed: ${fetched.error || `HTTP ${fetched.statusCode}`}`,
+      fetch: fetched,
+    });
+  }
+  const allPassed = checks.every((c) => c.passed);
+  auditLog('settings.saml.test', { passed: allPassed, checks: checks.map((c) => `${c.check}:${c.passed}`).join(',') });
+  res.json({
+    status: allPassed ? 'success' : 'error',
+    message: allPassed
+      ? 'SAML configuration validated: required fields present, stored certificate parses and is in date, IdP metadata fetchable.'
+      : 'SAML configuration validation failed: see checks.',
+    testedAt: new Date().toISOString(),
+    statusCheck: allPassed ? 'OK' : 'FAILED',
+    checks,
+    note: 'This validates the stored SAML configuration and IdP metadata reachability. It does not perform a SAML login flow.',
   });
 });
 
@@ -1196,6 +1915,11 @@ router.get('/api/settings/system', (req, res) => {
       sessionTimeoutMins: stored.sessionTimeoutMins ?? null,
       dnsReverseLookup: stored.dnsReverseLookup ?? null,
       dataRetentionDays: stored.dataRetentionDays ?? null,
+      // Gap E: retention is now enforced by the poll cycle (see
+      // server/services/retention.js). This object reports it honestly:
+      // status is 'Not configured' until a valid retention is set, and
+      // lastPurge is the real last purge run (or null if none ran yet).
+      retention: retention.getRetentionStatus(store),
       monitoringThreads: null,
       snmpTimeoutSecs: stored.snmpTimeoutSecs ?? null,
       snmpRetries: stored.snmpRetries ?? null,
@@ -1271,7 +1995,116 @@ router.post('/api/settings/ssl', (req, res) => {
 });
 
 router.post('/api/settings/ssl/test', (req, res) => {
-  res.status(501).json({ status: 'error', message: 'TLS verification is not connected in this local build.' });
+  const stored = getStored('ssl');
+  const body = req.body || {};
+  const host = body.host || (stored && stored.host);
+  const port = Number(body.port || (stored && stored.port) || 443);
+  if (!host && !(stored && stored.certificate)) {
+    return res.status(501).json({
+      status: 'error',
+      ...NOT_IMPLEMENTED('No TLS target is configured (no host in the request body or stored SSL settings) and no certificate is stored, so there is nothing to verify.'),
+    });
+  }
+  // A stored certificate (PEM) can be verified without any network target.
+  if (!host && stored && stored.certificate) {
+    const info = inspectCertificate(stored.certificate);
+    const passed = info.parsed && !info.expired && !info.notYetValid;
+    auditLog('settings.ssl.test', { target: 'stored-certificate', passed });
+    return res.json({
+      status: passed ? 'success' : 'error',
+      message: passed
+        ? 'Stored certificate parses and is within its validity dates.'
+        : 'Stored certificate failed validation: see certificate detail.',
+      testedAt: new Date().toISOString(),
+      statusCheck: passed ? 'OK' : 'FAILED',
+      certificate: info,
+    });
+  }
+  // Real TLS handshake to the target: report the peer certificate exactly
+  // as the server presented it (authorized:false is reported, not hidden).
+  const t0 = Date.now();
+  let done = false;
+  const finish = (payload) => {
+    if (done) return;
+    done = true;
+    res.json(payload);
+  };
+  const socket = tls.connect({
+    host: String(host),
+    port,
+    servername: String(host),
+    rejectUnauthorized: false,
+    timeout: 5000,
+  });
+  socket.on('secureConnect', () => {
+    const latencyMs = Date.now() - t0;
+    const raw = socket.getPeerCertificate(true);
+    let certificate = null;
+    if (raw && Object.keys(raw).length) {
+      const validTo = raw.valid_to ? new Date(raw.valid_to) : null;
+      const validFrom = raw.valid_from ? new Date(raw.valid_from) : null;
+      const now = new Date();
+      certificate = {
+        subject: raw.subject ? raw.subject.CN || JSON.stringify(raw.subject) : null,
+        issuer: raw.issuer ? raw.issuer.CN || JSON.stringify(raw.issuer) : null,
+        subjectAltName: raw.subjectaltname || null,
+        validFrom: raw.valid_from || null,
+        validTo: raw.valid_to || null,
+        expired: validTo ? now > validTo : null,
+        notYetValid: validFrom ? now < validFrom : null,
+        daysRemaining: validTo ? Math.floor((validTo - now) / (24 * 60 * 60 * 1000)) : null,
+        fingerprint256: raw.fingerprint256 || null,
+        serialNumber: raw.serialNumber || null,
+      };
+    }
+    const authorized = socket.authorized === true;
+    const certOk = certificate && certificate.expired === false && certificate.notYetValid === false;
+    const passed = authorized && certOk;
+    const protocol = socket.getProtocol ? socket.getProtocol() : null;
+    const cipher = socket.getCipher ? socket.getCipher() : null;
+    const authorizationError = socket.authorizationError ? String(socket.authorizationError) : null;
+    auditLog('settings.ssl.test', { host: String(host), port, authorized, passed });
+    socket.destroy();
+    finish({
+      status: passed ? 'success' : 'error',
+      message: passed
+        ? `TLS handshake to ${host}:${port} succeeded with a valid, authorized certificate.`
+        : `TLS handshake to ${host}:${port} completed but the certificate is not trusted/valid: authorized=${authorized}${authorizationError ? ` (${authorizationError})` : ''}${certificate && certificate.expired ? ' (EXPIRED)' : ''}.`,
+      testedAt: new Date().toISOString(),
+      statusCheck: passed ? 'OK' : 'FAILED',
+      host: String(host),
+      port,
+      latencyMs,
+      protocol,
+      cipher,
+      authorized,
+      authorizationError,
+      certificate,
+    });
+  });
+  socket.on('timeout', () => {
+    socket.destroy();
+    finish({
+      status: 'error',
+      message: `TLS connect to ${host}:${port} timed out.`,
+      testedAt: new Date().toISOString(),
+      statusCheck: 'FAILED',
+      host: String(host),
+      port,
+      latencyMs: Date.now() - t0,
+    });
+  });
+  socket.on('error', (err) => {
+    finish({
+      status: 'error',
+      message: `TLS connect to ${host}:${port} failed: ${err.message}`,
+      testedAt: new Date().toISOString(),
+      statusCheck: 'FAILED',
+      host: String(host),
+      port,
+      latencyMs: Date.now() - t0,
+    });
+  });
 });
 
 module.exports = router;

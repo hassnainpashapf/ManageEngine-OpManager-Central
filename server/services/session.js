@@ -111,8 +111,21 @@ function extractToken(req) {
 }
 
 /**
+ * Whether a user record is flagged must-change-password (the store's
+ * must_change_password column; tolerates camelCase / legacy spellings).
+ */
+function isMustChangePassword(user) {
+  if (!user) return false;
+  const value =
+    user.must_change_password ?? user.mustChangePassword ?? user.force_password_change;
+  return value === true || value === 1 || value === '1';
+}
+
+/**
  * Validate the presented session and resolve its user.
- * Returns { id, username, role } or null. Expired sessions are revoked.
+ * Returns { id, username, role, mustChangePassword } or null. Expired
+ * sessions are revoked. The flag is read fresh from the users table on
+ * every call, so a password change clears it for the very next request.
  */
 async function getSessionUser(req) {
   const token = extractToken(req);
@@ -141,7 +154,12 @@ async function getSessionUser(req) {
   const users = await store.users.listUsers();
   const user = (users || []).find((u) => String(u.id) === String(userId));
   if (!user) return null;
-  return { id: user.id, username: user.username, role: user.role || 'admin' };
+  return {
+    id: user.id,
+    username: user.username,
+    role: user.role || 'admin',
+    mustChangePassword: isMustChangePassword(user),
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -150,8 +168,9 @@ async function getSessionUser(req) {
 
 /**
  * Require a valid session (HttpOnly `opm_session` cookie or
- * `Authorization: Bearer <token>`). Sets req.user = { id, username, role }.
- * Otherwise 401 { error: 'unauthorized', authenticated: false }.
+ * `Authorization: Bearer <token>`). Sets req.user = { id, username, role,
+ * mustChangePassword }. Otherwise 401 { error: 'unauthorized',
+ * authenticated: false }.
  */
 async function requireAuth(req, res, next) {
   try {
@@ -164,6 +183,29 @@ async function requireAuth(req, res, next) {
   } catch (err) {
     return next(err);
   }
+}
+
+/**
+ * Require that the session's user is NOT flagged must-change-password.
+ * Apply AFTER requireAuth (req.user must already be set). A flagged
+ * session may only call POST /api/auth/change-password and
+ * GET /api/auth/session — those two routes are exempted by the API guard
+ * in server/index.js; every other API route behind this middleware
+ * answers 403 { error: 'password change required' } until the password
+ * is changed (change-password clears the flag, so the next request
+ * passes). No user at all => 401, same as requireAuth.
+ */
+function requirePasswordChanged(req, res, next) {
+  if (!req.user) {
+    return res.status(401).json({ error: 'unauthorized', authenticated: false });
+  }
+  if (req.user.mustChangePassword === true) {
+    return res.status(403).json({
+      error: 'password change required',
+      mustChangePassword: true,
+    });
+  }
+  return next();
 }
 
 /**
@@ -250,6 +292,7 @@ module.exports = {
   verifyPassword,
   createSessionToken,
   requireAuth,
+  requirePasswordChanged,
   requireRole,
   ensureFirstAdmin,
 };

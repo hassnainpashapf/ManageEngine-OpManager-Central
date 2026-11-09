@@ -9,12 +9,10 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "$ROOT_DIR"
 
-# Host monitoring agent binary: Linux build on Linux, macOS build on Darwin.
-case "$(uname -s)" in
-  Linux)  AGENT_BIN="./agent_src/OpManagerAgent-linux-amd64" ;;
-  Darwin) AGENT_BIN="./agent_src/OpManagerAgent" ;;
-  *)      AGENT_BIN="./agent_src/OpManagerAgent-linux-amd64" ;;
-esac
+# Host monitoring agent binary: macOS build on Darwin (per-arch), Linux build elsewhere.
+# Shared selection logic — see scripts/select_agent_bin.sh.
+. "$ROOT_DIR/scripts/select_agent_bin.sh"
+AGENT_BIN="$(select_agent_bin)"
 
 echo "[1/3] Building unified OpManager Central v12.9.204-GA frontend suite..."
 node scripts/rebuild_bundle.js

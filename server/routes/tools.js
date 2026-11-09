@@ -626,10 +626,223 @@ router.get(['/api/tools/switch-ports', '/api/tools/spm'], (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
-// Outside-scope canned endpoints (audit E1–E4). There is no real backend for
+// MAC resolution — real, read-only, multi-source (no fabrication).
+// Sources, in order:
+//   1. Stored interface rows (store.listInterfaces) whose stored IP is the
+//      target — real data collected by the poller.
+//   2. This host's ARP cache (/proc/net/arp on Linux) — real kernel data.
+//   3. Live SNMPv2c (read-only): the target's own MAC via ipAddrTable ->
+//      ifPhysAddress, then ipNetToMediaTable / ipNetToPhysicalTable on the
+//      target and on managed devices (or an explicit `via` device).
+// Source 3 needs RAW varbinds: the SNMP service normalises OctetString
+// values to UTF-8 strings, which destroys arbitrary MAC bytes, so this
+// endpoint opens its own short-lived net-snmp sessions (same library, same
+// community/timeout conventions) and formats Buffer values directly.
+// No OUI/vendor database is bundled, so `vendor` is always null — never
+// guessed from the prefix. A target found in no source is an honest 404
+// listing every source tried.
+// ---------------------------------------------------------------------------
+
+const IP_NET_TO_MEDIA_TABLE = '1.3.6.1.2.1.4.22.1.2'; // ipNetToMediaPhysAddress
+const IP_NET_TO_PHYSICAL_TABLE = '1.3.6.1.2.1.4.35.1.4'; // ipNetToPhysicalPhysAddress
+const IP_ADDR_TABLE_IF_INDEX = '1.3.6.1.2.1.4.20.1.2'; // ipAdEntIfIndex
+const IF_PHYS_ADDRESS = '1.3.6.1.2.1.2.2.1.6'; // ifPhysAddress
+
+let netSnmpLib = null;
+function loadNetSnmp() {
+  if (netSnmpLib !== null) return netSnmpLib;
+  try {
+    netSnmpLib = require('net-snmp');
+  } catch (e) {
+    netSnmpLib = false;
+  }
+  return netSnmpLib || null;
+}
+
+// Canonicalise a MAC value to lowercase colon hex, or null when it is not
+// a real 6-byte hardware address (wrong length, all-zero, unparsable).
+// Buffers are formatted byte-by-byte (never via a UTF-8 string: arbitrary
+// MAC bytes are not valid UTF-8 and would be destroyed by the conversion).
+function formatMac(value) {
+  if (Buffer.isBuffer(value)) {
+    if (value.length !== 6) return null;
+    if (value.every((b) => b === 0)) return null;
+    return [...value].map((b) => b.toString(16).padStart(2, '0')).join(':');
+  }
+  if (typeof value === 'string') {
+    const clean = value.trim().toLowerCase();
+    if (/^([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$/.test(clean)) return clean.replace(/-/g, ':');
+    const hex = clean.replace(/[^0-9a-f]/g, '');
+    if (hex.length === 12 && !/^0{12}$/.test(hex)) return hex.match(/../g).join(':');
+    return null;
+  }
+  return null;
+}
+
+// This host's ARP cache (Linux /proc/net/arp): Map ip -> { mac, device }.
+// Empty map on non-Linux hosts or an unreadable table — never an error.
+function readHostArpCache() {
+  const out = new Map();
+  try {
+    const text = fs.readFileSync('/proc/net/arp', 'utf8');
+    for (const line of text.split('\n').slice(1)) {
+      const parts = line.trim().split(/\s+/);
+      if (parts.length >= 6 && /^\d{1,3}(\.\d{1,3}){3}$/.test(parts[0])) {
+        const mac = formatMac(parts[3]);
+        if (mac) out.set(parts[0], { mac, device: parts[5] });
+      }
+    }
+  } catch (e) {
+    // No ARP table available on this host; the caller treats it as a miss.
+  }
+  return out;
+}
+
+// Raw net-snmp GET: varbind values are returned untouched (Buffers stay
+// Buffers) so MAC bytes survive. Callback bodies never throw: a throw
+// inside net-snmp's UDP callback escapes every promise and kills the
+// whole Node process.
+function snmpRawGet(address, community, oids) {
+  const lib = loadNetSnmp();
+  if (!lib) throw new Error('net-snmp library is not available on this server');
+  return new Promise((resolve, reject) => {
+    let session;
+    try {
+      session = lib.createSession(address, community, { version: lib.Version2c, timeout: 3000, retries: 1, transport: 'udp4' });
+    } catch (e) {
+      return reject(e);
+    }
+    session.get(oids, (error, varbinds) => {
+      try { session.close(); } catch (_e) {}
+      if (error) return reject(error);
+      resolve((varbinds || []).map((vb) => {
+        let value = null;
+        let err = null;
+        try {
+          if (lib.isVarbindError(vb)) err = lib.varbindError(vb);
+          else value = vb.value;
+        } catch (e) {
+          err = e.message;
+        }
+        return { oid: String(vb.oid), type: vb.type, value, error: err };
+      }));
+    });
+  });
+}
+
+// Raw net-snmp subtree walk (bounded by the requested column, like
+// server/services/snmp.js sessionWalk). Resolves to the varbinds actually
+// returned (possibly []); rejects on transport error/timeout.
+function snmpRawWalk(address, community, oid) {
+  const lib = loadNetSnmp();
+  if (!lib) throw new Error('net-snmp library is not available on this server');
+  return new Promise((resolve, reject) => {
+    let session;
+    try {
+      session = lib.createSession(address, community, { version: lib.Version2c, timeout: 3000, retries: 1, transport: 'udp4' });
+    } catch (e) {
+      return reject(e);
+    }
+    const rows = [];
+    const base = String(oid);
+    try {
+      session.subtree(oid, 20, (varbinds) => {
+        try {
+          for (const vb of varbinds || []) {
+            try {
+              if (lib.isVarbindError(vb)) continue;
+              const vbOid = String(vb.oid);
+              if (vbOid !== base && !vbOid.startsWith(`${base}.`)) continue;
+              rows.push({ oid: vbOid, type: vb.type, value: vb.value });
+            } catch (_e) {
+              // One bad varbind is skipped, never thrown out of the callback.
+            }
+          }
+        } catch (_e) {
+          // Never throw out of the net-snmp callback.
+        }
+      }, (error) => {
+        try { session.close(); } catch (_e) {}
+        if (error) return reject(error);
+        resolve(rows);
+      });
+    } catch (e) {
+      try { session.close(); } catch (_e) {}
+      reject(e);
+    }
+  });
+}
+
+// The target device's OWN MAC: ipAddrTable maps its IP to an ifIndex,
+// ifPhysAddress.<ifIndex> is that interface's hardware address.
+// { found, mac?, ifIndex?, error? } — error is set only when SNMP itself
+// failed; a missing table row is a plain miss (error null).
+async function snmpOwnMac(address, community) {
+  let rows;
+  try {
+    rows = await snmpRawWalk(address, community, IP_ADDR_TABLE_IF_INDEX);
+  } catch (err) {
+    return { found: false, error: `SNMP walk of ipAddrTable on ${address} failed: ${err.message}` };
+  }
+  const want = `${IP_ADDR_TABLE_IF_INDEX}.${address}`;
+  const hit = rows.find((vb) => vb.oid === want && !vb.error && vb.value !== null && vb.value !== undefined);
+  if (!hit) return { found: false, error: null };
+  const ifIndex = Number(hit.value);
+  if (!Number.isInteger(ifIndex) || ifIndex < 0) return { found: false, error: null };
+  let got;
+  try {
+    got = await snmpRawGet(address, community, [`${IF_PHYS_ADDRESS}.${ifIndex}`]);
+  } catch (err) {
+    return { found: false, error: `SNMP GET of ifPhysAddress.${ifIndex} on ${address} failed: ${err.message}` };
+  }
+  const vb = got[0];
+  if (!vb || vb.error) return { found: false, error: null };
+  const mac = formatMac(vb.value);
+  if (!mac) return { found: false, error: null };
+  return { found: true, mac, ifIndex };
+}
+
+// The target's MAC as seen in one device's ARP table: ipNetToMediaTable
+// first (row OID ...22.1.2.<ifIndex>.<ip>), then ipNetToPhysicalTable
+// (row OID ...35.1.4.<ifIndex>.1.<ip> for IPv4). { found, mac?, ifIndex?,
+// table?, error? } — error is set only when SNMP itself failed.
+async function snmpArpLookup(viaAddress, targetIp, community) {
+  let rows;
+  try {
+    rows = await snmpRawWalk(viaAddress, community, IP_NET_TO_MEDIA_TABLE);
+  } catch (err) {
+    return { found: false, error: `SNMP walk of ipNetToMediaTable on ${viaAddress} failed: ${err.message}` };
+  }
+  const suffix = `.${targetIp}`;
+  for (const vb of rows) {
+    if (!vb.oid.endsWith(suffix) || vb.error) continue;
+    const mac = formatMac(vb.value);
+    if (!mac) continue;
+    const ifIndex = Number(vb.oid.slice(IP_NET_TO_MEDIA_TABLE.length + 1, vb.oid.length - suffix.length));
+    return { found: true, mac, ifIndex: Number.isInteger(ifIndex) ? ifIndex : null, table: 'ipNetToMediaTable' };
+  }
+  try {
+    rows = await snmpRawWalk(viaAddress, community, IP_NET_TO_PHYSICAL_TABLE);
+  } catch (err) {
+    return { found: false, error: `SNMP walk of ipNetToPhysicalTable on ${viaAddress} failed: ${err.message}` };
+  }
+  const suffix2 = `.1.${targetIp}`;
+  for (const vb of rows) {
+    if (!vb.oid.endsWith(suffix2) || vb.error) continue;
+    const mac = formatMac(vb.value);
+    if (!mac) continue;
+    const ifIndex = Number(vb.oid.slice(IP_NET_TO_PHYSICAL_TABLE.length + 1, vb.oid.length - suffix2.length));
+    return { found: true, mac, ifIndex: Number.isInteger(ifIndex) ? ifIndex : null, table: 'ipNetToPhysicalTable' };
+  }
+  return { found: false, error: null };
+}
+
+// ---------------------------------------------------------------------------
+// Outside-scope canned endpoints (audit E1–E3). There is no real backend for
 // any of these in this server — no SSH/Telnet session runner, no WMI/WinRM
-// client, no ARP/MAC-table source — so they answer an honest 501 instead of
-// returning canned template output. Paths are unchanged.
+// client — so they answer an honest 501 instead of returning canned
+// template output. Paths are unchanged. (mac-resolve used to sit here; it
+// is now implemented above from real sources.)
 // ---------------------------------------------------------------------------
 
 // Interactive Web CLI Terminal Command Executor
@@ -672,14 +885,121 @@ router.post('/api/tools/cli-query', (req, res) => {
   });
 });
 
-// ADDRESS RESOLVER & MAC TOOL
-router.post('/api/tools/mac-resolve', (req, res) => {
-  const { target = '127.0.0.1' } = req.body || {};
-  return res.status(501).json({
+// ADDRESS RESOLVER & MAC TOOL — real, read-only, multi-source (see above).
+// POST /api/tools/mac-resolve { target, community?, via? }
+//   target: IPv4 or managed-device name (required). community: SNMPv2c
+//   community for the live-SNMP sources (default 'public'). via: IP or
+//   managed-device name of a device whose ARP table to search; without it,
+//   every managed device's ARP table is tried. Success: 200 with the real
+//   MAC and the source that supplied it. Nothing found: honest 404 listing
+//   every source tried. Unresolvable target/via: 422.
+router.post('/api/tools/mac-resolve', async (req, res) => {
+  const { target = '127.0.0.1', community = 'public', via } = req.body || {};
+  if (!target || typeof target !== 'string' || !target.trim()) {
+    return res.status(400).json({ status: 'error', message: 'A target IP address (or managed device name) is required.' });
+  }
+  const { requested, address } = await resolveSnmpTarget(target.trim());
+  if (!address) {
+    return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
+  }
+  const comm = typeof community === 'string' && community.trim() ? community.trim() : 'public';
+  const attempts = [];
+  const answer = (mac, source, detail) => res.json({
+    status: 'success',
+    target: requested,
+    resolvedIp: address,
+    mac,
+    vendor: null,
+    vendorNote: 'No OUI/vendor database is bundled with this server, so vendor is not inferred.',
+    source,
+    ...detail,
+    timestamp: new Date().toISOString()
+  });
+
+  // 1. Stored interface rows whose stored IP is the target.
+  try {
+    let hit = null;
+    for (const dev of safeListDevices()) {
+      let ifaces = [];
+      try { ifaces = store.listInterfaces(dev.id) || []; } catch (e) { ifaces = []; }
+      const row = ifaces.find((i) => i && i.ip === address && formatMac(i.mac));
+      if (row) { hit = { dev, row }; break; }
+    }
+    if (hit) {
+      return answer(formatMac(hit.row.mac), 'stored-interface', {
+        device: hit.dev.ip || null,
+        deviceName: hit.dev.sys_name || hit.dev.hostname || null,
+        ifIndex: hit.row.if_index ?? null,
+        interface: hit.row.name || hit.row.descr || null
+      });
+    }
+    attempts.push({ source: 'stored-interface', result: 'no stored interface row has this IP' });
+  } catch (e) {
+    attempts.push({ source: 'stored-interface', result: `store error: ${e.message}` });
+  }
+
+  // 2. This host's ARP cache.
+  const arp = readHostArpCache();
+  if (arp.has(address)) {
+    const hit = arp.get(address);
+    return answer(hit.mac, 'host-arp-cache', {
+      device: null,
+      deviceName: null,
+      ifIndex: null,
+      interface: hit.device
+    });
+  }
+  attempts.push({ source: 'host-arp-cache', result: 'no entry in this host ARP cache' });
+
+  // 3a. The target's own MAC via live SNMP (ipAddrTable -> ifPhysAddress).
+  const own = await snmpOwnMac(address, comm);
+  if (own.found) {
+    return answer(own.mac, 'snmp-if-table', {
+      device: address,
+      deviceName: null,
+      ifIndex: own.ifIndex,
+      interface: null
+    });
+  }
+  attempts.push({ source: 'snmp-if-table', result: own.error || 'target has no ipAddrTable row for this IP (or no ifPhysAddress)' });
+
+  // 3b. ARP tables: an explicit `via` device, else every managed device.
+  const viaTargets = [];
+  if (via !== undefined && via !== null && String(via).trim() !== '') {
+    const v = await resolveSnmpTarget(String(via).trim());
+    if (!v.address) {
+      return res.status(422).json({ status: 'error', message: `Could not resolve 'via' device '${v.requested}' to an IPv4 address.` });
+    }
+    viaTargets.push(v.address);
+  } else {
+    for (const dev of safeListDevices()) {
+      if (dev.ip && dev.ip !== address) viaTargets.push(dev.ip);
+    }
+  }
+  for (const viaIp of viaTargets) {
+    const hit = await snmpArpLookup(viaIp, address, comm);
+    if (hit.found) {
+      return answer(hit.mac, 'snmp-arp-table', {
+        device: viaIp,
+        deviceName: null,
+        ifIndex: hit.ifIndex,
+        interface: null,
+        table: hit.table
+      });
+    }
+    attempts.push({ source: `snmp-arp-table@${viaIp}`, result: hit.error || 'no ARP entry for this IP' });
+  }
+  if (!viaTargets.length) {
+    attempts.push({ source: 'snmp-arp-table', result: 'no managed device or via device to query' });
+  }
+
+  return res.status(404).json({
     status: 'error',
-    error: 'not_implemented',
-    message: 'MAC resolution is not implemented: no ARP table or SNMP ipNetToMediaTable source is wired to this endpoint, so no MAC/vendor/port is returned.',
-    target,
+    error: 'mac_not_found',
+    message: `No MAC address was found for ${requested} (${address}) in any available source; nothing was fabricated.`,
+    target: requested,
+    resolvedIp: address,
+    sourcesTried: attempts,
     timestamp: new Date().toISOString()
   });
 });
