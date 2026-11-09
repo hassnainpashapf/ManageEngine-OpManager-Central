@@ -374,7 +374,14 @@ app.get(['/apiclient/ember/index.jsp', '/apiclient/ember', '/apiclient/fluidicv3
 });
 
 // Redirect classic module routes to fluidic hash routes
-app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'], (req, res) => {
+// (HE-3a) API paths contain the same words (e.g. /api/json/ncmclient/...,
+// /maps/listRacks, /ncmclient/getMainMenuTabs) and Express matches these
+// wildcards anywhere in the path, so without this guard every one of
+// those JSON endpoints 302'd to the SPA shell instead of reaching its
+// router. API paths fall through to the mounts; only genuine page routes
+// (e.g. /NCM, /Maps) redirect.
+app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'], (req, res, next) => {
+  if (isApiPath(apiPathname(req))) return next();
   res.redirect('/apiclient/fluidicv3/itom/index.html#' + req.originalUrl);
 });
 

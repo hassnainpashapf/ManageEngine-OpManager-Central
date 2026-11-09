@@ -730,12 +730,31 @@ function getAlarm(id) {
 
 function raiseAlarm(alarm) {
   const a = alarm || {};
-  return insertAndGet(
+  const created = insertAndGet(
     'alarms',
     ['device_id', 'severity', 'message', 'source', 'status', 'created_at'],
     [a.device_id ?? null, a.severity ?? null, a.message ?? null, a.source ?? null, a.status || 'active', now()],
     getAlarm
   );
+  // (Phase 5, HE-3a) Real console event -> console message: every alarm
+  // actually raised records one ALERT message for the 'alarms' page, built
+  // only from the alarm's own fields. Lazy require avoids a load-time
+  // cycle (consoleMessages requires this store); best-effort so a message
+  // failure can never break alarm creation.
+  try {
+    const consoleMessages = require('./consoleMessages');
+    consoleMessages.recordMessage({
+      page: 'alarms',
+      type: 'ALERT',
+      title: created && created.severity
+        ? `${created.severity} alarm${created.source ? ` (${created.source})` : ''}`
+        : 'Alarm raised',
+      message: (created && created.message) || 'An alarm was raised.'
+    });
+  } catch (e) {
+    // Message recording is best-effort; the alarm itself was stored.
+  }
+  return created;
 }
 
 function listAlarms(filter) {
