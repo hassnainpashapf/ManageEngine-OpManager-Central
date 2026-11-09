@@ -261,19 +261,52 @@ function createV3Session(ip, v3, options = {}) {
 }
 
 /**
+ * normalizeSnmpVersion(raw) — THE canonical SNMP version spelling map
+ * for this codebase (audit A3 G-01). Stored device rows hold '2c' (the
+ * discovery/devices write paths normalize it on write, but rows written
+ * before that — and any direct store write — still carry '2c'), so every
+ * version-consumption point must accept the aliases instead of comparing
+ * against the exact 'v2c'/'v3' spellings:
+ *
+ *   'v2c' | '2c' | 'v2' | '2'  → 'v2c'
+ *   'v3'  | '3'                → 'v3'
+ *
+ * Matching is case-insensitive with surrounding whitespace trimmed.
+ * A present-but-unknown value (including 'v1'/'1' — SNMPv1 is not
+ * supported anywhere in this codebase) returns null: callers keep the
+ * strict rejection with a clear error naming the unsupported version.
+ * An unknown version is NEVER defaulted to v2c — that would silently
+ * poll a device with the wrong protocol. Missing/blank is also null;
+ * callers that historically defaulted a missing version to v2c keep
+ * that default explicitly at their own call site.
+ */
+function normalizeSnmpVersion(raw) {
+  if (raw === undefined || raw === null) return null;
+  const v = String(raw).trim().toLowerCase();
+  if (v === 'v2c' || v === '2c' || v === 'v2' || v === '2') return 'v2c';
+  if (v === 'v3' || v === '3') return 'v3';
+  return null;
+}
+
+/**
  * createSnmpSession(ip, snmpConfig, options = {}) — version dispatcher.
  * snmpConfig: { version: 'v2c'|'v3', community, v3 } (canonical
  * device.snmp shape). v2c returns the existing community session;
  * v3 returns createV3Session. Any other version throws — v1 is not
  * supported by this codebase, and an unknown version must fail loudly
- * rather than silently polling as v2c.
+ * rather than silently polling as v2c. Version spellings go through
+ * normalizeSnmpVersion, so stored '2c' (and '2'/'3') aliases are
+ * accepted exactly like 'v2c'/'v3' (audit A3 G-01).
  */
 function createSnmpSession(ip, snmpConfig, options = {}) {
   const cfg = snmpConfig && typeof snmpConfig === 'object' ? snmpConfig : {};
-  const version = String(cfg.version || 'v2c').trim().toLowerCase();
+  const rawVersion = cfg.version;
+  const version = (rawVersion === undefined || rawVersion === null || String(rawVersion).trim() === '')
+    ? 'v2c'
+    : normalizeSnmpVersion(rawVersion);
   if (version === 'v3') return createV3Session(ip, cfg.v3, options);
   if (version === 'v2c') return createSession(ip, cfg.community, options);
-  throw new Error(`SNMP: unsupported SNMP version '${cfg.version}' (supported: 'v2c', 'v3')`);
+  throw new Error(`SNMP: unsupported SNMP version '${rawVersion}' (supported: 'v2c', 'v3')`);
 }
 
 /**
@@ -281,15 +314,22 @@ function createSnmpSession(ip, snmpConfig, options = {}) {
  * get/walk primitives below. Backward compatible: options without a
  * version still opens the v2c community session exactly as before.
  * options { version: 'v3', v3: {...} } opens a v3 session instead.
+ * Version spellings go through normalizeSnmpVersion, so the stored
+ * '2c' alias (and '2'/'3') is accepted exactly like 'v2c'/'v3'
+ * (audit A3 G-01); any other present version still throws.
  */
 function openSession(ip, community, options = {}) {
-  if (options.version !== undefined && String(options.version).trim().toLowerCase() === 'v3') {
+  if (options.version === undefined || options.version === null || String(options.version).trim() === '') {
+    return createSession(ip, community, options);
+  }
+  const version = normalizeSnmpVersion(options.version);
+  if (version === 'v3') {
     return createV3Session(ip, options.v3, options);
   }
-  if (options.version !== undefined && String(options.version).trim().toLowerCase() !== 'v2c') {
-    throw new Error(`SNMP: unsupported SNMP version '${options.version}' (supported: 'v2c', 'v3')`);
+  if (version === 'v2c') {
+    return createSession(ip, community, options);
   }
-  return createSession(ip, community, options);
+  throw new Error(`SNMP: unsupported SNMP version '${options.version}' (supported: 'v2c', 'v3')`);
 }
 
 /**
@@ -658,7 +698,7 @@ async function getSystemInfoV3(ip, v3, options = {}) {
  */
 function v3UserFromOptions(options = {}) {
   return options.version !== undefined
-    && String(options.version).trim().toLowerCase() === 'v3'
+    && normalizeSnmpVersion(options.version) === 'v3'
     && options.v3 && typeof options.v3.user === 'string'
     ? options.v3.user
     : null;
@@ -908,6 +948,7 @@ module.exports = {
   createV3Session,
   createSnmpSession,
   openSession,
+  normalizeSnmpVersion,
   validateV3,
   describeSnmpV3,
   isV3AuthError,

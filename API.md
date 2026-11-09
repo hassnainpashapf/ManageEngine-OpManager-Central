@@ -247,7 +247,7 @@ real pagination (`page`, `pageSize` clamped 1–1000, default 200).
 | Method + path | Auth | Request | Response | Status |
 | --- | --- | --- | --- | --- |
 | `GET /api/ccm/configs` | Session (guard) | — | Config rows from `store.configs`, grouped by `config_type`, with real `fetchedAt` and per-type device counts. | **REAL** |
-| `POST /api/json/enterprise/pushCentralConfig`, `/api/ccm/push` | Session (guard) | `{configurationType, targetProbeId?}` | `400` no `configurationType`; `404` if that config type is not in the store, or the named target probe does not exist; otherwise `501 {error:'not_implemented', config:{configName, lastPushed:null, status:null, targetProbeId}, pushedAt:null}` — no Central-to-probe delivery channel exists. | **501** — **OPEN O-3** |
+| `POST /api/json/enterprise/pushCentralConfig`, `/api/ccm/push` | Session (guard) | `{configurationType, targetProbeId?}` | `400` no `configurationType`; `404` if that config type is not in the store, or the named target probe does not exist; otherwise `202` — stages a push approval (`approvalId`); response carries `dryRun: true, sent: false, sentToDevice: false, pushedAt: null` — nothing has been sent to any probe or device. Approve/reject/execute on the staged approval are admin-only. No live delivery channel exists. | **REAL** (staging) — delivery still **OPEN O-3** |
 | `POST /api/ccm/backup-device`, `/api/ccm/backup` | Session (guard) | `{deviceId}` | `400` no `deviceId`; `404` unknown device (with null `deviceName`/`ip`/`revision`/`backupTime`/`complianceStatus`/`linesCount`/`fileSize`); known device → `501` — no SSH/TFTP/SNMP config retrieval path exists, so no configuration was fetched and no backup was written. | **501** — **OPEN O-4** |
 
 ## 7. `server/routes/devices.js` — 18 definitions: 18 REAL (phase-5 HE-2: virtualization + firewall-rules now REAL, derived from stored data)
@@ -817,9 +817,9 @@ password changed first) and `scripts/verify-p3.sh` on port 8137 — see
 
 | # | Route definition | Now |
 | --- | --- | --- |
-| 1 | `POST /api/ccm/push` (+ legacy aliases) | REAL — stages an approval (202); approve → dry-run execute only. Nothing is ever sent to a device; no live push exists. See §24.3 NCM. |
+| 1 | `POST /api/ccm/push` (+ legacy aliases) | REAL — stages an approval (202) with `dryRun: true, sent: false, sentToDevice: false`; approve/reject/execute are admin-only; approve → dry-run execute only. Nothing is ever sent to a device; no live push exists. See §24.3 NCM. |
 | 2 | `POST /api/ccm/backup-device`, `/api/ccm/backup` | REAL — real SSH fetch (`ssh2`) of `show running-config`; 501 only when no SSH credential is stored for the device (conditional, §24.2). |
-| 3 | `POST /api/ccm/resolve-drift` | REAL — stages an approval (202) with the exact diff + remediation commands; approve → dry-run only. |
+| 3 | `POST /api/ccm/resolve-drift` | REAL — stages an approval (202) with the exact diff + remediation commands; drift approve/reject/execute are admin-only; approve → dry-run only. |
 | 4 | `POST /admin/updateJvmHeapSize`, `/api/admin/updateJvmHeapSize` | **Still 501 — permanently N/A, the one unconditional 501.** Structurally impossible: no JVM exists in this Node.js build (see §23.6). Never invent a JVM metric; the 501 body carries the exact reason and the V8 flag. |
 | 5 | `POST /api/tools/terminal-exec` | REAL — allow-listed local commands via `execFile` (shell:false) + exact SSH strings via `ssh2`. Anything else → 403. |
 | 6 | `POST /api/tools/wmi-query` | REAL — WinRM SOAP + NTLMv2 (Basic only over HTTPS or explicit opt-in). SELECT-only WQL. |
@@ -862,12 +862,12 @@ them is a route that always refuses.
 - **ccm.js (+5):** `GET /api/ccm/approvals`, `GET /api/ccm/approvals/:id`,
   `POST …/:id/approve|reject|execute` — the NCM approval queue on the
   canonical service (`server/services/ncm.js`, store key `settings.ncm`).
-  Execute is dry-run only, always.
+  Execute is dry-run only, always. Approve/reject/execute are admin-only.
 - **devices.js (+1):** `PUT /api/devices/:id` (admin-only) — device update
   with the canonical `snmp` object (v2c/v3, masked on read).
 - **diff.js (+5):** `GET /api/ccm/drift-approvals`, `GET …/:id`,
   `POST …/:id/approve|reject|execute` — drift-remediation approvals on
-  the same canonical NCM service.
+  the same canonical NCM service. Approve/reject/execute are admin-only.
 - **ha.js (+9, new file):** `GET /api/ha/status|peers|decisions`,
   `POST /api/ha/register|heartbeat|failover/test`,
   `GET|POST /api/settings/ha`, `POST /api/settings/ha/test` — HA service

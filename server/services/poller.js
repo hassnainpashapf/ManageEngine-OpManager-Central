@@ -242,7 +242,11 @@ function resolveSnmpConfig(device) {
   const s = device && device.snmp && typeof device.snmp === 'object' ? device.snmp : null;
   if (s) {
     if (typeof s.version === 'string' && s.version.trim()) {
-      cfg.version = s.version.trim().toLowerCase();
+      // Canonical normalization (audit A3 G-01): stored rows hold '2c',
+      // which must poll as v2c. An unrecognized spelling is kept verbatim
+      // (lowercased) so the strict unsupported-version error below still
+      // names it instead of silently polling as v2c.
+      cfg.version = snmp.normalizeSnmpVersion(s.version) || s.version.trim().toLowerCase();
     }
     if (typeof s.community === 'string' && s.community) {
       cfg.community = s.community;
@@ -252,7 +256,7 @@ function resolveSnmpConfig(device) {
   if (!s || !s.version) {
     const flatVersion = device.snmp_version || device.snmpVersion || device.version;
     if (typeof flatVersion === 'string' && flatVersion.trim()) {
-      cfg.version = flatVersion.trim().toLowerCase();
+      cfg.version = snmp.normalizeSnmpVersion(flatVersion) || flatVersion.trim().toLowerCase();
     }
   }
   if (!cfg.v3) cfg.v3 = readFlatV3(device);
