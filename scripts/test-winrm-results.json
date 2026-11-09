@@ -1,0 +1,61 @@
+{
+  "startedAt": "2026-11-09T11:24:51.274Z",
+  "cases": [
+    {
+      "id": "1",
+      "title": "NTLM handshake structure (Type 1/2/3 well-formed; malformed rejected)",
+      "outcome": "pass",
+      "detail": "Type1 len=40 ok=true flags=0xa0088235; Type2 len=132 ok=true challenge=4368589fabf4f02d targetLen=14; Type3 len=254 ok=true lmLen=24 ntLen=110; malformed rejected: bad-signature ok=false (bad signature (want NTLMSSP\\0)), truncated-Type3 ok=false, out-of-bounds-offset ok=false, wrong-type ok=false. Validation method: pure structural parse of signature/type/flags/security-buffer bounds (see validateNtlmMessage) over messages built by this harness's own NTLM builders + the peer's live Type 2 (case 2/4/5 re-validate the peer-issued Type 2 on the wire). SCOPE: the APP has no WinRM client, so no app-issued handshake exists to validate — the app-level evidence is case 1-app below; this case validates the validator + the local test peer's messages."
+    },
+    {
+      "id": "1-app",
+      "title": "NTLM handshake at APP level (route presence)",
+      "outcome": "blocked",
+      "detail": "GET /api/winrm/test -> HTTP 404 (no WinRM route exists on this build). POST /api/tools/wmi-query without a session -> HTTP 401 (expected 401 from the API auth guard). POST /api/tools/wmi-query -> HTTP 400 error=INVALID_ARGUMENT message=WinRM: username is required. Non-501 outcome recorded verbatim; no handshake exists to validate at app level."
+    },
+    {
+      "id": "2",
+      "title": "Wrong credentials -> honest auth failure (exact code)",
+      "outcome": "pass",
+      "detail": "wrong password -> HTTP 401 (expected 401), body=NTLM authentication required (LOCAL TEST PEER); wrong username -> HTTP 401 (expected 401); no EnumerateResponse in either body: true; peer NTLMv2 verification is real (MD4+HMAC-MD5 proof check, timing-safe compare). APP level: BLOCKED — no WinRM client exists to present credentials through; the app's own login brute-force guard is a separate mechanism and is not a WinRM auth test."
+    },
+    {
+      "id": "3",
+      "title": "Unreachable host -> honest error, bounded time",
+      "outcome": "pass",
+      "detail": "TEST-NET-1 192.0.2.1:5985: ECONNRESET in 54ms; closed localhost 127.0.0.1:1: ECONNREFUSED in 5ms. Bound: <10000ms each (timeout 5000ms, enforced by the harness wall-clock watchdog); all within bound: true. Environment note: this sandbox's network answers TCP for unroutable TEST-NET-1 (connects in ~12ms) and can hold the connection open — the first run took 53239ms to ECONNRESET with only the socket timeout set, which is why the watchdog exists. A real WinRM client must enforce its own wall-clock bound, not rely on socket timeout alone. APP level: BLOCKED — no WinRM client exists, so the app has no unreachable-host path to time; when winrm-service lands, re-run and require the same bound through the app route."
+    },
+    {
+      "id": "4",
+      "title": "Malformed WQL -> honest 400 / SOAP Fault",
+      "outcome": "pass",
+      "detail": "app: SELEC Caption FROM Win32_Ope... -> HTTP 400; SELECT Caption FROM FROM Win... -> HTTP 400; SELECT Caption Win32_Operati... -> HTTP 400; __MALFORMED_WQL__... -> HTTP 400 (all non-200; honest 501 not_implemented — the query is never executed). peer: malformed WQL -> HTTP 500, SOAP fault code=s:Sender subcode=w:InvalidQuery reason=The query is invalid.; surfaced as error, not success: true."
+    },
+    {
+      "id": "5",
+      "title": "SOAP fault from peer -> honest error surfacing the fault",
+      "outcome": "pass",
+      "detail": "forced peer fault -> HTTP 500, fault code=s:Receiver subcode=w:InternalError reason=The server encountered an internal error (forced by test token).; ERROR surfaced: HTTP 500, fault s:Receiver/w:InternalError — \"The server encountered an internal error (forced by test token).\"; body contains EnumerateResponse: false. APP level: BLOCKED — no WinRM client exists to receive/parse a peer SOAP Fault; when it lands, re-run and require the fault code+reason to reach the API caller verbatim."
+    },
+    {
+      "id": "5-app",
+      "title": "Well-formed WQL at APP level is not faked",
+      "outcome": "blocked",
+      "detail": "well-formed WQL to /api/tools/wmi-query -> HTTP 400; body starts: {\"status\":\"error\",\"error\":\"INVALID_ARGUMENT\",\"message\":\"WinRM: username is required\",\"host\":\"127.0.0.1\",\"namespace\":\"roo. Non-200 recorded verbatim."
+    },
+    {
+      "id": "6",
+      "title": "No credential echoed in any response or log line",
+      "outcome": "pass",
+      "detail": "swept 24 sources (all collected response bodies, own server log in-memory + file, peer request log) for 2 runtime-only test credential values: 0 hits. Peer request log stores metadata only (no Authorization values): true. Note: the OpManager bootstrap admin password is NEVER used as a grep pattern and never appears in this report; only the two WinRM test sentinels are swept."
+    }
+  ],
+  "bugs": [],
+  "finishedAt": "2026-11-09T11:24:52.025Z",
+  "summary": {
+    "pass": 6,
+    "blocked": 2,
+    "bug": 0,
+    "fail": 0
+  }
+}

@@ -13,6 +13,43 @@ const net = require('node:net');
 const fs = require('node:fs');
 const run = promisify(execFile);
 
+// Safe command runner (built by the parallel runner-service track:
+// server/services/runner.js). Loaded lazily, same pattern as the SNMP
+// service, so this router still loads if the runner file (or its ssh2
+// dependency) is not present yet; the runner endpoints then answer 502
+// instead of crashing the whole server. The runner is the ONLY execution
+// path for terminal-exec / cli-query: execFile with shell:false locally,
+// ssh2 exec channels remotely, explicit allow-list only. Credentials are
+// per-call only — this router never reads stored credentials, never logs
+// a request body, and never echoes a password/privateKey/passphrase back.
+let runnerService = null;
+function loadRunnerService() {
+  if (runnerService) return runnerService;
+  try {
+    runnerService = require('../services/runner');
+  } catch (e) {
+    return null;
+  }
+  return runnerService;
+}
+
+// WinRM service (real WS-Management client, server/services/winrm.js —
+// canonical client from the winrm-service track, with the Basic-over-
+// HTTPS fallback and useHttps handling ported from the winrm-route
+// fork). Loaded lazily, same pattern as the runner/SNMP services, so
+// this router still loads if the service file is not present yet; the
+// WMI endpoint then answers 502 instead of crashing the whole server.
+let winrmService = null;
+function loadWinrmService() {
+  if (winrmService) return winrmService;
+  try {
+    winrmService = require('../services/winrm');
+  } catch (e) {
+    return null;
+  }
+  return winrmService;
+}
+
 // SNMP service (built by the parallel SNMP-engine track). Loaded lazily so
 // this router still loads if the service file is not present yet; the SNMP
 // endpoints then answer 502 instead of crashing the whole server.
@@ -838,51 +875,547 @@ async function snmpArpLookup(viaAddress, targetIp, community) {
 }
 
 // ---------------------------------------------------------------------------
-// Outside-scope canned endpoints (audit E1–E3). There is no real backend for
-// any of these in this server — no SSH/Telnet session runner, no WMI/WinRM
-// client — so they answer an honest 501 instead of returning canned
-// template output. Paths are unchanged. (mac-resolve used to sit here; it
-// is now implemented above from real sources.)
+// Safe runner endpoints (Phase 3, runner-routes) + WMI endpoint (Phase 4
+// merge, winrm-route handler adapted to the canonical winrm-service
+// client). terminal-exec and cli-query execute ONLY through
+// server/services/runner.js — there is no shell anywhere on this path, no
+// raw pass-through of caller strings, and no stored credentials: SSH
+// credentials (password / privateKey / passphrase) are accepted per call,
+// handed to ssh2, and never logged, never audited, never echoed in any
+// response. wmi-query executes ONLY through server/services/winrm.js
+// (real WinRM SOAP + NTLMv2, Basic-over-HTTPS fallback); its credentials
+// are likewise per-call only and never echoed.
+//
+// terminal-exec { command, hostname?, timeoutMs?, username?, password?,
+//                 privateKey?, passphrase?, port? }
+//   Routing is decided by the COMMAND, not the hostname:
+//     - a local allow-list command (ping, traceroute, nslookup, dig, arp)
+//       runs on this server via execFile; the command's own host argument
+//       is its target and `hostname` is ignored for execution (it is still
+//       recorded in the response/audit).
+//     - an exact SSH allow-list string ("show version", "show interfaces",
+//       "show ip interface brief", "uptime", "uname -a") runs over SSH
+//       against `hostname` (a managed-device name, an IP, or a DNS
+//       hostname; defaults to 127.0.0.1 when absent) with per-call
+//       credentials.
+//     - anything else is refused with 403 before anything is spawned.
+//   The UI's terminal modal sends exactly { command, hostname } and reads
+//   `output`, so every outcome carries `output` (stdout, else stderr, else
+//   the error message) alongside the structured fields.
+// cli-query { host?, protocol?, command, username?, password?, privateKey?,
+//             passphrase?, port?, timeoutMs? }
+//   protocol must be SSHv2/ssh (anything else: honest 501 — no Telnet
+//   runner exists). host defaults to 127.0.0.1. command must be an exact
+//   SSH allow-list string; credentials are per-call only.
+//
+// Status mapping (honest, never fake-200):
+//   400  missing/empty command, malformed arguments, missing SSH creds
+//   403  command (or any token/flag in it) is not on the allow-list
+//   422  hostname/host cannot be resolved to an address
+//   501  protocol with no runner (Telnet) / runner service unloadable
+//        is reported as 502 (see below); protocol Telnet stays 501
+//   502  nothing ran: runner unavailable, SSH connect/auth failure,
+//        remote host unreachable, local binary missing, execution timeout
+//   200  the command RAN: body carries ok, stdout, stderr, output,
+//        exitCode, signal, timedOut, durationMs, auditId. A non-zero exit
+//        is reported in the body (status 'error', ok false) — the output
+//        is real, so the HTTP call itself succeeded.
 // ---------------------------------------------------------------------------
 
-// Interactive Web CLI Terminal Command Executor
-router.post('/api/tools/terminal-exec', (req, res) => {
-  return res.status(501).json({
+// Any token containing one of these can never be a legitimate allow-list
+// argument (hostnames, IPs, DNS types and the known flags contain none of
+// them); it is treated as an attempt to run something outside the
+// allow-list and refused with 403, before anything is spawned. execFile
+// runs with shell:false anyway — this is defence in depth.
+const SHELL_META_RE = /[;|&$`"'<>\n\r()\\*?~#![\]{}\s]/;
+
+function runnerHttpError(status, message) {
+  const err = new Error(message);
+  err.status = status;
+  return err;
+}
+
+function runnerUser(req) {
+  return (req && req.user && typeof req.user.username === 'string' && req.user.username) || 'system';
+}
+
+function runnerUnavailable(res) {
+  return res.status(502).json({
     status: 'error',
-    error: 'not_implemented',
-    message: 'Terminal execution is not implemented: no safe allow-listed command runner (SSH/Telnet session) exists on this server, so no command is executed and no output is fabricated.',
-    hostname: req.body?.hostname ?? null,
-    command: req.body?.command ?? null,
+    error: 'runner_unavailable',
+    message: 'Safe command runner is not available on this server (server/services/runner.js could not be loaded).',
+    timestamp: new Date().toISOString()
+  });
+}
+
+// Map a runner rejection to its HTTP status: refusal -> 403, bad arguments
+// -> 400, anything else -> 502. The runner's own message is reused
+// verbatim; it never contains a credential.
+function mapRunnerRejection(res, err, meta) {
+  if (err && err.code === 'ERR_RUNNER_NOT_ALLOWED') {
+    return res.status(403).json({
+      status: 'error', error: 'command_not_allowed', message: err.message,
+      target: meta.target, hostname: meta.hostname ?? null, command: meta.command ?? null,
+      timestamp: new Date().toISOString()
+    });
+  }
+  if (err && err.code === 'ERR_RUNNER_VALIDATION') {
+    return res.status(400).json({
+      status: 'error', error: 'invalid_argument', message: err.message,
+      target: meta.target, hostname: meta.hostname ?? null, command: meta.command ?? null,
+      timestamp: new Date().toISOString()
+    });
+  }
+  return res.status(502).json({
+    status: 'error', error: 'runner_error',
+    message: `Command execution failed: ${(err && err.message) || 'unknown error'}`,
+    target: meta.target, hostname: meta.hostname ?? null, command: meta.command ?? null,
+    timestamp: new Date().toISOString()
+  });
+}
+
+// Shape a runner result for the wire. `output` mirrors stdout (the UI
+// terminal reads it); when stdout is empty it falls back to stderr, then
+// to the runner's error string, so the caller always sees what happened.
+function runnerResultBody(result, meta) {
+  const output = (result.stdout && result.stdout.length > 0)
+    ? result.stdout
+    : ((result.stderr && result.stderr.length > 0) ? result.stderr : (result.error || ''));
+  return {
+    status: result.ok ? 'success' : 'error',
+    ok: result.ok,
+    target: result.target,
+    hostname: meta.hostname ?? null,
+    host: result.host ?? null,
+    command: result.command,
+    argv: result.argv ?? null,
+    username: result.username ?? null,
+    stdout: result.stdout,
+    stderr: result.stderr,
+    output,
+    exitCode: result.exitCode,
+    signal: result.signal,
+    timedOut: result.timedOut,
+    truncated: result.truncated,
+    error: result.error,
+    durationMs: result.durationMs,
+    auditId: result.auditId ?? null,
+    timestamp: new Date().toISOString()
+  };
+}
+
+// Send a runner result: the command RAN (exitCode is a number) -> 200 with
+// the full result, even on a non-zero exit. Nothing ran (exitCode null:
+// connect/auth failure, unreachable host, missing binary, timeout before
+// exec) -> honest 502.
+function sendRunnerResult(res, result, meta) {
+  if (!result.ok && (result.exitCode === null || result.exitCode === undefined)) {
+    return res.status(502).json({
+      ...runnerResultBody(result, meta),
+      error: 'unreachable',
+      message: result.error || 'The target could not be reached or the command could not be started; nothing was executed.'
+    });
+  }
+  return res.status(200).json(runnerResultBody(result, meta));
+}
+
+// Parse a free-text local command into { command, args } for
+// runner.runLocal(). The first token must be an allow-listed binary;
+// every later token must be a known flag or a positional argument for
+// that binary. Anything else is refused with 403 — never passed through.
+// Positional host/name validation itself stays in the runner (400 on a
+// malformed host); this parser only enforces the allow-list shape.
+function parseLocalCommand(commandStr) {
+  const tokens = commandStr.trim().split(/\s+/).filter(Boolean);
+  if (!tokens.length) throw runnerHttpError(400, 'A command is required.');
+  const name = tokens[0];
+  for (const tok of tokens) {
+    if (SHELL_META_RE.test(tok)) {
+      throw runnerHttpError(403, `runner: command not allowed: "${commandStr}"`);
+    }
+  }
+  const rest = tokens.slice(1);
+  const noFlags = (cmd) => {
+    for (const tok of rest) {
+      if (tok.startsWith('-') || tok.startsWith('+')) {
+        throw runnerHttpError(403, `runner: command not allowed: "${commandStr}" (unexpected flag "${tok}" for ${cmd})`);
+      }
+    }
+  };
+  // Parse "-c N" / "-W N" style flags; returns { positionals, flags }.
+  // Unknown flags are refused (403), never forwarded.
+  const flagValues = (cmd, allowed) => {
+    const positionals = [];
+    const flags = {};
+    for (let i = 0; i < rest.length; i++) {
+      const tok = rest[i];
+      if (Object.prototype.hasOwnProperty.call(allowed, tok)) {
+        const key = allowed[tok];
+        const val = rest[i + 1];
+        if (val === undefined || val.startsWith('-') || val.startsWith('+')) {
+          throw runnerHttpError(403, `runner: command not allowed: "${commandStr}" (flag "${tok}" needs a value)`);
+        }
+        const n = Number(val);
+        if (!Number.isInteger(n)) {
+          throw runnerHttpError(403, `runner: command not allowed: "${commandStr}" (flag "${tok}" needs an integer value)`);
+        }
+        flags[key] = n;
+        i++;
+      } else if (tok.startsWith('-') || tok.startsWith('+')) {
+        throw runnerHttpError(403, `runner: command not allowed: "${commandStr}" (unexpected flag "${tok}" for ${cmd})`);
+      } else {
+        positionals.push(tok);
+      }
+    }
+    return { positionals, flags };
+  };
+
+  switch (name) {
+    case 'ping': {
+      const { positionals, flags } = flagValues('ping', { '-c': 'count', '-W': 'deadline' });
+      if (positionals.length !== 1) {
+        throw runnerHttpError(400, 'ping needs exactly one host: ping [-c 1..5] [-W 1..10] <host>');
+      }
+      return { command: 'ping', args: { host: positionals[0], count: flags.count, deadline: flags.deadline } };
+    }
+    case 'traceroute': {
+      const { positionals, flags } = flagValues('traceroute', { '-m': 'maxHops', '-w': 'wait' });
+      if (positionals.length !== 1) {
+        throw runnerHttpError(400, 'traceroute needs exactly one host: traceroute [-m 1..30] [-w 1..10] <host>');
+      }
+      return { command: 'traceroute', args: { host: positionals[0], maxHops: flags.maxHops, wait: flags.wait } };
+    }
+    case 'nslookup': {
+      noFlags('nslookup');
+      if (rest.length < 1 || rest.length > 2) {
+        throw runnerHttpError(400, 'nslookup needs a name and an optional server: nslookup <name> [<server>]');
+      }
+      return { command: 'nslookup', args: { name: rest[0], server: rest[1] } };
+    }
+    case 'dig': {
+      // dig [+short] <name> [<type>]; a bare "+short" token is the flag,
+      // any other "+" token is refused. A trailing token that is a known
+      // DNS type is the type; anything else in second position is refused
+      // by the runner's host validation only if it is not a valid name —
+      // so reject a second positional that is not a DNS type here.
+      const DNS_TYPES = new Set(['A', 'AAAA', 'MX', 'TXT', 'NS', 'SOA', 'CNAME', 'PTR']);
+      let short = true;
+      const positionals = [];
+      for (const tok of rest) {
+        if (tok === '+short') { short = true; continue; }
+        if (tok.startsWith('+') || tok.startsWith('-')) {
+          throw runnerHttpError(403, `runner: command not allowed: "${commandStr}" (unexpected flag "${tok}" for dig)`);
+        }
+        positionals.push(tok);
+      }
+      if (positionals.length < 1 || positionals.length > 2) {
+        throw runnerHttpError(400, 'dig needs a name and an optional type: dig [+short] <name> [<type>]');
+      }
+      if (positionals.length === 2 && !DNS_TYPES.has(positionals[1].toUpperCase())) {
+        throw runnerHttpError(403, `runner: command not allowed: "${commandStr}" (unknown DNS type "${positionals[1]}")`);
+      }
+      return { command: 'dig', args: { short, name: positionals[0], type: positionals[1] } };
+    }
+    case 'arp': {
+      if (rest.length > 1 || (rest.length === 1 && rest[0] !== '-n')) {
+        throw runnerHttpError(403, `runner: command not allowed: "${commandStr}" (arp takes only "-n")`);
+      }
+      return { command: 'arp', args: {} };
+    }
+    default:
+      throw runnerHttpError(403, `runner: command not allowed: "${name}"`);
+  }
+}
+
+// Collapse runs of whitespace in an SSH command string so "show  version"
+// matches the exact allow-list entry "show version". No other rewriting:
+// the runner still requires an exact allow-list match.
+function normalizeSshCommand(commandStr) {
+  return String(commandStr).trim().split(/\s+/).join(' ');
+}
+
+// Pull per-call SSH credentials out of a request body. Returns
+// { username, port, password?, privateKey?, passphrase? } or throws 400
+// when no credential was supplied. The values are handed to the runner
+// only; they are never stored, logged or echoed anywhere in this router.
+function pickSshCredentials(body) {
+  const b = body || {};
+  const username = typeof b.username === 'string' ? b.username.trim() : '';
+  const port = b.port === undefined || b.port === null ? 22 : Number(b.port);
+  if (!username) throw runnerHttpError(400, 'An SSH username is required for remote execution.');
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw runnerHttpError(400, 'SSH port must be an integer between 1 and 65535.');
+  }
+  const hasPassword = typeof b.password === 'string' && b.password.length > 0;
+  const hasKey = typeof b.privateKey === 'string' && b.privateKey.length > 0;
+  if (!hasPassword && !hasKey) {
+    throw runnerHttpError(400, 'SSH credentials are required for remote execution: supply a per-call password or privateKey (never stored).');
+  }
+  const creds = { username, port };
+  if (hasPassword) creds.password = b.password;
+  if (hasKey) creds.privateKey = b.privateKey;
+  if (typeof b.passphrase === 'string' && b.passphrase.length > 0) creds.passphrase = b.passphrase;
+  return creds;
+}
+
+function pickTimeoutMs(body) {
+  if (body === undefined || body === null || body.timeoutMs === undefined || body.timeoutMs === null) return undefined;
+  return body.timeoutMs; // the runner validates and clamps it (max 30 s)
+}
+
+// Interactive Web CLI Terminal Command Executor — real, via the safe runner.
+router.post('/api/tools/terminal-exec', async (req, res) => {
+  const commandRaw = req.body?.command;
+  if (typeof commandRaw !== 'string' || !commandRaw.trim()) {
+    return res.status(400).json({ status: 'error', message: 'A command is required.' });
+  }
+  const command = commandRaw.trim();
+  const hostname = typeof req.body?.hostname === 'string' ? req.body.hostname.trim() : '';
+  const user = runnerUser(req);
+
+  const runner = loadRunnerService();
+  if (!runner) return runnerUnavailable(res);
+
+  try {
+    // Local diagnostics first: the command's own host argument is the
+    // target; `hostname` is ignored for execution. parseLocalCommand
+    // throws 403 for anything that is not a local allow-list command —
+    // but a 403 there may mean "this is an SSH command, not a local one",
+    // so only treat it as final when the command is neither local nor
+    // an SSH allow-list string (checked below).
+    let parsed = null;
+    let parseErr = null;
+    try {
+      parsed = parseLocalCommand(command);
+    } catch (e) {
+      parseErr = e;
+    }
+    if (parsed) {
+      const result = await runner.run({
+        target: 'local', command: parsed.command, args: parsed.args,
+        user, timeoutMs: pickTimeoutMs(req.body)
+      });
+      return sendRunnerResult(res, result, { hostname: hostname || 'local', command });
+    }
+
+    // Not a local command: it must be an exact SSH allow-list string.
+    // The runner itself is the authority — ask it via run(); a refusal
+    // surfaces as ERR_RUNNER_NOT_ALLOWED -> 403. But pre-check with
+    // listAllowed() so a malformed local command (400, e.g. "ping" with
+    // no host) keeps its 400 instead of being re-reported as 403.
+    const sshCommand = normalizeSshCommand(command);
+    const sshAllowed = runner.listAllowed().ssh.some((e) => e.command === sshCommand);
+    if (!sshAllowed) {
+      if (parseErr && parseErr.status === 400) throw parseErr;
+      throw runnerHttpError(403, `runner: command not allowed: "${command}"`);
+    }
+    const hostRaw = hostname || '127.0.0.1';
+    const { requested, address } = await resolveSnmpTarget(hostRaw);
+    if (!address) {
+      return res.status(422).json({
+        status: 'error', message: `Could not resolve host '${requested}' to an IPv4 address.`,
+        hostname: requested, command, timestamp: new Date().toISOString()
+      });
+    }
+    const creds = pickSshCredentials(req.body);
+    const result = await runner.run({
+      target: 'ssh', host: address, ...creds,
+      command: sshCommand,
+      user, timeoutMs: pickTimeoutMs(req.body)
+    });
+    return sendRunnerResult(res, result, { hostname: requested, command });
+  } catch (err) {
+    if (err && err.status) {
+      return res.status(err.status).json({
+        status: 'error', message: err.message,
+        hostname: hostname || null, command, timestamp: new Date().toISOString()
+      });
+    }
+    return mapRunnerRejection(res, err, { target: hostname ? 'ssh' : 'local', hostname: hostname || null, command });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// WMI QUERY TOOL — real WQL over WinRM via server/services/winrm.js
+// (WS-Management Enumerate + Pull, NTLMv2 with a Basic-over-HTTPS
+// fallback). Adapted from the Phase 3 winrm-route handler to the
+// canonical winrm-service client: the client returns { results, count }
+// (not the fork's { rows }) and UPPER_SNAKE error codes (not the fork's
+// lowercase ones), so the response carries `results`/`count` and the
+// error mapping is INVALID_ARGUMENT -> 400, every other WinRM code
+// (AUTH_FAILED, UNREACHABLE, TIMEOUT, PROTOCOL) -> 502. The fork's
+// careful validation is kept verbatim: SELECT-only WQL, namespace
+// regex, port validation, and credentials are never logged, never
+// stored, and never echoed back (only host/namespace/query are echoed).
+// The fork's Basic-over-HTTPS fallback and useHttps handling live in
+// the canonical client now (server/services/winrm.js): `useHttps` is
+// passed through and the client derives the transport from it, so
+// HTTPS is not silently dropped.
+//   POST /api/tools/wmi-query { host, username, password,
+//     namespace?, query?, port?, useHttps? }
+//   namespace defaults to 'root\cimv2'; query defaults to
+//   'SELECT Name, PercentProcessorTime FROM
+//   Win32_PerfFormattedData_PerfOS_Processor'; port defaults to
+//   settings.winrm.defaultPort, else 5985 (http) / 5986 (https).
+// ---------------------------------------------------------------------------
+const DEFAULT_WMI_NAMESPACE = 'root\\cimv2';
+const DEFAULT_WMI_QUERY =
+  'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor';
+
+function winrmServiceUnavailable(res) {
+  return res.status(502).json({
+    status: 'error',
+    error: 'winrm_unavailable',
+    message: 'WinRM service is not available on this server (server/services/winrm.js could not be loaded).'
+  });
+}
+
+router.post('/api/tools/wmi-query', async (req, res) => {
+  const body = req.body || {};
+  const host = typeof body.host === 'string' ? body.host.trim() : '';
+  if (!host) {
+    return res.status(400).json({ status: 'error', message: 'A WinRM host (IP or hostname) is required.' });
+  }
+  const query = body.query === undefined || body.query === null ? DEFAULT_WMI_QUERY : body.query;
+  if (typeof query !== 'string' || !query.trim()) {
+    return res.status(400).json({ status: 'error', message: 'A WQL query string is required.' });
+  }
+  if (!/^SELECT\b/i.test(query.trim())) {
+    return res.status(400).json({ status: 'error', message: 'Invalid WQL query: only SELECT statements are accepted.' });
+  }
+  const namespace = body.namespace === undefined || body.namespace === null
+    ? DEFAULT_WMI_NAMESPACE
+    : body.namespace;
+  if (typeof namespace !== 'string' || !/^[A-Za-z0-9_]+(\\[A-Za-z0-9_]+)*$/.test(namespace.trim())) {
+    return res.status(400).json({ status: 'error', message: `Invalid WMI namespace '${String(namespace).slice(0, 80)}'. Expected e.g. 'root\\cimv2'.` });
+  }
+
+  // Port / transport: explicit body values win, then settings.winrm
+  // ({ defaultPort, transport: 'http'|'https' }), then 5985/5986.
+  let winrmSettings = {};
+  try {
+    const raw = store.getSetting('winrm');
+    if (raw) winrmSettings = JSON.parse(raw);
+  } catch (e) {
+    winrmSettings = {};
+  }
+  const useHttps = typeof body.useHttps === 'boolean'
+    ? body.useHttps
+    : winrmSettings.transport === 'https';
+  let port = body.port;
+  if (port === undefined || port === null || port === '') {
+    port = winrmSettings.defaultPort || (useHttps ? 5986 : 5985);
+  }
+  port = Number(port);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    return res.status(400).json({ status: 'error', message: 'WinRM port must be between 1 and 65535.' });
+  }
+
+  const winrm = loadWinrmService();
+  if (!winrm || typeof winrm.runWql !== 'function') return winrmServiceUnavailable(res);
+
+  let result;
+  try {
+    result = await winrm.runWql(host, {
+      username: body.username,
+      password: body.password,
+      namespace: namespace.trim(),
+      query: query.trim(),
+      port,
+      useHttps,
+    });
+  } catch (err) {
+    // Service error messages never contain credentials; the response echoes
+    // host/namespace/query only — username/password are never returned.
+    // Canonical client codes are UPPER_SNAKE: INVALID_ARGUMENT -> 400,
+    // AUTH_FAILED / UNREACHABLE / TIMEOUT / PROTOCOL -> 502.
+    const code = err && err.code ? err.code : 'PROTOCOL';
+    const status = code === 'INVALID_ARGUMENT' ? 400 : 502;
+    return res.status(status).json({
+      status: 'error',
+      error: code,
+      message: err && err.message ? err.message : 'WinRM query failed.',
+      host,
+      namespace: namespace.trim(),
+      query: query.trim(),
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  res.json({
+    status: 'success',
+    host,
+    namespace: namespace.trim(),
+    query: query.trim(),
+    count: result.count,
+    results: result.results,
     timestamp: new Date().toISOString()
   });
 });
 
-// WMI QUERY TOOL
-router.post('/api/tools/wmi-query', (req, res) => {
-  const { host = '127.0.0.1', namespace = 'root\\cimv2', query = 'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor' } = req.body || {};
-  return res.status(501).json({
-    status: 'error',
-    error: 'not_implemented',
-    message: 'WMI query is not implemented: no WMI/WinRM client exists on this server, so no query is executed against the host.',
-    host,
-    namespace,
-    query,
-    timestamp: new Date().toISOString()
-  });
+// CLI QUERY TOOL — real, via the safe runner (SSH only). { host?,
+// protocol?, command, username?, password?, privateKey?, passphrase?,
+// port?, timeoutMs? }. protocol must be SSHv2/ssh; anything else (e.g.
+// Telnet) is an honest 501 — no Telnet runner exists. command must be an
+// exact SSH allow-list string; credentials are per-call only, never
+// stored, never logged, never echoed.
+router.post('/api/tools/cli-query', async (req, res) => {
+  const commandRaw = req.body?.command;
+  if (typeof commandRaw !== 'string' || !commandRaw.trim()) {
+    return res.status(400).json({ status: 'error', message: 'A command is required.' });
+  }
+  const command = normalizeSshCommand(commandRaw);
+  const protocol = typeof req.body?.protocol === 'string' ? req.body.protocol.trim() : 'SSHv2';
+  const proto = protocol.toLowerCase();
+  if (proto !== 'sshv2' && proto !== 'ssh') {
+    return res.status(501).json({
+      status: 'error',
+      error: 'not_implemented',
+      message: `CLI protocol '${protocol}' is not implemented: only SSHv2 is supported by the safe runner; no Telnet runner exists on this server, so no command is executed against the host.`,
+      host: req.body?.host ?? null,
+      protocol,
+      command,
+      timestamp: new Date().toISOString()
+    });
+  }
+  const hostRaw = typeof req.body?.host === 'string' && req.body.host.trim() ? req.body.host.trim() : '127.0.0.1';
+  const user = runnerUser(req);
+
+  const runner = loadRunnerService();
+  if (!runner) return runnerUnavailable(res);
+
+  try {
+    const { requested, address } = await resolveSnmpTarget(hostRaw);
+    if (!address) {
+      return res.status(422).json({
+        status: 'error', message: `Could not resolve host '${requested}' to an IPv4 address.`,
+        host: requested, command, timestamp: new Date().toISOString()
+      });
+    }
+    const creds = pickSshCredentials(req.body);
+    const result = await runner.run({
+      target: 'ssh', host: address, ...creds,
+      command, user, timeoutMs: pickTimeoutMs(req.body)
+    });
+    return sendRunnerResult(res, result, { hostname: requested, command });
+  } catch (err) {
+    if (err && err.status) {
+      return res.status(err.status).json({
+        status: 'error', message: err.message,
+        host: hostRaw, command, timestamp: new Date().toISOString()
+      });
+    }
+    return mapRunnerRejection(res, err, { target: 'ssh', hostname: hostRaw, command });
+  }
 });
 
-// CLI QUERY TOOL
-router.post('/api/tools/cli-query', (req, res) => {
-  const { host = '127.0.0.1', protocol = 'SSHv2', command = 'show version' } = req.body || {};
-  return res.status(501).json({
-    status: 'error',
-    error: 'not_implemented',
-    message: 'CLI query is not implemented: no SSH session runner exists on this server, so no command is executed against the host.',
-    host,
-    protocol,
-    command,
-    timestamp: new Date().toISOString()
-  });
+// GET /api/tools/runner-allowed — the sanitized allow-list (local + SSH
+// commands, defaults). No internals, no credentials, no host data. The
+// runner UI reads this to offer only commands that can actually run.
+router.get('/api/tools/runner-allowed', (req, res) => {
+  const runner = loadRunnerService();
+  if (!runner) return runnerUnavailable(res);
+  res.json({ status: 'success', ...runner.listAllowed(), timestamp: new Date().toISOString() });
 });
 
 // ADDRESS RESOLVER & MAC TOOL — real, read-only, multi-source (see above).
