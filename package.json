@@ -3,6 +3,9 @@
   "version": "12.9.204-GA",
   "description": "ManageEngine OpManager Central - Distributed Enterprise Network Management Suite",
   "main": "server/index.js",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "start": "node server/index.js",
     "dev": "node server/index.js",

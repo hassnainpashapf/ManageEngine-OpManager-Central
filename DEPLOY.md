@@ -19,13 +19,13 @@ machines — run it yourself using one of the paths below.
 
 | Item | Requirement | Source |
 | --- | --- | --- |
-| Node.js | v18 or higher (v20+ recommended) | `README.md`; `Dockerfile` uses `node:20-alpine` |
+| Node.js | v24 or higher | `README.md`; `Dockerfile` uses `node:24-alpine` |
 | npm | v9 or higher | `README.md` |
 | Git | any recent version | — |
 | Network | Outbound ICMP + UDP 161 to the devices you monitor; TCP 8060 inbound to the console | `server/services/poller.js`, `server/services/snmp.js` |
 
-There is **no `engines` field in `package.json`** — the Node version is a
-documented requirement, not an enforced one. `package.json` scripts:
+`package.json` declares `"engines": {"node": ">=24"}` — npm warns (it only
+errors when `engine-strict` is set) on an older Node. `package.json` scripts:
 
 ```json
 "start": "node server/index.js",
@@ -149,7 +149,7 @@ running.
 ### 2.1 What the `Dockerfile` does (read, not assumed)
 
 ```dockerfile
-FROM node:20-alpine
+FROM node:24-alpine
 WORKDIR /app
 RUN apk add --no-cache iputils iproute2 traceroute curl net-tools
 COPY package*.json ./
@@ -530,9 +530,10 @@ on redeploy (§3).
 3. **Render free plan has no persistent disk.** `render.yaml` documents it
    and §3 repeats it: every redeploy/restart wipes `server/data`, including
    the admin account and all devices.
-4. **No `engines` field in `package.json`.** The Node ≥ 18 requirement is
-   documented only; nothing enforces it. Running on an older Node will fail
-   in unclear ways — check with `node --version` before starting.
+4. **`engines` in `package.json` requires Node ≥ 24.** npm warns on an older
+   Node unless `engine-strict` is set. Running on Node < 24 fails at startup
+   with `ERR_UNKNOWN_BUILTIN_MODULE: node:sqlite` — check with
+   `node --version` before starting.
 5. **Trap/syslog ports (UDP 162/514) need privileges.** Binding them
    requires root or the right capability; on a plain macOS run without
    privileges the bind fails (logged, non-fatal — console unaffected).
