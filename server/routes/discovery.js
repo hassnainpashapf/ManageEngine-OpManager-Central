@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../services/db');
+const netprobe = require('../services/netprobe');
 
 // List discovery profiles
 router.get('/api/discovery/profiles', (req, res) => {
@@ -40,55 +41,69 @@ router.get('/api/discovery/history', (req, res) => {
   });
 });
 
-// Run network discovery simulation
-router.post('/api/discovery/run', (req, res) => {
-  const { probeId, ipRange, startIp, endIp, snmpVersion } = req.body;
+// Run a real network discovery sweep: ICMP/TCP reachability + SNMP sysDescr
+// identification against the actual subnet/range supplied by the caller.
+router.post('/api/discovery/run', async (req, res) => {
+  const { probeId, ipRange, startIp, endIp, subnet, cidr, snmpVersion, community } = req.body;
   const probe = db.getProbeById(probeId) || db.getProbes()[0];
 
-  const sampleCatalog = [
-    { vendor: 'Cisco Systems', category: 'Switch', type: 'Cisco Catalyst 3850-48P', os: 'Cisco IOS-XE 16.12.4', sysDescr: 'Cisco IOS Software, C3850 Software (CAT3K_CAA-UNIVERSALK9-M)' },
-    { vendor: 'Fortinet, Inc.', category: 'Firewall', type: 'FortiGate 100F', os: 'FortiOS v7.2.4', sysDescr: 'Fortinet FortiGate-100F Enterprise Next-Gen Firewall' },
-    { vendor: 'Dell Inc.', category: 'Server', type: 'Dell PowerEdge R740xd', os: 'VMware ESXi 7.0.3', sysDescr: 'Dell PowerEdge R740xd Rackmount Hypervisor Node' },
-    { vendor: 'Aruba Networks', category: 'Wireless', type: 'Aruba AP-535', os: 'ArubaOS 8.10.0', sysDescr: 'Aruba Instant AP-535 Dual 4x4:4 802.11ax Campus AP' },
-    { vendor: 'Juniper Networks', category: 'Router', type: 'Juniper MX204', os: 'Junos OS 21.4R1', sysDescr: 'Juniper Networks MX204 3D Universal Edge Router' }
-  ];
+  const rangeInput = subnet || cidr || ipRange || (startIp && endIp ? `${startIp} - ${endIp}` : startIp);
+  const candidates = netprobe.expandRange(rangeInput, 256);
 
-  const baseIpParts = (startIp || '192.168.1.1').split('.').slice(0, 3).join('.');
+  if (candidates.length === 0) {
+    return res.status(400).json({
+      status: 'error',
+      message: `Could not parse a scannable range from "${rangeInput || ''}". Use CIDR (e.g. 192.168.30.0/24) or a start-end range (e.g. 192.168.30.1 - 192.168.30.50).`
+    });
+  }
+
+  const existingIps = new Set((db.data.devices || []).map(d => d.ip));
   const discovered = [];
+  const scannedCount = { reachable: 0 };
 
-  const count = Math.min(4, Math.max(2, Math.floor(Math.random() * 3) + 2));
-  for (let i = 0; i < count; i++) {
-    const hostNum = Math.floor(Math.random() * 200) + 12;
-    const item = sampleCatalog[(i + Math.floor(Math.random() * 5)) % sampleCatalog.length];
+  await netprobe.mapWithConcurrency(candidates, 32, async (ip) => {
+    if (existingIps.has(ip)) return;
+    const reach = await netprobe.checkReachable(ip);
+    if (!reach.reachable) return;
+    scannedCount.reachable++;
+
+    const snmpResult = await netprobe.snmpProbe(ip, community || 'public', snmpVersion);
+    const classification = snmpResult && snmpResult.sysDescr
+      ? netprobe.classifyFromSysDescr(snmpResult.sysDescr)
+      : netprobe.classifyFromPort(reach.port || null);
+
     const dev = db.addDevice({
-      name: `${item.vendor.split(' ')[0].toUpperCase()}-${item.category.toUpperCase()}-${hostNum}`,
-      displayName: `${item.type} (${probe.displayName})`,
-      ip: `${baseIpParts}.${hostNum}`,
-      category: item.category,
-      type: item.type,
-      vendor: item.vendor,
-      os: item.os,
+      name: (snmpResult && snmpResult.sysName) || `Host-${ip.split('.').pop()}`,
+      displayName: `${classification.os} (${probe.displayName})`,
+      ip,
+      category: classification.category,
+      type: (snmpResult && snmpResult.sysDescr) ? snmpResult.sysDescr.split('\n')[0].slice(0, 60) : 'Discovered Host',
+      vendor: classification.vendor,
+      os: classification.os,
       probeId: probe.id,
       snmpVersion: snmpVersion || 'v2c',
       status: 'Clear',
-      cpu: Math.floor(Math.random() * 25) + 15,
-      memory: Math.floor(Math.random() * 35) + 25,
-      disk: Math.floor(Math.random() * 40) + 20,
-      responseTime: Math.floor(Math.random() * 8) + 1,
-      serial: 'FOC' + Math.floor(10000000 + Math.random() * 90000000),
+      cpu: snmpResult && snmpResult.cpu !== null && snmpResult.cpu !== undefined ? snmpResult.cpu : null,
+      memory: snmpResult && snmpResult.memory !== null && snmpResult.memory !== undefined ? snmpResult.memory : null,
+      disk: null,
+      responseTime: reach.rttMs,
+      serial: null,
       lastBackup: 'Pending Initial Discovery Backup'
     });
     discovered.push({
       ...dev,
-      sysDescr: item.sysDescr,
+      sysDescr: (snmpResult && snmpResult.sysDescr) || null,
+      detectionMethod: reach.method,
       discoveredAt: new Date().toISOString()
     });
-  }
+  });
 
   const logEntry = {
     id: 'DISC-' + Date.now(),
     probe: probe.displayName,
-    ipRange: ipRange || `${startIp || '192.168.1.1'} - ${endIp || '192.168.1.30'}`,
+    ipRange: rangeInput,
+    scannedHosts: candidates.length,
+    reachableHosts: scannedCount.reachable,
     discoveredCount: discovered.length,
     timestamp: new Date().toISOString(),
     devices: discovered.map(d => ({ name: d.name, ip: d.ip, category: d.category }))
@@ -98,8 +113,10 @@ router.post('/api/discovery/run', (req, res) => {
 
   res.json({
     status: 'success',
-    message: `Network discovery sweep completed on ${probe.displayName}`,
+    message: `Network discovery sweep completed on ${probe.displayName}: ${candidates.length} addresses scanned, ${scannedCount.reachable} reachable, ${discovered.length} new device(s) added.`,
     probe: probe.displayName,
+    scannedHosts: candidates.length,
+    reachableHosts: scannedCount.reachable,
     discoveredCount: discovered.length,
     discoveredDevices: discovered
   });

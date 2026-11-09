@@ -1,22 +1,24 @@
 const db = require('./db');
+const netprobe = require('./netprobe');
 
 class NetworkPoller {
   constructor() {
     this.timer = null;
     this.listeners = [];
     this.tickCount = 0;
+    this.busy = false;
   }
 
   onUpdate(callback) {
     this.listeners.push(callback);
   }
 
-  start(intervalMs = 4000) {
+  start(intervalMs = 10000) {
     if (this.timer) return;
     this.timer = setInterval(() => {
       this.pollCycle();
     }, intervalMs);
-    console.log(`[OpManager Poller] Live polling engine active (interval: ${intervalMs}ms)`);
+    console.log(`[OpManager Poller] Live ICMP/SNMP polling engine active (interval: ${intervalMs}ms)`);
   }
 
   stop() {
@@ -26,12 +28,22 @@ class NetworkPoller {
     }
   }
 
-  pollCycle() {
+  async pollCycle() {
+    if (this.busy) return; // avoid overlapping cycles when probes are slower than the interval
+    this.busy = true;
+    try {
+      await this.runCycle();
+    } finally {
+      this.busy = false;
+    }
+  }
+
+  async runCycle() {
     const devices = db.data.devices || [];
     const updatedDevices = [];
 
-    devices.forEach(device => {
-      // If device is monitored by real host agent, preserve real metrics!
+    await netprobe.mapWithConcurrency(devices, 16, async (device) => {
+      // Real host agent reports its own metrics directly; don't override them.
       if (device.isAgentMonitored) {
         device.lastPolled = 'Just now';
         updatedDevices.push({
@@ -45,23 +57,29 @@ class NetworkPoller {
         return;
       }
 
-      // Small realistic fluctuations for SNMP/simulated nodes
-      const cpuDelta = (Math.random() - 0.5) * 4;
-      const memDelta = (Math.random() - 0.5) * 2;
-      const pingDelta = (Math.random() - 0.5) * 2;
+      if (!device.ip) return;
 
-      device.cpu = Math.min(99, Math.max(5, Math.round(device.cpu + cpuDelta)));
-      device.memory = Math.min(99, Math.max(10, Math.round(device.memory + memDelta)));
-      device.responseTime = Math.max(1, Math.round(device.responseTime + pingDelta));
+      const reach = await netprobe.checkReachable(device.ip);
       device.lastPolled = 'Just now';
 
-      // Fluctuate interface bandwidth
-      if (device.interfaces && device.interfaces.length > 0) {
-        device.interfaces.forEach(intf => {
-          const trafficVariance = (Math.random() - 0.5) * 15;
-          intf.inTraffic = Math.max(0.5, Number((intf.inTraffic + trafficVariance).toFixed(1)));
-          intf.outTraffic = Math.max(0.5, Number((intf.outTraffic + trafficVariance * 1.1).toFixed(1)));
-        });
+      if (!reach.reachable) {
+        device.status = 'Down';
+        device.responseTime = null;
+        updatedDevices.push({ id: device.id, cpu: device.cpu, memory: device.memory, responseTime: null, status: device.status });
+        return;
+      }
+
+      device.responseTime = reach.rttMs;
+      if (device.status === 'Down') device.status = 'Clear';
+
+      const community = device.snmpCommunity || 'public';
+      const snmp = await netprobe.snmpProbe(device.ip, community, device.snmpVersion);
+      if (snmp) {
+        if (snmp.cpu !== null && snmp.cpu !== undefined) device.cpu = snmp.cpu;
+        if (snmp.memory !== null && snmp.memory !== undefined) device.memory = snmp.memory;
+        device.snmpReachable = true;
+      } else {
+        device.snmpReachable = false;
       }
 
       updatedDevices.push({
@@ -75,7 +93,6 @@ class NetworkPoller {
 
     this.tickCount++;
 
-    // Notify listeners / WebSocket clients
     const payload = {
       type: 'METRIC_TICK',
       timestamp: Date.now(),
@@ -85,29 +102,33 @@ class NetworkPoller {
 
     this.listeners.forEach(fn => fn(payload));
 
-    // Periodic live alarm toast event (every ~20s)
-    if (this.tickCount % 5 === 0 && db.data.alarms && db.data.alarms.length > 0) {
-      const randomAlarm = db.data.alarms[Math.floor(Math.random() * db.data.alarms.length)];
-      const toastPayload = {
-        type: 'ALARM_TOAST',
-        alarm: {
-          id: randomAlarm.id,
-          deviceId: randomAlarm.deviceId,
-          device: randomAlarm.deviceName || randomAlarm.device || ((db.data.devices && db.data.devices[0]?.name) || 'Managed Node'),
-          deviceName: randomAlarm.deviceName || randomAlarm.device || ((db.data.devices && db.data.devices[0]?.name) || 'Managed Node'),
-          ip: randomAlarm.ip || ((db.data.devices && db.data.devices[0]?.ip) || '127.0.0.1'),
-          message: randomAlarm.message,
-          severity: randomAlarm.severity,
-          entity: randomAlarm.entity || randomAlarm.category || 'Threshold Monitor',
-          category: randomAlarm.category || 'Server',
-          probe: randomAlarm.probeName || randomAlarm.probe || 'Central Site Probe',
-          probeName: randomAlarm.probeName || randomAlarm.probe || 'Central Site Probe',
-          time: 'Just now',
-          timestamp: 'Just now',
-          technician: randomAlarm.who || 'Unacknowledged'
-        }
-      };
-      this.listeners.forEach(fn => fn(toastPayload));
+    // Raise a real alarm toast when a device transitions down during this cycle.
+    const newlyDown = updatedDevices.filter(d => d.status === 'Down');
+    if (newlyDown.length > 0) {
+      const first = newlyDown[0];
+      const device = db.getDeviceById(first.id);
+      if (device) {
+        const toastPayload = {
+          type: 'ALARM_TOAST',
+          alarm: {
+            id: `live_${device.id}_${Date.now()}`,
+            deviceId: device.id,
+            device: device.name,
+            deviceName: device.name,
+            ip: device.ip,
+            message: `${device.name} (${device.ip}) is not responding to ICMP/TCP probes`,
+            severity: 'Critical',
+            entity: 'Availability Monitor',
+            category: device.category || 'Server',
+            probe: device.probeName || 'Central Site Probe',
+            probeName: device.probeName || 'Central Site Probe',
+            time: 'Just now',
+            timestamp: 'Just now',
+            technician: 'Unacknowledged'
+          }
+        };
+        this.listeners.forEach(fn => fn(toastPayload));
+      }
     }
   }
 }

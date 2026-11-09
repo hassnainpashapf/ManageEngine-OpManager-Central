@@ -303,8 +303,8 @@ poller.onUpdate((payload) => {
   });
 });
 
-// Start network poller
-poller.start(4000);
+// Start network poller (real ICMP/SNMP probes need more headroom than the old simulated tick)
+poller.start(15000);
 
 // Fallback route
 app.get('*', (req, res) => {

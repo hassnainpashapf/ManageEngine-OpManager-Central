@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../services/db');
+const netprobe = require('../services/netprobe');
 
 // OpManager Standard API: list devices with optional probe/category/status filters
 router.get(['/device/listDevices', '/device/list', '/api/json/device/list', '/api/devices'], (req, res) => {
@@ -197,48 +198,99 @@ router.post(['/api/json/device/delete', '/api/devices/:id/delete'], (req, res) =
   });
 });
 
-// Poll Device Immediately (Manual / Live SNMP Trigger)
-router.post(['/api/json/device/pollNow', '/api/devices/:id/poll-now'], (req, res) => {
+// Poll Device Immediately (real ICMP + SNMP probe against the device's actual IP)
+router.post(['/api/json/device/pollNow', '/api/devices/:id/poll-now'], async (req, res) => {
   const deviceId = req.body.deviceId || req.query.deviceId || req.params.id;
   const dev = db.getDeviceById(deviceId);
   if (!dev) {
     return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
 
-  // Simulate instant SNMP / ICMP fetch
-  dev.responseTime = Math.floor(Math.random() * 15) + 8;
-  dev.cpu = Math.min(98, Math.max(8, Math.round(dev.cpu + (Math.random() - 0.5) * 6)));
-  dev.memory = Math.min(95, Math.max(15, Math.round(dev.memory + (Math.random() - 0.5) * 4)));
+  if (dev.isAgentMonitored) {
+    dev.lastPolled = 'Just now';
+    return res.json({
+      status: 'success',
+      message: `Device ${dev.name} is agent-monitored; latest metrics came from its host agent heartbeat.`,
+      device: dev,
+      polledAt: new Date().toISOString()
+    });
+  }
+
+  const reach = await netprobe.checkReachable(dev.ip);
   dev.lastPolled = 'Just now';
+
+  if (!reach.reachable) {
+    dev.status = 'Down';
+    dev.responseTime = null;
+    return res.json({
+      status: 'success',
+      message: `Device ${dev.name} (${dev.ip}) did not respond to ICMP or TCP probes.`,
+      device: dev,
+      polledAt: new Date().toISOString()
+    });
+  }
+
+  dev.responseTime = reach.rttMs;
+  if (dev.status === 'Down') dev.status = 'Clear';
+
+  const snmp = await netprobe.snmpProbe(dev.ip, dev.snmpCommunity || 'public', dev.snmpVersion);
+  if (snmp) {
+    if (snmp.cpu !== null && snmp.cpu !== undefined) dev.cpu = snmp.cpu;
+    if (snmp.memory !== null && snmp.memory !== undefined) dev.memory = snmp.memory;
+    dev.snmpReachable = true;
+  } else {
+    dev.snmpReachable = false;
+  }
 
   res.json({
     status: 'success',
-    message: `Device ${dev.name} (${dev.ip}) polled successfully via ${dev.probeName || 'Dallas-Probe-01'} (SNMP v2c OK, Latency: ${dev.responseTime}ms)`,
+    message: `Device ${dev.name} (${dev.ip}) polled via ${dev.probeName || 'Central Site Probe'} (${reach.method.toUpperCase()} OK, latency: ${dev.responseTime}ms${snmp ? ', SNMP OK' : ', SNMP unavailable'})`,
     device: dev,
     polledAt: new Date().toISOString()
   });
 });
 
-// Test Active Monitors (Ping, SNMP, WMI, Ports)
-router.get(['/api/json/device/testMonitors', '/api/devices/:id/test-monitors'], (req, res) => {
+// Test Active Monitors (real ICMP + SNMP probes against the device's IP)
+router.get(['/api/json/device/testMonitors', '/api/devices/:id/test-monitors'], async (req, res) => {
   const deviceId = req.query.deviceId || req.params.id;
   const dev = db.getDeviceById(deviceId);
   if (!dev) {
     return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
 
+  const start = Date.now();
+  const reach = await netprobe.checkReachable(dev.ip);
+  const monitors = [
+    {
+      name: reach.method === 'icmp' ? 'ICMP Ping Echo' : 'TCP Connect Probe',
+      protocol: reach.method === 'icmp' ? 'ICMP' : 'TCP',
+      status: reach.reachable ? 'Success' : 'Failed',
+      roundTripMs: reach.rttMs,
+      packetLoss: reach.reachable ? '0%' : '100%'
+    }
+  ];
+
+  if (reach.reachable) {
+    const snmpStart = Date.now();
+    const snmp = await netprobe.snmpProbe(dev.ip, dev.snmpCommunity || 'public', dev.snmpVersion);
+    const snmpRtt = Date.now() - snmpStart;
+    if (snmp) {
+      monitors.push(
+        { name: 'SNMP RFC1213-MIB sysDescr', protocol: `SNMP ${dev.snmpVersion || 'v2c'}`, status: 'Success', roundTripMs: snmpRtt, value: snmp.sysDescr || 'n/a' },
+        { name: 'HOST-RESOURCES-MIB hrProcessorLoad', protocol: `SNMP ${dev.snmpVersion || 'v2c'}`, status: snmp.cpu !== null ? 'Success' : 'Not Supported', roundTripMs: snmpRtt, value: snmp.cpu !== null ? `${snmp.cpu}%` : null },
+        { name: 'HOST-RESOURCES-MIB hrStorageUsed', protocol: `SNMP ${dev.snmpVersion || 'v2c'}`, status: snmp.memory !== null ? 'Success' : 'Not Supported', roundTripMs: snmpRtt, value: snmp.memory !== null ? `${snmp.memory}%` : null }
+      );
+    } else {
+      monitors.push({ name: 'SNMP RFC1213-MIB sysDescr', protocol: `SNMP ${dev.snmpVersion || 'v2c'}`, status: 'Failed', roundTripMs: Date.now() - snmpStart, value: null });
+    }
+  }
+
   res.json({
     status: 'success',
     device: dev.name,
     ip: dev.ip,
-    monitors: [
-      { name: 'ICMP Ping Echo', protocol: 'ICMP', status: 'Success', roundTripMs: dev.responseTime || 12, packetLoss: '0%' },
-      { name: 'SNMP RFC1213-MIB sysDescr', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 16, value: `${dev.vendor} IOS Software, Version ${dev.osVersion || '16.12'}` },
-      { name: 'HOST-RESOURCES-MIB hrProcessorLoad', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 14, value: `${dev.cpu}%` },
-      { name: 'HOST-RESOURCES-MIB hrStorageUsed', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 18, value: `${dev.memory}% (${Math.round((dev.memory / 100) * 32)} GB / 32 GB)` },
-      { name: 'IF-MIB ifOperStatus', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 22, value: '3 / 3 interfaces operational UP' },
-      { name: 'CISCO-ENVMON-MIB ciscoEnvMonTemperatureStatusValue', protocol: 'SNMP v2c', status: 'Success', roundTripMs: 20, value: `${dev.temperature || 34}°C (Normal)` }
-    ]
+    totalRoundTripMs: Date.now() - start,
+    monitors
   });
 });
 
