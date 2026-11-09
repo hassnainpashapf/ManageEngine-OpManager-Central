@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T11:29:08.602Z",
+  "generatedAt": "2026-11-09T12:06:47.429Z",
   "agent": "127.0.0.1:161 (local test service only; in-memory datagram shim — this VM blocks UDP send)",
   "server": "own instance, in-process on :8160, throwaway DB /home/hatch/workspace/opm-p4/m1-work/test-snmpv3.db",
   "summary": {
@@ -11,48 +11,48 @@
     {
       "case": "0 v3 happy path",
       "verdict": "PASS",
-      "detail": "sysDescr=\"Test Agent (local test service only) v3-negtest\" sysName=\"v3-negtest-agent\" sysUpTime=7654321 (80ms)",
-      "ms": 80,
+      "detail": "sysDescr=\"Test Agent (local test service only) v3-negtest\" sysName=\"v3-negtest-agent\" sysUpTime=7654321 (25ms)",
+      "ms": 25,
       "sysDescr": "Test Agent (local test service only) v3-negtest",
       "sysName": "v3-negtest-agent"
     },
     {
       "case": "1 v3 wrong auth passphrase (service)",
       "verdict": "PASS",
-      "detail": "honest throw: RequestTimedOutError: Request timed out (6012ms)",
-      "ms": 6012,
+      "detail": "honest throw: RequestTimedOutError: Request timed out (6004ms)",
+      "ms": 6004,
       "error": "Request timed out",
       "errorName": "RequestTimedOutError"
     },
     {
       "case": "2 v3 wrong priv passphrase (service)",
       "verdict": "PASS",
-      "detail": "honest throw: RequestTimedOutError: Request timed out (6006ms)",
-      "ms": 6006,
+      "detail": "honest throw: RequestTimedOutError: Request timed out (6005ms)",
+      "ms": 6005,
       "error": "Request timed out",
       "errorName": "RequestTimedOutError"
     },
     {
       "case": "3 v3 unknown v3 user (service)",
       "verdict": "PASS",
-      "detail": "honest throw: ResponseInvalidError: Unknown User Name (2ms)",
-      "ms": 2,
+      "detail": "honest throw: ResponseInvalidError: Unknown User Name (3ms)",
+      "ms": 3,
       "error": "Unknown User Name",
       "errorName": "ResponseInvalidError"
     },
     {
       "case": "1 v3 wrong auth passphrase (poller)",
       "verdict": "PASS",
-      "detail": "status=Down cpu=null mem=null error=\"Request timed out\" (6074ms)",
-      "ms": 6074,
+      "detail": "status=Down cpu=null mem=null error=\"Request timed out\" (6066ms)",
+      "ms": 6066,
       "status": "Down",
       "error": "Request timed out"
     },
     {
       "case": "2 v3 wrong priv passphrase (poller)",
       "verdict": "PASS",
-      "detail": "status=Down cpu=null mem=null error=\"Request timed out\" (6045ms)",
-      "ms": 6045,
+      "detail": "status=Down cpu=null mem=null error=\"Request timed out\" (6027ms)",
+      "ms": 6027,
       "status": "Down",
       "error": "Request timed out"
     },
@@ -67,8 +67,8 @@
     {
       "case": "4 v3 missing user (HTTP snmp-query)",
       "verdict": "PASS",
-      "detail": "HTTP 400 {\"status\":\"error\",\"message\":\"SNMPv3: v3.user is required (non-empty user name)\"} (14ms)",
-      "ms": 14,
+      "detail": "HTTP 400 {\"status\":\"error\",\"message\":\"SNMPv3: v3.user is required (non-empty user name)\"} (11ms)",
+      "ms": 11,
       "httpStatus": 400,
       "body": {
         "status": "error",
@@ -78,8 +78,8 @@
     {
       "case": "4b v3 full creds (HTTP snmp-query)",
       "verdict": "PASS",
-      "detail": "HTTP 200 {\"status\":\"success\",\"target\":\"127.0.0.1\",\"resolvedIp\":\"127.0.0.1\",\"version\":\"v3\",\"v3\":{\"user\":\"opmtest\",\"authProtocol\":\"sha\",\"privProtocol\":\"des\",\"securityLevel\":\"authPriv\"},\"securityLevel\":\"authPriv\",\"user\":\"opmtest\",\"oid\":\"1.3.6.1.2.1.1.1.0\",\"name\":\"sysDescr\",\"type\":\"OctetString\",\"description\":null,\"value\":\"Test Agent (local test service only) v3-negtest\",\"timestamp\":\"2026-11-09T11:28:52.398Z\"} (68ms)",
-      "ms": 68,
+      "detail": "HTTP 200 {\"status\":\"success\",\"target\":\"127.0.0.1\",\"resolvedIp\":\"127.0.0.1\",\"version\":\"v3\",\"v3\":{\"user\":\"opmtest\",\"authProtocol\":\"sha\",\"privProtocol\":\"des\",\"securityLevel\":\"authPriv\"},\"securityLevel\":\"authPriv\",\"user\":\"opmtest\",\"oid\":\"1.3.6.1.2.1.1.1.0\",\"name\":\"sysDescr\",\"type\":\"OctetString\",\"description\":null,\"value\":\"Test Agent (local test service only) v3-negtest\",\"timestamp\":\"2026-11-09T12:06:31.048Z\"} (67ms)",
+      "ms": 67,
       "httpStatus": 200,
       "body": {
         "status": "success",
@@ -99,7 +99,7 @@
         "type": "OctetString",
         "description": null,
         "value": "Test Agent (local test service only) v3-negtest",
-        "timestamp": "2026-11-09T11:28:52.398Z"
+        "timestamp": "2026-11-09T12:06:31.048Z"
       }
     },
     {
@@ -110,23 +110,23 @@
     {
       "case": "5 v3 dead port (service)",
       "verdict": "PASS",
-      "detail": "threw: Request timed out (elapsed 4003ms)",
-      "ms": 4003,
+      "detail": "threw: Request timed out (elapsed 4005ms)",
+      "ms": 4005,
       "error": "Request timed out"
     },
     {
       "case": "5 v3 dead port (poller)",
       "verdict": "PASS",
-      "detail": "status=Down error=\"Request timed out\" (elapsed 6041ms)",
-      "ms": 6041,
+      "detail": "status=Down error=\"Request timed out\" (elapsed 6148ms)",
+      "ms": 6148,
       "status": "Down",
       "error": "Request timed out"
     },
     {
       "case": "5 unreachable host (HTTP snmp-query)",
       "verdict": "PASS",
-      "detail": "HTTP 502 {\"status\":\"error\",\"message\":\"SNMP GET to 192.0.2.1 failed: Request timed out\"} (elapsed 6008ms)",
-      "ms": 6008,
+      "detail": "HTTP 502 {\"status\":\"error\",\"message\":\"SNMP GET to 192.0.2.1 failed: Request timed out\"} (elapsed 6009ms)",
+      "ms": 6009,
       "httpStatus": 502,
       "body": {
         "status": "error",
@@ -136,8 +136,8 @@
     {
       "case": "6 v2c query (HTTP, regression)",
       "verdict": "PASS",
-      "detail": "HTTP 200 value=\"Test Agent (local test service only) v3-negtest\" (24ms)",
-      "ms": 24,
+      "detail": "HTTP 200 value=\"Test Agent (local test service only) v3-negtest\" (32ms)",
+      "ms": 32,
       "httpStatus": 200,
       "body": {
         "status": "success",
@@ -150,14 +150,14 @@
         "type": "OctetString",
         "description": null,
         "value": "Test Agent (local test service only) v3-negtest",
-        "timestamp": "2026-11-09T11:29:08.472Z"
+        "timestamp": "2026-11-09T12:06:47.242Z"
       }
     },
     {
       "case": "6 v2c poll-now (HTTP, regression)",
       "verdict": "PASS",
-      "detail": "HTTP 200 poll.status=Up cpu=23 mem=37.6 error=null (114ms)",
-      "ms": 114,
+      "detail": "HTTP 200 poll.status=Up cpu=23 mem=37.6 error=null (166ms)",
+      "ms": 166,
       "httpStatus": 200,
       "body": {
         "status": "success",
@@ -183,8 +183,13 @@
           "mem_used_pct": 37.6,
           "uptime_ticks": 7654321,
           "response_ms": null,
-          "last_polled_at": 1794223748484,
-          "created_at": 1794223720146,
+          "last_polled_at": 1794226007259,
+          "applied_template": null,
+          "effective_thresholds": "{\"cpuWarn\":80,\"cpuCrit\":90,\"memWarn\":null,\"memCrit\":90}",
+          "effective_poll_interval_sec": 60,
+          "ssh_credential_id": null,
+          "ssh_port": null,
+          "created_at": 1794225978839,
           "snmp": {
             "version": "v2c",
             "community": null,
@@ -200,24 +205,24 @@
           "uptime_ticks": 7654321,
           "response_ms": null,
           "status": "Up",
-          "last_polled_at": "2026-11-09T11:29:08.484Z",
+          "last_polled_at": "2026-11-09T12:06:47.259Z",
           "error": null
         },
-        "polledAt": "2026-11-09T11:29:08.590Z"
+        "polledAt": "2026-11-09T12:06:47.401Z"
       }
     },
     {
       "case": "6 v2c GET (service, regression)",
       "verdict": "PASS",
-      "detail": "sysDescr=\"Test Agent (local test service only) v3-negtest\" sysName=\"v3-negtest-agent\" (1ms)",
-      "ms": 1,
+      "detail": "sysDescr=\"Test Agent (local test service only) v3-negtest\" sysName=\"v3-negtest-agent\" (0ms)",
+      "ms": 0,
       "sysDescr": "Test Agent (local test service only) v3-negtest"
     },
     {
       "case": "7 walk unimplemented subtree (HTTP snmp-walk)",
       "verdict": "PASS",
-      "detail": "HTTP 200 {\"status\":\"success\",\"target\":\"127.0.0.1\",\"resolvedIp\":\"127.0.0.1\",\"rootOid\":\"1.3.6.1.4.1.9.9.999\",\"count\":0,\"results\":[],\"timestamp\":\"2026-11-09T11:29:08.600Z\"} (9ms)",
-      "ms": 9,
+      "detail": "HTTP 200 {\"status\":\"success\",\"target\":\"127.0.0.1\",\"resolvedIp\":\"127.0.0.1\",\"rootOid\":\"1.3.6.1.4.1.9.9.999\",\"count\":0,\"results\":[],\"timestamp\":\"2026-11-09T12:06:47.426Z\"} (15ms)",
+      "ms": 15,
       "httpStatus": 200,
       "body": {
         "status": "success",
@@ -226,7 +231,7 @@
         "rootOid": "1.3.6.1.4.1.9.9.999",
         "count": 0,
         "results": [],
-        "timestamp": "2026-11-09T11:29:08.600Z"
+        "timestamp": "2026-11-09T12:06:47.426Z"
       }
     }
   ]

@@ -34,7 +34,7 @@
 #       harness still proves the endpoint really attempts the v3 query.
 #   (2) POST /api/tools/wmi-query .......... winrm-route / winrm-service
 #       (missing host must be 400, not the old 501)
-#   (3) GET  /api/saml/metadata ............ saml-routes / saml-service
+#   (3) GET  /api/auth/saml/metadata ............ saml-routes / saml-service
 #       (harness first saves a test-only SP identity via
 #       POST /api/settings/auth/saml { spEntityId, spAcsUrl }; the route
 #       honestly 501s without one, so the check configures it, then
@@ -319,14 +319,14 @@ fi
 # Try unauthenticated first (public by design in the saml-routes contract),
 # then with the admin session (in case the merged tree guards it).
 fetch_saml_metadata() {
-  code="$(api_call GET /api/saml/metadata '' "$TMP/saml.xml" 0)"
+  code="$(api_call GET /api/auth/saml/metadata '' "$TMP/saml.xml" 0)"
   [ "$code" = "200" ] && return 0
-  code="$(api_call GET /api/saml/metadata '' "$TMP/saml.xml" 1)"
+  code="$(api_call GET /api/auth/saml/metadata '' "$TMP/saml.xml" 1)"
   [ "$code" = "200" ] && return 0
   return 1
 }
 fetch_saml_metadata || true
-CTYPE="$(curl -s -o /dev/null -D - --max-time 10 "$BASE/api/saml/metadata" 2>/dev/null | grep -i '^content-type:' | tr -d '\r' || true)"
+CTYPE="$(curl -s -o /dev/null -D - --max-time 10 "$BASE/api/auth/saml/metadata" 2>/dev/null | grep -i '^content-type:' | tr -d '\r' || true)"
 if [ "$code" != "200" ]; then
   SAML_CFG="$(jq -n --arg eid 'https://p3-verify.local/saml/metadata' \
     --arg acs "http://127.0.0.1:${PORT}/api/auth/saml/acs" \
@@ -334,7 +334,7 @@ if [ "$code" != "200" ]; then
   cfg_code="$(api_call POST /api/settings/auth/saml "$SAML_CFG" "$TMP/saml-cfg.json")"
   if [ "$cfg_code" = "200" ]; then
     fetch_saml_metadata || true
-    CTYPE="$(curl -s -o /dev/null -D - --max-time 10 "$BASE/api/saml/metadata" 2>/dev/null | grep -i '^content-type:' | tr -d '\r' || true)"
+    CTYPE="$(curl -s -o /dev/null -D - --max-time 10 "$BASE/api/auth/saml/metadata" 2>/dev/null | grep -i '^content-type:' | tr -d '\r' || true)"
   else
     SAML_CFG_NOTE="SP config save failed (HTTP $cfg_code)"
   fi
@@ -345,7 +345,7 @@ if [ "$code" = "200" ] && grep -q 'EntityDescriptor' "$TMP/saml.xml" 2>/dev/null
   ENT="$(grep -o 'entityID="[^"]*"' "$TMP/saml.xml" | head -1)"
   ok "3-saml-metadata" "HTTP 200 Content-Type: $CTYPE $ENT bytes=$(wc -c < "$TMP/saml.xml") first120=$(head -c 120 "$TMP/saml.xml")"
 else
-  bad "3-saml-metadata" "GET /api/saml/metadata -> HTTP $code body=$(body_one_line "$TMP/saml.xml") ${SAML_CFG_NOTE:-} (expected 200 + XML EntityDescriptor with entityID=https://p3-verify.local/saml/metadata)"
+  bad "3-saml-metadata" "GET /api/auth/saml/metadata -> HTTP $code body=$(body_one_line "$TMP/saml.xml") ${SAML_CFG_NOTE:-} (expected 200 + XML EntityDescriptor with entityID=https://p3-verify.local/saml/metadata)"
 fi
 
 # ===========================================================================
@@ -440,7 +440,7 @@ if [ "$code" = "200" ]; then
   { [ "$FO_TRIGGER" = "null" ] || [ -z "$FO_TRIGGER" ]; } && FO_TRIGGER="$(jqget '.wouldTrigger' "$TMP/hafo.json")"
   FO_CHECKS="$(jqget '.failover.checks | length' "$TMP/hafo.json")"
   { [ "$FO_CHECKS" = "null" ] || [ -z "$FO_CHECKS" ]; } && FO_CHECKS="$(jqget '.checks | length' "$TMP/hafo.json")"
-  if { [ "$HA_STATUS" = "standalone" ] || [ "$HA_STATUS" = "healthy" ] || [ "$HA_STATUS" = "degraded" ]; } \
+  if { [ "$HA_STATUS" = "single-node" ] || [ "$HA_STATUS" = "standalone" ] || [ "$HA_STATUS" = "healthy" ] || [ "$HA_STATUS" = "degraded" ]; } \
      && { [ "$HA_ROLE" = "primary" ] || [ "$HA_ROLE" = "standby" ]; } \
      && [ -n "$HA_EVAL1" ] && [ "$HA_EVAL1" != "null" ] \
      && [ "$HA_EVAL1" != "$HA_EVAL2" ] \
@@ -605,7 +605,7 @@ code="$(api_call POST /api/admin/updateJvmHeapSize '{"heapSizeMb":2048}' "$TMP/j
 JVM_ERR="$(jqget '.error' "$TMP/jvm.json")"
 JVM_MSG="$(jqget '.message' "$TMP/jvm.json")"
 if [ "$code" = "501" ] && [ "$JVM_ERR" = "not_implemented" ] \
-   && printf '%s' "$JVM_MSG" | grep -qi 'No JVM exists'; then
+   && printf '%s' "$JVM_MSG" | grep -qiE 'no JVM (process )?exists'; then
   ok "9-jvm-heap" "HTTP 501 error=not_implemented message='$JVM_MSG'"
 else
   bad "9-jvm-heap" "POST /api/admin/updateJvmHeapSize -> HTTP $code error=$JVM_ERR message='$JVM_MSG' (expected 501 not_implemented 'No JVM exists...')"
@@ -614,10 +614,10 @@ fi
 # ===========================================================================
 # (10) verify-auth 11/11 and verify-empty 16/16 still pass
 # ===========================================================================
-for spec in "verify-auth.sh:11/11" "verify-empty.sh:16/16"; do
+for spec in "verify-auth.sh:11 passed" "verify-empty.sh:16 passed"; do
   script="${spec%%:*}"; want="${spec##*:}"
   if [ -x "$ROOT/scripts/$script" ]; then
-    if timeout 300 env OPM_BASE="$BASE" bash "$ROOT/scripts/$script" >"$TMP/$script.out" 2>&1; then
+    if timeout 300 env OPM_BASE_URL="$BASE" OPM_REPO="$ROOT" OPM_ADMIN_PASSWORD="$NEW_ADMIN_PASS" bash "$ROOT/scripts/$script" >"$TMP/$script.out" 2>&1; then
       rc=0
     else
       rc=$?

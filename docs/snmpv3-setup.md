@@ -160,6 +160,20 @@ For each device, in the device's SNMP settings:
   only if the device cannot do authPriv)
 - Auth protocol: **SHA** (or MD5), Auth passphrase: `<auth-passphrase>`
 - Privacy protocol: **AES** (or DES), Privacy passphrase: `<priv-passphrase>`
+  > **DES privacy needs the OpenSSL legacy provider (close-out
+  > 2026-11-09).** Node 24 bundles OpenSSL 3, where single-DES
+  > (`des-cbc`) is disabled by default:
+  > `crypto.createCipheriv('des-cbc', …)` throws
+  > `error:0308010C:digital envelope routines::unsupported`. MD5, SHA,
+  > AES-128-CBC and 3DES work without it. So authPriv with
+  > `privProtocol: 'des'` fails on a stock Node 24 start, while `'aes'`
+  > works out of the box — **prefer AES**. Proven:
+  > `scripts/test-snmpv3.js` scores 15/17 without the flag and **17/17
+  > with `node --openssl-legacy-provider`**. The server start was not
+  > changed to enable the legacy provider (it re-enables legacy crypto
+  > process-wide); use DES only with
+  > `NODE_OPTIONS=--openssl-legacy-provider`, by explicit operator
+  > decision.
 
 Then test with `POST /api/tools/snmp-query` (§1) against
 `1.3.6.1.2.1.1.1.0` (sysDescr). Expected on the Core switch:

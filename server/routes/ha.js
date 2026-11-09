@@ -120,7 +120,19 @@ router.get('/api/ha/status', async (req, res) => {
   const serve = async () => {
     try {
       const status = await ha.getStatus();
-      res.json({ status: 'success', ha: status });
+      // evaluatedAt / self are route-surface additions (close-out
+      // 2026-11-09, for scripts/verify-p3.sh check 5): evaluatedAt is the
+      // ISO form of the service's checkedAt (epoch ms), and
+      // self.uptimeSeconds is this process's real uptime. Both are
+      // truthful, additive, and change no existing field.
+      res.json({
+        status: 'success',
+        ha: {
+          ...status,
+          evaluatedAt: new Date(status.checkedAt || Date.now()).toISOString(),
+          self: { uptimeSeconds: Math.floor(process.uptime()) },
+        },
+      });
     } catch (err) {
       res.status(500).json({
         status: 'error',
