@@ -64,7 +64,7 @@
     },
     ccm: {
       title: 'Network Configuration (CCM)',
-      subTabs: ['Configuration Backups', 'Config Diff Inspector', 'Compliance Audit', 'Push Central Baseline']
+      subTabs: ['Configuration Backups', 'Config Diff Inspector', 'Compliance Audit', 'Push Central Baseline', 'Change Approvals']
     },
     reports: {
       title: 'Performance Reports',
@@ -72,7 +72,7 @@
     },
     settings: {
       title: 'Central Administration',
-      subTabs: ['Central System Info', 'Workflow Automation', 'Probe Mutual Auth', 'SNMP / WMI Credentials']
+      subTabs: ['Central System Info', 'Workflow Automation', 'Probe Mutual Auth', 'SNMP / WMI Credentials', 'High Availability', 'SAML Single Sign-On', 'LDAP / Active Directory', 'AD Browser', 'Device Templates', 'Tools Terminal', 'Workflow Runs']
     }
   };
 
@@ -608,6 +608,10 @@
       state.ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
+          // Phase 3 ws-events partial (client/js/p3/ws-events.js): logs
+          // TEMPLATE_APPLIED / NCM_* / HA_STATUS / TRAP_RECEIVED /
+          // SYSLOG_RECEIVED frames and re-fires them as 'opm-ws-event'.
+          if (window.OpmWsEvents) window.OpmWsEvents.handle(data);
           if (data.type === 'METRIC_TICK' && data.devices) {
             handleMetricTick(data.devices);
           } else if (data.type === 'ALARM_TOAST' && data.alarm) {
@@ -1210,6 +1214,12 @@
                 <button class="btn-me-secondary" style="justify-content: center; padding: 10px 4px; font-size: 11px;" ${devices.length ? '' : 'disabled title="Add a device first"'} onclick="window.OpManager.openSwitchPortsForFirstDevice()">
                   🔌 Port Mapper
                 </button>
+                <button class="btn-me-secondary" style="justify-content: center; padding: 10px 4px; font-size: 11px;" onclick="if (window.OpManager.openWmiQueryTool) window.OpManager.openWmiQueryTool(); else alert('WMI Query UI not loaded (client/js/p3/winrm-ui.js) — reload the console.')">
+                  🪟 WMI Query
+                </button>
+                <button class="btn-me-secondary" style="justify-content: center; padding: 10px 4px; font-size: 11px;" onclick="if (window.OpManager.openMacResolver) window.OpManager.openMacResolver(); else alert('MAC Resolver UI not loaded (client/js/p3/mac-arp.js) — reload the console.')">
+                  🔍 MAC Resolver
+                </button>
               </div>
             </div>
           ` : ''}
@@ -1463,6 +1473,9 @@
         </div>
         ${emptyStateHtml('No NCM Devices Enrolled', 'Add a device, then back it up here — automated backup and drift audits activate once network devices are added.')}
       `;
+      if (window.OpManagerNcmPush && typeof window.OpManagerNcmPush.renderApprovals === 'function') {
+        window.OpManagerNcmPush.renderApprovals(DOM.workspace);
+      }
       return;
     }
 
@@ -1502,6 +1515,12 @@
         </div>
       </div>
     `;
+    // Phase 3/4 (p3/ncm-push.js): staged push-approval queue, appended
+    // below the backups table (renderApprovals appends its own host div;
+    // it never replaces the table above).
+    if (window.OpManagerNcmPush && typeof window.OpManagerNcmPush.renderApprovals === 'function') {
+      window.OpManagerNcmPush.renderApprovals(DOM.workspace);
+    }
   }
 
   function renderFlowAnalysisView() {
@@ -3080,6 +3099,16 @@
 
 
   async function renderCCMView() {
+    if (state.currentSubTab === 'Change Approvals') {
+      // Phase 3/4 (p3/ncm-ui.js): NCM change-approval queue. The partial
+      // self-registers renderNcmApprovalsView on window.OpManager.
+      if (window.OpManager && typeof window.OpManager.renderNcmApprovalsView === 'function') {
+        window.OpManager.renderNcmApprovalsView();
+      } else {
+        DOM.workspace.innerHTML = emptyStateHtml('Change Approvals UI not loaded', 'The NCM approvals partial (client/js/p3/ncm-ui.js) did not load — reload the console.');
+      }
+      return;
+    }
     if (state.currentSubTab === 'Compliance Audit') {
       renderComplianceAuditView();
       return;
@@ -3175,6 +3204,8 @@
     DOM.configDiffModal.classList.add('active');
     DOM.diffRunningText.textContent = 'Loading running-config…';
     DOM.diffStartupText.textContent = 'Loading startup-config…';
+    const diffPanel = document.getElementById('diffApprovalPanel');
+    if (diffPanel) diffPanel.innerHTML = '';
 
     try {
       const res = await apiJson(`/api/ccm/diff?deviceId=${encodeURIComponent(deviceId)}`);
@@ -3209,24 +3240,37 @@
         </div>
       `).join('') || 'No startup config lines returned.';
 
-      DOM.btnResolveDrift.onclick = async () => {
-        DOM.btnResolveDrift.disabled = true;
-        DOM.btnResolveDrift.textContent = 'Resolving drift…';
-        try {
-          const r = await apiJson('/api/ccm/resolve-drift', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ deviceId })
-          });
-          alert(r.message || 'Config drift resolved.');
-          DOM.configDiffModal.classList.remove('active');
-          renderCurrentView();
-        } catch (e) {
-          alert('Could not resolve drift: ' + e.message);
-        } finally {
-          DOM.btnResolveDrift.disabled = false;
-          DOM.btnResolveDrift.textContent = '✓ Synchronized';
+      // Phase 3/4 (p3/ncm-drift.js): resolve-drift now returns 202 with a
+      // PENDING approval — nothing is resolved and nothing was sent to the
+      // device. Stage it and show the approval panel in the modal; the
+      // remediation runs only after an admin approves + dry-runs it.
+      DOM.btnResolveDrift.onclick = () => {
+        const panel = document.getElementById('diffApprovalPanel');
+        if (panel) panel.innerHTML = '';
+        if (!window.NcmDrift || typeof window.NcmDrift.stageDriftResolution !== 'function') {
+          alert('Drift approval UI not loaded (client/js/p3/ncm-drift.js) — reload the console. Nothing was staged.');
+          return;
         }
+        DOM.btnResolveDrift.disabled = true;
+        DOM.btnResolveDrift.textContent = 'Staging remediation…';
+        window.NcmDrift.stageDriftResolution(deviceId, {
+          onStaged: (payload) => {
+            if (panel) panel.innerHTML = window.NcmDrift.renderApprovalPanel(payload);
+            if (panel) window.NcmDrift.bindApprovalPanel(payload, { onDone: () => { DOM.configDiffModal.classList.remove('active'); renderCurrentView(); } });
+            DOM.btnResolveDrift.disabled = false;
+            DOM.btnResolveDrift.textContent = '✓ Synchronized';
+          },
+          onNoDrift: (payload) => {
+            alert(payload.message || 'No drift — running and startup configs already match.');
+            DOM.btnResolveDrift.disabled = false;
+            DOM.btnResolveDrift.textContent = '✓ Synchronized';
+          },
+          onError: (err) => {
+            alert('Could not resolve drift: ' + err.message);
+            DOM.btnResolveDrift.disabled = false;
+            DOM.btnResolveDrift.textContent = '✓ Synchronized';
+          }
+        });
       };
     } catch (e) {
       DOM.diffRunningText.textContent = 'Diff error: ' + e.message;
@@ -3308,6 +3352,55 @@
   }
 
   async function renderSettingsView() {
+    // Phase 3/4 partials (client/js/p3/*.js, loaded after app.js in
+    // noc.html). Each self-registers on window.OpManager / its own
+    // namespace; a missing partial shows an honest message, never a crash.
+    // NOTE (p4m-ha decision): ha-ui.js OWNS the 'High Availability'
+    // sub-tab (live status view); settings-ui-ha.js owns only the settings
+    // form, opened on demand by a button inside that view — the two renders
+    // must never run back-to-back (each overwrites workspaceContent).
+    // NOTE (SAML): saml-ui.js and settings-ui-saml.js both register
+    // renderSamlSettingsView; saml-ui.js loads LAST in noc.html so its
+    // fuller form (test-result rendering, SP ACS URL, no-config state)
+    // wins. Both save through the same canonical endpoint, so no data
+    // conflict either way.
+    if (state.currentSubTab === 'High Availability') {
+      if (typeof window.OpManager.renderHaStatusView === 'function') { window.OpManager.renderHaStatusView(); return; }
+      DOM.workspace.innerHTML = emptyStateHtml('High Availability UI not loaded', 'The HA status partial (client/js/p3/ha-ui.js) did not load — reload the console.');
+      return;
+    }
+    if (state.currentSubTab === 'SAML Single Sign-On') {
+      if (typeof window.OpManager.renderSamlSettingsView === 'function') { window.OpManager.renderSamlSettingsView(); return; }
+      DOM.workspace.innerHTML = emptyStateHtml('SAML UI not loaded', 'The SAML partial (client/js/p3/saml-ui.js) did not load — reload the console.');
+      return;
+    }
+    if (state.currentSubTab === 'LDAP / Active Directory') {
+      if (typeof window.OpManager.renderLdapSettingsView === 'function') { window.OpManager.renderLdapSettingsView(); return; }
+      DOM.workspace.innerHTML = emptyStateHtml('LDAP UI not loaded', 'The LDAP settings partial (client/js/p3/settings-ui-ldap.js) did not load — reload the console.');
+      return;
+    }
+    if (state.currentSubTab === 'AD Browser') {
+      // Phase 3 ldap-routes partial: live AD user/group browser; the bind
+      // password is asked per call and never stored.
+      if (window.OpManagerLdapRoutes && typeof window.OpManagerLdapRoutes.mount === 'function') { window.OpManagerLdapRoutes.mount(DOM.workspace); return; }
+      DOM.workspace.innerHTML = emptyStateHtml('AD Browser UI not loaded', 'The AD browser partial (client/js/p3/ldap-routes.js) did not load — reload the console.');
+      return;
+    }
+    if (state.currentSubTab === 'Device Templates') {
+      if (window.OpManagerTplUi && typeof window.OpManagerTplUi.render === 'function') { window.OpManagerTplUi.render(DOM.workspace); return; }
+      DOM.workspace.innerHTML = emptyStateHtml('Device Templates UI not loaded', 'The templates partial (client/js/p3/tpl-ui.js) did not load — reload the console.');
+      return;
+    }
+    if (state.currentSubTab === 'Tools Terminal') {
+      if (typeof window.OpManager.renderRunnerTerminalView === 'function') { window.OpManager.renderRunnerTerminalView(); return; }
+      DOM.workspace.innerHTML = emptyStateHtml('Tools Terminal UI not loaded', 'The runner partial (client/js/p3/runner-ui.js) did not load — reload the console.');
+      return;
+    }
+    if (state.currentSubTab === 'Workflow Runs') {
+      if (typeof window.OpManager.renderWorkflowRunsView === 'function') { window.OpManager.renderWorkflowRunsView(); return; }
+      DOM.workspace.innerHTML = emptyStateHtml('Workflow Runs UI not loaded', 'The runner partial (client/js/p3/runner-ui.js) did not load — reload the console.');
+      return;
+    }
     if (state.currentSubTab === 'Workflow Automation') {
       renderWorkflowView();
       return;
@@ -4006,11 +4099,30 @@
         return;
       }
 
+      // Phase 3/4 (p3/snmpv3-ui.js): when the SNMP fields partial is
+      // loaded, the canonical snmp object (v2c community or v3 USM
+      // credentials) is collected from #devSnmpFields and sent with the
+      // create payload; the legacy credential-profile select is kept so
+      // existing behaviour is unchanged when the partial is absent.
+      let payload = newD;
+      if (window.Snmpv3UI) {
+        try {
+          payload = window.Snmpv3UI.buildDevicePayload(
+            { ip: newD.ip, name: newD.name, category: newD.category, probeId: newD.probeId },
+            window.Snmpv3UI.collectSnmp(document.getElementById('devSnmpFields'))
+          );
+          payload.credential = newD.credential;
+        } catch (err) {
+          alert(err.message || 'Invalid SNMP settings.');
+          return;
+        }
+      }
+
       try {
         const res = await fetch('/api/json/device/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newD)
+          body: JSON.stringify(payload)
         }).then(r => r.json());
 
         if (res.status === 'success') {
@@ -4025,6 +4137,16 @@
         alert('Failed to add device: ' + err.message);
       }
     });
+
+    // Phase 3/4 (p3/snmpv3-ui.js): render the SNMP version/credential
+    // fields into the Add Device modal once, at bind time (the modal
+    // markup is static in noc.html, so one render covers every open).
+    try {
+      const snmpFields = document.getElementById('devSnmpFields');
+      if (snmpFields && window.Snmpv3UI) window.Snmpv3UI.renderSnmpFields(snmpFields);
+    } catch (err) {
+      console.warn('SNMP fields could not be rendered:', err.message);
+    }
 
     // MIB Browser Modal
     DOM.btnHeaderMibBrowser?.addEventListener('click', () => openMibBrowser());
@@ -4669,6 +4791,12 @@
       showToastMessage(res.message || 'Central baseline push completed.', 'Clear');
       await fetchInitialData();
       renderCurrentView();
+      // Phase 3/4 (p3/ncm-push.js): a 202 stages an approval — re-render
+      // the queue on the NCMEE view so the new pending approval is visible
+      // immediately (renderCurrentView above rebuilt the workspace).
+      if (res.approvalId && state.currentSubTab === 'NCM Enterprise (NCMEE)' && window.OpManagerNcmPush && typeof window.OpManagerNcmPush.renderApprovals === 'function') {
+        window.OpManagerNcmPush.renderApprovals(DOM.workspace);
+      }
     } catch (e) {
       alert('Baseline push failed: ' + e.message);
     }

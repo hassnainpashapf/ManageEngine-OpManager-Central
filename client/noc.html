@@ -433,6 +433,9 @@
               <option value="wmi">Windows-Domain-Admin-WMI</option>
             </select>
           </div>
+          <!-- Phase 3/4 (p3/snmpv3-ui.js): SNMP v2c/v3 credential fields,
+               rendered here by app.js at bind time. -->
+          <div id="devSnmpFields"></div>
           <button type="submit" class="btn-me-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
             Initiate Real-time Polling & Inventory
           </button>
@@ -705,6 +708,9 @@
             <div id="diffStartupText" style="flex: 1; overflow-y: auto; font-family: monospace; font-size: 10px; line-height: 1.6; padding: 8px;"></div>
           </div>
         </div>
+        <!-- Phase 3/4 (p3/ncm-drift.js): staged drift-remediation approval
+             panel, filled by app.js when Resolve Drift stages a 202. -->
+        <div id="diffApprovalPanel"></div>
       </div>
       <div class="modal-footer-me">
         <button class="btn-me-secondary" id="closeConfigDiffBottom">Close</button>
@@ -741,5 +747,25 @@
     })();
   </script>
   <script src="/js/app.js"></script>
+  <!-- Phase 3/4 UI partials (client/js/p3/*.js). Each self-registers on
+       window.OpManager / its own namespace; app.js branches call them.
+       ORDER MATTERS: settings-ui-saml.js must load BEFORE saml-ui.js —
+       both register renderSamlSettingsView and saml-ui.js's fuller form
+       wins. All others are order-independent. -->
+  <script src="/js/p3/ws-events.js"></script>
+  <script src="/js/p3/tpl-ui.js"></script>
+  <script src="/js/p3/mac-arp.js"></script>
+  <script src="/js/p3/ncm-ui.js"></script>
+  <script src="/js/p3/ncm-push.js"></script>
+  <script src="/js/p3/ncm-drift.js"></script>
+  <script src="/js/p3/winrm-ui.js"></script>
+  <script src="/js/p3/runner-ui.js"></script>
+  <script src="/js/p3/settings-ui-ldap.js"></script>
+  <script src="/js/p3/ldap-routes.js"></script>
+  <script src="/js/p3/settings-ui-ha.js"></script>
+  <script src="/js/p3/ha-ui.js"></script>
+  <script src="/js/p3/settings-ui-saml.js"></script>
+  <script src="/js/p3/saml-ui.js"></script>
+  <script src="/js/p3/snmpv3-ui.js"></script>
 </body>
 </html>
