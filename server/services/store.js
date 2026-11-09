@@ -74,6 +74,13 @@ CREATE TABLE IF NOT EXISTS devices (
   uptime_ticks INTEGER,
   response_ms REAL,
   last_polled_at INTEGER,
+  -- NCM backup (Phase 3 ncm-backup): link to the stored SSH credential used
+  -- to fetch the running config, and the SSH port (NULL = 22). The credential
+  -- itself lives in the credentials table (type 'ssh'); only its id is stored
+  -- here. NULL ssh_credential_id means "no SSH credentials configured for
+  -- this device" and backup honestly 501s instead of guessing.
+  ssh_credential_id INTEGER REFERENCES credentials(id) ON DELETE SET NULL,
+  ssh_port INTEGER,
   created_at INTEGER NOT NULL
 );
 
@@ -259,6 +266,21 @@ if (!_alarmColumns.includes('rca_status')) {
   db.exec('ALTER TABLE alarms ADD COLUMN rca_status TEXT;');
 }
 
+// Migration (Phase 3 ncm-backup): devices.ssh_credential_id / ssh_port were
+// added after the initial schema, so pre-existing databases need them added.
+// ALTER-safe: only add if absent. (Fresh databases get them from the CREATE
+// TABLE above.)
+const _deviceColumns = db
+  .prepare('PRAGMA table_info(devices)')
+  .all()
+  .map((c) => c.name);
+if (!_deviceColumns.includes('ssh_credential_id')) {
+  db.exec('ALTER TABLE devices ADD COLUMN ssh_credential_id INTEGER REFERENCES credentials(id) ON DELETE SET NULL;');
+}
+if (!_deviceColumns.includes('ssh_port')) {
+  db.exec('ALTER TABLE devices ADD COLUMN ssh_port INTEGER;');
+}
+
 function now() {
   return Date.now();
 }
@@ -394,7 +416,7 @@ const DEVICE_COLUMNS = [
   'ip', 'hostname', 'sys_name', 'sys_descr', 'sys_object_id', 'vendor',
   'model', 'category', 'snmp_community', 'snmp_version', 'probe_id',
   'managed', 'status', 'cpu_pct', 'mem_used_pct', 'uptime_ticks',
-  'response_ms', 'last_polled_at',
+  'response_ms', 'last_polled_at', 'ssh_credential_id', 'ssh_port',
 ];
 
 function getDevice(id) {
