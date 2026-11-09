@@ -24,6 +24,11 @@
   }
 
   function renderActiveTab(tab) {
+    // Auth gate (defense in depth): never render the console unless a live
+    // session has been verified. initSuite sets suiteAuthenticated only
+    // after GET /api/auth/session succeeds; the route guard clears it
+    // again if the session dies mid-use.
+    if (!suiteAuthenticated) return;
     const container = ensureOverlayContainer();
     ensureLayoutPlacement();
     setupHeaderBrandingAndIcons();
@@ -60,7 +65,29 @@
     }
   }
 
+  // Route guard: every hash-route change re-checks the live session before
+  // rendering. If the session has died mid-use, redirect to login instead
+  // of rendering with stale/empty data. The session check is de-duplicated
+  // while one is in flight (see checkAuthSession).
   function handleRoute() {
+    if (!suiteAuthenticated) return;
+    checkAuthSession().then((authenticated) => {
+      if (!authenticated) {
+        suiteAuthenticated = false;
+        redirectToLogin();
+        return;
+      }
+      renderCurrentRoute();
+    }).catch(() => {
+      suiteAuthenticated = false;
+      redirectToLogin();
+    });
+  }
+
+  // Render the route named by the current hash. Only ever called after a
+  // verified session (from handleRoute, or directly from initSuite right
+  // after its own session check). Routing table and hash routes unchanged.
+  function renderCurrentRoute() {
     const tab = resolveTabFromHash();
     state.currentTab = tab;
 
@@ -179,6 +206,8 @@
 
   // 1-second auto-refresh countdown timer
   setInterval(() => {
+    // Never re-render the dashboard without a verified session.
+    if (!suiteAuthenticated) return;
     if (state.currentTab === 'dashboard') {
       state.autoRefreshCountdown--;
       const span = document.getElementById('opm-refresh-countdown-span');
@@ -363,29 +392,22 @@
     } catch (e) {}
   }
 
-  // Patch ItomUtils service to provide stable security score and eliminate redundant fetch loops
-  function patchItomServices() {
-    try {
-      if (typeof window.require === 'function') {
-        const itomUtilsMod = window.require('itom/services/itom-utils');
-        if (itomUtilsMod && itomUtilsMod.default && itomUtilsMod.default.prototype) {
-          const u = itomUtilsMod.default.prototype;
-          u.securityScore = 96;
-          u.getSecurityScore = function() {
-            this.securityScore = 96;
-            return Promise.resolve({ SecurityScore: 96, score: 96 });
-          };
-        }
-      }
-    } catch (e) {}
-  }
+  // NOTE (audit G1): the former patchItomServices() hardcoded the ITOM
+  // security score to 96 by monkey-patching the vendored itom-utils
+  // service. It has been removed entirely — the service's real value is
+  // now shown (or "not available" when it provides none). No fake score
+  // is injected anywhere in this file.
 
-  // Eagerly patch WebSocket and ITOM service prototypes immediately on module evaluation
+  // Eagerly patch the WebSocket service prototype immediately on module evaluation.
+  // (The former patchItomServices() call was removed with audit item G1 — it
+  // hardcoded the security score to 96. This patch only installs message
+  // handlers; it renders nothing and fetches no data.)
   patchEmberWebSocketService();
-  patchItomServices();
 
   // Live WebSocket Connection for Real-Time ITOM Alarms & Telemetry
   function initWebSocketConnection() {
+    // Never open the live feed without a verified session.
+    if (!suiteAuthenticated) return;
     patchEmberWebSocketService();
 
     try {
@@ -437,7 +459,9 @@
       };
 
       ws.onclose = () => {
-        setTimeout(initWebSocketConnection, 3000);
+        // Reconnect only while the session is alive; if the session died
+        // mid-use the route guard redirects to login instead of reconnecting.
+        if (suiteAuthenticated) setTimeout(initWebSocketConnection, 3000);
       };
     } catch (err) {}
   }
@@ -475,6 +499,9 @@
   }
 
   function loadBackendData() {
+    // Never fetch data without a verified session. Initial state stays
+    // empty until the API responses below populate it — nothing is seeded.
+    if (!suiteAuthenticated) return;
     fetch('/api/devices')
       .then(r => r.json())
       .then(res => {
@@ -546,41 +573,91 @@
       }).catch(() => {});
   }
 
-  // Initialize Suite
+  // --- Auth gating -------------------------------------------------------
+  // The session is verified against the server (GET /api/auth/session),
+  // never against a client-side flag: no localStorage/sessionStorage
+  // login flag is read or written anywhere in this file.
+  let suiteInitStarted = false;
+  let suiteAuthenticated = false;
+  let suiteAuthCheckPromise = null;
+
+  // Resolves to true only when the server confirms an authenticated
+  // session ({ authenticated: true }). Any non-OK status (including 401),
+  // malformed body, or network failure resolves to false (fail closed).
+  // Concurrent callers share the single in-flight request.
+  function checkAuthSession() {
+    if (suiteAuthCheckPromise) return suiteAuthCheckPromise;
+    suiteAuthCheckPromise = fetch('/api/auth/session', { credentials: 'same-origin' })
+      .then((res) => {
+        if (!res.ok) return false;
+        return res.json().then((data) => !!(data && data.authenticated)).catch(() => false);
+      })
+      .catch(() => false);
+    suiteAuthCheckPromise.then(() => { suiteAuthCheckPromise = null; });
+    return suiteAuthCheckPromise;
+  }
+
+  function redirectToLogin() {
+    if (window.location.pathname !== '/login.html') {
+      window.location.href = '/login.html';
+    }
+  }
+
+  // Initialize Suite — auth-first, exactly once.
   function initSuite() {
-    registerEmberRoutesAndTemplates();
-    patchEmberWebSocketService();
-    patchItomServices();
-    ensureOverlayContainer();
-    ensureLayoutPlacement();
-    setupHeaderBrandingAndIcons();
-    hookMainHeaderEvents();
-    loadBackendData();
-    handleRoute();
-    initWebSocketConnection();
-    initContainerGuard();
+    // Double-init guard (audit correctness note): initSuite is invoked both
+    // immediately when document.body exists and again on DOMContentLoaded
+    // when the script loads while the document is still loading. Without
+    // this guard the 8 s poller and the WebSocket connection were started
+    // twice. The first call wins; later calls are no-ops.
+    if (suiteInitStarted) return;
+    suiteInitStarted = true;
 
-    // Periodic live background telemetry sync (every 8 seconds)
-    setInterval(loadBackendData, 8000);
+    // Auth FIRST: verify the live session before rendering the console,
+    // fetching any data, or opening the WebSocket. Unauthenticated users
+    // go to /login.html and nothing else below runs.
+    checkAuthSession().then((authenticated) => {
+      if (!authenticated) {
+        redirectToLogin();
+        return;
+      }
+      suiteAuthenticated = true;
 
-    // Fast check for layout placement during Ember mount
-    const mountInterval = setInterval(() => {
+      registerEmberRoutesAndTemplates();
       patchEmberWebSocketService();
+      ensureOverlayContainer();
       ensureLayoutPlacement();
       setupHeaderBrandingAndIcons();
       hookMainHeaderEvents();
-      syncHeaderTabs(state.currentTab);
-    }, 200);
+      loadBackendData();
+      renderCurrentRoute();
+      initWebSocketConnection();
+      initContainerGuard();
 
-    setTimeout(() => {
-      clearInterval(mountInterval);
-      setInterval(() => {
+      // Periodic live background telemetry sync (every 8 seconds)
+      setInterval(loadBackendData, 8000);
+
+      // Fast check for layout placement during Ember mount
+      const mountInterval = setInterval(() => {
+        patchEmberWebSocketService();
         ensureLayoutPlacement();
         setupHeaderBrandingAndIcons();
         hookMainHeaderEvents();
         syncHeaderTabs(state.currentTab);
-      }, 1500);
-    }, 10000);
+      }, 200);
+
+      setTimeout(() => {
+        clearInterval(mountInterval);
+        setInterval(() => {
+          ensureLayoutPlacement();
+          setupHeaderBrandingAndIcons();
+          hookMainHeaderEvents();
+          syncHeaderTabs(state.currentTab);
+        }, 1500);
+      }, 10000);
+    }).catch(() => {
+      redirectToLogin();
+    });
   }
 
   // Expose API on window for debugging & automated inspection immediately

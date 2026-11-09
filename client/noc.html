@@ -31,17 +31,17 @@
         <form id="loginForm">
           <div class="form-group-me">
             <label>Username</label>
-            <input type="text" class="form-input-me" id="loginUser" value="admin" required autocomplete="username">
+            <input type="text" class="form-input-me" id="loginUser" required autocomplete="username">
           </div>
           <div class="form-group-me">
             <label>Password</label>
-            <input type="password" class="form-input-me" id="loginPass" value="admin" required autocomplete="current-password">
+            <input type="password" class="form-input-me" id="loginPass" required autocomplete="current-password">
           </div>
           <div class="form-group-me">
             <label>Authentication Domain</label>
             <select class="form-input-me" id="loginDomain">
               <option value="Local">Local Authentication (Central Server)</option>
-              <option value="AD">Active Directory (enterprise.corp)</option>
+              <option value="AD" disabled>Active Directory (not configured)</option>
               <option value="SAML">Enterprise SAML 2.0 / Azure AD</option>
             </select>
           </div>
@@ -49,7 +49,7 @@
             <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-muted);">
               <input type="checkbox" id="keepSignedIn" checked> Keep me signed in
             </label>
-            <span style="color: var(--primary); cursor: pointer;" onclick="alert('Default credentials: admin / admin')">Forgot Password?</span>
+            <span style="color: var(--primary); cursor: pointer;" onclick="alert('Contact your administrator to reset your password.')">Forgot Password?</span>
           </div>
           <button type="submit" class="btn-me-primary" id="btnLoginSubmit" style="width: 100%; justify-content: center; padding: 8px; font-size: 13px;">
             Sign In to OpManager Central
@@ -59,7 +59,7 @@
       </div>
 
       <div class="me-login-footer">
-        <div>Version 12.9.203 | Build 129203 (64-bit GA)</div>
+        <div>Version 12.9.204-GA (64-bit GA)</div>
         <div style="margin-top: 4px;">© 2026 ZOHO Corporation. All rights reserved.</div>
       </div>
     </div>
@@ -78,7 +78,7 @@
     <div class="me-probe-scope-box">
       <span class="probe-scope-icon">🌐</span>
       <select id="globalProbeSelect" class="probe-scope-select" title="Switch Global / Probe Scope">
-        <option value="all">🌐 All Enterprise Probes (4 Probes • 48 Devices)</option>
+        <option value="all">🌐 All Enterprise Probes</option>
       </select>
     </div>
 
@@ -113,7 +113,7 @@
       <div class="alarms-bell-btn" id="headerAlarmsBtn" title="Active Alarms">
         <button class="btn-header-action">
           <span>🚨 Alarms</span>
-          <span class="alarms-badge-pill" id="headerAlarmsBadge">7</span>
+          <span class="alarms-badge-pill" id="headerAlarmsBadge" style="display: none;"></span>
         </button>
       </div>
 
@@ -154,7 +154,7 @@
         <div class="me-user-dropdown" id="userMenuDropdown">
           <div class="me-user-dropdown-header">
             <div style="font-weight: 800; font-size: 13px;">Enterprise Administrator</div>
-            <div style="font-size: 10px; color: var(--text-muted);">admin@opmanager-central.enterprise.corp</div>
+            <div id="sessionUserLabel" style="font-size: 10px; color: var(--text-muted);">Signed-in user</div>
           </div>
           <div class="me-user-dropdown-item" id="menuItemAbout">
             <span>ℹ️ About OpManager Central</span>
@@ -215,7 +215,7 @@
     </ul>
 
     <div class="me-navbar-info">
-      <span id="centralStatusText">Central: <strong>10.0.0.100:8060</strong> (Primary Active)</span>
+      <span id="centralStatusText">Central: —</span>
     </div>
   </nav>
 
@@ -250,7 +250,7 @@
     <div class="zia-chat-box" id="ziaChatBox">
       <div class="zia-msg bot">
         <strong>Zia AI:</strong>
-        <div>Hello <strong>admin</strong>! I am Zia, your ManageEngine IT Operations Assistant. I continuously monitor telemetry, correlation rules, and alarms across your 4 Enterprise Probes. How can I assist you?</div>
+        <div>Hello <strong>admin</strong>! I am Zia, your ManageEngine IT Operations Assistant. I continuously monitor telemetry, correlation rules, and alarms across your probes. How can I assist you?</div>
       </div>
     </div>
 
@@ -308,10 +308,9 @@
         <button class="modal-close-me" id="closeTerminalModal">&times;</button>
       </div>
       <div class="modal-body-me">
-        <div class="terminal-screen" id="terminalScreenText">CORE-RTR-01# Connected to Cisco IOS Enterprise (10.10.0.1:22).
-Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.</div>
+        <div class="terminal-screen" id="terminalScreenText">No device connected. Select a device to open a terminal session.</div>
         <div class="terminal-prompt-line">
-          <span class="terminal-prompt-lbl" id="termPromptLbl">CORE-RTR-01#</span>
+          <span class="terminal-prompt-lbl" id="termPromptLbl">opm#</span>
           <input type="text" class="terminal-input-field" id="terminalInput" placeholder="Enter command (e.g. show ip int br)...">
           <button class="btn-me-primary" id="btnSendTerminalCmd">Exec</button>
         </div>
@@ -346,8 +345,8 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
         <button class="modal-close-me" id="closeTracerouteModal">&times;</button>
       </div>
       <div class="modal-body-me" id="tracerouteBody">
-        <div style="font-size: 12px; margin-bottom: 8px;">Target: <code id="traceTargetIp">10.10.0.1</code></div>
-        <div class="terminal-screen" id="tracerouteOutput" style="height: 180px;">Traceroute in progress...</div>
+        <div style="font-size: 12px; margin-bottom: 8px;">Target: <code id="traceTargetIp">—</code></div>
+        <div class="terminal-screen" id="tracerouteOutput" style="height: 180px;">No traceroute run yet.</div>
       </div>
       <div class="modal-footer-me">
         <button class="btn-me-secondary" id="closeTracerouteBottom">Close</button>
@@ -411,7 +410,7 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
           </div>
           <div class="form-group-me">
             <label>Device Name</label>
-            <input type="text" class="form-input-me" id="devName" placeholder="e.g. CORE-RTR-02" required>
+            <input type="text" class="form-input-me" id="devName" placeholder="e.g. hostname or IP" required>
           </div>
           <div class="form-group-me">
             <label>Device Category</label>
@@ -480,7 +479,7 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
               </a>
             </div>
             <div style="margin-top: 10px; background: #0f172a; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 10px; color: #38bdf8;">
-              OpManagerAgent.exe -server http://10.0.0.100:8060 -probe 101
+              <span id="nocAgentCmd">OpManagerAgent.exe -server http://localhost:8060</span>
             </div>
           </div>
 
@@ -535,7 +534,7 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
           <img src="/assets/opmanager-logo.svg" style="width: 48px; height: 48px;" alt="Logo">
           <div>
             <div style="font-size: 16px; font-weight: 800;">ManageEngine OpManager Central</div>
-            <div style="font-size: 11px; color: var(--text-muted);">Version 12.9.203 (Build 129203 - 64-bit GA Edition)</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Version 12.9.204-GA (64-bit GA Edition)</div>
             <div style="font-size: 10px; color: var(--primary); font-weight: 700; margin-top: 2px;">Central-Probe Enterprise Architecture Active</div>
           </div>
         </div>
@@ -545,16 +544,16 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
             <div style="font-weight: 700; color: var(--text-muted);">LICENSE SPECIFICATIONS</div>
             <div><strong>License Type:</strong> Enterprise Central Edition</div>
             <div><strong>Licensed User:</strong> Global Enterprise NOC</div>
-            <div><strong>Expiry:</strong> Dec 31, 2028 (Perpetual)</div>
-            <div><strong>Monitored Devices:</strong> 48 / 10,000</div>
+            <div><strong>Expiry:</strong> —</div>
+            <div><strong>Monitored Devices:</strong> —</div>
           </div>
 
           <div style="background: var(--bg-subnav); padding: 10px; border-radius: 4px; border: 1px solid var(--border-color);">
             <div style="font-weight: 700; color: var(--text-muted);">SYSTEM & ARCHITECTURE</div>
-            <div><strong>Central Status:</strong> Active-Primary (HA)</div>
-            <div><strong>Remote Probes:</strong> 4 Probes Registered (Max: 50)</div>
-            <div><strong>Database Engine:</strong> PostgreSQL 14.2 Embedded</div>
-            <div><strong>Server Binding:</strong> 10.0.0.100:8060</div>
+            <div><strong>Central Status:</strong> —</div>
+            <div><strong>Remote Probes:</strong> —</div>
+            <div><strong>Database Engine:</strong> SQLite (embedded)</div>
+            <div><strong>Server Binding:</strong> —</div>
           </div>
         </div>
 
@@ -600,7 +599,7 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
         <div class="mib-query-controls">
           <div style="display: flex; align-items: center; gap: 6px;">
             <label style="font-size: 11px; font-weight: 700;">Host / IP:</label>
-            <input type="text" id="mibTargetIp" class="form-input-me" value="10.0.0.1" style="width: 140px; padding: 4px 8px; font-size: 11px;">
+            <input type="text" id="mibTargetIp" class="form-input-me" style="width: 140px; padding: 4px 8px; font-size: 11px;">
           </div>
           <div style="display: flex; align-items: center; gap: 6px;">
             <label style="font-size: 11px; font-weight: 700;">Community:</label>
@@ -681,8 +680,8 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
       <div class="modal-body-me">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: var(--bg-subnav); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border-color);">
           <div>
-            <div style="font-weight: 800; font-size: 13px;" id="diffDevName">CORE-SW-01 (10.10.0.1)</div>
-            <div style="font-size: 10px; color: var(--text-muted);" id="diffMeta">Status: Drift Detected • 2 Added Lines, 1 Removed Line</div>
+            <div style="font-weight: 800; font-size: 13px;" id="diffDevName">No device selected</div>
+            <div style="font-size: 10px; color: var(--text-muted);" id="diffMeta">Status: —</div>
           </div>
           <button class="btn-me-primary" id="btnResolveDrift" style="padding: 6px 14px; font-size: 11px;">✓ Resolve Drift (Write to NVRAM)</button>
         </div>
@@ -692,7 +691,7 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
           <div style="display: flex; flex-direction: column; background: #090d16; border: 1px solid #1e293b; border-radius: 4px; overflow: hidden;">
             <div style="background: #111827; padding: 6px 10px; font-size: 10px; font-weight: 800; color: #38bdf8; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between;">
               <span>ACTIVE RUNNING-CONFIG (DRAM)</span>
-              <span id="diffRunningVer" style="color: #f59e0b;">v8.1 (Unsaved)</span>
+              <span id="diffRunningVer" style="color: #f59e0b;">—</span>
             </div>
             <div id="diffRunningText" style="flex: 1; overflow-y: auto; font-family: monospace; font-size: 10px; line-height: 1.6; padding: 8px;"></div>
           </div>
@@ -701,7 +700,7 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
           <div style="display: flex; flex-direction: column; background: #090d16; border: 1px solid #1e293b; border-radius: 4px; overflow: hidden;">
             <div style="background: #111827; padding: 6px 10px; font-size: 10px; font-weight: 800; color: #4ade80; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between;">
               <span>BASELINE STARTUP-CONFIG (NVRAM)</span>
-              <span id="diffStartupVer" style="color: #94a3b8;">v8.0 (Baseline)</span>
+              <span id="diffStartupVer" style="color: #94a3b8;">—</span>
             </div>
             <div id="diffStartupText" style="flex: 1; overflow-y: auto; font-family: monospace; font-size: 10px; line-height: 1.6; padding: 8px;"></div>
           </div>
@@ -718,11 +717,28 @@ Type 'show ip int br', 'show ver', 'show run', or 'ping &lt;ip&gt;' to execute.<
 
   <!-- Core Application Scripts -->
   <script>
-    try {
-      sessionStorage.setItem('opm_logged_in', 'true');
-      localStorage.setItem('opm_logged_in', 'true');
-      localStorage.setItem('me_opm_theme', 'dark');
-    } catch (e) {}
+    // Gate the NOC page on a real server session, like app.js does.
+    // There is no client-side login flag: unauthenticated users go to
+    // /login.html instead of seeing the app.
+    (function () {
+      try { localStorage.setItem('me_opm_theme', 'dark'); } catch (e) {}
+      var cmd = document.getElementById('nocAgentCmd');
+      if (cmd) {
+        cmd.textContent = 'OpManagerAgent.exe -server http://' + window.location.host;
+      }
+      fetch('/api/auth/session', { credentials: 'include' })
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (data) {
+          if (!data || data.authenticated !== true) {
+            window.location.replace('/login.html');
+          } else {
+            var label = document.getElementById('sessionUserLabel');
+            var name = data.user && data.user.username;
+            if (label && typeof name === 'string' && name) { label.textContent = name; }
+          }
+        })
+        .catch(function () { window.location.replace('/login.html'); });
+    })();
   </script>
   <script src="/js/app.js"></script>
 </body>

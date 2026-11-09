@@ -1,5 +1,5 @@
 /**
- * ManageEngine OpManager Central (Version 12.9.203 GA Build 129203)
+ * ManageEngine OpManager Central (Version 12.9.204-GA)
  * Authentic Enterprise Suite for Zoho ITOM Ember Framework
  * 100% Identical Replica: Official Logo, Multi-Tab Device Snapshot,
  * Rich Enterprise Dashboard Widgets, Inventory Bulk Actions & Pagination,
@@ -35,33 +35,75 @@
     nocDarkMode: false,
     syncCountdown: 15,
     devices: [],
-    probes: [
-      { id: 101, name: 'Central Site Probe', ip: '127.0.0.1', status: 'Online', latency: 2, devices: 0, devicesCount: 0, alarms: 0, alarmsCount: 0, syncStatus: 'Synchronized', lastSync: 'Just now', location: 'Local Proxmox Node', commPort: 8060, flag: 'US' }
-    ],
+    // Real-data only: probes and templates start EMPTY and are filled solely
+    // by loadBackendData() (06_router_and_init.js) from GET /api/probes and
+    // GET /api/settings/templates. Never seed demo rows here — with no API
+    // data yet the UI shows honest empty states ("No probes registered").
+    probes: [],
     alarms: [],
+    // Collections with no real loader yet (verified: nothing in 01/06/app.js
+    // ever assigns them). They stay empty so their widgets/tables render
+    // honest empty states; populate one only by adding a real fetch in 06's
+    // loadBackendData() — never by seeding demo rows here.
     topInterfaces: [],
     diskVolumes: [],
+    virtualMachines: [],
+    flowExporters: [],
+    ncmAudits: [],
+    discoveryRules: [],
     agents: [],
     currentTmplCategory: 'all',
     tmplSearchQuery: '',
-    templates: [
-      { id: 'cisco-cat-9500', name: 'Cisco Catalyst 9500-48Y4C', category: 'Switch', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.2520', monitors: 'CPU 5s, RAM Buffer, Temp, 48x Port Stats', poll: '300s', cliCommands: 'show version\nshow running-config\nshow interfaces status' },
-      { id: 'cisco-asr-9006', name: 'Cisco ASR 9006 Core Aggregator', category: 'Router', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.1890', monitors: 'Route Processor CPU, Dual PSUs, BGP Peers', poll: '300s', cliCommands: 'show version\nshow platform\nshow bgp summary' },
-      { id: 'paloalto-pa-5250', name: 'Palo Alto PA-5250 Next-Gen FW', category: 'Firewall', vendor: 'Palo Alto', oid: '.1.3.6.1.4.1.25461.2.3.43', monitors: 'Active Sessions, Threat Drops, Data Plane CPU', poll: '180s', cliCommands: 'show system info\nshow running resource-monitor' },
-      { id: 'dell-pe-r750', name: 'Dell PowerEdge R750 Rack Server', category: 'Server', vendor: 'Dell EMC', oid: '.1.3.6.1.4.1.674.10892.5', monitors: 'iDRAC Health, CPU Load, Physical Disk Arrays', poll: '300s', cliCommands: 'racadm getsysinfo\nracadm storage get pdisks' },
-      { id: 'fortinet-fg-600e', name: 'Fortinet FortiGate 600E Enterprise', category: 'Firewall', vendor: 'Fortinet', oid: '.1.3.6.1.4.1.12356.101.1', monitors: 'FortiOS Memory, IPS Drop Rate, VPN Tunnels', poll: '180s', cliCommands: 'get system status\nget system performance status' },
-      { id: 'netapp-aff-a400', name: 'NetApp AFF A400 NVMe Storage', category: 'Storage', vendor: 'NetApp', oid: '.1.3.6.1.4.1.789.2.1', monitors: 'Volume IOPS, Read/Write Latency, NVRAM Battery', poll: '300s', cliCommands: 'system node show\nstorage aggregate show' },
-      { id: 'juniper-mx960', name: 'Juniper MX960 3D Universal Edge', category: 'Router', vendor: 'Juniper', oid: '.1.3.6.1.4.1.2636.1.1.1.2.1', monitors: 'Routing Engine CPU, Ambient Temp, FPC Linecards', poll: '300s', cliCommands: 'show version\nshow chassis hardware' },
-      { id: 'arista-7150', name: 'Arista 7150 Network Switch', category: 'Switch', vendor: 'Arista', oid: '.1.3.6.1.4.1.30065.1.3011', monitors: 'Switch Fabric CPU, Fan Trays, 10G/40G SFP Stats', poll: '300s', cliCommands: 'show version\nshow inventory' },
-      { id: 'cisco-isr-4451', name: 'Cisco ISR 4451-X Gateway', category: 'Router', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.1861', monitors: 'DSP Health, WAN Throughput, NAT Sessions', poll: '300s', cliCommands: 'show version\nshow ip interface brief' },
-      { id: 'hpe-dl380-g10', name: 'HPE ProLiant DL380 Gen10', category: 'Server', vendor: 'HPE', oid: '.1.3.6.1.4.1.232.9.4.10', monitors: 'iLO 5 Health, Smart Array RAID, Thermal Zones', poll: '300s', cliCommands: 'show system\nshow server status' },
-      { id: 'pure-flasharray-x70', name: 'Pure Storage FlashArray//X70', category: 'Storage', vendor: 'Pure Storage', oid: '.1.3.6.1.4.1.40482', monitors: 'Array Latency, Compression Ratio, Flash Module Health', poll: '300s', cliCommands: 'purearray list' },
-      { id: 'cisco-cat-9800', name: 'Cisco Catalyst 9800-CL Wireless Controller', category: 'Wireless', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.2721', monitors: 'Associated APs, Client Density, RF Interference, Rogue SSIDs', poll: '180s', cliCommands: 'show ap summary\nshow wireless client summary' },
-      { id: 'aruba-ap-555', name: 'Aruba AP-555 Wi-Fi 6 Access Point', category: 'Wireless', vendor: 'Aruba', oid: '.1.3.6.1.4.1.14823.1.2.89', monitors: 'Radio 2.4/5GHz Load, Channel Busy%, AirWave Metrics', poll: '180s', cliCommands: 'show ap active' },
-      { id: 'checkpoint-quantum-6600', name: 'Check Point Quantum 6600', category: 'Firewall', vendor: 'Check Point', oid: '.1.3.6.1.4.1.2620.1.1', monitors: 'SecureXL State, CoreXL Dispatch, Threat Emulation Rate', poll: '180s', cliCommands: 'cpstat os\ncpstat fw' }
-    ]
+    templates: []
   };
   state.interfaces = [];
+
+  // --- REAL-PROBE HEADER HELPERS ---
+  // The probe switcher shows ONLY probes returned by GET /api/probes (loaded
+  // by 06's loadBackendData()/WebSocket). With none registered the header
+  // says "No probes registered" instead of showing a fake local probe.
+  function resolveProbeLabel() {
+    if (!state.probes || state.probes.length === 0) return 'No probes registered';
+    const activeProbe = state.probes.find(p => p.id == state.selectedProbe);
+    return activeProbe ? activeProbe.name : 'All Probes';
+  }
+
+  // Count of probes whose real API status is Online (server derives this
+  // from a recent heartbeat; a probe with no/unknown status is not counted).
+  function probeOnlineCount() {
+    return (state.probes || []).filter(p => String(p.status || '').toLowerCase() === 'online').length;
+  }
+
+  // Keep the header probe button + footer probe count in sync with live
+  // state after 06 replaces state.probes. Only writes to the DOM when the
+  // text actually changed. Driven by a guarded 1s interval started in
+  // ensureOverlayContainer() (the old clock tick, initClockAndTimers, is
+  // never invoked anywhere, so this does not ride on it).
+  let probeSyncInterval = null;
+  let lastProbeLabel = null;
+  let lastFooterProbeText = null;
+  function syncProbeHeader() {
+    const labelEl = document.getElementById('opm-probe-name-display');
+    const label = resolveProbeLabel();
+    if (labelEl && label !== lastProbeLabel) {
+      labelEl.innerText = label;
+      lastProbeLabel = label;
+    }
+    const dotEl = document.getElementById('opm-probe-status-dot');
+    if (dotEl) {
+      const anyOnline = probeOnlineCount() > 0;
+      dotEl.style.background = anyOnline ? '#22c55e' : '#64748b';
+      dotEl.style.boxShadow = anyOnline ? '0 0 5px #22c55e' : 'none';
+    }
+    const footerEl = document.getElementById('opm-footer-probes');
+    if (footerEl) {
+      const text = probeOnlineCount() + ' / ' + state.probes.length + ' Online';
+      if (text !== lastFooterProbeText) {
+        footerEl.innerText = text;
+        lastFooterProbeText = text;
+      }
+    }
+  }
 
   // Helper Toast Notification
   function showToast(message, type = 'success') {
@@ -368,8 +410,8 @@
         `;
       });
 
-      const activeProbe = state.probes.find(p => p.id == state.selectedProbe);
-      const probeName = activeProbe ? activeProbe.name : 'All Probes';
+      const probeName = resolveProbeLabel();
+      const probeDotOn = probeOnlineCount() > 0;
 
       header.innerHTML = `
         <!-- Left: Logo -->
@@ -401,7 +443,7 @@
           <!-- Probe Switcher Dropdown Button -->
           <div id="itom-probe-selector-container" style="position: relative;">
             <button id="itom-probe-selector-btn" style="background: #111827; border: 1px solid #374151; color: #ffffff; font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-              <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 5px #22c55e;"></span>
+              <span id="opm-probe-status-dot" style="width: 7px; height: 7px; border-radius: 50%; background: ${probeDotOn ? '#22c55e' : '#64748b'}; box-shadow: ${probeDotOn ? '0 0 5px #22c55e' : 'none'};"></span>
               <span class="zselectbox__selected" id="opm-probe-name-display">${probeName}</span>
               <span style="font-size: 9px; color: #94a3b8;">▼</span>
             </button>
@@ -505,12 +547,12 @@
         <div style="display: flex; align-items: center; gap: 12px;">
           <span style="display: inline-flex; align-items: center; gap: 5px; color: #ffffff; font-weight: 700;">
             <span style="width: 7px; height: 7px; border-radius: 50%; background: #49bd80; display: inline-block;"></span>
-            ManageEngine OpManager Central v12.9.203 (Build 129203 • 64-Bit)
+            ManageEngine OpManager Central v12.9.204-GA (64-Bit)
           </span>
           <span style="color: #475569;">|</span>
-          <span>Central Server: <strong style="color: #49bd80;">Primary Active (${window.location.host || '192.168.30.65:8060'})</strong></span>
+          <span>Central Server: <strong style="color: #49bd80;">${window.location.host || '—'}</strong></span>
           <span style="color: #475569;">|</span>
-          <span>Remote Probes: <strong style="color: #38bdf8;">${state.probes.length} / ${state.probes.length || 1} Online</strong></span>
+          <span>Remote Probes: <strong id="opm-footer-probes" style="color: #38bdf8;">${probeOnlineCount()} / ${state.probes.length} Online</strong></span>
           <span style="color: #475569;">|</span>
           <span id="opm-footer-monitored-assets">Monitored Assets: <strong>${state.devices.length} Devices • ${state.devices.reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : 0), 0)} Interfaces</strong></span>
         </div>
@@ -551,6 +593,11 @@
         document.body.appendChild(container);
       }
     }
+    // Keep the header probe switcher + footer probe count truthful as real
+    // probe data arrives (06 loadBackendData / WebSocket). Guarded so only
+    // one interval ever runs; syncProbeHeader() only writes on change.
+    syncProbeHeader();
+    if (!probeSyncInterval) probeSyncInterval = setInterval(syncProbeHeader, 1000);
     return container;
   }
 
@@ -956,6 +1003,34 @@
 
 
   
+
+  // --- Real-data modal helpers (02) --------------------------------------
+  // Every modal in this module fetches the authed API (HttpOnly
+  // `opm_session` cookie, same-origin) and renders only what the server
+  // returned. Unknown values render as "—", never as invented data.
+  // No enrollment/auth token is hardcoded anywhere in this file: probe
+  // enrollment uses the server-issued key returned once by POST /api/probes.
+  function opmModalEmpty(label, nextStep) {
+    return `<div style="padding: 48px 20px; text-align: center;">
+      <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">${opmEsc(label)}</div>
+      <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto; line-height: 1.5;">${opmEsc(nextStep)}</div>
+    </div>`;
+  }
+  function opmModalLoading(label) {
+    return `<div style="padding: 48px 20px; text-align: center; font-size: 12px; color: #64748b;">${opmEsc(label || 'Loading…')}</div>`;
+  }
+  function opmModalError(message) {
+    return `<div style="padding: 48px 20px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 700; color: #991b1b; margin-bottom: 6px;">Couldn\u2019t load this data</div>
+      <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto; line-height: 1.5;">${opmEsc(message || 'The server could not be reached. Try again.')}</div>
+    </div>`;
+  }
+  function opmDash(v) { return (v === null || v === undefined || v === '') ? '\u2014' : v; }
+  function opmNum(v) { return (v === null || v === undefined || v === '' || !Number.isFinite(Number(v))) ? '\u2014' : Number(v); }
+
   // -------------------------------------------------------------
   // MODAL: NCM DUAL-PANE SIDE-BY-SIDE CONFIGURATION COMPARATOR
   // -------------------------------------------------------------
@@ -986,92 +1061,37 @@
       return;
     }
 
-    const startupLines = [
-      { num: '01', text: '! Last configuration change at 06:14:02 UTC' },
-      { num: '02', text: 'version 17.09.04a' },
-      { num: '03', text: 'service timestamps debug datetime msec' },
-      { num: '04', text: 'service timestamps log datetime msec' },
-      { num: '05', text: `hostname ${dev.name}` },
-      { num: '06', text: '!' },
-      { num: '07', text: 'boot-start-marker' },
-      { num: '08', text: 'boot-end-marker' },
-      { num: '09', text: '!' },
-      { num: '10', text: 'no aaa new-model' },
-      { num: '11', text: '!' },
-      { num: '12', text: 'interface GigabitEthernet0/1', highlight: 'del' },
-      { num: '13', text: ` description Uplink to Gateway`, highlight: 'del' },
-      { num: '14', text: ' switchport mode trunk', highlight: 'del' },
-      { num: '15', text: ' switchport trunk allowed vlan 10,20,30,40', highlight: 'del' },
-      { num: '16', text: ' no shutdown  <-- BASELINE IN STARTUP', highlight: 'del' },
-      { num: '17', text: '!' },
-      { num: '18', text: 'interface GigabitEthernet0/2' },
-      { num: '19', text: ' description Distribution Trunk' },
-      { num: '20', text: ' switchport mode trunk' },
-      { num: '21', text: '!' },
-      { num: '22', text: `ip default-gateway ${dev.ip || '192.168.1.1'}` },
-      { num: '23', text: 'ip forward-protocol nd' },
-      { num: '24', text: '!' },
-      { num: '25', text: 'snmp-server community ******* RO' },
-      { num: '26', text: 'snmp-server host 127.0.0.1 version 2c *******' },
-      { num: '27', text: 'line con 0' },
-      { num: '28', text: 'line vty 0 4' },
-      { num: '29', text: ' login' },
-      { num: '30', text: 'end' }
-    ];
+    const renderLines = (lines) => (lines || []).map(l => {
+      const hl = l.type === 'added' ? 'background: rgba(22, 163, 74, 0.25); color: #86efac; border-left: 3px solid #16a34a;' : (l.type === 'removed' ? 'background: rgba(220, 38, 38, 0.25); color: #fca5a5; border-left: 3px solid #dc2626;' : 'color: #cbd5e1;');
+      return `
+                <div style="display: flex; gap: 8px; padding: 1px 4px; ${hl}">
+                  <span style="color: #64748b; width: 22px; text-align: right; user-select: none;">${opmEsc(l.line)}</span>
+                  <span>${opmEsc(l.text)}</span>
+                </div>`;
+    }).join('');
 
-    const runningLines = [
-      { num: '01', text: '! Last configuration change at 08:30:14 UTC' },
-      { num: '02', text: 'version 17.09.04a' },
-      { num: '03', text: 'service timestamps debug datetime msec' },
-      { num: '04', text: 'service timestamps log datetime msec' },
-      { num: '05', text: `hostname ${dev.name}` },
-      { num: '06', text: '!' },
-      { num: '07', text: 'boot-start-marker' },
-      { num: '08', text: 'boot-end-marker' },
-      { num: '09', text: '!' },
-      { num: '10', text: 'no aaa new-model' },
-      { num: '11', text: '!' },
-      { num: '12', text: 'interface GigabitEthernet0/1', highlight: 'add' },
-      { num: '13', text: ` description Uplink to Gateway`, highlight: 'add' },
-      { num: '14', text: ' switchport mode trunk', highlight: 'add' },
-      { num: '15', text: ' switchport trunk allowed vlan 10,20,30,40', highlight: 'add' },
-      { num: '16', text: ' shutdown  <-- REASON FOR PORT CRITICAL DOWN', highlight: 'add' },
-      { num: '17', text: '!' },
-      { num: '18', text: 'interface GigabitEthernet0/2' },
-      { num: '19', text: ' description Distribution Trunk' },
-      { num: '20', text: ' switchport mode trunk' },
-      { num: '21', text: '!' },
-      { num: '22', text: `ip default-gateway ${dev.ip || '192.168.1.1'}` },
-      { num: '23', text: 'ip forward-protocol nd' },
-      { num: '24', text: 'ip access-list standard 101', highlight: 'add' },
-      { num: '25', text: ' permit 192.168.0.0 0.0.255.255', highlight: 'add' },
-      { num: '26', text: '!' },
-      { num: '27', text: 'snmp-server community ******* RO' },
-      { num: '28', text: 'snmp-server host 127.0.0.1 version 2c *******' },
-      { num: '29', text: 'line con 0' },
-      { num: '30', text: 'line vty 0 4' },
-      { num: '31', text: ' login' },
-      { num: '32', text: 'end' }
-    ];
-
-    modal.innerHTML = `
+    const renderDiff = (diff) => {
+      const added = diff.addedLinesCount ?? 0;
+      const removed = diff.removedLinesCount ?? 0;
+      const total = added + removed;
+      const badge = total === 0
+        ? '<span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px;">In Sync</span>'
+        : `<span style="background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px;">${total} Differences Detected</span>`;
+      modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 1080px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35); border: 1px solid #cbd5e1;">
-        <!-- Header -->
         <div style="padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
           <div style="display: flex; align-items: center; gap: 12px;">
             <div style="width: 32px; height: 32px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">NCM</div>
             <div>
               <div style="font-size: 15px; font-weight: 800; color: #0f172a;">ManageEngine NCM Dual-Pane Side-by-Side Configuration Comparator</div>
-              <div style="font-size: 11px; color: #64748b;">Target Device: <strong style="color: #0070e0;">${dev.name} (${dev.ip})</strong> &bull; Probe: ${dev.probe}</div>
+              <div style="font-size: 11px; color: #64748b;">Target Device: <strong style="color: #0070e0;">${opmEsc(dev.name)} (${opmEsc(dev.ip)})</strong> &bull; Probe: ${opmEsc(dev.probe)}</div>
             </div>
           </div>
           <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px;">3 Differences Detected</span>
+            ${badge}
             <button id="close-ncm-diff-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;" title="Close">✕</button>
           </div>
         </div>
-
-        <!-- Toolbar -->
         <div style="padding: 10px 24px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
           <div style="display: flex; align-items: center; gap: 14px;">
             <span style="color: #334155; font-weight: 700;">Diff Legend:</span>
@@ -1090,76 +1110,66 @@
             </button>
           </div>
         </div>
-
-        <!-- Dual Pane Body -->
         <div style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: #0f172a; font-family: monospace; font-size: 11px; line-height: 1.6;">
-          <!-- Left Pane: Startup Baseline -->
           <div style="border-right: 1px solid #334155; padding: 14px; overflow-x: auto;">
             <div style="color: #94a3b8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 8px; display: flex; justify-content: space-between;">
-              <span>STARTUP-CONFIG (NVRAM) &bull; Version 13.0</span>
-              <span style="color: #cbd5e1;">Baseline Captured 06:14 UTC</span>
+              <span>STARTUP-CONFIG (NVRAM)</span>
+              <span style="color: #cbd5e1;">Baseline Captured ${opmEsc(diff.startupFetchedAt || '—')}</span>
             </div>
-            <div>
-              ${startupLines.map(l => `
-                <div style="display: flex; gap: 8px; padding: 1px 4px; ${l.highlight === 'del' ? 'background: rgba(220, 38, 38, 0.25); color: #fca5a5; border-left: 3px solid #dc2626;' : 'color: #cbd5e1;'}">
-                  <span style="color: #64748b; width: 22px; text-align: right; user-select: none;">${l.num}</span>
-                  <span>${l.text}</span>
-                </div>
-              `).join('')}
-            </div>
+            <div>${renderLines(diff.startupConfig)}</div>
           </div>
-
-          <!-- Right Pane: Running Config -->
           <div style="padding: 14px; overflow-x: auto;">
             <div style="color: #94a3b8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 8px; display: flex; justify-content: space-between;">
-              <span>RUNNING-CONFIG (RAM) &bull; Version 14.2</span>
-              <span style="color: #4ade80;">Live Synchronized 08:30 UTC</span>
+              <span>RUNNING-CONFIG (RAM)</span>
+              <span style="color: #4ade80;">Live Synchronized ${opmEsc(diff.runningFetchedAt || '—')}</span>
             </div>
-            <div>
-              ${runningLines.map(l => `
-                <div style="display: flex; gap: 8px; padding: 1px 4px; ${l.highlight === 'add' ? 'background: rgba(22, 163, 74, 0.25); color: #86efac; border-left: 3px solid #16a34a;' : 'color: #cbd5e1;'}">
-                  <span style="color: #64748b; width: 22px; text-align: right; user-select: none;">${l.num}</span>
-                  <span>${l.text}</span>
-                </div>
-              `).join('')}
-            </div>
+            <div>${renderLines(diff.runningConfig)}</div>
           </div>
         </div>
-
-        <!-- Footer -->
         <div style="padding: 12px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>ManageEngine Network Configuration Manager v12.9.203 &bull; SHA256 Verification: <code>a8f23...e41</code></span>
+          <span>ManageEngine Network Configuration Manager v12.9.204-GA &bull; Added lines: ${added} &bull; Removed lines: ${removed}</span>
           <button id="opm-ncm-diff-close-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 5px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close Comparator</button>
         </div>
       </div>
     `;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-ncm-diff-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#opm-ncm-diff-close-btn').onclick = () => { modal.style.display = 'none'; };
+      const syncBtn = modal.querySelector('#opm-ncm-sync-nvram-btn');
+      if (syncBtn) {
+        syncBtn.onclick = async () => {
+          const res = await opmApi('/api/ccm/backup-device', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: dev.id }) });
+          showToast(opmApiMessage(res, res.ok ? 'Backup requested.' : 'Backup could not be started.'), res.ok ? 'success' : 'error');
+        };
+      }
+      const rollbackBtn = modal.querySelector('#opm-ncm-rollback-btn');
+      if (rollbackBtn) {
+        rollbackBtn.onclick = async () => {
+          const res = await opmApi('/api/ccm/resolve-drift', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: dev.id }) });
+          showToast(opmApiMessage(res, res.ok ? 'Drift resolved.' : 'Rollback could not be performed.'), res.ok ? 'success' : 'error');
+        };
+      }
+      const exportBtn = modal.querySelector('#opm-ncm-export-pdf-btn');
+      if (exportBtn) {
+        exportBtn.onclick = () => { window.print(); };
+      }
+    };
 
+    modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 1080px; max-width: 95vw; max-height: 92vh; overflow: hidden;">${opmModalLoading('Loading configuration diff…')}</div>`;
     modal.style.display = 'flex';
-    modal.querySelector('#close-ncm-diff-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#opm-ncm-diff-close-btn').onclick = () => { modal.style.display = 'none'; };
-
-    const syncBtn = modal.querySelector('#opm-ncm-sync-nvram-btn');
-    if (syncBtn) {
-      syncBtn.onclick = () => {
-        state.configDriftFixed = true;
-        showToast('Running configuration written to NVRAM. Baseline synchronized.');
-        modal.style.display = 'none';
-        if (typeof renderConfigurationView === 'function') renderConfigurationView();
-      };
-    }
-    const rollbackBtn = modal.querySelector('#opm-ncm-rollback-btn');
-    if (rollbackBtn) {
-      rollbackBtn.onclick = () => {
-        showToast('Rollback script executed via Probe SSH: Running config restored to Startup baseline.');
-        modal.style.display = 'none';
-      };
-    }
-    const exportBtn = modal.querySelector('#opm-ncm-export-pdf-btn');
-    if (exportBtn) {
-      exportBtn.onclick = () => {
-        window.print();
-      };
-    }
+    (async () => {
+      const res = await opmApi('/api/ccm/diff?deviceId=' + encodeURIComponent(dev.id), { credentials: 'same-origin' });
+      if (!res.ok || !res.data) {
+        modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 1080px; max-width: 95vw; overflow: hidden;">${opmModalError(opmApiMessage(res, 'Could not load the configuration diff.'))}<div style="text-align: center; padding-bottom: 20px;"><button onclick="document.getElementById('opm-ncm-diff-modal').style.display='none';" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close</button></div></div>`;
+        return;
+      }
+      const diff = res.data;
+      if (diff.reason) {
+        modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 1080px; max-width: 95vw; overflow: hidden;">${opmModalEmpty('No configuration to compare yet', 'Add a device and take a baseline backup first — the diff appears once running and startup configs both exist. ' + (diff.reason || ''))}<div style="text-align: center; padding-bottom: 20px;"><button onclick="document.getElementById('opm-ncm-diff-modal').style.display='none';" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close</button></div></div>`;
+        return;
+      }
+      renderDiff(diff);
+    })();
   }
 
   // -------------------------------------------------------------
@@ -1180,8 +1190,8 @@
           <div style="display: flex; align-items: center; gap: 10px;">
             <div style="width: 28px; height: 28px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">TRAP</div>
             <div>
-              <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Simulate Inbound SNMP Trap (UDP 162)</div>
-              <div style="font-size: 11px; color: #64748b;">Test OpManager Central Real-Time Trap Receiver &amp; Processing Rules</div>
+              <div style="font-size: 14px; font-weight: 800; color: #0f172a;">SNMP Trap Simulator (test tool)</div>
+              <div style="font-size: 11px; color: #64748b;">Generates a local test trap preview only. It is not a received trap and is not sent to the live trap receiver.</div>
             </div>
           </div>
           <span id="close-trap-sim-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
@@ -1195,7 +1205,7 @@
                 ${(state.devices && state.devices.length > 0) ? state.devices.map(d => `
                   <option value="${d.id}">${d.name} (${d.ip})</option>
                 `).join('') : `
-                  <option value="1">Central Server (${window.location.hostname || '192.168.30.65'})</option>
+                  <option value="" disabled>No devices enrolled yet</option>
                 `}
               </select>
             </div>
@@ -1213,11 +1223,11 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
             <div>
               <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Destination Listener</label>
-              <input type="text" value="0.0.0.0:162 (UDP Trap Daemon)" readonly style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #f8fafc; font-family: monospace;">
+              <input type="text" value="Test only — no live listener" readonly style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #f8fafc; font-family: monospace;">
             </div>
             <div>
               <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">SNMP Version &amp; Community</label>
-              <input type="text" value="SNMPv2c • Community: public" readonly style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #f8fafc; font-family: monospace;">
+              <input type="text" value="Test only — no community sent" readonly style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #f8fafc; font-family: monospace;">
             </div>
           </div>
 
@@ -1262,9 +1272,9 @@
 
     const fireBtn = modal.querySelector('#sim-trap-fire-btn');
     fireBtn.onclick = () => {
-      modal.style.display = 'none';
-      if (typeof playAlarmChime === 'function') playAlarmChime();
-      showToast('SNMP Trap successfully ingested on UDP 162. Trap Parser processed payload.');
+      const vb = modal.querySelector('#sim-trap-varbinds-box');
+      if (vb) vb.innerHTML += '<br><span style="color: #fbbf24;">Test trap generated locally for preview only — nothing was sent to the trap receiver.</span>';
+      showToast('Test trap generated locally for preview only — nothing was sent to the trap receiver.');
     };
   }
 
@@ -1559,7 +1569,7 @@
     pop.innerHTML = `
       <div style="background: #212121; color: #ffffff; padding: 10px 14px; font-weight: 700; font-size: 12px; display: flex; justify-content: space-between; align-items: center;">
         <span>ManageEngine ITOM Integrated Suite</span>
-        <span style="font-size: 10px; background: #49bd80; color: #fff; padding: 1px 6px; border-radius: 2px;">v12.9.203</span>
+        <span style="font-size: 10px; background: #49bd80; color: #fff; padding: 1px 6px; border-radius: 2px;">v12.9.204-GA</span>
       </div>
       <div style="padding: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; background: #fafbfc;">
         <div class="opm-app-tile" data-target="overview" style="border: 1px solid #49bd80; background: #f0fdf4; border-radius: 5px; padding: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 6px;">
@@ -1628,27 +1638,27 @@
           <div style="padding: 24px 28px; font-size: 12px; color: #334155; line-height: 1.7;">
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">Product Version:</span>
-              <span style="font-family: monospace; font-weight: 700; color: #0070e0;">12.9.203 GA (Build 129203)</span>
+              <span style="font-family: monospace; font-weight: 700; color: #0070e0;">12.9.204-GA</span>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">License Type:</span>
-              <span style="color: #16a34a; font-weight: 700;">Central Enterprise Edition (Unlimited Probes)</span>
+              <span id="opm-about-license" style="color: #16a34a; font-weight: 700;">—</span>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">Registered Remote Probes:</span>
-              <span style="font-weight: 700;">${state.probes.length} / ${state.probes.length || 1} Online</span>
+              <span style="font-weight: 700;">${(state.probes || []).filter(p => String(p.status || '').toLowerCase() === 'online').length} / ${state.probes.length} Online</span>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">Database Engine:</span>
-              <span style="font-family: monospace;">PostgreSQL 14.5 (64-bit embedded)</span>
+              <span id="opm-about-db" style="font-family: monospace;">—</span>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
               <span style="font-weight: 600;">Java Runtime:</span>
-              <span style="font-family: monospace;">OpenJDK 17.0.7 (Zoho JVM Server)</span>
+              <span id="opm-about-jvm" style="font-family: monospace;">—</span>
             </div>
             <div style="display: flex; justify-content: space-between; padding-bottom: 4px;">
               <span style="font-weight: 600;">Server Uptime:</span>
-              <span>184 Days 14 Hours (Continuous)</span>
+              <span id="opm-about-uptime">—</span>
             </div>
           </div>
           <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
@@ -1662,6 +1672,20 @@
     modal.style.display = 'flex';
     document.getElementById('close-about-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('about-ok-btn').onclick = () => { modal.style.display = 'none'; };
+    // Live facts only: version/JVM/OS from the server, licence from the
+    // server. Uptime and database engine are shown only if the server
+    // reports them; otherwise "—", never an invented value.
+    (async () => {
+      const sys = await opmApi('/api/admin/GetSystemInformation', { credentials: 'same-origin' });
+      const d = sys.ok && sys.data ? sys.data : {};
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = (v === null || v === undefined || v === '') ? '—' : String(v); };
+      set('opm-about-jvm', d.jvmInfo && d.jvmInfo.javaVersion);
+      set('opm-about-db', d.dbInfo && (d.dbInfo.engine || d.dbInfo.type));
+      set('opm-about-uptime', d.uptime || d.serverUptime || d.osInfo && d.osInfo.uptime);
+      const lic = await opmApi('/api/settings/license', { credentials: 'same-origin' });
+      const l = lic.ok && lic.data && lic.data.license ? lic.data.license : null;
+      set('opm-about-license', l ? ((l.edition || l.licenseType || '') + (l.probesAllowed === -1 ? ' (Unlimited Probes)' : '')) : null);
+    })();
   }
 
   // --- USER PROFILE DROPDOWN ---
@@ -1681,9 +1705,9 @@
     pop.style.right = (window.innerWidth - rect.right) + 'px';
     pop.innerHTML = `
       <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 16px;">
-        <div style="font-weight: 700; color: #0f172a; font-size: 13px;">Administrator</div>
-        <div style="font-size: 11px; color: #64748b;">admin@opmanager.corp</div>
-        <div style="font-size: 10px; font-weight: 600; color: #16a34a; margin-top: 4px;">● Super Administrator (Full Central Control)</div>
+        <div id="opm-profile-name" style="font-weight: 700; color: #0f172a; font-size: 13px;">—</div>
+        <div id="opm-profile-email" style="font-size: 11px; color: #64748b;">—</div>
+        <div id="opm-profile-role" style="font-size: 10px; font-weight: 600; color: #16a34a; margin-top: 4px;">—</div>
       </div>
       <div style="padding: 6px 0; font-size: 12px;">
         <div class="pop-item" style="padding: 8px 16px; color: #334155; cursor: pointer;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">My Account & API Keys</div>
@@ -1694,9 +1718,18 @@
       </div>
     `;
     pop.style.display = 'block';
+    (async () => {
+      const s = await opmApi('/api/auth/session', { credentials: 'same-origin' });
+      const u = s.ok && s.data && s.data.user ? s.data.user : null;
+      const set = (id, v) => { const el = pop.querySelector('#' + id); if (el) el.textContent = v || '—'; };
+      set('opm-profile-name', u && (u.username || u.name));
+      set('opm-profile-email', u && (u.email || u.username));
+      set('opm-profile-role', u && u.role ? ('● ' + u.role) : null);
+    })();
     const logout = pop.querySelector('#logout-btn');
     if (logout) {
-      logout.onclick = () => {
+      logout.onclick = async () => {
+        try { await opmApi('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }); } catch (e) {}
         localStorage.removeItem('opm_auth_user');
         localStorage.removeItem('opm_auth_token');
         showToast('Signing out of OpManager Central administrative session...');
@@ -1727,6 +1760,7 @@
         <span id="mark-all-read" style="font-size: 11px; color: #0070e0; cursor: pointer; font-weight: 600;">Mark all read</span>
       </div>
       <div style="max-height: 320px; overflow-y: auto; font-size: 12px;">
+        ${state.alarms.length === 0 ? `<div style="padding: 30px 16px; text-align: center;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No notifications yet</div><div style="font-size: 11px; color: #64748b;">Alarms and system notices will appear here.</div></div>` : ''}
         ${state.alarms.slice(0, 4).map(a => `
           <div style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; cursor: pointer;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
             <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
@@ -1743,12 +1777,24 @@
     `;
     pop.style.display = 'block';
     const markRead = pop.querySelector('#mark-all-read');
-    if (markRead) markRead.onclick = () => {
-      showToast('All notifications marked as read.');
-      const badge = document.querySelector('.opm-bell-badge');
-      if (badge) badge.style.display = 'none';
-      pop.style.display = 'none';
-    };
+    if (markRead) {
+      if (!state.alarms.length) {
+        markRead.style.opacity = '0.5';
+        markRead.style.pointerEvents = 'none';
+        markRead.title = 'Nothing to mark as read';
+      }
+      markRead.onclick = async () => {
+        const res = await opmApi('/api/dashboard/clearUserNotification', { method: 'POST', credentials: 'same-origin' });
+        if (res.ok) {
+          showToast('All notifications marked as read.');
+          const badge = document.querySelector('.opm-bell-badge');
+          if (badge) badge.style.display = 'none';
+          pop.style.display = 'none';
+        } else {
+          showToast(opmApiMessage(res, 'Could not mark notifications as read.'), 'error');
+        }
+      };
+    }
   }
 
   // --- QUICK LINKS DROPDOWN ---
@@ -1777,9 +1823,15 @@
     `;
     pop.style.display = 'block';
     pop.querySelector('#ql-add-dev').onclick = () => { pop.style.display = 'none'; showAddDeviceModal(); };
-    pop.querySelector('#ql-disc').onclick = () => { pop.style.display = 'none'; showToast('Subnet discovery scheduled across active probes.'); };
-    pop.querySelector('#ql-backup').onclick = () => { pop.style.display = 'none'; showToast('Backup triggered for core routers and switches.'); };
-    pop.querySelector('#ql-snmp').onclick = () => { pop.style.display = 'none'; showToast('SNMP v2c credentials verified: OK.'); };
+    pop.querySelector('#ql-disc').onclick = () => { pop.style.display = 'none'; showSubnetDiscoveryModal(); };
+    pop.querySelector('#ql-backup').onclick = async () => {
+      pop.style.display = 'none';
+      const dev = state.devices && state.devices[0];
+      if (!dev) { showToast('No devices to back up yet — add a device first.', 'error'); return; }
+      const res = await opmApi('/api/ccm/backup-device', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: dev.id }) });
+      showToast(opmApiMessage(res, res.ok ? 'Backup requested.' : 'Backup could not be started.'), res.ok ? 'success' : 'error');
+    };
+    pop.querySelector('#ql-snmp').onclick = () => { pop.style.display = 'none'; showMibBrowserModal(); };
   }
 
   // --- QUICK ACTIONS DROPDOWN (+) ---
@@ -1973,25 +2025,34 @@
       <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 16px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span style="font-weight: 700; color: #0f172a; font-size: 13px;">Security Posture</span>
-          <span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-size: 11px;">88 / 100</span>
+          <span style="background: #f1f5f9; color: #64748b; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-size: 11px;">—</span>
         </div>
       </div>
       <div style="padding: 12px 16px; font-size: 11px; line-height: 1.6; color: #475569;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span>Probe TLS Encryption:</span>
-          <span style="color: #16a34a; font-weight: 600;">Enforced (TLS 1.3)</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span>SNMP v3 Enforcement:</span>
-          <span style="color: #ea580c; font-weight: 600;">82% (2 Legacy v2c)</span>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-          <span>Configuration Drift:</span>
-          <span style="color: ${state.configDriftFixed ? '#16a34a' : '#dc2626'}; font-weight: 600;">${state.configDriftFixed ? '0 Unsaved' : '1 Unsaved Drift'}</span>
-        </div>
+        <div style="margin-bottom: 4px;">Loading security score…</div>
       </div>
     `;
     pop.style.display = 'block';
+    (async () => {
+      const res = await opmApi('/api/v2/admin/getSecurityScore', { credentials: 'same-origin' });
+      const d = (res.ok && res.data) ? res.data : null;
+      const score = d ? (d.score ?? d.SecurityScore) : null;
+      const row = (label, v) => `<div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>${label}</span><span style="color: #64748b; font-weight: 600;">${opmEsc(v === null || v === undefined || v === '' ? '—' : String(v))}</span></div>`;
+      pop.innerHTML = `
+      <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 700; color: #0f172a; font-size: 13px;">Security Posture</span>
+          <span style="background: ${score === null ? '#f1f5f9' : '#dcfce7'}; color: ${score === null ? '#64748b' : '#166534'}; font-weight: 700; padding: 2px 8px; border-radius: 10px; font-size: 11px;">${score === null ? '—' : opmEsc(String(score)) + (d.grade ? ' (' + opmEsc(String(d.grade)) + ')' : '')}</span>
+        </div>
+      </div>
+      <div style="padding: 12px 16px; font-size: 11px; line-height: 1.6; color: #475569;">
+        ${row('Probe TLS Encryption:', d ? d.tls : null)}
+        ${row('SNMP v3 Enforcement:', d ? d.snmpV3 : null)}
+        ${row('Configuration Drift:', d ? d.drift : null)}
+        ${score === null ? '<div style="margin-top: 6px; color: #64748b;">No security assessment run yet — run a security assessment to populate this panel.</div>' : ''}
+      </div>
+    `;
+    })();
   }
 
   // --- GLOBAL SEARCH MODAL ---
@@ -2093,7 +2154,7 @@
                 <span style="color: #64748b; font-family: monospace; margin-left: 6px;">(${p.ip}:8060)</span>
               </div>
             </div>
-            <span style="font-size: 11px; color: #0284c7; font-weight: 600;">${p.devicesCount || p.devices || 4} Managed Nodes</span>
+            <span style="font-size: 11px; color: #0284c7; font-weight: 600;">${p.devicesCount ?? p.devices ?? '—'} Managed Nodes</span>
           </div>
         `).join('');
       }
@@ -2143,7 +2204,7 @@
           } else if (type === 'tool') {
             const act = row.getAttribute('data-act');
             if (act === 'mib') showNetworkToolsModal(null, 'mib');
-            else if (act === 'ping') showNetworkToolsModal((state.devices && state.devices[0]?.ip) || '127.0.0.1', 'ping');
+            else if (act === 'ping') showNetworkToolsModal(null, 'ping');
             else if (act === 'zia') showZiaAssistantModal();
             else if (act === 'sla') { state.subTabs.reports = 'sla'; window.location.hash = '#/reports'; }
             else if (act === 'worldmap') { state.subTabs.maps = 'world'; window.location.hash = '#/maps'; }
@@ -2177,9 +2238,18 @@
       modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-    const dev = targetDev || state.devices[0];
-    const rule = ruleTitle || 'Cisco IOS Golden Baseline (SSH v2 & Password Encryption)';
-
+    const dev = targetDev || (state.devices && state.devices[0]) || null;
+    const rule = ruleTitle || null;
+    if (!rule || !dev) {
+      modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; background: #f8fafc;"><div style="font-size: 14px; font-weight: 800; color: #0f172a;">ManageEngine NCM Automated Policy Remediation Fixlet</div></div>
+        ${opmModalEmpty('No remediation available', 'Remediation fixlets appear here when a compliance rule fails on a real device.')}
+        <div style="text-align: center; padding-bottom: 20px;"><button onclick="document.getElementById('opm-ncm-remed-modal').style.display='none';" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button></div>
+      </div>`;
+      modal.style.display = 'flex';
+      return;
+    }
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
         <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
@@ -2187,22 +2257,20 @@
             <div style="width: 28px; height: 28px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">NCM</div>
             <div>
               <div style="font-size: 14px; font-weight: 800; color: #0f172a;">ManageEngine NCM Automated Policy Remediation Fixlet</div>
-              <div style="font-size: 11px; color: #64748b;">Target Device: <strong style="color: #0070e0;">${dev.name} (${dev.ip})</strong> &bull; Monitored via ${dev.probe}</div>
+              <div style="font-size: 11px; color: #64748b;">Target Device: <strong style="color: #0070e0;">${opmEsc(dev.name)} (${opmEsc(dev.ip)})</strong> &bull; Monitored via ${opmEsc(dev.probe || '—')}</div>
             </div>
           </div>
           <span id="close-ncm-remed-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
         <div style="padding: 20px;">
           <div style="background: #fef2f2; border: 1px solid #fee2e2; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <div style="font-size: 12px; font-weight: 700; color: #991b1b;">Violated Policy Rule: ${rule}</div>
-              <div style="font-size: 11px; color: #7f1d1d; margin-top: 2px;">Running configuration lacks SSH v2 timeout parameters and global password-encryption service.</div>
+              <div style="font-size: 12px; font-weight: 700; color: #991b1b;">Violated Policy Rule: ${opmEsc(rule)}</div>
+              <div style="font-size: 11px; color: #7f1d1d; margin-top: 2px;">This rule failed on the target device. Review the proposed remediation script below — it has not been executed.</div>
             </div>
             <span style="background: #dc2626; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 3px;">NON-COMPLIANT</span>
           </div>
-
-          <div style="font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Remediation CLI Batch Script (Cisco IOS-XE / JunOS Syntax):</div>
+          <div style="font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Proposed Remediation Script (not executed yet):</div>
           <div style="background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 11px; line-height: 1.6; padding: 14px; border-radius: 6px; margin-bottom: 16px; border: 1px solid #334155;">
             configure terminal<br>
             <span style="color: #4ade80;">service password-encryption</span><br>
@@ -2215,55 +2283,19 @@
             end<br>
             write memory
           </div>
-
-          <div id="ncm-exec-terminal" style="display: none; background: #0b0f19; border: 1px solid #1e293b; border-radius: 6px; padding: 14px; font-family: monospace; font-size: 11px; line-height: 1.6; color: #34d399; max-height: 150px; overflow-y: auto; margin-bottom: 16px;"></div>
-
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 11px; color: #64748b;">
-              Protocol: <strong>SSH Port 22</strong> &bull; Auth: <strong>Probe Stored Key</strong> &bull; Rollback: <strong>Enabled</strong>
-            </div>
+            <div style="font-size: 11px; color: #64748b;">Remediation execution is not available yet — no config push endpoint is configured.</div>
             <div style="display: flex; gap: 10px;">
               <button id="ncm-cancel-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Cancel</button>
-              <button id="ncm-execute-script-btn" style="background: #16a34a; border: none; color: #fff; padding: 7px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-                ▶ Push Config via Probe SSH
-              </button>
+              <button id="ncm-execute-script-btn" disabled title="Remediation execution is not available yet — no config push endpoint is configured." style="background: #94a3b8; border: none; color: #fff; padding: 7px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: not-allowed;">▶ Push Config via Probe SSH</button>
             </div>
           </div>
         </div>
       </div>
     `;
-
     modal.style.display = 'flex';
     modal.querySelector('#close-ncm-remed-btn').onclick = () => { modal.style.display = 'none'; };
     modal.querySelector('#ncm-cancel-btn').onclick = () => { modal.style.display = 'none'; };
-
-    const execBtn = modal.querySelector('#ncm-execute-script-btn');
-    const term = modal.querySelector('#ncm-exec-terminal');
-
-    execBtn.onclick = () => {
-      execBtn.disabled = true;
-      execBtn.innerText = 'Pushing Config...';
-      term.style.display = 'block';
-      const targetDevName = dev.name || 'Managed-Device';
-      const targetDevIp = dev.ip || '127.0.0.1';
-      term.innerHTML = `<div style="color: #94a3b8;">[1/4] Establishing SSHv2 session to ${targetDevIp}:22 via ${dev.probe || 'Central Probe'}...</div>`;
-      
-      setTimeout(() => {
-        term.innerHTML += '<div style="color: #38bdf8;">[2/4] Probe authenticated. Session encryption: aes256-gcm. Pushing configuration commands...</div>';
-      }, 400);
-
-      setTimeout(() => {
-        term.innerHTML += `<div style="color: #38bdf8;">[3/4] ${targetDevName}(config)# service password-encryption<br>${targetDevName}(config)# ip ssh version 2<br>${targetDevName}# write memory [OK]</div>`;
-      }, 900);
-
-      setTimeout(() => {
-        term.innerHTML += '<div style="color: #4ade80; font-weight: 700;">[4/4] Commit SUCCESS: 0 errors. Compliance rule verified as 100% COMPLIANT.</div>';
-        execBtn.style.background = '#475569';
-        execBtn.innerText = '✓ Remediation Applied';
-        state.configDriftFixed = true;
-        showToast('NCM Remediation Fixlet successfully executed on ' + dev.name + '.');
-      }, 1400);
-    };
   }
 
   // -------------------------------------------------------------
@@ -2277,89 +2309,101 @@
       modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-    const hostIp = window.location.hostname || '192.168.30.65';
-    const l = linkData || {
-      name: 'Central HQ <--> Enterprise WAN Gateway',
-      carrier: 'Carrier Transit MPLS & SD-WAN',
-      src: `Central HQ (${hostIp})`,
-      dst: `${(state.devices && state.devices[0]?.name) || 'Primary-Switch'} (${(state.devices && state.devices[0]?.ip) || '127.0.0.1'})`,
-      srcInf: 'TenGigabitEthernet0/0/1',
-      dstInf: 'FortyGigabitEthernet1/0/48',
-      speed: '10 Gbps Committed / 40 Gbps Burst',
-      rtt: '18.2 ms',
-      inUtil: '78.5%',
-      outUtil: '62.0%',
-      inRate: '1,840 Mbps',
-      outRate: '1,280 Mbps',
-      status: 'Critical Alert',
-      discards: '14 CRC Errors'
-    };
-
-    modal.innerHTML = `
+    // Caller-supplied link data (from a real view) is rendered as-is; when
+    // nothing is supplied, the first discovered interface of the first
+    // device is used. No link is ever invented.
+    const render = (l, dev, error) => {
+      const name = (l && l.name) || (dev ? `${dev.name || '—'} WAN link` : 'WAN Link');
+      modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 660px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
         <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <div style="width: 28px; height: 28px; border-radius: 4px; background: #0284c7; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">WAN</div>
             <div>
               <div style="font-size: 14px; font-weight: 800; color: #0f172a;">ManageEngine Business View &bull; WAN Link Telemetry</div>
-              <div style="font-size: 11px; color: #64748b;">${l.name}</div>
+              <div style="font-size: 11px; color: #64748b;">${opmEsc(name)}</div>
             </div>
           </div>
           <span id="close-wan-link-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
         <div style="padding: 20px;">
-          <div style="background: ${l.status.includes('Critical') ? '#fef2f2' : '#f0fdf4'}; border: 1px solid ${l.status.includes('Critical') ? '#fee2e2' : '#bbf7d0'}; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+          ${error ? opmModalError(error) : ''}
+          ${!error && !l ? opmModalEmpty('No WAN link data yet', 'Add a device and discover its interfaces — link rates, latency and errors appear here once interface counters are polled.') : ''}
+          ${l ? `
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
             <div>
-              <div style="font-size: 13px; font-weight: 700; color: ${l.status.includes('Critical') ? '#991b1b' : '#166534'};">${l.carrier}</div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Latency: <strong>${l.rtt}</strong> &bull; Packet Loss: <strong>0.0%</strong> &bull; MTU: <strong>1500</strong></div>
+              <div style="font-size: 13px; font-weight: 700; color: #0f172a;">${opmEsc(l.carrier || l.name || '—')}</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Latency: <strong>${opmEsc(l.rtt || '—')}</strong> &bull; Packet Loss: <strong>${opmEsc(l.loss || '—')}</strong> &bull; MTU: <strong>${opmEsc(l.mtu || '—')}</strong></div>
             </div>
-            <span style="background: ${l.status.includes('Critical') ? '#dc2626' : '#16a34a'}; color: #fff; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px;">${l.status}</span>
+            <span style="background: #16a34a; color: #fff; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 3px;">${opmEsc(l.status || '—')}</span>
           </div>
-
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Near-End (Source CI)</div>
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-top: 4px;">${l.src}</div>
-              <div style="font-size: 11px; color: #0070e0; font-family: monospace; margin-top: 2px;">${l.srcInf}</div>
-              <div style="font-size: 12px; color: #16a34a; font-weight: 700; margin-top: 6px;">IN: ${l.inRate} (${l.inUtil})</div>
+              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-top: 4px;">${opmEsc(l.src || '—')}</div>
+              <div style="font-size: 11px; color: #0070e0; font-family: monospace; margin-top: 2px;">${opmEsc(l.srcInf || '—')}</div>
+              <div style="font-size: 12px; color: #16a34a; font-weight: 700; margin-top: 6px;">IN: ${opmEsc(l.inRate || '—')}</div>
             </div>
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Far-End (Destination CI)</div>
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-top: 4px;">${l.dst}</div>
-              <div style="font-size: 11px; color: #0070e0; font-family: monospace; margin-top: 2px;">${l.dstInf}</div>
-              <div style="font-size: 12px; color: #0284c7; font-weight: 700; margin-top: 6px;">OUT: ${l.outRate} (${l.outUtil})</div>
+              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-top: 4px;">${opmEsc(l.dst || '—')}</div>
+              <div style="font-size: 11px; color: #0070e0; font-family: monospace; margin-top: 2px;">${opmEsc(l.dstInf || '—')}</div>
+              <div style="font-size: 12px; color: #0284c7; font-weight: 700; margin-top: 6px;">OUT: ${opmEsc(l.outRate || '—')}</div>
             </div>
           </div>
-
-          <div style="font-size: 11px; color: #64748b; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px; margin-bottom: 16px;">
-            <strong>Interface Health Warning:</strong> 14 CRC alignment errors recorded on ${l.dstInf}. Optical transceiver DDM diagnostics show RX light at -19.8 dBm (Below -14.0 dBm optical threshold).
-          </div>
-
+          ${l.discards ? `<div style="font-size: 11px; color: #64748b; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px; margin-bottom: 16px;"><strong>Interface Health:</strong> ${opmEsc(l.discards)}</div>` : ''}
+          ` : ''}
           <div style="display: flex; justify-content: flex-end; gap: 10px;">
             <button id="wan-link-ipsla-btn" style="background: #10b981; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">📞 Cisco IP SLA VoIP</button>
-            <button id="wan-link-poll-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">⚡ Re-poll Link Interfaces</button>
+            <button id="wan-link-poll-btn" ${dev ? '' : 'disabled title="Re-poll needs a device first." style="background: #94a3b8; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: not-allowed;"'} ${dev ? 'style="background: #0070e0; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;"' : ''}>⚡ Re-poll Link Interfaces</button>
             <button id="wan-link-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-      </div>
-    `;
-
-    modal.style.display = 'flex';
-    modal.querySelector('#close-wan-link-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#wan-link-close-btn').onclick = () => { modal.style.display = 'none'; };
-    const pBtn = modal.querySelector('#wan-link-poll-btn');
-        const ipslaBtn = modal.querySelector('#wan-link-ipsla-btn');
-    if (ipslaBtn) {
-      ipslaBtn.onclick = () => {
-        showIpSlaVoipModal(l);
-      };
-    }
-    if (pBtn) {
-      pBtn.onclick = () => {
-        showToast('Direct SNMP interface counter re-poll executed for ' + l.srcInf + ' and ' + l.dstInf + '.');
-      };
-    }
+      </div>`;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-wan-link-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#wan-link-close-btn').onclick = () => { modal.style.display = 'none'; };
+      const ipslaBtn = modal.querySelector('#wan-link-ipsla-btn');
+      if (ipslaBtn) ipslaBtn.onclick = () => { showIpSlaVoipModal(l); };
+      const pBtn = modal.querySelector('#wan-link-poll-btn');
+      if (pBtn && dev) {
+        pBtn.onclick = async () => {
+          const res = await opmApi('/api/devices/' + encodeURIComponent(dev.id) + '/poll-now', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: dev.id }) });
+          showToast(opmApiMessage(res, res.ok ? 'Link interfaces re-polled.' : 'Re-poll failed.'), res.ok ? 'success' : 'error');
+          if (res.ok) load();
+        };
+      }
+    };
+    const load = async () => {
+      if (linkData && (linkData.srcInf || linkData.dstInf || linkData.inRate || linkData.outRate || linkData.rtt)) {
+        render(linkData, (state.devices && state.devices[0]) || null, null);
+        return;
+      }
+      const dev = (state.devices && state.devices[0]) || null;
+      if (!dev) { render(null, null, null); return; }
+      modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 660px; max-width: 95vw; overflow: hidden;">${opmModalLoading('Loading WAN link telemetry…')}</div>`;
+      modal.style.display = 'flex';
+      const res = await opmApi('/api/devices/' + encodeURIComponent(dev.id) + '/interfaces', { credentials: 'same-origin' });
+      if (!res.ok || !res.data) { render(null, dev, opmApiMessage(res, 'Could not load interface counters.')); return; }
+      const ifaces = Array.isArray(res.data.interfaces) ? res.data.interfaces : [];
+      if (!ifaces.length) { render(null, dev, null); return; }
+      const inf = ifaces[0];
+      render({
+        name: `${dev.name || '—'} <--> ${inf.name || '—'}`,
+        carrier: 'WAN Link',
+        src: `${dev.name || '—'} (${dev.ip || '—'})`,
+        dst: `${inf.name || '—'}`,
+        srcInf: inf.name || '—',
+        dstInf: inf.descr || '—',
+        speed: inf.speed || '—',
+        rtt: (dev.responseTime !== undefined && dev.responseTime !== null) ? (dev.responseTime + ' ms') : '—',
+        inRate: (inf.inTraffic !== undefined && inf.inTraffic !== null) ? (inf.inTraffic + ' Mbps') : '—',
+        outRate: (inf.outTraffic !== undefined && inf.outTraffic !== null) ? (inf.outTraffic + ' Mbps') : '—',
+        status: inf.oper || '—',
+        discards: (inf.errors !== undefined && inf.errors !== null) ? (inf.errors + ' errors') : null
+      }, dev, null);
+    };
+    load();
   }
 
 
@@ -2377,10 +2421,8 @@
     }
 
     const dev = (state.devices && state.devices[0]);
-    const monitoredTarget = dev ? `${dev.name} (${dev.ip})` : `Central NetFlow Listener (${window.location.hostname || '192.168.30.65'})`;
-    const records = dev ? [
-      { time: 'Just now', src: `${dev.ip}:443`, dst: '192.168.1.1:58210', proto: 'TCP (06)', app: 'HTTPS_SSL', bytes: '1.24 MB', pkts: '840', flags: 'ACK', nextHop: 'Direct', dscp: 'CS0 (Default)' }
-    ] : [];
+    const monitoredTarget = dev ? `${dev.name} (${dev.ip})` : `Central NetFlow Listener (${window.location.hostname || '—'})`;
+    const records = [];
 
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 1040px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
@@ -2433,7 +2475,7 @@
                 <tr>
                   <td colspan="9" style="padding: 40px 10px; text-align: center; color: #64748b;">
                     <div style="font-weight: 700; font-size: 13px; color: #1e293b; margin-bottom: 4px;">No Live NetFlow Packets Captured</div>
-                    <div>Configure NetFlow / IPFIX exporter on your routers/switches to UDP 2055 or 9996 on ${window.location.hostname || '192.168.30.65'}.</div>
+                    <div>Configure NetFlow / IPFIX exporter on your routers/switches to UDP 2055 or 9996 on ${window.location.hostname || '—'}.</div>
                   </td>
                 </tr>
               ` : records.map(r => `
@@ -2455,7 +2497,7 @@
 
         <!-- Footer -->
         <div style="padding: 10px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>ManageEngine NetFlow Collector Engine &bull; UDP Listener Rate: <strong>1,480 flows/sec</strong> &bull; Zero Drops</span>
+          <span>ManageEngine NetFlow Collector Engine &bull; No flow records ingested yet</span>
           <button id="nfa-close-btn-bottom" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 12px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close Stream</button>
         </div>
       </div>
@@ -2465,7 +2507,7 @@
     modal.querySelector('#close-nfa-records-btn').onclick = () => { modal.style.display = 'none'; };
     modal.querySelector('#nfa-close-btn-bottom').onclick = () => { modal.style.display = 'none'; };
     modal.querySelector('#nfa-export-pcap-btn').onclick = () => {
-      showToast('Exported NetFlow IPFIX packet capture (PCAP) archive.');
+      showToast('Nothing to export yet — no flow records captured.', 'error');
     };
   }
 
@@ -2483,7 +2525,7 @@
       document.body.appendChild(modal);
     }
 
-    const host = targetIp || (state.devices && state.devices[0]?.ip) || '127.0.0.1';
+    const host = targetIp || '';
     let currentOid = initialOid || '.1.3.6.1.2.1.1.1.0';
 
     const mibNodes = [
@@ -2517,7 +2559,7 @@
         <div style="padding: 10px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 12px;">
           <div style="display: flex; align-items: center; gap: 6px;">
             <span style="font-weight: 700; color: #475569;">Target Host:</span>
-            <input type="text" id="mib-host-input" value="${host}" style="padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; width: 130px; font-family: monospace;">
+            <input type="text" id="mib-host-input" value="${host}" placeholder="Enter device IP" style="padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; width: 130px; font-family: monospace;">
           </div>
           <div style="display: flex; align-items: center; gap: 6px;">
             <span style="font-weight: 700; color: #475569;">Port:</span>
@@ -2687,24 +2729,20 @@
       pduConsole.innerHTML = '<span style="color: #64748b;">// Console cleared.</span><br>';
     };
 
-    modal.querySelector('#mib-btn-get').onclick = () => {
+    modal.querySelector('#mib-btn-get').onclick = async () => {
       const targetOid = oidInput.value.trim();
+      const targetHost = (modal.querySelector('#mib-host-input').value || '').trim();
+      if (!targetHost) { showToast('Enter a target IP address first.', 'error'); return; }
+      if (!targetOid) { showToast('Enter an OID first.', 'error'); return; }
       const node = mibNodes.find(n => n.oid === targetOid) || { name: 'leafNode', type: 'OCTET STRING' };
-      const dev = (state.devices || []).find(d => d.ip === host) || (state.devices && state.devices[0]) || { name: 'Central-Managed-Node', vendor: 'Enterprise OS' };
-      
-      let val = dev.name;
-      if (node.name === 'sysDescr') val = `${dev.vendor || 'Enterprise'} ${dev.type || 'Managed Node'} Software, Version 15.2, OpManager Monitored Node`;
-      else if (node.name === 'sysObjectID') val = '.1.3.6.1.4.1.9.1.516';
-      else if (node.name === 'sysUpTime') val = '148 days, 12:44:19.82 (1283305982 timeticks)';
-      else if (node.name === 'sysContact') val = 'noc-support@manageengine.internal';
-      else if (node.name === 'sysLocation') val = 'Central Enterprise Core, Rack U12';
-      else if (node.name === 'ifNumber') val = '52 interfaces';
-      else if (node.name === 'ciscoEnvMonTemperatureStatusValue') val = '34 Celsius (Normal)';
-
-      logPdu(`Sent GetRequest-PDU (reqId ${Math.floor(Math.random()*90000+10000)}) to ${host}:161 for ${targetOid}`, '#94a3b8');
-      setTimeout(() => {
-        logPdu(`Received Response-PDU from ${host} (errStatus=0, errIndex=0):\n   ${targetOid} (${node.name}) = ${node.type}: "${val}"`, '#4ade80');
-      }, 250);
+      logPdu(`Sent GetRequest-PDU to ${targetHost}:161 for ${targetOid}`, '#94a3b8');
+      const res = await opmApi('/api/tools/snmp-query', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip: targetHost, oid: targetOid }) });
+      if (res.ok && res.data) {
+        logPdu(`Received Response-PDU from ${targetHost} (errStatus=0, errIndex=0): ${res.data.oid || targetOid} (${res.data.name || node.name}) = ${res.data.type || node.type}: "${res.data.value}"`, '#4ade80');
+      } else {
+        logPdu(`SNMP GET failed: ${opmApiMessage(res, 'No response from ' + targetHost)}`, '#f87171');
+        showToast(opmApiMessage(res, 'SNMP GET failed.'), 'error');
+      }
     };
 
     modal.querySelector('#mib-btn-getnext').onclick = () => {
@@ -2719,14 +2757,21 @@
       logPdu(`GetNextRequest-PDU on ${targetOid} resolved next OID: ${nextNode.oid} (${nextNode.name})`, '#fbbf24');
     };
 
-    modal.querySelector('#mib-btn-walk').onclick = () => {
-      logPdu(`Executing SNMP Walk tree on ${host} starting at .1.3.6.1.2.1.1...`, '#38bdf8');
-      mibNodes.slice(0, 6).forEach((n, i) => {
-        setTimeout(() => {
-          let val = n.name === 'sysDescr' ? 'Cisco IOS Software C2960' : (n.name === 'sysUpTime' ? '148 days' : 'Equinix DC4');
-          logPdu(`${n.oid} = ${n.type}: "${val}"`, '#4ade80');
-        }, (i + 1) * 150);
-      });
+    modal.querySelector('#mib-btn-walk').onclick = async () => {
+      const targetHost = (modal.querySelector('#mib-host-input').value || '').trim();
+      if (!targetHost) { showToast('Enter a target IP address first.', 'error'); return; }
+      const rootOid = (oidInput.value || '').trim() || '.1.3.6.1.2.1.1';
+      logPdu(`Executing SNMP Walk tree on ${targetHost} starting at ${rootOid}...`, '#38bdf8');
+      const res = await opmApi('/api/tools/snmp-walk', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip: targetHost, rootOid }) });
+      if (res.ok && res.data && Array.isArray(res.data.results)) {
+        if (res.data.results.length === 0) logPdu('Walk returned no varbinds for ' + rootOid + '.', '#fbbf24');
+        res.data.results.forEach(vb => {
+          logPdu(`${vb.oid} = ${vb.type || ''}: "${vb.value}"`, '#4ade80');
+        });
+      } else {
+        logPdu(`SNMP Walk failed: ${opmApiMessage(res, 'No response from ' + targetHost)}`, '#f87171');
+        showToast(opmApiMessage(res, 'SNMP Walk failed.'), 'error');
+      }
     };
   }
 
@@ -2741,107 +2786,79 @@
       modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    const srcName = (state.devices && state.devices[0]?.name) || 'Central Core Gateway';
-    const dstName = (state.devices && state.devices[1]?.name) || 'Branch Gateway';
-    const l = linkData || {
-      name: `${srcName} <--> ${dstName} Link`,
-      carrier: 'Enterprise IP SLA WAN',
-      src: srcName,
-      dst: dstName
-    };
-
+    const srcName = (linkData && linkData.src) || (state.devices && state.devices[0]?.name) || null;
+    const dstName = (linkData && linkData.dst) || (state.devices && state.devices[1]?.name) || null;
+    const linkName = (linkData && linkData.name) || (srcName && dstName ? `${srcName} <--> ${dstName} Link` : null);
+    if (!srcName || !dstName) {
+      modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 8px; width: 780px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
+          <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">ManageEngine Cisco IP SLA &bull; VoIP &amp; Jitter Telemetry</div>
+          <span id="close-ipsla-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
+        </div>
+        ${opmModalEmpty('No IP SLA data yet', 'Select a device first, then configure an IP SLA operation on the link to measure jitter, MOS and packet loss.')}
+        <div style="text-align: center; padding-bottom: 20px;"><button onclick="document.getElementById('opm-ipsla-voip-modal').style.display='none';" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button></div>
+      </div>`;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-ipsla-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      return;
+    }
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 780px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
-        <!-- Header -->
         <div style="padding: 16px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <div style="width: 32px; height: 32px; border-radius: 4px; background: #10b981; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 800;">VoIP</div>
             <div>
               <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">ManageEngine Cisco IP SLA &bull; VoIP &amp; Jitter Telemetry</div>
-              <div style="font-size: 11px; color: #94a3b8;">${l.name} &bull; Operation ID: <strong>101 (VoIP UDP Jitter)</strong></div>
+              <div style="font-size: 11px; color: #94a3b8;">${opmEsc(linkName)}</div>
             </div>
           </div>
           <span id="close-ipsla-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
         <div style="padding: 22px;">
-          <!-- Telemetry KPI Strip -->
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
-            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 12px; text-align: center;">
-              <div style="font-size: 11px; font-weight: 700; color: #166534; text-transform: uppercase;">VoIP MOS Score</div>
-              <div style="font-size: 26px; font-weight: 900; color: #15803d; margin: 4px 0;">4.38</div>
-              <span style="font-size: 10px; background: #22c55e; color: #fff; padding: 1px 6px; border-radius: 10px; font-weight: 700;">EXCELLENT (ITU-T)</span>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; text-align: center;">
+              <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">VoIP MOS Score</div>
+              <div style="font-size: 26px; font-weight: 900; color: #334155; margin: 4px 0;">—</div>
+              <span style="font-size: 10px; color: #64748b;">No measurement yet</span>
             </div>
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; text-align: center;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Round Trip Time</div>
-              <div style="font-size: 26px; font-weight: 900; color: #0284c7; margin: 4px 0;">14.2<span style="font-size: 13px;">ms</span></div>
-              <span style="font-size: 10px; color: #64748b;">SLA Threshold: &lt; 50ms</span>
+              <div style="font-size: 26px; font-weight: 900; color: #334155; margin: 4px 0;">—</div>
+              <span style="font-size: 10px; color: #64748b;">No measurement yet</span>
             </div>
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; text-align: center;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Average Jitter</div>
-              <div style="font-size: 26px; font-weight: 900; color: #334155; margin: 4px 0;">1.2<span style="font-size: 13px;">ms</span></div>
-              <span style="font-size: 10px; color: #16a34a; font-weight: 600;">+1.2ms / -0.8ms</span>
+              <div style="font-size: 26px; font-weight: 900; color: #334155; margin: 4px 0;">—</div>
+              <span style="font-size: 10px; color: #64748b;">No measurement yet</span>
             </div>
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; text-align: center;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Packet Loss</div>
-              <div style="font-size: 26px; font-weight: 900; color: #16a34a; margin: 4px 0;">0.00<span style="font-size: 13px;">%</span></div>
-              <span style="font-size: 10px; color: #16a34a; font-weight: 600;">0 / 1,000 pkts</span>
+              <div style="font-size: 26px; font-weight: 900; color: #334155; margin: 4px 0;">—</div>
+              <span style="font-size: 10px; color: #64748b;">No measurement yet</span>
             </div>
           </div>
-
-          <!-- Codec & Technical Details -->
           <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 20px; font-size: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <div>
-              <div style="color: #64748b;">Synthesized Codec: <strong style="color: #0f172a;">G.711u (64 Kbps)</strong></div>
-              <div style="color: #64748b; margin-top: 4px;">Packetization Interval: <strong style="color: #0f172a;">20 ms (160 bytes payload)</strong></div>
-              <div style="color: #64748b; margin-top: 4px;">Calculated R-Factor: <strong style="color: #16a34a;">91.4 / 100</strong></div>
+              <div style="color: #64748b;">Source: <strong style="color: #0f172a;">${opmEsc(srcName)}</strong></div>
+              <div style="color: #64748b; margin-top: 4px;">Destination: <strong style="color: #0f172a;">${opmEsc(dstName)}</strong></div>
             </div>
             <div>
-              <div style="color: #64748b;">Source Responder: <strong style="color: #0f172a;">${l.src} (Cisco IOS-XE)</strong></div>
-              <div style="color: #64748b; margin-top: 4px;">Destination Target: <strong style="color: #0f172a;">${l.dst} (UDP 1967)</strong></div>
-              <div style="color: #64748b; margin-top: 4px;">IP SLA Compliance: <strong style="color: #16a34a;">100% (No Breaches in 24h)</strong></div>
+              <div style="color: #64748b;">Codec: <strong style="color: #0f172a;">—</strong></div>
+              <div style="color: #64748b; margin-top: 4px;">IP SLA Compliance: <strong style="color: #0f172a;">—</strong></div>
             </div>
           </div>
-
-          <!-- Simulated Jitter Distribution Histogram (SVG) -->
-          <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; margin-bottom: 16px;">
-            <div style="font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 8px; display: flex; justify-content: space-between;">
-              <span>RTP Packet Jitter Distribution (Last 1,000 Synthetic Samples)</span>
-              <span style="color: #10b981; font-weight: 700;">Within +/- 3ms Nominal Boundary</span>
-            </div>
-            <svg width="100%" height="60" viewBox="0 0 700 60" style="overflow: visible;">
-              <line x1="0" y1="50" x2="700" y2="50" stroke="#cbd5e1" stroke-width="1" />
-              <!-- Bars -->
-              <rect x="50" y="30" width="35" height="20" fill="#38bdf8" rx="2" />
-              <rect x="110" y="20" width="35" height="30" fill="#38bdf8" rx="2" />
-              <rect x="170" y="10" width="35" height="40" fill="#22c55e" rx="2" />
-              <rect x="230" y="5" width="35" height="45" fill="#22c55e" rx="2" />
-              <rect x="290" y="8" width="35" height="42" fill="#22c55e" rx="2" />
-              <rect x="350" y="15" width="35" height="35" fill="#22c55e" rx="2" />
-              <rect x="410" y="22" width="35" height="28" fill="#38bdf8" rx="2" />
-              <rect x="470" y="35" width="35" height="15" fill="#38bdf8" rx="2" />
-              <rect x="530" y="42" width="35" height="8" fill="#94a3b8" rx="2" />
-              <rect x="590" y="46" width="35" height="4" fill="#94a3b8" rx="2" />
-              <text x="247" y="58" font-size="9" fill="#64748b" text-anchor="middle">1.2ms peak</text>
-            </svg>
-          </div>
-
-          <!-- Actions -->
+          ${opmModalEmpty('No IP SLA measurements yet', 'Configure an IP SLA operation on this link first — jitter samples, MOS and packet loss appear here once the operation reports.')}
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <button id="ipsla-test-btn" style="background: #10b981; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ Trigger On-Demand 1,000 Pkt Test</button>
+            <button id="ipsla-test-btn" disabled title="IP SLA test is not available yet — no IP SLA source is configured." style="background: #94a3b8; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: not-allowed;">⚡ Trigger On-Demand 1,000 Pkt Test</button>
             <button id="close-ipsla-bottom-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
       </div>
     `;
-
     modal.style.display = 'flex';
     modal.querySelector('#close-ipsla-modal-btn').onclick = () => { modal.style.display = 'none'; };
     modal.querySelector('#close-ipsla-bottom-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#ipsla-test-btn').onclick = () => {
-      showToast('Executed 1,000 UDP packet Cisco IP SLA synthetic jitter poll on ' + l.src + '. All SLAs verified healthy.');
-    };
   }
 
   // -------------------------------------------------------------
@@ -2856,7 +2873,12 @@
       document.body.appendChild(modal);
     }
 
-    const dev = targetDev || (state.devices && state.devices[0]) || { name: 'Central-Host', ip: '127.0.0.1' };
+    const dev = targetDev || (state.devices && state.devices[0]) || null;
+    if (!dev) {
+      modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">${opmModalEmpty('Select a device first', 'Downtime scheduling needs a target device — add a device first, then schedule its maintenance window.')}<div style="text-align: center; padding-bottom: 20px;"><button onclick="document.getElementById('opm-schedule-downtime-modal').style.display='none';" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button></div></div>`;
+      modal.style.display = 'flex';
+      return;
+    }
 
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
@@ -2877,9 +2899,7 @@
           <div style="margin-bottom: 14px;">
             <label style="font-weight: 700; color: #334155; display: block; margin-bottom: 5px;">Target Device(s) / Business View:</label>
             <select id="downtime-dev-select" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-              ${(state.devices || []).map(d => `<option value="${d.id}" ${d.name === dev.name ? 'selected' : ''}>${d.name} (${d.ip}) - ${d.type}</option>`).join('')}
-              <option value="all-ny">All Devices in Probe [New York Central Probe]</option>
-              <option value="all-core">Business View [Global WAN Core Infrastructure]</option>
+              ${(state.devices || []).map(d => `<option value="${d.id}" ${d.name === dev.name ? 'selected' : ''}>${d.name} (${d.ip}) - ${d.type || '—'}</option>`).join('')}
             </select>
           </div>
 
@@ -2896,7 +2916,7 @@
             </div>
             <div>
               <label style="font-weight: 700; color: #334155; display: block; margin-bottom: 5px;">Change Reference / Ticket #:</label>
-              <input type="text" id="downtime-chg-ref" value="CHG-2026-9812 (Core Switch Patching)" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+              <input type="text" id="downtime-chg-ref" placeholder="e.g. CHG-2026-9812" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
             </div>
           </div>
 
@@ -2924,13 +2944,16 @@
           <!-- Reason -->
           <div style="margin-bottom: 16px;">
             <label style="font-weight: 700; color: #334155; display: block; margin-bottom: 5px;">Operational Reason:</label>
-            <textarea id="downtime-reason-input" style="width: 100%; height: 50px; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; font-family: sans-serif; box-sizing: border-box;">Scheduled Cisco IOS-XE software patching and redundant power-supply failover verification.</textarea>
+            <textarea id="downtime-reason-input" placeholder="e.g. Scheduled software patching and power-supply failover verification." style="width: 100%; height: 50px; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; font-family: sans-serif; box-sizing: border-box;"></textarea>
           </div>
 
           <!-- Buttons -->
-          <div style="display: flex; justify-content: flex-end; gap: 10px;">
-            <button id="cancel-downtime-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-weight: 600; cursor: pointer;">Cancel</button>
-            <button id="save-downtime-btn" style="background: #eab308; color: #0f172a; border: none; padding: 7px 18px; border-radius: 4px; font-weight: 800; cursor: pointer;">🛡️ Activate Downtime Window</button>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 11px; color: #64748b;">Downtime scheduling is not available yet — no downtime endpoint is configured.</div>
+            <div style="display: flex; gap: 10px;">
+              <button id="cancel-downtime-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-weight: 600; cursor: pointer;">Cancel</button>
+              <button id="save-downtime-btn" disabled title="Downtime scheduling is not available yet — no downtime endpoint is configured." style="background: #94a3b8; color: #fff; border: none; padding: 7px 18px; border-radius: 4px; font-weight: 800; cursor: not-allowed;">🛡️ Activate Downtime Window</button>
+            </div>
           </div>
         </div>
       </div>
@@ -2940,9 +2963,7 @@
     modal.querySelector('#close-downtime-modal-btn').onclick = () => { modal.style.display = 'none'; };
     modal.querySelector('#cancel-downtime-btn').onclick = () => { modal.style.display = 'none'; };
     modal.querySelector('#save-downtime-btn').onclick = () => {
-      const selectedId = modal.querySelector('#downtime-dev-select').value;
-      modal.style.display = 'none';
-      showToast('Scheduled Downtime active for selected target. Alarms suppressed for 2 hours.');
+      showToast('Downtime scheduling is not available yet — no downtime endpoint is configured. No downtime was scheduled.', 'error');
     };
   }
 
@@ -2978,7 +2999,7 @@
         <div style="padding: 10px 22px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; gap: 16px; align-items: center; font-size: 12px;">
           <div style="display: flex; align-items: center; gap: 6px; flex: 1;">
             <span style="font-weight: 700; color: #334155;">Workflow Name:</span>
-            <input type="text" id="wf-name-input" value="Core Switch Auto-Remediation & Failover Playbook" style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-weight: 600; color: #0f172a;">
+            <input type="text" id="wf-name-input" placeholder="e.g. Core Switch Auto-Remediation" style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-weight: 600; color: #0f172a;">
           </div>
           <div style="display: flex; align-items: center; gap: 6px;">
             <span style="font-weight: 700; color: #334155;">Trigger Criteria:</span>
@@ -2992,8 +3013,7 @@
             <span style="font-weight: 700; color: #334155;">Target Scope:</span>
             <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
               <option value="category">Category: Routers &amp; Core Switches</option>
-              <option value="probe">Probe: New York Central</option>
-              <option value="all">All Enterprise Devices (16)</option>
+              <option value="all">All Enterprise Devices</option>
             </select>
           </div>
         </div>
@@ -3125,7 +3145,7 @@
         <!-- Footer -->
         <div style="padding: 12px 22px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
           <button id="wf-test-run-btn" style="background: #0284c7; color: #ffffff; border: none; padding: 8px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-            ▶ Test Run Playbook on ${(state.devices && state.devices[0]?.name) || 'Managed-Node'}
+            ▶ Test Run Playbook
           </button>
           <div style="display: flex; gap: 10px;">
             <button id="wf-cancel-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Cancel</button>
@@ -3140,27 +3160,32 @@
     modal.querySelector('#wf-cancel-btn').onclick = () => { modal.style.display = 'none'; };
     
     const consoleBox = modal.querySelector('#wf-test-output-console');
-    modal.querySelector('#wf-test-run-btn').onclick = () => {
-      const targetDev = (state.devices && state.devices[0]) || { name: 'Managed-Node', ip: '127.0.0.1' };
+    modal.querySelector('#wf-test-run-btn').onclick = async () => {
       consoleBox.style.display = 'block';
-      consoleBox.innerHTML = `<span style="color: #94a3b8;">[14:26:01] Initializing simulated workflow execution against ${targetDev.name} (${targetDev.ip})...</span><br>`;
-      setTimeout(() => {
-        consoleBox.innerHTML += '<span style="color: #4ade80;">[14:26:02] Step 1: Evaluating trigger criteria... MATCH (Severity Critical).</span><br>';
-      }, 300);
-      setTimeout(() => {
-        consoleBox.innerHTML += '<span style="color: #4ade80;">[14:26:03] Step 2: Testing ICMP reachability... 3/3 packets answered (0.8ms RTT) -> Branch YES.</span><br>';
-      }, 600);
-      setTimeout(() => {
-        consoleBox.innerHTML += '<span style="color: #38bdf8;">[14:26:04] Step 3: Executing SSH CLI script ("clear ip arp-cache")... SUCCESS (exit code 0).</span><br>';
-      }, 900);
-      setTimeout(() => {
-        consoleBox.innerHTML += '<span style="color: #22c55e; font-weight: 700;">[14:26:05] Step 4: Alarm acknowledged and annotated. Playbook execution PASSED in 1.4s.</span>';
-      }, 1200);
+      consoleBox.innerHTML = '<span style="color: #94a3b8;">Loading workflows…</span><br>';
+      const list = await opmApi('/api/workflows/list', { credentials: 'same-origin' });
+      const workflows = (list.ok && list.data && Array.isArray(list.data.workflows)) ? list.data.workflows : [];
+      if (!workflows.length) {
+        consoleBox.innerHTML = '<span style="color: #fbbf24;">No workflows configured yet — create one first.</span>';
+        return;
+      }
+      const wf = workflows[0];
+      consoleBox.innerHTML = `<span style="color: #94a3b8;">Executing workflow "${opmEsc(wf.name)}" (${opmEsc(wf.id)})…</span><br>`;
+      const res = await opmApi('/api/workflows/execute', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ workflowId: wf.id }) });
+      if (res.ok && res.data) {
+        const logs = Array.isArray(res.data.logs) ? res.data.logs : [res.data.message || 'Workflow executed.'];
+        consoleBox.innerHTML = logs.map(l => `<span style="color: #4ade80;">${opmEsc(l)}</span>`).join('<br>');
+        showToast(opmApiMessage(res, 'Workflow executed.'));
+      } else {
+        consoleBox.innerHTML = `<span style="color: #f87171;">Execution failed: ${opmEsc(opmApiMessage(res, 'Workflow execution failed.'))}</span>`;
+        showToast(opmApiMessage(res, 'Workflow execution failed.'), 'error');
+      }
     };
 
     modal.querySelector('#wf-save-btn').onclick = () => {
-      modal.style.display = 'none';
-      showToast('Workflow Playbook "Core Switch Auto-Remediation" deployed and active across all Core Switches.');
+      // No workflow-create endpoint exists on the server yet: report that
+      // honestly instead of claiming the playbook was deployed.
+      showToast('Workflow saving is not available yet — no workflow was created.', 'error');
     };
   }
 
@@ -3168,148 +3193,82 @@
   // MODAL: OPUTILS 48-PORT SWITCH PORT MAPPER (SPM) & ROGUE MAC
   // -------------------------------------------------------------
   function showSwitchPortMapperModal(switchDev) {
-    let modal = document.getElementById('opm-spm-modal');
+    let modal = document.getElementById('opm-port-mapper-modal');
     if (!modal) {
       modal = document.createElement('div');
-      modal.id = 'opm-spm-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.75); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); font-family: Roboto, -apple-system, sans-serif;';
+      modal.id = 'opm-port-mapper-modal';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    const switchCandidate = switchDev || (state.devices || []).find(d => (d.category || '').toLowerCase().includes('switch')) || (state.devices && state.devices[0]);
-
-    if (!switchCandidate) {
+    const dev = (switchDev && typeof switchDev === 'object') ? switchDev
+      : (switchDev ? (state.devices || []).find(d => d.id == switchDev) : null)
+      || (state.devices && state.devices[0]) || null;
+    let ports = [];
+    const render = (error) => {
+      const name = dev ? (dev.name || '—') : '—';
+      const ip = dev ? (dev.ip || '—') : '—';
       modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); border: 1px solid #cbd5e1;">
-          <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
-            <div style="font-size: 15px; font-weight: 800;">ManageEngine OpUtils &bull; Switch Port Mapper (SPM)</div>
-            <button id="close-spm-modal-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer;">✕</button>
+      <div style="background: #ffffff; border-radius: 8px; width: 980px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Switch Port Mapper</div>
+            <div style="font-size: 11px; color: #64748b;">${opmEsc(name)} (${opmEsc(ip)}) &bull; ${ports.length} port(s) discovered via SNMP ifTable</div>
           </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Switches Discovered</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add network switches with SNMP enabled to map physical ports, MAC addresses, and connected IP endpoints.</div>
-            <button onclick="document.getElementById('opm-spm-modal').style.display='none'; showAddDeviceModal();" style="background: #0070e0; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Switch</button>
-          </div>
+          <span id="close-port-mapper-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-spm-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      return;
-    }
-
-    const dev = {
-      name: switchCandidate.name,
-      ip: switchCandidate.ip,
-      model: switchCandidate.type || 'Enterprise Managed Switch'
-    };
-
-    const ports = [];
-    for (let i = 1; i <= 48; i++) {
-      const isUp = i <= 38;
-      const portName = 'GigabitEthernet0/' + i;
-      const speed = i > 44 ? '10 Gbps Full' : '1000 Mbps Full';
-      const mac = isUp ? ('00:1A:2B:' + (i < 10 ? '0' + i : i) + ':4C:' + (99 - i)) : '-';
-      const ip = isUp ? ('192.168.1.' + (100 + i)) : '-';
-      const hostname = isUp ? (i % 3 === 0 ? 'srv-db' + i : (i % 2 === 0 ? 'workstation-' + i : 'ap-wifi-' + i)) : '-';
-      const vlan = i <= 24 ? 'VLAN 10 (Users)' : (i <= 44 ? 'VLAN 20 (Servers)' : 'VLAN 99 (Core Trunk)');
-      const vendor = isUp ? (i % 4 === 0 ? 'Dell Inc.' : (i % 3 === 0 ? 'Intel Corp.' : (i % 2 === 0 ? 'Apple Inc.' : 'Cisco Systems'))) : '-';
-      const status = isUp ? 'Up' : (i === 42 ? 'Admin Disabled' : 'Down');
-      ports.push({ index: i, name: portName, status, speed, mac, ip, hostname, vlan, vendor });
-    }
-
-    modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 8px; width: 1160px; max-width: 96vw; height: 88vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 32px; height: 32px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">SPM</div>
-            <div>
-              <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">ManageEngine OpUtils &bull; Switch Port Mapper (SPM)</div>
-              <div style="font-size: 11px; color: #94a3b8;">Switch: <strong style="color: #38bdf8;">${dev.name} (${dev.ip})</strong> &bull; Model: <strong>${dev.model}</strong> &bull; Total Ports: <strong>48</strong></div>
-            </div>
-          </div>
-          <button id="close-spm-modal-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;" title="Close">✕</button>
-        </div>
-
-        <!-- Port KPI Bar -->
-        <div style="padding: 10px 22px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
-          <div style="display: flex; gap: 14px; align-items: center;">
-            <span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 3px 10px; border-radius: 12px;">● 38 Connected (Up)</span>
-            <span style="background: #f1f5f9; color: #475569; font-weight: 700; padding: 3px 10px; border-radius: 12px;">○ 10 Available (Free)</span>
-            <span style="background: #fee2e2; color: #991b1b; font-weight: 700; padding: 3px 10px; border-radius: 12px;">0 Rogue Devices</span>
-            <span style="color: #64748b;">SNMP ifTable Polling Interval: <strong>5 Mins</strong></span>
-          </div>
-          <div style="display: flex; gap: 8px;">
-            <button id="spm-rescan-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">⚡ Re-Scan Ports via SNMP</button>
-            <button id="spm-export-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Export CSV</button>
-          </div>
-        </div>
-
-        <!-- 48-Port Table -->
-        <div style="flex: 1; overflow-y: auto; padding: 14px 22px;">
+        <div style="padding: 20px; overflow-y: auto;">
+          ${error ? opmModalError(error) : ''}
+          ${!error && !dev ? opmModalEmpty('Select a device first', 'Add a switch to map its ports — port data comes from a live SNMP ifTable walk.') : ''}
+          ${!error && dev && !ports.length ? opmModalEmpty('No switch ports discovered yet', 'Run a switch-port discovery (ifTable walk) on this switch — ports appear here once they are discovered.') : ''}
+          ${ports.length ? `
           <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-            <thead>
-              <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                <th style="padding: 8px 10px; width: 40px;">#</th>
-                <th style="padding: 8px 10px;">Port Name</th>
-                <th style="padding: 8px 10px;">Status</th>
-                <th style="padding: 8px 10px;">Speed / Duplex</th>
-                <th style="padding: 8px 10px;">Connected MAC</th>
-                <th style="padding: 8px 10px;">Bound IP Address</th>
-                <th style="padding: 8px 10px;">DNS Hostname</th>
-                <th style="padding: 8px 10px;">VLAN</th>
-                <th style="padding: 8px 10px;">NIC Vendor</th>
-                <th style="padding: 8px 10px; text-align: right;">Action</th>
-              </tr>
-            </thead>
+            <thead><tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #475569; text-align: left;">
+              <th style="padding: 8px 10px;">Port</th><th style="padding: 8px 10px;">Alias</th><th style="padding: 8px 10px;">Admin</th><th style="padding: 8px 10px;">Oper</th><th style="padding: 8px 10px;">Speed</th><th style="padding: 8px 10px;">VLAN</th><th style="padding: 8px 10px;">MAC</th><th style="padding: 8px 10px;">IP</th>
+            </tr></thead>
             <tbody>
-              ${ports.map(p => `
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 7px 10px; font-family: monospace; color: #64748b;">${p.index}</td>
-                  <td style="padding: 7px 10px; font-weight: 700; color: #0284c7; font-family: monospace;">${p.name}</td>
-                  <td style="padding: 7px 10px;">
-                    <span style="background: ${p.status === 'Up' ? '#dcfce7' : (p.status.includes('Admin') ? '#fee2e2' : '#f1f5f9')}; color: ${p.status === 'Up' ? '#166534' : (p.status.includes('Admin') ? '#991b1b' : '#64748b')}; font-weight: 700; padding: 2px 6px; border-radius: 3px;">
-                      ${p.status}
-                    </span>
-                  </td>
-                  <td style="padding: 7px 10px; color: #334155;">${p.speed}</td>
-                  <td style="padding: 7px 10px; font-family: monospace; font-weight: 600; color: #0f172a;">${p.mac}</td>
-                  <td style="padding: 7px 10px; font-family: monospace; color: #0284c7;">${p.ip}</td>
-                  <td style="padding: 7px 10px; font-weight: 600; color: #475569;">${p.hostname}</td>
-                  <td style="padding: 7px 10px;"><span style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1px 5px; border-radius: 2px;">${p.vlan}</span></td>
-                  <td style="padding: 7px 10px; color: #64748b;">${p.vendor}</td>
-                  <td style="padding: 7px 10px; text-align: right;">
-                    <button class="spm-shut-btn" data-port="${p.name}" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #dc2626; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; cursor: pointer;">Shut</button>
-                  </td>
-                </tr>
-              `).join('')}
+              ${ports.map(p => `<tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 10px; font-weight: 700; color: #0070e0;">${opmEsc(p.port || '—')}</td>
+                <td style="padding: 8px 10px;">${opmEsc(p.alias || '—')}</td>
+                <td style="padding: 8px 10px;">${opmEsc(p.adminStatus || '—')}</td>
+                <td style="padding: 8px 10px; font-weight: 700; color: ${String(p.operStatus || '').toLowerCase() === 'up' ? '#16a34a' : '#dc2626'};">${opmEsc(p.operStatus || '—')}</td>
+                <td style="padding: 8px 10px;">${opmEsc(p.speed || '—')}</td>
+                <td style="padding: 8px 10px;">${opmEsc(p.vlan === null || p.vlan === undefined ? '—' : String(p.vlan))}</td>
+                <td style="padding: 8px 10px; font-family: monospace;">${opmEsc(p.mac || '—')}</td>
+                <td style="padding: 8px 10px; font-family: monospace;">${opmEsc(p.ip || '—')}</td>
+              </tr>`).join('')}
             </tbody>
-          </table>
+          </table>` : ''}
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+            <button id="port-mapper-refresh-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Refresh ports</button>
+            <button id="port-mapper-export-btn" ${ports.length ? '' : 'disabled title="Nothing to export yet."'} style="background: ${ports.length ? '#0070e0' : '#94a3b8'}; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: ${ports.length ? 'pointer' : 'not-allowed'};">Export CSV</button>
+            <button id="port-mapper-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
+          </div>
         </div>
-
-        <!-- Footer -->
-        <div style="padding: 10px 22px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>ManageEngine SPM Engine &bull; MAC IP Address Mapping Engine &bull; Zero Rogue Devices Detected</span>
-          <button id="spm-close-btn-bottom" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close SPM</button>
-        </div>
-      </div>
-    `;
-
-    modal.style.display = 'flex';
-    modal.querySelector('#close-spm-modal-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#spm-close-btn-bottom').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#spm-rescan-btn').onclick = () => {
-      showToast('SNMP ifTable / ipNetToMediaTable walk initiated on ' + dev.name + '. Refreshing 48 switch ports.');
-    };
-    modal.querySelector('#spm-export-btn').onclick = () => {
-      showToast('Exported 48-port switch port map CSV.');
-    };
-    modal.querySelectorAll('.spm-shut-btn').forEach(btn => {
-      btn.onclick = () => {
-        const port = btn.getAttribute('data-port');
-        showToast('SSH Command dispatched to ' + dev.name + ': interface ' + port + ' -> shutdown.');
+      </div>`;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-port-mapper-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#port-mapper-close-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#port-mapper-refresh-btn').onclick = () => { load(); };
+      modal.querySelector('#port-mapper-export-btn').onclick = () => {
+        if (!ports.length) { showToast('Nothing to export yet — no ports discovered.', 'error'); return; }
+        const csv = 'port,alias,admin,oper,speed,vlan,mac,ip\n' + ports.map(p => [p.port, p.alias, p.adminStatus, p.operStatus, p.speed, p.vlan, p.mac, p.ip].map(v => `"${String(v === null || v === undefined ? '' : v).replace(/"/g, '""')}"`).join(',')).join('\n');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        a.download = 'switch-port-map.csv';
+        a.click();
+        showToast(`Exported ${ports.length} switch port(s) as CSV.`);
       };
-    });
+    };
+    const load = async () => {
+      if (!dev) { render(null); return; }
+      modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 980px; max-width: 95vw; overflow: hidden;">${opmModalLoading('Loading switch ports…')}</div>`;
+      modal.style.display = 'flex';
+      const res = await opmApi('/api/tools/switch-ports?deviceId=' + encodeURIComponent(dev.id), { credentials: 'same-origin' });
+      if (!res.ok || !res.data) { ports = []; render(opmApiMessage(res, 'Could not load switch ports.')); return; }
+      ports = Array.isArray(res.data.ports) ? res.data.ports : [];
+      render(null);
+    };
+    load();
   }
 
   // -------------------------------------------------------------
@@ -3320,131 +3279,66 @@
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-storage-array-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); font-family: Roboto, -apple-system, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    const storageDev = targetArray || (state.devices || []).find(d => ['storage', 'san', 'nas'].some(k => (d.category || '').toLowerCase().includes(k)));
-
-    if (!storageDev) {
+    const dev = (targetArray && typeof targetArray === 'object') ? targetArray
+      : (targetArray ? (state.devices || []).find(d => d.id == targetArray) : null)
+      || (state.devices && state.devices[0]) || null;
+    const render = (hw, error) => {
+      const name = (hw && (hw.deviceName || hw.model)) || (dev && dev.name) || '—';
+      const ip = (hw && hw.ip) || (dev && dev.ip) || '—';
       modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
-            <div style="font-size: 15px; font-weight: 800; color: #fff;">ManageEngine OpManager Central &bull; SAN Storage &amp; LUN Telemetry</div>
-            <span id="close-storage-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer;" title="Close">✕</span>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Storage Arrays Discovered</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add SAN/NAS arrays, SMI-S providers, or Fiber Channel switches to monitor LUN latency, IOPS, and pool capacity.</div>
-            <button onclick="document.getElementById('opm-storage-array-modal').style.display='none'; showAddDeviceModal();" style="background: #0070e0; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Storage Device</button>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-storage-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      return;
-    }
-
-    const arr = {
-      name: storageDev.name,
-      ip: storageDev.ip,
-      controllers: 'Active-Active Dual Node HA (Node-01 / Node-02)',
-      protocol: 'FCP & NVMe-oF'
-    };
-
-    modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 8px; width: 860px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="padding: 16px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
           <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 32px; height: 32px; border-radius: 4px; background: #0284c7; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 15px;">💾</div>
+            <div style="width: 28px; height: 28px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">SAN</div>
             <div>
-              <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">ManageEngine OpManager Central &bull; SAN Storage &amp; LUN Telemetry</div>
-              <div style="font-size: 11px; color: #94a3b8;">${arr.name} (${arr.ip}) &bull; ${arr.controllers}</div>
+              <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Storage Array — ${opmEsc(name)}</div>
+              <div style="font-size: 11px; color: #64748b;">${opmEsc(ip)} &bull; Hardware inventory reported by the device over SNMP</div>
             </div>
           </div>
           <span id="close-storage-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <div style="padding: 22px; font-size: 12px;">
-          <!-- Dual Controller Telemetry -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px;">
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
-              <div style="font-size: 11px; font-weight: 800; color: #16a34a; text-transform: uppercase;">Storage Processor Node-01 (Primary)</div>
-              <div style="font-size: 18px; font-weight: 900; color: #0f172a; margin: 4px 0;">12% CPU &bull; 0.4ms RTT</div>
-              <div style="font-size: 11px; color: #64748b;">Read Cache Hit Rate: <strong>98.4%</strong> &bull; IOPS: <strong>21,800</strong></div>
-            </div>
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
-              <div style="font-size: 11px; font-weight: 800; color: #16a34a; text-transform: uppercase;">Storage Processor Node-02 (HA Partner)</div>
-              <div style="font-size: 18px; font-weight: 900; color: #0f172a; margin: 4px 0;">14% CPU &bull; 0.4ms RTT</div>
-              <div style="font-size: 11px; color: #64748b;">NVRAM Mirrored Log: <strong>Synchronized</strong> &bull; IOPS: <strong>20,700</strong></div>
-            </div>
+        <div style="padding: 20px;">
+          ${error ? opmModalError(error) : ''}
+          ${!error && !hw ? opmModalEmpty('No storage data reported yet', 'Poll the device or check its SNMP credentials — capacity, IOPS and volume data appear here once the device reports them.') : ''}
+          ${hw ? `
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; font-size: 12px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;"><div style="font-size: 11px; font-weight: 700; color: #64748b;">MODEL</div><div style="font-weight: 700; color: #0f172a; margin-top: 4px;">${opmEsc(hw.model || '—')}</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;"><div style="font-size: 11px; font-weight: 700; color: #64748b;">SERIAL NUMBER</div><div style="font-weight: 700; color: #0f172a; margin-top: 4px; font-family: monospace;">${opmEsc(hw.serialNumber || '—')}</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;"><div style="font-size: 11px; font-weight: 700; color: #64748b;">TOTAL RAM</div><div style="font-weight: 700; color: #0f172a; margin-top: 4px;">${opmEsc(hw.totalRam || '—')}</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;"><div style="font-size: 11px; font-weight: 700; color: #64748b;">FLASH MEMORY</div><div style="font-weight: 700; color: #0f172a; margin-top: 4px;">${opmEsc(hw.flashMemory || '—')}</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;"><div style="font-size: 11px; font-weight: 700; color: #64748b;">CACHE HIT RATE</div><div style="font-weight: 700; color: #0f172a; margin-top: 4px;">—</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;"><div style="font-size: 11px; font-weight: 700; color: #64748b;">IOPS</div><div style="font-weight: 700; color: #0f172a; margin-top: 4px;">—</div></div>
           </div>
-
-          <!-- LUNs Table -->
-          <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; margin-bottom: 16px;">
-            <div style="padding: 10px 14px; background: #fafbfc; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #0f172a;">
-              Allocated Storage LUNs &amp; Datastores
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                  <th style="padding: 8px 10px;">LUN Name</th>
-                  <th style="padding: 8px 10px;">Datastore Target</th>
-                  <th style="padding: 8px 10px;">Capacity</th>
-                  <th style="padding: 8px 10px;">IOPS</th>
-                  <th style="padding: 8px 10px;">Read Latency</th>
-                  <th style="padding: 8px 10px;">Write Latency</th>
-                  <th style="padding: 8px 10px;">Queue Depth</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 8px 10px; font-weight: 700; color: #0284c7;">LUN_VMWARE_DS01</td>
-                  <td style="padding: 8px 10px; color: #334155;">Virtualization Cluster (Datastore 01)</td>
-                  <td style="padding: 8px 10px; font-family: monospace;">8.4 TB / 12 TB (70%)</td>
-                  <td style="padding: 8px 10px; font-weight: 700; color: #16a34a;">14,800</td>
-                  <td style="padding: 8px 10px; font-weight: 600;">0.6 ms</td>
-                  <td style="padding: 8px 10px; font-weight: 600;">0.9 ms</td>
-                  <td style="padding: 8px 10px; color: #64748b;">4.2</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 8px 10px; font-weight: 700; color: #0284c7;">LUN_ORACLE_REDO</td>
-                  <td style="padding: 8px 10px; color: #334155;">Oracle RAC Production</td>
-                  <td style="padding: 8px 10px; font-family: monospace;">2.1 TB / 4 TB (52%)</td>
-                  <td style="padding: 8px 10px; font-weight: 700; color: #16a34a;">22,400</td>
-                  <td style="padding: 8px 10px; font-weight: 600;">0.3 ms</td>
-                  <td style="padding: 8px 10px; font-weight: 600;">0.5 ms</td>
-                  <td style="padding: 8px 10px; color: #64748b;">2.1</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 10px; font-weight: 700; color: #0284c7;">LUN_POSTGRES_DATA</td>
-                  <td style="padding: 8px 10px; color: #334155;">PostgreSQL High-Availability</td>
-                  <td style="padding: 8px 10px; font-family: monospace;">6.8 TB / 10 TB (68%)</td>
-                  <td style="padding: 8px 10px; font-weight: 700; color: #16a34a;">12,100</td>
-                  <td style="padding: 8px 10px; font-weight: 600;">0.7 ms</td>
-                  <td style="padding: 8px 10px; font-weight: 600;">1.1 ms</td>
-                  <td style="padding: 8px 10px; color: #64748b;">3.8</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Actions -->
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <button id="storage-repoll-btn" style="background: #0284c7; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ Re-poll SMI-S / REST Counters</button>
-            <button id="close-storage-bottom-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
+          <div style="font-size: 12px; color: #64748b;">No storage volumes reported yet — volume and LUN data appear here once the device reports them.</div>
+          ` : ''}
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+            <button id="storage-poll-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Re-poll Storage</button>
+            <button id="storage-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-      </div>
-    `;
-
-    modal.style.display = 'flex';
-    modal.querySelector('#close-storage-modal-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#close-storage-bottom-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#storage-repoll-btn').onclick = () => {
-      showToast('Polled NetApp REST API / SMI-S counters. All 3 LUNs reporting normal NVMe performance.');
+      </div>`;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-storage-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#storage-close-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#storage-poll-btn').onclick = () => { load(); };
     };
+    const load = async () => {
+      if (!dev) {
+        render(null, null);
+        modal.querySelector('#storage-poll-btn').style.display = 'none';
+        return;
+      }
+      modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; overflow: hidden;">${opmModalLoading('Loading storage inventory…')}</div>`;
+      modal.style.display = 'flex';
+      const res = await opmApi('/api/hardware/details?deviceId=' + encodeURIComponent(dev.id), { credentials: 'same-origin' });
+      if (res.ok && res.data && res.data.hardware) render(res.data.hardware, null);
+      else if (res.ok && res.data && res.data.hardware === null) render(null, null);
+      else render(null, opmApiMessage(res, 'Could not load storage inventory.'));
+    };
+    load();
   }
 
   // -------------------------------------------------------------
@@ -3455,76 +3349,57 @@
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-ssl-cert-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); font-family: Roboto, -apple-system, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    const host = targetHost || 'opmanager-central.enterprise.corp:8443';
-
-    modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 8px; width: 840px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="padding: 16px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 32px; height: 32px; border-radius: 4px; background: #16a34a; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px;">🔒</div>
-            <div>
-              <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">ManageEngine SSL / TLS Certificate &amp; Cipher Suite Inspector</div>
-              <div style="font-size: 11px; color: #94a3b8;">Host: <strong style="color: #38bdf8;">${host}</strong> &bull; Protocol: <strong>TLSv1.3</strong></div>
-            </div>
+    const host = (targetHost && (targetHost.name || targetHost)) || window.location.hostname || '—';
+    const render = (ssl, error) => {
+      const cert = ssl && ssl.certificate ? ssl.certificate : null;
+      const certRows = cert && typeof cert === 'object' ? Object.entries(cert).map(([k, v]) => `
+        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;"><span style="color: #64748b;">${opmEsc(k)}</span><span style="font-weight: 600; color: #0f172a;">${opmEsc(v === null || v === undefined ? '—' : String(v))}</span></div>`).join('') : '';
+      modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">SSL / TLS Certificate</div>
+            <div style="font-size: 11px; color: #64748b;">${opmEsc(typeof host === 'string' ? host : '—')}</div>
           </div>
-          <span id="close-ssl-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
+          <span id="close-ssl-cert-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <div style="padding: 22px; font-size: 12px;">
-          <!-- Trust Chain -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 16px;">
-            <div style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 8px;">Certificate Trust Chain (PKI Hierarchy)</div>
-            <div style="display: flex; flex-direction: column; gap: 6px; font-family: monospace;">
-              <div style="color: #64748b;">🔒 Root CA: <strong>DigiCert Global Root G2</strong> (Valid to 2031-01-15)</div>
-              <div style="padding-left: 20px; color: #64748b;">↳ 🔒 Intermediate CA: <strong>DigiCert TLS RSA SHA256 2020 CA1</strong> (Valid to 2029-09-23)</div>
-              <div style="padding-left: 40px; color: #16a34a; font-weight: 700;">↳ 🔒 Server Leaf: <strong>opmanager-central.enterprise.corp</strong> (Valid to 2027-11-30 &bull; 387 Days Remaining)</div>
-            </div>
+        <div style="padding: 20px;">
+          ${error ? opmModalError(error) : ''}
+          ${!error && !ssl ? opmModalEmpty('No custom certificate installed', 'Upload a certificate or keep the built-in one.') : ''}
+          ${ssl ? `
+          <div style="font-size: 12px; color: #334155; line-height: 1.8;">
+            <div><strong>Status:</strong> ${opmEsc(ssl.status || '—')}</div>
+            <div><strong>HTTPS enabled:</strong> ${ssl.httpsEnabled ? 'Yes' : 'No'}</div>
+            <div><strong>HTTPS port:</strong> ${opmEsc(ssl.httpsPort === null || ssl.httpsPort === undefined ? '—' : String(ssl.httpsPort))}</div>
+            <div><strong>TLS versions:</strong> ${opmEsc(Array.isArray(ssl.tlsVersions) && ssl.tlsVersions.length ? ssl.tlsVersions.join(', ') : '—')}</div>
+            <div><strong>Cipher suite:</strong> ${opmEsc(ssl.cipherSuite || '—')}</div>
           </div>
-
-          <!-- Cipher & Protocol Grid -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
-            <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
-              <div style="font-weight: 700; color: #0f172a; margin-bottom: 8px;">Negotiated Cipher Suite:</div>
-              <div style="font-family: monospace; font-size: 11px; color: #0284c7; font-weight: 700;">TLS_AES_256_GCM_SHA384</div>
-              <div style="margin-top: 6px; font-size: 11px; color: #64748b;">Key Exchange: <strong>ECDHE (X25519)</strong></div>
-              <div style="font-size: 11px; color: #64748b;">Bulk Encryption: <strong>AES-256 (GCM Authenticated)</strong></div>
-              <div style="font-size: 11px; color: #16a34a; font-weight: 700; margin-top: 4px;">✓ Forward Secrecy Enabled (PFS)</div>
-            </div>
-
-            <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
-              <div style="font-weight: 700; color: #0f172a; margin-bottom: 8px;">Vulnerability Assessment:</div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 11px;">
-                <div>Heartbleed: <strong style="color: #16a34a;">Safe ✓</strong></div>
-                <div>POODLE: <strong style="color: #16a34a;">Safe ✓</strong></div>
-                <div>ROBOT: <strong style="color: #16a34a;">Safe ✓</strong></div>
-                <div>DROWN: <strong style="color: #16a34a;">Safe ✓</strong></div>
-                <div>LOGJAM: <strong style="color: #16a34a;">Safe ✓</strong></div>
-                <div>BEAST: <strong style="color: #16a34a;">Safe ✓</strong></div>
-              </div>
-              <div style="font-size: 10px; color: #166534; background: #dcfce7; padding: 2px 6px; border-radius: 3px; font-weight: 700; display: inline-block; margin-top: 6px;">Qualys SSL Labs Score: A+</div>
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <button id="ssl-handshake-poll-btn" style="background: #16a34a; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ Probe Live TLS Handshake</button>
-            <button id="close-ssl-bottom-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
+          ${cert ? `<div style="margin-top: 14px; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;"><div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Certificate</div>${certRows}</div>` : '<div style="margin-top: 14px; font-size: 12px; color: #64748b;">No certificate details stored — no TLS rating is claimed without a real probe.</div>'}
+          ` : ''}
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+            <button id="ssl-test-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Verify TLS</button>
+            <button id="ssl-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-      </div>
-    `;
-
-    modal.style.display = 'flex';
-    modal.querySelector('#close-ssl-modal-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#close-ssl-bottom-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#ssl-handshake-poll-btn').onclick = () => {
-      showToast('Live TLS 1.3 handshake probed for ' + host + '. Certificate valid with A+ rating.');
+      </div>`;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-ssl-cert-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#ssl-close-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#ssl-test-btn').onclick = async () => {
+        const res = await opmApi('/api/settings/ssl/test', { method: 'POST', credentials: 'same-origin' });
+        showToast(opmApiMessage(res, res.ok ? 'TLS verification completed.' : 'TLS verification is not available.'), res.ok ? 'success' : 'error');
+      };
     };
+    modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; overflow: hidden;">${opmModalLoading('Loading SSL / TLS settings…')}</div>`;
+    modal.style.display = 'flex';
+    (async () => {
+      const res = await opmApi('/api/settings/ssl', { credentials: 'same-origin' });
+      if (!res.ok || !res.data) render(null, opmApiMessage(res, 'Could not load SSL / TLS settings.'));
+      else render(res.data.ssl || null, null);
+    })();
   }
 
 
@@ -3540,7 +3415,7 @@
           <div style="padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #212121; color: #ffffff;">
             <div>
               <div style="font-size: 15px; font-weight: 700;">ManageEngine OpManager Central Official Video Tutorials</div>
-              <div style="font-size: 11px; color: #94a3b8;">Step-by-step enterprise ITOM walkthroughs for v12.9.203 (Build 129203)</div>
+              <div style="font-size: 11px; color: #94a3b8;">Step-by-step enterprise ITOM walkthroughs for v12.9.204-GA</div>
             </div>
             <button id="close-videos-btn" style="background: none; border: none; font-size: 18px; color: #94a3b8; cursor: pointer;">✕</button>
           </div>
@@ -3590,118 +3465,54 @@
       drawer.style.cssText = 'position: fixed; top: 0; right: 0; width: 620px; max-width: 90vw; height: 100vh; background: #ffffff; box-shadow: -10px 0 25px rgba(0,0,0,0.15); z-index: 99999; display: flex; flex-direction: column; font-family: Roboto, -apple-system, sans-serif; transition: transform 0.3s ease;';
       document.body.appendChild(drawer);
     }
+    const dev = (state.devices || []).find(d => d.name === alm.device) || null;
+    const availability = dev && dev.availability !== undefined && dev.availability !== null && dev.availability !== '' ? dev.availability : null;
     drawer.innerHTML = `
       <div style="padding: 16px 24px; border-bottom: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 10px;">
           ${getStatusBadge(alm.severity)}
           <div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a;">${alm.device}</div>
-            <div style="font-size: 11px; color: #64748b;">${alm.probe} • Entity: ${alm.entity}</div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a;">${opmEsc(alm.device)}</div>
+            <div style="font-size: 11px; color: #64748b;">${opmEsc(alm.probe || '—')} • Entity: ${opmEsc(alm.entity || '—')}</div>
           </div>
         </div>
         <button id="close-drawer-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
       </div>
 
       <div style="flex: 1; overflow-y: auto; padding: 24px;">
-        <!-- Zia AI Root Cause Analysis -->
         <div style="background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 6px; padding: 16px; margin-bottom: 20px;">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
             <span style="font-size: 16px;">✨</span>
             <span style="font-size: 13px; font-weight: 700; color: #5b21b6;">Zia AI Anomaly Correlation & Root Cause Analysis</span>
           </div>
           <p style="font-size: 12px; color: #4c1d95; line-height: 1.5; margin-bottom: 10px;">
-            Zia correlated this incident on ${alm.device} (${alm.probe || 'Central Probe'}). Automated event telemetry registered telemetry divergence: "${alm.message}".
+            Alarm on ${opmEsc(alm.device)} (${opmEsc(alm.probe || 'Central Probe')}): &ldquo;${opmEsc(alm.message)}&rdquo;.
           </p>
           <div style="background: #ffffff; border: 1px solid #c4b5fd; border-radius: 4px; padding: 8px 12px; font-size: 11px; color: #5b21b6;">
-            <strong>Recommended Action:</strong> Inspect real-time SNMP/WMI telemetry metrics and verify health threshold state on ${alm.device}.
+            <strong>Recommended Action:</strong> Inspect real-time SNMP/WMI telemetry metrics and verify health threshold state on ${opmEsc(alm.device)}.
           </div>
         </div>
 
-        <!-- ManageEngine 24-Hour Availability Time Line Bar (from mobile-app-opm.png) -->
         <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; background: #ffffff; margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 11px; font-weight: 800; color: #1e293b; text-transform: uppercase;">Time Line (Last 24 Hours)</span>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 10px; color: #475569;">
-              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #9333ea;"></span> On Maintenance (0%)</span>
-              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #49bd80;"></span> Up Time (98.4%)</span>
-              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444;"></span> Down Time (1.6%)</span>
-            </div>
-          </div>
-          <div style="height: 12px; width: 100%; border-radius: 6px; overflow: hidden; display: flex; background: #e2e8f0;">
-            <div style="width: 82%; background: #49bd80;" title="Up Time (10:00 - 06:15)"></div>
-            <div style="width: 4%; background: #ef4444;" title="Alert Window (06:15 - 06:40)"></div>
-            <div style="width: 14%; background: #49bd80;" title="Up Time (06:40 - 09:59)"></div>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; margin-top: 4px; font-family: monospace;">
-            <span>10:00</span>
-            <span>22:00</span>
-            <span>09:59</span>
-          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #1e293b; text-transform: uppercase; margin-bottom: 6px;">Availability (Last 24 Hours)</div>
+          ${availability !== null
+            ? `<div style="font-size: 12px; color: #334155;">Up Time: <strong>${opmEsc(String(availability))}${String(availability).includes('%') ? '' : '%'}</strong></div>`
+            : '<div style="font-size: 12px; color: #64748b;">No availability history yet for this device.</div>'}
         </div>
 
-        <!-- Official NetFlow Alert Traffic Drilldown (Exact replica of NFA_Alert_Sample.png) -->
         <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; background: #fafbfc; margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <span style="font-size: 11px; font-weight: 800; color: #0f172a; text-transform: uppercase;">NetFlow Alert Traffic Drilldown (IN / OUT)</span>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 10px; font-weight: 700;">
-              <span style="display: flex; align-items: center; gap: 4px; color: #334155;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #29c5f6;"></span> IN</span>
-              <span style="display: flex; align-items: center; gap: 4px; color: #334155;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #f8a346;"></span> OUT</span>
-            </div>
-          </div>
-          <svg width="100%" height="76" viewBox="0 0 420 76" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 8px;">
-            <line x1="30" y1="15" x2="405" y2="15" stroke="#f1f5f9" stroke-width="1" />
-            <line x1="30" y1="36" x2="405" y2="36" stroke="#f1f5f9" stroke-width="1" />
-            <line x1="30" y1="58" x2="405" y2="58" stroke="#cbd5e1" stroke-width="1" />
-            <text x="4" y="18" font-size="8" fill="#64748b">15M</text>
-            <text x="4" y="39" font-size="8" fill="#64748b">7.5M</text>
-            <text x="4" y="60" font-size="8" fill="#64748b">0</text>
-            ${[
-              { x: 48, inH: 36, outH: 18, t: '17:04' },
-              { x: 108, inH: 42, outH: 16, t: '17:05' },
-              { x: 168, inH: 34, outH: 24, t: '17:06' },
-              { x: 228, inH: 44, outH: 36, t: '17:07' },
-              { x: 288, inH: 32, outH: 28, t: '17:08' },
-              { x: 348, inH: 40, outH: 31, t: '17:09' }
-            ].map(b => `
-              <rect x="${b.x}" y="${58 - b.inH}" width="12" height="${b.inH}" fill="#29c5f6" rx="1" />
-              <rect x="${b.x + 14}" y="${58 - b.outH}" width="12" height="${b.outH}" fill="#f8a346" rx="1" />
-              <text x="${b.x + 13}" y="70" font-size="8" fill="#64748b" text-anchor="middle">${b.t}</text>
-            `).join('')}
-          </svg>
-          <table style="width: 100%; border-collapse: collapse; font-size: 10px; background: #ffffff; border: 1px solid #e2e8f0;">
-            <thead>
-              <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                <th style="padding: 4px 6px;">Top Application</th>
-                <th style="padding: 4px 6px;">Top Conversation (Src &rarr; Dst)</th>
-                <th style="padding: 4px 6px;">DSCP</th>
-                <th style="padding: 4px 6px; text-align: right;">Traffic</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid #f1f5f9;">
-                <td style="padding: 4px 6px; font-weight: 700; color: #0284c7;">Menu (TCP/1111)</td>
-                <td style="padding: 4px 6px; font-family: monospace;">11.0.2.100 &rarr; 172.21.149.155</td>
-                <td style="padding: 4px 6px;">CS0</td>
-                <td style="padding: 4px 6px; text-align: right; font-weight: 700;">161.34 MB</td>
-              </tr>
-              <tr>
-                <td style="padding: 4px 6px; font-weight: 700; color: #16a34a;">SmartCard_Port</td>
-                <td style="padding: 4px 6px; font-family: monospace;">192.168.100.104 &rarr; 172.16.1.2</td>
-                <td style="padding: 4px 6px;">AF21</td>
-                <td style="padding: 4px 6px; text-align: right; font-weight: 700;">101.66 MB</td>
-              </tr>
-            </tbody>
-          </table>
+          <div style="font-size: 11px; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-bottom: 6px;">NetFlow Alert Traffic Drilldown (IN / OUT)</div>
+          <div style="font-size: 12px; color: #64748b;">No NetFlow drilldown data for this alarm yet — flow records appear here once a NetFlow exporter reports traffic for this device.</div>
         </div>
 
         <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Full Alert Telemetry</div>
         <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px; font-size: 12px; line-height: 1.8; margin-bottom: 20px;">
-          <div><strong>Message:</strong> ${alm.message}</div>
-          <div><strong>First Occurred:</strong> Today at 08:42:10 UTC</div>
-          <div><strong>Last Occurred:</strong> ${alm.time}</div>
-          <div><strong>Repeat Count:</strong> 14 polls</div>
-          <div><strong>Assigned Technician:</strong> <span style="color: #0070e0; font-weight: 600;">${alm.technician}</span></div>
-          <div><strong>Last Operator Note:</strong> ${alm.lastNote || 'None recorded'}</div>
+          <div><strong>Message:</strong> ${opmEsc(alm.message)}</div>
+          <div><strong>First Occurred:</strong> ${opmEsc(alm.firstSeen || alm.time || '—')}</div>
+          <div><strong>Last Occurred:</strong> ${opmEsc(alm.time || '—')}</div>
+          <div><strong>Repeat Count:</strong> ${opmEsc(alm.repeatCount === null || alm.repeatCount === undefined ? '—' : String(alm.repeatCount))}</div>
+          <div><strong>Assigned Technician:</strong> <span style="color: #0070e0; font-weight: 600;">${opmEsc(alm.technician || 'Unassigned')}</span></div>
+          <div><strong>Last Operator Note:</strong> ${opmEsc(alm.lastNote || 'None recorded')}</div>
         </div>
 
         <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Add Resolution Note</div>
@@ -3719,23 +3530,43 @@
       </div>
     `;
     drawer.style.display = 'flex';
-
-    document.getElementById('close-drawer-btn').onclick = () => { drawer.style.display = 'none'; };
-    document.getElementById('drawer-ack-btn').onclick = () => {
-      alm.technician = 'admin@opmanager';
-      showToast(`Alarm for ${alm.device} acknowledged by admin.`);
-      drawer.style.display = 'none';
-      const c = document.getElementById('opm-custom-suite-container');
-      if (c && state.currentTab === 'alarms') renderAlarmsView(c);
-    };
-    document.getElementById('drawer-clear-btn').onclick = () => {
-      state.alarms = state.alarms.filter(a => a.id !== alm.id);
-      showToast(`Alarm for ${alm.device} marked as Clear.`);
-      drawer.style.display = 'none';
+    const rerenderAlarms = () => {
       const c = document.getElementById('opm-custom-suite-container');
       if (c) {
-        if (state.currentTab === 'dashboard') renderDashboardView(c);
-        else if (state.currentTab === 'alarms') renderAlarmsView(c);
+        if (state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') renderDashboardView(c);
+        else if (state.currentTab === 'alarms' && typeof renderAlarmsView === 'function') renderAlarmsView(c);
+      }
+    };
+
+    document.getElementById('close-drawer-btn').onclick = () => { drawer.style.display = 'none'; };
+    document.getElementById('drawer-add-note-btn').onclick = async () => {
+      const note = (document.getElementById('drawer-note-input').value || '').trim();
+      if (!note) { showToast('Type a note first.', 'error'); return; }
+      const res = await opmApi('/api/json/alarms/addNotes', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ alarmId: alm.id, note }) });
+      showToast(opmApiMessage(res, res.ok ? 'Note added.' : 'Note could not be saved.'), res.ok ? 'success' : 'error');
+    };
+    document.getElementById('drawer-ack-btn').onclick = async () => {
+      const res = await opmApi('/api/json/alarms/acknowledge', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ alarmId: alm.id }) });
+      if (res.ok && res.data && res.data.alarm) {
+        const idx = state.alarms.findIndex(a => a.id === alm.id);
+        if (idx >= 0) state.alarms[idx] = Object.assign({}, state.alarms[idx], res.data.alarm);
+        alm.status = 'Acknowledged';
+        showToast(opmApiMessage(res, 'Alarm acknowledged.'));
+        drawer.style.display = 'none';
+        rerenderAlarms();
+      } else {
+        showToast(opmApiMessage(res, 'Could not acknowledge alarm.'), 'error');
+      }
+    };
+    document.getElementById('drawer-clear-btn').onclick = async () => {
+      const res = await opmApi('/api/json/alarms/clear', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ alarmId: alm.id }) });
+      if (res.ok) {
+        state.alarms = state.alarms.filter(a => a.id !== alm.id);
+        showToast(opmApiMessage(res, 'Alarm cleared.'));
+        drawer.style.display = 'none';
+        rerenderAlarms();
+      } else {
+        showToast(opmApiMessage(res, 'Could not clear alarm.'), 'error');
       }
     };
   }
@@ -3756,7 +3587,7 @@
     const summaryText = devCount === 0
       ? 'Currently monitoring 0 active nodes. Add servers and network switches across your connected enterprise probes to stream real-time Zia AI anomaly detection.'
       : (critAlarms.length > 0 
-          ? `Currently monitoring ${devCount} core nodes across ${prbCount} distributed probes. Overall availability is at 99.98%. Primary attention is required on ${critAlarms[0].device} reporting: "${critAlarms[0].message}".`
+          ? `Currently monitoring ${devCount} core nodes across ${prbCount} distributed probes. Primary attention is required on ${critAlarms[0].device} reporting: "${critAlarms[0].message}".`
           : `Currently monitoring ${devCount} core nodes across ${prbCount} distributed probes. All monitored infrastructure nodes are performing within normal operational thresholds.`);
 
     modal.innerHTML = `
@@ -3803,6 +3634,7 @@
       try {
         const resp = await fetch('/api/zia/ask', {
           method: 'POST',
+          credentials: 'same-origin',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query: queryText, prompt: queryText })
         });
@@ -3819,17 +3651,17 @@
           area.innerHTML = `
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
               <span style="color: #7c3aed; font-weight: 700; font-size: 13px;">✨ Zia AI Assistant:</span>
-              <span style="font-size: 10px; background: #e0e7ff; color: #4338ca; padding: 1px 6px; border-radius: 3px; font-weight: 600;">Confidence: 98%</span>
+              ${data.response.confidence ? `<span style="font-size: 10px; background: #e0e7ff; color: #4338ca; padding: 1px 6px; border-radius: 3px; font-weight: 600;">Confidence: ${opmEsc(data.response.confidence)}</span>` : ''}
             </div>
             <div>${data.response.summary.replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')}</div>
             ${recHtml}
             ${devHtml}
           `;
         } else {
-          area.innerHTML = '<strong>Zia AI:</strong> Telemetry analysis complete. All regional systems normal.';
+          area.innerHTML = '<strong>Zia AI:</strong> Could not reach the Zia service — check the connection and try again.';
         }
       } catch (e) {
-        area.innerHTML = '<strong>Zia AI:</strong> Telemetry analysis complete. All regional systems normal.';
+        area.innerHTML = '<strong>Zia AI:</strong> Could not reach the Zia service — check the connection and try again.';
       }
     }
 
@@ -3878,9 +3710,9 @@
             <div style="margin-bottom: 14px;">
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">SNMP Credentials Profile</label>
               <select id="new-dev-snmp" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box; background: #ffffff;">
-                <option>Enterprise SNMP v2c (dxb-ro / pub-ro)</option>
-                <option>Enterprise SNMP v3 (SHA-256 / AES-256)</option>
-                <option>WMI / Windows Admin Credentials</option>
+                <option value="v2c">SNMP v2c</option>
+                <option value="v3">SNMP v3</option>
+                <option value="wmi">WMI / Windows</option>
               </select>
             </div>
           </div>
@@ -3902,80 +3734,19 @@
     document.getElementById('close-add-dev-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('cancel-add-dev-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('save-add-dev-btn').onclick = async () => {
-      const saveBtn = document.getElementById('save-add-dev-btn');
-      saveBtn.disabled = true;
-      saveBtn.textContent = 'Discovering...';
-
-      const ipInput = document.getElementById('new-dev-ip');
-      const ip = (ipInput ? ipInput.value.trim() : '') || '192.168.30.' + Math.floor(Math.random() * 150 + 20);
-      const probeId = parseInt(document.getElementById('new-dev-probe')?.value, 10) || 101;
-      const targetProbe = (state.probes || []).find(p => p.id === probeId || String(p.id) === String(probeId)) || (state.probes && state.probes[0]) || { id: 101, name: 'Central-Probe-01' };
-      const snmpProfile = document.getElementById('new-dev-snmp')?.value || 'Enterprise SNMP v2c';
-
-      const newId = (state.devices ? state.devices.length : 0) + 1;
-      const devName = 'SW-CORE-' + ip.split('.').slice(2).join('-');
-      const startupCfg = `! Cisco IOS Software, Catalyst L3 Switch Software (CAT9K_IOSXE), Version 17.3.4a\n!\nhostname ${devName}\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nservice password-encryption\n!\nboot-start-marker\nboot-end-marker\n!\naaa new-model\n!\nip domain name corp.internal\nip name-server 192.168.30.254\n!\nspanning-tree mode rapid-pvst\n!\ninterface GigabitEthernet0/1\n description Primary Core Trunk to Datacenter\n switchport mode trunk\n switchport trunk allowed vlan 10,20,30\n!\ninterface Vlan1\n ip address ${ip} 255.255.255.0\n no shutdown\n!\nline con 0\nline vty 0 4\n transport input ssh\n!\nend`;
-      const runningCfg = startupCfg + `\ninterface GigabitEthernet0/2\n description Access Port (Vlan 20)\n switchport access vlan 20\n switchport mode access\n! [Unsaved drift detected in RAM]`;
-
-      const newDev = {
-        id: newId,
-        name: devName,
-        ip: ip,
-        category: 'Switches',
-        type: 'Managed Cisco Catalyst L3 Switch (' + (snmpProfile.includes('v3') ? 'v3' : 'v2c') + ')',
-        vendor: 'Cisco Systems',
-        probe: targetProbe.name,
-        probeId: targetProbe.id,
-        status: 'Clear',
-        cpu: Math.floor(Math.random() * 25 + 15),
-        memory: Math.floor(Math.random() * 30 + 25),
-        disk: 28.0,
-        temp: 31,
-        responseTime: Math.floor(Math.random() * 15 + 4),
-        availability: '100.0%',
-        serial: 'CAT9K-' + Math.floor(Math.random() * 899999 + 100000),
-        osVersion: 'Cisco IOS-XE 17.3.4a',
-        lastBackup: 'Just now',
-        startupConfig: startupCfg,
-        runningConfig: runningCfg,
-        ncmConfigured: true,
-        interfaces: [
-          { name: 'GigabitEthernet0/1', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 140.2, outTraffic: 120.5, errors: 0 },
-          { name: 'GigabitEthernet0/2', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 42.1, outTraffic: 31.8, errors: 0 }
-        ]
-      };
-
-      if (!state.devices) state.devices = [];
-      state.devices.unshift(newDev);
-
-      if (targetProbe) {
-        targetProbe.devices = (targetProbe.devices || 0) + 1;
-        targetProbe.devicesCount = (targetProbe.devicesCount || 0) + 1;
-      }
-
-      // Send to server
-      try {
-        await fetch('/api/devices', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newDev)
-        });
-      } catch (e) {}
-
-      saveBtn.disabled = false;
-      saveBtn.textContent = 'Discover & Add';
+      const ip = document.getElementById('new-dev-ip').value.trim();
+      if (!ip) { showToast('Enter a device IP address or hostname first.', 'error'); return; }
+      const probeRaw = document.getElementById('new-dev-probe').value;
+      const probeId = probeRaw ? parseInt(probeRaw, 10) : null;
+      const snmpVersion = document.getElementById('new-dev-snmp').value || undefined;
+      // Only user-entered facts are sent. CPU/memory/serial/interfaces are
+      // left unset — the poller measures them after the device is added.
+      const res = await opmApi('/api/devices', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip, probeId, snmpVersion }) });
+      if (!res.ok) { showToast(opmApiMessage(res, 'Could not add device.'), 'error'); return; }
+      showToast(opmApiMessage(res, 'Device added.'));
       modal.style.display = 'none';
-      if (ipInput) ipInput.value = '';
-
-      if (typeof updateStatusCounters === 'function') {
-        updateStatusCounters();
-      }
-
-      showToast(`Device ${newDev.name} (${ip}) successfully discovered and enrolled into NCM!`);
-
-      if (state.currentTab === 'configuration' && typeof renderConfigurationView === 'function') {
-        renderConfigurationView();
-      } else if (state.currentTab === 'inventory' && typeof renderInventoryView === 'function') {
+      if (typeof loadBackendData === 'function') loadBackendData();
+      if (state.currentTab === 'inventory' && typeof renderInventoryView === 'function') {
         renderInventoryView();
       } else if (state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') {
         renderDashboardView();
@@ -4019,7 +3790,7 @@
               </div>
             </div>
             <div style="background: #f1f5f9; border-radius: 4px; padding: 10px 12px; font-size: 11px; color: #475569; margin-bottom: 10px;">
-              <strong>Probe Architecture:</strong> Probes act as local data collectors at remote branch sites. Once registered, install the probe service on the remote host pointing to Central: <code style="color: #0070e0;">http://${window.location.host || '192.168.30.65:8060'}</code>.
+              <strong>Probe Architecture:</strong> Probes act as local data collectors at remote branch sites. Once registered, install the probe service on the remote host${window.location.host ? ` pointing to Central: <code style="color: #0070e0;">http://${window.location.host}</code>` : ''}.
             </div>
           </div>
           <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end; gap: 8px;">
@@ -4033,45 +3804,45 @@
     modal.style.display = 'flex';
     document.getElementById('close-add-probe-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('cancel-add-probe-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('save-add-probe-btn').onclick = () => {
-      const name = (document.getElementById('new-probe-name').value || '').trim() || 'New Branch Site';
-      const location = (document.getElementById('new-probe-loc').value || '').trim() || 'Remote Office';
-      const ip = (document.getElementById('new-probe-ip').value || '').trim() || '192.168.50.10';
+    document.getElementById('save-add-probe-btn').onclick = async () => {
+      const name = (document.getElementById('new-probe-name').value || '').trim();
+      const ip = (document.getElementById('new-probe-ip').value || '').trim();
       const port = parseInt(document.getElementById('new-probe-port').value, 10) || 8060;
-
-      const newId = (state.probes.length ? Math.max(...state.probes.map(p => Number(p.id) || 0)) : 100) + 1;
-      const newProbe = {
-        id: newId,
-        name: name,
-        displayName: name,
-        location: location,
-        ip: ip,
-        port: port,
-        status: 'Online',
-        version: '12.9.203',
-        build: 129203,
-        latency: Math.floor(Math.random() * 20 + 8),
-        devicesCount: 0,
-        monitorsCount: 0,
-        activeAlarms: 0,
-        lastSync: 'Just now',
-        syncStatus: 'Synchronized'
+      if (!name) { showToast('Enter a branch / site name first.', 'error'); return; }
+      if (!ip) { showToast('Enter a probe IP address or hostname first.', 'error'); return; }
+      // The server verifies the probe is reachable, measures the real
+      // round-trip, and issues a fresh enrollment key shown exactly once.
+      // Nothing is added locally until the server confirms registration.
+      const res = await opmApi('/api/probes', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, ip, port }) });
+      if (!res.ok || !res.data) { showToast(opmApiMessage(res, 'Could not register probe.'), 'error'); return; }
+      const d = res.data;
+      const rtt = d.verified && d.verified.rttMs !== undefined && d.verified.rttMs !== null ? d.verified.rttMs + ' ms' : '—';
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 6px; width: 520px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #cbd5e1;">
+          <div style="background: #f0fdf4; border-bottom: 1px solid #bbf7d0; padding: 16px 22px;">
+            <div style="font-size: 15px; font-weight: 700; color: #166534;">Probe registered: ${opmEsc(name)}</div>
+            <div style="font-size: 12px; color: #475569; margin-top: 4px;">${opmEsc(d.message || '')} Measured round-trip: ${opmEsc(rtt)}.</div>
+          </div>
+          <div style="padding: 22px; font-size: 12px; color: #334155;">
+            <div style="font-weight: 700; color: #0f172a; margin-bottom: 6px;">Probe enrollment key — shown only once</div>
+            <div style="font-size: 11px; color: #64748b; margin-bottom: 8px;">${opmEsc(d.authKeyNote || 'Store this key on the probe now — it is shown only once and cannot be recovered from Central.')}</div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <code id="opm-new-probe-key" style="flex: 1; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 10px; font-size: 11px; word-break: break-all;">${opmEsc(d.authKey || '—')}</code>
+              <button id="opm-copy-probe-key-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; color: #0070e0; font-weight: 600;">Copy key</button>
+            </div>
+          </div>
+          <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end;">
+            <button id="opm-probe-done-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Done</button>
+          </div>
+        </div>
+      `;
+      const copyBtn = document.getElementById('opm-copy-probe-key-btn');
+      if (copyBtn) copyBtn.onclick = () => { const k = document.getElementById('opm-new-probe-key'); if (k) navigator.clipboard.writeText(k.textContent); showToast('Enrollment key copied to clipboard.'); };
+      document.getElementById('opm-probe-done-btn').onclick = () => {
+        modal.style.display = 'none';
+        if (typeof loadBackendData === 'function') loadBackendData();
+        if (state.currentTab === 'settings' && typeof renderSettingsView === 'function') renderSettingsView();
       };
-
-      state.probes.push(newProbe);
-
-      fetch('/api/probes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newProbe)
-      }).catch(() => {});
-
-      showToast(`Branch Site / Remote Probe "${name}" registered successfully!`);
-      modal.style.display = 'none';
-
-      if (state.currentTab === 'settings') {
-        renderSettingsView();
-      }
     };
   }
 
@@ -4314,7 +4085,8 @@
       modal.style.cssText = "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Lato, Roboto, -apple-system, sans-serif;";
       document.body.appendChild(modal);
     }
-    const incNum = "SDP-WO#" + (10000 + Math.floor(Math.random() * 9000));
+    // No ServiceDesk endpoint exists: no ticket number is invented here.
+    // The form below is display-only until the integration is connected.
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 6px; width: 560px; max-width: 95vw; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); overflow: hidden;">
         <div style="background: #1e1b4b; color: #ffffff; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center;">
@@ -4322,7 +4094,7 @@
             <div style="width: 24px; height: 24px; border-radius: 4px; background: #6366f1; color: #fff; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center;">SD</div>
             <div>
               <div style="font-weight: 800; font-size: 14px; color: #a5b4fc;">ServiceDesk Plus Cloud Integration</div>
-              <div style="font-size: 11px; color: #c7d2fe;">Create Enterprise Incident Ticket &bull; ${incNum}</div>
+              <div style="font-size: 11px; color: #c7d2fe;">Create Enterprise Incident Ticket &bull; ServiceDesk Plus is not connected yet</div>
             </div>
           </div>
           <button id="close-sdp-modal-btn" style="background: none; border: none; font-size: 18px; color: #a5b4fc; cursor: pointer;">✕</button>
@@ -4358,7 +4130,7 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 4px; color: #0f172a;">Associated CI Asset</label>
-              <input type="text" value="${alarm.device} (${alarm.ip || (state.devices && state.devices[0]?.ip) || '127.0.0.1'})" readonly style="width: 100%; border: 1px solid #e2e8f0; background: #f8fafc; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; color: #64748b;">
+              <input type="text" value="${alarm.device}${alarm.ip ? ' (' + alarm.ip + ')' : ''}" readonly style="width: 100%; border: 1px solid #e2e8f0; background: #f8fafc; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; color: #64748b;">
             </div>
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 4px; color: #0f172a;">Assigned Support Group</label>
@@ -4372,7 +4144,7 @@
 
           <div style="margin-bottom: 14px;">
             <label style="display: block; font-weight: 700; margin-bottom: 4px; color: #0f172a;">Detailed Description &amp; Diagnostic Telemetry</label>
-            <textarea rows="4" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 10px; font-size: 11px; font-family: monospace; box-sizing: border-box; line-height: 1.5;">${alarm.message}&#10;Managed by Probe: ${alarm.probe}&#10;Reported: ${alarm.time}&#10;Zia AI Root Cause: Automated correlation identified high resource contention during scheduled maintenance window.</textarea>
+            <textarea rows="4" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 10px; font-size: 11px; font-family: monospace; box-sizing: border-box; line-height: 1.5;">${alarm.message}&#10;Managed by Probe: ${alarm.probe}&#10;Reported: ${alarm.time}</textarea>
           </div>
 
           <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; padding: 10px 14px; font-size: 11px; color: #166534; display: flex; align-items: center; gap: 8px;">
@@ -4392,26 +4164,33 @@
     modal.style.display = "flex";
     document.getElementById("close-sdp-modal-btn").onclick = () => { modal.style.display = "none"; };
     document.getElementById("cancel-sdp-modal-btn").onclick = () => { modal.style.display = "none"; };
-    document.getElementById("submit-sdp-modal-btn").onclick = () => {
-      alarm.technician = incNum + " (NOC Assigned)";
-      modal.style.display = "none";
-      showToast(`WorkOrder ${incNum} created in ServiceDesk Plus for ${alarm.device}!`);
-      if (state.currentTab === "alarms" && typeof renderAlarmsView === "function") {
-        renderAlarmsView();
-      }
-      const drawer = document.getElementById("opm-alarm-drawer");
-      if (drawer && drawer.style.display === "flex" && typeof openAlarmDrawer === "function") {
-        openAlarmDrawer(alarm.id);
-      }
-    };
+    const sdpBtn = document.getElementById("submit-sdp-modal-btn");
+    if (sdpBtn) {
+      sdpBtn.disabled = true;
+      sdpBtn.style.opacity = '0.5';
+      sdpBtn.style.cursor = 'not-allowed';
+      sdpBtn.title = 'ServiceDesk Plus is not connected yet — no ticket can be created.';
+      sdpBtn.onclick = () => { showToast('ServiceDesk Plus is not connected — no ticket was created.', 'error'); };
+    }
   }
 
   // --- MASTER MULTI-TAB DEVICE SNAPSHOT MODAL ---
   function showDeviceSnapshotModal(dev) {
     if (typeof dev === 'number' || typeof dev === 'string') {
-      dev = state.devices.find(d => d.id == dev || d.id === 'dev_' + dev || d.name === dev) || state.devices[0];
+      dev = state.devices.find(d => d.id == dev || d.id === 'dev_' + dev || d.name === dev) || null;
     }
-    if (!dev) dev = state.devices[0];
+    if (!dev) {
+      let emptyModal = document.getElementById('device-snapshot-modal');
+      if (!emptyModal) {
+        emptyModal = document.createElement('div');
+        emptyModal.id = 'device-snapshot-modal';
+        emptyModal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.5); z-index: 99999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Roboto, -apple-system, sans-serif;';
+        document.body.appendChild(emptyModal);
+      }
+      emptyModal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 640px; max-width: 95vw; overflow: hidden;">${opmModalEmpty('No device selected', 'Select a device from the inventory to see its snapshot.')}<div style="text-align: center; padding-bottom: 20px;"><button onclick="document.getElementById('device-snapshot-modal').style.display='none';" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button></div></div>`;
+      emptyModal.style.display = 'flex';
+      return;
+    }
     let modal = document.getElementById('device-snapshot-modal');
     if (!modal) {
       modal = document.createElement('div');
@@ -4422,632 +4201,291 @@
 
     let activeModalTab = 'summary';
     const isSwitch = (dev.category || '').toLowerCase().includes('switch') || (dev.type || '').toLowerCase().includes('switch') || (dev.type || '').toLowerCase().includes('catalyst') || (dev.type || '').toLowerCase().includes('nexus') || (dev.type || '').toLowerCase().includes('leaf') || (dev.type || '').toLowerCase().includes('procurve');
-    let selectedPortNumber = dev.status === 'Critical' ? 48 : 1;
+    let selectedPortNumber = 1;
 
-    function renderSnapshotBody() {
+    // Per-modal caches: undefined = not loaded yet, null = loaded with no data / failed.
+    let snapHw = undefined;
+    let snapIfaces = undefined;
+    let snapPorts = undefined;
+    let snapDiff = undefined;
+
+    async function renderSnapshotBody() {
       const bodyContainer = modal.querySelector('#snapshot-body-container');
       if (!bodyContainer) return;
 
+      const numOrNull = (v) => (v === null || v === undefined || v === '' || !Number.isFinite(Number(v))) ? null : Number(v);
+      const gaugeCard = (label, v, unit) => {
+        const n = numOrNull(v);
+        return `<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; text-align: center;">
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">${opmEsc(label)}</div>
+          <div style="font-size: 24px; font-weight: 800; color: ${n === null ? '#94a3b8' : '#0f172a'}; margin-top: 6px;">${n === null ? '—' : n + (unit || '')}</div>
+          <div style="font-size: 11px; color: #64748b; margin-top: 2px;">${n === null ? 'No data yet' : 'Last poll'}</div>
+        </div>`;
+      };
+      const infoRow = (label, v) => `<div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #f1f5f9; font-size: 12px;"><span style="color: #64748b;">${label}</span><span style="font-weight: 600; color: #0f172a;">${opmEsc(v === null || v === undefined || v === '' ? '—' : String(v))}</span></div>`;
+      const rerenderIfStillOn = (tab) => {
+        if (activeModalTab === tab && modal.style.display !== 'none') renderSnapshotBody();
+      };
+
+      // ---------------- SUMMARY ----------------
       if (activeModalTab === 'summary') {
-        // Dynamic gauges from reverse-engineered opmanager_snapshot_dial.xml
-        const isSwitch = (dev.category || '').toLowerCase().includes('switch');
-        const isRouter = (dev.category || '').toLowerCase().includes('router');
-        const isStorage = (dev.category || '').toLowerCase().includes('storage');
-
-        let dynamicGauges = [
-          { label: 'CPU UTILIZATION', val: dev.cpu, color: dev.cpu >= 90 ? '#dc2626' : dev.cpu >= 75 ? '#ea580c' : '#0070e0', unit: '%' },
-          { label: 'MEMORY UTILIZATION', val: dev.memory, color: dev.memory >= 90 ? '#dc2626' : dev.memory >= 75 ? '#ea580c' : '#0070e0', unit: '%' }
-        ];
-
-        if (isSwitch) {
-          dynamicGauges.push(
-            { label: 'BACKPLANE UTILIZATION', val: dev.backplane || 24, color: '#0070e0', unit: '%' },
-            { label: 'CHASSIS THERMAL', val: dev.temp || 32, unit: '°C', color: (dev.temp || 32) >= 45 ? '#ea580c' : '#16a34a' }
-          );
-        } else if (isRouter) {
-          dynamicGauges.push(
-            { label: 'CHASSIS THERMAL', val: dev.temp || 38, unit: '°C', color: (dev.temp || 38) >= 45 ? '#ea580c' : '#16a34a' },
-            { label: 'ACTIVE FLOWS', val: dev.connections || 1840, unit: '', color: '#0070e0' }
-          );
-        } else if (isStorage) {
-          dynamicGauges.push(
-            { label: 'VOLUMES USED', val: dev.disk || 76, unit: '%', color: (dev.disk || 76) >= 85 ? '#dc2626' : '#16a34a' },
-            { label: 'FAILED DISKS', val: 0, unit: '', color: '#16a34a' }
-          );
-        } else {
-          dynamicGauges.push(
-            { label: 'LOCAL STORAGE', val: dev.disk, color: dev.disk >= 85 ? '#dc2626' : '#16a34a', unit: '%' },
-            { label: 'CHASSIS THERMAL', val: dev.temp, unit: '°C', color: dev.temp >= 45 ? '#ea580c' : '#16a34a' }
-          );
+        const hw = snapHw;
+        const hwLoaded = hw !== undefined;
+        const hwObj = (hw && hw.hardware) ? hw.hardware : null;
+        const avail = numOrNull(dev.availability);
+        let html = `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+          ${gaugeCard('CPU Utilization', dev.cpu, '%')}
+          ${gaugeCard('Memory Utilization', dev.memory, '%')}
+          ${gaugeCard('Disk Utilization', dev.disk, '%')}
+        </div>`;
+        html += `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+            <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Device Details</div>
+            ${infoRow('IP Address', dev.ip)}
+            ${infoRow('Category', dev.category)}
+            ${infoRow('Vendor', hwObj ? hwObj.vendor : '—')}
+            ${infoRow('Model', hwObj ? hwObj.model : '—')}
+            ${infoRow('Serial Number', hwObj ? hwObj.serialNumber : '—')}
+            ${infoRow('OS Version', dev.osVersion)}
+            ${infoRow('Last Poll', dev.lastPolledAt || dev.lastPoll)}
+            ${infoRow('SNMP Response Time', numOrNull(dev.responseTime) === null ? '—' : (dev.responseTime + ' ms'))}
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+            <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Availability (Last 24 Hours)</div>
+            ${avail === null
+              ? '<div style="font-size: 12px; color: #64748b;">No availability history yet for this device.</div>'
+              : `<div style="font-size: 12px; color: #334155; margin-bottom: 6px;">Up Time: <strong>${avail}%</strong></div>
+                 <div style="height: 10px; background: #f1f5f9; border-radius: 5px; overflow: hidden;"><div style="height: 100%; width: ${Math.max(0, Math.min(100, avail))}%; background: #16a34a;"></div></div>`}
+            <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 16px 0 8px;">Hardware</div>
+            ${!hwLoaded ? '<div style="font-size: 12px; color: #64748b;">Loading hardware details…</div>'
+              : !hwObj ? '<div style="font-size: 12px; color: #64748b;">No hardware details reported for this device.</div>'
+              : `${infoRow('Total RAM', hwObj.totalRam)}${infoRow('Flash Memory', hwObj.flashMemory)}${infoRow('Fan Trays', Array.isArray(hwObj.fanTrays) ? hwObj.fanTrays.length + ' reported' : '—')}${infoRow('Power Supplies', Array.isArray(hwObj.powerSupplies) ? hwObj.powerSupplies.length + ' reported' : '—')}${infoRow('Thermal Sensors', Array.isArray(hwObj.thermalSensors) ? hwObj.thermalSensors.length + ' reported' : '—')}`}
+          </div>
+        </div>`;
+        html += `<div style="margin-top: 16px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #64748b;">No traffic statistics yet — interface counters appear here once polls complete.</div>`;
+        bodyContainer.innerHTML = html;
+        if (!hwLoaded) {
+          const res = await opmApi('/api/hardware/details?deviceId=' + encodeURIComponent(dev.id), { credentials: 'same-origin' });
+          snapHw = (res.ok && res.data) ? res.data : null;
+          rerenderIfStillOn('summary');
         }
-
-        bodyContainer.innerHTML = `
-          <!-- 4 Circular SVG Gauges (Reverse Engineered XML) -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px;">
-            ${dynamicGauges.map(g => {
-              const r = 38;
-              const c = 2 * Math.PI * r;
-              const pct = typeof g.val === 'number' && g.unit === '%' ? Math.min(100, g.val) : 65;
-              const offset = c - (pct / 100) * c;
-              return `
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
-                  <div style="font-size: 10px; font-weight: 700; color: #64748b; margin-bottom: 8px;">${g.label}</div>
-                  <div style="position: relative; width: 90px; height: 90px; margin: 0 auto;">
-                    <svg width="90" height="90" viewBox="0 0 100 100">
-                      <circle cx="50" cy="50" r="${r}" fill="none" stroke="#edf2f7" stroke-width="8" />
-                      <circle cx="50" cy="50" r="${r}" fill="none" stroke="${g.color}" stroke-width="8" stroke-dasharray="${c}" stroke-dashoffset="${offset}" stroke-linecap="round" transform="rotate(-90 50 50)" />
-                    </svg>
-                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #0f172a;">
-                      ${g.val}${g.unit || ''}
-                    </div>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-
-          <!-- Hardware Sensors (Fans, PSUs) -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
-            <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px; background: #fafbfc;">
-              <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Chassis Fan Trays</div>
-              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
-                <span>Fan Tray 1 (Front-to-Back):</span>
-                <span style="color: #16a34a; font-weight: 700;">● 4,200 RPM (Normal)</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 11px;">
-                <span>Fan Tray 2 (Chassis Exhaust):</span>
-                <span style="color: ${dev.status === 'Critical' ? '#dc2626' : '#16a34a'}; font-weight: 700;">● ${dev.status === 'Critical' ? '1,800 RPM (Speed Degraded)' : '4,150 RPM (Normal)'}</span>
-              </div>
-            </div>
-
-            <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px; background: #fafbfc;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 12px; font-weight: 700; color: #1e293b;">Dual Redundant Power Supplies</span>
-                <span style="font-size: 10px; font-weight: 700; background: #dcfce7; color: #166534; padding: 1px 5px; border-radius: 2px;">REDUNDANT OK</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
-                <span>PSU 1 (AC 230V Ingest):</span>
-                <span style="color: #16a34a; font-weight: 600;">Optimal (142 Watts draw)</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 11px;">
-                <span>PSU 2 (Hot-Standby Feed):</span>
-                <span style="color: #16a34a; font-weight: 600;">Optimal (138 Watts draw)</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Hardware Chassis Front & Rear Panel Elevation Strip -->
-          <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px 16px; background: #1e293b; color: #f8fafc; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-              <div>
-                <div style="font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase;">Live Physical Chassis Front-Panel View (Port LED Telemetry)</div>
-                <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">47 Ports UP (Green) • ${dev.status === 'Critical' ? '1 Port DOWN: FortyGigE1/0/48 (Red)' : '0 Ports Down'}</div>
-              </div>
-              <img src="/images/racks/front/Cisco-Switch-1U.png" style="height: 30px; width: 420px; object-fit: fill; border-radius: 2px; border: 1px solid #475569;" />
-            </div>
-            <div style="border-top: 1px solid #334155; padding-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-              <div>
-                <div style="font-size: 11px; font-weight: 700; color: #4ade80; text-transform: uppercase;">Live Physical Chassis Rear-Panel View (Dual PSU &amp; Fan Modules)</div>
-                <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">PSU-1: 230V AC Active • PSU-2: Redundant Active • Grounding &amp; Console RJ45 Connected</div>
-              </div>
-              <img src="/images/racks/rear/Cisco-Switch-RearView-1U.png" style="height: 30px; width: 420px; object-fit: fill; border-radius: 2px; border: 1px solid #475569;" />
-            </div>
-          </div>
-
-          <!-- System Specs Matrix -->
-          <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px 16px; background: #ffffff; margin-bottom: 14px;">
-            <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">System Specifications &amp; Inventory Data</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px; color: #334155;">
-              <div><strong>System Uptime:</strong> 184 Days 14 Hours</div>
-              <div><strong>Serial Number:</strong> <span style="font-family: monospace;">${dev.serial}</span></div>
-              <div><strong>Operating System:</strong> ${dev.osVersion}</div>
-              <div><strong>Last Config Backup:</strong> ${dev.lastBackup}</div>
-              <div><strong>SNMP Response Time:</strong> ${dev.responseTime} ms (0% Packet Loss)</div>
-              <div><strong>Remote Probe:</strong> ${dev.probe}</div>
-            </div>
-          </div>
-
-          <!-- ManageEngine 24-Hour Availability Time Line Bar (from mobile-app-opm.png) -->
-          <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 16px; background: #ffffff; margin-bottom: 14px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span style="font-size: 11px; font-weight: 800; color: #1e293b;">Time Line (Last 24 Hours Availability)</span>
-              <div style="display: flex; align-items: center; gap: 14px; font-size: 10px; font-weight: 600; color: #475569;">
-                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #9333ea;"></span> On Maintenance (0.0%)</span>
-                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #49bd80;"></span> Up Time (${dev.availability || '99.98%'})</span>
-                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span> Down Time (${dev.status === 'Critical' ? '0.42%' : '0.00%'})</span>
-              </div>
-            </div>
-            <div style="height: 12px; width: 100%; border-radius: 6px; overflow: hidden; display: flex; background: #e2e8f0;">
-              ${dev.status === 'Critical' ? `
-                <div style="width: 86%; background: #49bd80;" title="Up Time (10:00 - 06:40)"></div>
-                <div style="width: 2%; background: #ef4444;" title="Brief Flap (06:40 - 06:46)"></div>
-                <div style="width: 12%; background: #49bd80;" title="Up Time (06:46 - 09:59)"></div>
-              ` : `
-                <div style="width: 100%; background: #49bd80;" title="100% Up Time (Last 24 Hours)"></div>
-              `}
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; margin-top: 4px; font-family: monospace;">
-              <span>10:00</span>
-              <span>22:00</span>
-              <span>09:59</span>
-            </div>
-          </div>
-
-          <!-- ManageEngine 95th Percentile Traffic Statistical Summary (Modeled on netflow_addon_inventory.png) -->
-          <div style="display: flex; border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; background: #ffffff;">
-            <div style="width: 130px; background: #f8fafc; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px;">
-              <div style="font-size: 16px; color: #64748b;">🕒</div>
-              <div style="font-size: 10px; font-weight: 700; color: #334155;">00:00 - 24:00</div>
-              <div style="font-size: 9px; color: #94a3b8;">95th Percentile</div>
-            </div>
-            <table style="flex: 1; border-collapse: collapse; font-size: 11px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                  <th style="padding: 6px 10px;">Category</th>
-                  <th style="padding: 6px 10px;">Total</th>
-                  <th style="padding: 6px 10px;">Maximum</th>
-                  <th style="padding: 6px 10px;">Minimum</th>
-                  <th style="padding: 6px 10px;">Average</th>
-                  <th style="padding: 6px 10px;">Std Deviation</th>
-                  <th style="padding: 6px 10px;">95th Percentile</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 6px 10px; font-weight: 700; color: #16a34a;">Traffic IN</td>
-                  <td style="padding: 6px 10px; font-family: monospace; font-weight: 700;">450.94 MB</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">942.5 kbps</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">112.4 kbps</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">464.56 kbps</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">198.49 kbps</td>
-                  <td style="padding: 6px 10px; font-family: monospace; font-weight: 700; color: #dc2626;">935.12 kbps</td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 10px; font-weight: 700; color: #0284c7;">Traffic OUT</td>
-                  <td style="padding: 6px 10px; font-family: monospace; font-weight: 700;">450.94 MB</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">942.5 kbps</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">108.2 kbps</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">464.56 kbps</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">198.49 kbps</td>
-                  <td style="padding: 6px 10px; font-family: monospace; font-weight: 700; color: #dc2626;">935.12 kbps</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        `;
-      } else if (activeModalTab === 'performance') {
-        bodyContainer.innerHTML = `
-          <div style="padding: 10px 0;">
-            <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">1-Minute Average Traffic &amp; 95th Percentile Threshold (IN / OUT)</div>
-            <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px; margin-bottom: 16px;">
-              <svg viewBox="0 0 700 150" style="width: 100%; height: 150px;">
-                <line x1="0" y1="35" x2="700" y2="35" stroke="#edf2f7" stroke-width="1" />
-                <line x1="0" y1="70" x2="700" y2="70" stroke="#edf2f7" stroke-width="1" />
-                <line x1="0" y1="105" x2="700" y2="105" stroke="#edf2f7" stroke-width="1" />
-                <polygon points="0,135 0,85 120,62 240,48 360,55 480,38 600,45 700,40 700,135" fill="rgba(73,189,128,0.22)" />
-                <polyline points="0,85 120,62 240,48 360,55 480,38 600,45 700,40" fill="none" stroke="#49bd80" stroke-width="2" />
-                <polygon points="0,135 0,98 120,82 240,70 360,76 480,58 600,65 700,60 700,135" fill="rgba(56,189,248,0.22)" />
-                <polyline points="0,98 120,82 240,70 360,76 480,58 600,65 700,60" fill="none" stroke="#38bdf8" stroke-width="2" />
-                <line x1="0" y1="42" x2="700" y2="42" stroke="#ef4444" stroke-width="1.5" />
-                <text x="580" y="37" font-size="9" font-weight="700" fill="#ef4444">IN 95th Percentile</text>
-                <line x1="0" y1="62" x2="700" y2="62" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="4,3" />
-                <text x="575" y="57" font-size="9" font-weight="700" fill="#dc2626">OUT 95th Percentile</text>
-              </svg>
-              <div style="display: flex; gap: 16px; font-size: 11px; margin-top: 8px;">
-                <span style="color: #49bd80; font-weight: 700;">■ IN Traffic (Mbps)</span>
-                <span style="color: #38bdf8; font-weight: 700;">■ OUT Traffic (Mbps)</span>
-                <span style="color: #ef4444; font-weight: 700;">— IN 95th Percentile</span>
-                <span style="color: #dc2626; font-weight: 700;">--- OUT 95th Percentile</span>
-              </div>
-            </div>
-          </div>
-        `;
-      } else if (activeModalTab === 'monitors') {
-        const monitorsList = [
-          { name: 'CPU Utilization', type: 'SNMP Gauge', interval: '1 Min', threshold: '> 85%', lastVal: dev.cpu + ' %', status: dev.cpu >= 85 ? 'Critical' : 'Clear' },
-          { name: 'Memory Utilization', type: 'SNMP Gauge', interval: '1 Min', threshold: '> 85%', lastVal: dev.memory + ' %', status: dev.memory >= 85 ? 'Trouble' : 'Clear' },
-          { name: 'Disk Space Utilization', type: 'SNMP Storage', interval: '5 Min', threshold: '> 90%', lastVal: (dev.disk || 42) + ' %', status: (dev.disk || 42) >= 90 ? 'Critical' : 'Clear' },
-          { name: 'Ping Response Time', type: 'ICMP Echo', interval: '1 Min', threshold: '> 50 ms', lastVal: dev.responseTime + ' ms', status: dev.responseTime > 50 ? 'Trouble' : 'Clear' },
-          { name: 'Packet Loss', type: 'ICMP Echo', interval: '1 Min', threshold: '> 5 %', lastVal: '0.0 %', status: 'Clear' },
-          { name: 'Chassis Temperature', type: 'SNMP Sensor', interval: '5 Min', threshold: '> 45 °C', lastVal: (dev.temp || 32) + ' °C', status: (dev.temp || 32) >= 45 ? 'Attention' : 'Clear' },
-          { name: 'Dual PSU Status', type: 'SNMP Traps', interval: 'Event Driven', threshold: 'Redundant Fail', lastVal: 'Optimal', status: 'Clear' }
-        ];
-
-        bodyContainer.innerHTML = `
-          <div style="border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden;">
-            <div style="padding: 10px 14px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 12px; font-weight: 700; color: #1e293b;">Associated Performance Monitors (${monitorsList.length})</span>
-              <button id="poll-all-monitors-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 4px 12px; font-size: 11px; font-weight: 600; cursor: pointer;">Poll All Now</button>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-              <thead>
-                <tr style="background: #f1f5f9; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 10px; text-transform: uppercase;">
-                  <th style="padding: 8px 12px; text-align: left;">Monitor Name</th>
-                  <th style="padding: 8px 12px; text-align: left;">Type</th>
-                  <th style="padding: 8px 12px; text-align: left;">Polling Interval</th>
-                  <th style="padding: 8px 12px; text-align: left;">Threshold</th>
-                  <th style="padding: 8px 12px; text-align: left;">Last Polled Value</th>
-                  <th style="padding: 8px 12px; text-align: left;">Status</th>
-                  <th style="padding: 8px 12px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${monitorsList.map(m => `
-                  <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding: 8px 12px; font-weight: 600; color: #0070e0;">${m.name}</td>
-                    <td style="padding: 8px 12px; color: #64748b;">${m.type}</td>
-                    <td style="padding: 8px 12px; color: #334155;">${m.interval}</td>
-                    <td style="padding: 8px 12px; color: #64748b;">${m.threshold}</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0f172a;">${m.lastVal}</td>
-                    <td style="padding: 8px 12px;">${getStatusBadge(m.status)}</td>
-                    <td style="padding: 8px 12px; text-align: right;">
-                      <button class="test-mon-btn" data-mon="${m.name}" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 10px; cursor: pointer;">Test</button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        `;
-        bodyContainer.querySelectorAll('.test-mon-btn').forEach(b => {
-          b.onclick = () => {
-            const mName = b.getAttribute('data-mon');
-            showToast(`SNMP Test executed for "${mName}": Response OK (14ms).`);
-          };
-        });
-        const pollAllBtn = bodyContainer.querySelector('#poll-all-monitors-btn');
-        if (pollAllBtn) {
-          pollAllBtn.onclick = () => {
-            showToast(`Initiated immediate probe re-poll for all ${monitorsList.length} monitors on ${dev.name}.`);
-          };
-        }
-      } else if (activeModalTab === 'interfaces') {
-        bodyContainer.innerHTML = `
-          <div style="border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #edf2f7; color: #64748b; font-size: 10px; text-transform: uppercase;">
-                  <th style="padding: 8px 12px; text-align: left;">Interface Name</th>
-                  <th style="padding: 8px 12px; text-align: left;">Admin</th>
-                  <th style="padding: 8px 12px; text-align: left;">Oper</th>
-                  <th style="padding: 8px 12px; text-align: left;">Speed</th>
-                  <th style="padding: 8px 12px; text-align: left;">In Rate</th>
-                  <th style="padding: 8px 12px; text-align: left;">Out Rate</th>
-                  <th style="padding: 8px 12px; text-align: left;">Errors</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${(dev.interfaces || []).map(inf => `
-                  <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding: 8px 12px; font-weight: 600; color: #0070e0; display: flex; align-items: center; gap: 6px;">
-                      <img src="/apiclient/fluidicv2/img/${inf.oper === 'UP' ? 'port_up.gif' : 'port_down.gif'}" style="width: 13px; height: 13px;">
-                      ${inf.name}
-                    </td>
-                    <td style="padding: 8px 12px; color: #16a34a; font-weight: 600;"><img src="/apiclient/fluidicv2/img/port_up.gif" style="width: 10px; height: 10px; vertical-align: middle;"> ${inf.admin}</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: ${inf.oper === 'UP' ? '#16a34a' : '#dc2626'};"><img src="/apiclient/fluidicv2/img/${inf.oper === 'UP' ? 'port_up.gif' : 'port_down.gif'}" style="width: 10px; height: 10px; vertical-align: middle;"> ${inf.oper}</td>
-                    <td style="padding: 8px 12px; color: #475569;">${inf.speed}</td>
-                    <td style="padding: 8px 12px; color: #16a34a;">${inf.inTraffic} Mbps</td>
-                    <td style="padding: 8px 12px; color: #0284c7;">${inf.outTraffic} Mbps</td>
-                    <td style="padding: 8px 12px; color: ${inf.errors > 0 ? '#dc2626' : '#64748b'}; font-weight: ${inf.errors > 0 ? '700' : 'normal'};">${inf.errors}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        `;
-      } else if (activeModalTab === 'alarms') {
-        const devAlarms = state.alarms.filter(a => a.device === dev.name);
-        bodyContainer.innerHTML = `
-          <div style="font-size: 12px;">
-            ${devAlarms.length === 0 ? `
-              <div style="padding: 30px; text-align: center; color: #16a34a; font-weight: 600;">✓ No active unresolved alarms for this node.</div>
-            ` : devAlarms.map(a => `
-              <div style="border: 1px solid #e2e8f0; border-left: 4px solid #dc2626; border-radius: 4px; padding: 12px; margin-bottom: 8px; background: #fafbfc;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                  <span style="font-weight: 700; color: #dc2626;">${a.severity}: ${a.entity}</span>
-                  <span style="font-size: 10px; color: #64748b;">${a.time}</span>
-                </div>
-                <div style="font-size: 11px; color: #334155;">${a.message}</div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } else if (activeModalTab === 'ports') {
-        const isDown48 = (p) => p === 48 && dev.status === 'Critical';
-        const isAmber = (p) => p % 7 === 0;
-
-        function renderPortInspector(p) {
-          const isDown = isDown48(p);
-          const isAmb = isAmber(p);
-          const speed = p === 48 ? '40 Gbps QSFP28' : (p % 2 === 0 ? '10 Gbps SFP+' : '1 Gbps RJ45');
-          const adminSt = 'UP (Administratively Enabled)';
-          const operSt = isDown ? 'DOWN (Link Failure / Loss of Carrier Signal)' : 'UP (Connected & Forwarding)';
-          const inRate = isDown ? '0.0 Mbps' : ((p * 18.4) % 780 + 15).toFixed(1) + ' Mbps';
-          const outRate = isDown ? '0.0 Mbps' : ((p * 14.1) % 650 + 12).toFixed(1) + ' Mbps';
-          const crc = isDown ? '14 CRC Errors (Transceiver Degraded)' : '0 Errors';
-          const vlan = p <= 24 ? 'VLAN 100 (Enterprise-Servers)' : 'VLAN 200 (Core-Uplinks)';
-
-          return `
-            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 16px; margin-top: 16px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-size: 14px; font-weight: 800; color: #38bdf8;">Interface Port ${p}: ${p === 48 ? 'FortyGigabitEthernet1/0/48' : 'TenGigabitEthernet1/0/' + p}</span>
-                  <span style="font-size: 10px; font-weight: 800; background: ${isDown ? '#dc2626' : '#166534'}; color: #fff; padding: 2px 7px; border-radius: 2px;">
-                    ${isDown ? 'PORT DOWN (CRITICAL)' : 'OPERATIONAL UP'}
-                  </span>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                  <button id="opm-port-bounce-btn" style="background: #334155; border: 1px solid #475569; color: #fff; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                    Shut / No-Shut
-                  </button>
-                  <button id="opm-port-clear-btn" style="background: #334155; border: 1px solid #475569; color: #fff; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                    Clear CRC Counters
-                  </button>
-                </div>
-              </div>
-
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; font-size: 11px; margin-bottom: 12px;">
-                <div style="background: #0f172a; padding: 10px; border-radius: 4px; border: 1px solid #334155;">
-                  <div style="color: #94a3b8; font-size: 10px;">NEGOTIATED SPEED</div>
-                  <div style="font-weight: 700; color: #f8fafc; font-size: 12px; margin-top: 2px;">${speed}</div>
-                </div>
-                <div style="background: #0f172a; padding: 10px; border-radius: 4px; border: 1px solid #334155;">
-                  <div style="color: #94a3b8; font-size: 10px;">VLAN ASSIGNMENT</div>
-                  <div style="font-weight: 700; color: #38bdf8; font-size: 12px; margin-top: 2px;">${vlan}</div>
-                </div>
-                <div style="background: #0f172a; padding: 10px; border-radius: 4px; border: 1px solid #334155;">
-                  <div style="color: #94a3b8; font-size: 10px;">TRAFFIC (IN / OUT)</div>
-                  <div style="font-weight: 700; color: #4ade80; font-size: 12px; margin-top: 2px;">${inRate} / ${outRate}</div>
-                </div>
-                <div style="background: #0f172a; padding: 10px; border-radius: 4px; border: 1px solid #334155;">
-                  <div style="color: #94a3b8; font-size: 10px;">PACKET DISCARDS &amp; CRC</div>
-                  <div style="font-weight: 700; color: ${isDown ? '#f87171' : '#cbd5e1'}; font-size: 12px; margin-top: 2px;">${crc}</div>
-                </div>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8;">
-                <span>Admin Status: <strong style="color: #4ade80;">${adminSt}</strong></span>
-                <span>Operational Status: <strong style="color: ${isDown ? '#f87171' : '#4ade80'};">${operSt}</strong></span>
-              </div>
-            </div>
-          `;
-        }
-
-        let topRowHtml = '';
-        for (let p = 1; p <= 47; p += 2) {
-          const isDown = isDown48(p);
-          const isAmb = isAmber(p);
-          const ledBg = isDown ? '#dc2626' : (isAmb ? '#eab308' : '#22c55e');
-          const isSel = selectedPortNumber === p;
-          topRowHtml += `
-            <div class="opm-faceplate-port" data-port="${p}" title="Port ${p}: ${isDown ? 'DOWN' : 'UP'}" style="width: 28px; height: 32px; background: ${isSel ? '#1e3a8a' : '#0f172a'}; border: 1px solid ${isSel ? '#3b82f6' : '#334155'}; border-radius: 3px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 3px 2px; cursor: pointer; transition: all 0.15s;">
-              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: ${ledBg}; ${isDown ? 'box-shadow: 0 0 6px #dc2626;' : 'box-shadow: 0 0 4px ' + ledBg + ';' }"></span>
-              <span style="font-family: monospace; font-size: 9px; font-weight: 700; color: ${isSel ? '#93c5fd' : '#cbd5e1'};">${p}</span>
-            </div>
-          `;
-        }
-
-        let btmRowHtml = '';
-        for (let p = 2; p <= 48; p += 2) {
-          const isDown = isDown48(p);
-          const isAmb = isAmber(p);
-          const ledBg = isDown ? '#dc2626' : (isAmb ? '#eab308' : '#22c55e');
-          const isSel = selectedPortNumber === p;
-          btmRowHtml += `
-            <div class="opm-faceplate-port" data-port="${p}" title="Port ${p}: ${isDown ? 'DOWN' : 'UP'}" style="width: 28px; height: 32px; background: ${isSel ? '#1e3a8a' : '#0f172a'}; border: 1px solid ${isSel ? '#3b82f6' : '#334155'}; border-radius: 3px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 3px 2px; cursor: pointer; transition: all 0.15s;">
-              <span style="font-family: monospace; font-size: 9px; font-weight: 700; color: ${isSel ? '#93c5fd' : '#cbd5e1'};">${p}</span>
-              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: ${ledBg}; ${isDown ? 'box-shadow: 0 0 6px #dc2626;' : 'box-shadow: 0 0 4px ' + ledBg + ';' }"></span>
-            </div>
-          `;
-        }
-
-        bodyContainer.innerHTML = `
-          <div style="background: #0f172a; border-radius: 6px; padding: 20px; color: #fff;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 12px; margin-bottom: 16px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 13px; font-weight: 800; color: #38bdf8; text-transform: uppercase;">
-                  ${dev.name} &bull; Physical 48-Port Switch Elevation Faceplate
-                </span>
-                <span style="font-size: 10px; font-weight: 700; background: #334155; color: #94a3b8; padding: 2px 6px; border-radius: 2px;">
-                  1U RACK CHASSIS
-                </span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 14px; font-size: 10px;">
-                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e;"></span> 10G/25G UP</span>
-                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #eab308;"></span> 1G Link</span>
-                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #dc2626; box-shadow: 0 0 4px #dc2626;"></span> DOWN (Port 48)</span>
-              </div>
-            </div>
-
-            <div style="background: #1e293b; border: 2px solid #334155; border-radius: 6px; padding: 14px; display: flex; gap: 16px; align-items: center; justify-content: space-between; overflow-x: auto;">
-              <div style="display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; padding-right: 12px; border-right: 1px solid #334155;">
-                <span style="font-size: 11px; font-weight: 800; color: #f8fafc; font-family: sans-serif;">CISCO</span>
-                <span style="font-size: 8px; color: #94a3b8; font-family: monospace;">CAT 9500</span>
-                <div style="display: flex; align-items: center; gap: 4px; font-size: 9px; color: #4ade80;">
-                  <span style="width: 5px; height: 5px; border-radius: 50%; background: #22c55e;"></span> SYS OK
-                </div>
-                <div style="display: flex; align-items: center; gap: 4px; font-size: 9px; color: #4ade80;">
-                  <span style="width: 5px; height: 5px; border-radius: 50%; background: #22c55e;"></span> PWR OK
-                </div>
-              </div>
-
-              <div style="display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
-                <div style="display: flex; gap: 4px;">
-                  ${topRowHtml}
-                </div>
-                <div style="display: flex; gap: 4px;">
-                  ${btmRowHtml}
-                </div>
-              </div>
-
-              <div style="display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; padding-left: 14px; border-left: 1px solid #334155;">
-                <div style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">40G QSFP</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-                  <div style="width: 32px; height: 24px; background: #0f172a; border: 1px solid #22c55e; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #4ade80;" title="QSFP 1 (40G) - UP">Q1</div>
-                  <div style="width: 32px; height: 24px; background: #0f172a; border: 1px solid #22c55e; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #4ade80;" title="QSFP 2 (40G) - UP">Q2</div>
-                  <div style="width: 32px; height: 24px; background: #0f172a; border: 1px solid #22c55e; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #4ade80;" title="QSFP 3 (40G) - UP">Q3</div>
-                  <div style="width: 32px; height: 24px; background: #450a0a; border: 1px solid #dc2626; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #f87171;" title="QSFP 4 (40G) - DOWN (Port 48 Uplink)">Q4 ⚠</div>
-                </div>
-              </div>
-            </div>
-
-            <div id="opm-port-inspector-container">
-              ${renderPortInspector(selectedPortNumber)}
-            </div>
-          </div>
-        `;
-
-        bodyContainer.querySelectorAll('.opm-faceplate-port').forEach(el => {
-          el.onclick = () => {
-            selectedPortNumber = Number(el.getAttribute('data-port'));
-            renderSnapshotBody();
-          };
-        });
-
-        const bounceBtn = bodyContainer.querySelector('#opm-port-bounce-btn');
-        if (bounceBtn) {
-          bounceBtn.onclick = () => {
-            showToast(`Administrative bounce sent for Port ${selectedPortNumber}. Interface re-negotiated.`);
-          };
-        }
-        const clearBtn = bodyContainer.querySelector('#opm-port-clear-btn');
-        if (clearBtn) {
-                const mibBrowserBtn = modal.querySelector('#mib-browser-from-snapshot-btn');
-      if (mibBrowserBtn) {
-        mibBrowserBtn.onclick = () => {
-          showMibBrowserModal(dev.ip);
-        };
+        return;
       }
-      clearBtn.onclick = () => {
-            showToast(`CRC error counters cleared for Port ${selectedPortNumber}.`);
-          };
+
+      // ---------------- PERFORMANCE ----------------
+      if (activeModalTab === 'performance') {
+        bodyContainer.innerHTML = opmModalEmpty('No performance history yet', 'Graphs fill in as polls complete — up to 24 hours of history is shown once the device has been polled.');
+        return;
+      }
+
+      // ---------------- MONITORS ----------------
+      if (activeModalTab === 'monitors') {
+        const monitorsList = [];
+        if (numOrNull(dev.cpu) !== null) monitorsList.push({ name: 'CPU Utilization', type: 'SNMP', value: dev.cpu + '%', threshold: '85%', warn: dev.cpu > 85 });
+        if (numOrNull(dev.memory) !== null) monitorsList.push({ name: 'Memory Utilization', type: 'SNMP', value: dev.memory + '%', threshold: '90%', warn: dev.memory > 90 });
+        if (numOrNull(dev.disk) !== null) monitorsList.push({ name: 'Disk Utilization', type: 'SNMP', value: dev.disk + '%', threshold: '90%', warn: dev.disk > 90 });
+        if (numOrNull(dev.responseTime) !== null) monitorsList.push({ name: 'Ping Response Time', type: 'ICMP', value: dev.responseTime + ' ms', threshold: '300 ms', warn: dev.responseTime > 300 });
+        if (numOrNull(dev.temp) !== null) monitorsList.push({ name: 'Device Temperature', type: 'SNMP', value: dev.temp + ' °C', threshold: '75 °C', warn: dev.temp > 75 });
+        if (!monitorsList.length) {
+          bodyContainer.innerHTML = opmModalEmpty('No monitors assigned yet', 'Assign a device template to add monitors — monitor values appear here once the device reports them.');
+          return;
         }
-      
-
-      } else if (activeModalTab === 'diagnostics') {
         bodyContainer.innerHTML = `
-          <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-            <div style="background: #161b22; border-bottom: 1px solid #30363d; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="width: 9px; height: 9px; border-radius: 50%; background: #238636; display: inline-block;"></span>
-                <span style="font-size: 12px; font-weight: 700; color: #f0f6fc; font-family: monospace;">OpManager Central Diagnostic Console &bull; ${dev.ip} (${dev.name})</span>
-              </div>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <button id="cli-run-ping-btn" style="background: #238636; color: #fff; border: 1px solid #2ea043; border-radius: 4px; padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer;">▶ ICMP Ping (4 pkts)</button>
-                <button id="cli-run-trace-btn" style="background: #1f6feb; color: #fff; border: 1px solid #388bfd; border-radius: 4px; padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer;">▶ WAN Traceroute</button>
-                <button id="cli-run-snmp-btn" style="background: #8957e5; color: #fff; border: 1px solid #a371f7; border-radius: 4px; padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer;">▶ SNMP MIB Walk</button>
-                <button id="cli-clear-btn" style="background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 4px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Clear</button>
-              </div>
-            </div>
-            
-            <!-- Live ICMP Ping Waveform & Oscilloscope Strip -->
-            <div style="background: #161b22; border-bottom: 1px solid #30363d; padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;">
-              <div style="display: flex; align-items: center; gap: 14px; font-size: 11px;">
-                <span style="color: #38bdf8; font-weight: 700; display: flex; align-items: center; gap: 5px;">
-                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 5px #22c55e;"></span>
-                  Continuous ICMP Waveform:
-                </span>
-                <span style="color: #c9d1d9;">Min: <strong style="color: #4ade80;">${(dev.responseTime - 0.4).toFixed(1)}ms</strong></span>
-                <span style="color: #c9d1d9;">Avg: <strong style="color: #38bdf8;">${dev.responseTime}ms</strong></span>
-                <span style="color: #c9d1d9;">Max: <strong style="color: #fca5a5;">${(dev.responseTime + 0.7).toFixed(1)}ms</strong></span>
-                <span style="color: #c9d1d9;">Jitter: <strong style="color: #34d399;">0.4ms</strong></span>
-                <span style="color: #c9d1d9;">Loss: <strong style="color: #4ade80;">0.0%</strong></span>
-              </div>
-              <span style="font-size: 10px; background: #238636; color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 700;">LIVE TELEMETRY</span>
-            </div>
-            <div style="background: #090d16; padding: 6px 16px; border-bottom: 1px solid #30363d;">
-              <svg width="100%" height="40" viewBox="0 0 700 40" style="overflow: visible;">
-                <line x1="0" y1="10" x2="700" y2="10" stroke="#21262d" stroke-width="1" />
-                <line x1="0" y1="25" x2="700" y2="25" stroke="#21262d" stroke-width="1" />
-                <polyline points="10,25 60,22 110,24 160,20 210,23 260,18 310,24 360,21 410,25 460,19 510,23 560,21 610,24 660,20 690,22" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" />
-                <polygon points="10,38 10,25 60,22 110,24 160,20 210,23 260,18 310,24 360,21 410,25 460,19 510,23 560,21 610,24 660,20 690,22 690,38" fill="rgba(56, 189, 248, 0.12)" />
-                <circle cx="690" cy="22" r="3.5" fill="#38bdf8" />
-              </svg>
-            </div>
-
-            <div id="cli-terminal-screen" style="padding: 16px; min-height: 260px; max-height: 320px; overflow-y: auto; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 11px; line-height: 1.6; color: #39d353;">
-              <div style="color: #8b949e;">ManageEngine OpManager Central Diagnostic Terminal v12.9.203 GA</div>
-              <div style="color: #8b949e;">Probe Agent: ${dev.probe} (Host ID: probe_${dev.probeId || 1})</div>
-              <div style="color: #8b949e;">Target node: ${dev.name} [${dev.ip}] &bull; SNMP Port: 161 &bull; ICMP Status: ALIVE</div>
-              <div style="color: #58a6ff; margin-top: 8px;">Ready. Select a diagnostic utility above to execute live test against this asset.</div>
-            </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 12px; font-weight: 700; color: #1e293b;">Associated Performance Monitors (${monitorsList.length})</span>
+            <button id="snap-poll-now-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Poll Now</button>
           </div>
-        `;
-
-        const term = bodyContainer.querySelector('#cli-terminal-screen');
-        const appendLog = (lines) => {
-          if (!term) return;
-          lines.forEach(l => {
-            const d = document.createElement('div');
-            d.innerHTML = l;
-            term.appendChild(d);
-          });
-          term.scrollTop = term.scrollHeight;
+          <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+            <thead><tr style="background: #f8fafc; text-align: left; color: #64748b;">
+              <th style="padding: 8px 10px;">Monitor</th><th style="padding: 8px 10px;">Type</th><th style="padding: 8px 10px;">Last Value</th><th style="padding: 8px 10px;">Threshold</th><th style="padding: 8px 10px;">Status</th><th style="padding: 8px 10px;"></th>
+            </tr></thead>
+            <tbody>
+              ${monitorsList.map(m => `<tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 10px; font-weight: 600;">${opmEsc(m.name)}</td>
+                <td style="padding: 8px 10px;">${opmEsc(m.type)}</td>
+                <td style="padding: 8px 10px;">${opmEsc(m.value)}</td>
+                <td style="padding: 8px 10px;">${opmEsc(m.threshold)}</td>
+                <td style="padding: 8px 10px; font-weight: 700; color: ${m.warn ? '#dc2626' : '#16a34a'};">${m.warn ? 'Warning' : 'OK'}</td>
+                <td style="padding: 8px 10px;"><button class="snap-test-monitor-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Test</button></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>`;
+        bodyContainer.querySelector('#snap-poll-now-btn').onclick = async () => {
+          const res = await opmApi('/api/devices/' + encodeURIComponent(dev.id) + '/poll-now', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: dev.id }) });
+          showToast(opmApiMessage(res, res.ok ? 'Poll completed.' : 'Poll failed.'), res.ok ? 'success' : 'error');
+          if (res.ok && typeof loadBackendData === 'function') { await loadBackendData(); rerenderIfStillOn('monitors'); }
         };
+        bodyContainer.querySelectorAll('.snap-test-monitor-btn').forEach(btn => {
+          btn.onclick = async () => {
+            const res = await opmApi('/api/devices/' + encodeURIComponent(dev.id) + '/test-monitors', { credentials: 'same-origin' });
+            showToast(opmApiMessage(res, res.ok ? 'Monitor test completed.' : 'Monitor test failed.'), res.ok ? 'success' : 'error');
+          };
+        });
+        return;
+      }
 
-        const runPing = () => {
-          appendLog([
-            `<div style="color: #f0f6fc; margin-top: 10px; font-weight: 700;">$ ping -c 4 ${dev.ip}</div>`,
-            `<div style="color: #8b949e;">PING ${dev.ip} (${dev.ip}): 56 data bytes</div>`,
-            `<div>64 bytes from ${dev.ip}: icmp_seq=0 ttl=62 time=${(dev.responseTime + (Math.random()*2 - 1)).toFixed(2)} ms</div>`,
-            `<div>64 bytes from ${dev.ip}: icmp_seq=1 ttl=62 time=${(dev.responseTime + (Math.random()*2 - 1)).toFixed(2)} ms</div>`,
-            `<div>64 bytes from ${dev.ip}: icmp_seq=2 ttl=62 time=${(dev.responseTime + (Math.random()*2 - 1)).toFixed(2)} ms</div>`,
-            `<div>64 bytes from ${dev.ip}: icmp_seq=3 ttl=62 time=${(dev.responseTime + (Math.random()*2 - 1)).toFixed(2)} ms</div>`,
-            `<div style="color: #8b949e;">--- ${dev.ip} ping statistics ---</div>`,
-            `<div style="color: #39d353; font-weight: 700;">4 packets transmitted, 4 packets received, 0.0% packet loss</div>`,
-            `<div style="color: #58a6ff;">round-trip min/avg/max = ${(dev.responseTime - 0.4).toFixed(2)}/${dev.responseTime.toFixed(2)}/${(dev.responseTime + 0.6).toFixed(2)} ms</div>`
-          ]);
-        };
-
-        const runTrace = () => {
-          appendLog([
-            `<div style="color: #f0f6fc; margin-top: 10px; font-weight: 700;">$ traceroute -m 30 -q 1 ${dev.ip}</div>`,
-            `<div style="color: #8b949e;">traceroute to ${dev.ip} (${dev.ip}), 30 hops max, 60 byte packets</div>`,
-            `<div> 1  opm-central-gw (10.0.0.1)  0.421 ms</div>`,
-            `<div> 2  probe-wan-uplink (10.${dev.probeId || 1}0.0.1)  ${(dev.responseTime * 0.4).toFixed(2)} ms</div>`,
-            `<div> 3  ${dev.name.toLowerCase()} (${dev.ip})  ${dev.responseTime.toFixed(2)} ms</div>`,
-            `<div style="color: #39d353; font-weight: 700;">Trace complete. Destination reached in 3 hops (0 drops, MTU: 1500).</div>`
-          ]);
-        };
-
-        const runSnmp = () => {
-          appendLog([
-            `<div style="color: #f0f6fc; margin-top: 10px; font-weight: 700;">$ snmpwalk -v 2c -c ******* ${dev.ip} RFC1213-MIB::system</div>`,
-            `<div>SNMPv2-MIB::sysDescr.0 = STRING: ${dev.vendor} ${dev.type} (${dev.osVersion || 'Enterprise OS'})</div>`,
-            `<div>SNMPv2-MIB::sysObjectID.0 = OID: SNMPv2-SMI::enterprises.9.1.2548</div>`,
-            `<div>DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (124892010) 14 days, 10:55:20.10</div>`,
-            `<div>SNMPv2-MIB::sysContact.0 = STRING: noc-admin@manageengine.internal</div>`,
-            `<div>SNMPv2-MIB::sysName.0 = STRING: ${dev.name}</div>`,
-            `<div>SNMPv2-MIB::sysLocation.0 = STRING: ${dev.probe}</div>`,
-            `<div>IF-MIB::ifNumber.0 = INTEGER: ${(dev.interfaces || []).length || 48}</div>`,
-            `<div style="color: #39d353; font-weight: 700;">End of MIB view reached (sysServices: 78).</div>`
-          ]);
-        };
-
-        const pBtn = bodyContainer.querySelector('#cli-run-ping-btn');
-        if (pBtn) pBtn.onclick = runPing;
-        const tBtn = bodyContainer.querySelector('#cli-run-trace-btn');
-        if (tBtn) tBtn.onclick = runTrace;
-        const sBtn = bodyContainer.querySelector('#cli-run-snmp-btn');
-        if (sBtn) sBtn.onclick = runSnmp;
-        const cBtn = bodyContainer.querySelector('#cli-clear-btn');
-        if (cBtn) cBtn.onclick = () => {
-          if (term) term.innerHTML = '<div style="color: #8b949e;">Terminal output cleared.</div>';
-        };
-
-      } else if (activeModalTab === 'config') {
+      // ---------------- INTERFACES ----------------
+      if (activeModalTab === 'interfaces') {
+        if (snapIfaces === undefined) {
+          bodyContainer.innerHTML = opmModalLoading('Loading interfaces…');
+          const res = await opmApi('/api/devices/' + encodeURIComponent(dev.id) + '/interfaces', { credentials: 'same-origin' });
+          snapIfaces = (res.ok && res.data && Array.isArray(res.data.interfaces)) ? res.data.interfaces : null;
+          rerenderIfStillOn('interfaces');
+          return;
+        }
+        if (!snapIfaces || !snapIfaces.length) {
+          bodyContainer.innerHTML = opmModalEmpty('No interfaces discovered yet', 'Run an SNMP interface discovery on this device — interfaces appear here once they are discovered.');
+          return;
+        }
         bodyContainer.innerHTML = `
-          <div>
-            <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">NCM Configuration Diff (Baseline Startup vs Live Running)</div>
-            <div style="background: #0f172a; color: #f8fafc; font-family: monospace; font-size: 11px; padding: 14px; border-radius: 4px; line-height: 1.6; max-height: 240px; overflow-y: auto;">
-              <span style="color: #94a3b8;">! Current running configuration drift detected on FortyGigE1/0/48</span><br>
-              interface FortyGigabitEthernet1/0/48<br>
-              <span style="color: #f87171;">- no shutdown (in Startup baseline)</span><br>
-              <span style="color: #f87171;">+ shutdown <-- REASON FOR PORT DOWN ALARM</span><br>
-              <span style="color: #4ade80;">+ access-list 101 permit tcp any host ${(state.devices && state.devices[0]?.ip) || '192.168.1.1'} eq 22</span>
+          <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+            <thead><tr style="background: #f8fafc; text-align: left; color: #64748b;">
+              <th style="padding: 8px 10px;">Interface</th><th style="padding: 8px 10px;">Admin</th><th style="padding: 8px 10px;">Oper</th><th style="padding: 8px 10px;">Speed</th><th style="padding: 8px 10px;">In Traffic</th><th style="padding: 8px 10px;">Out Traffic</th><th style="padding: 8px 10px;">Errors</th>
+            </tr></thead>
+            <tbody>
+              ${snapIfaces.map(i => `<tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 10px; font-weight: 600;">${opmEsc(i.name || i.descr || '—')}</td>
+                <td style="padding: 8px 10px;">${opmEsc(i.admin || '—')}</td>
+                <td style="padding: 8px 10px; font-weight: 700; color: ${String(i.oper || '').toLowerCase() === 'up' ? '#16a34a' : '#dc2626'};">${opmEsc(i.oper || '—')}</td>
+                <td style="padding: 8px 10px;">${opmEsc(i.speed || '—')}</td>
+                <td style="padding: 8px 10px;">${opmEsc(i.inTraffic === null || i.inTraffic === undefined ? '—' : String(i.inTraffic))}</td>
+                <td style="padding: 8px 10px;">${opmEsc(i.outTraffic === null || i.outTraffic === undefined ? '—' : String(i.outTraffic))}</td>
+                <td style="padding: 8px 10px;">${opmEsc(i.errors === null || i.errors === undefined ? '—' : String(i.errors))}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>`;
+        return;
+      }
+
+      // ---------------- ALARMS ----------------
+      if (activeModalTab === 'alarms') {
+        const devAlarms = (state.alarms || []).filter(a => a.device === dev.name || a.deviceId === dev.id);
+        if (!devAlarms.length) {
+          bodyContainer.innerHTML = opmModalEmpty('No alarms for this device', 'Good news — no alarms are currently open on this device.');
+          return;
+        }
+        bodyContainer.innerHTML = devAlarms.map(a => `
+          <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start;">
+            ${getStatusBadge(a.severity)}
+            <div>
+              <div style="font-size: 12px; font-weight: 700; color: #0f172a;">${opmEsc(a.message || '—')}</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">${opmEsc(a.time || '—')} &bull; ${opmEsc(a.entity || '—')} &bull; ${opmEsc(a.status || '—')}</div>
             </div>
+          </div>`).join('');
+        return;
+      }
+
+      // ---------------- PORTS ----------------
+      if (activeModalTab === 'ports') {
+        if (snapPorts === undefined) {
+          bodyContainer.innerHTML = opmModalLoading('Loading switch ports…');
+          const res = await opmApi('/api/tools/switch-ports?deviceId=' + encodeURIComponent(dev.id), { credentials: 'same-origin' });
+          snapPorts = (res.ok && res.data && Array.isArray(res.data.ports)) ? res.data.ports : null;
+          rerenderIfStillOn('ports');
+          return;
+        }
+        if (!snapPorts || !snapPorts.length) {
+          bodyContainer.innerHTML = opmModalEmpty('No switch ports discovered yet', 'Run a switch-port discovery (ifTable walk) on this switch — ports appear here once they are discovered.');
+          return;
+        }
+        const sel = snapPorts.find(p => String(p.port) === String(selectedPortNumber)) || snapPorts[0];
+        if (sel) selectedPortNumber = sel.port;
+        bodyContainer.innerHTML = `
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; align-content: start;">
+              ${snapPorts.map(p => `<div class="snap-port-cell" data-port="${opmEsc(String(p.port))}" style="border: 1px solid ${String(p.port) === String(selectedPortNumber) ? '#0070e0' : '#e2e8f0'}; border-radius: 6px; padding: 10px 6px; text-align: center; cursor: pointer; background: ${String(p.operStatus || '').toLowerCase() === 'up' ? '#f0fdf4' : '#fef2f2'};">
+                <div style="font-size: 11px; font-weight: 700; color: #0f172a;">${opmEsc(String(p.port))}</div>
+                <div style="font-size: 10px; color: ${String(p.operStatus || '').toLowerCase() === 'up' ? '#16a34a' : '#dc2626'}; font-weight: 700;">${opmEsc(p.operStatus || '—')}</div>
+              </div>`).join('')}
+            </div>
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+              <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Port ${opmEsc(String(sel.port))} Details</div>
+              ${infoRow('Alias', sel.alias)}
+              ${infoRow('Admin Status', sel.adminStatus)}
+              ${infoRow('Oper Status', sel.operStatus)}
+              ${infoRow('Speed', sel.speed)}
+              ${infoRow('VLAN', sel.vlan)}
+              ${infoRow('MAC', sel.mac)}
+              ${infoRow('IP', sel.ip)}
+              ${infoRow('CRC Errors', '—')}
+              <div style="display: flex; gap: 8px; margin-top: 12px;">
+                <button disabled title="Port bounce is not available yet — no port-control endpoint is configured." style="background: #94a3b8; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: not-allowed;">Bounce Port</button>
+                <button disabled title="CRC clearing is not available yet — no port-control endpoint is configured." style="background: #94a3b8; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: not-allowed;">Clear CRC</button>
+              </div>
+            </div>
+          </div>`;
+        bodyContainer.querySelectorAll('.snap-port-cell').forEach(cell => {
+          cell.onclick = () => { selectedPortNumber = cell.getAttribute('data-port'); renderSnapshotBody(); };
+        });
+        return;
+      }
+
+      // ---------------- DIAGNOSTICS ----------------
+      if (activeModalTab === 'diagnostics') {
+        bodyContainer.innerHTML = `
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <button id="cli-run-ping-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Ping ${opmEsc(dev.ip || '')}</button>
+            <button id="cli-run-trace-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #334155; cursor: pointer;">Traceroute</button>
+            <button id="cli-run-snmp-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #334155; cursor: pointer;">SNMP Walk (system)</button>
           </div>
-        `;
+          <div id="cli-terminal-screen" style="background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 11px; line-height: 1.6; padding: 14px; border-radius: 6px; min-height: 120px; white-space: pre-wrap; word-break: break-word;">No diagnostic output yet — run a command or an SNMP query.</div>`;
+        const termEl = bodyContainer.querySelector('#cli-terminal-screen');
+        const setTerm = (text) => { if (termEl) termEl.textContent = text; };
+        bodyContainer.querySelector('#cli-run-ping-btn').onclick = async () => {
+          setTerm('Running ping…');
+          const res = await opmApi('/api/tools/ping', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip: dev.ip, count: 4 }) });
+          setTerm(res.ok && res.data ? (res.data.output || JSON.stringify(res.data, null, 2)) : opmApiMessage(res, 'Ping failed.'));
+        };
+        bodyContainer.querySelector('#cli-run-trace-btn').onclick = async () => {
+          setTerm('Running traceroute…');
+          const res = await opmApi('/api/tools/traceroute', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip: dev.ip }) });
+          setTerm(res.ok && res.data ? (res.data.output || JSON.stringify(res.data, null, 2)) : opmApiMessage(res, 'Traceroute failed.'));
+        };
+        bodyContainer.querySelector('#cli-run-snmp-btn').onclick = async () => {
+          setTerm('Running SNMP walk…');
+          const res = await opmApi('/api/tools/snmp-walk', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip: dev.ip, rootOid: '.1.3.6.1.2.1.1' }) });
+          if (res.ok && res.data && Array.isArray(res.data.results)) {
+            setTerm(res.data.results.length ? res.data.results.map(r => `${r.oid} = ${r.value}`).join('\n') : 'SNMP walk returned no results for this device.');
+          } else {
+            setTerm(opmApiMessage(res, 'SNMP walk failed.'));
+          }
+        };
+        return;
+      }
+
+      // ---------------- CONFIG ----------------
+      if (activeModalTab === 'config') {
+        if (snapDiff === undefined) {
+          bodyContainer.innerHTML = opmModalLoading('Loading configuration status…');
+          const res = await opmApi('/api/ccm/diff?deviceId=' + encodeURIComponent(dev.id), { credentials: 'same-origin' });
+          snapDiff = (res.ok && res.data) ? res.data : null;
+          rerenderIfStillOn('config');
+          return;
+        }
+        const d = snapDiff;
+        const drift = d ? (d.drift === true || d.hasDrift === true) : null;
+        const added = d ? (d.addedLinesCount || 0) : 0;
+        const removed = d ? (d.removedLinesCount || 0) : 0;
+        bodyContainer.innerHTML = `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+            <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Configuration Status</div>
+            ${!d ? opmModalEmpty('No configuration backed up yet', 'Take a baseline backup to enable diff and drift checks for this device.')
+              : drift === false ? '<div style="font-size: 12px; color: #16a34a; font-weight: 700;">In Sync — running and startup configurations match.</div>'
+              : drift === true ? `<div style="font-size: 12px; color: #dc2626; font-weight: 700;">Drift detected — ${added} line(s) added, ${removed} line(s) removed.</div>`
+              : `<div style="font-size: 12px; color: #64748b;">${opmEsc(d.reason || 'Configuration status is not available for this device.')}</div>`}
+            ${d ? `<div style="font-size: 12px; color: #64748b; margin-top: 8px;">Last backup: ${opmEsc(d.lastBackupTime || '—')}</div>` : ''}
+            <div style="display: flex; gap: 8px; margin-top: 14px;">
+              <button id="snap-backup-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Backup Config</button>
+              <button id="snap-diff-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #334155; cursor: pointer;">View Drift Diff</button>
+            </div>
+          </div>`;
+        bodyContainer.querySelector('#snap-backup-btn').onclick = async () => {
+          const res = await opmApi('/api/ccm/backup-device', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: dev.id }) });
+          showToast(opmApiMessage(res, res.ok ? 'Backup completed.' : 'Backup failed.'), res.ok ? 'success' : 'error');
+          if (res.ok) { snapDiff = undefined; renderSnapshotBody(); }
+        };
+        bodyContainer.querySelector('#snap-diff-btn').onclick = () => { showNcmVersionCompareModal(dev); };
+        return;
       }
     }
 
@@ -5079,9 +4517,9 @@
           ${[
             { id: 'summary', label: 'Summary & Hardware' },
             { id: 'performance', label: 'Telemetry Graphs' },
-            { id: 'monitors', label: 'Performance Monitors (7)' },
-            { id: 'interfaces', label: `Interfaces (${(dev.interfaces || []).length})` },
-            ...(isSwitch ? [{ id: 'ports', label: 'Port Matrix (48-Port)' }] : []),
+            { id: 'monitors', label: 'Performance Monitors' },
+            { id: 'interfaces', label: 'Interfaces' },
+            ...(isSwitch ? [{ id: 'ports', label: 'Port Matrix' }] : []),
             { id: 'diagnostics', label: 'Diagnostic CLI & SNMP' },
             { id: 'alarms', label: 'Active Alarms' },
             { id: 'config', label: 'Configuration (NCM)' }
@@ -5104,7 +4542,7 @@
 
         <!-- Authentic ManageEngine Support & Build Footer -->
         <div style="padding: 10px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>ManageEngine OpManager Central (Version 12.9.203 GA Build 129203) • Monitored via ${dev.probe}</span>
+          <span>ManageEngine OpManager Central (Version 12.9.204-GA) • Monitored via ${dev.probe || '—'}</span>
           <span>Support: +1-888-720-9500 • <a href="mailto:opmanager-support@manageengine.com" style="color: #0070e0; text-decoration: none;">opmanager-support@manageengine.com</a></span>
         </div>
       </div>
@@ -5186,108 +4624,74 @@
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-trap-viewer-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.55); z-index: 99999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Roboto, -apple-system, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    const traps = [];
-
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 8px; width: 920px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
-        
-        <!-- Header -->
-        <div style="padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; background: #fafbfc;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 34px; height: 34px; border-radius: 6px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
-            </div>
-            <div>
-              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">SNMP Trap Viewer &amp; Parser Console</div>
-              <div style="font-size: 11px; color: #64748b;">UDP Port 162 Listener • Central Master aggregating across ${state.probes.length} Enterprise Probes</div>
-            </div>
+      <div style="background: #ffffff; border-radius: 8px; width: 860px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">SNMP Trap Viewer</div>
+            <div style="font-size: 11px; color: #64748b;">Traps received by the Central trap listener (UDP 162)</div>
           </div>
-          <button id="opm-close-traps-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;">✕</button>
+          <span id="close-trap-viewer-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <!-- Filter Bar -->
-        <div style="padding: 12px 24px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-          <div style="display: flex; gap: 10px; align-items: center;">
-            <span style="font-size: 12px; font-weight: 700; color: #475569;">Filter Traps:</span>
-            <select id="opm-trap-probe-filter" style="font-size: 11px; padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff;">
-              <option value="all">All Probes (${state.probes.length})</option>
-              ${state.probes.map(p => `<option value="${p.id}">${p.name}</option>`).join('')}
-            </select>
-            <input type="text" placeholder="Search Trap OID or IP..." style="font-size: 11px; padding: 5px 10px; border: 1px solid #cbd5e1; border-radius: 4px; width: 180px;">
-          </div>
+        <div id="opm-trap-viewer-body" style="padding: 20px; overflow-y: auto;">${opmModalLoading('Loading traps…')}</div>
+        <div style="padding: 10px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
+          <span id="opm-trap-viewer-count">—</span>
           <div style="display: flex; gap: 8px;">
-            <button id="opm-trap-test-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #0f172a; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-              Simulate Inbound Trap
-            </button>
-            <button id="opm-trap-export-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-              Export Trap Log
-            </button>
+            <button id="opm-trap-test-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; color: #334155;">Open Trap Simulator (test tool)</button>
+            <button id="opm-trap-export-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Export CSV</button>
+            <button id="opm-trap-close-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; color: #334155;">Close</button>
           </div>
         </div>
-
-        <!-- Table Body -->
-        <div style="flex: 1; overflow-y: auto; padding: 16px 24px;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-            <thead>
-              <tr style="background: #f1f5f9; text-align: left; color: #475569; font-weight: 700;">
-                <th style="padding: 8px 10px;">Severity</th>
-                <th style="padding: 8px 10px;">Trap Name & OID</th>
-                <th style="padding: 8px 10px;">Source Device</th>
-                <th style="padding: 8px 10px;">Probe</th>
-                <th style="padding: 8px 10px;">Variable Bindings</th>
-                <th style="padding: 8px 10px;">Received</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${traps.length === 0 ? `
-                <tr>
-                  <td colspan="6" style="padding: 40px; text-align: center; color: #94a3b8;">
-                    No SNMP Traps captured yet. UDP Port 162 listener is active across connected probes.
-                  </td>
-                </tr>
-              ` : traps.map(t => {
-                const badgeColor = t.severity === 'Critical' ? '#dc2626' : (t.severity === 'Trouble' ? '#ea580c' : (t.severity === 'Attention' ? '#ca8a04' : '#16a34a'));
-                return `
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 10px 10px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #fff; background: ${badgeColor}; padding: 2px 6px; border-radius: 3px;">${t.severity}</span>
-                    </td>
-                    <td style="padding: 10px 10px;">
-                      <div style="font-weight: 700; color: #0070e0;">${t.name}</div>
-                      <div style="font-size: 10px; font-family: monospace; color: #64748b;">${t.oid}</div>
-                    </td>
-                    <td style="padding: 10px 10px; font-weight: 600; color: #1e293b;">${t.source}</td>
-                    <td style="padding: 10px 10px; color: #64748b;">${t.probe}</td>
-                    <td style="padding: 10px 10px; font-family: monospace; font-size: 11px; color: #334155; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${t.bindings}</td>
-                    <td style="padding: 10px 10px; color: #64748b; font-size: 11px;">${t.time}</td>
-                  </tr>
-                `;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Footer -->
-        <div style="padding: 12px 24px; background: #fafbfc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>${traps.length} Traps Captured (Last 1 Hour) • Trap-to-Alarm Correlation Rule: <strong>ACTIVE</strong></span>
-          <button id="opm-trap-close-btn-bottom" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close</button>
-        </div>
-      </div>
-    `;
-
+      </div>`;
     modal.style.display = 'flex';
-    document.getElementById('opm-close-traps-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('opm-trap-close-btn-bottom').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('opm-trap-test-btn').onclick = () => {
-      showToast('Simulated RFC1213 linkDown SNMP trap injected successfully.');
+    modal.querySelector('#close-trap-viewer-btn').onclick = () => { modal.style.display = 'none'; };
+    modal.querySelector('#opm-trap-close-btn').onclick = () => { modal.style.display = 'none'; };
+    modal.querySelector('#opm-trap-test-btn').onclick = () => { showSnmpTrapSimulatorModal(); };
+    let trapRows = [];
+    const exportBtn = modal.querySelector('#opm-trap-export-btn');
+    exportBtn.onclick = () => {
+      if (!trapRows.length) { showToast('Nothing to export yet — no traps received.', 'error'); return; }
+      const csv = 'received_at,source_ip,oid,value\n' + trapRows.map(t => [t.received_at || '', t.source_ip || '', t.oid || '', String(t.value || '').replace(/"/g, '""')].map(v => `"${v}"`).join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+      a.download = 'snmp-traps.csv';
+      a.click();
+      showToast(`Exported ${trapRows.length} received trap(s) as CSV.`);
     };
-    document.getElementById('opm-trap-export-btn').onclick = () => {
-      showToast('Exported SNMP Traps log as CSV.');
-    };
+    (async () => {
+      const body = modal.querySelector('#opm-trap-viewer-body');
+      const countEl = modal.querySelector('#opm-trap-viewer-count');
+      const res = await opmApi('/api/traps/list', { credentials: 'same-origin' });
+      if (!res.ok || !res.data) {
+        body.innerHTML = opmModalError(opmApiMessage(res, 'Could not load traps.'));
+        countEl.textContent = '—';
+        return;
+      }
+      trapRows = Array.isArray(res.data.traps) ? res.data.traps : [];
+      const total = (res.data.total !== undefined && res.data.total !== null) ? res.data.total : trapRows.length;
+      countEl.textContent = `${total} Trap(s) Received`;
+      if (!trapRows.length) {
+        body.innerHTML = opmModalEmpty('No SNMP Traps Received', 'OpManager Central SNMP Trap Listener is active on UDP port 162. Forward traps from your routers, switches, and firewalls to begin receiving real-time trap events.');
+        return;
+      }
+      body.innerHTML = `
+        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+          <thead><tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #475569; text-align: left;">
+            <th style="padding: 8px 10px;">Received</th><th style="padding: 8px 10px;">Source IP</th><th style="padding: 8px 10px;">OID</th><th style="padding: 8px 10px;">Value</th>
+          </tr></thead>
+          <tbody>
+            ${trapRows.map(t => `<tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 8px 10px; font-family: monospace;">${opmEsc(t.received_at || '—')}</td>
+              <td style="padding: 8px 10px; font-family: monospace;">${opmEsc(t.source_ip || '—')}</td>
+              <td style="padding: 8px 10px; font-family: monospace;">${opmEsc(t.oid || '—')}</td>
+              <td style="padding: 8px 10px;">${opmEsc(t.value === null || t.value === undefined ? '—' : String(t.value))}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>`;
+    })();
   }
 
   // -------------------------------------------------------------
@@ -5381,11 +4785,11 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 5px; color: #475569;">Starting IP Address *</label>
-              <input type="text" id="disc-start-ip" value="192.168.1.1" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+              <input type="text" id="disc-start-ip" placeholder="e.g. 192.168.1.1" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
             </div>
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 5px; color: #475569;">Ending IP Address *</label>
-              <input type="text" id="disc-end-ip" value="192.168.1.254" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+              <input type="text" id="disc-end-ip" placeholder="e.g. 192.168.1.254" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
             </div>
           </div>
 
@@ -5399,7 +4803,7 @@
             <div>
               <label style="display: block; font-weight: 700; margin-bottom: 5px; color: #475569;">Discovery Protocol Profile</label>
               <select id="disc-cred-sel" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #ffffff; box-sizing: border-box;">
-                <option value="v2c">SNMP v1/v2c (Community: public, dxb-ro)</option>
+                <option value="v2c">SNMP v1/v2c (Community: public)</option>
                 <option value="v3">SNMP v3 (SHA-256 Auth / AES-256 Priv)</option>
                 <option value="wmi">Windows WMI / PowerShell RPC</option>
                 <option value="ssh">Linux SSH Key (opm-monitoring)</option>
@@ -5420,7 +4824,7 @@
 
           <!-- Real-Time Terminal Output -->
           <div style="border: 1px solid #cbd5e1; border-radius: 4px; background: #0f172a; padding: 12px; font-family: monospace; font-size: 11px; color: #38bdf8; height: 140px; overflow-y: auto; line-height: 1.5;" id="disc-terminal">
-            <span style="color: #94a3b8;">OpManager Central Subnet Discovery Engine v12.9.203 ready.</span><br>
+            <span style="color: #94a3b8;">OpManager Central Subnet Discovery Engine v12.9.204-GA ready.</span><br>
             <span style="color: #64748b;">Specify target IP range and click "Start Discovery Sweep" to query live probe agents.</span>
           </div>
         </div>
@@ -5543,7 +4947,7 @@
     }
 
     let activeTool = defaultTab;
-    const ip = targetIp || (state.devices[0] ? state.devices[0].ip : '127.0.0.1');
+    const ip = targetIp || '';
 
     function renderToolsContent() {
       const container = modal.querySelector('#tools-tab-content');
@@ -5737,7 +5141,7 @@
       } else if (activeTool === 'terminal') {
         container.innerHTML = `
           <div style="background: #0f172a; color: #f8fafc; font-family: monospace; font-size: 11px; padding: 14px; border-radius: 4px; height: 180px; overflow-y: auto; line-height: 1.5;" id="tool-term-screen">
-            <span style="color: #4ade80;">ManageEngine OpManager Central Web CLI Terminal v12.9.203</span><br>
+            <span style="color: #4ade80;">ManageEngine OpManager Central Web CLI Terminal v12.9.204-GA</span><br>
             <span style="color: #94a3b8;">Connected to ${ip} via Secure Shell (SSHv2). Type commands below (e.g. 'show ip int br', 'show version', 'show running-config', 'ping 10.0.0.1').</span><br><br>
           </div>
           <div style="display: flex; gap: 8px; margin-top: 10px;">
@@ -5757,7 +5161,7 @@
             const res = await fetch('/api/tools/terminal-exec', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ command: cmd, hostname: 'CORE-RTR-01' })
+              body: JSON.stringify({ command: cmd, hostname: ip || '' })
             });
             const d = await res.json();
             scr.innerHTML += `<span style="color: #f1f5f9;">${(d.output || '').replace(/\n/g, '<br>')}</span><br><br>`;
@@ -5806,7 +5210,7 @@
 
         <!-- Footer -->
         <div style="padding: 10px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>ManageEngine OpManager Central (Version 12.9.203 GA Build 129203)</span>
+          <span>ManageEngine OpManager Central (Version 12.9.204-GA)</span>
           <button id="ok-tools-modal-btn" style="background: #0070e0; color: #fff; border: none; border-radius: 4px; padding: 5px 14px; font-size: 11px; font-weight: 600; cursor: pointer;">Done</button>
         </div>
       </div>
@@ -5897,22 +5301,22 @@
     document.getElementById('close-add-user-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('cancel-add-user-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('save-add-user-btn').onclick = async () => {
-      const u = document.getElementById('new-user-username').value.trim() || 'user_' + Math.floor(Math.random() * 900 + 100);
+      const u = document.getElementById('new-user-username').value.trim();
+      if (!u) { showToast('Enter a username first.', 'error'); return; }
       const fn = document.getElementById('new-user-fullname').value.trim() || u;
-      const em = document.getElementById('new-user-email').value.trim() || `${u}@enterprise.corp`;
+      const em = document.getElementById('new-user-email').value.trim();
       const rl = document.getElementById('new-user-role').value;
       const at = document.getElementById('new-user-auth').value;
       const sc = document.getElementById('new-user-scope').value;
 
-      try {
-        await fetch('/api/settings/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: u, name: fn, email: em, role: rl, authType: at, probeScope: sc })
-        });
-      } catch(e) {}
-
-      showToast(`User account ${u} (${fn}) created successfully with role ${rl}.`);
+      const res = await opmApi('/api/settings/users', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, name: fn, email: em || undefined, role: rl, authType: at, probeScope: sc })
+      });
+      if (!res.ok) { showToast(opmApiMessage(res, 'Could not create user account.'), 'error'); return; }
+      showToast(opmApiMessage(res, `User account ${u} (${fn}) created successfully with role ${rl}.`));
       modal.style.display = 'none';
       if (state.currentTab === 'settings') {
         renderSettingsView();
@@ -5935,17 +5339,17 @@
           <div style="padding: 22px; font-size: 12px; color: #334155;">
             <div style="margin-bottom: 14px;">
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">Discovery Rule Name *</label>
-              <input type="text" id="new-rule-name" placeholder="e.g. Branch Office Subnet Sweep" value="Branch Office Subnet Sweep (10.60.0.0/24)" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
+              <input type="text" id="new-rule-name" placeholder="e.g. Branch Office Subnet Sweep" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
               <div>
                 <label style="display: block; font-weight: 600; margin-bottom: 4px;">CIDR Subnet / Range *</label>
-                <input type="text" id="new-rule-subnet" value="10.60.0.0/24" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; font-family: monospace;">
+                <input type="text" id="new-rule-subnet" placeholder="e.g. 10.60.0.0/24" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; font-family: monospace;">
               </div>
               <div>
                 <label style="display: block; font-weight: 600; margin-bottom: 4px;">Assigned Probe *</label>
                 <select id="new-rule-probe" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff; box-sizing: border-box;">
-                  ${state.probes.map(p => `<option value="${p.name}">${p.name} (${p.location})</option>`).join('')}
+                  ${state.probes.map(p => `<option value="${p.name}">${p.name}${p.location ? ' (' + p.location + ')' : ''}</option>`).join('')}
                 </select>
               </div>
             </div>
@@ -5962,7 +5366,7 @@
               <div>
                 <label style="display: block; font-weight: 600; margin-bottom: 4px;">Credential Profile</label>
                 <select id="new-rule-cred" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff; box-sizing: border-box;">
-                  <option>SNMPv2c Community (dxb-ro)</option>
+                  <option>SNMPv2c Community</option>
                   <option>SNMPv3 USM (SHA-256 / AES-256)</option>
                   <option>WMI / Windows WinRM</option>
                   <option>Linux SSH Key Vault</option>
@@ -5985,21 +5389,22 @@
     document.getElementById('close-new-rule-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('cancel-new-rule-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('save-new-rule-btn').onclick = async () => {
-      const nm = document.getElementById('new-rule-name').value.trim() || 'Subnet Sweep';
-      const sub = document.getElementById('new-rule-subnet').value.trim() || '10.60.0.0/24';
+      const nm = document.getElementById('new-rule-name').value.trim();
+      const sub = document.getElementById('new-rule-subnet').value.trim();
+      if (!nm) { showToast('Enter a discovery rule name first.', 'error'); return; }
+      if (!sub) { showToast('Enter a subnet or range first.', 'error'); return; }
       const prb = document.getElementById('new-rule-probe').value;
       const sch = document.getElementById('new-rule-sched').value;
       const crd = document.getElementById('new-rule-cred').value;
 
-      try {
-        await fetch('/api/discovery/rules', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: nm, subnet: sub, probe: prb, schedule: sch, credential: crd })
-        });
-      } catch(e) {}
-
-      showToast(`Discovery rule "${nm}" scheduled on ${prb}.`);
+      const res = await opmApi('/api/discovery/rules', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: nm, subnet: sub, probe: prb, schedule: sch, credential: crd })
+      });
+      if (!res.ok) { showToast(opmApiMessage(res, 'Could not save discovery rule.'), 'error'); return; }
+      showToast(opmApiMessage(res, `Discovery rule "${nm}" scheduled on ${prb}.`));
       modal.style.display = 'none';
       if (state.currentTab === 'settings') {
         renderSettingsView();
@@ -6024,12 +5429,12 @@
         <div style="padding: 22px; font-size: 12px; color: #334155;">
           <div style="margin-bottom: 14px;">
             <label style="display: block; font-weight: 600; margin-bottom: 4px;">Template Name *</label>
-            <input type="text" id="new-tmpl-name" placeholder="e.g. Cisco Nexus 9300-FX3" value="Cisco Nexus 9300-FX3 Series" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
+            <input type="text" id="new-tmpl-name" placeholder="e.g. Cisco Nexus 9300-FX3" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
             <div>
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">Hardware Vendor *</label>
-              <input type="text" id="new-tmpl-vendor" value="Cisco Systems" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
+              <input type="text" id="new-tmpl-vendor" placeholder="e.g. Cisco Systems" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
             </div>
             <div>
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">Device Category *</label>
@@ -6046,7 +5451,7 @@
           <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
             <div>
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">Enterprise SysOID String *</label>
-              <input type="text" id="new-tmpl-sysoid" value=".1.3.6.1.4.1.9.1.2840" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; font-family: monospace;">
+              <input type="text" id="new-tmpl-sysoid" placeholder="e.g. .1.3.6.1.4.1.9.1.2840" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; font-family: monospace;">
             </div>
             <div>
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">Polling Interval *</label>
@@ -6077,19 +5482,22 @@
     modal.style.display = 'flex';
     document.getElementById('close-new-tmpl-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('cancel-new-tmpl-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('save-new-tmpl-btn').onclick = () => {
-      const nm = document.getElementById('new-tmpl-name').value.trim() || 'Custom Device Template';
-      const vendor = document.getElementById('new-tmpl-vendor').value.trim() || 'Generic';
+    document.getElementById('save-new-tmpl-btn').onclick = async () => {
+      const nm = document.getElementById('new-tmpl-name').value.trim();
+      const vendor = document.getElementById('new-tmpl-vendor').value.trim();
       const cat = document.getElementById('new-tmpl-cat').value;
-      const sysoid = document.getElementById('new-tmpl-sysoid').value.trim() || '.1.3.6.1.4.1.9.1';
+      const sysoid = document.getElementById('new-tmpl-sysoid').value.trim();
+      if (!nm) { showToast('Enter a template name first.', 'error'); return; }
+      if (!vendor) { showToast('Enter a hardware vendor first.', 'error'); return; }
+      if (!sysoid) { showToast('Enter an enterprise SysOID first.', 'error'); return; }
       const poll = document.getElementById('new-tmpl-poll') ? document.getElementById('new-tmpl-poll').value : '300s';
-      
+
       const checkedMonitors = [];
       modal.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
         const lbl = cb.parentElement ? cb.parentElement.textContent.trim() : '';
         if (lbl) checkedMonitors.push(lbl);
       });
-      const monitors = checkedMonitors.length > 0 ? checkedMonitors.join(', ') : 'CPU Utilization, Memory Buffer, Temperature';
+      const monitors = checkedMonitors.length > 0 ? checkedMonitors.join(', ') : '';
 
       const newTmplObj = {
         id: 'tmpl-' + Date.now(),
@@ -6098,20 +5506,19 @@
         vendor: vendor,
         oid: sysoid,
         monitors: monitors,
-        poll: poll,
-        cliCommands: 'show version\nshow running-config'
+        poll: poll
       };
 
-      if (!state.templates) state.templates = [];
-      state.templates.unshift(newTmplObj);
-
-      fetch('/api/settings/templates', {
+      const res = await opmApi('/api/settings/templates', {
         method: 'POST',
+        credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTmplObj)
-      }).catch(() => {});
-
-      showToast(`Device Template "${nm}" added to AdventNet template repository.`);
+      });
+      if (!res.ok) { showToast(opmApiMessage(res, 'Could not save device template.'), 'error'); return; }
+      if (!state.templates) state.templates = [];
+      state.templates.unshift(newTmplObj);
+      showToast(opmApiMessage(res, `Device Template "${nm}" added.`));
       modal.style.display = 'none';
       if (state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
         renderSettingsView();
@@ -6447,74 +5854,92 @@
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-apply-license-modal';
-      modal.style.cssText = 'position: fixed; inset: 0; background: rgba(15,23,42,0.6); display: flex; align-items: center; justify-content: center; z-index: 100000; backdrop-filter: blur(2px);';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
+      document.body.appendChild(modal);
+    }
+    const render = (lic, error) => {
+      const row = (label, v) => `<div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;"><span style="font-weight: 600;">${label}:</span><span style="font-weight: 700;">${opmEsc(v === null || v === undefined || v === '' ? '—' : String(v))}</span></div>`;
       modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 8px; width: 560px; max-width: 95vw; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
-          <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 15px; font-weight: 700; color: #0f172a;">Apply License Key (.xml)</span>
-              <span style="background: #e0f2fe; color: #0369a1; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">GA BUILD 129203</span>
+        <div style="background: #ffffff; border-radius: 6px; width: 560px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); overflow: hidden;">
+          <div style="background: #0f172a; padding: 20px 24px; color: #ffffff; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 16px; font-weight: 700;">Apply License</div>
+              <div style="font-size: 11px; color: #94a3b8;">License facts below come from the server — nothing is pre-filled.</div>
             </div>
-            <button id="close-apply-license-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
+            <button id="close-license-btn" style="background: none; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">✕</button>
           </div>
-          <div style="padding: 22px; font-size: 12px; color: #334155;">
-            <!-- Server Machine Host ID -->
-            <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 11px; color: #64748b; font-weight: 600;">Central Server Host ID (MAC Address):</div>
-                <div style="font-size: 13px; font-weight: 700; color: #0f172a; font-family: monospace; margin-top: 2px;">00:50:56:B2:91:A4</div>
-              </div>
-              <button onclick="navigator.clipboard.writeText('00:50:56:B2:91:A4'); window.showToast('Copied Host ID to clipboard');" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; color: #0070e0; font-weight: 600;">Copy Host ID</button>
+          <div style="padding: 24px; font-size: 12px; color: #334155; line-height: 1.7;">
+            ${error ? opmModalError(error) : ''}
+            ${!error && !lic ? opmModalEmpty('No license applied yet', 'Apply a license key to register this installation.') : ''}
+            ${lic ? `
+            ${row('Edition', lic.edition)}
+            ${row('Version', lic.version)}
+            ${row('License type', lic.licenseType)}
+            ${row('Registered user', lic.registeredUser)}
+            ${row('Organization', lic.organization)}
+            ${row('Expiry', lic.expiryDate)}
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
+              <span style="font-weight: 600;">Host ID:</span>
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <span id="opm-license-hostid" style="font-family: monospace; font-weight: 700; color: #0f172a;">${opmEsc(lic.hostId || '—')}</span>
+                <button id="opm-copy-hostid-btn" ${lic.hostId ? '' : 'disabled'} style="background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; color: #0070e0; font-weight: 600;">Copy Host ID</button>
+              </span>
             </div>
-
-            <!-- License XML File Selector -->
-            <div style="margin-bottom: 14px;">
-              <label style="display: block; font-weight: 600; margin-bottom: 6px;">Select AdventNetLicense.xml File *</label>
-              <div style="border: 2px dashed #cbd5e1; border-radius: 6px; padding: 18px; text-align: center; background: #fafbfc; cursor: pointer;" onclick="document.getElementById('license-file-input').click()">
-                <div style="font-size: 13px; font-weight: 600; color: #0070e0;">Click to browse or drop AdventNetLicense.xml</div>
-                <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Official XML license certificate provided by Zoho Corporation Pvt. Ltd.</div>
-                <input type="file" id="license-file-input" accept=".xml" style="display: none;" onchange="document.getElementById('selected-lic-name').textContent = this.files[0] ? this.files[0].name : '';">
-                <div id="selected-lic-name" style="font-size: 11px; font-weight: 700; color: #16a34a; margin-top: 6px;">AdventNetLicense_GA_Perpetual_Central.xml (Attached)</div>
-              </div>
+            ${row('Probes used / allowed', (lic.probesUsed ?? '—') + ' / ' + (lic.probesAllowed === -1 ? 'Unlimited' : (lic.probesAllowed ?? '—')))}
+            ${row('Devices used / allowed', (lic.devicesUsed ?? '—') + ' / ' + (lic.devicesAllowed ?? '—'))}
+            ` : ''}
+            <div style="margin-top: 16px;">
+              <label style="display: block; font-weight: 700; color: #0f172a; margin-bottom: 6px;">License file (.xml)</label>
+              <input type="file" id="opm-license-file" accept=".xml" style="width: 100%; font-size: 12px; box-sizing: border-box;">
+              <div id="opm-license-file-name" style="font-size: 11px; color: #64748b; margin-top: 6px;">No file chosen yet.</div>
             </div>
-
-            <div style="margin-bottom: 14px;">
-              <label style="display: block; font-weight: 600; margin-bottom: 4px;">License Key XML Content (Optional Text Input)</label>
-              <textarea id="license-xml-text" rows="4" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 10px; font-size: 11px; font-family: monospace; box-sizing: border-box;" placeholder="<?xml version='1.0' encoding='UTF-8'?><AdventNetLicense><Product>OpManager-Central</Product><Type>Perpetual</Type></AdventNetLicense>"></textarea>
-            </div>
-            
-            <div style="font-size: 11px; color: #64748b; line-height: 1.5;">
-              Applying a new license key automatically distributes probe licenses across all connected enterprise probes (${(state.probes || []).map(p => p.name).join(', ') || 'Connected Probes'}).
+            <div style="margin-top: 12px;">
+              <label style="display: block; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Or license key string</label>
+              <input type="text" id="opm-license-key" placeholder="Paste a license key string (optional)" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
             </div>
           </div>
-          <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end; gap: 8px;">
-            <button id="cancel-apply-license-btn" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Cancel</button>
-            <button id="save-apply-license-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Validate & Apply License</button>
+          <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 11px; color: #64748b;">Applying a license validates it on the server and reports the real result.</span>
+            <div style="display: flex; gap: 8px;">
+              <button id="license-cancel-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Cancel</button>
+              <button id="license-apply-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-weight: 600; cursor: pointer;">Validate &amp; Apply</button>
+            </div>
           </div>
         </div>
       `;
-      document.body.appendChild(modal);
-    }
-    modal.style.display = 'flex';
-    document.getElementById('close-apply-license-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('cancel-apply-license-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('save-apply-license-btn').onclick = async () => {
-      try {
-        const res = await fetch('/api/settings/license/apply', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ licenseXml: 'AdventNetLicense_GA_Perpetual.xml' })
-        });
-        const data = await res.json();
-        showToast(data.message || 'Perpetual License applied successfully.');
-      } catch (e) {
-        showToast('Perpetual License applied successfully.');
-      }
-      modal.style.display = 'none';
-      if (state.currentTab === 'settings') {
-        renderSettingsView();
-      }
+      modal.style.display = 'flex';
+      document.getElementById('close-license-btn').onclick = () => { modal.style.display = 'none'; };
+      document.getElementById('license-cancel-btn').onclick = () => { modal.style.display = 'none'; };
+      const fileInput = document.getElementById('opm-license-file');
+      if (fileInput) fileInput.onchange = () => {
+        const nameEl = document.getElementById('opm-license-file-name');
+        if (nameEl) nameEl.textContent = fileInput.files && fileInput.files[0] ? ('Selected: ' + fileInput.files[0].name) : 'No file chosen yet.';
+      };
+      const copyBtn = document.getElementById('opm-copy-hostid-btn');
+      if (copyBtn) copyBtn.onclick = () => {
+        const el = document.getElementById('opm-license-hostid');
+        if (el) navigator.clipboard.writeText(el.textContent);
+        showToast('Copied Host ID to clipboard.');
+      };
+      document.getElementById('license-apply-btn').onclick = async () => {
+        const keyString = (document.getElementById('opm-license-key').value || '').trim();
+        let licenseXml = null;
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          try { licenseXml = await fileInput.files[0].text(); } catch (e) { showToast('Could not read the license file.', 'error'); return; }
+        }
+        if (!licenseXml && !keyString) { showToast('Choose a license file or paste a license key first.', 'error'); return; }
+        const res = await opmApi('/api/settings/license/apply', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ licenseXml, keyString }) });
+        showToast(opmApiMessage(res, res.ok ? 'License applied.' : 'License could not be applied.'), res.ok ? 'success' : 'error');
+        if (res.ok) { modal.style.display = 'none'; if (typeof loadBackendData === 'function') loadBackendData(); }
+      };
     };
+    modal.innerHTML = `<div style="background: #ffffff; border-radius: 6px; width: 560px; overflow: hidden;">${opmModalLoading('Loading license…')}</div>`;
+    modal.style.display = 'flex';
+    (async () => {
+      const res = await opmApi('/api/settings/license', { credentials: 'same-origin' });
+      if (!res.ok || !res.data) render(null, opmApiMessage(res, 'Could not load license details.'));
+      else render(res.data.license || null, null);
+    })();
   }
 
 
@@ -6527,437 +5952,125 @@
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-netpath-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10006; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    const services = [
-      { id: 'salesforce', name: 'Salesforce CRM Cloud', ip: '13.107.6.156', port: 443, as: 'AS8075 Microsoft/Salesforce' },
-      { id: 'o365', name: 'Microsoft 365 Exchange', ip: '52.96.0.0', port: 443, as: 'AS8075 Microsoft Corp' },
-      { id: 'aws', name: 'AWS us-east-1 RDS Core', ip: '172.31.0.12', port: 5432, as: 'AS16509 Amazon.com' },
-      { id: 'gcp', name: 'Google Cloud Storage VPC', ip: '142.250.190.46', port: 443, as: 'AS15169 Google LLC' }
-    ];
-
-    const currentSvc = services.find(s => s.id === targetService) || services[0];
-    const activeProbe = sourceProbe || (state.probes && state.probes[0]) || { name: 'Central HQ Probe', ip: '192.168.30.65' };
-    const probeName = activeProbe.name;
-    const probeIp = activeProbe.ip || '192.168.30.65';
-    const firstDev = (state.devices && state.devices[0]) || { name: 'Core Gateway', ip: '192.168.1.1' };
-
-    const hops = [
-      { num: 0, name: 'Source Probe', host: `${probeName.toLowerCase().replace(/[^a-z0-9]/g, '-')}.local`, ip: probeIp, rtt: '0.0 ms', loss: '0.0%', as: 'Enterprise Probe Node', status: 'optimal' },
-      { num: 1, name: 'Local Gateway Switch', host: `${firstDev.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.lan`, ip: firstDev.ip, rtt: '0.8 ms', loss: '0.0%', as: 'LAN Gateway', status: 'optimal' },
-      { num: 2, name: 'Core Distribution', host: 'core-dist.corp', ip: '192.168.10.1', rtt: '1.4 ms', loss: '0.0%', as: 'Core Backbone', status: 'optimal' },
-      { num: 3, name: 'Perimeter Edge Firewall', host: 'edge-gw.transit', ip: '192.168.100.1', rtt: '2.1 ms', loss: '0.0%', as: 'Enterprise Border', status: 'optimal' },
-      { num: 4, name: 'Tier-1 Carrier Transit', host: 'ae2.cr01.lga.lumen.net', ip: '4.69.130.1', rtt: '12.6 ms', loss: '0.0%', as: 'AS3356 Lumen Technologies', status: 'optimal' },
-      { num: 5, name: 'Edge Interconnect IXP', host: 'ash-b1-link.telia.net', ip: '172.70.240.1', rtt: '18.4 ms', loss: '0.0%', as: 'AS13335 Cloudflare / Edge IXP', status: 'optimal' },
-      { num: 6, name: 'Target Cloud Endpoint', host: currentSvc.name, ip: currentSvc.ip, rtt: '22.8 ms', loss: '0.0%', as: currentSvc.as, status: 'optimal' }
-    ];
-
+    const guess = (typeof targetService === 'string' && targetService.trim()) ? targetService.trim()
+      : (sourceProbe && sourceProbe.ip) ? sourceProbe.ip : '';
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1080px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0070e0;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 18px;">🌐</span>
-            <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine NetPath &trade; - Hop-by-Hop Visual Network Path Telemetry</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">TraceTCP / MTR Hybrid Continuous Latency & Packet Loss Profiler (RFC 1393)</div>
-            </div>
+      <div style="background: #ffffff; border-radius: 8px; width: 780px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">NetPath — Path Tracing</div>
+            <div style="font-size: 11px; color: #64748b;">Hops, round-trip time and loss are measured live by traceroute — nothing here is pre-filled.</div>
           </div>
-          <button id="close-netpath-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <span id="close-netpath-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <!-- Controls Bar -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 10px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <div style="display: flex; align-items: center; gap: 14px; font-size: 12px;">
-            <div>
-              <span style="color: #64748b; font-weight: 600;">Source Probe:</span>
-              <strong style="color: #0f172a; margin-left: 4px;">${probeName}</strong>
-            </div>
-            <span style="color: #cbd5e1;">|</span>
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="color: #64748b; font-weight: 600;">Destination Service:</span>
-              <select id="opm-netpath-svc-select" style="padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-weight: 600; color: #0f172a; background: #fff;">
-                ${services.map(s => `<option value="${s.id}" ${s.id === currentSvc.id ? 'selected' : ''}>${s.name} (${s.ip}:${s.port})</option>`).join('')}
-              </select>
-            </div>
-            <span style="color: #cbd5e1;">|</span>
-            <div>
-              <span style="color: #64748b; font-weight: 600;">End-to-End Latency:</span>
-              <strong style="color: #16a34a; margin-left: 4px;">22.8 ms</strong>
-            </div>
-            <div>
-              <span style="color: #64748b; font-weight: 600;">Total Packet Loss:</span>
-              <strong style="color: #16a34a; margin-left: 4px;">0.00%</strong>
-            </div>
+        <div style="padding: 20px;">
+          <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+            <input type="text" id="opm-netpath-target" value="${opmEsc(guess)}" placeholder="Enter destination hostname or IP" style="flex: 1; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 10px; font-size: 12px; font-family: monospace; box-sizing: border-box;">
+            <button id="opm-netpath-run-btn" style="background: #0070e0; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Run trace</button>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <button id="opm-netpath-run-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-              ▶ Run Live TraceTCP Poll
-            </button>
-            <button id="opm-netpath-export-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-              Export CSV
-            </button>
+          <div id="opm-netpath-output" style="background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 11px; line-height: 1.6; padding: 14px; border-radius: 6px; min-height: 120px; white-space: pre-wrap;">No result yet — enter a target and run the check.</div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+            <button id="opm-netpath-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-
-        <!-- Body Canvas -->
-        <div style="padding: 20px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <!-- Hop-by-Hop Visual Pipeline Flow -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-            <div style="font-size: 12px; font-weight: 800; color: #334155; text-transform: uppercase; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
-              <span>End-to-End Hop-by-Hop Node Telemetry (7 Hops Discovered)</span>
-              <span style="color: #16a34a; font-size: 11px; font-weight: 700;">● All Hops Responsive</span>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; position: relative; padding: 10px 0;">
-              ${hops.map((hp, idx) => `
-                <div style="display: flex; flex-direction: column; align-items: center; width: 130px; text-align: center; position: relative; z-index: 2;">
-                  <div id="opm-hop-bubble-${hp.num}" style="width: 38px; height: 38px; border-radius: 50%; background: #ffffff; border: 2px solid #16a34a; color: #16a34a; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06); transition: all 0.3s;">
-                    ${hp.num === 0 ? 'SRC' : hp.num === hops.length - 1 ? 'DST' : hp.num}
-                  </div>
-                  <div style="font-size: 11px; font-weight: 800; color: #0f172a; margin-top: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 125px;" title="${hp.name}">
-                    ${hp.name}
-                  </div>
-                  <div style="font-family: monospace; font-size: 10px; color: #0284c7; margin-top: 2px;">
-                    ${hp.ip}
-                  </div>
-                  <div style="margin-top: 4px; font-size: 11px; font-weight: 700; color: #16a34a; background: #f0fdf4; padding: 1px 6px; border-radius: 3px; border: 1px solid #bbf7d0;">
-                    ${hp.rtt}
-                  </div>
-                  <div style="font-size: 9px; color: #64748b; margin-top: 3px; max-width: 120px; line-height: 1.2;">
-                    ${hp.as}
-                  </div>
-                </div>
-
-                ${idx < hops.length - 1 ? `
-                  <div style="flex: 1; height: 2px; background: #cbd5e1; position: relative; margin: -42px -6px 0 -6px; z-index: 1;">
-                    <div id="opm-hop-link-${hp.num}" style="width: 100%; height: 100%; background: #16a34a; transition: all 0.4s;"></div>
-                    <div style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 700; color: #64748b; background: #ffffff; padding: 0 4px; border-radius: 2px;">
-                      +${(parseFloat(hops[idx+1].rtt) - parseFloat(hp.rtt)).toFixed(1)}ms
-                    </div>
-                  </div>
-                ` : ''}
-              `).join('')}
-            </div>
-          </div>
-
-          <!-- Hop Details Table -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f8fafc; padding: 10px 14px; font-size: 12px; font-weight: 700; color: #334155; border-bottom: 1px solid #e2e8f0;">
-              Hop-by-Hop Latency, Loss & Autonomous System (AS) Breakdown
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-              <thead>
-                <tr style="background: #fafbfc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #64748b; font-weight: 700;">
-                  <th style="padding: 8px 12px;">Hop #</th>
-                  <th style="padding: 8px 12px;">Device / Hostname</th>
-                  <th style="padding: 8px 12px;">IP Address</th>
-                  <th style="padding: 8px 12px;">Transit AS / Provider</th>
-                  <th style="padding: 8px 12px;">RTT (ms)</th>
-                  <th style="padding: 8px 12px;">Packet Loss</th>
-                  <th style="padding: 8px 12px;">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${hops.map(hp => `
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 8px 12px; font-weight: 700; color: #475569;">${hp.num}</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0;">${hp.host}</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">${hp.ip}</td>
-                    <td style="padding: 8px 12px; color: #475569;">${hp.as}</td>
-                    <td style="padding: 8px 12px; font-weight: 700; color: #16a34a;">${hp.rtt}</td>
-                    <td style="padding: 8px 12px; color: #64748b;">${hp.loss}</td>
-                    <td style="padding: 8px 12px;">
-                      <span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 9px; padding: 2px 6px; border-radius: 2px;">ONLINE</span>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Trace Output Terminal -->
-          <div style="background: #0f172a; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #38bdf8;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 8px;">
-              <span style="font-weight: 700; color: #94a3b8;">NETPATH CONTINUOUS MTR PROBE OUTPUT</span>
-              <span style="color: #16a34a; font-size: 10px;">● Poller Active (Interval: 120s)</span>
-            </div>
-            <div id="opm-netpath-term-logs" style="line-height: 1.6; color: #cbd5e1; max-height: 100px; overflow-y: auto;">
-              <div>[00:00:01] TraceTCP initiating sync from New York Data Center (10.0.0.10) to ${currentSvc.name} (${currentSvc.ip}:${currentSvc.port})...</div>
-              <div>[00:00:02] Hop 1 (10.0.0.1) answered in 0.82ms. SYN-ACK verified.</div>
-              <div>[00:00:03] Hop 4 (4.69.130.1 AS3356 Lumen) transit latency nominal at 12.64ms. Jitter: 0.3ms.</div>
-              <div>[00:00:04] Hop 6 (${currentSvc.ip} ${currentSvc.as}) answered on port ${currentSvc.port}. Total RTT: 22.8ms. Packet loss: 0.00%.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine NetPath &bull; OpManager Central GA Build 129203</span>
-          <button id="close-netpath-btn-footer" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close NetPath
-          </button>
-        </div>
-      </div>
-    `;
-
+      </div>`;
     modal.style.display = 'flex';
-
-    document.getElementById('close-netpath-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('close-netpath-btn-footer').onclick = () => { modal.style.display = 'none'; };
-
-    const svcSelect = document.getElementById('opm-netpath-svc-select');
-    if (svcSelect) {
-      svcSelect.onchange = (e) => {
-        showNetPathModal(sourceProbe, e.target.value);
-      };
-    }
-
-    const runBtn = document.getElementById('opm-netpath-run-btn');
-    if (runBtn) {
-      runBtn.onclick = () => {
-        runBtn.disabled = true;
-        runBtn.innerHTML = '⚡ Polling Hops...';
-        const term = document.getElementById('opm-netpath-term-logs');
-        if (term) {
-          term.innerHTML += `<div style="color: #49bd80;">[${new Date().toLocaleTimeString()}] Triggering manual TraceTCP poll across 7 hops...</div>`;
-        }
-        setTimeout(() => {
-          if (term) {
-            term.innerHTML += `<div style="color: #86efac;">[${new Date().toLocaleTimeString()}] ✔ All 7 hops verified! Nominal path latency: 22.4ms (Δ -0.4ms). 0% loss.</div>`;
-            term.scrollTop = term.scrollHeight;
-          }
-          runBtn.disabled = false;
-          runBtn.innerHTML = '▶ Run Live TraceTCP Poll';
-          showToast('NetPath TraceTCP poll completed successfully across 7 hops.');
-        }, 1200);
-      };
-    }
-
-    const exportBtn = document.getElementById('opm-netpath-export-btn');
-    if (exportBtn) {
-      exportBtn.onclick = () => {
-        showToast('Exported NetPath telemetry to CSV successfully.');
-      };
-    }
+    modal.querySelector('#close-netpath-modal-btn').onclick = () => { modal.style.display = 'none'; };
+    modal.querySelector('#opm-netpath-close-btn').onclick = () => { modal.style.display = 'none'; };
+    const runTrace = async () => {
+      const out = modal.querySelector('#opm-netpath-output');
+      const target = (modal.querySelector('#opm-netpath-target').value || '').trim();
+      if (!target) { showToast('Enter a destination hostname or IP first.', 'error'); return; }
+      out.textContent = 'Tracing route to ' + target + '…';
+      const res = await opmApi('/api/tools/traceroute', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip: target }) });
+      if (res.ok && res.data) {
+        if (res.data.output) out.textContent = res.data.output;
+        else if (Array.isArray(res.data.hops) && res.data.hops.length) out.textContent = res.data.hops.map(h => `${h.hop || ''}  ${h.ip || h.hostname || '*'}  ${h.rtt !== undefined && h.rtt !== null ? h.rtt + ' ms' : '—'}`).join('\n');
+        else out.textContent = 'Trace completed with no hops returned.';
+      } else {
+        out.textContent = 'Trace failed: ' + opmApiMessage(res, 'Traceroute could not run.');
+        showToast(opmApiMessage(res, 'Traceroute failed.'), 'error');
+      }
+    };
+    modal.querySelector('#opm-netpath-run-btn').onclick = runTrace;
+    if (guess) runTrace();
   }
 
   // -------------------------------------------------------------
   // MODAL: ManageEngine Hardware Health & Sensor Telemetry (IPMI/iDRAC)
   // -------------------------------------------------------------
   function showHardwareSensorsModal(targetServer) {
-    let modal = document.getElementById('opm-hardware-modal');
+    let modal = document.getElementById('opm-hw-sensors-modal');
     if (!modal) {
       modal = document.createElement('div');
-      modal.id = 'opm-hardware-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10006; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.id = 'opm-hw-sensors-modal';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    const srv = targetServer || (state.devices.find(d => d.type === 'Windows' || d.type === 'Linux') || state.devices[0]);
-
-    modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1040px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #16a34a;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 18px;">🌡️</span>
-            <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine Hardware Health &amp; Sensor Telemetry Inspector</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">IPMI 2.0 / DMTF Redfish / Dell iDRAC9 / HPE iLO5 Sensor Poller</div>
-            </div>
+    const dev = (targetServer && typeof targetServer === 'object') ? targetServer
+      : (targetServer ? (state.devices || []).find(d => d.id == targetServer) : null)
+      || (state.devices && state.devices[0]) || null;
+    const render = (hw, error) => {
+      const name = (hw && (hw.deviceName || hw.model)) || (dev && dev.name) || '—';
+      const fans = (hw && Array.isArray(hw.fanTrays)) ? hw.fanTrays : [];
+      const temps = (hw && Array.isArray(hw.thermalSensors)) ? hw.thermalSensors : [];
+      const psus = (hw && Array.isArray(hw.powerSupplies)) ? hw.powerSupplies : [];
+      const anyData = fans.length > 0 || temps.length > 0 || psus.length > 0;
+      modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Hardware Sensors — ${opmEsc(name)}</div>
+            <div style="font-size: 11px; color: #64748b;">Fan, temperature and power data reported by the device over SNMP/IPMI</div>
           </div>
-          <button id="close-hw-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <span id="close-hw-sensors-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <!-- Server Identity Banner -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <div style="display: flex; align-items: center; gap: 16px; font-size: 12px;">
-            <div>
-              <span style="color: #64748b; font-weight: 600;">Server Node:</span>
-              <strong style="color: #0070e0; font-size: 13px; margin-left: 4px;">${srv.name}</strong>
+        <div style="padding: 20px;">
+          ${error ? opmModalError(error) : ''}
+          ${!error && !anyData ? opmModalEmpty('No hardware sensor data reported yet', 'Poll the device or check its SNMP credentials — fan speeds, temperatures and power supplies appear here once the device reports them.') : ''}
+          ${anyData ? `
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+              <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Fans (${fans.length})</div>
+              ${fans.length === 0 ? '<div style="font-size: 11px; color: #64748b;">No fan data reported.</div>' : fans.map(f => `
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;"><span>${opmEsc(f.id || 'Fan')}</span><span style="font-weight: 700;">${opmEsc(f.speed === null || f.speed === undefined ? '—' : String(f.speed))}</span></div>`).join('')}
             </div>
-            <span style="color: #cbd5e1;">|</span>
-            <div>
-              <span style="color: #64748b; font-weight: 600;">Model:</span>
-              <span style="color: #1e293b; margin-left: 4px; font-weight: 600;">Dell PowerEdge R750 (2x Intel Xeon Gold 6348)</span>
-            </div>
-            <span style="color: #cbd5e1;">|</span>
-            <div>
-              <span style="color: #64748b; font-weight: 600;">BMC / iDRAC IP:</span>
-              <span style="font-family: monospace; color: #0284c7; margin-left: 4px;">10.0.1.200 (iDRAC9 Enterprise v6.10.30)</span>
+            <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+              <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Power Supplies (${psus.length})</div>
+              ${psus.length === 0 ? '<div style="font-size: 11px; color: #64748b;">No power supply data reported.</div>' : psus.map(p => `
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;"><span>${opmEsc(p.id || 'PSU')}</span><span style="font-weight: 700;">${opmEsc(p.model || '—')}</span></div>`).join('')}
             </div>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; border: 1px solid #86efac;">
-              ● ALL SENSORS HEALTHY
-            </span>
-            <button id="opm-hw-poll-btn" style="background: #16a34a; color: #ffffff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
-              ⚡ Re-Poll IPMI
-            </button>
+          <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-top: 14px;">
+            <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Temperature Sensors (${temps.length})</div>
+            ${temps.length === 0 ? '<div style="font-size: 11px; color: #64748b;">No temperature data reported.</div>' : temps.map(t => `
+              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;"><span>${opmEsc(t.location || 'Sensor')}</span><span>${opmEsc(t.temperature || '—')} &bull; Limit ${opmEsc(t.threshold || '—')} &bull; ${opmEsc(t.status || '—')}</span></div>`).join('')}
           </div>
-        </div>
-
-        <!-- 4-Quadrant Sensor Telemetry Grid -->
-        <div style="padding: 20px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            
-            <!-- Quadrant 1: Power Supplies (PSUs) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px;">
-                <span style="font-size: 12px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px;">
-                  <span>⚡</span> Power Supply Units (2x 750W Titanium Redundant)
-                </span>
-                <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 700; padding: 2px 6px; border-radius: 2px;">REDUNDANT OK</span>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 10px; font-size: 11px;">
-                <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px 12px; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-weight: 700; color: #0f172a;">PSU 1 (Primary Active)</div>
-                    <div style="color: #64748b; font-size: 10px;">Input: 120.4V AC &bull; Current: 1.42A &bull; Output: 171.0W</div>
-                  </div>
-                  <span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 2px 6px; border-radius: 2px;">ACTIVE 🟢</span>
-                </div>
-                <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px 12px; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-weight: 700; color: #0f172a;">PSU 2 (Secondary Standby)</div>
-                    <div style="color: #64748b; font-size: 10px;">Input: 120.1V AC &bull; Current: 0.12A &bull; Output: 14.4W</div>
-                  </div>
-                  <span style="background: #e0f2fe; color: #0369a1; font-weight: 700; padding: 2px 6px; border-radius: 2px;">HOT STANDBY 🔵</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Quadrant 2: Chassis Cooling Fans (6x PWM) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px;">
-                <span style="font-size: 12px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px;">
-                  <span>🌀</span> Chassis Cooling Fans (6x Redundant PWM)
-                </span>
-                <span style="font-size: 10px; color: #16a34a; font-weight: 700;">Average: 4,838 RPM</span>
-              </div>
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 11px;">
-                ${[
-                  { name: 'Fan 1 (Inlet)', rpm: '4,800 RPM' },
-                  { name: 'Fan 2 (Inlet)', rpm: '4,860 RPM' },
-                  { name: 'Fan 3 (CPU 1)', rpm: '4,920 RPM' },
-                  { name: 'Fan 4 (CPU 2)', rpm: '4,810 RPM' },
-                  { name: 'Fan 5 (PCIe)', rpm: '4,790 RPM' },
-                  { name: 'Fan 6 (Power)', rpm: '4,850 RPM' }
-                ].map(f => `
-                  <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px 8px; text-align: center;">
-                    <div style="font-size: 10px; color: #64748b;">${f.name}</div>
-                    <div style="font-size: 12px; font-weight: 800; color: #16a34a; margin-top: 2px;">${f.rpm}</div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            
-            <!-- Quadrant 3: Thermal Temperature Probes -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px;">
-                <span style="font-size: 12px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px;">
-                  <span>🌡️</span> Thermal Temperature Sensors
-                </span>
-                <span style="font-size: 10px; color: #16a34a; font-weight: 700;">Within Normal Thresholds</span>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11px;">
-                ${[
-                  { name: 'Processor 1 Die (CPU 1)', temp: '41.5 °C', limit: 'Max 82 °C', pct: '50%' },
-                  { name: 'Processor 2 Die (CPU 2)', temp: '43.8 °C', limit: 'Max 82 °C', pct: '53%' },
-                  { name: 'System Board Inlet Air', temp: '23.5 °C', limit: 'Max 42 °C', pct: '40%' },
-                  { name: 'Exhaust Air Sensor', temp: '31.8 °C', limit: 'Max 55 °C', pct: '48%' },
-                  { name: 'Memory Ambient Zone', temp: '34.2 °C', limit: 'Max 65 °C', pct: '45%' }
-                ].map(t => `
-                  <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
-                      <span style="color: #334155; font-weight: 600;">${t.name}</span>
-                      <span style="font-weight: 700; color: #16a34a;">${t.temp} <span style="font-size: 9px; color: #94a3b8; font-weight: normal;">(${t.limit})</span></span>
-                    </div>
-                    <div style="height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: ${t.pct}; height: 100%; background: #16a34a; border-radius: 3px;"></div>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
-            <!-- Quadrant 4: Voltage Rails & RAID Storage Enclosure -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px;">
-                <span style="font-size: 12px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px;">
-                  <span>💾</span> Voltage Rails &amp; Physical Disk Enclosure
-                </span>
-                <span style="font-size: 10px; color: #0284c7; font-weight: 700;">PERC H745 RAID 6</span>
-              </div>
-              
-              <!-- Voltages -->
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; font-size: 10px; text-align: center;">
-                <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 3px; padding: 4px;">
-                  <div style="color: #64748b;">+12.0V Rail</div>
-                  <div style="font-weight: 800; color: #16a34a;">12.06 V</div>
-                </div>
-                <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 3px; padding: 4px;">
-                  <div style="color: #64748b;">+5.0V Rail</div>
-                  <div style="font-weight: 800; color: #16a34a;">5.02 V</div>
-                </div>
-                <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 3px; padding: 4px;">
-                  <div style="color: #64748b;">+3.3V Rail</div>
-                  <div style="font-weight: 800; color: #16a34a;">3.31 V</div>
-                </div>
-                <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 3px; padding: 4px;">
-                  <div style="color: #64748b;">CMOS Battery</div>
-                  <div style="font-weight: 800; color: #16a34a;">3.14 V (Good)</div>
-                </div>
-              </div>
-
-              <!-- Drives -->
-              <div style="font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 6px;">8x SAS 10K RPM 1.8TB Drives in Hardware RAID 6:</div>
-              <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px;">
-                ${[0,1,2,3,4,5,6,7].map(idx => `
-                  <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 3px; padding: 4px 2px; text-align: center; font-size: 9px;">
-                    <div style="color: #166534; font-weight: 700;">Disk ${idx}</div>
-                    <div style="color: #16a34a; font-size: 8px;">OK 🟢</div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
+          ` : ''}
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+            <button id="hw-sensors-refresh-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Refresh sensors</button>
+            <button id="hw-sensors-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-
-        <!-- Footer -->
-        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">IPMI Sensor Poller &bull; OpManager Central Hardware Health Subsystem</span>
-          <button id="close-hw-btn-footer" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close Inspector
-          </button>
-        </div>
-      </div>
-    `;
-
-    modal.style.display = 'flex';
-    document.getElementById('close-hw-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('close-hw-btn-footer').onclick = () => { modal.style.display = 'none'; };
-
-    const pollBtn = document.getElementById('opm-hw-poll-btn');
-    if (pollBtn) {
-      pollBtn.onclick = () => {
-        pollBtn.disabled = true;
-        pollBtn.innerHTML = '⚡ Polling BMC...';
-        setTimeout(() => {
-          pollBtn.disabled = false;
-          pollBtn.innerHTML = '⚡ Re-Poll IPMI';
-          showToast(`Successfully refreshed IPMI telemetry for ${srv.name}. All 24 hardware sensors normal.`);
-        }, 800);
-      };
-    }
+      </div>`;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-hw-sensors-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#hw-sensors-close-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#hw-sensors-refresh-btn').onclick = () => { load(); };
+    };
+    const load = async () => {
+      if (!dev) { render(null, null); return; }
+      modal.innerHTML = `<div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; overflow: hidden;">${opmModalLoading('Loading hardware sensors…')}</div>`;
+      modal.style.display = 'flex';
+      const res = await opmApi('/api/hardware/details?deviceId=' + encodeURIComponent(dev.id), { credentials: 'same-origin' });
+      if (res.ok && res.data && res.data.hardware) render(res.data.hardware, null);
+      else if (res.ok && res.data && res.data.hardware === null) render(null, null);
+      else render(null, opmApiMessage(res, 'Could not load hardware sensors.'));
+    };
+    load();
   }
 
   // -------------------------------------------------------------
@@ -6968,159 +6081,65 @@
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-zia-rca-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10006; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    const alm = alarm || (state.alarms && state.alarms[0]) || {
-      id: 'ALM-101',
-      device: (state.devices && state.devices[0]?.name) || 'Core-Node-01',
-      severity: 'Critical',
-      message: 'Interface TenGigabitEthernet1/0/48 down',
-      timestamp: '10:41:02 UTC'
-    };
-
+    const alm = alarm || (state.alarms && state.alarms[0]) || null;
+    if (!alm) {
+      modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; background: #f8fafc;"><div style="font-size: 14px; font-weight: 800; color: #0f172a;">Zia AI Root Cause Analysis</div></div>
+        ${opmModalEmpty('No root cause found yet', 'Root cause analysis runs on a real alarm — open it from an active alarm. No incident is open right now.')}
+        <div style="text-align: center; padding-bottom: 20px;"><button onclick="document.getElementById('opm-zia-rca-modal').style.display='none';" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button></div>
+      </div>`;
+      modal.style.display = 'flex';
+      return;
+    }
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 920px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); color: #ffffff; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #818cf8;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 22px;">🧠</span>
-            <div>
-              <div style="font-size: 15px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine Zia AI &trade; Root Cause Analysis (RCA) &amp; Incident Correlation</div>
-              <div style="font-size: 11px; color: #c7d2fe; margin-top: 1px;">Machine Learning Causality Inference &bull; Event Deduplication &bull; Automated Remediation</div>
-            </div>
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f5f3ff;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #5b21b6;">✨ Zia AI Root Cause Analysis</div>
+            <div style="font-size: 11px; color: #64748b;">${opmEsc(alm.device)} &bull; ${opmEsc(alm.entity || '')} &bull; ${opmEsc(alm.time || '')}</div>
           </div>
-          <button id="close-zia-rca-btn" style="background: transparent; border: none; color: #c7d2fe; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#c7d2fe'">&times;</button>
+          <span id="close-zia-rca-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <!-- Body -->
-        <div style="padding: 20px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <!-- Primary Incident Card -->
-          <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="background: #dc2626; color: #fff; font-weight: 800; font-size: 10px; padding: 2px 6px; border-radius: 3px;">${alm.severity}</span>
-                <span style="font-weight: 800; color: #0f172a; font-size: 13px;">${alm.device}: ${alm.message}</span>
-              </div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 4px;">
-                Alarm ID: <strong style="font-family: monospace;">${alm.id}</strong> &bull; First Event: <strong>${alm.timestamp || 'Today 10:41 UTC'}</strong> &bull; Category: <strong>Network Interface / Routing</strong>
-              </div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-size: 10px; color: #4338ca; font-weight: 700; text-transform: uppercase;">Zia ML Confidence</div>
-              <div style="font-size: 20px; font-weight: 900; color: #4f46e5;">98.8%</div>
-            </div>
-          </div>
-
-          <!-- Correlated Multi-Event Causality Timeline -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
-            <div style="font-size: 12px; font-weight: 800; color: #334155; text-transform: uppercase; margin-bottom: 12px;">
-              Multi-Event Causality Graph (4 Correlated Incidents Detected Within 60 Seconds)
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
-              ${[
-                { time: '10:41:02 UTC', title: 'NCM Configuration Change Committed', desc: 'admin executed "interface TenGigabitEthernet1/0/48 shutdown" via SSH terminal.', badge: 'TRIGGER', color: '#dc2626' },
-                { time: '10:41:08 UTC', title: 'BGP Neighbor Hold Timer Expired', desc: `BGP Peering ${(state.devices && state.devices[0]?.ip) || '192.168.1.1'} (AS65001) transitioned from ESTABLISHED to IDLE state.`, badge: 'CASCADE', color: '#ea580c' },
-                { time: '10:41:15 UTC', title: 'Inbound WAN Link Saturation & Packet Drop', desc: 'Failover traffic shifted to secondary 1Gbps backup trunk, causing 98% link congestion.', badge: 'IMPACT', color: '#d97706' },
-                { time: '10:41:22 UTC', title: '14 Downstream Edge Switch Alarms Cascaded', desc: 'Access switches lost primary gateway reachability. Suppressed by Zia AI deduplication.', badge: 'DEDUPLICATED', color: '#4f46e5' }
-              ].map(ev => `
-                <div style="display: flex; gap: 12px; align-items: flex-start; padding: 8px 12px; background: #fafbfc; border: 1px solid #e2e8f0; border-left: 3px solid ${ev.color}; border-radius: 4px;">
-                  <span style="font-family: monospace; font-size: 11px; font-weight: 700; color: #64748b; white-space: nowrap; margin-top: 1px;">${ev.time}</span>
-                  <div style="flex: 1;">
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                      <span style="font-size: 12px; font-weight: 700; color: #0f172a;">${ev.title}</span>
-                      <span style="font-size: 9px; font-weight: 800; background: ${ev.color}15; color: ${ev.color}; padding: 1px 5px; border-radius: 2px;">${ev.badge}</span>
-                    </div>
-                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">${ev.desc}</div>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-
-          <!-- Natural Language Narrative -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px;">
-            <div style="font-size: 12px; font-weight: 800; color: #312e81; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-              <span>🤖</span> Zia AI Natural Language Incident Summary:
-            </div>
-            <div style="font-size: 12px; color: #334155; line-height: 1.6;">
-              "Zia AI Analysis confirms the primary root cause on <strong>${alm.device || 'Monitored Device'}</strong>. Automated correlation identified anomalous state change affecting upstream connectivity. Executing an immediate baseline rollback will restore connectivity in under 15 seconds."
-            </div>
-          </div>
-
-          <!-- Remediation Actions -->
-          <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; background: #ffffff;">
-            <div style="font-size: 12px; font-weight: 800; color: #0f172a; margin-bottom: 10px;">
-              Automated Remediation Actions Recommended by Zia AI:
-            </div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <button id="opm-zia-rollback-btn" style="background: #16a34a; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-                ⚡ Execute NCM Rollback (no shutdown)
-              </button>
-              <button id="opm-zia-ticket-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-                Log P1 Incident in ServiceDesk Plus
-              </button>
-              <button id="opm-zia-mute-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #475569; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-                Mute 14 Downstream Alarms
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine Zia AI Engine &bull; Incident Correlation Module</span>
-          <button id="close-zia-rca-btn-footer" style="background: #4f46e5; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close Analysis
-          </button>
-        </div>
-      </div>
-    `;
-
+        <div id="opm-rca-body" style="padding: 20px;">${opmModalLoading('Loading root cause analysis…')}</div>
+      </div>`;
     modal.style.display = 'flex';
-    document.getElementById('close-zia-rca-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('close-zia-rca-btn-footer').onclick = () => { modal.style.display = 'none'; };
-
-    const rollbackBtn = document.getElementById('opm-zia-rollback-btn');
-    if (rollbackBtn) {
-      rollbackBtn.onclick = () => {
-        rollbackBtn.disabled = true;
-        rollbackBtn.innerHTML = '⚡ Rolling back configuration via SSH...';
-        setTimeout(() => {
-          state.configDriftFixed = true;
-          rollbackBtn.innerHTML = '✔ Baseline Restored Successfully';
-          showToast('NCM Rollback completed on ' + (alm.device || 'Monitored Device') + ': interface restored UP. Alarm cleared.');
-          // Remove or downgrade alarm
-          const found = state.alarms.find(a => a.id === alm.id);
-          if (found) {
-            found.severity = 'Clear';
-            found.message += ' (Resolved via Zia AI Rollback)';
-          }
-          if (state.currentTab === 'alarms') {
-            renderAlarmsView();
-          }
-        }, 1200);
+    modal.querySelector('#close-zia-rca-btn').onclick = () => { modal.style.display = 'none'; };
+    (async () => {
+      const body = modal.querySelector('#opm-rca-body');
+      const res = await opmApi('/api/alarm/getRCAData?alarmId=' + encodeURIComponent(alm.id), { credentials: 'same-origin' });
+      if (!res.ok || !res.data) { body.innerHTML = opmModalError(opmApiMessage(res, 'Could not load root cause analysis.')); return; }
+      const d = res.data;
+      const events = Array.isArray(d.correlatedEvents) ? d.correlatedEvents : [];
+      body.innerHTML = `
+        <div style="background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 6px; padding: 14px 16px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 12px; font-weight: 700; color: #5b21b6;">Correlation result</span>
+            ${d.confidencePercent ? `<span style="font-size: 20px; font-weight: 900; color: #4f46e5;">${opmEsc(d.confidencePercent)}</span>` : '<span style="font-size: 12px; color: #64748b;">Confidence: —</span>'}
+          </div>
+          <div style="font-size: 12px; color: #4c1d95; line-height: 1.5; margin-top: 6px;">${opmEsc(d.hypothesis || alm.message || 'No hypothesis returned for this alarm.')}</div>
+          <div style="font-size: 11px; color: #64748b; margin-top: 6px;">Root cause entity: <strong>${opmEsc(d.rootCauseEntity || alm.entity || '—')}</strong> &bull; Device: <strong>${opmEsc(d.device || alm.device || '—')}</strong></div>
+        </div>
+        <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Correlated events (${events.length})</div>
+        ${events.length === 0 ? '<div style="font-size: 12px; color: #64748b;">No correlated events recorded for this alarm.</div>' : events.map(e => `
+          <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 12px; margin-bottom: 6px; font-size: 12px;">
+            <div style="display: flex; justify-content: space-between;"><span style="font-weight: 700; color: #0f172a;">${opmEsc(e.message || '')}</span><span style="color: #64748b; font-size: 11px;">${opmEsc(e.time || '')}</span></div>
+            <div style="color: #64748b; font-size: 11px; margin-top: 2px;">Severity: ${opmEsc(e.severity || '—')}</div>
+          </div>`).join('')}
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+          <button id="opm-rca-suppress-btn" disabled title="Alarm suppression is not available yet." style="background: #94a3b8; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: not-allowed;">Suppress cascaded alarms</button>
+          <button id="opm-rca-rollback-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Rollback via NCM</button>
+        </div>`;
+      const rb = body.querySelector('#opm-rca-rollback-btn');
+      if (rb) rb.onclick = async () => {
+        const dev = (state.devices || []).find(x => x.name === alm.device);
+        const r = await opmApi('/api/ccm/resolve-drift', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: dev ? dev.id : undefined }) });
+        showToast(opmApiMessage(r, r.ok ? 'Rollback requested.' : 'Rollback could not be performed.'), r.ok ? 'success' : 'error');
       };
-    }
-
-    const ticketBtn = document.getElementById('opm-zia-ticket-btn');
-    if (ticketBtn) {
-      ticketBtn.onclick = () => {
-        if (typeof showServiceDeskIncidentModal === 'function') {
-          modal.style.display = 'none';
-          showServiceDeskIncidentModal(alm);
-        }
-      };
-    }
-
-    const muteBtn = document.getElementById('opm-zia-mute-btn');
-    if (muteBtn) {
-      muteBtn.onclick = () => {
-        showToast('Suppressed 14 cascaded downstream alarms under Zia AI Incident Correlation.');
-        modal.style.display = 'none';
-      };
-    }
+    })();
   }
 
 
@@ -7131,983 +6150,260 @@
 
   // 1. ManageEngine BGP-4 Routing & Autonomous System (AS) Topology Modal
   function showBgpMonitoringModal(router) {
+    const rtr = (router && typeof router === 'object') ? router : (state.devices && state.devices[0]) || null;
+    const rtrName = rtr ? (rtr.name || '—') : '—';
+    const rtrIp = rtr ? (rtr.ip || '—') : '—';
     let modal = document.getElementById('opm-bgp-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-bgp-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10007; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    if (!router && (!state.devices || state.devices.length === 0)) {
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #8b5cf6;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>📡</span>
-              <span style="font-weight: 800; font-size: 14px;">ManageEngine OpManager Central &bull; BGP-4 Routing</span>
-            </div>
-            <button id="close-bgp-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No BGP Routers Discovered</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add edge routers with BGP MIB (RFC 4273) enabled to monitor Autonomous System topology, peering states, and prefix exchanges.</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-              <button onclick="document.getElementById('opm-bgp-modal').style.display='none'; showAddDeviceModal();" style="background: #6d28d9; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Router</button>
-              <button id="opm-bgp-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
-            </div>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-bgp-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      const demoBtn = modal.querySelector('#opm-bgp-live-demo-btn');
-      if (demoBtn) demoBtn.onclick = () => showBgpMonitoringModal({ name: 'Cisco-ASR-9006-Core', ip: '192.168.30.1' });
-      return;
-    }
-
-    const rtrName = router ? router.name : ((state.devices && state.devices[0]?.name) || 'Edge-WAN-RTR');
-    const rtrIp = router ? router.ip : ((state.devices && state.devices[0]?.ip) || '192.168.1.1');
-
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #8b5cf6;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 20px;">📡</span>
-            <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine OpManager Central &bull; BGP-4 Routing & Autonomous System (AS) Topology</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">RFC 4271 BGP-4 &bull; RFC 4893 4-Octet AS &bull; Router: ${rtrName} (${rtrIp}) &bull; Local ASN: <strong>AS65001</strong></div>
-            </div>
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">BGP Monitoring</div>
+            <div style="font-size: 11px; color: #64748b;">Router: ${opmEsc(rtrName)} (${opmEsc(rtrIp)})</div>
           </div>
-          <button id="close-bgp-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <span id="close-bgp-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <!-- Metric Badges Bar -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 22px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">Local Autonomous System</div>
-            <div style="font-size: 16px; font-weight: 800; color: #6d28d9; margin-top: 2px;">AS65001 (Private DC)</div>
-            <div style="font-size: 11px; color: #16a34a; font-weight: 600; margin-top: 2px;">BGP Daemon: RUNNING 🟢</div>
-          </div>
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">BGP Neighbors (Peers)</div>
-            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px;">4 Configured / 3 Up</div>
-            <div style="font-size: 11px; color: #0284c7; font-weight: 600; margin-top: 2px;">3 Established &bull; 1 Active (Syncing)</div>
-          </div>
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">Global RIB Routing Table</div>
-            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px;">845,190 Prefixes</div>
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; margin-top: 2px;">FIB HW Memory: 64% used</div>
-          </div>
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">BGP Updates (Rx / Tx)</div>
-            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px;">14,290 / 8,940 msgs</div>
-            <div style="font-size: 11px; color: #16a34a; font-weight: 600; margin-top: 2px;">Flap Damping: Normal (0 damp)</div>
+        <div style="padding: 20px;">
+          ${opmModalEmpty('No BGP peer data yet', 'BGP monitoring is not connected — peer state, AS numbers and prefix counts appear here once a BGP poller reports them.')}
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button disabled title="BGP refresh is not available yet — no BGP endpoint is configured." style="background: #94a3b8; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: not-allowed;">Refresh peers</button>
+            <button id="opm-bgp-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-
-        <!-- Main Body -->
-        <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <!-- SVG Autonomous System Topology Map -->
-          <div style="background: #0f172a; border-radius: 6px; padding: 16px; border: 1px solid #334155; position: relative;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span style="font-size: 12px; font-weight: 700; color: #f8fafc; text-transform: uppercase; letter-spacing: 0.5px;">BGP Autonomous System Interconnect Graph</span>
-              <span style="font-size: 11px; color: #94a3b8;">Real-Time Peering Paths &bull; RFC 1771</span>
-            </div>
-            <svg viewBox="0 0 1000 180" style="width: 100%; height: 180px; display: block;">
-              <!-- Connecting Lines -->
-              <line x1="500" y1="90" x2="160" y2="45" stroke="#10b981" stroke-width="2.5" stroke-dasharray="4 2" />
-              <line x1="500" y1="90" x2="160" y2="135" stroke="#38bdf8" stroke-width="2.5" />
-              <line x1="500" y1="90" x2="840" y2="45" stroke="#06b6d4" stroke-width="2.5" />
-              <line x1="500" y1="90" x2="840" y2="135" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 5" />
-
-              <!-- Central Node (AS65001) -->
-              <circle cx="500" cy="90" r="38" fill="#6d28d9" stroke="#c4b5fd" stroke-width="3" />
-              <text x="500" y="86" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800">AS65001</text>
-              <text x="500" y="102" text-anchor="middle" fill="#ddd6fe" font-size="10">Local Edge RTR</text>
-
-              <!-- Node 1: AS3356 Lumen -->
-              <circle cx="160" cy="45" r="30" fill="#065f46" stroke="#34d399" stroke-width="2.5" />
-              <text x="160" y="42" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">AS3356</text>
-              <text x="160" y="55" text-anchor="middle" fill="#a7f3d0" font-size="9">Lumen Transit</text>
-              <rect x="250" y="50" width="85" height="18" rx="3" fill="#1e293b" />
-              <text x="292" y="63" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">845k pfx | 12ms</text>
-
-              <!-- Node 2: AS13335 Cloudflare -->
-              <circle cx="160" cy="135" r="30" fill="#075985" stroke="#38bdf8" stroke-width="2.5" />
-              <text x="160" y="132" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">AS13335</text>
-              <text x="160" y="145" text-anchor="middle" fill="#bae6fd" font-size="9">Cloudflare IXP</text>
-              <rect x="250" y="105" width="85" height="18" rx="3" fill="#1e293b" />
-              <text x="292" y="118" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="600">42k pfx | 4.1ms</text>
-
-              <!-- Node 3: AS15169 Google Peering -->
-              <circle cx="840" cy="45" r="30" fill="#155e75" stroke="#22d3ee" stroke-width="2.5" />
-              <text x="840" y="42" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">AS15169</text>
-              <text x="840" y="55" text-anchor="middle" fill="#a5f3fc" font-size="9">Google Direct</text>
-              <rect x="660" y="50" width="85" height="18" rx="3" fill="#1e293b" />
-              <text x="702" y="63" text-anchor="middle" fill="#22d3ee" font-size="10" font-weight="600">12k pfx | 8.6ms</text>
-
-              <!-- Node 4: AS64512 Backup MPLS -->
-              <circle cx="840" cy="135" r="30" fill="#78350f" stroke="#fbbf24" stroke-width="2.5" />
-              <text x="840" y="132" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">AS64512</text>
-              <text x="840" y="145" text-anchor="middle" fill="#fef08a" font-size="9">Backup MPLS</text>
-              <rect x="660" y="105" width="85" height="18" rx="3" fill="#1e293b" />
-              <text x="702" y="118" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">Active (Sync)</text>
-            </svg>
-          </div>
-
-          <!-- BGP Neighbors Table -->
-          <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">BGP Neighbor Peer Summary (Cisco &bull; Juniper BGP MIB)</span>
-              <button id="opm-bgp-refresh-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #475569; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                ↻ Poll Peers Now
-              </button>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 700; font-size: 11px;">
-                  <th style="padding: 10px 12px;">Neighbor IP</th>
-                  <th style="padding: 10px 12px;">Remote AS</th>
-                  <th style="padding: 10px 12px;">Peer State</th>
-                  <th style="padding: 10px 12px;">Admin</th>
-                  <th style="padding: 10px 12px;">Flaps</th>
-                  <th style="padding: 10px 12px;">Established Uptime</th>
-                  <th style="padding: 10px 12px;">Prefixes (Rx / Tx)</th>
-                  <th style="padding: 10px 12px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="opm-bgp-table-body">
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">198.51.100.1</td>
-                  <td style="padding: 10px 12px;"><strong>AS3356</strong> <span style="color: #64748b;">(Lumen Tier-1 Transit)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">Established</span></td>
-                  <td style="padding: 10px 12px; color: #16a34a; font-weight: 600;">Up</td>
-                  <td style="padding: 10px 12px; color: #1e293b;">0</td>
-                  <td style="padding: 10px 12px; color: #475569;">48d 14h 22m</td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 600;">845,190 / 24</td>
-                  <td style="padding: 10px 12px; text-align: right;">
-                    <button class="opm-bgp-softclear-btn" data-peer="198.51.100.1" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      ↻ Soft Clear
-                    </button>
-                  </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">203.0.113.5</td>
-                  <td style="padding: 10px 12px;"><strong>AS13335</strong> <span style="color: #64748b;">(Cloudflare CDN IXP)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">Established</span></td>
-                  <td style="padding: 10px 12px; color: #16a34a; font-weight: 600;">Up</td>
-                  <td style="padding: 10px 12px; color: #1e293b;">1</td>
-                  <td style="padding: 10px 12px; color: #475569;">14d 06h 11m</td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 600;">42,800 / 24</td>
-                  <td style="padding: 10px 12px; text-align: right;">
-                    <button class="opm-bgp-softclear-btn" data-peer="203.0.113.5" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      ↻ Soft Clear
-                    </button>
-                  </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">198.18.0.22</td>
-                  <td style="padding: 10px 12px;"><strong>AS15169</strong> <span style="color: #64748b;">(Google Peering Direct)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">Established</span></td>
-                  <td style="padding: 10px 12px; color: #16a34a; font-weight: 600;">Up</td>
-                  <td style="padding: 10px 12px; color: #1e293b;">0</td>
-                  <td style="padding: 10px 12px; color: #475569;">92d 18h 45m</td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 600;">12,400 / 24</td>
-                  <td style="padding: 10px 12px; text-align: right;">
-                    <button class="opm-bgp-softclear-btn" data-peer="198.18.0.22" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      ↻ Soft Clear
-                    </button>
-                  </td>
-                </tr>
-                <tr style="background: #fffbeb;">
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">192.0.2.78</td>
-                  <td style="padding: 10px 12px;"><strong>AS64512</strong> <span style="color: #64748b;">(Backup Telco MPLS)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">Active (Sync)</span></td>
-                  <td style="padding: 10px 12px; color: #ea580c; font-weight: 600;">Connecting</td>
-                  <td style="padding: 10px 12px; color: #dc2626; font-weight: 700;">5</td>
-                  <td style="padding: 10px 12px; color: #475569;">0m 42s</td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 600; color: #64748b;">0 / 0</td>
-                  <td style="padding: 10px 12px; text-align: right;">
-                    <button id="opm-bgp-force-reset-btn" style="background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      ⚡ Reset Peer
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- CLI Console Simulation -->
-          <div id="opm-bgp-terminal" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 120px; overflow-y: auto;">
-            <div style="color: #64748b;">// ManageEngine OpManager Central BGP Diagnostic Terminal</div>
-            <div>[BGP] Router ${rtrName} BGP process ID 100 initialized.</div>
-            <div>[BGP] RFC 2918 Route Refresh capability negotiated on all 3 established peers.</div>
-            <div id="opm-bgp-live-log" style="color: #34d399;">✔ System steady state: Autonomous System AS65001 fully converged.</div>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; BGP Peer Monitoring Engine (RFC 4271)</span>
-          <button id="close-bgp-modal-btn-footer" style="background: #6d28d9; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close BGP View
-          </button>
-        </div>
-      </div>
-    `;
-
+      </div>`;
     modal.style.display = 'flex';
-    document.getElementById('close-bgp-modal-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('close-bgp-modal-btn-footer').onclick = () => { modal.style.display = 'none'; };
-
-    const liveLog = document.getElementById('opm-bgp-live-log');
-    modal.querySelectorAll('.opm-bgp-softclear-btn').forEach(btn => {
-      btn.onclick = () => {
-        const peer = btn.getAttribute('data-peer');
-        btn.disabled = true;
-        btn.innerHTML = 'Executing...';
-        if (liveLog) {
-          liveLog.innerHTML = `<span style="color: #fbbf24;">[CMD] clear ip bgp ${peer} soft in</span><br><span style="color: #38bdf8;">[BGP] Sent ROUTE-REFRESH request to neighbor ${peer}...</span>`;
-        }
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.innerHTML = '✔ Done';
-          if (liveLog) {
-            liveLog.innerHTML += `<br><span style="color: #34d399;">✔ Neighbor ${peer} acknowledged refresh; 845,190 prefixes re-evaluated with 0 packet drop.</span>`;
-          }
-          showToast(`BGP Soft Inbound Refresh completed for neighbor ${peer}.`);
-        }, 1000);
-      };
-    });
-
-    const resetBtn = document.getElementById('opm-bgp-force-reset-btn');
-    if (resetBtn) {
-      resetBtn.onclick = () => {
-        resetBtn.disabled = true;
-        resetBtn.innerHTML = 'Resetting TCP...';
-        if (liveLog) {
-          liveLog.innerHTML = `<span style="color: #f87171;">[CMD] clear ip bgp 192.0.2.78 hard</span><br><span style="color: #fbbf24;">[BGP] Terminated TCP port 179 session with AS64512; sending SYN handshakes...</span>`;
-        }
-        setTimeout(() => {
-          resetBtn.innerHTML = '✔ Connected';
-          resetBtn.style.background = '#dcfce7';
-          resetBtn.style.color = '#15803d';
-          if (liveLog) {
-            liveLog.innerHTML += `<br><span style="color: #34d399;">✔ TCP socket established. Received BGP OPEN message from AS64512. State: Established.</span>`;
-          }
-          showToast('BGP session with AS64512 successfully restored to Established state.');
-        }, 1200);
-      };
-    }
+    modal.querySelector('#close-bgp-modal-btn').onclick = () => { modal.style.display = 'none'; };
+    modal.querySelector('#opm-bgp-close-btn').onclick = () => { modal.style.display = 'none'; };
   }
 
 
   // 2. Cisco & Multi-Vendor SD-WAN Performance Controller Modal
   function showSdwanPerformanceModal(sdwanDevice) {
+    const dev = (sdwanDevice && typeof sdwanDevice === 'object') ? sdwanDevice : (state.devices && state.devices[0]) || null;
+    const name = dev ? (dev.name || '—') : '—';
+    const ip = dev ? (dev.ip || '—') : '—';
     let modal = document.getElementById('opm-sdwan-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-sdwan-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10008; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    if (!sdwanDevice && (!state.devices || state.devices.length === 0)) {
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #10b981;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>🚀</span>
-              <span style="font-weight: 800; font-size: 14px;">ManageEngine OpManager Central &bull; SD-WAN Fabric</span>
-            </div>
-            <button id="close-sdwan-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No SD-WAN Gateways Configured</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Connect Cisco vManage, Fortinet Secure SD-WAN, or Silver Peak appliances to track BFD tunnels, jitter, and application steering policies.</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-              <button onclick="document.getElementById('opm-sdwan-modal').style.display='none'; showAddDeviceModal();" style="background: #047857; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add SD-WAN Edge</button>
-              <button id="opm-sdwan-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
-            </div>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-sdwan-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      const sdwanDemoBtn = modal.querySelector('#opm-sdwan-live-demo-btn');
-      if (sdwanDemoBtn) sdwanDemoBtn.onclick = () => showSdwanPerformanceModal({ name: 'Cisco-vEdge-2000-Core', ip: '192.168.30.2' });
-      return;
-    }
-
-    const devName = sdwanDevice ? sdwanDevice.name : ((state.devices && state.devices[0]?.name) || 'SDWAN-EDGE-01');
-
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #10b981;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 20px;">🚀</span>
-            <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine OpManager Central &bull; SD-WAN Fabric & BFD Tunnel Performance</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">Cisco Catalyst SD-WAN (vManage 20.9.3) &bull; Edge Gateway: ${devName} &bull; BFD Polling Interval: 100ms</div>
-            </div>
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">SD-WAN Performance</div>
+            <div style="font-size: 11px; color: #64748b;">${opmEsc(name)} (${opmEsc(ip)})</div>
           </div>
-          <button id="close-sdwan-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <span id="close-sdwan-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <!-- 3 Transport Overlay Underlay Cards -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 22px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
-          <!-- Transport 1: Biz-Internet -->
-          <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 6px; padding: 12px 16px; border-left: 4px solid #16a34a;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 13px; font-weight: 800; color: #0f172a;">Biz-Internet (DIA Lumen)</span>
-              <span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">ACTIVE 🟢</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; text-align: center;">
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Latency</div>
-                <div style="font-size: 14px; font-weight: 800; color: #16a34a;">12.4 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Jitter</div>
-                <div style="font-size: 14px; font-weight: 800; color: #16a34a;">1.2 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Loss</div>
-                <div style="font-size: 14px; font-weight: 800; color: #16a34a;">0.00%</div>
-              </div>
-            </div>
-            <div style="margin-top: 8px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Capacity: 1 Gbps Symmetric</span>
-              <strong style="color: #0f172a;">Utilization: 48%</strong>
-            </div>
-          </div>
-
-          <!-- Transport 2: Private MPLS -->
-          <div style="background: #ffffff; border: 1px solid #bae6fd; border-radius: 6px; padding: 12px 16px; border-left: 4px solid #0284c7;">
-            <div style="display: space-between; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 13px; font-weight: 800; color: #0f172a;">Private MPLS (AT&T AVPN)</span>
-              <span style="background: #e0f2fe; color: #0369a1; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">ACTIVE 🟢</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; text-align: center;">
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Latency</div>
-                <div style="font-size: 14px; font-weight: 800; color: #0284c7;">28.6 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Jitter</div>
-                <div style="font-size: 14px; font-weight: 800; color: #0284c7;">3.1 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Loss</div>
-                <div style="font-size: 14px; font-weight: 800; color: #0284c7;">0.05%</div>
-              </div>
-            </div>
-            <div style="margin-top: 8px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Capacity: 500 Mbps CIR</span>
-              <strong style="color: #0f172a;">Utilization: 31%</strong>
-            </div>
-          </div>
-
-          <!-- Transport 3: LTE 5G -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; border-left: 4px solid #64748b;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 13px; font-weight: 800; color: #0f172a;">Cellular LTE (Verizon 5G)</span>
-              <span style="background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">STANDBY 🔵</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; text-align: center;">
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Latency</div>
-                <div style="font-size: 14px; font-weight: 800; color: #64748b;">64.2 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Jitter</div>
-                <div style="font-size: 14px; font-weight: 800; color: #64748b;">8.7 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Loss</div>
-                <div style="font-size: 14px; font-weight: 800; color: #64748b;">0.80%</div>
-              </div>
-            </div>
-            <div style="margin-top: 8px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Capacity: 100 Mbps Metered</span>
-              <strong style="color: #0f172a;">Utilization: 1% (Heartbeat)</strong>
-            </div>
+        <div style="padding: 20px;">
+          ${opmModalEmpty('No SD-WAN telemetry yet', 'Connect an SD-WAN edge device to see tunnel health, SLA and steering data here. No tunnels are reporting yet.')}
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button id="opm-sdwan-test-btn" disabled title="Application steering test is not available yet — no SD-WAN controller is connected." style="background: #94a3b8; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: not-allowed;">Test application steering</button>
+            <button id="opm-sdwan-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-
-        <!-- Main Body: SLA Policies & Dynamic Application Steering -->
-        <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <!-- SLA Matrix Table -->
-          <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Application SLA Classes & Dynamic Path Steering</span>
-              <button id="opm-sdwan-simulate-brownout-btn" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
-                ⚡ Run Dynamic SLA Failover Test
-              </button>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 700; font-size: 11px;">
-                  <th style="padding: 10px 12px;">SLA Profile</th>
-                  <th style="padding: 10px 12px;">Target Thresholds</th>
-                  <th style="padding: 10px 12px;">Current Transport</th>
-                  <th style="padding: 10px 12px;">Live Metric</th>
-                  <th style="padding: 10px 12px;">SLA Health</th>
-                  <th style="padding: 10px 12px; text-align: right;">Policy Status</th>
-                </tr>
-              </thead>
-              <tbody id="opm-sdwan-sla-body">
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Voice SLA (G.711 / SIP)</td>
-                  <td style="padding: 10px 12px; color: #475569;">Jitter &lt; 10ms, Loss &lt; 1%, Latency &lt; 150ms</td>
-                  <td style="padding: 10px 12px;"><span id="sla-path-voice" style="background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Biz-Internet (Primary)</span></td>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #16a34a;">MOS 4.41 (Excellent)</td>
-                  <td style="padding: 10px 12px;"><span style="color: #16a34a; font-weight: 700;">100% Compliant</span></td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="color: #0284c7; font-weight: 600;">Steered by Policy</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Microsoft 365 & SaaS</td>
-                  <td style="padding: 10px 12px; color: #475569;">Latency &lt; 30ms, Zero Loss</td>
-                  <td style="padding: 10px 12px;"><span id="sla-path-m365" style="background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Biz-Internet DIA</span></td>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #16a34a;">14.2 ms RTT</td>
-                  <td style="padding: 10px 12px;"><span style="color: #16a34a; font-weight: 700;">100% Compliant</span></td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="color: #0284c7; font-weight: 600;">Direct Cloud Breakout</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">ERP SAP S/4HANA Core</td>
-                  <td style="padding: 10px 12px; color: #475569;">Latency &lt; 40ms, Jitter &lt; 5ms</td>
-                  <td style="padding: 10px 12px;"><span style="background: #e0f2fe; color: #0369a1; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Private MPLS (AVPN)</span></td>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0284c7;">28.6 ms RTT</td>
-                  <td style="padding: 10px 12px;"><span style="color: #16a34a; font-weight: 700;">100% Compliant</span></td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="color: #0284c7; font-weight: 600;">QoS EF Priority</span></td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Zoom & Teams HD Video</td>
-                  <td style="padding: 10px 12px; color: #475569;">Jitter &lt; 15ms, Loss &lt; 2%</td>
-                  <td style="padding: 10px 12px;"><span id="sla-path-video" style="background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Biz-Internet (Primary)</span></td>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #16a34a;">1.8 ms Jitter</td>
-                  <td style="padding: 10px 12px;"><span style="color: #16a34a; font-weight: 700;">100% Compliant</span></td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="color: #0284c7; font-weight: 600;">Steered by Policy</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- BFD Echo & Dynamic Switch Log -->
-          <div id="opm-sdwan-log-console" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 120px; overflow-y: auto;">
-            <div style="color: #64748b;">// Cisco Catalyst SD-WAN BFD (Bidirectional Forwarding Detection) Daemon</div>
-            <div>[BFD] Session 1042 (Biz-Internet): Echo interval 100ms, multiplier 3 &bull; State: UP</div>
-            <div>[BFD] Session 1043 (MPLS AVPN): Echo interval 100ms, multiplier 3 &bull; State: UP</div>
-            <div id="opm-sdwan-dynamic-msg" style="color: #34d399;">✔ Zero SLA violations in last 24 hours. Optimal application steering across all 3 WAN transports.</div>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; SD-WAN Fabric Orchestration Engine</span>
-          <button id="close-sdwan-modal-btn-footer" style="background: #10b981; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close SD-WAN Console
-          </button>
-        </div>
-      </div>
-    `;
-
+      </div>`;
     modal.style.display = 'flex';
-    document.getElementById('close-sdwan-modal-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('close-sdwan-modal-btn-footer').onclick = () => { modal.style.display = 'none'; };
-
-    const failoverBtn = document.getElementById('opm-sdwan-simulate-brownout-btn');
-    const logConsole = document.getElementById('opm-sdwan-log-console');
-    const dynamicMsg = document.getElementById('opm-sdwan-dynamic-msg');
-
-    if (failoverBtn) {
-      failoverBtn.onclick = () => {
-        failoverBtn.disabled = true;
-        failoverBtn.innerHTML = 'Testing Brownout...';
-        if (dynamicMsg) {
-          dynamicMsg.innerHTML = `<span style="color: #f87171;">[SLA-ALERT] Injected simulated 85ms latency spike & 4% packet drop on Biz-Internet (DIA)...</span>`;
-        }
-        setTimeout(() => {
-          document.getElementById('sla-path-voice').innerHTML = 'Private MPLS (Failover ⚡)';
-          document.getElementById('sla-path-voice').style.background = '#fef3c7';
-          document.getElementById('sla-path-voice').style.color = '#b45309';
-
-          document.getElementById('sla-path-video').innerHTML = 'Private MPLS (Failover ⚡)';
-          document.getElementById('sla-path-video').style.background = '#fef3c7';
-          document.getElementById('sla-path-video').style.color = '#b45309';
-
-          if (dynamicMsg) {
-            dynamicMsg.innerHTML += `<br><span style="color: #38bdf8;">[vManage Dynamic Steering] Voice & HD Video re-routed from DIA to MPLS in 38ms!</span><br><span style="color: #34d399;">✔ Zero dropped VoIP calls. SLA Compliance restored to 100%.</span>`;
-          }
-          failoverBtn.innerHTML = '✔ Re-Route Verified';
-          showToast('SD-WAN Dynamic Application Steering test passed: Voice & Video shifted to MPLS in 38ms.');
-        }, 1100);
-      };
-    }
+    modal.querySelector('#close-sdwan-modal-btn').onclick = () => { modal.style.display = 'none'; };
+    modal.querySelector('#opm-sdwan-close-btn').onclick = () => { modal.style.display = 'none'; };
   }
 
 
   // 3. Deep Packet Inspection (DPI) & Cisco NBAR2 Application Classification Modal
   function showDpiTrafficModal(iface) {
+    const name = (iface && (iface.name || iface)) || (state.devices && state.devices[0] && state.devices[0].name) || '—';
     let modal = document.getElementById('opm-dpi-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-dpi-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10009; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    if (!iface && (!state.devices || state.devices.length === 0)) {
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>📊</span>
-              <span style="font-weight: 800; font-size: 14px;">Deep Packet Inspection (DPI) & Cisco NBAR2</span>
-            </div>
-            <button id="close-dpi-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No DPI Interfaces Monitored</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Deploy NetFlow / IPFIX packet sampling or configure Cisco NBAR2 on router interfaces to inspect Layer-7 applications.</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-              <button onclick="document.getElementById('opm-dpi-modal').style.display='none'; showAddDeviceModal();" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Device</button>
-              <button id="opm-dpi-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
-            </div>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-dpi-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      const dpiDemoBtn = modal.querySelector('#opm-dpi-live-demo-btn');
-      if (dpiDemoBtn) dpiDemoBtn.onclick = () => showDpiTrafficModal({ name: 'GigabitEthernet0/0/1 - WAN Gateway' });
-      return;
-    }
-
-    const ifName = iface ? (iface.name || iface) : 'GigabitEthernet0/0/1 - WAN Gateway (10 Gbps)';
-
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 20px;">📊</span>
-            <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine OpManager Central &bull; Deep Packet Inspection (DPI) & Cisco NBAR2</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">Layer 7 Deep Packet Flow Classification &bull; Interface: ${ifName} &bull; Sampling: Full Wire Rate</div>
-            </div>
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">DPI Traffic Analysis</div>
+            <div style="font-size: 11px; color: #64748b;">${opmEsc(typeof name === 'string' ? name : '—')}</div>
           </div>
-          <button id="close-dpi-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <span id="close-dpi-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <!-- Top Rate Gauges & Split Response Time Bar -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <!-- Bandwidth Throughput Card -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase;">Aggregate Interface Throughput</span>
-              <span style="font-size: 11px; color: #16a34a; font-weight: 700;">Capacity: 10 Gbps</span>
-            </div>
-            <div style="display: flex; gap: 16px; margin-top: 10px;">
-              <div style="flex: 1;">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-bottom: 4px;">
-                  <span>Inbound Traffic</span>
-                  <strong style="color: #0f172a;">4.82 Gbps (48.2%)</strong>
-                </div>
-                <div style="width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 48.2%; height: 100%; background: #0284c7;"></div>
-                </div>
-              </div>
-              <div style="flex: 1;">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-bottom: 4px;">
-                  <span>Outbound Traffic</span>
-                  <strong style="color: #0f172a;">1.94 Gbps (19.4%)</strong>
-                </div>
-                <div style="width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 19.4%; height: 100%; background: #10b981;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Split Response Time: NRT vs ART -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase;">Network Response Time (NRT) vs App Response Time (ART)</span>
-              <span style="font-size: 11px; color: #64748b;">TCP Handshake Analyzer</span>
-            </div>
-            <div style="display: flex; gap: 16px; margin-top: 10px;">
-              <div style="flex: 1; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; padding: 6px 10px; text-align: center;">
-                <div style="font-size: 10px; color: #166534; font-weight: 600;">NRT (Network Latency)</div>
-                <div style="font-size: 16px; font-weight: 800; color: #15803d; margin-top: 2px;">14.2 ms</div>
-                <div style="font-size: 9px; color: #166534;">Optimal WAN propagation</div>
-              </div>
-              <div style="flex: 1; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 4px; padding: 6px 10px; text-align: center;">
-                <div style="font-size: 10px; color: #075985; font-weight: 600;">ART (Server Processing)</div>
-                <div style="font-size: 16px; font-weight: 800; color: #0284c7; margin-top: 2px;">38.5 ms</div>
-                <div style="font-size: 9px; color: #075985;">Fast HTTP execution</div>
-              </div>
-            </div>
+        <div style="padding: 20px;">
+          ${opmModalEmpty('No DPI traffic data yet', 'Configure a flow exporter on this interface to see the application breakdown — no flow records have been ingested for it yet.')}
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button disabled title="Traffic policy actions are not available yet — no DPI/policy endpoint is configured." style="background: #94a3b8; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: not-allowed;">Enforce DSCP policy</button>
+            <button id="opm-dpi-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-
-        <!-- Main Body: NBAR2 Table & Actions -->
-        <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Cisco NBAR2 Layer 7 Applications & DSCP Markings</span>
-              <button id="opm-dpi-enforce-scavenger-btn" style="background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
-                🛡️ Enforce DSCP Scavenger Policy on P2P
-              </button>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 700; font-size: 11px;">
-                  <th style="padding: 10px 12px;">Layer 7 Application</th>
-                  <th style="padding: 10px 12px;">Protocol / Port</th>
-                  <th style="padding: 10px 12px;">Bandwidth & Share</th>
-                  <th style="padding: 10px 12px;">DSCP Tagging</th>
-                  <th style="padding: 10px 12px;">QoS Classification</th>
-                  <th style="padding: 10px 12px; text-align: right;">Risk Profile</th>
-                </tr>
-              </thead>
-              <tbody id="opm-dpi-table-body">
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Microsoft Teams / Zoom Audio-Video</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">UDP / RTP (3478-3481)</td>
-                  <td style="padding: 10px 12px;"><strong>1.84 Gbps</strong> <span style="color: #64748b;">(38.2%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dbeafe; color: #1e40af; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">EF (46)</span></td>
-                  <td style="padding: 10px 12px; color: #16a34a; font-weight: 600;">Expedited Forwarding</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Low Risk</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Salesforce CRM / Workday SaaS</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">TCP / HTTPS (443)</td>
-                  <td style="padding: 10px 12px;"><strong>1.12 Gbps</strong> <span style="color: #64748b;">(23.2%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dbeafe; color: #1e40af; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">AF31 (26)</span></td>
-                  <td style="padding: 10px 12px; color: #0284c7; font-weight: 600;">Assured Forwarding 3</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Low Risk</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">AWS S3 / Azure Blob Storage</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">TCP / TLS (443)</td>
-                  <td style="padding: 10px 12px;"><strong>780 Mbps</strong> <span style="color: #64748b;">(16.2%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dbeafe; color: #1e40af; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">AF21 (18)</span></td>
-                  <td style="padding: 10px 12px; color: #0284c7; font-weight: 600;">Bulk Data Forwarding</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Low Risk</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">YouTube / Social Media Streaming</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">UDP / QUIC (443)</td>
-                  <td style="padding: 10px 12px;"><strong>540 Mbps</strong> <span style="color: #64748b;">(11.2%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">CS1 (8)</span></td>
-                  <td style="padding: 10px 12px; color: #64748b; font-weight: 600;">Non-Critical Traffic</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #fef3c7; color: #b45309; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Medium</span></td>
-                </tr>
-                <tr id="dpi-row-p2p" style="background: #fff1f2;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #9f1239;">Unsanctioned BitTorrent / P2P Swarm</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #9f1239;">TCP / UDP (6881-6889)</td>
-                  <td style="padding: 10px 12px;"><strong id="dpi-p2p-bw" style="color: #9f1239;">320 Mbps</strong> <span style="color: #9f1239;">(6.6%)</span></td>
-                  <td style="padding: 10px 12px;"><span id="dpi-p2p-dscp" style="background: #fee2e2; color: #991b1b; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Best Effort (0)</span></td>
-                  <td style="padding: 10px 12px; color: #9f1239; font-weight: 600;" id="dpi-p2p-qos">Unthrottled Bandwidth Hog</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #fee2e2; color: #b91c1c; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">High Risk ⚠️</span></td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">SSH / HTTPS Device Management</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">TCP / SSH (22)</td>
-                  <td style="padding: 10px 12px;"><strong>220 Mbps</strong> <span style="color: #64748b;">(4.6%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dbeafe; color: #1e40af; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">CS2 (16)</span></td>
-                  <td style="padding: 10px 12px; color: #0284c7; font-weight: 600;">Network Management</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Low Risk</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Policy Feed & QoS Terminal -->
-          <div id="opm-dpi-policy-log" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 100px; overflow-y: auto;">
-            <div style="color: #64748b;">// ManageEngine OpManager Central DPI Engine &bull; QoS Shaper</div>
-            <div>[DPI] Deep packet state engine actively tracking 14,890 simultaneous L7 sessions.</div>
-            <div id="opm-dpi-dynamic-msg" style="color: #34d399;">✔ Wire-speed classification active. Zero packet loss on EF (46) realtime queue.</div>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; Cisco NBAR2 Deep Packet Flow Engine</span>
-          <button id="close-dpi-modal-btn-footer" style="background: #0284c7; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close DPI View
-          </button>
-        </div>
-      </div>
-    `;
-
+      </div>`;
     modal.style.display = 'flex';
-    document.getElementById('close-dpi-modal-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('close-dpi-modal-btn-footer').onclick = () => { modal.style.display = 'none'; };
-
-    const enforceBtn = document.getElementById('opm-dpi-enforce-scavenger-btn');
-    const dynamicMsg = document.getElementById('opm-dpi-dynamic-msg');
-
-    if (enforceBtn) {
-      enforceBtn.onclick = () => {
-        enforceBtn.disabled = true;
-        enforceBtn.innerHTML = 'Applying DSCP Scavenger...';
-        if (dynamicMsg) {
-          dynamicMsg.innerHTML = `<span style="color: #fbbf24;">[QOS-CLI] class-map match-all P2P-TRAFFIC -> police cir 10000000 pir 15000000 conform-action set-dscp-transmit cs1 exceed-action drop...</span>`;
-        }
-        setTimeout(() => {
-          document.getElementById('dpi-p2p-bw').innerHTML = '10 Mbps';
-          document.getElementById('dpi-p2p-dscp').innerHTML = 'CS1 (Scavenger 8)';
-          document.getElementById('dpi-p2p-dscp').style.background = '#e2e8f0';
-          document.getElementById('dpi-p2p-dscp').style.color = '#475569';
-          document.getElementById('dpi-p2p-qos').innerHTML = 'Policed to 10 Mbps (Scavenger)';
-          document.getElementById('dpi-p2p-qos').style.color = '#15803d';
-
-          if (dynamicMsg) {
-            dynamicMsg.innerHTML += `<br><span style="color: #34d399;">✔ DSCP Scavenger applied. Unsanctioned P2P bandwidth clamped from 320 Mbps down to 10 Mbps!</span>`;
-          }
-          enforceBtn.innerHTML = '✔ Scavenger Policy Active';
-          enforceBtn.style.background = '#dcfce7';
-          enforceBtn.style.color = '#15803d';
-          showToast('DSCP Scavenger Policy enforced: P2P throttled to 10 Mbps on WAN uplink.');
-        }, 1100);
-      };
-    }
+    modal.querySelector('#close-dpi-modal-btn').onclick = () => { modal.style.display = 'none'; };
+    modal.querySelector('#opm-dpi-close-btn').onclick = () => { modal.style.display = 'none'; };
   }
 
 
   // 4. Network Detection & Response (NDR) & Security Threat Forensics Modal
   function showNdrForensicsModal(threatSource) {
+    const src = (threatSource && (threatSource.name || threatSource)) || '—';
     let modal = document.getElementById('opm-ndr-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-ndr-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10010; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.65); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); font-family: Roboto, -apple-system, sans-serif;';
       document.body.appendChild(modal);
     }
-
-    if (!threatSource && (!state.devices || state.devices.length === 0)) {
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc2626;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>🛡️</span>
-              <span style="font-weight: 800; font-size: 14px;">Network Detection & Response (NDR)</span>
-            </div>
-            <button id="close-ndr-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Security Threats Detected</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Central Network Detection & Response engine is continuously monitoring flow traffic across probes. No anomalous lateral movement or botnet telemetry identified.</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-              <button onclick="document.getElementById('opm-ndr-modal').style.display='none';" style="background: #dc2626; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Dismiss</button>
-              <button id="opm-ndr-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Threat Forensics Console</button>
-            </div>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-ndr-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      const ndrDemoBtn = modal.querySelector('#opm-ndr-live-demo-btn');
-      if (ndrDemoBtn) ndrDemoBtn.onclick = () => showNdrForensicsModal({ name: 'Central NDR Threat Intelligence Engine' });
-      return;
-    }
-
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc2626;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 20px;">🛡️</span>
-            <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine OpManager Central &bull; Network Detection & Response (NDR) & Threat Forensics</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">TAXII 2.1 Threat Intel Server (ndr.threatintel.default.server) &bull; STIX Feed: Active (1.8M Indicators)</div>
-            </div>
+      <div style="background: #ffffff; border-radius: 8px; width: 720px; max-width: 95vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid #cbd5e1;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">NDR Forensics</div>
+            <div style="font-size: 11px; color: #64748b;">${opmEsc(typeof src === 'string' ? src : '—')}</div>
           </div>
-          <button id="close-ndr-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <span id="close-ndr-modal-btn" style="color: #94a3b8; font-size: 18px; cursor: pointer; padding: 0 4px;" title="Close">✕</span>
         </div>
-
-        <!-- Threat Score & Threat Summary Bar -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 22px; display: grid; grid-template-columns: 280px 1fr; gap: 16px; align-items: center;">
-          <!-- Threat Score Gauge Card -->
-          <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 12px 16px; display: flex; align-items: center; gap: 14px;">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dc2626; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);">
-              89
-              <span style="font-size: 8px; font-weight: 600; text-transform: uppercase;">SCORE</span>
-            </div>
-            <div>
-              <div style="font-size: 12px; font-weight: 800; color: #991b1b; text-transform: uppercase;">High Risk Incident Active</div>
-              <div style="font-size: 11px; color: #b91c1c; margin-top: 2px;">4 Critical Anomalies detected in last 30 minutes</div>
-            </div>
-          </div>
-
-          <!-- Quick Action Buttons -->
-          <div style="display: flex; gap: 10px; justify-content: flex-end;">
-            <button id="opm-ndr-push-acl-btn" style="background: #dc2626; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);">
-              🔒 Push Immediate Firewall ACL Blacklist
-            </button>
-            <button id="opm-ndr-quarantine-btn" style="background: #ea580c; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-              🛑 Quarantine Host via 802.1X NAC
-            </button>
-            <button id="opm-ndr-export-stix-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-              📥 Export STIX 2.1 PCAP
-            </button>
+        <div style="padding: 20px;">
+          ${opmModalEmpty('No threat indicators yet', 'No NDR feed is connected — threat indicators, blocked hosts and forensic timelines appear here once a feed reports them.')}
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button disabled title="Firewall ACL push is not available yet — no NDR enforcement endpoint is configured." style="background: #94a3b8; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: not-allowed;">Push firewall ACL</button>
+            <button disabled title="Host quarantine is not available yet — no NAC endpoint is configured." style="background: #94a3b8; color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: not-allowed;">Quarantine host</button>
+            <button id="opm-ndr-close-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close</button>
           </div>
         </div>
-
-        <!-- Main Body: Threat Matrix Table -->
-        <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Active Behavioral Anomaly Detections & STIX Indicators</span>
-              <span style="font-size: 11px; color: #64748b;">Feed: TAXII 2.1 Threat Intel Server &bull; Updated 8 mins ago</span>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 700; font-size: 11px;">
-                  <th style="padding: 10px 12px;">Threat Classification</th>
-                  <th style="padding: 10px 12px;">Attacker Source IP</th>
-                  <th style="padding: 10px 12px;">Target Host / Asset</th>
-                  <th style="padding: 10px 12px;">MITRE ATT&CK ID</th>
-                  <th style="padding: 10px 12px;">Severity Score</th>
-                  <th style="padding: 10px 12px; text-align: right;">Mitigation State</th>
-                </tr>
-              </thead>
-              <tbody id="opm-ndr-threat-table-body">
-                <tr id="ndr-row-1" style="border-bottom: 1px solid #f1f5f9; background: #fff5f5;">
-                  <td style="padding: 10px 12px;">
-                    <div style="font-weight: 700; color: #991b1b;">Horizontal TCP SYN Port Scan</div>
-                    <div style="font-size: 10px; color: #64748b;">Probed 1,024 TCP ports across /24 subnet</div>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    198.51.100.89 <span style="font-size: 10px; color: #dc2626; font-weight: 600;">(Tor Exit Node NL)</span>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">10.0.1.0/24 (DMZ)</td>
-                  <td style="padding: 10px 12px;"><span style="background: #fee2e2; color: #991b1b; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1046 Discovery</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dc2626; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 94</span></td>
-                  <td id="ndr-status-1" style="padding: 10px 12px; text-align: right; color: #dc2626; font-weight: 700;">Block Recommended</td>
-                </tr>
-                <tr id="ndr-row-2" style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px;">
-                    <div style="font-weight: 700; color: #9a3412;">DNS Data Exfiltration via TXT Tunneling</div>
-                    <div style="font-size: 10px; color: #64748b;">High-entropy Base64 queries (48.2 MB exfiltrated)</div>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    10.0.1.44 <span style="font-size: 10px; color: #ea580c; font-weight: 600;">(Internal-Host-04)</span>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">ns1.tunnel-c2.top</td>
-                  <td style="padding: 10px 12px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1071.004 C2</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #ea580c; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 86</span></td>
-                  <td id="ndr-status-2" style="padding: 10px 12px; text-align: right; color: #ea580c; font-weight: 700;">Host Active</td>
-                </tr>
-                <tr id="ndr-row-3" style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px;">
-                    <div style="font-weight: 700; color: #9a3412;">Automated SSH Dictionary Brute Force</div>
-                    <div style="font-size: 10px; color: #64748b;">540 failed authentications in 60 seconds</div>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    203.0.113.190 <span style="font-size: 10px; color: #dc2626; font-weight: 600;">(Mirai C2 Botnet)</span>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">10.0.1.15 (Local-DB-Node)</td>
-                  <td style="padding: 10px 12px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1110 Brute Force</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #ea580c; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 82</span></td>
-                  <td id="ndr-status-3" style="padding: 10px 12px; text-align: right; color: #dc2626; font-weight: 700;">Block Recommended</td>
-                </tr>
-                <tr id="ndr-row-4">
-                  <td style="padding: 10px 12px;">
-                    <div style="font-weight: 700; color: #475569;">Suspicious Outbound SMB Lateral Connection</div>
-                    <div style="font-size: 10px; color: #64748b;">TCP port 445 direct packet to untrusted public IP</div>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    10.0.1.108 <span style="font-size: 10px; color: #64748b; font-weight: 600;">(Test-Node-02)</span>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">198.18.44.12:445</td>
-                  <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1021.002 SMB</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #94a3b8; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 65</span></td>
-                  <td id="ndr-status-4" style="padding: 10px 12px; text-align: right; color: #64748b; font-weight: 600;">Monitored</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Forensic Security Console -->
-          <div id="opm-ndr-console" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 100px; overflow-y: auto;">
-            <div style="color: #64748b;">// ManageEngine OpManager Central NDR Threat Intelligence Engine</div>
-            <div>[TAXII] Synced 1,840,290 reputation signatures from global TAXII 2.1 intelligence feeds.</div>
-            <div id="opm-ndr-dynamic-msg" style="color: #f87171;">⚠️ Alert: 2 C2 botnet communication attempts flagged. Automated perimeter ACL push ready.</div>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; Network Detection & Response (NDR) Engine</span>
-          <button id="close-ndr-modal-btn-footer" style="background: #dc2626; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close NDR View
-          </button>
-        </div>
-      </div>
-    `;
-
+      </div>`;
     modal.style.display = 'flex';
-    document.getElementById('close-ndr-modal-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('close-ndr-modal-btn-footer').onclick = () => { modal.style.display = 'none'; };
-
-    const pushAclBtn = document.getElementById('opm-ndr-push-acl-btn');
-    const quarantineBtn = document.getElementById('opm-ndr-quarantine-btn');
-    const exportStixBtn = document.getElementById('opm-ndr-export-stix-btn');
-    const dynamicMsg = document.getElementById('opm-ndr-dynamic-msg');
-
-    if (pushAclBtn) {
-      pushAclBtn.onclick = () => {
-        pushAclBtn.disabled = true;
-        pushAclBtn.innerHTML = 'Pushing ACL Rules...';
-        if (dynamicMsg) {
-          dynamicMsg.innerHTML = `<span style="color: #fbbf24;">[FW-CLI] access-list 101 deny ip host 198.51.100.89 any -> applied to Perimeter Firewall...</span><br><span style="color: #fbbf24;">[FW-CLI] access-list 101 deny ip host 203.0.113.190 any -> applied...</span>`;
-        }
-        setTimeout(() => {
-          document.getElementById('ndr-status-1').innerHTML = '✔ Blocked (ACL 101)';
-          document.getElementById('ndr-status-1').style.color = '#15803d';
-          document.getElementById('ndr-status-3').innerHTML = '✔ Blocked (ACL 101)';
-          document.getElementById('ndr-status-3').style.color = '#15803d';
-
-          if (dynamicMsg) {
-            dynamicMsg.innerHTML += `<br><span style="color: #34d399;">✔ Firewall Perimeter ACL successfully deployed. 2 malicious IPs dropped at edge.</span>`;
-          }
-          pushAclBtn.innerHTML = '✔ Firewall ACL Enforced';
-          pushAclBtn.style.background = '#15803d';
-          showToast('Automated Perimeter Firewall ACL pushed: Tor node & Mirai C2 blocked.');
-        }, 1100);
-      };
-    }
-
-    if (quarantineBtn) {
-      quarantineBtn.onclick = () => {
-        quarantineBtn.disabled = true;
-        quarantineBtn.innerHTML = 'Quarantining 802.1X...';
-        setTimeout(() => {
-          document.getElementById('ndr-status-2').innerHTML = '✔ Isolated (VLAN 999)';
-          document.getElementById('ndr-status-2').style.color = '#ea580c';
-          if (dynamicMsg) {
-            dynamicMsg.innerHTML += `<br><span style="color: #38bdf8;">[802.1X NAC] Switch port FastEthernet0/24 changed to Remediation Quarantine VLAN 999.</span>`;
-          }
-          quarantineBtn.innerHTML = '✔ Host Quarantined';
-          showToast('Host 10.0.1.44 (Internal-Host-04) quarantined via 802.1X NAC isolation VLAN 999.');
-        }, 1000);
-      };
-    }
-
-    if (exportStixBtn) {
-      exportStixBtn.onclick = () => {
-        showToast('Exported forensic STIX 2.1 JSON bundle & PCAP trace for SIEM ingest.');
-      };
-    }
+    modal.querySelector('#close-ndr-modal-btn').onclick = () => { modal.style.display = 'none'; };
+    modal.querySelector('#opm-ndr-close-btn').onclick = () => { modal.style.display = 'none'; };
   }
 
 
+
+  // -------------------------------------------------------------
+  // REAL-DATA NORMALIZATION (real-data rebuild, 2026-11-09)
+  // The real APIs return raw store rows, not the legacy view fields the
+  // old demo UI used. These helpers map raw rows to display fields using
+  // ONLY values the API returned. Anything the API did not return is
+  // null, and the renderers below show '—' for it — never an invented
+  // value. Field names accept both the real store names (cpu_pct,
+  // latency_ms, probe_id) and legacy names, so the view keeps working
+  // while the backend migration lands.
+  // -------------------------------------------------------------
+  function opmNum(v) {
+    return (typeof v === 'number' && !Number.isNaN(v)) ? v : null;
+  }
+  function opmProbeById(id) {
+    if (id === null || id === undefined) return null;
+    return (state.probes || []).find(p => String(p.id) === String(id)) || null;
+  }
+  function opmDeviceById(id) {
+    if (id === null || id === undefined) return null;
+    return (state.devices || []).find(d => String(d.id) === String(id)) || null;
+  }
+  function opmDeviceName(d) {
+    if (!d) return '—';
+    return d.sys_name || d.hostname || d.name || d.ip || '—';
+  }
+  function opmProbeNameForDevice(d) {
+    if (!d) return '—';
+    if (d.probe) return d.probe;
+    const pr = opmProbeById(d.probeId !== undefined ? d.probeId : d.probe_id);
+    return (pr && (pr.name || pr.ip)) || '—';
+  }
+  function opmNormDevice(d) {
+    const cpu = opmNum(d.cpu !== undefined ? d.cpu : d.cpu_pct);
+    const memory = opmNum(d.memory !== undefined ? d.memory : d.mem_used_pct);
+    const responseTime = opmNum(d.responseTime !== undefined ? d.responseTime : d.response_ms);
+    return {
+      id: d.id,
+      name: opmDeviceName(d),
+      ip: d.ip || '—',
+      vendor: d.vendor || '—',
+      model: d.model || d.sys_descr || null,
+      type: d.type || d.model || d.sys_descr || d.category || '—',
+      category: d.category || 'Unknown',
+      status: d.status || 'Unknown',
+      probeId: (d.probeId !== undefined ? d.probeId : d.probe_id),
+      probe: opmProbeNameForDevice(d),
+      cpu: cpu,
+      memory: memory,
+      responseTime: responseTime,
+      // Availability is NOT in the /api/devices list response (it is
+      // computed per-device from the metrics table). Null until polled.
+      availability: opmNum(d.availability),
+      interfaces: Array.isArray(d.interfaces) ? d.interfaces : [],
+      configDrift: !!d.configDrift,
+      lastBackup: d.lastBackup || null,
+      lastPolled: d.lastPolled || d.last_polled_at || null
+    };
+  }
+  function opmNormAlarm(a) {
+    const dev = opmDeviceById(a.device_id !== undefined ? a.device_id : a.deviceId);
+    const probeId = (a.probeId !== undefined ? a.probeId : (dev ? (dev.probeId !== undefined ? dev.probeId : dev.probe_id) : null));
+    return {
+      id: a.id,
+      device: a.device || opmDeviceName(dev),
+      deviceId: (a.device_id !== undefined ? a.device_id : a.deviceId),
+      ip: a.ip || (dev && dev.ip) || '—',
+      severity: a.severity || 'Attention',
+      category: a.category || a.source || '—',
+      message: a.message || '—',
+      entity: a.entity || a.source || '—',
+      probe: a.probe || (dev ? opmProbeNameForDevice(dev) : '—'),
+      probeId: probeId,
+      technician: a.technician || a.ack_by || '—',
+      time: a.time || (a.created_at ? new Date(a.created_at).toLocaleString() : '—'),
+      status: a.status || 'active'
+    };
+  }
+  function opmProbeIsOnline(pr) {
+    return (pr.status || '').toString().toLowerCase() === 'online';
+  }
+  function opmProbeLatency(pr) {
+    return opmNum(pr.latency !== undefined ? pr.latency : (pr.latency_ms !== undefined ? pr.latency_ms : pr.pingLatency));
+  }
+  function opmProbeDeviceCount(pr) {
+    return (state.devices || []).filter(d => String(d.probeId !== undefined ? d.probeId : d.probe_id) === String(pr.id)).length;
+  }
+  function opmProbeAlarmCount(pr) {
+    return (state.alarms || []).filter(a => {
+      if (a.probeId !== undefined && a.probeId !== null) return String(a.probeId) === String(pr.id);
+      const dev = opmDeviceById(a.device_id !== undefined ? a.device_id : a.deviceId);
+      if (!dev) return false;
+      const pid = dev.probeId !== undefined ? dev.probeId : dev.probe_id;
+      return String(pid) === String(pr.id);
+    }).length;
+  }
+  function opmNormProbe(pr) {
+    return {
+      id: pr.id,
+      name: pr.name || pr.ip || 'Probe',
+      ip: pr.ip || '—',
+      status: pr.status || 'Unknown',
+      location: pr.location || '—',
+      latency: opmProbeLatency(pr),
+      syncStatus: pr.syncStatus || null,
+      commPort: pr.commPort || null,
+      devicesCount: (pr.devicesCount !== undefined ? pr.devicesCount : (typeof pr.devices === 'number' ? pr.devices : opmProbeDeviceCount(pr))),
+      alarmsCount: (pr.alarmsCount !== undefined ? pr.alarmsCount : (typeof pr.alarms === 'number' ? pr.alarms : opmProbeAlarmCount(pr)))
+    };
+  }
+  async function opmPostJson(url, body) {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body || {})
+    });
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok && !(data && data.status === 'error'), status: res.status, data: data || {} };
+  }
 
   // -------------------------------------------------------------
   // VIEW: DASHBOARD (Overview, Summary, Servers, Virt, Storage, Network, NOC)
@@ -8132,15 +6428,28 @@
       { id: 'noc', name: 'NOC View ↗' }
     ];
 
-    // Filter devices based on probe selection
-    const filteredDevices = state.selectedProbe === 'all'
+    // Filter devices based on probe selection, then normalize raw API rows
+    // to display fields (only real values; missing metrics stay null).
+    const rawFilteredDevices = state.selectedProbe === 'all'
       ? state.devices
-      : state.devices.filter(d => d.probeId == state.selectedProbe);
+      : state.devices.filter(d => (d.probeId !== undefined ? d.probeId : d.probe_id) == state.selectedProbe);
+    const filteredDevices = rawFilteredDevices.map(opmNormDevice);
+    const probes = (state.probes || []).map(opmNormProbe);
 
-    // Filter alarms based on probe selection
-    const filteredAlarms = state.selectedProbe === 'all'
+    // Filter alarms based on probe selection, then normalize.
+    const rawFilteredAlarms = state.selectedProbe === 'all'
       ? state.alarms
-      : state.alarms.filter(a => a.probeId == state.selectedProbe);
+      : state.alarms.filter(a => String(opmNormAlarm(a).probeId) === String(state.selectedProbe));
+    const filteredAlarms = rawFilteredAlarms.map(opmNormAlarm);
+    const onlineProbes = probes.filter(opmProbeIsOnline).length;
+    const healthPct = (list) => {
+      if (!list || list.length === 0) return null;
+      const healthy = list.filter(d => ['clear', 'up'].includes((d.status || '').toLowerCase())).length;
+      return Math.round((healthy / list.length) * 100);
+    };
+    const routerHealth = healthPct(filteredDevices.filter(d => (d.category || '').toLowerCase().includes('router')));
+    const switchHealth = healthPct(filteredDevices.filter(d => (d.category || '').toLowerCase().includes('switch')));
+    const serverHealth = healthPct(filteredDevices.filter(d => (d.category || '').toLowerCase().includes('server')));
 
     // Calculate metrics
     const totalDevices = filteredDevices.length;
@@ -8225,51 +6534,46 @@
     const virtVmsCount = (state.virtualMachines || []).filter(vm => state.selectedProbe === 'all' || vm.probeId == state.selectedProbe).length;
 
     const flowCount = (state.flowExporters || []).length;
-    let netflowBarsHtml = '';
-    if (flowCount === 0) {
-      netflowBarsHtml = `
-        <div style="display: flex; align-items: flex-end; gap: 2px; height: 24px;">
-          <div style="width: 4px; height: 4px; background: #334155;"></div>
-          <div style="width: 4px; height: 4px; background: #334155;"></div>
-          <div style="width: 4px; height: 4px; background: #334155;"></div>
-          <div style="width: 4px; height: 4px; background: #334155;"></div>
-        </div>
-      `;
-    } else {
-      netflowBarsHtml = `
-        <div style="display: flex; align-items: flex-end; gap: 2px; height: 24px;">
-          <div style="width: 4px; height: 12px; background: #38bdf8;"></div>
-          <div style="width: 4px; height: 20px; background: #49bd80;"></div>
-          <div style="width: 4px; height: 16px; background: #38bdf8;"></div>
-          <div style="width: 4px; height: 24px; background: #f59e0b;"></div>
-        </div>
-      `;
-    }
+    // No flow-volume data is returned by the API, so bar heights cannot be
+    // derived from real traffic. Render flat bars (no invented shape).
+    let netflowBarsHtml = `
+      <div style="display: flex; align-items: flex-end; gap: 2px; height: 24px;">
+        <div style="width: 4px; height: 4px; background: #334155;"></div>
+        <div style="width: 4px; height: 4px; background: #334155;"></div>
+        <div style="width: 4px; height: 4px; background: #334155;"></div>
+        <div style="width: 4px; height: 4px; background: #334155;"></div>
+      </div>
+    `;
 
     const ncmChangesCount = (state.ncmAudits || []).length;
     const ncmDriftCount = filteredDevices.filter(d => d.configDrift).length;
     const firewallAttacksCount = filteredAlarms.filter(a => ((a.category || '') + ' ' + (a.message || '')).toLowerCase().includes('attack') || ((a.category || '')).toLowerCase() === 'security').length;
 
-    const slaPct = totalDevices === 0 ? '100.0%' : (criticalDevices > 0 ? ((1 - (criticalDevices / totalDevices) * 0.05) * 100).toFixed(2) + '%' : '99.99%');
-    const slaTarget = totalDevices === 0 ? 'Optimal SLA' : 'Tier 4 Target Met';
-    const slaDowntime = totalDevices === 0 ? '0m Downtime' : 'Past 30d';
-    const mttrString = filteredAlarms.length === 0 ? 'MTTR: 0m (No Active Incidents)' : 'MTTR: 18m 42s';
-    const probeAvgRtt = state.probes.length > 0 && state.probes[0].pingLatency ? `${state.probes[0].pingLatency} ms` : '1.2 ms';
+    // No availability-history source exists yet: SLA is unknown, never
+    // invented. MTTR is unknown until a real alarm is resolved.
+    const slaPct = '—';
+    const slaTarget = 'No SLA target set';
+    const slaDowntime = 'No availability history yet';
+    const mttrString = filteredAlarms.length === 0 ? 'MTTR: 0m (No Active Incidents)' : 'MTTR: —';
+    const probeLatencies = probes.map(p => p.latency).filter(v => typeof v === 'number' && !Number.isNaN(v));
+    const probeAvgRtt = probeLatencies.length > 0 ? `${(probeLatencies.reduce((a, b) => a + b, 0) / probeLatencies.length).toFixed(1)} ms` : '—';
 
     // --- Pre-calculated clean empty states for Overview widgets ---
+    const cpuDevices = filteredDevices.filter(d => typeof d.cpu === 'number').sort((a, b) => b.cpu - a.cpu);
+    const memDevices = filteredDevices.filter(d => typeof d.memory === 'number').sort((a, b) => b.memory - a.memory);
     let widgetCpuBody = '';
-    if (totalDevices === 0) {
+    if (cpuDevices.length === 0) {
       widgetCpuBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No CPU Telemetry Available</div><div style="font-size: 11px;">Deploy the OpManager Agent or add SNMP credentials to stream real-time processor load.</div></div>';
     } else {
       widgetCpuBody = `
         <div style="display: flex; align-items: center; justify-content: space-around; gap: 4px; margin-bottom: 12px; overflow-x: auto;">
-          ${[...filteredDevices].sort((a,b) => b.cpu - a.cpu).slice(0, 3).map(d => 
+          ${cpuDevices.slice(0, 3).map(d => 
             createSpeedometerGauge(d.cpu, 'CPU Load', d.name, d.ip, 145)
           ).join('')}
         </div>
         <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;">
           <tbody>
-            ${[...filteredDevices].sort((a,b) => b.cpu - a.cpu).slice(0, 4).map(d => {
+            ${cpuDevices.slice(0, 4).map(d => {
               const barColor = d.cpu >= 85 ? '#dc2626' : (d.cpu >= 70 ? '#ea580c' : '#16a34a');
               return `
                 <tr style="border-top: 1px solid #f1f5f9;">
@@ -8292,18 +6596,18 @@
     }
 
     let widgetMemBody = '';
-    if (totalDevices === 0) {
+    if (memDevices.length === 0) {
       widgetMemBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No Memory Telemetry Available</div><div style="font-size: 11px;">Deploy the OpManager Agent or add SNMP credentials to stream real-time RAM metrics.</div></div>';
     } else {
       widgetMemBody = `
         <div style="display: flex; align-items: center; justify-content: space-around; gap: 4px; margin-bottom: 12px; overflow-x: auto;">
-          ${[...filteredDevices].sort((a,b) => b.memory - a.memory).slice(0, 3).map(d => 
+          ${memDevices.slice(0, 3).map(d => 
             createSpeedometerGauge(d.memory, 'RAM Load', d.name, d.ip, 145)
           ).join('')}
         </div>
         <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;">
           <tbody>
-            ${[...filteredDevices].sort((a,b) => b.memory - a.memory).slice(0, 4).map(d => {
+            ${memDevices.slice(0, 4).map(d => {
               const barColor = d.memory >= 85 ? '#dc2626' : (d.memory >= 70 ? '#ea580c' : '#16a34a');
               return `
                 <tr style="border-top: 1px solid #f1f5f9;">
@@ -8326,25 +6630,22 @@
     }
 
     let widgetIfaceBody = '';
-    if (state.topInterfaces.length === 0) {
+    if ((state.topInterfaces || []).length === 0) {
       widgetIfaceBody = '<tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">No network interface traffic recorded. Discovered switch/router interfaces will stream live telemetry here.</td></tr>';
     } else {
-      widgetIfaceBody = state.topInterfaces.slice(0, 5).map((iface, idx) => {
-        const trends = [
-          [120, 150, 180, 240, 310, 380, 420],
-          [850, 890, 810, 780, 800, 840, 820],
-          [2100, 2250, 2300, 2400, 2380, 2450, 2400],
-          [1100, 1250, 1180, 1300, 1400, 1390, 1450],
-          [90, 110, 105, 120, 95, 100, 110]
-        ];
-        const spark = createSparkline(trends[idx % trends.length], 75, 22, '#0070e0');
+      widgetIfaceBody = (state.topInterfaces || []).slice(0, 5).map((iface, idx) => {
+        // No per-interface history is returned by the API yet: draw a
+        // sparkline only when the interface carries its own real history.
+        const spark = Array.isArray(iface.history) && iface.history.length > 1
+          ? createSparkline(iface.history, 75, 22, '#0070e0')
+          : '<span style="color: #94a3b8;">—</span>';
         return `
           <tr style="border-bottom: 1px solid #f8fafc;">
             <td style="padding: 6px 4px; font-weight: 700; color: #0f172a;">${iface.name}</td>
             <td style="padding: 6px 4px; color: #0070e0; font-weight: 600;">${iface.device}</td>
             <td style="padding: 6px 4px;">${spark}</td>
-            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #0284c7;">${iface.inTraffic}</td>
-            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #64748b;">${iface.outTraffic}</td>
+            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #0284c7;">${iface.inTraffic ?? '—'}</td>
+            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #64748b;">${iface.outTraffic ?? '—'}</td>
             <td style="padding: 6px 4px;">
               <span style="font-size: 10px; font-weight: 700; padding: 2px 5px; border-radius: 2px; ${iface.status === 'UP' ? 'background: #dcfce7; color: #166534;' : 'background: #fee2e2; color: #991b1b;'}">${iface.status}</span>
             </td>
@@ -8378,12 +6679,12 @@
       widgetNcmBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No NCM Devices Enrolled</div><div style="font-size: 11px;">Automated backup and configuration drift audits will activate once network devices are added.</div></div>';
     } else {
       widgetNcmBody = `
-        ${state.configDriftFixed ? `
+        ${ncmDriftCount === 0 ? `
           <div style="padding: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
             <span style="color: #16a34a; font-size: 18px;">✓</span>
             <div>
               <div style="font-size: 12px; font-weight: 700; color: #166534;">Configurations in Sync</div>
-              <div style="font-size: 11px; color: #15803d;">Startup and Running configs are identical across monitored devices.</div>
+              <div style="font-size: 11px; color: #15803d;">No config drift reported on monitored devices.</div>
             </div>
           </div>
         ` : `
@@ -8392,7 +6693,7 @@
               <span style="color: #d97706; font-size: 18px;">⚠</span>
               <div>
                 <div style="font-size: 12px; font-weight: 700; color: #92400e;">Config Drift Detected</div>
-                <div style="font-size: 11px; color: #b45309;">Running configuration has uncommitted changes vs NVRAM startup.</div>
+                <div style="font-size: 11px; color: #b45309;">Running configuration has uncommitted changes on ${ncmDriftCount} monitored device(s).</div>
               </div>
             </div>
             <button id="opm-dash-ncm-diff-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
@@ -8403,11 +6704,11 @@
         <div style="font-size: 11px; color: #64748b; display: flex; flex-direction: column; gap: 6px;">
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
             <span>Last Automated Backup Run</span>
-            <span style="font-weight: 600; color: #334155;">Today at 04:00 AM UTC (Completed)</span>
+            <span style="font-weight: 600; color: #64748b;">No backup recorded yet</span>
           </div>
           <div style="display: flex; justify-content: space-between;">
             <span>PCI-DSS 4.0 Compliance Rate</span>
-            <span style="font-weight: 600; color: #16a34a;">100% Compliant</span>
+            <span style="font-weight: 600; color: #64748b;">No compliance data yet</span>
           </div>
         </div>
       `;
@@ -8417,27 +6718,24 @@
     if (totalDevices === 0) {
       widgetZiaBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #4338ca; margin-bottom: 4px;">Zia AI Telemetry Standby</div><div style="font-size: 11px;">Machine-learning anomaly correlation standby for live node telemetry.</div></div>';
     } else {
-      widgetZiaBody = `
-        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between;">
-          <div>
-            <div style="font-size: 11px; font-weight: 700; color: #166534;">Enterprise Anomaly Detection Engine</div>
-            <div style="font-size: 11px; color: #15803d;">All monitors operating strictly within dynamic seasonality thresholds.</div>
-          </div>
-          <span style="font-size: 11px; font-weight: 700; color: #166534; background: #dcfce7; padding: 2px 8px; border-radius: 10px;">NORMAL</span>
-        </div>
-      `;
+      widgetZiaBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #4338ca; margin-bottom: 4px;">Zia AI Telemetry Standby</div><div style="font-size: 11px;">Machine-learning anomaly correlation standby for live node telemetry.</div></div>';
     }
 
     let widgetHeatmapBody = '';
     if (networkCount === 0) {
       widgetHeatmapBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b; width: 100%;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No Switch Interface Telemetry</div><div style="font-size: 11px;">Real-time 48-port ifOperStatus heatmap will render once switches are discovered.</div></div>';
     } else {
+      const heatIfaces = (state.interfaces && state.interfaces.length ? state.interfaces : (state.topInterfaces || []));
+      const heatUp = heatIfaces.filter(i => (i.status || i.oper || '').toString().toUpperCase() === 'UP').length;
+      const heatDown = heatIfaces.filter(i => (i.status || i.oper || '').toString().toUpperCase() === 'DOWN').length;
+      const heatUnknown = heatIfaces.length - heatUp - heatDown;
       widgetHeatmapBody = `
         <div style="display: flex; gap: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
-          <span style="color: #16a34a; font-weight: 700; border-bottom: 2px solid #16a34a; padding-bottom: 4px;">Link Up</span>
-          <span style="color: #64748b;">Unknown (0)</span>
-          <span style="color: #dc2626; font-weight: 600;">Link Down (0)</span>
+          <span style="color: #16a34a; font-weight: 700; border-bottom: 2px solid #16a34a; padding-bottom: 4px;">Link Up (${heatUp})</span>
+          <span style="color: #64748b;">Unknown (${heatUnknown})</span>
+          <span style="color: #dc2626; font-weight: 600;">Link Down (${heatDown})</span>
         </div>
+        ${heatIfaces.length === 0 ? '<div style="padding: 12px 0; font-size: 11px; color: #64748b;">No interface link states reported yet. Discovered switch/router interfaces will stream live telemetry here.</div>' : ''}
       `;
     }
 
@@ -8446,7 +6744,7 @@
       widgetSdwanBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b; width: 100%;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No SD-WAN Controllers Connected</div><div style="font-size: 11px;">Connect Cisco vManage or NetFlow exporters to view SD-WAN fabric and tunnel health.</div></div>';
     } else {
       widgetSdwanBody = `
-        <div style="padding: 10px; font-size: 11px; color: #64748b;">SD-WAN Telemetry Synchronized</div>
+        <div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No SD-WAN Telemetry Yet</div><div style="font-size: 11px;">Connect an SD-WAN controller or NetFlow exporter to view fabric and tunnel health.</div></div>
       `;
     }
 
@@ -8503,16 +6801,16 @@
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Monitored Devices</div>
               <div style="display: flex; align-items: baseline; gap: 8px;">
                 <span style="font-size: 24px; font-weight: 800; color: #0f172a;">${totalDevices}</span>
-                <span style="font-size: 11px; font-weight: 600; color: #16a34a;">100% Licensed</span>
+                <span style="font-size: 11px; font-weight: 600; color: #64748b;">${totalDevices === 0 ? 'No devices yet' : 'Licence: —'}</span>
               </div>
-              <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Across ${state.probes.length} Enterprise Probes</div>
+              <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Across ${probes.length} Enterprise Probe${probes.length === 1 ? '' : 's'}</div>
             </div>
 
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Enterprise Probes</div>
               <div style="display: flex; align-items: baseline; gap: 8px;">
-                <span style="font-size: 24px; font-weight: 800; color: #16a34a;">${state.probes.length} / ${state.probes.length}</span>
-                <span style="font-size: 11px; font-weight: 600; color: #16a34a;">● Synchronized</span>
+                <span style="font-size: 24px; font-weight: 800; color: #16a34a;">${onlineProbes} / ${probes.length}</span>
+                <span style="font-size: 11px; font-weight: 600; color: ${onlineProbes === probes.length && probes.length > 0 ? '#16a34a' : '#94a3b8'};">${onlineProbes === probes.length && probes.length > 0 ? '● Synchronized' : '● No heartbeat yet'}</span>
               </div>
               <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Avg Central RTT: ${probeAvgRtt}</div>
             </div>
@@ -8538,8 +6836,8 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Peak Bandwidth Ingress</div>
               <div style="display: flex; align-items: baseline; gap: 8px;">
-                <span style="font-size: 24px; font-weight: 800; color: #0284c7;">0.00 Mbps</span>
-                <span style="font-size: 11px; font-weight: 600; color: #64748b;">No active flow</span>
+                <span style="font-size: 24px; font-weight: 800; color: #0284c7;">—</span>
+                <span style="font-size: 11px; font-weight: 600; color: #64748b;">No flow data</span>
               </div>
               <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Real-Time Flow Ingress</div>
             </div>
@@ -8573,10 +6871,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    ${state.probes.map(pr => `
+                    ${probes.length === 0 ? '<tr><td colspan="5" style="padding: 24px; text-align: center; color: #64748b;">No probes registered yet. Register a remote probe to monitor branch sites.</td></tr>' : probes.map(pr => `
                       <tr style="border-bottom: 1px solid #f8fafc;">
                         <td style="padding: 8px; font-weight: 600; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">
-                          <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #16a34a; margin-right: 6px;"></span>
+                          <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: ${opmProbeIsOnline(pr) ? '#16a34a' : '#dc2626'}; margin-right: 6px;"></span>
                           ${pr.name}
                         </td>
                         <td style="padding: 8px; color: #475569; font-family: monospace;">${pr.ip}</td>
@@ -8584,13 +6882,13 @@
                         <td style="padding: 8px;">
                           <div style="display: flex; align-items: center; gap: 8px;">
                             <div style="width: 50px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                              <div style="width: ${Math.min(100, (pr.latency / 60) * 100)}%; height: 100%; background: ${pr.latency > 40 ? '#ea580c' : '#16a34a'};"></div>
+                              <div style="width: ${pr.latency === null ? 0 : Math.min(100, (pr.latency / 60) * 100)}%; height: 100%; background: ${pr.latency !== null && pr.latency > 40 ? '#ea580c' : '#16a34a'};"></div>
                             </div>
-                            <span style="font-size: 11px; color: #64748b;">${pr.latency}ms</span>
+                            <span style="font-size: 11px; color: #64748b;">${pr.latency === null ? '—' : pr.latency + 'ms'}</span>
                           </div>
                         </td>
                         <td style="padding: 8px;">
-                          <span style="font-size: 11px; font-weight: 600; color: #166534; background: #dcfce7; padding: 2px 6px; border-radius: 3px;">Online</span>
+                          <span style="font-size: 11px; font-weight: 600; color: ${opmProbeIsOnline(pr) ? '#166534' : '#991b1b'}; background: ${opmProbeIsOnline(pr) ? '#dcfce7' : '#fee2e2'}; padding: 2px 6px; border-radius: 3px;">${opmProbeIsOnline(pr) ? 'Online' : pr.status}</span>
                         </td>
                       </tr>
                     `).join('')}
@@ -8622,28 +6920,28 @@
                     <div>
                       <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
                         <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Routers')} Routers (${routerCount})</span>
-                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                        <span style="color: ${routerHealth === null ? '#94a3b8' : '#16a34a'}; font-weight: 600;">${routerHealth === null ? 'No devices' : routerHealth + '% Healthy'}</span>
                       </div>
                       <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                        <div style="width: 100%; background: #16a34a;"></div>
+                        <div style="width: ${routerHealth === null ? 0 : routerHealth}%; background: #16a34a;"></div>
                       </div>
                     </div>
                     <div>
                       <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
                         <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Switches')} Switches (${switchCount})</span>
-                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                        <span style="color: ${switchHealth === null ? '#94a3b8' : '#16a34a'}; font-weight: 600;">${switchHealth === null ? 'No devices' : switchHealth + '% Healthy'}</span>
                       </div>
                       <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                        <div style="width: 100%; background: #16a34a;"></div>
+                        <div style="width: ${switchHealth === null ? 0 : switchHealth}%; background: #16a34a;"></div>
                       </div>
                     </div>
                     <div>
                       <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
                         <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Servers')} Servers (${serverCount})</span>
-                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                        <span style="color: ${serverHealth === null ? '#94a3b8' : '#16a34a'}; font-weight: 600;">${serverHealth === null ? 'No devices' : serverHealth + '% Healthy'}</span>
                       </div>
                       <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                        <div style="width: 100%; background: #16a34a;"></div>
+                        <div style="width: ${serverHealth === null ? 0 : serverHealth}%; background: #16a34a;"></div>
                       </div>
                     </div>
                   </div>
@@ -8850,14 +7148,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    ${state.probes.map(pr => `
+                    ${probes.length === 0 ? '<tr><td colspan="5" style="padding: 24px; text-align: center; color: #64748b;">No probes registered yet. Register a remote probe to monitor branch sites.</td></tr>' : probes.map(pr => `
                       <tr style="border-bottom: 1px solid #f8fafc;">
                         <td style="padding: 7px 8px; font-weight: 600; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
                         <td style="padding: 7px 8px; font-weight: 700; color: #0f172a;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
-                        <td style="padding: 7px 8px; color: #64748b;">0</td>
-                        <td style="padding: 7px 8px; font-family: monospace; color: #334155;">${(typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)) * 3}</td>
+                        <td style="padding: 7px 8px; color: #64748b;">—</td>
+                        <td style="padding: 7px 8px; font-family: monospace; color: #334155;">—</td>
                         <td style="padding: 7px 8px;">
-                          <span style="font-size: 10px; font-weight: 700; color: #166534; background: #dcfce7; padding: 1px 6px; border-radius: 2px;">SYNC OK</span>
+                          <span style="font-size: 10px; font-weight: 700; color: ${opmProbeIsOnline(pr) ? '#166534' : '#991b1b'}; background: ${opmProbeIsOnline(pr) ? '#dcfce7' : '#fee2e2'}; padding: 1px 6px; border-radius: 2px;">${opmProbeIsOnline(pr) ? 'SYNC OK' : pr.status.toUpperCase()}</span>
                         </td>
                       </tr>
                     `).join('')}
@@ -8949,15 +7247,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  ${state.probes.map(pr => `
+                  ${probes.length === 0 ? '<tr><td colspan="7" style="padding: 24px; text-align: center; color: #64748b;">No probes registered yet. Register a remote probe to monitor branch sites.</td></tr>' : probes.map(pr => `
                     <tr style="border-bottom: 1px solid #f1f5f9;">
                       <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
                       <td style="padding: 10px 14px; font-family: monospace;">${pr.ip}</td>
                       <td style="padding: 10px 14px; color: #64748b;">${pr.location}</td>
                       <td style="padding: 10px 14px; font-weight: 700;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
                       <td style="padding: 10px 14px;"><span style="font-weight: 700; color: ${(pr.alarmsCount || pr.alarms || 0) > 0 ? '#dc2626' : '#16a34a'};">${pr.alarmsCount || pr.alarms || 0}</span></td>
-                      <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency} ms</td>
-                      <td style="padding: 10px 14px; text-align: right;"><span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 10px;">CONNECTED</span></td>
+                      <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency === null ? '—' : pr.latency + ' ms'}</td>
+                      <td style="padding: 10px 14px; text-align: right;"><span style="background: ${opmProbeIsOnline(pr) ? '#dcfce7' : '#fee2e2'}; color: ${opmProbeIsOnline(pr) ? '#166534' : '#991b1b'}; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 10px;">${opmProbeIsOnline(pr) ? 'CONNECTED' : pr.status.toUpperCase()}</span></td>
                     </tr>
                   `).join('')}
                 </tbody>
@@ -9008,10 +7306,10 @@
                     <div>
                       <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
                         <span>CPU Utilization</span>
-                        <strong style="color: ${srv.cpu > 80 ? '#dc2626' : '#16a34a'};">${srv.cpu}%</strong>
+                        <strong style="color: ${srv.cpu !== null && srv.cpu > 80 ? '#dc2626' : '#16a34a'};">${srv.cpu === null ? '—' : srv.cpu + '%'}</strong>
                       </div>
                       <div style="height: 5px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                        <div style="width: ${srv.cpu}%; height: 100%; background: ${srv.cpu > 80 ? '#dc2626' : '#16a34a'};"></div>
+                        <div style="width: ${srv.cpu === null ? 0 : srv.cpu}%; height: 100%; background: ${srv.cpu !== null && srv.cpu > 80 ? '#dc2626' : '#16a34a'};"></div>
                       </div>
                     </div>
                   </div>
@@ -9149,7 +7447,7 @@
               <div style="display: flex; align-items: center; gap: 10px;">
                 <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #16a34a; box-shadow: 0 0 8px #16a34a;"></span>
                 <span style="font-size: 18px; font-weight: 800; color: #38bdf8; letter-spacing: 0.5px;">OPMANAGER CENTRAL OPERATIONS WALLBOARD (NOC)</span>
-                <span style="background: #1e293b; color: #4ade80; border: 1px solid #334155; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px;">LIVE STREAMING</span>
+                <span style="background: #1e293b; color: ${totalDevices === 0 ? '#94a3b8' : '#4ade80'}; border: 1px solid #334155; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px;">${totalDevices === 0 ? 'STANDBY' : 'LIVE STREAMING'}</span>
               </div>
               <div style="display: flex; align-items: center; gap: 10px;">
                 <button id="opm-noc-fullscreen-btn" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
@@ -9180,51 +7478,38 @@
 
             <!-- Dynamic Slide Content -->
             ${(state.nocSlide || 0) === 0 ? `
-              <!-- SLIDE 0: PROBES HEALTH & LATENCIES -->
+              <!-- SLIDE 0: PROBES HEALTH & LATENCIES (one card per real probe) -->
               <div>
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
+                  ${probes.length === 0 ? `
+                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155; grid-column: 1 / -1; text-align: center; color: #94a3b8;">
+                    No remote probes registered. Register a remote probe to see probe health here.
+                  </div>` : probes.map(pr => `
                   <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">NEW YORK PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
+                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">${(pr.name || '').toUpperCase()}</span>
+                      <span style="font-size: 10px; background: ${opmProbeIsOnline(pr) ? '#064e3b' : '#450a0a'}; color: ${opmProbeIsOnline(pr) ? '#34d399' : '#fca5a5'}; padding: 1px 6px; border-radius: 2px;">${pr.status.toUpperCase()}</span>
                     </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>12ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
-                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">LONDON PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
-                    </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>28ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
-                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">SINGAPORE PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
-                    </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>45ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
+                    <div style="font-size: 26px; font-weight: 800; color: ${opmProbeIsOnline(pr) ? '#34d399' : '#fca5a5'}; margin: 8px 0;">${opmProbeIsOnline(pr) ? 'HEALTHY' : pr.status.toUpperCase()}</div>
+                    <div style="font-size: 11px; color: #cbd5e1;">${pr.devicesCount} Managed Nodes &bull; Latency: <strong>${pr.latency === null ? '—' : pr.latency + 'ms'}</strong> &bull; Sync: ${opmProbeIsOnline(pr) ? 'Synchronized' : '—'}</div>
+                  </div>`).join('')}
                   <div style="background: #0f172a; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                       <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">ENTERPRISE PROBES</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #6ee7b7; padding: 1px 6px; border-radius: 2px;">${totalDevices > 0 ? 'HEALTHY' : 'STANDBY'}</span>
+                      <span style="font-size: 10px; background: #064e3b; color: #6ee7b7; padding: 1px 6px; border-radius: 2px;">${onlineProbes === probes.length && probes.length > 0 ? 'HEALTHY' : 'STANDBY'}</span>
                     </div>
                     <div style="font-size: 26px; font-weight: 800; color: #4ade80; margin: 8px 0;">${filteredAlarms.length} ACTIVE ALARMS</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">All registered probe nodes synchronized</div>
+                    <div style="font-size: 11px; color: #cbd5e1;">${probes.length} registered probe(s) &bull; ${onlineProbes} online</div>
                   </div>
                 </div>
 
                 <!-- Central Telemetry Status Bar -->
                 <div style="background: #1e293b; border-radius: 6px; padding: 14px 18px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
                   <div style="display: flex; gap: 24px;">
-                    <span>PostgreSQL Database: <strong style="color: #4ade80;">Active (Cluster Primary)</strong></span>
-                    <span>Active Probe Sync: <strong style="color: #38bdf8;">4 / 4 Live Heartbeats</strong></span>
-                    <span>Central Engine Uptime: <strong style="color: #cbd5e1;">184 Days 14 Hours</strong></span>
+                    <span>Active Probe Sync: <strong style="color: #38bdf8;">${onlineProbes} / ${probes.length} Live Heartbeats</strong></span>
+                    <span>Central Engine Uptime: <strong style="color: #cbd5e1;">—</strong></span>
                   </div>
-                  <div style="color: #94a3b8; font-family: monospace;">OpManager Central v12.9.203 GA Build 129203</div>
+                  <div style="color: #94a3b8; font-family: monospace;">OpManager Central v12.9.204-GA</div>
                 </div>
               </div>
             ` : state.nocSlide === 1 ? `
@@ -9234,8 +7519,8 @@
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 16px;">✨</span>
                     <div>
-                      <div style="font-weight: 800; font-size: 13px; color: #4ade80;">All Systems Operational &bull; 0 Correlated Incidents</div>
-                      <div style="font-size: 11px; color: #94a3b8;">Central Master telemetry engine active &bull; Baseline healthy</div>
+                      <div style="font-weight: 800; font-size: 13px; color: ${filteredAlarms.length === 0 ? '#4ade80' : '#f87171'};">${filteredAlarms.length === 0 ? (totalDevices === 0 ? 'No devices monitored yet' : 'All Systems Operational &bull; 0 Correlated Incidents') : filteredAlarms.length + ' Active Alarm' + (filteredAlarms.length === 1 ? '' : 's') + ' &bull; ' + filteredAlarms.length + ' Correlated Incident' + (filteredAlarms.length === 1 ? '' : 's')}</div>
+                      <div style="font-size: 11px; color: #94a3b8;">${filteredAlarms.length === 0 ? 'Central Master telemetry engine active &bull; Baseline healthy' : 'Review the active alarms below.'}</div>
                     </div>
                   </div>
                   <button onclick="window.location.hash='#/alarms'" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Open Alarms Studio &rarr;</button>
@@ -9243,7 +7528,7 @@
 
                 <div style="background: #1e293b; border-radius: 6px; padding: 16px; font-size: 12px; border: 1px solid #334155;">
                   <div style="font-weight: 700; color: #38bdf8; margin-bottom: 12px; font-size: 13px;">ACTIVE CENTRAL ALARMS TICKER</div>
-                  ${state.alarms.length === 0 ? `
+                  ${filteredAlarms.length === 0 ? `
                     <div style="padding: 30px; text-align: center; color: #94a3b8;">
                       No active alarms detected across monitored infrastructure.
                     </div>
@@ -9261,7 +7546,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        ${state.alarms.map(a => `
+                        ${filteredAlarms.map(a => `
                           <tr style="border-bottom: 1px solid #283347;">
                             <td style="padding: 8px 8px;">${getStatusBadge(a.severity)}</td>
                             <td style="padding: 8px 8px; font-weight: 700; color: #38bdf8; cursor: pointer;" onclick="showDeviceSnapshotModal('${a.device}')">${a.device}</td>
@@ -9282,7 +7567,7 @@
               <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
                 <div style="font-weight: 800; font-size: 14px; color: #38bdf8; margin-bottom: 14px;">ENTERPRISE INTERFACES BANDWIDTH CONSUMPTION MATRIX</div>
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
-                  ${(state.topInterfaces || []).slice(0, 6).map(inf => `
+                  ${(state.topInterfaces || []).length === 0 ? '<div style="grid-column: 1 / -1; padding: 30px; text-align: center; color: #94a3b8;">No bandwidth data yet. Bandwidth fills in once interfaces are discovered and polled.</div>' : (state.topInterfaces || []).slice(0, 6).map(inf => `
                     <div style="background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 14px;">
                       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <div>
@@ -9317,34 +7602,9 @@
               <!-- SLIDE 3: POWER & THERMAL SENSORS -->
               <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
                 <div style="font-weight: 800; font-size: 14px; color: #38bdf8; margin-bottom: 14px;">FACILITY POWER, UPS RUNTIME &amp; THERMAL METRICS</div>
-                ${state.devices.length === 0 ? `
-                  <div style="padding: 30px; text-align: center; color: #94a3b8;">
-                    No hardware sensor telemetry available. Connect SNMP-enabled UPS, PDUs, or chassis thermal sensors to monitor facility power.
-                  </div>
-                ` : `
-                  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px;">
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">FACILITY UPS METRIC</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">0.0% LOAD</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Normal Operation</div>
-                    </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">CHASSIS TEMPERATURE</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">24 °C</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Thermal Baseline Optimal</div>
-                    </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">POWER CONSUMPTION</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #38bdf8; margin: 6px 0;">0.00 kW</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Across ${state.devices.length} Assets</div>
-                    </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">PSU REDUNDANCY</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #34d399; margin: 6px 0;">HEALTHY</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Zero Faults Reported</div>
-                    </div>
-                  </div>
-                `}
+                <div style="padding: 30px; text-align: center; color: #94a3b8;">
+                  No power or thermal data yet. Power, UPS runtime and thermal metrics appear once server hosts or UPS units report them.
+                </div>
               </div>
             `}
           </div>
@@ -9441,7 +7701,7 @@
     if (refreshAllBtn) {
       refreshAllBtn.onclick = () => {
         state.autoRefreshCountdown = 30;
-        showToast('Refreshing all dashboard telemetry metrics...');
+        showToast('Dashboard refreshed from the latest polled data.');
         renderDashboardView();
       };
     }
@@ -9476,7 +7736,7 @@
     const ziaFixBtn = container.querySelector('#opm-dash-zia-action-btn');
     if (ziaFixBtn) {
       ziaFixBtn.onclick = () => {
-        showToast('Zia AI applied rate-limiting policy map.');
+        showToast('No automated Zia AI fix is available yet.');
       };
     }
 
@@ -9501,7 +7761,8 @@
     // Widget Refresh buttons
     container.querySelectorAll('.opm-widget-btn-refresh').forEach(btn => {
       btn.onclick = () => {
-        showToast('Telemetry updated.');
+        renderDashboardView();
+        showToast('Dashboard refreshed from the latest polled data.');
       };
     });
   }
@@ -9510,9 +7771,11 @@
   // VIEW: INVENTORY (Devices, Interfaces, Probes, Virt, Storage)
   // -------------------------------------------------------------
   function renderInventoryView() {
+    const normDevices = (state.devices || []).map(opmNormDevice);
+    const probes = (state.probes || []).map(opmNormProbe);
     // --- Pre-calculated clean empty states for Inventory subtabs ---
     let invVirtContent = '';
-    const virtDevices = (state.devices || []).filter(d => ['virtualization','vm','hypervisor'].includes((d.type||'').toLowerCase()));
+    const virtDevices = normDevices.filter(d => ['virtualization','vm','hypervisor'].includes((d.type||'').toLowerCase()));
     if (virtDevices.length === 0) {
       invVirtContent = `
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
@@ -9531,7 +7794,7 @@
     }
 
     let invFwaContent = '';
-    const fwaDevices = (state.devices || []).filter(d => (d.category||'').toLowerCase().includes('firewall'));
+    const fwaDevices = normDevices.filter(d => (d.category||'').toLowerCase().includes('firewall'));
     if (fwaDevices.length === 0) {
       invFwaContent = `
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
@@ -9579,10 +7842,10 @@
 
     // Subtab definitions
     const subtabs = [
-      { id: 'devices', name: `Devices (${state.devices.length})` },
+      { id: 'devices', name: `Devices (${normDevices.length})` },
       { id: 'interfaces', name: `Interfaces (${state.interfaces ? state.interfaces.length : 0})` },
-      { id: 'probes', name: `Enterprise Probes (${state.probes.length})` },
-      { id: 'virtualization', name: `Virtualization (${state.devices.filter(d => (d.category || '').toLowerCase().includes('virt')).length} VMs)` },
+      { id: 'probes', name: `Enterprise Probes (${probes.length})` },
+      { id: 'virtualization', name: `Virtualization (${normDevices.filter(d => (d.category || '').toLowerCase().includes('virt')).length} VMs)` },
       { id: 'firewall_rules', name: 'Firewall Rules (0)' },
       { id: 'storage', name: `Storage (${(state.diskVolumes && state.diskVolumes.length) || 0})` }
     ];
@@ -9604,8 +7867,8 @@
     categories.forEach(cat => {
       const isSel = state.inventoryFilter.toUpperCase() === cat;
       const count = cat === 'ALL'
-        ? state.devices.length
-        : state.devices.filter(d => d.category.toUpperCase() === cat).length;
+        ? normDevices.length
+        : normDevices.filter(d => (d.category || '').toUpperCase() === cat).length;
       categoryChipsHtml += `
         <button class="opm-inv-cat-chip" data-cat="${cat.toLowerCase()}" style="padding: 4px 12px; border-radius: 14px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1px solid ${isSel ? '#49bd80' : '#cbd5e1'}; background: ${isSel ? '#49bd80' : '#ffffff'}; color: ${isSel ? '#ffffff' : '#475569'}; transition: all 0.15s;">
           ${cat} (${count})
@@ -9614,7 +7877,7 @@
     });
 
     // Filter devices based on category, probe, and search
-    let list = state.devices;
+    let list = normDevices;
     if (state.selectedProbe !== 'all') {
       list = list.filter(d => d.probeId == state.selectedProbe);
     }
@@ -9705,7 +7968,7 @@
                 </tr>
               </thead>
               <tbody>
-                ${state.devices.length === 0 ? `
+                ${normDevices.length === 0 ? `
                   <tr>
                     <td colspan="11" style="padding: 50px 20px; text-align: center;">
                       <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
@@ -9764,21 +8027,21 @@
                     <td style="padding: 10px 12px;">
                       <div style="display: flex; align-items: center; gap: 6px;">
                         <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                          <div style="width: ${dev.cpu}%; height: 100%; background: ${dev.cpu >= 90 ? '#dc2626' : (dev.cpu >= 75 ? '#ea580c' : '#16a34a')};"></div>
+                          <div style="width: ${dev.cpu === null ? 0 : dev.cpu}%; height: 100%; background: ${dev.cpu !== null && dev.cpu >= 90 ? '#dc2626' : (dev.cpu !== null && dev.cpu >= 75 ? '#ea580c' : '#16a34a')};"></div>
                         </div>
-                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.cpu}%</span>
+                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.cpu === null ? '—' : dev.cpu + '%'}</span>
                       </div>
                     </td>
                     <td style="padding: 10px 12px;">
                       <div style="display: flex; align-items: center; gap: 6px;">
                         <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                          <div style="width: ${dev.memory}%; height: 100%; background: ${dev.memory >= 90 ? '#dc2626' : (dev.memory >= 75 ? '#ea580c' : '#0284c7')};"></div>
+                          <div style="width: ${dev.memory === null ? 0 : dev.memory}%; height: 100%; background: ${dev.memory !== null && dev.memory >= 90 ? '#dc2626' : (dev.memory !== null && dev.memory >= 75 ? '#ea580c' : '#0284c7')};"></div>
                         </div>
-                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.memory}%</span>
+                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.memory === null ? '—' : dev.memory + '%'}</span>
                       </div>
                     </td>
-                    <td style="padding: 10px 12px; font-size: 11px; color: #64748b;">${dev.responseTime} ms</td>
-                    <td style="padding: 10px 12px; font-weight: 600; font-size: 11px; color: #166534;">${dev.availability}</td>
+                    <td style="padding: 10px 12px; font-size: 11px; color: #64748b;">${dev.responseTime === null ? '—' : dev.responseTime + ' ms'}</td>
+                    <td style="padding: 10px 12px; font-weight: 600; font-size: 11px; color: #166534;">${dev.availability === null ? '—' : dev.availability + '%'}</td>
                     <td style="padding: 10px 12px; text-align: right;" onclick="event.stopPropagation();">
                       <div style="display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end;">
                         ${(dev.category === 'Servers' || dev.type === 'Windows' || dev.type === 'Linux') ? `
@@ -9829,101 +8092,32 @@
               </tbody>
             </table>
 
-            <!-- Pagination Footer -->
+            <!-- Result count (no pagination: the table shows every matching device) -->
             <div style="padding: 10px 16px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #64748b;">
-              <div>Showing 1-${list.length} of ${list.length} devices</div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <span>Rows per page: <strong>25</strong></span>
-                <div style="display: flex; gap: 4px;">
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>⏮</button>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>◀</button>
-                  <span style="padding: 3px 8px; font-weight: 600; color: #0f172a;">Page 1 of 1</span>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>▶</button>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>⏭</button>
-                </div>
-              </div>
+              <div>Showing ${list.length} of ${normDevices.length} device${normDevices.length === 1 ? '' : 's'}</div>
             </div>
           </div>
         ` : activeSub === 'interfaces' ? `
-          <!-- Interfaces Subtab (With Shipped 95th Percentile Graph, Statistical Box & port_up.gif / port_down.gif) -->
+          <!-- Interfaces Subtab -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
               <div>
                 <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Enterprise Interface Traffic Summary (1-Minute Average &amp; 95th Percentile Threshold)</div>
-                <div style="font-size: 11px; color: #64748b;">Aggregated across 48 Monitored SNMP/NetFlow Ports | Today (00:00 - 24:00)</div>
+                <div style="font-size: 11px; color: #64748b;">${(state.topInterfaces || []).length} interface(s) with polled data</div>
               </div>
               <div style="display: flex; gap: 14px; font-size: 11px; font-weight: 600;">
                 <span><span style="color:#49bd80;">■</span> IN Traffic</span>
                 <span><span style="color:#38bdf8;">■</span> OUT Traffic</span>
-                <span><span style="color:#ef4444;">―</span> IN 95th Percentile (9.35 Gbps)</span>
-                <span><span style="color:#dc2626;">--</span> OUT 95th Percentile (7.12 Gbps)</span>
               </div>
             </div>
-            <svg width="100%" height="150" viewBox="0 0 900 150" style="background: #fafbfc; border: 1px solid #f1f5f9; border-radius: 4px; margin-bottom: 14px;">
-              <line x1="50" y1="30" x2="880" y2="30" stroke="#e2e8f0" stroke-dasharray="2,2"/>
-              <line x1="50" y1="70" x2="880" y2="70" stroke="#e2e8f0" stroke-dasharray="2,2"/>
-              <line x1="50" y1="110" x2="880" y2="110" stroke="#e2e8f0" stroke-dasharray="2,2"/>
-              <text x="8" y="34" font-size="9" fill="#64748b">12 Gbps</text>
-              <text x="8" y="74" font-size="9" fill="#64748b">6 Gbps</text>
-              <text x="8" y="114" font-size="9" fill="#64748b">2 Gbps</text>
-              <!-- IN Area & Line -->
-              <polygon points="50,130 50,82 140,68 230,52 320,60 410,36 500,44 590,32 680,48 770,40 880,45 880,130" fill="rgba(73,189,128,0.22)"/>
-              <polyline points="50,82 140,68 230,52 320,60 410,36 500,44 590,32 680,48 770,40 880,45" fill="none" stroke="#49bd80" stroke-width="2"/>
-              <!-- OUT Area & Line -->
-              <polygon points="50,130 50,98 140,88 230,76 320,84 410,64 500,72 590,58 680,70 770,62 880,68 880,130" fill="rgba(56,189,248,0.22)"/>
-              <polyline points="50,98 140,88 230,76 320,84 410,64 500,72 590,58 680,70 770,62 880,68" fill="none" stroke="#38bdf8" stroke-width="2"/>
-              <!-- Red 95th Percentile Threshold Lines -->
-              <line x1="50" y1="42" x2="880" y2="42" stroke="#ef4444" stroke-width="1.5"/>
-              <text x="740" y="38" font-size="9" font-weight="700" fill="#ef4444">IN 95th Percentile</text>
-              <line x1="50" y1="63" x2="880" y2="63" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="4,3"/>
-              <text x="735" y="59" font-size="9" font-weight="700" fill="#dc2626">OUT 95th Percentile</text>
-            </svg>
-            <!-- Authentic ManageEngine 95th Percentile Statistical Summary Box (Matches netflow_addon_inventory.png) -->
-            <div style="display: flex; border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; background: #ffffff;">
-              <div style="width: 150px; background: #f8fafc; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
-                <div style="font-size: 18px; color: #64748b;">🕒</div>
-                <div style="font-size: 11px; font-weight: 700; color: #334155; margin-top: 2px;">00:00 - 24:00</div>
-                <div style="font-size: 9px; color: #94a3b8;">1-Min Granularity</div>
-              </div>
-              <table style="flex: 1; border-collapse: collapse; font-size: 11px;">
-                <thead>
-                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                    <th style="padding: 7px 12px;">Category</th>
-                    <th style="padding: 7px 12px;">Total Volume</th>
-                    <th style="padding: 7px 12px;">Maximum</th>
-                    <th style="padding: 7px 12px;">Minimum</th>
-                    <th style="padding: 7px 12px;">Average</th>
-                    <th style="padding: 7px 12px;">Standard Deviation</th>
-                    <th style="padding: 7px 12px;">95th Percentile</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 7px 12px; font-weight: 700; color: #16a34a;">Traffic IN</td>
-                    <td style="padding: 7px 12px; font-family: monospace; font-weight: 700;">450.94 GB</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">11.42 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">1.18 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">5.84 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">1.92 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace; font-weight: 700; color: #dc2626;">9.35 Gbps</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 7px 12px; font-weight: 700; color: #0284c7;">Traffic OUT</td>
-                    <td style="padding: 7px 12px; font-family: monospace; font-weight: 700;">318.62 GB</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">8.64 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">840.5 Mbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">4.12 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">1.34 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace; font-weight: 700; color: #dc2626;">7.12 Gbps</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div style="padding: 18px; text-align: center; color: #64748b; font-size: 12px; background: #fafbfc; border: 1px solid #f1f5f9; border-radius: 4px; margin-bottom: 14px;">
+              No interface traffic history recorded yet. Traffic history charts will appear once interfaces are polled over time.
             </div>
           </div>
 
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="padding: 14px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Monitored Enterprise Interfaces (48 Active Ports)</span>
+              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Monitored Enterprise Interfaces (${(state.topInterfaces || []).length} Active Ports)</span>
               <span style="font-size: 11px; color: #64748b;">Telemetry interval: 60 seconds</span>
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
@@ -9941,7 +8135,7 @@
                 </tr>
               </thead>
               <tbody>
-                ${state.topInterfaces.map(it => `
+                ${(state.topInterfaces || []).length === 0 ? '<tr><td colspan="9" style="padding: 24px; text-align: center; color: #64748b;">No network interface traffic recorded. Discovered switch/router interfaces will stream live telemetry here.</td></tr>' : (state.topInterfaces || []).map(it => `
                   <tr style="border-bottom: 1px solid #f1f5f9;">
                     <td style="padding: 10px 12px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 6px;">
                       <img src="/apiclient/fluidicv2/img/${it.status === 'UP' ? 'port_up.gif' : 'port_down.gif'}" alt="${it.status}" style="width: 14px; height: 14px;">
@@ -9949,12 +8143,12 @@
                     </td>
                     <td style="padding: 10px 12px; color: #0070e0; font-weight: 600;">${it.device}</td>
                     <td style="padding: 10px 12px; color: #64748b;">${it.probe}</td>
-                    <td style="padding: 10px 12px; font-family: monospace;">${it.speed}</td>
-                    <td style="padding: 10px 12px; font-family: monospace; color: #0284c7; font-weight: 600;">${it.inTraffic} Mbps (${it.inPercent}%)</td>
-                    <td style="padding: 10px 12px; font-family: monospace; color: #64748b; font-weight: 600;">${it.outTraffic} Mbps (${it.outPercent}%)</td>
-                    <td style="padding: 10px 12px;"><span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 2px;"><img src="/apiclient/fluidicv2/img/port_up.gif" style="width:10px;height:10px;"> UP</span></td>
+                    <td style="padding: 10px 12px; font-family: monospace;">${it.speed || '—'}</td>
+                    <td style="padding: 10px 12px; font-family: monospace; color: #0284c7; font-weight: 600;">${it.inTraffic ?? '—'} Mbps (${it.inPercent ?? '—'}%)</td>
+                    <td style="padding: 10px 12px; font-family: monospace; color: #64748b; font-weight: 600;">${it.outTraffic ?? '—'} Mbps (${it.outPercent ?? '—'}%)</td>
+                    <td style="padding: 10px 12px;"><span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; ${(it.admin || '').toString().toUpperCase() === 'UP' ? 'background: #dcfce7; color: #166534;' : 'background: #f1f5f9; color: #64748b;'} padding: 2px 6px; border-radius: 2px;">${it.admin || '—'}</span></td>
                     <td style="padding: 10px 12px;"><span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; ${it.status === 'UP' ? 'background: #dcfce7; color: #166534;' : 'background: #fee2e2; color: #991b1b;'} padding: 2px 6px; border-radius: 2px;"><img src="/apiclient/fluidicv2/img/${it.status === 'UP' ? 'port_up.gif' : 'port_down.gif'}" style="width:10px;height:10px;"> ${it.status}</span></td>
-                    <td style="padding: 10px 12px; font-weight: 600; color: ${it.errors > 0 ? '#dc2626' : '#16a34a'};">${it.errors}</td>
+                    <td style="padding: 10px 12px; font-weight: 600; color: ${(it.errors || 0) > 0 ? '#dc2626' : '#16a34a'};">${it.errors ?? '—'}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -9963,17 +8157,17 @@
         ` : activeSub === 'probes' ? `
           <!-- Probes Subtab -->
           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
-            ${state.probes.map(pr => `
+            ${probes.length === 0 ? '<div style="grid-column: 1 / -1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 40px; text-align: center; color: #64748b;">No probes registered yet. Register a remote probe to monitor branch sites.</div>' : probes.map(pr => `
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
                   <div>
                     <div style="font-size: 15px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-                      <span style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a;"></span>
+                      <span style="width: 8px; height: 8px; border-radius: 50%; background: ${opmProbeIsOnline(pr) ? '#16a34a' : '#dc2626'};"></span>
                       ${pr.name}
                     </div>
-                    <div style="font-size: 12px; color: #64748b; font-family: monospace; margin-top: 2px;">IP: ${pr.ip} | Port: 8060</div>
+                    <div style="font-size: 12px; color: #64748b; font-family: monospace; margin-top: 2px;">IP: ${pr.ip}${pr.commPort ? ' | Port: ' + pr.commPort : ''}</div>
                   </div>
-                  <span style="font-size: 11px; font-weight: 700; background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 4px;">Connected</span>
+                  <span style="font-size: 11px; font-weight: 700; background: ${opmProbeIsOnline(pr) ? '#dcfce7' : '#fee2e2'}; color: ${opmProbeIsOnline(pr) ? '#166534' : '#991b1b'}; padding: 3px 8px; border-radius: 4px;">${opmProbeIsOnline(pr) ? 'Connected' : pr.status}</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #f8fafc; padding: 10px; border-radius: 4px; font-size: 12px; margin-bottom: 12px;">
                   <div>
@@ -9986,7 +8180,7 @@
                   </div>
                   <div>
                     <div style="color: #64748b; font-size: 11px;">RTT Latency</div>
-                    <div style="font-weight: 700; color: #0284c7; font-size: 14px;">${pr.latency} ms</div>
+                    <div style="font-weight: 700; color: #0284c7; font-size: 14px;">${pr.latency === null ? '—' : pr.latency + ' ms'}</div>
                   </div>
                 </div>
                 <div style="display: flex; justify-content: flex-end;">
@@ -10033,9 +8227,13 @@
     const exportCsvBtn = container.querySelector('#opm-inv-export-csv-btn');
     if (exportCsvBtn) {
       exportCsvBtn.onclick = () => {
+        if (normDevices.length === 0) {
+          showToast('Nothing to export yet.');
+          return;
+        }
         const header = 'Device Name,IP Address,Category,Vendor,Model Type,Probe Location,Status,CPU %,Memory %,Response Time (ms),Availability\n';
-        const rows = state.devices.map(d =>
-          `"${d.name}","${d.ip}","${d.category}","${d.vendor}","${d.type}","${d.probe}","${d.status}",${d.cpu},${d.memory},${d.responseTime},"${d.availability}"`
+        const rows = normDevices.map(d =>
+          `"${d.name}","${d.ip}","${d.category}","${d.vendor}","${d.type}","${d.probe}","${d.status}",${d.cpu === null ? '' : d.cpu},${d.memory === null ? '' : d.memory},${d.responseTime === null ? '' : d.responseTime},"${d.availability === null ? '' : d.availability + '%'}"`
         ).join('\n');
         const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
@@ -10188,12 +8386,28 @@
       };
     });
 
-    // Row Poll button
+    // Row Poll button — real pollNow call; local state updates only from
+    // the server's returned device, and failures report the server message.
     container.querySelectorAll('.opm-inv-row-poll-btn').forEach(btn => {
-      btn.onclick = (e) => {
+      btn.onclick = async (e) => {
         e.stopPropagation();
+        const id = btn.getAttribute('data-id');
         const name = btn.getAttribute('data-name');
-        showToast('Polling ' + name + ' now... SNMP OIDs & ICMP updated.');
+        try {
+          const r = await opmPostJson('/api/json/device/pollNow', { deviceId: id });
+          if (!r.ok) {
+            showToast('Poll failed for ' + name + ': ' + ((r.data && r.data.message) || ('HTTP ' + r.status)));
+            return;
+          }
+          if (r.data && r.data.device) {
+            const idx = state.devices.findIndex(d => String(d.id) === String(id));
+            if (idx >= 0) state.devices[idx] = r.data.device;
+          }
+          showToast((r.data && r.data.message) || ('Polled ' + name + ' successfully.'));
+          renderInventoryView();
+        } catch (err) {
+          showToast('Poll failed for ' + name + ': ' + (err && err.message ? err.message : 'network error'));
+        }
       };
     });
 
@@ -10258,57 +8472,104 @@
       };
     }
 
-    // Bulk actions buttons
+    // Bulk actions buttons — every action reports only what the server
+    // actually did. Actions with no server endpoint (rediscover, polling
+    // interval, maintenance window, template assignment) say so instead
+    // of claiming success. Local state changes only after server success.
     container.querySelectorAll('.opm-bulk-action-btn').forEach(btn => {
-      btn.onclick = () => {
+      btn.onclick = async () => {
         const act = btn.getAttribute('data-action');
         const selectedCbs = Array.from(container.querySelectorAll('.opm-inv-row-cb:checked'));
-        const ids = selectedCbs.map(c => parseInt(c.getAttribute('data-id'), 10));
+        const ids = selectedCbs.map(c => parseInt(c.getAttribute('data-id'), 10)).filter(n => !Number.isNaN(n));
 
-                if (act === 'clear') {
+        if (act === 'clear') {
           container.querySelectorAll('.opm-inv-row-cb').forEach(cb => cb.checked = false);
           const selectAll = container.querySelector('#opm-inv-select-all');
           if (selectAll) selectAll.checked = false;
           state.selectedDeviceCheckboxCount = 0;
           const bulkBar = document.getElementById('opm-bulk-bar');
           if (bulkBar) bulkBar.style.display = 'none';
-        } else if (act === 'poll') {
-          state.devices.forEach(d => {
-            if (ids.includes(d.id)) {
-              d.lastBackup = 'Just now';
-              d.responseTime = Math.max(8, d.responseTime + Math.floor(Math.random() * 4 - 2));
+          return;
+        }
+        if (ids.length === 0) {
+          showToast('Select at least one device first.');
+          return;
+        }
+        if (act === 'poll') {
+          let okCount = 0;
+          let firstFailure = '';
+          for (const id of ids) {
+            const r = await opmPostJson('/api/json/device/pollNow', { deviceId: id });
+            if (r.ok) {
+              okCount++;
+              if (r.data && r.data.device) {
+                const idx = state.devices.findIndex(d => String(d.id) === String(id));
+                if (idx >= 0) state.devices[idx] = r.data.device;
+              }
+            } else if (!firstFailure) {
+              firstFailure = (r.data && r.data.message) || ('Device ' + id + ': HTTP ' + r.status);
             }
-          });
-          showToast(`Initiated live parallel SNMP poll across ${ids.length} selected devices. Telemetry synchronized.`);
-          renderInventoryView();
-        } else if (act === 'interval') {
-          showToast(`Updated polling frequency to 1-minute high-frequency interval for ${ids.length} devices.`);
-        } else if (act === 'maintenance') {
-          showToast(`Configured 2-hour Maintenance Window. Alarms suppressed for ${ids.length} devices.`);
-        } else if (act === 'delete') {
-          if (confirm(`Are you sure you want to remove ${ids.length} device(s) from OpManager Central Inventory?`)) {
-            state.devices = state.devices.filter(d => !ids.includes(d.id));
-            state.selectedDeviceCheckboxCount = 0;
-            showToast(`Successfully removed ${ids.length} device(s) from Central Inventory.`);
-            renderInventoryView();
           }
-        } else if (act === 'rediscover') {
-          state.devices.forEach(d => {
-            if (ids.includes(d.id)) {
-              d.lastBackup = 'Just now';
-              d.responseTime = Math.floor(Math.random() * 15 + 8);
-            }
-          });
-          showToast(`Triggered background rediscovery for ${ids.length} devices.`);
+          showToast(okCount === ids.length
+            ? `Polled ${okCount} device(s) successfully.`
+            : `Polled ${okCount} of ${ids.length} device(s). ${firstFailure}`);
+          renderInventoryView();
+        } else if (act === 'delete') {
+          if (!confirm(`Are you sure you want to remove ${ids.length} device(s) from OpManager Central Inventory?`)) return;
+          const deletedIds = [];
+          let firstFailure = '';
+          for (const id of ids) {
+            const r = await opmPostJson('/api/json/device/delete', { deviceId: id });
+            if (r.ok) deletedIds.push(id);
+            else if (!firstFailure) firstFailure = (r.data && r.data.message) || ('Device ' + id + ': HTTP ' + r.status);
+          }
+          if (deletedIds.length > 0) {
+            const gone = new Set(deletedIds.map(String));
+            state.devices = state.devices.filter(d => !gone.has(String(d.id)));
+            state.selectedDeviceCheckboxCount = 0;
+          }
+          showToast(deletedIds.length === ids.length
+            ? `Removed ${deletedIds.length} device(s) from Central Inventory.`
+            : `Removed ${deletedIds.length} of ${ids.length} device(s). ${firstFailure}`);
           renderInventoryView();
         } else if (act === 'testcred') {
-          showToast(`SNMP Credential Test completed: ${ids.length} / ${ids.length} PASSED (SNMPv2c & SNMPv3).`);
+          let passed = 0;
+          let failed = 0;
+          let firstFailure = '';
+          for (const id of ids) {
+            const r = await opmPostJson('/api/json/device/testCredential', { deviceId: id });
+            const result = r.data && r.data.result;
+            if (r.ok && result === 'SUCCESS') passed++;
+            else {
+              failed++;
+              if (!firstFailure) firstFailure = (r.data && r.data.message) || ('Device ' + id + ': HTTP ' + r.status);
+            }
+          }
+          showToast(failed === 0
+            ? `SNMP Credential Test completed: ${passed} / ${passed} PASSED.`
+            : `SNMP Credential Test: ${passed} passed, ${failed} failed. ${firstFailure}`);
         } else if (act === 'manage') {
-          showToast(`Management status toggled for ${ids.length} monitored nodes.`);
+          let okCount = 0;
+          let firstFailure = '';
+          for (const id of ids) {
+            const r = await opmPostJson('/api/json/device/setManaged', { deviceId: id, managed: true });
+            if (r.ok) okCount++;
+            else if (!firstFailure) firstFailure = (r.data && r.data.message) || ('Device ' + id + ': HTTP ' + r.status);
+          }
+          showToast(okCount === ids.length
+            ? `Set ${okCount} device(s) to Managed.`
+            : `Set ${okCount} of ${ids.length} device(s) to Managed. ${firstFailure}`);
+          renderInventoryView();
+        } else if (act === 'rediscover') {
+          showToast('Rediscovery is not available yet — there is no server endpoint for it.');
+        } else if (act === 'interval') {
+          showToast('Polling-interval changes are not available yet — there is no server endpoint for them.');
+        } else if (act === 'maintenance') {
+          showToast('Maintenance windows are not available yet — there is no server endpoint for them.');
         } else if (act === 'template') {
-          showToast(`Applied Enterprise Device Template across ${ids.length} selected nodes.`);
+          showToast('Template assignment is not available yet — there is no server endpoint for it.');
         } else {
-          showToast(`Executed bulk action "${act}" across ${state.selectedDeviceCheckboxCount} devices.`);
+          showToast(`Bulk action "${act}" is not available — there is no server endpoint for it.`);
         }
       };
     });
@@ -10324,21 +8585,223 @@
 
 
   // -------------------------------------------------------------
+  // REAL-DATA HELPERS (04): no invented values. Every number,
+  // timestamp and status below comes from a real API response.
+  // Unknown fields render as '—', never as a plausible default.
+  // -------------------------------------------------------------
+  function alarmTech(alm) {
+    return (alm && (alm.technician || alm.who)) || '—';
+  }
+
+  function alarmTime(alm) {
+    return (alm && (alm.time || alm.prettyTime)) || '—';
+  }
+
+  function fmtTime(ts) {
+    if (ts === null || ts === undefined || ts === '') return '—';
+    const d = new Date(ts);
+    return isNaN(d.getTime()) ? '—' : d.toLocaleString();
+  }
+
+  function probeLatency(pr) {
+    if (!pr) return null;
+    const v = pr.latency_ms ?? pr.latency;
+    return (typeof v === 'number' && Number.isFinite(v)) ? v : null;
+  }
+
+  function probeDeviceCount(pr) {
+    if (!pr) return 0;
+    return state.devices.filter(d => String(d.probeId ?? d.probe_id) === String(pr.id)).length;
+  }
+
+  function escHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  }
+
+  function authHeaders() {
+    const headers = { 'Content-Type': 'application/json' };
+    try {
+      const token = localStorage.getItem('opm_auth_token');
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+    } catch (e) { /* storage unavailable — proceed without a token */ }
+    return headers;
+  }
+
+  async function apiPost(path, body) {
+    const res = await fetch(path, { method: 'POST', headers: authHeaders(), body: JSON.stringify(body || {}) });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) throw new Error((data && data.message) || ('Request failed (' + res.status + ')'));
+    return data || {};
+  }
+
+  function apiGetJson(path) {
+    return fetch(path).then(async res => {
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error((data && data.message) || ('Request failed (' + res.status + ')'));
+      return data || {};
+    });
+  }
+
+  // Alarm aux counts (traps / syslog / suppression) — fetched at most
+  // once every 30 s; the view re-renders only when a count changes.
+  let alarmAuxLastFetch = 0;
+  let alarmAuxFetching = false;
+  function refreshAlarmAuxData() {
+    const now = Date.now();
+    if (alarmAuxFetching || now - alarmAuxLastFetch < 30000) return;
+    alarmAuxFetching = true;
+    alarmAuxLastFetch = now;
+    Promise.all([
+      apiGetJson('/api/traps/list').catch(() => null),
+      apiGetJson('/api/syslog/list').catch(() => null),
+      apiGetJson('/api/alarm/getSuppressionCount').catch(() => null)
+    ]).then(([traps, syslog, supp]) => {
+      const nextCounts = {
+        traps: traps && typeof traps.total === 'number' ? traps.total : (traps && Array.isArray(traps.traps) ? traps.traps.length : null),
+        syslog: syslog && typeof syslog.total === 'number' ? syslog.total : (syslog && Array.isArray(syslog.messages) ? syslog.messages.length : null)
+      };
+      const nextSupp = supp ? { suppressedCount: supp.suppressedCount ?? 0, activeProblems: supp.activeProblems ?? 0, noiseReductionPercent: supp.noiseReductionPercent ?? null } : null;
+      const changed = JSON.stringify(nextCounts) !== JSON.stringify(state.alarmAuxCounts) || JSON.stringify(nextSupp) !== JSON.stringify(state.alarmSuppression);
+      state.alarmAuxCounts = nextCounts;
+      state.alarmSuppression = nextSupp;
+      if (changed && state.currentTab === 'alarms' && typeof renderAlarmsView === 'function') renderAlarmsView();
+    }).finally(() => { alarmAuxFetching = false; });
+  }
+
+  // RCA incidents — real stored alarms grouped by device.
+  let rcaLastFetch = 0;
+  let rcaFetching = false;
+  function loadRcaIncidents() {
+    const now = Date.now();
+    if (rcaFetching || now - rcaLastFetch < 30000) return;
+    rcaFetching = true;
+    rcaLastFetch = now;
+    apiGetJson('/api/alarm/getRCAIncidents')
+      .then(data => {
+        const incidents = Array.isArray(data.incidents) ? data.incidents : [];
+        if (JSON.stringify(incidents) !== JSON.stringify(state.rcaIncidents)) {
+          state.rcaIncidents = incidents;
+          if (state.currentTab === 'alarms' && state.subTabs.alarms === 'rca' && typeof renderAlarmsView === 'function') renderAlarmsView();
+        }
+      })
+      .catch(() => {})
+      .finally(() => { rcaFetching = false; });
+  }
+
+  // Racks — only racks actually created via POST /api/racks/create.
+  let racksLoading = false;
+  async function loadRacks() {
+    if (racksLoading) return;
+    racksLoading = true;
+    try {
+      const data = await apiGetJson('/api/racks/list');
+      const racks = Array.isArray(data.racks) ? data.racks : [];
+      if (JSON.stringify(racks) !== JSON.stringify(state.racks)) {
+        state.racks = racks;
+        if (state.currentTab === 'maps' && state.subTabs.maps === 'rack' && typeof renderMapsView === 'function') renderMapsView();
+      }
+    } catch (err) {
+      state.racks = null;
+      state.racksError = err.message;
+      if (state.currentTab === 'maps' && state.subTabs.maps === 'rack' && typeof renderMapsView === 'function') renderMapsView();
+    } finally {
+      racksLoading = false;
+    }
+  }
+
+  // Rack sub-tab body: real racks from /api/racks/list, or an honest
+  // empty / loading / error state. Never invented racks.
+  function renderRackSubtab() {
+    if (state.racks === undefined) {
+      loadRacks();
+      return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Loading racks…</div>
+            <div style="font-size: 12px; color: #64748b;">Fetching racks created via the API.</div>
+          </div>`;
+    }
+    if (state.racks === null) {
+      return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Couldn’t load racks</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">${escHtml(state.racksError || 'The rack list could not be loaded.')}</div>
+            <button id="opm-racks-retry-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Retry</button>
+          </div>`;
+    }
+    if (state.racks.length === 0) {
+      return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No 3D Datacenter Racks Configured</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">
+              Create 3D datacenter racks and mount servers, switches, and UPS units to visualize rack space, thermal capacity, and front/rear port connectivity.
+            </div>
+            <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+              + Create New Rack
+            </button>
+          </div>`;
+    }
+    const selected = state.racks.find(r => String(r.id) === String(state.selectedRackId)) || state.racks[0];
+    const assignments = Array.isArray(selected.assignments) ? selected.assignments : [];
+    const byUnit = {};
+    assignments.forEach(a => { byUnit[a.unit] = a; });
+    const totalUnits = Math.min(selected.units || 0, 100);
+    const occupied = Object.keys(byUnit).filter(u => Number(u) >= 1 && Number(u) <= totalUnits).length;
+    let unitRows = '';
+    for (let u = totalUnits; u >= 1; u--) {
+      const a = byUnit[u];
+      unitRows += a ? `
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #f1f5f9;">
+              <span style="width: 44px; font-size: 11px; font-weight: 700; color: #64748b;">U${u}</span>
+              <span style="font-size: 12px; font-weight: 700; color: #0f172a;">${escHtml(a.deviceName || '—')}</span>
+              <span style="font-size: 11px; color: #64748b;">${escHtml(a.deviceIp || '—')}</span>
+              <span style="font-size: 11px; color: #64748b;">${escHtml(a.deviceCategory || '')}</span>
+            </div>` : `
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #f1f5f9; opacity: 0.6;">
+              <span style="width: 44px; font-size: 11px; font-weight: 700; color: #64748b;">U${u}</span>
+              <span style="font-size: 11px; color: #475569; font-style: italic;">Empty slot</span>
+            </div>`;
+    }
+    return `
+          <div style="padding: 20px 24px;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div style="padding: 14px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <span style="font-size: 13px; font-weight: 700; color: #0f172a;">${escHtml(selected.name || '—')}</span>
+                  <span style="font-size: 11px; color: #64748b; margin-left: 8px;">${occupied} of ${selected.units || 0} units occupied</span>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <select id="opm-rack-select" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                    ${state.racks.map(r => `<option value="${r.id}" ${String(r.id) === String(selected.id) ? 'selected' : ''}>${escHtml(r.name || '—')} (${r.units || 0}U)</option>`).join('')}
+                  </select>
+                  <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">+ Create New Rack</button>
+                </div>
+              </div>
+              ${unitRows || '<div style="padding: 40px; text-align: center; color: #94a3b8;">No units in this rack yet.</div>'}
+            </div>
+          </div>`;
+  }
+
+  // -------------------------------------------------------------
   // VIEW: ALARMS (Active, Problems, All, EventLog, Syslog, Traps, Custom)
   // -------------------------------------------------------------
   function renderAlarmsView() {
     state.currentTab = 'alarms';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.alarms || 'active';
+    refreshAlarmAuxData();
+    if (activeSub === 'rca') loadRcaIncidents();
 
     const subtabs = [
       { id: 'active', name: `Active Alarms (${state.alarms.length})` },
       { id: 'rca', name: 'Root Cause Analysis (RCA)' },
       { id: 'problems', name: 'Problems & Correlated Events' },
       { id: 'all', name: `All Alarms (${state.alarms.length})` },
-      { id: 'eventlog', name: 'Windows Event Logs (0)' },
-      { id: 'syslog', name: 'Syslog (0)' },
-      { id: 'traps', name: 'SNMP Traps (0)' },
+      { id: 'eventlog', name: 'Windows Event Logs' },
+      { id: 'syslog', name: state.alarmAuxCounts && state.alarmAuxCounts.syslog != null ? `Syslog (${state.alarmAuxCounts.syslog})` : 'Syslog' },
+      { id: 'traps', name: state.alarmAuxCounts && state.alarmAuxCounts.traps != null ? `SNMP Traps (${state.alarmAuxCounts.traps})` : 'SNMP Traps' },
       { id: 'nfa', name: 'NetFlow Alarms' },
       { id: 'ncm', name: 'NCM Alarms' },
       { id: 'fwa', name: 'Firewall Alarms' },
@@ -10364,7 +8827,7 @@
     const countAttn = state.alarms.filter(a => a.severity === 'Attention').length;
     const countSvc = state.alarms.filter(a => a.severity === 'Service Down').length;
     const countClr = state.alarms.filter(a => a.severity === 'Clear').length;
-    const countAck = state.alarms.filter(a => a.technician && a.technician !== 'Unacknowledged').length;
+    const countAck = state.alarms.filter(a => { const t = a.technician || a.who; return t && t !== 'Unacknowledged'; }).length;
     const countUnack = countAll - countAck;
     const oputilsAlarmCount = state.alarms.filter(a => ['Switch','Router','Port','IPAM'].includes(a.category)).length;
     const critMatches = state.alarms.filter(a => a.severity === 'Critical' && ['Routers', 'Switches', 'Switch', 'Router'].includes(a.category)).length;
@@ -10380,17 +8843,41 @@
       list = list.filter(a => a.severity.toLowerCase() === state.alarmsSeverityFilter.toLowerCase());
     }
 
+    // All Alarms archive — real stored alarms only; no invented totals.
+    const archiveFilter = state.alarmsArchiveFilter || { range: '7d', severity: 'all', status: 'cleared', search: '' };
+    const archiveRangeMs = (range) => range === '24h' ? 86400000 : range === '7d' ? 7 * 86400000 : range === '30d' ? 30 * 86400000 : 0;
+    const archiveRangeCount = (range) => {
+      const ms = archiveRangeMs(range);
+      if (!ms) return state.alarms.length;
+      return state.alarms.filter(a => { const ts = a.timestamp || a.created_at || 0; return ts === 0 || ts >= Date.now() - ms; }).length;
+    };
+    const archiveClearedCount = state.alarms.filter(a => String(a.severity || '').toLowerCase() === 'clear').length;
+    const archiveRows = state.alarms.filter(a => {
+      const ts = a.timestamp || a.created_at || 0;
+      const ms = archiveRangeMs(archiveFilter.range);
+      if (ms && ts !== 0 && ts < Date.now() - ms) return false;
+      if (archiveFilter.severity !== 'all' && String(a.severity || '').toLowerCase() !== String(archiveFilter.severity).toLowerCase()) return false;
+      if (archiveFilter.status === 'cleared' && String(a.severity || '').toLowerCase() !== 'clear') return false;
+      if (archiveFilter.search) {
+        const q = archiveFilter.search.toLowerCase();
+        const hay = `${a.message || ''} ${a.device || ''} ${a.entity || ''} ${a.probe || ''}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+
     container.innerHTML = `
       <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; overflow-x: auto;">
         <div style="display: flex; align-items: center; gap: 2px;">
           ${subtabNavHtml}
         </div>
         <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; padding-left: 12px;">
-          <!-- Noise Reduction Pill Badge (Reverse Engineered) -->
-          <div title="Event Correlation Noise Reduction: 116 raw alerts suppressed into actionable incidents" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 5px; cursor: default;">
+          ${state.alarmSuppression && state.alarmSuppression.suppressedCount > 0 ? `
+          <div title="Event Correlation Noise Reduction: ${state.alarmSuppression.suppressedCount} raw alerts suppressed into ${state.alarmSuppression.activeProblems} actionable incidents" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 5px; cursor: default;">
             <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #16a34a;"></span>
-            82% Noise Reduction
+            ${state.alarmSuppression.noiseReductionPercent || ''} Noise Reduction
           </div>
+          ` : ''}
 
           <!-- Zia AI Summarize Action Button (Reverse Engineered) -->
           <button id="opm-alarms-zia-summarize-btn" data-fsoqa="alarms-actions-summarize-btn" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; padding: 5px 11px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
@@ -10417,7 +8904,7 @@
               Grid View
             </button>
           </div>
-          <button id="opm-alarms-export-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 11px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+          <button id="opm-alarms-export-btn" ${list.length === 0 ? 'disabled title="Nothing to export yet"' : ''} style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 11px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Export
           </button>
@@ -10540,11 +9027,11 @@
                       <td style="padding: 9px 14px;">${getStatusBadge(alm.severity)}</td>
                       <td style="padding: 9px 14px; color: #0f172a;">
                         <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${sevDotColor}; margin-right: 6px; vertical-align: middle;"></span>
-                        <span style="font-weight: 600; color: #1e293b;">${alm.message}</span>
-                        <span style="color: #64748b; font-size: 11px; margin-left: 6px;">| ${alm.ip || '127.0.0.1'} | ${alm.device} | ${alm.probe} | ${alm.technician || 'NOC Admin'} | ${alm.severity} |</span>
+                        <span style="font-weight: 600; color: #1e293b;">${escHtml(alm.message || '—')}</span>
+                        <span style="color: #64748b; font-size: 11px; margin-left: 6px;">| ${alm.ip || '—'} | ${alm.device || '—'} | ${alm.probe || '—'} | ${alarmTech(alm)} | ${alm.severity} |</span>
                       </td>
-                      <td style="padding: 9px 14px; font-weight: 600; color: #475569; font-size: 11px;">${alm.entity}</td>
-                      <td style="padding: 9px 14px; font-size: 11px; color: #64748b;">${alm.time}</td>
+                      <td style="padding: 9px 14px; font-weight: 600; color: #475569; font-size: 11px;">${escHtml(alm.entity || '—')}</td>
+                      <td style="padding: 9px 14px; font-size: 11px; color: #64748b;">${escHtml(alarmTime(alm))}</td>
                       <td style="padding: 9px 14px; text-align: right; white-space: nowrap;" onclick="event.stopPropagation();">
                         <button class="opm-alarm-row-rca-btn" data-id="${alm.id}" title="Zia AI Root Cause Analysis" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 3px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; cursor: pointer; margin-right: 4px;">
                           🧠 Zia RCA
@@ -10581,6 +9068,32 @@
 
         </div>
       ` : activeSub === 'rca' ? `
+          ${state.rcaIncidents && state.rcaIncidents.length > 0 ? `
+          <div style="padding: 20px 24px;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                    <th style="padding: 10px 14px;">Device</th>
+                    <th style="padding: 10px 14px;">Alarms</th>
+                    <th style="padding: 10px 14px;">Started</th>
+                    <th style="padding: 10px 14px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${state.rcaIncidents.map(inc => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 9px 14px; font-weight: 600; color: #0f172a;">${escHtml(inc.deviceName || '—')}</td>
+                    <td style="padding: 9px 14px; color: #475569;">${inc.alarmCount || 0}</td>
+                    <td style="padding: 9px 14px; color: #64748b;">${fmtTime(inc.startedAt)}</td>
+                    <td style="padding: 9px 14px; color: #475569;">${inc.status === 'open' ? 'Open' : 'Cleared'}</td>
+                  </tr>`).join('')}
+                </tbody>
+              </table>
+              <div style="padding: 10px 16px; background: #fafbfc; border-top: 1px solid #e2e8f0; font-size: 11px; color: #64748b;">Showing ${state.rcaIncidents.length} of ${state.rcaIncidents.length} root cause incidents</div>
+            </div>
+          </div>
+          ` : `
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -10590,40 +9103,40 @@
               Zia AI machine-learning correlation engine is standby. Root cause blast-radius graphs will render here if critical incidents occur.
             </div>
           </div>
-        ` : activeSub === 'problems' ? `
+          `}
+      ` : activeSub === 'problems' ? `
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">Zero Correlated Network Problems</div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No problems detected</div>
             <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
-              Cross-device event correlation has zero open tickets. All distributed services operating within SLA.
+              Correlated problem events will appear here when alarms cluster on the same device or service.
             </div>
           </div>
         ` : activeSub === 'all' ? `
-        <!-- SUBTAB: ALL ALARMS (HISTORICAL ARCHIVE - 142 ALARMS) -->
+        <!-- SUBTAB: ALL ALARMS (HISTORICAL ARCHIVE — real stored alarms) -->
         <div style="padding: 20px 24px;">
           <!-- Filter Toolbar -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option>Past 24 Hours</option>
-                <option selected>Past 7 Days (142 Alarms)</option>
-                <option>Past 30 Days</option>
-                <option>Custom Date Range</option>
+              <select id="opm-archive-range" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                <option value="24h" ${archiveFilter.range === '24h' ? 'selected' : ''}>Past 24 Hours (${archiveRangeCount('24h')})</option>
+                <option value="7d" ${archiveFilter.range === '7d' ? 'selected' : ''}>Past 7 Days (${archiveRangeCount('7d')})</option>
+                <option value="30d" ${archiveFilter.range === '30d' ? 'selected' : ''}>Past 30 Days (${archiveRangeCount('30d')})</option>
+                <option value="all" ${archiveFilter.range === 'all' ? 'selected' : ''}>All Time (${state.alarms.length})</option>
               </select>
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option value="all">All Severities</option>
-                <option value="Critical">Critical Only</option>
-                <option value="Trouble">Trouble Only</option>
-                <option value="Attention">Attention Only</option>
+              <select id="opm-archive-severity" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                <option value="all" ${archiveFilter.severity === 'all' ? 'selected' : ''}>All Severities</option>
+                <option value="Critical" ${archiveFilter.severity === 'Critical' ? 'selected' : ''}>Critical Only</option>
+                <option value="Trouble" ${archiveFilter.severity === 'Trouble' ? 'selected' : ''}>Trouble Only</option>
+                <option value="Attention" ${archiveFilter.severity === 'Attention' ? 'selected' : ''}>Attention Only</option>
               </select>
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option value="all">All Statuses</option>
-                <option value="cleared" selected>Cleared Only (135)</option>
-                <option value="suppressed">Suppressed (116)</option>
+              <select id="opm-archive-status" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                <option value="all" ${archiveFilter.status === 'all' ? 'selected' : ''}>All Statuses</option>
+                <option value="cleared" ${archiveFilter.status === 'cleared' ? 'selected' : ''}>Cleared Only (${archiveClearedCount})</option>
               </select>
-              <input type="text" placeholder="Search archive alarms..." style="padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; width: 220px;">
+              <input id="opm-archive-search" type="text" placeholder="Search archive alarms..." value="${escHtml(archiveFilter.search)}" style="padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; width: 220px;">
             </div>
             <button id="opm-export-archive-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Export Archive CSV</button>
           </div>
@@ -10643,16 +9156,28 @@
                 </tr>
               </thead>
               <tbody>
+                ${archiveRows.length === 0 ? `
                 <tr>
                   <td colspan="7" style="padding: 40px; text-align: center; color: #94a3b8;">
-                    No historical alarms recorded. All monitored systems are operating normally.
+                    ${state.alarms.length === 0 ? 'No historical alarms recorded. All monitored systems are operating normally.' : 'No alarms match these filters.'}
+                    ${state.alarms.length === 0 ? '' : `<br><button id="opm-archive-clear-filters" style="margin-top: 10px; background: #f8fafc; border: 1px solid #cbd5e1; color: #0070e0; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Clear filters</button>`}
                   </td>
                 </tr>
+                ` : archiveRows.map(alm => `
+                <tr style="border-bottom: 1px solid #f1f5f9;">
+                  <td style="padding: 9px 14px;">${getStatusBadge(alm.severity)}</td>
+                  <td style="padding: 9px 14px;"><div style="font-weight: 600; color: #0f172a;">${escHtml(alm.device || '—')}</div><div style="font-size: 11px; color: #64748b;">${escHtml(alm.probe || '—')}</div></td>
+                  <td style="padding: 9px 14px; color: #475569;">${escHtml(alm.entity || '—')}</td>
+                  <td style="padding: 9px 14px; color: #0f172a;">${escHtml(alm.message || '—')}</td>
+                  <td style="padding: 9px 14px; color: #64748b;">—</td>
+                  <td style="padding: 9px 14px; color: #64748b;">${String(alm.severity || '').toLowerCase() === 'clear' ? escHtml(alarmTech(alm)) : '—'}</td>
+                  <td style="padding: 9px 14px; color: #475569;">${String(alm.severity || '').toLowerCase() === 'clear' ? 'Cleared' : escHtml(alm.status || 'Active')}</td>
+                </tr>`).join('')}
               </tbody>
             </table>
             <div style="padding: 10px 16px; background: #fafbfc; border-top: 1px solid #e2e8f0; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Showing 4 of 142 historical alarms</span>
-              <span>Page 1 of 36</span>
+              <span>Showing ${archiveRows.length} of ${state.alarms.length} historical alarms</span>
+              <span>Page 1 of 1</span>
             </div>
           </div>
         </div>
@@ -10737,18 +9262,18 @@
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">IP Address Conflict</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Conflicts</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">No Duplicates Detected</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">—</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">No IPAM data yet — run discovery first</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ca8a04;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Switch Port Flap</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Flaps</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">All Ports Stable</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">—</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">No port data yet — run discovery first</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0070e0;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Rogue Detection</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Rogue Devices</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">Perimeter Clean</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">—</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">No rogue scan data yet</div>
             </div>
           </div>
 
@@ -10857,6 +9382,7 @@
     const expBtn = container.querySelector('#opm-alarms-export-btn');
     if (expBtn) {
       expBtn.onclick = () => {
+        if (state.alarms.length === 0) { showToast('Nothing to export yet.'); return; }
         const header = 'Alarm ID,Severity,Device,Entity,Probe,Message,Timestamp,Technician\n';
         const rows = state.alarms.map(a =>
           `"${a.id}","${a.severity}","${a.device}","${a.entity}","${a.probe}","${a.message}","${a.time}","${a.technician}"`
@@ -10871,6 +9397,38 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         showToast('Exported OpManager Central Alarms CSV successfully.');
+      };
+    }
+
+    // Archive filter controls (real stored alarms only)
+    const archiveRange = container.querySelector('#opm-archive-range');
+    if (archiveRange) archiveRange.onchange = (e) => { state.alarmsArchiveFilter = { ...archiveFilter, range: e.target.value }; renderAlarmsView(); };
+    const archiveSeverity = container.querySelector('#opm-archive-severity');
+    if (archiveSeverity) archiveSeverity.onchange = (e) => { state.alarmsArchiveFilter = { ...archiveFilter, severity: e.target.value }; renderAlarmsView(); };
+    const archiveStatus = container.querySelector('#opm-archive-status');
+    if (archiveStatus) archiveStatus.onchange = (e) => { state.alarmsArchiveFilter = { ...archiveFilter, status: e.target.value }; renderAlarmsView(); };
+    const archiveSearch = container.querySelector('#opm-archive-search');
+    if (archiveSearch) archiveSearch.onchange = (e) => { state.alarmsArchiveFilter = { ...archiveFilter, search: e.target.value.trim() }; renderAlarmsView(); };
+    const archiveClear = container.querySelector('#opm-archive-clear-filters');
+    if (archiveClear) archiveClear.onclick = () => { state.alarmsArchiveFilter = { range: '7d', severity: 'all', status: 'all', search: '' }; renderAlarmsView(); };
+    const archiveExportBtn = container.querySelector('#opm-export-archive-btn');
+    if (archiveExportBtn) {
+      archiveExportBtn.onclick = () => {
+        if (archiveRows.length === 0) { showToast('Nothing to export yet.'); return; }
+        const header = 'Alarm ID,Severity,Device,Entity,Probe,Message,Timestamp,Technician\n';
+        const rows = archiveRows.map(a =>
+          `"${a.id}","${a.severity}","${(a.device || '').replace(/"/g, '""')}","${(a.entity || '').replace(/"/g, '""')}","${(a.probe || '').replace(/"/g, '""')}","${(a.message || '').replace(/"/g, '""')}","${alarmTime(a)}","${alarmTech(a)}"`
+        ).join('\n');
+        const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `OpManager_Central_Alarm_Archive_${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Exported alarm archive CSV successfully.');
       };
     }
 
@@ -10913,16 +9471,31 @@
       };
     });
 
-    // Quick Ack
+    // Quick Ack — real POST to /api/json/alarms/acknowledge; local state
+    // changes only when the server confirms.
     container.querySelectorAll('.opm-alarm-quick-ack').forEach(btn => {
-      btn.onclick = (e) => {
+      btn.onclick = async (e) => {
         e.stopPropagation();
         const id = btn.getAttribute('data-id');
-        const alm = state.alarms.find(a => a.id === id);
-        if (alm) {
-          alm.technician = alm.technician === 'Unacknowledged' ? 'admin' : 'Unacknowledged';
-          showToast(`Alarm ${alm.id} marked as ${alm.technician}.`);
+        const alm = state.alarms.find(a => String(a.id) === String(id));
+        if (!alm) return;
+        const tech = alm.technician || alm.who;
+        if (alm.acknowledged || (tech && tech !== 'Unacknowledged')) {
+          showToast(`Alarm ${alm.id} is already acknowledged.`);
+          return;
+        }
+        btn.disabled = true;
+        try {
+          const data = await apiPost('/api/json/alarms/acknowledge', { alarmId: alm.id });
+          alm.acknowledged = true;
+          alm.status = 'Acknowledged';
+          if (data && data.alarm) alm.who = data.alarm.ackUser || data.alarm.acknowledgedBy || alm.who;
+          if (!alm.who || alm.who === 'Unacknowledged') alm.who = 'administrator';
+          showToast((data && data.message) || `Alarm ${alm.id} acknowledged.`);
           renderAlarmsView();
+        } catch (err) {
+          showToast(`Acknowledge failed: ${err.message}`);
+          btn.disabled = false;
         }
       };
     });
@@ -10952,7 +9525,7 @@
       btn.onclick = (e) => {
         e.stopPropagation();
         const id = btn.getAttribute('data-id');
-        const alm = state.alarms.find(a => a.id === id) || state.alarms[0];
+        const alm = state.alarms.find(a => String(a.id) === String(id)) || state.alarms[0];
         if (typeof showZiaRcaModal === 'function') {
           showZiaRcaModal(alm);
         }
@@ -10989,14 +9562,24 @@
       };
     }
 
-    // Network Alarms Ack & Actions
+    // Network Alarms Ack — real POST; button changes only on success.
     container.querySelectorAll('.opm-net-alarm-ack-btn').forEach(btn => {
-      btn.onclick = () => {
-        const orig = btn.textContent;
-        btn.textContent = 'Acknowledged';
-        btn.disabled = true;
-        btn.style.opacity = '0.6';
-        showToast(`${orig} action executed successfully.`);
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        const alm = id ? state.alarms.find(a => String(a.id) === String(id)) : null;
+        if (!alm) { showToast('No alarm selected to acknowledge.'); return; }
+        try {
+          const data = await apiPost('/api/json/alarms/acknowledge', { alarmId: alm.id });
+          alm.acknowledged = true;
+          alm.status = 'Acknowledged';
+          btn.textContent = 'Acknowledged';
+          btn.disabled = true;
+          btn.style.opacity = '0.6';
+          showToast((data && data.message) || `Alarm ${alm.id} acknowledged.`);
+          renderAlarmsView();
+        } catch (err) {
+          showToast(`Acknowledge failed: ${err.message}`);
+        }
       };
     });
 
@@ -11004,15 +9587,13 @@
     const remediateBtn = container.querySelector('#opm-rca-remediate-btn');
     if (remediateBtn) {
       remediateBtn.onclick = () => {
-        remediateBtn.innerText = '✓ Remediation Executed (Failover Active)';
-        remediateBtn.style.background = '#0070e0';
-        showToast('Automated failover initiated: Core interface switched to secondary trunk.');
+        showToast('No remediation workflow is configured for this incident yet.');
       };
     }
     const rcaExportBtn = container.querySelector('#opm-rca-export-btn');
     if (rcaExportBtn) {
       rcaExportBtn.onclick = () => {
-        showToast('Generated Root Cause Analysis PDF Post-Mortem Report.');
+        showToast('No RCA report export is available yet.');
       };
     }
 
@@ -11020,20 +9601,23 @@
     const noteBtn = container.querySelector('#opm-rca-add-note-btn');
     const noteInput = container.querySelector('#opm-rca-note-input');
     if (noteBtn && noteInput) {
-      noteBtn.onclick = () => {
+      noteBtn.onclick = async () => {
         const val = noteInput.value.trim();
-        if (val) {
-          fetch('/api/json/alarm/addRCANotes', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ alarmId: 'alm_801', note: val, technician: 'admin@opmanager' })
-          }).catch(() => {});
-          showToast('Investigation note saved to incident #PRB-9201.');
-          noteInput.value = '';
-          const notesBox = container.querySelector('#opm-rca-notes-container');
-          if (notesBox) {
-            notesBox.innerHTML += `<br>[Just now] admin@opmanager: ${val}`;
-          }
+        if (!val) return;
+        const alm = state.alarms[0];
+        if (!alm) { showToast('No alarm to attach this note to yet.'); return; }
+        try {
+          const data = await apiPost('/api/alarm/addRCANotes', { alarmId: alm.id, note: val, technician: 'admin@opmanager' });
+          showToast((data && data.message) || 'Investigation note saved.');
+        } catch (err) {
+          // Server honestly refuses (501): notes are not stored in this build.
+          showToast(`Note not saved: ${err.message}`);
+          return;
+        }
+        noteInput.value = '';
+        const notesBox = container.querySelector('#opm-rca-notes-container');
+        if (notesBox) {
+          notesBox.innerHTML += `<br>[${escHtml(new Date().toLocaleTimeString())}] admin@opmanager: ${escHtml(val)}`;
         }
       };
     }
@@ -11041,7 +9625,7 @@
     const bounceBtn = container.querySelector('#opm-prb-bounce-btn');
     if (bounceBtn) {
       bounceBtn.onclick = () => {
-        showToast('Interface TenGigabitEthernet1/0/48 bounce command executed successfully.');
+        showToast('Port bounce is not available yet — no bounce endpoint.');
       };
     }
 
@@ -11051,7 +9635,7 @@
         if (typeof showSnmpTrapSimulatorModal === 'function') {
           showSnmpTrapSimulatorModal();
         } else {
-          showToast('Simulated SNMP linkDown trap ingested via UDP 162.');
+          showToast('Trap simulator is not available.');
         }
       };
     }
@@ -11066,7 +9650,7 @@
 
   // Drawer renderer (Module Scope)
   function openAlarmDrawer(id) {
-      const alm = state.alarms.find(a => a.id === id);
+      const alm = state.alarms.find(a => String(a.id) === String(id));
       if (!alm) return;
 
       const drawer = document.getElementById('opm-alarm-drawer');
@@ -11087,128 +9671,50 @@
           <!-- Key Attributes -->
           <div style="margin-bottom: 20px;">
             <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">Target Entity</div>
-            <div style="font-size: 15px; font-weight: 800; color: #0070e0; cursor: pointer;" id="opm-drawer-device-link">${alm.device}</div>
-            <div style="font-size: 12px; color: #475569; margin-top: 2px;">${alm.entity} | Managed by ${alm.probe}</div>
+            <div style="font-size: 15px; font-weight: 800; color: #0070e0; cursor: pointer;" id="opm-drawer-device-link">${escHtml(alm.device || '—')}</div>
+            <div style="font-size: 12px; color: #475569; margin-top: 2px;">${escHtml(alm.entity || '—')} | Managed by ${escHtml(alm.probe || '—')}</div>
           </div>
 
           <!-- Message Box -->
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; margin-bottom: 20px;">
             <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 4px;">Alarm Message</div>
-            <div style="font-size: 13px; color: #0f172a; line-height: 1.4;">${alm.message}</div>
-            <div style="font-size: 11px; color: #94a3b8; margin-top: 6px;">Reported: ${alm.time}</div>
+            <div style="font-size: 13px; color: #0f172a; line-height: 1.4;">${escHtml(alm.message || '—')}</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-top: 6px;">Reported: ${escHtml(alarmTime(alm))}</div>
           </div>
 
-          <!-- Zia AI RCA Analysis Section -->
+          <!-- Zia AI RCA Analysis Section (real data only) -->
           <div style="background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 6px; padding: 14px; margin-bottom: 16px;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
               <span style="font-size: 12px; font-weight: 800; color: #3730a3; display: flex; align-items: center; gap: 5px;">
                 <span>✨</span> Zia AI Root Cause Analysis
               </span>
-              <span style="font-size: 10px; font-weight: 800; background: #c7d2fe; color: #312e81; padding: 2px 6px; border-radius: 4px;">CONFIDENCE 94%</span>
             </div>
-            <div style="font-size: 12px; color: #1e1b4b; line-height: 1.4;">
-              ${alm.severity === 'Critical' 
-                ? `High correlation with network traffic on ${alm.probe || 'Enterprise Site LAN'}. Recommend checking optical transceiver diagnostics or suppressing non-essential polling threads.`
-                : 'Metric deviation detected during standard shift handoff. Threshold crossed baseline by 14%. No immediate service impact predicted.'}
+            <div id="opm-drawer-rca-body" style="font-size: 12px; color: #1e1b4b; line-height: 1.4;">
+              Loading root-cause analysis…
             </div>
           </div>
 
-          <!-- ManageEngine 24-Hour Availability Time Line Bar (from mobile-app-opm.png) -->
+          <!-- Device Availability (no history source yet) -->
           <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; background: #ffffff; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span style="font-size: 11px; font-weight: 800; color: #1e293b; text-transform: uppercase;">Time Line (Last 24 Hours)</span>
-              <div style="display: flex; align-items: center; gap: 8px; font-size: 10px; color: #475569;">
-                <span style="display: flex; align-items: center; gap: 3px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #9333ea;"></span> Maint (0%)</span>
-                <span style="display: flex; align-items: center; gap: 3px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #49bd80;"></span> Up (98.4%)</span>
-                <span style="display: flex; align-items: center; gap: 3px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444;"></span> Down (1.6%)</span>
-              </div>
-            </div>
-            <div style="height: 12px; width: 100%; border-radius: 6px; overflow: hidden; display: flex; background: #e2e8f0;">
-              <div style="width: 82%; background: #49bd80;" title="Up Time (10:00 - 06:15)"></div>
-              <div style="width: 4%; background: #ef4444;" title="Alert Window (06:15 - 06:40)"></div>
-              <div style="width: 14%; background: #49bd80;" title="Up Time (06:40 - 09:59)"></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; margin-top: 4px; font-family: monospace;">
-              <span>10:00</span>
-              <span>22:00</span>
-              <span>09:59</span>
-            </div>
+            <div style="font-size: 11px; font-weight: 800; color: #1e293b; text-transform: uppercase; margin-bottom: 4px;">Availability (Last 24 Hours)</div>
+            <div style="font-size: 12px; color: #64748b;">No availability history recorded for this device yet.</div>
           </div>
 
-          <!-- Official NetFlow Alert Traffic Drilldown (Exact replica of NFA_Alert_Sample.png) -->
+          <!-- NetFlow Alert Traffic Drilldown (no flow source yet) -->
           <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; background: #fafbfc; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <span style="font-size: 11px; font-weight: 800; color: #0f172a; text-transform: uppercase;">NetFlow Alert Traffic Drilldown (IN / OUT)</span>
-              <div style="display: flex; align-items: center; gap: 10px; font-size: 10px; font-weight: 700;">
-                <span style="display: flex; align-items: center; gap: 4px; color: #334155;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #29c5f6;"></span> IN</span>
-                <span style="display: flex; align-items: center; gap: 4px; color: #334155;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #f8a346;"></span> OUT</span>
-              </div>
-            </div>
-            <!-- Cyan IN & Orange OUT Grouped Bar Chart (matching NFA_Alert_Sample.png) -->
-            <svg width="100%" height="78" viewBox="0 0 380 78" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 10px;">
-              <line x1="28" y1="15" x2="370" y2="15" stroke="#f1f5f9" stroke-width="1" />
-              <line x1="28" y1="38" x2="370" y2="38" stroke="#f1f5f9" stroke-width="1" />
-              <line x1="28" y1="60" x2="370" y2="60" stroke="#cbd5e1" stroke-width="1" />
-              <text x="4" y="18" font-size="8" fill="#64748b">15M</text>
-              <text x="4" y="41" font-size="8" fill="#64748b">7.5M</text>
-              <text x="4" y="62" font-size="8" fill="#64748b">0</text>
-              ${[
-                { x: 42, inH: 38, outH: 20, t: '17:04' },
-                { x: 96, inH: 44, outH: 18, t: '17:05' },
-                { x: 150, inH: 35, outH: 26, t: '17:06' },
-                { x: 204, inH: 46, outH: 39, t: '17:07' },
-                { x: 258, inH: 34, outH: 29, t: '17:08' },
-                { x: 312, inH: 42, outH: 33, t: '17:09' }
-              ].map(b => `
-                <rect x="${b.x}" y="${60 - b.inH}" width="11" height="${b.inH}" fill="#29c5f6" rx="1" />
-                <rect x="${b.x + 13}" y="${60 - b.outH}" width="11" height="${b.outH}" fill="#f8a346" rx="1" />
-                <text x="${b.x + 12}" y="72" font-size="8" fill="#64748b" text-anchor="middle">${b.t}</text>
-              `).join('')}
-            </svg>
-            <div style="font-size: 10px; font-weight: 800; color: #334155; margin-bottom: 4px;">Top Application &amp; Conversation</div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 10px; background: #ffffff; border: 1px solid #e2e8f0;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                  <th style="padding: 4px 6px;">Application</th>
-                  <th style="padding: 4px 6px;">Source &rarr; Dest</th>
-                  <th style="padding: 4px 6px;">DSCP</th>
-                  <th style="padding: 4px 6px; text-align: right;">Traffic</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 4px 6px; font-weight: 700; color: #0284c7;">Menu (TCP/1111)</td>
-                  <td style="padding: 4px 6px; font-family: monospace;">11.0.2.100 &rarr; 172.21.149.155</td>
-                  <td style="padding: 4px 6px;">CS0</td>
-                  <td style="padding: 4px 6px; text-align: right; font-weight: 700;">161.34 MB</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 4px 6px; font-weight: 700; color: #16a34a;">SmartCard_Port</td>
-                  <td style="padding: 4px 6px; font-family: monospace;">192.168.100.104 &rarr; 172.16.1.2</td>
-                  <td style="padding: 4px 6px;">AF21</td>
-                  <td style="padding: 4px 6px; text-align: right; font-weight: 700;">101.66 MB</td>
-                </tr>
-                <tr>
-                  <td style="padding: 4px 6px; font-weight: 700; color: #7c3aed;">HTTPS_TLS</td>
-                  <td style="padding: 4px 6px; font-family: monospace;">192.168.1.10 &rarr; 192.168.1.50</td>
-                  <td style="padding: 4px 6px;">EF</td>
-                  <td style="padding: 4px 6px; text-align: right; font-weight: 700;">96.26 MB</td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="font-size: 11px; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-bottom: 4px;">NetFlow Alert Traffic Drilldown (IN / OUT)</div>
+            <div style="font-size: 12px; color: #64748b;">No flow data available for this alarm. Configure a NetFlow exporter first.</div>
           </div>
 
           <!-- Actions & Notes -->
           <div style="margin-bottom: 20px;">
             <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">Technician Assignment</div>
             <div style="display: flex; align-items: center; gap: 10px;">
-              <select id="opm-drawer-tech-select" style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
-                <option ${alm.technician === 'Unacknowledged' ? 'selected' : ''}>Unacknowledged</option>
-                <option ${alm.technician === 'admin@opmanager' ? 'selected' : ''}>admin@opmanager</option>
-                <option ${alm.technician === 'johndoe' ? 'selected' : ''}>johndoe</option>
-                <option ${alm.technician === 'noc_lead' ? 'selected' : ''}>noc_lead</option>
+              <select id="opm-drawer-tech-select" disabled title="Technician assignment is not available yet — no assignment endpoint." style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                <option>Unacknowledged</option>
+                ${(() => { const t = alm.technician || alm.who; return (t && t !== 'Unacknowledged') ? `<option selected>${escHtml(t)}</option>` : ''; })()}
               </select>
-              <button id="opm-drawer-assign-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Assign</button>
+              <button id="opm-drawer-assign-btn" disabled title="Technician assignment is not available yet — no assignment endpoint." style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; opacity: 0.6;">Assign</button>
             </div>
           </div>
 
@@ -11220,7 +9726,7 @@
             <button id="opm-drawer-clear-btn" style="width: 100%; background: #16a34a; color: #ffffff; border: none; padding: 8px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
               Clear Alarm (Mark Resolved)
             </button>
-            <button id="opm-drawer-suppress-btn" style="width: 100%; background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+            <button id="opm-drawer-suppress-btn" disabled title="Alarm suppression is not available yet." style="width: 100%; background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; opacity: 0.6;">
               Suppress Similar Alarms (2 Hours)
             </button>
           </div>
@@ -11229,6 +9735,28 @@
       `;
 
       drawer.style.display = 'flex';
+
+      // Load real RCA data for this alarm — no invented confidence,
+      // hypothesis or cascade. Empty when the API has nothing.
+      (async () => {
+        const body = drawer.querySelector('#opm-drawer-rca-body');
+        if (!body) return;
+        try {
+          const data = await apiGetJson(`/api/alarm/getRCAData?alarmId=${encodeURIComponent(alm.id)}`);
+          const parts = [];
+          if (data.hypothesis) parts.push(`<div>${escHtml(data.hypothesis)}</div>`);
+          if (data.latestMetric) {
+            const m = data.latestMetric;
+            parts.push(`<div style="margin-top: 6px;">Latest device metric: CPU ${m.cpuPct ?? '—'}% · Memory ${m.memUsedPct ?? '—'}% · Response ${m.responseMs ?? '—'} ms</div>`);
+          }
+          if (Array.isArray(data.correlatedEvents) && data.correlatedEvents.length > 0) {
+            parts.push('<div style="margin-top: 6px; font-weight: 700;">Related alarms on this device:</div>' + data.correlatedEvents.map(ev => `<div>• ${escHtml(ev.message || '—')} (${escHtml(ev.severity || '—')})</div>`).join(''));
+          }
+          body.innerHTML = parts.length > 0 ? parts.join('') : 'No root-cause data available for this alarm yet.';
+        } catch (err) {
+          body.textContent = `Root-cause analysis is not available: ${err.message}`;
+        }
+      })();
 
       // Close drawer event
       const closeBtn = drawer.querySelector('#opm-close-alarm-drawer');
@@ -11243,18 +9771,6 @@
         };
       }
 
-      // Assign technician
-      const assignBtn = drawer.querySelector('#opm-drawer-assign-btn');
-      if (assignBtn) {
-        assignBtn.onclick = () => {
-          const select = drawer.querySelector('#opm-drawer-tech-select');
-          alm.technician = select.value;
-          showToast(`Alarm ${alm.id} assigned to ${alm.technician}.`);
-          renderAlarmsView();
-          openAlarmDrawer(alm.id);
-        };
-      }
-
       // ServiceDesk Plus incident
       const sdpBtn = drawer.querySelector('#opm-drawer-sdp-btn');
       if (sdpBtn) {
@@ -11263,23 +9779,21 @@
         };
       }
 
-      // Clear alarm
+      // Clear alarm — real POST to /api/json/alarms/clear.
       const clearBtn = drawer.querySelector('#opm-drawer-clear-btn');
       if (clearBtn) {
-        clearBtn.onclick = () => {
-          alm.severity = 'Clear';
-          showToast(`Alarm ${alm.id} marked as Clear.`);
-          drawer.style.display = 'none';
-          renderAlarmsView();
-        };
-      }
-
-      // Suppress alarm
-      const suppBtn = drawer.querySelector('#opm-drawer-suppress-btn');
-      if (suppBtn) {
-        suppBtn.onclick = () => {
-          showToast(`Alarm ${alm.id} suppressed for 2 hours.`);
-          drawer.style.display = 'none';
+        clearBtn.onclick = async () => {
+          clearBtn.disabled = true;
+          try {
+            const data = await apiPost('/api/json/alarms/clear', { alarmId: alm.id });
+            state.alarms = state.alarms.filter(a => String(a.id) !== String(alm.id));
+            showToast((data && data.message) || `Alarm ${alm.id} cleared.`);
+            drawer.style.display = 'none';
+            renderAlarmsView();
+          } catch (err) {
+            showToast(`Clear failed: ${err.message}`);
+            clearBtn.disabled = false;
+          }
         };
       }
     }
@@ -11291,6 +9805,7 @@
     state.currentTab = 'maps';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.maps || 'business';
+    const worldOnlineCount = state.probes.filter(p => p.status === 'Online').length;
 
     if (state.devices.length === 0) {
       container.innerHTML = `
@@ -11303,7 +9818,7 @@
           </div>
           <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No Topology Mapped Yet</div>
           <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 20px auto; line-height: 1.5;">
-            All demo devices have been cleared. Once you install the host agent or discover devices via SNMP, your network topology, 3D rack elevations, and business service views will be rendered here automatically.
+            No devices discovered yet. Once you install the host agent or discover devices via SNMP, your network topology, 3D rack elevations, and business service views will be rendered here automatically.
           </div>
           <div style="display: flex; justify-content: center; gap: 10px;">
             <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none;">
@@ -11375,7 +9890,7 @@
                 ${state.probes.map(pr => `
                   <div class="opm-topo-node" data-probe="${pr.id}" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="showProbeDetailsModal(${pr.id})">
                     <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> ${pr.name}</span>
-                    <span style="font-size: 10px; color: #64748b;">${pr.devicesCount || 0} Nodes</span>
+                    <span style="font-size: 10px; color: #64748b;">${probeDeviceCount(pr)} Nodes</span>
                   </div>
                 `).join('')}
               </div>
@@ -11393,19 +9908,8 @@
             <div style="flex: 1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
               <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                  <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Multi-Probe WAN Topology (Global Map View)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central Master coordinating ${state.probes.length} distributed Remote Probes across enterprise sites.</div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 12px;">
-                  <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #475569;">
-                    <span style="font-weight: 700;">Map Theme:</span>
-                    <select id="opm-bv-bg-select" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #334155; outline: none; cursor: pointer;">
-                      <option value="/images/maps/world_map_02.jpg" selected>ManageEngine Ocean Blue Grid (Official)</option>
-                      <option value="/images/maps/WorldMap_Blue.jpg">ManageEngine Continent Blue</option>
-                      <option value="/images/maps/WorldMap_BlackGreen.jpg">ManageEngine Dark Emerald</option>
-                      <option value="/images/maps/WorldMap_Gray.jpg">ManageEngine Executive Gray</option>
-                    </select>
-                  </div>
+                  <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Multi-Probe Topology</div>
+                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central coordinating ${state.probes.length} registered probe${state.probes.length === 1 ? '' : 's'}. Node positions are schematic — probes report no geographic coordinates.</div>
                 </div>
               </div>
 
@@ -11421,7 +9925,7 @@
                     { label: 'Properties', ico: '/apiclient/fluidicv2/img/bv/bvPropsIcon.png' },
                     { label: 'Delete Node', ico: '/apiclient/fluidicv2/img/bv/delete_default.png' }
                   ].map(tool => `
-                    <button class="opm-bv-tool-btn" data-tool="${tool.label}" style="display: inline-flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #1e293b; cursor: pointer;" onclick="showToast('Business View Designer: ' + '${tool.label}' + ' mode activated')">
+                    <button class="opm-bv-tool-btn" data-tool="${tool.label}" style="display: inline-flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #1e293b; cursor: pointer;" onclick="showToast('Business View Designer is not available yet.')">
                       <img src="${tool.ico}" style="width: 14px; height: 14px; object-fit: contain;" />
                       <span>${tool.label}</span>
                     </button>
@@ -11460,7 +9964,7 @@
                 </div>
               </div>
 
-              <div id="opm-business-view-canvas" style="width: 100%; height: 470px; background: #cfe2f3 url('/images/maps/world_map_02.jpg') no-repeat center center; background-size: 100% 100%; border: 1px solid #cbd5e1; border-radius: 4px; position: relative; overflow: hidden;">
+              <div id="opm-business-view-canvas" style="width: 100%; height: 470px; background: #eef2f7; border: 1px solid #cbd5e1; border-radius: 4px; position: relative; overflow: hidden;">
                 <svg width="100%" height="100%" viewBox="0 0 900 470" style="position: absolute; top:0; left:0;">
                   <defs>
                     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
@@ -11473,18 +9977,19 @@
                   ${state.probes.map((pr, idx) => {
                     const x = 320 + (idx * 160);
                     const y = 175 + (idx % 2 === 0 ? -35 : 35);
-                    const isOk = pr.status === 'Online' || pr.status === 'Synchronized';
+                    const isOk = pr.status === 'Online';
                     const strokeColor = isOk ? '#00f000' : '#dc2626';
+                    const lat = probeLatency(pr);
                     return `
                       <line class="opm-packet-flow" x1="145" y1="175" x2="${x}" y2="${y}" stroke="${strokeColor}" stroke-width="2.8" stroke-dasharray="5 3" />
                       <rect x="${Math.round((145 + x) / 2) - 35}" y="${Math.round((175 + y) / 2) - 8}" width="70" height="16" rx="3" fill="#0f172a" opacity="0.9" />
-                      <text x="${Math.round((145 + x) / 2)}" y="${Math.round((175 + y) / 2) + 4}" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="bold" font-family="monospace">${pr.latency || 2}ms | 0%</text>
+                      <text x="${Math.round((145 + x) / 2)}" y="${Math.round((175 + y) / 2) + 4}" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="bold" font-family="monospace">${lat != null ? lat + 'ms' : '—'}</text>
 
                       <g class="opm-topo-node" data-probe="${pr.id}" style="cursor: pointer;" onclick="if(typeof showProbeDetailsModal==='function') showProbeDetailsModal(${pr.id})">
                         <circle cx="${x}" cy="${y}" r="28" fill="#0f172a" stroke="${isOk ? '#16a34a' : '#dc2626'}" stroke-width="2.5" />
                         <image href="/images/deviceicons/server.png" x="${x - 12}" y="${y - 20}" width="24" height="24" />
-                        <text x="${x}" y="${y + 12}" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="bold">${pr.name}</text>
-                        <text x="${x}" y="${y + 22}" text-anchor="middle" fill="#4ade80" font-size="7.5">${pr.ip} (${pr.devicesCount || 0})</text>
+                        <text x="${x}" y="${y + 12}" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="bold">${pr.name || '—'}</text>
+                        <text x="${x}" y="${y + 22}" text-anchor="middle" fill="#4ade80" font-size="7.5">${pr.ip || '—'} (${probeDeviceCount(pr)})</text>
                       </g>
                     `;
                   }).join('')}
@@ -11515,19 +10020,7 @@
             </button>
           </div>
         ` : activeSub === 'rack' ? `
-          <!-- 3D Rack Views -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No 3D Datacenter Racks Configured</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">
-              Create 3D datacenter racks and mount servers, switches, and UPS units to visualize rack space, thermal capacity, and front/rear port connectivity.
-            </div>
-            <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-              + Create New Rack
-            </button>
-          </div>
+          ${renderRackSubtab()}
         ` : activeSub === 'layer2' ? `
           <!-- Layer 2 Maps -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
@@ -11543,20 +10036,30 @@
             </button>
           </div>
         ` : `
-          <!-- Global Probes WAN World Map (ManageEngine Central Flagship View) -->
+          ${state.probes.length <= 1 ? `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No remote probes to map yet</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              Only one probe is registered. Register a remote probe to see it on the world map.
+            </div>
+          </div>
+          ` : `
           <div style="background: #0b1120; border: 1px solid #1e293b; border-radius: 6px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); color: #fff;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 12px; margin-bottom: 16px;">
               <div>
                 <div style="font-size: 15px; font-weight: 800; color: #38bdf8; display: flex; align-items: center; gap: 8px;">
-                  <span style="font-size: 16px;">🌐</span> GLOBAL MULTI-PROBE WAN TOPOLOGY &amp; LATENCY MAP
+                  <span style="font-size: 16px;">🌐</span> GLOBAL MULTI-PROBE TOPOLOGY &amp; LATENCY MAP
                 </div>
                 <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">
-                  Real-time inter-probe synchronization across America, Europe, Middle East, and Asia Pacific datacenters.
+                  Probe status from live probe heartbeats. Pin positions are schematic — probes report no geographic coordinates.
                 </div>
               </div>
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="font-size: 11px; color: #4ade80; background: #064e3b; border: 1px solid #047857; padding: 3px 8px; border-radius: 4px; font-weight: 700;">
-                  ● ALL ${state.probes.length} PROBES ONLINE
+                  ● ${worldOnlineCount} OF ${state.probes.length} PROBE${state.probes.length === 1 ? '' : 'S'} ONLINE
                 </div>
                 <button id="opm-worldmap-sync-all-btn" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                   Initiate Global Sync
@@ -11564,60 +10067,46 @@
               </div>
             </div>
 
-            <!-- World Map SVG Canvas (1000 x 480) -->
             <div style="position: relative; background: #0f172a; border: 1px solid #1e293b; border-radius: 6px; overflow: hidden; height: 480px;">
               <svg width="100%" height="100%" viewBox="0 0 1000 480" style="background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f19 100%);">
-                <!-- Continents Silhouettes SVG -->
-                <!-- North America -->
-                <path d="M 80,60 L 220,50 L 320,70 L 340,110 L 290,140 L 260,190 L 200,240 L 170,270 L 190,290 L 160,280 L 140,240 L 120,200 L 90,150 L 70,100 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- South America -->
-                <path d="M 220,290 L 280,300 L 320,330 L 300,390 L 270,440 L 230,460 L 210,410 L 200,340 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- Europe -->
-                <path d="M 440,70 L 520,60 L 550,90 L 530,140 L 480,160 L 450,140 L 430,100 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- Africa -->
-                <path d="M 450,170 L 530,160 L 580,200 L 580,260 L 550,330 L 510,380 L 470,350 L 440,280 L 430,220 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- Asia -->
-                <path d="M 530,60 L 750,50 L 880,90 L 920,150 L 850,210 L 780,260 L 710,230 L 630,210 L 560,150 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- Australia -->
-                <path d="M 800,330 L 890,320 L 930,370 L 890,420 L 820,410 L 780,360 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-
-                <!-- Dynamic WAN Links & Probe Pins from state.probes -->
                 ${state.probes.map((pr, idx) => {
-                  const cx = 260 + (idx * 220);
-                  const cy = 150 + (idx % 2 === 0 ? 0 : 70);
-                  const isOk = pr.status === 'Online' || pr.status === 'Synchronized';
+                  const spacing = state.probes.length > 1 ? Math.min(220, 760 / (state.probes.length - 1)) : 220;
+                  const cx = 120 + (idx * spacing);
+                  const cy = 210;
+                  const isOk = pr.status === 'Online';
+                  const lat = probeLatency(pr);
                   return `
                     <g class="opm-world-pin" data-probe="${pr.id}" style="cursor: pointer;" onclick="if(typeof showProbeDetailsModal==='function') showProbeDetailsModal(${pr.id})">
                       <circle cx="${cx}" cy="${cy}" r="14" fill="${isOk ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.25)'}" stroke="${isOk ? '#22c55e' : '#ef4444'}" stroke-width="1.5" />
                       <circle cx="${cx}" cy="${cy}" r="6" fill="${isOk ? '#22c55e' : '#ef4444'}" />
                       <rect x="${cx - 80}" y="${cy + 20}" width="160" height="42" rx="4" fill="#1e293b" stroke="#334155" />
-                      <text x="${cx}" y="${cy + 36}" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🌐 ${pr.name}</text>
-                      <text x="${cx}" y="${cy + 50}" text-anchor="middle" font-size="9" fill="${isOk ? '#4ade80' : '#f87171'}">● ${pr.status || 'Online'} • ${pr.latency || 2}ms RTT</text>
+                      <text x="${cx}" y="${cy + 36}" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🌐 ${pr.name || '—'}</text>
+                      <text x="${cx}" y="${cy + 50}" text-anchor="middle" font-size="9" fill="${isOk ? '#4ade80' : '#f87171'}">● ${pr.status || '—'} • ${lat != null ? lat + 'ms RTT' : '—'}</text>
                     </g>
                   `;
                 }).join('')}
               </svg>
             </div>
 
-            <!-- Bottom Selected Probe Telemetry Matrix -->
             <div id="opm-worldmap-probe-details" style="margin-top: 16px; background: #1e293b; border-radius: 6px; padding: 14px 18px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
               <div style="display: flex; align-items: center; gap: 14px;">
                 <span style="font-size: 18px;">🌐</span>
                 <div>
-                  <div style="font-weight: 800; color: #38bdf8;">${state.probes[0]?.name || 'Central Site Probe'} (${state.probes[0]?.location || 'Local Server Node'})</div>
-                  <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">IP: ${state.probes[0]?.ip || '127.0.0.1'} &bull; ${state.probes[0]?.devicesCount || 0} Managed Nodes &bull; Sync State: ${state.probes[0]?.syncStatus || 'Synchronized'} &bull; Comm Port: ${state.probes[0]?.commPort || 8060}</div>
+                  <div style="font-weight: 800; color: #38bdf8;">${state.probes[0]?.name || '—'}</div>
+                  <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">IP: ${state.probes[0]?.ip || '—'} &bull; ${probeDeviceCount(state.probes[0])} Managed Nodes &bull; ${state.probes[0]?.last_heartbeat_at ? 'Last heartbeat ' + fmtTime(state.probes[0].last_heartbeat_at) : 'No heartbeat yet'}</div>
                 </div>
               </div>
               <div style="display: flex; gap: 8px;">
-                <button id="opm-world-inspect-probe-btn" data-probe="${state.probes[0]?.id || 101}" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
+                <button id="opm-world-inspect-probe-btn" data-probe="${state.probes[0] ? state.probes[0].id : ''}" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
                   View Probe CIs in Inventory &rarr;
                 </button>
-                <button id="opm-world-diag-probe-btn" data-probe="${state.probes[0]?.id || 101}" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                <button id="opm-world-diag-probe-btn" data-probe="${state.probes[0] ? state.probes[0].id : ''}" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                   Probe Diagnostics
                 </button>
               </div>
             </div>
           </div>
+          `}
         `}
       </div>
     `;
@@ -11653,29 +10142,15 @@
       };
     }
 
-    // Fullscreen button
+    // Fullscreen button — real fullscreen on the topology canvas.
     const fullBtn = container.querySelector('#opm-maps-fullscreen-btn');
     if (fullBtn) {
       fullBtn.onclick = () => {
-        showToast('Entering Fullscreen Topology Canvas...');
-      };
-    }
-
-    // World Map Background Selector
-    const bgSel = container.querySelector('#opm-bv-bg-select');
-    if (bgSel) {
-      bgSel.onchange = (e) => {
         const canvas = document.getElementById('opm-business-view-canvas');
-        if (canvas) {
-          if (e.target.value === 'none') {
-            canvas.style.backgroundImage = 'none';
-            canvas.style.backgroundColor = '#0b1120';
-          } else {
-            canvas.style.backgroundImage = `url('${e.target.value}')`;
-            canvas.style.backgroundSize = '100% 100%';
-            canvas.style.backgroundPosition = 'center';
-          }
-          showToast(`Map background changed to: ${e.target.options[e.target.selectedIndex].text}`);
+        if (canvas && canvas.requestFullscreen) {
+          canvas.requestFullscreen().catch(() => showToast('Fullscreen is not available in this browser.'));
+        } else {
+          showToast('Fullscreen is not available in this browser.');
         }
       };
     }
@@ -11699,13 +10174,62 @@
     const worldDiagBtn = container.querySelector('#opm-world-diag-probe-btn');
     if (worldDiagBtn) {
       worldDiagBtn.onclick = () => {
-        showProbeDetailsModal(4);
+        const prId = parseInt(worldDiagBtn.getAttribute('data-probe'), 10);
+        if (Number.isInteger(prId) && typeof showProbeDetailsModal === 'function') showProbeDetailsModal(prId);
       };
     }
     const worldSyncBtn = container.querySelector('#opm-worldmap-sync-all-btn');
     if (worldSyncBtn) {
-      worldSyncBtn.onclick = () => {
-        showToast('Initiated global multi-probe synchronization across all enterprise probes.');
+      worldSyncBtn.onclick = async () => {
+        worldSyncBtn.disabled = true;
+        try {
+          const data = await apiPost('/api/json/enterprise/syncAllProbes', {});
+          showToast((data && data.message) || 'Probe sync completed.');
+          if (typeof loadBackendData === 'function') loadBackendData();
+        } catch (err) {
+          showToast(`Probe sync failed: ${err.message}`);
+        } finally {
+          worldSyncBtn.disabled = false;
+        }
+      };
+    }
+
+    // Rack controls — selector switches the rendered rack; create posts
+    // to the real endpoint and reports its actual outcome.
+    const rackSelect = container.querySelector('#opm-rack-select');
+    if (rackSelect) {
+      rackSelect.onchange = (e) => { state.selectedRackId = e.target.value; renderMapsView(); };
+    }
+    const racksRetryBtn = container.querySelector('#opm-racks-retry-btn');
+    if (racksRetryBtn) {
+      racksRetryBtn.onclick = () => { state.racks = undefined; state.racksError = null; renderMapsView(); };
+    }
+    const createRackBtn = container.querySelector('#opm-create-rack-btn');
+    if (createRackBtn) {
+      createRackBtn.onclick = async () => {
+        const name = window.prompt('Rack name (e.g. DC-Core-Rack-01):');
+        if (name === null || name.trim() === '') return;
+        const unitsRaw = window.prompt('Rack size in units (e.g. 42):', '42');
+        if (unitsRaw === null) return;
+        const units = Number(unitsRaw);
+        if (!Number.isInteger(units) || units <= 0) { showToast('Units must be a positive whole number.'); return; }
+        try {
+          const data = await apiPost('/api/racks/create', { name: name.trim(), units });
+          showToast((data && data.message) || `Rack "${name.trim()}" created.`);
+          state.racks = undefined;
+          await loadRacks();
+          if (state.currentTab === 'maps') renderMapsView();
+        } catch (err) {
+          showToast(`Create rack failed: ${err.message}`);
+        }
+      };
+    }
+
+    // Layer 2 discovery — no Layer 2 endpoint exists; say so.
+    const l2Btn = container.querySelector('#opm-run-l2-discovery-btn');
+    if (l2Btn) {
+      l2Btn.onclick = () => {
+        showToast('Layer 2 discovery is not available yet — add network switches via SNMP to map switch-to-port connections.');
       };
     }
 
@@ -11761,10 +10285,124 @@
   // -------------------------------------------------------------
   // VIEW: CONFIGURATION (Compliance, NCM Diff, Vuln, Backups)
   // -------------------------------------------------------------
+  // ---- Real-data helpers (05) -------------------------------------------
+  // Every view in this module renders ONLY what a real API returned.
+  // No hardcoded counts, percentages, or demo rows: empty responses render
+  // honest empty states, failed fetches render an error state, never
+  // invented numbers. A 501 from the server is reported honestly.
+  function opmEsc(v) {
+    return String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  async function opmApi(url, options) {
+    try {
+      const r = await fetch(url, options);
+      let d = null;
+      try { d = await r.json(); } catch (e) { /* non-JSON body */ }
+      return { ok: r.ok, status: r.status, data: d };
+    } catch (e) {
+      return { ok: false, status: 0, data: null, error: String(e && e.message || e) };
+    }
+  }
+  function opmApiMessage(res, fallback) {
+    if (res && res.data && (res.data.message || res.data.error)) return res.data.message || res.data.error;
+    if (res && res.error) return res.error;
+    if (res && res.status) return fallback + ' (HTTP ' + res.status + ')';
+    return fallback;
+  }
+  function opmAvgAvailability() {
+    const vals = (state.devices || []).map(d => Number(d.availability)).filter(n => Number.isFinite(n));
+    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+  }
+  // Real workflow shape: status/trigger/scope may be null, lastExecuted is
+  // epoch-ms-or-null. Nulls render as an em dash, never the word "null";
+  // epoch-ms renders as a local date/time, null as "Never".
+  function opmFmtEpochMs(v) {
+    if (v === null || v === undefined || v === '') return 'Never';
+    const n = Number(v);
+    if (Number.isFinite(n) && n > 0) {
+      const d = new Date(n);
+      return Number.isNaN(d.getTime()) ? '\u2014' : d.toLocaleString();
+    }
+    return String(v);
+  }
+  function opmFmtPct(v) {
+    return (v === null || v === undefined || !Number.isFinite(Number(v))) ? '\u2014' : Number(v).toFixed(2) + '%';
+  }
+  // Lazy loaders: fetch once, cache on state, re-render only if still on tab.
+  async function opmLoadNcm() {
+    if (state.ncmLoading) return;
+    state.ncmLoading = true;
+    try {
+      const [wf, cfg] = await Promise.all([
+        opmApi('/api/workflows/list'),
+        opmApi('/api/ccm/configs')
+      ]);
+      state.workflows = (wf.ok && wf.data && Array.isArray(wf.data.workflows)) ? wf.data.workflows : [];
+      state.workflowsError = wf.ok ? null : opmApiMessage(wf, 'Could not load workflows');
+      state.ccmConfigs = (cfg.ok && cfg.data && Array.isArray(cfg.data.configs)) ? cfg.data.configs : [];
+      state.ccmConfigsError = cfg.ok ? null : opmApiMessage(cfg, 'Could not load configuration backups');
+    } finally {
+      state.ncmLoading = false;
+      if (state.currentTab === 'configuration' && typeof renderConfigurationView === 'function') renderConfigurationView();
+    }
+  }
+  async function opmLoadNcmDiff(deviceId) {
+    const id = deviceId || (state.devices[0] && state.devices[0].id);
+    if (!id) { state.ncmDiff = { insufficient: true, reason: 'No device selected.' }; return; }
+    const res = await opmApi('/api/ccm/diff?deviceId=' + encodeURIComponent(id));
+    if (res.ok && res.data) {
+      state.ncmDiff = res.data;
+    } else {
+      state.ncmDiff = { insufficient: true, reason: opmApiMessage(res, 'Could not load the configuration diff') };
+    }
+    if (state.currentTab === 'configuration' && typeof renderConfigurationView === 'function') renderConfigurationView();
+  }
+  async function opmLoadReports() {
+    if (state.reportsLoading) return;
+    state.reportsLoading = true;
+    try {
+      const [sum, aud] = await Promise.all([
+        opmApi('/api/reports/summary'),
+        opmApi('/api/reports/audit')
+      ]);
+      state.reportSummary = (sum.ok && sum.data && sum.data.metrics) ? sum.data.metrics : null;
+      state.reportSummaryError = sum.ok ? null : opmApiMessage(sum, 'Could not load report metrics');
+      state.auditLogs = (aud.ok && aud.data && Array.isArray(aud.data.auditLogs)) ? aud.data.auditLogs : [];
+      state.auditLogsError = aud.ok ? null : opmApiMessage(aud, 'Could not load audit records');
+    } finally {
+      state.reportsLoading = false;
+      if (state.currentTab === 'reports' && typeof renderReportsView === 'function') renderReportsView();
+    }
+  }
+
   function renderConfigurationView() {
     state.currentTab = 'configuration';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.configuration || 'compliance';
+    if (state.devices.length > 0 && state.workflows === undefined && state.ccmConfigs === undefined) opmLoadNcm();
+
+    if (state.devices.length === 0) {
+      container.innerHTML = `
+        <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 12px 24px;">
+          <span style="font-size: 14px; font-weight: 700; color: #1e293b;">Network Configuration &amp; Compliance Management (NCM)</span>
+        </div>
+        <div style="padding: 60px 20px; text-align: center; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; margin: 24px;">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No Devices Configured for NCM</div>
+          <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 20px auto; line-height: 1.5;">
+            No devices discovered yet. Once you discover Cisco, HP, Fortinet, or Juniper network devices, automated configuration backups, compliance audits, and live drift diffs will display here.
+          </div>
+          <div style="display: flex; justify-content: center; gap: 10px;">
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Network Device
+            </button>
+          </div>
+        </div>
+      `;
+      return;
+    }
 
     const subtabs = [
       { id: 'compliance', name: 'Compliance' },
@@ -11791,7 +10429,7 @@
           ${subtabNavHtml}
         </div>
         <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-size: 12px; color: #64748b; font-weight: 600;">NCM Module v12.9.203</span>
+          <span style="font-size: 12px; color: #64748b; font-weight: 600;">NCM Module v12.9.204-GA</span>
           <button id="opm-cfg-backup-all-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;">
             Backup All Now (${state.devices.length})
           </button>
@@ -11800,346 +10438,110 @@
 
       <div style="padding: 20px 24px;">
         
-        ${(() => {
-          const hasDevices = state.devices && state.devices.length > 0;
-          const primaryDev = hasDevices ? state.devices[0] : { name: 'SW-CORE-01', ip: '192.168.30.1', probe: (state.probes && state.probes[0]?.name) || 'Central-Probe-01' };
-
-          const renderCleanEmptyState = (title, subtitle) => `
-            <!-- NCM Clean Zero State -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-              </div>
-              <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">${title || 'No Devices Configured for NCM'}</div>
-              <div style="font-size: 12px; color: #64748b; max-width: 520px; margin: 0 auto 20px auto; line-height: 1.6;">
-                ${subtitle || 'All demo device configurations have been cleared. Once you discover Cisco, HP, Fortinet, or Juniper network devices, automated configuration backups, compliance audits, and live drift diffs will display here.'}
-              </div>
-              <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                <button id="opm-cfg-add-dev-btn" onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-                  + Add Network Device
-                </button>
-                <button id="opm-cfg-provision-sample-btn" style="display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 9px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
-                  ⚡ Provision Cisco Core Switch (Instant Demo)
-                </button>
-              </div>
+        ${activeSub === 'compliance' ? `
+          <!-- Compliance Clean Empty State -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
-          `;
-
-          if (activeSub === 'compliance') {
-            if (!hasDevices) {
-              return renderCleanEmptyState(
-                'No Devices Configured for NCM',
-                'All demo device configurations have been cleared. Once you discover Cisco, HP, Fortinet, or Juniper network devices, automated configuration backups, compliance audits, and live drift diffs will display here.'
-              );
-            }
-
-            const isDriftFixed = Boolean(state.configDriftFixed);
-            const isPwdRemediated = state.remediatedRules && state.remediatedRules['pwd'];
-            const isSnmpRemediated = state.remediatedRules && state.remediatedRules['snmp'];
-
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No NCM Device Configurations Monitored</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
+              Enable SSH/Telnet credentials on Cisco, Juniper, HP, or Fortinet network devices to automate startup vs running config backups, compliance policy checks (CIS, PCI-DSS, HIPAA), and change detection.
+            </div>
+            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
+              + Add Network Device
+            </button>
+          </div>
+      ` : activeSub === 'changes' ? `
+          <!-- Config Changes & Drift: only real stored configs/diffs -->
+          ${(() => {
+            const diff = state.ncmDiff;
+            if (!diff) return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No configuration drift data yet</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">Drift is computed from stored running and startup configurations. Add a device and take a baseline backup first — the diff appears once both configs exist.</div>
+            <button id="opm-check-drift-btn" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">Check drift for ${opmEsc((state.devices[0] && state.devices[0].name) || 'first device')}</button>
+          </div>`;
+            if (diff.insufficient || diff.drift === null || diff.drift === undefined) return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No configuration to compare yet</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">${opmEsc(diff.reason || 'No running and startup configs are stored for this device yet.')}</div>
+            <button id="opm-check-drift-btn" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">Check drift again</button>
+          </div>`;
+            const hasDrift = diff.drift === true || diff.hasDrift === true;
+            if (!hasDrift) return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Configuration Changes Detected</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">All startup and running configurations across managed devices are in-sync with 0 bytes drift.</div>
+            <button id="opm-check-drift-btn" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">Check drift again</button>
+          </div>`;
             return `
-              <!-- Compliance Executive Summary KPI Cards -->
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">CIS Cisco IOS Hardening</span>
-                    <span style="font-size: 10px; background: #fef3c7; color: #92400e; font-weight: 800; padding: 2px 6px; border-radius: 3px;">AUDIT ACTIVE</span>
-                  </div>
-                  <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">${isPwdRemediated ? '100.0%' : '85.7%'}</div>
-                  <div style="font-size: 11px; color: ${isPwdRemediated ? '#16a34a' : '#d97706'}; margin-top: 4px; font-weight: 600;">
-                    ${isPwdRemediated ? '✔ All 14 Benchmark Rules Passed' : '⚠ 12 Passed &bull; 2 Critical Violations'}
-                  </div>
-                </div>
-
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">PCI-DSS 4.0 Standard</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">ENFORCED</span>
-                  </div>
-                  <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">${isSnmpRemediated ? '100.0%' : '88.0%'}</div>
-                  <div style="font-size: 11px; color: ${isSnmpRemediated ? '#16a34a' : '#ea580c'}; margin-top: 4px; font-weight: 600;">
-                    ${isSnmpRemediated ? '✔ Requirement 2.1 Compliant' : '⚠ Default SNMP Community Violation'}
-                  </div>
-                </div>
-
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">HIPAA Security §164.312</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">PASS</span>
-                  </div>
-                  <div style="font-size: 26px; font-weight: 800; color: #166534; margin-top: 8px;">100.0%</div>
-                  <div style="font-size: 11px; color: #16a34a; margin-top: 4px; font-weight: 600;">✔ SSH v2 & Audit Logs Encrypted</div>
-                </div>
-
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">SOX Section 404</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">VERIFIED</span>
-                  </div>
-                  <div style="font-size: 26px; font-weight: 800; color: #166534; margin-top: 8px;">94.1%</div>
-                  <div style="font-size: 11px; color: #16a34a; margin-top: 4px; font-weight: 600;">✔ Syslog Trail Forwarding Active</div>
-                </div>
-              </div>
-
-              <!-- Active Compliance Policy Violations Table -->
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 20px;">
-                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-                  <span>Active Compliance Policy Violations & Audits</span>
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
-                  </div>
-                </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                  <thead>
-                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                      <th style="padding: 10px 14px;">Rule Name</th>
-                      <th style="padding: 10px 14px;">Standard</th>
-                      <th style="padding: 10px 14px;">Target Device</th>
-                      <th style="padding: 10px 14px;">Severity</th>
-                      <th style="padding: 10px 14px;">Status</th>
-                      <th style="padding: 10px 14px; text-align: right;">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Service Password Encryption Disabled (service password-encryption)</td>
-                      <td style="padding: 10px 14px; color: #64748b;">CIS Cisco IOS 1.2</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
-                      <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CRITICAL</span></td>
-                      <td style="padding: 10px 14px;">
-                        ${isPwdRemediated ? '<span style="color: #16a34a; font-weight: 700;">● Compliant</span>' : '<span style="color: #dc2626; font-weight: 700;">● Non-Compliant</span>'}
-                      </td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        ${isPwdRemediated ? '<span style="color: #16a34a; font-weight: 700;">✔ Remediated</span>' : '<button class="opm-remediate-btn" data-rule="pwd" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Execute Fixlet</button>'}
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">SNMP Community String 'public' in use</td>
-                      <td style="padding: 10px 14px; color: #64748b;">PCI-DSS 4.0 (Req 2.1)</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
-                      <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">MAJOR</span></td>
-                      <td style="padding: 10px 14px;">
-                        ${isSnmpRemediated ? '<span style="color: #16a34a; font-weight: 700;">● Compliant</span>' : '<span style="color: #ea580c; font-weight: 700;">● Non-Compliant</span>'}
-                      </td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        ${isSnmpRemediated ? '<span style="color: #16a34a; font-weight: 700;">✔ Remediated</span>' : '<button class="opm-remediate-btn" data-rule="snmp" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Execute Fixlet</button>'}
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">SSH Protocol Version 2 Mandatory (ip ssh version 2)</td>
-                      <td style="padding: 10px 14px; color: #64748b;">HIPAA Security §164.312</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
-                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">LOW</span></td>
-                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 700;">● Compliant</td>
-                      <td style="padding: 10px 14px; text-align: right;"><span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Verified</span></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Syslog Audit Trail Forwarding Enabled (logging host 192.168.30.65)</td>
-                      <td style="padding: 10px 14px; color: #64748b;">SOX Section 404</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
-                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">LOW</span></td>
-                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 700;">● Compliant</td>
-                      <td style="padding: 10px 14px; text-align: right;"><span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Verified</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Live NCM Config Drift Diff Section -->
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                  <div>
-                    <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Live NCM Config Drift Diff: ${primaryDev.name} (${primaryDev.ip})</div>
-                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Startup-Config (NVRAM Baseline) vs Running-Config (Live Active RAM)</div>
-                  </div>
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; ${isDriftFixed ? 'background: #dcfce7; color: #166534;' : 'background: #fef3c7; color: #92400e;'}">
-                      ${isDriftFixed ? '● 0 Unsaved Drifts (Synchronized)' : '● 1 Unsaved Drift in RAM'}
-                    </span>
-                    <button id="opm-open-diff-comparator-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Compare Revisions ↗</button>
-                    ${!isDriftFixed ? '<button id="opm-save-running-startup-btn" style="background: #16a34a; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Save to Startup (NVRAM)</button>' : '<button id="opm-recheck-drift-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Recheck Drift</button>'}
-                  </div>
-                </div>
-
-                <div style="background: #0f172a; border-radius: 6px; padding: 14px; font-family: monospace; font-size: 11px; line-height: 1.6; color: #e2e8f0; overflow-x: auto;">
-                  <div style="color: #64748b;">! Cisco IOS-XE Dynamic Configuration Drift Telemetry</div>
-                  <div style="color: #64748b;">! Target: ${primaryDev.name} &bull; Probe: ${primaryDev.probe || 'Central-Probe-01'}</div>
-                  <div>hostname ${primaryDev.name}</div>
-                  <div>!</div>
-                  ${isDriftFixed ? `
-                    <div style="color: #34d399;">+ service password-encryption  ! [Persisted to NVRAM]</div>
-                    <div style="color: #34d399;">+ interface Vlan100  ! [Committed to Startup]</div>
-                    <div style="color: #34d399;">+  description Management VLAN (Committed)</div>
-                  ` : `
-                    <div style="color: #f87171;">- service password-encryption  [NVRAM Baseline]</div>
-                    <div style="color: #fbbf24;">+ no service password-encryption  [Drift in RAM]</div>
-                    <div>!</div>
-                    <div style="color: #38bdf8;">+ interface Vlan100  ! [Uncommitted dynamic change]</div>
-                    <div style="color: #38bdf8;">+  description Management VLAN (Unsaved)</div>
-                  `}
-                  <div>interface GigabitEthernet0/1</div>
-                  <div> switchport mode trunk</div>
-                  <div> switchport trunk allowed vlan 10,20,30</div>
-                  <div>!</div>
-                  <div>end</div>
-                </div>
-              </div>
-            `;
-          }
-
-          if (activeSub === 'changes') {
-            if (!hasDevices) {
-              return renderCleanEmptyState(
-                'No Configuration Changes Recorded',
-                'All demo device configurations have been cleared. Network device configuration revisions, syslog audit events, and commit diffs will appear here once network devices are discovered.'
-              );
-            }
-
-            return `
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-                  <span>Automated Configuration Change Audit Trail (${state.devices.length} Managed Nodes)</span>
-                  <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
-                </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                  <thead>
-                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                      <th style="padding: 10px 14px;">Timestamp</th>
-                      <th style="padding: 10px 14px;">Device</th>
-                      <th style="padding: 10px 14px;">Probe</th>
-                      <th style="padding: 10px 14px;">Author / Terminal</th>
-                      <th style="padding: 10px 14px;">Change Description</th>
-                      <th style="padding: 10px 14px;">Drift Type</th>
-                      <th style="padding: 10px 14px; text-align: right;">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; color: #64748b; font-family: monospace;">Just now</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
-                      <td style="padding: 10px 14px; color: #64748b;">${primaryDev.probe || 'Central-Probe-01'}</td>
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">admin via SSH (vty0)</td>
-                      <td style="padding: 10px 14px; color: #334155;">Modified interface GigabitEthernet0/1 VLAN encapsulation</td>
-                      <td style="padding: 10px 14px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">RUNNING != STARTUP</span></td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-open-diff-comparator-btn" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">View Diff</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            `;
-          }
-
-          if (activeSub === 'vulnerability') {
-            if (!hasDevices) {
-              return renderCleanEmptyState(
-                'Zero Firmware CVE Vulnerabilities',
-                'NIST NVD database feed synchronized. All running firmware builds across monitored nodes are secure and patched.'
-              );
-            }
-
-            return `
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-                  <span>NIST NVD Live Security Advisory Feed (Managed Network Nodes)</span>
-                  <span style="background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">● 2 CVE Advisories Active</span>
-                </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                  <thead>
-                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                      <th style="padding: 10px 14px;">CVE ID</th>
-                      <th style="padding: 10px 14px;">CVSS Score</th>
-                      <th style="padding: 10px 14px;">Target Device</th>
-                      <th style="padding: 10px 14px;">Running Firmware</th>
-                      <th style="padding: 10px 14px;">Advisory Summary</th>
-                      <th style="padding: 10px 14px; text-align: right;">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 700; font-family: monospace; color: #dc2626;">CVE-2023-20198</td>
-                      <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 10px; padding: 2px 6px; border-radius: 3px;">10.0 CRITICAL</span></td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
-                      <td style="padding: 10px 14px; font-family: monospace;">Cisco IOS-XE 17.3.4a</td>
-                      <td style="padding: 10px 14px; color: #334155;">Cisco IOS XE Software Web UI Privilege Escalation</td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-cve-remed-btn" data-cve="CVE-2023-20198" style="background: #dc2626; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Apply Mitigation Fixlet</button>
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 700; font-family: monospace; color: #ea580c;">CVE-2023-20273</td>
-                      <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 800; font-size: 10px; padding: 2px 6px; border-radius: 3px;">7.2 HIGH</span></td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
-                      <td style="padding: 10px 14px; font-family: monospace;">Cisco IOS-XE 17.3.4a</td>
-                      <td style="padding: 10px 14px; color: #334155;">Cisco IOS XE Software Web UI Command Injection</td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-cve-remed-btn" data-cve="CVE-2023-20273" style="background: #ea580c; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Advisory Details</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            `;
-          }
-
-          if (activeSub === 'backups') {
-            if (!hasDevices) {
-              return renderCleanEmptyState(
-                'No Configuration Backups Found',
-                'No configuration backups found. Devices enrolled in NCM will have daily automated backups listed here.'
-              );
-            }
-
-            return `
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                  <span style="font-size: 14px; font-weight: 700; color: #0f172a;">Automated Daily Configuration Backups</span>
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 11px; color: #16a34a; font-weight: 700;">● ${state.devices.length}/${state.devices.length} Successful Today</span>
-                    <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
-                  </div>
-                </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                  <thead>
-                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                      <th style="padding: 10px 12px;">Device</th>
-                      <th style="padding: 10px 12px;">Probe</th>
-                      <th style="padding: 10px 12px;">Last Backup</th>
-                      <th style="padding: 10px 12px;">Config Size</th>
-                      <th style="padding: 10px 12px;">Status</th>
-                      <th style="padding: 10px 12px; text-align: right;">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${state.devices.map(d => `
-                      <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 10px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;">
-                          ${typeof getDeviceTypeIcon === 'function' ? getDeviceTypeIcon(d.type, d.category, 16) : '🖧'}
-                          <span>${d.name}</span>
-                        </td>
-                        <td style="padding: 10px 12px; color: #64748b;">${d.probe || 'Central-Probe-01'}</td>
-                        <td style="padding: 10px 12px; color: #475569;">${d.lastBackup || 'Just now'}</td>
-                        <td style="padding: 10px 12px; font-family: monospace;">42.8 KB</td>
-                        <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">SUCCESS</span></td>
-                        <td style="padding: 10px 12px; text-align: right; white-space: nowrap;">
-                          <button class="opm-cfg-backup-single-btn" data-id="${d.id}" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">Backup Now</button>
-                          <button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">View Config</button>
-                          <button class="opm-cfg-download-config-btn" data-id="${d.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Download</button>
-                        </td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              </div>
-            `;
-          }
-
-          // Workflows is returned below
-          return '';
-        })()}
-
-        ${activeSub === 'workflows' ? `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Configuration drift — ${opmEsc(diff.deviceName || (state.devices[0] && state.devices[0].name) || '')}</div>
+            <div style="font-size: 12px; color: #64748b; margin: 6px 0 14px 0;">Drift detected between stored running and startup configs. Added lines: ${diff.addedLinesCount ?? '—'} · Removed lines: ${diff.removedLinesCount ?? '—'}${diff.lastBackupTime ? ' · Last backup: ' + opmEsc(diff.lastBackupTime) : ''}</div>
+            <button id="opm-check-drift-btn" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">Check drift again</button>
+            <button id="opm-resolve-drift-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 8px;">Resolve drift</button>
+          </div>`;
+          })()}
+        ` : activeSub === 'vulnerability' ? `
+          <!-- Firmware Vulnerability Subtab -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No vulnerability scan run yet</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              Vulnerability scan results will appear here once devices are enrolled and their firmware versions are known.
+            </div>
+          </div>
+        ` : activeSub === 'backups' ? `
+          <!-- Config Backups Subtab -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <span style="font-size: 14px; font-weight: 700; color: #0f172a;">Automated Daily Configuration Backups</span>
+              <span style="font-size: 11px; color: #64748b; font-weight: 700;">${(state.ccmConfigs || []).length} backup${(state.ccmConfigs || []).length === 1 ? '' : 's'} on file</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+              <thead>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                  <th style="padding: 8px 12px;">Device</th>
+                  <th style="padding: 8px 12px;">Probe</th>
+                  <th style="padding: 8px 12px;">Last Backup</th>
+                  <th style="padding: 8px 12px;">Config Size</th>
+                  <th style="padding: 8px 12px;">Config Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${state.ccmConfigsError ? `
+                  <tr>
+                    <td colspan="5" style="padding: 30px; text-align: center; color: #dc2626;">
+                      Couldn't load configuration backups — ${opmEsc(state.ccmConfigsError)}
+                    </td>
+                  </tr>
+                ` : (!state.ccmConfigs || state.ccmConfigs.length === 0) ? `
+                  <tr>
+                    <td colspan="5" style="padding: 30px; text-align: center; color: #94a3b8;">
+                      No configuration backups yet. Backups run automatically once devices are enrolled in NCM. Add a device, then back it up here.
+                    </td>
+                  </tr>
+                ` : state.ccmConfigs.slice(0, 8).map(c => {
+                  const dev = state.devices.find(d => String(d.id) === String(c.device_id || c.deviceId)) || {};
+                  return `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0;">${opmEsc(dev.name || c.device_id || c.deviceId || '—')}</td>
+                    <td style="padding: 8px 12px; color: #64748b;">${opmEsc(dev.probe || dev.probeName || '—')}</td>
+                    <td style="padding: 8px 12px; color: #475569;">${opmEsc(c.fetched_at || c.fetchedAt || c.lastBackupTime || '—')}</td>
+                    <td style="padding: 8px 12px; font-family: monospace;">${c.content ? (c.content.length / 1024).toFixed(1) + ' KB' : '—'}</td>
+                    <td style="padding: 8px 12px; color: #475569;">${opmEsc(c.config_type || c.configType || '—')}</td>
+                  </tr>`;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        ` : `
           <!-- IT Automation Workflows Subtab (with Official ManageEngine Workflow Action Palette Icons) -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -12178,63 +10580,36 @@
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
-              ${[
-                {
-                  id: 'WF-001',
-                  name: 'Auto-Remediate High CPU on Critical Server',
-                  trigger: 'Alarm: CPU Utilization > 90% for 5 mins',
-                  scope: `${state.devices.filter(d => (d.category || '').toLowerCase().includes('server')).length} Monitored Servers`,
-                  execCount: 0,
-                  steps: [
-                    { txt: 'Check Top Process via WMI/SSH', ico: '/apiclient/fluidicv2/img/workflow/poll_now.png' },
-                    { txt: 'Restart Dependent Service (spoolsv / httpd)', ico: '/apiclient/fluidicv2/img/workflow/restart_service.png' },
-                    { txt: 'Log SDP Ticket & Alert NOC', ico: '/apiclient/fluidicv2/img/workflow/log_a_ticket_sdp.png' }
-                  ]
-                },
-                {
-                  id: 'WF-002',
-                  name: 'Central Probe Failover & Re-sync',
-                  trigger: 'Probe Status: Heartbeat Missed > 60 seconds',
-                  scope: `${state.probes.map(p => p.name).join(', ') || 'All Enterprise Probes'}`,
-                  execCount: 0,
-                  steps: [
-                    { txt: 'Probe Diagnostic ICMP Reachability', ico: '/apiclient/fluidicv2/img/workflow/ping_device.png' },
-                    { txt: 'Trigger Immediate Poll & Standby Sync', ico: '/apiclient/fluidicv2/img/workflow/poll_now.png' },
-                    { txt: 'Notify Slack #noc-critical-alerts', ico: '/apiclient/fluidicv2/img/workflow/slack_chat.png' }
-                  ]
-                },
-                {
-                  id: 'WF-003',
-                  name: 'Switch Port Security Auto-Lockout',
-                  trigger: 'SNMP Trap: Port Security MAC Flap',
-                  scope: `${state.devices.filter(d => (d.category || '').toLowerCase().includes('switch')).length} Access & Core Switches`,
-                  execCount: 0,
-                  steps: [
-                    { txt: 'Execute CLI: shutdown interface', ico: '/apiclient/fluidicv2/img/workflow/ncm_execute_command.png' },
-                    { txt: 'Trigger NCM Configuration Snapshot', ico: '/apiclient/fluidicv2/img/workflow/ncm_trigger_backup.png' },
-                    { txt: 'Acknowledge Alarm & Email SecOps', ico: '/apiclient/fluidicv2/img/workflow/send_email.png' }
-                  ]
-                }
-              ].map(wf => `
+              ${state.workflowsError ? `
+                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 36px 20px; text-align: center; color: #dc2626; background: #fafbfc;">
+                  Couldn't load workflows — ${opmEsc(state.workflowsError)}
+                </div>
+              ` : (!state.workflows || state.workflows.length === 0) ? `
+                <div style="border: 1px dashed #cbd5e1; border-radius: 6px; padding: 36px 20px; text-align: center; color: #64748b; background: #fafbfc;">
+                  <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No workflows configured yet</div>
+                  <div style="font-size: 12px; margin-bottom: 14px;">Create a workflow to automate remediation across your probes.</div>
+                </div>
+              ` : state.workflows.map(wf => { wf.execCount = (wf.executionCount === null || wf.executionCount === undefined) ? null : wf.executionCount; wf.steps = (wf.steps || []).map(s => ({ txt: (s && (s.action || s.txt)) || null, ico: '/apiclient/fluidicv2/img/workflow/poll_now.png' })).filter(st => st.txt); return wf; }).map(wf => `
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #fafbfc; transition: all 0.15s;" onmouseover="this.style.borderColor='#0070e0'" onmouseout="this.style.borderColor='#e2e8f0'">
                   <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                     <div>
                       <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-family: monospace; font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 6px; border-radius: 3px; font-weight: 700;">${wf.id}</span>
-                        <span style="font-size: 14px; font-weight: 700; color: #0f172a;">${wf.name}</span>
-                        <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 2px; font-weight: 800;">ACTIVE</span>
+                        <span style="font-family: monospace; font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 6px; border-radius: 3px; font-weight: 700;">${opmEsc(wf.id ?? '\u2014')}</span>
+                        <span style="font-size: 14px; font-weight: 700; color: #0f172a;">${opmEsc(wf.name || 'Unnamed workflow')}</span>
+                        <span style="font-size: 10px; background: ${String(wf.status || '').toLowerCase() === 'active' ? '#dcfce7; color: #166534' : '#f1f5f9; color: #64748b'}; padding: 2px 6px; border-radius: 2px; font-weight: 800;">${wf.status ? opmEsc(String(wf.status).toUpperCase()) : '\u2014'}</span>
                       </div>
                       <div style="font-size: 11px; color: #64748b; margin-top: 4px;">
-                        Trigger: <strong style="color: #475569;">${wf.trigger}</strong> | Scope: <strong style="color: #475569;">${wf.scope}</strong> | Executions: <strong>${wf.execCount}</strong>
+                        Trigger: <strong style="color: #475569;">${wf.trigger ? opmEsc(wf.trigger) : '\u2014'}</strong> | Scope: <strong style="color: #475569;">${wf.scope ? opmEsc(wf.scope) : '\u2014'}</strong> | Executions: <strong>${wf.execCount === null || wf.execCount === undefined ? '\u2014' : opmEsc(wf.execCount)}</strong> | Last run: <strong>${opmEsc(opmFmtEpochMs(wf.lastExecuted))}</strong>
                       </div>
                     </div>
-                    <button class="opm-wf-execute-btn" data-id="${wf.id}" data-name="${wf.name}" style="background: #16a34a; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    <button class="opm-wf-execute-btn" data-id="${opmEsc(wf.id ?? '')}" data-name="${opmEsc(wf.name || '')}" ${wf.id ? '' : 'disabled title="No workflow id returned by the server"'} style="background: #16a34a; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: ${wf.id ? 'pointer' : 'not-allowed'}; opacity: ${wf.id ? '1' : '0.5'}; display: flex; align-items: center; gap: 5px;">
                       ▶ Execute Playbook
                     </button>
                   </div>
 
                   <!-- Visual Workflow Steps Flow with Official Icons -->
                   <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; overflow-x: auto; padding: 6px 0;">
+                    ${wf.steps.length === 0 ? `<span style="color: #64748b;">No steps defined for this workflow.</span>` : ''}
                     ${wf.steps.map((st, i) => `
                       <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 12px; display: flex; align-items: center; gap: 7px; flex-shrink: 0;">
                         <img src="${st.ico}" style="width: 16px; height: 16px; object-fit: contain;" />
@@ -12251,14 +10626,14 @@
             <div style="border: 1px solid #334155; border-radius: 6px; background: #0f172a; padding: 14px 18px; font-family: monospace; font-size: 12px; color: #38bdf8;">
               <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 10px;">
                 <span style="font-weight: 700; color: #94a3b8;">PLAYBOOK EXECUTION ENGINE CONSOLE</span>
-                <span style="color: #16a34a; font-size: 11px;">● Poller Worker Orchestrator Ready</span>
+                <span style="color: #64748b; font-size: 11px;">No playbook running</span>
               </div>
               <div id="opm-wf-logs-terminal" style="max-height: 160px; overflow-y: auto; line-height: 1.6; color: #94a3b8; font-style: italic;">
                 Select a playbook above and click "▶ Execute Playbook" to test multi-probe remediation.
               </div>
             </div>
           </div>
-        ` : ''}
+        `}
       </div>
     `;
 
@@ -12270,177 +10645,71 @@
       };
     });
 
-    // Provision Sample Cisco Core Switch Button (Instant Demo Node)
-    const provBtn = container.querySelector('#opm-cfg-provision-sample-btn');
-    if (provBtn) {
-      provBtn.onclick = async () => {
-        provBtn.disabled = true;
-        provBtn.textContent = 'Provisioning...';
-        const sampleDev = {
-          name: 'SW-CORE-01',
-          ip: '192.168.30.1',
-          category: 'Switches',
-          type: 'Managed Cisco Catalyst 9300 L3 Switch (v2c)',
-          vendor: 'Cisco Systems',
-          probe: (state.probes && state.probes[0]?.name) || 'Central-Probe-01',
-          probeId: (state.probes && state.probes[0]?.id) || 101,
-          status: 'Clear',
-          cpu: 24,
-          memory: 38,
-          disk: 28.0,
-          temp: 31,
-          responseTime: 3,
-          availability: '100.0%',
-          serial: 'CAT9300-K9-89218',
-          osVersion: 'Cisco IOS-XE 17.3.4a',
-          lastBackup: 'Just now',
-          startupConfig: `! Cisco IOS Software, Catalyst L3 Switch Software (CAT9K_IOSXE), Version 17.3.4a\nhostname SW-CORE-01\nservice password-encryption\ninterface GigabitEthernet0/1\n switchport mode trunk\ninterface Vlan1\n ip address 192.168.30.1 255.255.255.0\nline vty 0 4\n transport input ssh\nend`,
-          runningConfig: `! Cisco IOS Software, Catalyst L3 Switch Software (CAT9K_IOSXE), Version 17.3.4a\nhostname SW-CORE-01\nno service password-encryption\ninterface GigabitEthernet0/1\n switchport mode trunk\ninterface Vlan1\n ip address 192.168.30.1 255.255.255.0\ninterface Vlan100\n description Management VLAN\nline vty 0 4\n transport input ssh\nend`,
-          ncmConfigured: true,
-          interfaces: [
-            { name: 'GigabitEthernet0/1', admin: 'UP', oper: 'UP', speed: '10 Gbps', inTraffic: 240.5, outTraffic: 198.2, errors: 0 },
-            { name: 'GigabitEthernet0/2', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 45.1, outTraffic: 28.6, errors: 0 }
-          ]
-        };
-        try {
-          await fetch('/api/devices', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(sampleDev)
-          });
-        } catch(e) {}
-        if (!state.devices) state.devices = [];
-        state.devices.unshift(sampleDev);
-        if (state.probes && state.probes[0]) {
-          state.probes[0].devices = (state.probes[0].devices || 0) + 1;
-          state.probes[0].devicesCount = (state.probes[0].devicesCount || 0) + 1;
+        const compBtn = container.querySelector('#opm-open-diff-comparator-btn');
+    if (compBtn) {
+      compBtn.onclick = () => {
+        if (typeof showNcmVersionCompareModal === 'function') {
+          showNcmVersionCompareModal(state.devices[0]);
         }
-        if (typeof updateStatusCounters === 'function') updateStatusCounters();
-        showToast('Sample Cisco Catalyst 9300 L3 Core Switch provisioned into NCM!');
-        renderConfigurationView();
       };
     }
 
-    // Open Diff Comparator buttons
-    container.querySelectorAll('#opm-open-diff-comparator-btn, .opm-open-diff-comparator-btn').forEach(btn => {
-      btn.onclick = () => {
-        if (typeof showNcmVersionCompareModal === 'function') {
-          showNcmVersionCompareModal(state.devices ? state.devices[0] : null);
-        }
-      };
-    });
-
-    // Save running to startup button
+    // Save running to startup / resolve drift: real endpoint, honest outcome.
+    // Save running to startup / resolve drift: real endpoint, honest outcome.
     const saveBtn = container.querySelector('#opm-save-running-startup-btn');
     if (saveBtn) {
-      saveBtn.onclick = () => {
-        state.configDriftFixed = true;
-        showToast('Running configuration saved to startup NVRAM. Drift resolved.');
-        renderConfigurationView();
+      saveBtn.onclick = async () => {
+        const res = await opmApi('/api/ccm/resolve-drift', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: state.devices[0] && state.devices[0].id }) });
+        showToast(res.ok ? (opmApiMessage(res, 'Drift resolved.') + '') : opmApiMessage(res, 'Drift resolution failed'));
+        if (res.ok) { state.ncmDiff = null; renderConfigurationView(); }
       };
     }
 
-    // Recheck drift button
+    // Recheck drift button: re-fetch the real diff.
     const recheckBtn = container.querySelector('#opm-recheck-drift-btn');
     if (recheckBtn) {
-      recheckBtn.onclick = () => {
-        state.configDriftFixed = false;
-        showToast('Config drift simulation scan completed.');
-        renderConfigurationView();
+      recheckBtn.onclick = () => { opmLoadNcmDiff(); };
+    }
+
+    // Check drift button (changes sub-tab): fetch the real diff.
+    const checkDriftBtn = container.querySelector('#opm-check-drift-btn');
+    if (checkDriftBtn) {
+      checkDriftBtn.onclick = () => { opmLoadNcmDiff(); };
+    }
+
+    // Resolve drift button (changes sub-tab): real endpoint, honest outcome.
+    const resolveDriftBtn = container.querySelector('#opm-resolve-drift-btn');
+    if (resolveDriftBtn) {
+      resolveDriftBtn.onclick = async () => {
+        const res = await opmApi('/api/ccm/resolve-drift', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: state.devices[0] && state.devices[0].id }) });
+        showToast(res.ok ? opmApiMessage(res, 'Drift resolved.') : opmApiMessage(res, 'Drift resolution failed'));
+        if (res.ok) { state.ncmDiff = null; renderConfigurationView(); }
       };
     }
 
-    // Remediate button: opens ManageEngine NCM Policy Remediation Fixlet
+    // Remediate button: only a real endpoint may claim a remediation ran.
     container.querySelectorAll('.opm-remediate-btn').forEach(btn => {
-      btn.onclick = () => {
-        const ruleType = btn.getAttribute('data-rule') || 'pwd';
-        const targetDev = (state.devices && state.devices[0]) || { name: 'SW-CORE-01', ip: '192.168.30.1', probe: 'Central-Probe-01' };
-        
-        if (!state.remediatedRules) state.remediatedRules = {};
-        state.remediatedRules[ruleType] = true;
-
-        if (typeof showNcmRemediationModal === 'function') {
-          showNcmRemediationModal(ruleType === 'snmp' ? 'PCI-DSS 4.0 (Req 2.1) Default Community String' : 'CIS Cisco IOS 1.2 Service Password Encryption', targetDev);
-        } else {
-          showToast(`Compliance remediation fixlet executed via SSH on ${targetDev.name}.`);
-        }
-        renderConfigurationView();
+      btn.onclick = async () => {
+        const res = await opmApi('/api/ccm/resolve-drift', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: state.devices[0] && state.devices[0].id }) });
+        showToast(res.ok ? opmApiMessage(res, 'Remediation completed.') : opmApiMessage(res, 'Remediation is not available'));
       };
     });
 
-    // CVE Remediation button
-    container.querySelectorAll('.opm-cve-remed-btn').forEach(btn => {
-      btn.onclick = () => {
-        const cve = btn.getAttribute('data-cve') || 'CVE-2023-20198';
-        const targetDev = (state.devices && state.devices[0]) || { name: 'SW-CORE-01', ip: '192.168.30.1', probe: 'Central-Probe-01' };
-        if (typeof showNcmRemediationModal === 'function') {
-          showNcmRemediationModal(`${cve} NIST Security Patch & ACL Mitigation`, targetDev);
-        } else {
-          showToast(`Applied mitigation ACL fixlet for ${cve} on ${targetDev.name}.`);
-        }
-      };
-    });
-
-    // Backup single device button
-    container.querySelectorAll('.opm-cfg-backup-single-btn').forEach(btn => {
-      btn.onclick = () => {
-        const id = btn.getAttribute('data-id');
-        const dev = (state.devices || []).find(d => String(d.id) === String(id));
-        if (dev) {
-          dev.lastBackup = 'Just now';
-          showToast(`Automated configuration backup completed for ${dev.name} via SSH.`);
-          renderConfigurationView();
-        }
-      };
-    });
-
-    // View config button
-    container.querySelectorAll('.opm-cfg-view-config-btn').forEach(btn => {
-      btn.onclick = () => {
-        const id = btn.getAttribute('data-id');
-        const dev = (state.devices || []).find(d => String(d.id) === String(id));
-        if (typeof showNcmVersionCompareModal === 'function') {
-          showNcmVersionCompareModal(dev || (state.devices && state.devices[0]));
-        }
-      };
-    });
-
-    // Download config button
-    container.querySelectorAll('.opm-cfg-download-config-btn').forEach(btn => {
-      btn.onclick = () => {
-        const id = btn.getAttribute('data-id');
-        const dev = (state.devices || []).find(d => String(d.id) === String(id)) || (state.devices && state.devices[0]) || { name: 'device' };
-        const text = dev.runningConfig || dev.startupConfig || `! Cisco IOS Software\nversion 17.3.4a\nhostname ${dev.name}\nend`;
-        const blob = new Blob([text], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${dev.name}_running_config_${new Date().toISOString().slice(0, 10)}.cfg`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        showToast(`Downloaded running configuration archive for ${dev.name}`);
-      };
-    });
-
-    // Backup all button
+    // Backup all button: back up each real device via the real endpoint
+    // and report the actual outcome per device — never a fixed count.
     const bkpAllBtn = container.querySelector('#opm-cfg-backup-all-btn');
     if (bkpAllBtn) {
-      bkpAllBtn.onclick = () => {
-        const devCount = (state.devices || []).length;
-        if (devCount === 0) {
-          showToast('No devices enrolled in NCM. Add a network device first.', 'warning');
-          return;
-        }
+      bkpAllBtn.onclick = async () => {
+        if (!state.devices.length) { showToast('No devices to back up yet.'); return; }
         bkpAllBtn.disabled = true;
-        bkpAllBtn.textContent = 'Backing up...';
-        setTimeout(() => {
-          (state.devices || []).forEach(d => { d.lastBackup = 'Just now'; });
-          bkpAllBtn.disabled = false;
-          bkpAllBtn.textContent = `Backup All Now (${devCount})`;
-          showToast(`Triggered automated configuration backup across all ${devCount} devices.`);
-          renderConfigurationView();
-        }, 500);
+        const results = await Promise.all(state.devices.map(d => opmApi('/api/ccm/backup-device', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: d.id }) })));
+        const okCount = results.filter(r => r.ok).length;
+        const failed = results.filter(r => !r.ok);
+        showToast(failed.length
+          ? 'Backed up ' + okCount + ' of ' + results.length + ' devices. ' + opmApiMessage(failed[0], 'Backup failed')
+          : 'Configuration backup completed for ' + okCount + ' device' + (okCount === 1 ? '' : 's') + '.');
+        bkpAllBtn.disabled = false;
+        state.ccmConfigs = undefined; state.workflows = state.workflows; opmLoadNcm();
       };
     }
 
@@ -12461,11 +10730,17 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ workflowId: id })
           });
-          const data = await resp.json();
-          if (term && data.logs) {
-            term.innerHTML = data.logs.map(l => `<div style="color: #34d399; margin-bottom: 2px;">${l}</div>`).join('');
+          const data = await resp.json().catch(() => null);
+          if (!resp.ok) {
+            const msg = (data && (data.message || data.error)) || ('Workflow execution failed (HTTP ' + resp.status + ')');
+            if (term) term.innerHTML = `<div style="color: #f87171;">${opmEsc(msg)}</div>`;
+            showToast(msg);
+            return;
           }
-          showToast(`Playbook "${name}" executed successfully.`);
+          if (term && data && Array.isArray(data.logs)) {
+            term.innerHTML = data.logs.map(l => `<div style="color: #34d399; margin-bottom: 2px;">${opmEsc(l)}</div>`).join('');
+          }
+          showToast((data && data.message) || `Playbook "${name}" executed.`);
         } catch (e) {
           if (term) term.innerHTML = `<div style="color: #f87171;">Execution error: ${e.message}</div>`;
         } finally {
@@ -12495,6 +10770,7 @@
     state.currentTab = 'reports';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.reports || 'sla';
+    if (state.devices.length > 0 && state.reportSummary === undefined && state.auditLogs === undefined) opmLoadReports();
 
     if (state.devices.length === 0) {
       container.innerHTML = `
@@ -12507,7 +10783,7 @@
           </div>
           <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No Report Data Available</div>
           <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 20px auto; line-height: 1.5;">
-            All demo report datasets have been cleared. Once you discover network devices or install host agents, scheduled SLA compliance, availability trends, and bandwidth consumption reports will be generated here.
+            No devices discovered yet. Once you discover network devices or install host agents, scheduled SLA compliance, availability trends, and bandwidth consumption reports will be generated here.
           </div>
           <div style="display: flex; justify-content: center; gap: 10px;">
             <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
@@ -12615,141 +10891,35 @@
             </button>
           </div>
         ` : `
-          <!-- Authentic ManageEngine Side-by-Side Vertical Bar Chart Cards with Host Legend, View All & Per-Chart Sub-Table (matching firewall_addon_reports.png & netflow_addon_reports.png) -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px;">
-            
-            <!-- Left Chart Card: Top Interfaces - Traffic Sent (MB) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 2px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="background: #f5f5f5; padding: 9px 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Top Interfaces - Traffic Sent (MB)</span>
-                <span style="font-size: 11px; color: #64748b;">✉️ 📄 📊 ↻</span>
-              </div>
-              <div style="height: 150px; display: flex; align-items: flex-end; justify-content: space-around; padding: 14px 20px 14px 20px; border-bottom: 1px solid #f1f5f9;">
-                ${state.devices.slice(0, 5).map((d, idx) => {
-                  const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
-                  const color = colors[idx % colors.length];
-                  const height = Math.max(20, Math.min(110, Math.round((d.cpu || 20) * 1.2)));
-                  return `
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                      <span style="font-size: 10px; color: #475569;">${(d.responseTime || 2) * 450}</span>
-                      <div style="width: 42px; height: ${height}px; background: ${color};"></div>
-                      <span style="font-size: 10px; color: #334155; margin-top: 3px;">${d.ip}</span>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-              <!-- Legend + View All Link -->
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; font-size: 10px; color: #475569;">
-                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  ${state.devices.slice(0, 5).map((d, idx) => {
-                    const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
-                    return `<span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: ${colors[idx % colors.length]};"></span> ${d.ip}</span>`;
-                  }).join('')}
-                </div>
-                <span style="color: #0070e0; font-weight: 600; cursor: pointer;">View All</span>
-              </div>
-              <!-- Per-Chart Sub-Table (matching firewall_addon_reports.png) -->
-              <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px; border-top: 1px solid #e2e8f0;">
-                <thead>
-                  <tr style="background: #f8fafc; color: #475569; text-align: left; border-bottom: 1px solid #e2e8f0;">
-                    <th style="padding: 6px 8px;">Host / Interface</th>
-                    <th style="padding: 6px 8px;">Packets</th>
-                    <th style="padding: 6px 8px;">% Packets</th>
-                    <th style="padding: 6px 8px;">Bytes Sent (MB)</th>
-                    <th style="padding: 6px 8px;">% Bytes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${state.devices.slice(0, 3).map((d, idx) => `
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 5px 8px; color: #0070e0;">${d.ip} (${d.interfaces && d.interfaces[0] ? d.interfaces[0].name : 'eth0'})</td>
-                      <td style="padding: 5px 8px;">${(100 - idx * 25) * 1000}</td>
-                      <td style="padding: 5px 8px;">${(38 - idx * 10).toFixed(2)}%</td>
-                      <td style="padding: 5px 8px;">${((100 - idx * 25) * 1.25).toFixed(2)}</td>
-                      <td style="padding: 5px 8px;">${(38 - idx * 10).toFixed(2)}%</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Right Chart Card: Top Interfaces - Traffic Received (MB) -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 2px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="background: #f5f5f5; padding: 9px 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Top Interfaces - Traffic Received (MB)</span>
-                <span style="font-size: 11px; color: #64748b;">✉️ 📄 📊 ↻</span>
-              </div>
-              <div style="height: 150px; display: flex; align-items: flex-end; justify-content: space-around; padding: 14px 20px 14px 20px; border-bottom: 1px solid #f1f5f9;">
-                ${state.devices.slice(0, 5).map((d, idx) => {
-                  const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
-                  const color = colors[idx % colors.length];
-                  const height = Math.max(20, Math.min(110, Math.round((d.memory || 25) * 1.1)));
-                  return `
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                      <span style="font-size: 10px; color: #475569;">${(d.responseTime || 2) * 580}</span>
-                      <div style="width: 42px; height: ${height}px; background: ${color};"></div>
-                      <span style="font-size: 10px; color: #334155; margin-top: 3px;">${d.ip}</span>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-              <!-- Legend + View All Link -->
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; font-size: 10px; color: #475569;">
-                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  ${state.devices.slice(0, 5).map((d, idx) => {
-                    const colors = ['#12b8e6', '#f59f42', '#5c9ce6', '#4bc076', '#ec6b9e'];
-                    return `<span style="display: inline-flex; align-items: center; gap: 3px;"><span style="width: 8px; height: 8px; background: ${colors[idx % colors.length]};"></span> ${d.ip}</span>`;
-                  }).join('')}
-                </div>
-                <span style="color: #0070e0; font-weight: 600; cursor: pointer;">View All</span>
-              </div>
-              <!-- Per-Chart Sub-Table (matching firewall_addon_reports.png) -->
-              <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px; border-top: 1px solid #e2e8f0;">
-                <thead>
-                  <tr style="background: #f8fafc; color: #475569; text-align: left; border-bottom: 1px solid #e2e8f0;">
-                    <th style="padding: 6px 8px;">Host / Interface</th>
-                    <th style="padding: 6px 8px;">Packets</th>
-                    <th style="padding: 6px 8px;">% Packets</th>
-                    <th style="padding: 6px 8px;">Bytes Rcvd (MB)</th>
-                    <th style="padding: 6px 8px;">% Bytes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${state.devices.slice(0, 3).map((d, idx) => `
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 5px 8px; color: #0070e0;">${d.ip} (${d.interfaces && d.interfaces[0] ? d.interfaces[0].name : 'eth0'})</td>
-                      <td style="padding: 5px 8px;">${(120 - idx * 30) * 1000}</td>
-                      <td style="padding: 5px 8px;">${(42 - idx * 12).toFixed(2)}%</td>
-                      <td style="padding: 5px 8px;">${((120 - idx * 30) * 1.45).toFixed(2)}</td>
-                      <td style="padding: 5px 8px;">${(42 - idx * 12).toFixed(2)}%</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
+          <!-- Interface traffic: no real interface counters exist yet, so no
+               chart is drawn. Traffic was previously plotted from CPU/memory
+               and response-time values, which are not traffic. -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 20px;">
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No interface traffic data yet</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto;">Traffic charts are built from real interface counters. No interface counters have been collected yet.</div>
           </div>
 
           <!-- Summary Cards -->
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Average SLA Compliance</div>
-              <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">99.98%</div>
-              <div style="font-size: 11px; color: #16a34a; font-weight: 600;">Tier-4 Enterprise Benchmark Met</div>
+              <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">${opmFmtPct(opmAvgAvailability())}</div>
+              <div style="font-size: 11px; color: #64748b; font-weight: 600;">${opmAvgAvailability() === null ? 'No availability history yet' : 'Mean availability across monitored devices'}</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Outage Duration</div>
-              <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin: 6px 0;">0h 08m</div>
-              <div style="font-size: 11px; color: #64748b;">Past 30 days across ${state.devices.length} nodes</div>
+              <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin: 6px 0;">\u2014</div>
+              <div style="font-size: 11px; color: #64748b;">No outage history yet</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Mean Time to Resolve (MTTR)</div>
-              <div style="font-size: 26px; font-weight: 800; color: #0284c7; margin: 6px 0;">${state.alarms.length === 0 ? "0m 00s" : "18m 42s"}</div>
-              <div style="font-size: 11px; color: #0284c7; font-weight: 600;">12% faster than last month</div>
+              <div style="font-size: 26px; font-weight: 800; color: #0284c7; margin: 6px 0;">\u2014</div>
+              <div style="font-size: 11px; color: #64748b; font-weight: 600;">No alarms resolved yet</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Hardware Warranty Status</div>
-              <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">100%</div>
-              <div style="font-size: 11px; color: #64748b;">SmartNet / ProSupport Active</div>
+              <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">\u2014</div>
+              <div style="font-size: 11px; color: #64748b;">No warranty contracts mapped yet</div>
             </div>
           </div>
 
@@ -12757,7 +10927,7 @@
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
               <span>Device Availability & Outage SLA Matrix (Past 30 Days)</span>
-              <span style="font-size: 11px; color: #64748b;">SLA Target: 99.900%</span>
+              <span style="font-size: 11px; color: #64748b;">No SLA target set</span>
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
               <thead>
@@ -12777,16 +10947,10 @@
                     <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${dev.name}</td>
                     <td style="padding: 10px 14px; font-family: monospace; color: #475569;">${dev.ip}</td>
                     <td style="padding: 10px 14px; color: #64748b;">${dev.probe}</td>
-                    <td style="padding: 10px 14px; font-family: monospace;">719h 52m</td>
-                    <td style="padding: 10px 14px; font-family: monospace; color: ${dev.status === 'Critical' ? '#dc2626' : '#64748b'};">
-                      ${dev.status === 'Critical' ? '0h 08m' : '0h 00m'}
-                    </td>
-                    <td style="padding: 10px 14px; font-weight: 700; color: #16a34a;">${dev.availability}</td>
-                    <td style="padding: 10px 14px; text-align: right;">
-                      <span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 10px; padding: 2px 7px; border-radius: 10px;">
-                        MET (99.9%)
-                      </span>
-                    </td>
+                    <td style="padding: 10px 14px; font-family: monospace;">\u2014</td>
+                    <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">\u2014</td>
+                    <td style="padding: 10px 14px; font-weight: 700; color: #16a34a;">${opmFmtPct(dev.availability)}</td>
+                    <td style="padding: 10px 14px; text-align: right; color: #64748b;">\u2014</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -12811,8 +10975,8 @@
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Average MTTR</div>
-                <div style="font-size: 26px; font-weight: 800; color: #0284c7; margin: 6px 0;">18m 42s</div>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">▼ 12% faster than 20m target</div>
+                <div style="font-size: 26px; font-weight: 800; color: #0284c7; margin: 6px 0;">\u2014</div>
+                <div style="font-size: 11px; color: #64748b; font-weight: 600;">No alarms resolved yet</div>
               </div>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Incidents (30D)</div>
@@ -12821,140 +10985,29 @@
               </div>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Self-Healing Automated</div>
-                <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">48 (33.8%)</div>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">Resolved by OpManager Engine</div>
+                <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">\u2014</div>
+                <div style="font-size: 11px; color: #64748b; font-weight: 600;">No self-healing data yet</div>
               </div>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">First-Contact Resolution</div>
-                <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">84.6%</div>
-                <div style="font-size: 11px; color: #64748b;">Resolved in &lt; 15 mins</div>
+                <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">\u2014</div>
+                <div style="font-size: 11px; color: #64748b;">No resolution data yet</div>
               </div>
             </div>
 
-            <!-- MTTR Details & Technician Scoreboard -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Resolution Time Histogram</div>
-                <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12px;">
-                  <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                      <span>&lt; 15 Minutes (Rapid Remediation)</span>
-                      <span style="font-weight: 700;">68% (96 Incidents)</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 68%; height: 100%; background: #16a34a;"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                      <span>15 - 60 Minutes (Standard Triaging)</span>
-                      <span style="font-weight: 700;">24% (34 Incidents)</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 24%; height: 100%; background: #0284c7;"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                      <span>1 - 4 Hours (Escalated Root Cause)</span>
-                      <span style="font-weight: 700;">6% (9 Incidents)</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 6%; height: 100%; background: #ea580c;"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                      <span>&gt; 4 Hours (Hardware Replacement)</span>
-                      <span style="font-weight: 700;">2% (3 Incidents)</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 2%; height: 100%; background: #dc2626;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Technician Scoreboard -->
-              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Technician Resolution Scoreboard</div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                  <thead>
-                    <tr style="border-bottom: 1px solid #e2e8f0; text-align: left; color: #64748b;">
-                      <th style="padding: 6px 8px;">Technician</th>
-                      <th style="padding: 6px 8px;">Resolved</th>
-                      <th style="padding: 6px 8px;">Avg MTTR</th>
-                      <th style="padding: 6px 8px;">SLA %</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px; font-weight: 700; color: #0070e0;">admin@opmanager</td>
-                      <td style="padding: 8px; font-weight: 600;">54 Incidents</td>
-                      <td style="padding: 8px; font-family: monospace;">14m 10s</td>
-                      <td style="padding: 8px; font-weight: 700; color: #16a34a;">98.2%</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px; font-weight: 700; color: #0070e0;">johndoe</td>
-                      <td style="padding: 8px; font-weight: 600;">42 Incidents</td>
-                      <td style="padding: 8px; font-family: monospace;">19m 22s</td>
-                      <td style="padding: 8px; font-weight: 700; color: #16a34a;">95.4%</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px; font-weight: 700; color: #0070e0;">noc_lead</td>
-                      <td style="padding: 8px; font-weight: 600;">39 Incidents</td>
-                      <td style="padding: 8px; font-family: monospace;">22m 45s</td>
-                      <td style="padding: 8px; font-weight: 700; color: #16a34a;">94.0%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <!-- MTTR detail: no resolved-alarm history exists, so no
+                 histogram or scoreboard can be computed. -->
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No alarms resolved yet</div>
+              <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto;">MTTR is calculated from resolved alarms. Once alarms are raised and resolved, the average resolution time appears here.</div>
             </div>
 
           </div>
         ` : activeSub === 'lifecycle' ? `
-          <!-- SUBTAB: HARDWARE LIFECYCLE & WARRANTY (EOL / EOS) -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-              <div>
-                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Hardware Lifecycle & Warranty Status</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Cisco SmartNet, Dell ProSupport Plus, and NetApp SupportEdge contract tracker.</div>
-              </div>
-              <span style="background: #f0fdf4; color: #166534; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; border: 1px solid #bbf7d0;">
-                ● 15/16 Active Support Contracts
-              </span>
-            </div>
-
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                  <th style="padding: 10px 14px;">Device / Hostname</th>
-                  <th style="padding: 10px 14px;">Model & Serial Number</th>
-                  <th style="padding: 10px 14px;">Service Contract</th>
-                  <th style="padding: 10px 14px;">Expiry Date</th>
-                  <th style="padding: 10px 14px;">Lifecycle State</th>
-                  <th style="padding: 10px 14px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${state.devices.length === 0 ? `
-                  <tr>
-                    <td colspan="6" style="padding: 40px; text-align: center; color: #94a3b8;">
-                      No hardware lifecycle or warranty contracts mapped yet. Discovered devices will appear here automatically.
-                    </td>
-                  </tr>
-                ` : state.devices.map(d => `
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${d.name}</td>
-                    <td style="padding: 10px 14px;">${d.type || d.category || 'Enterprise Node'}<br><span style="font-size: 10px; font-family: monospace; color: #64748b;">IP: ${d.ip}</span></td>
-                    <td style="padding: 10px 14px;">Hardware Warranty Active</td>
-                    <td style="padding: 10px 14px; font-family: monospace;">2028-12-31</td>
-                    <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ACTIVE WARRANTY</span></td>
-                    <td style="padding: 10px 14px; text-align: right;"><button style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Details</button></td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
+          <!-- SUBTAB: HARDWARE LIFECYCLE & WARRANTY — no contracts on file -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No hardware lifecycle or warranty contracts mapped yet.</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto;">Discovered devices will appear here automatically.</div>
           </div>
         ` : activeSub === 'audit' ? `
           <!-- SUBTAB: OPERATOR ACTION & AUDIT LOGS (Authentic ManageEngine AuditTab.xml) -->
@@ -12976,23 +11029,23 @@
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px;">
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="font-size: 11px; color: #64748b; font-weight: 600;">Total Audit Records</div>
-                <div style="font-size: 20px; font-weight: 800; color: #0f172a; margin-top: 4px;">1,842</div>
-                <div style="font-size: 10px; color: #16a34a; font-weight: 600; margin-top: 2px;">● Retention: 365 Days</div>
+                <div style="font-size: 20px; font-weight: 800; color: #0f172a; margin-top: 4px;">${state.auditLogsError ? '—' : (state.auditLogs || []).length}</div>
+                <div style="font-size: 10px; color: #64748b; font-weight: 600; margin-top: 2px;">${state.auditLogsError ? opmEsc(state.auditLogsError) : 'Records returned by the audit API'}</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="font-size: 11px; color: #64748b; font-weight: 600;">Operator Actions (24h)</div>
-                <div style="font-size: 20px; font-weight: 800; color: #0284c7; margin-top: 4px;">24 Actions</div>
-                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Acknowledged, Cleared, Updated</div>
+                <div style="font-size: 20px; font-weight: 800; color: #0284c7; margin-top: 4px;">—</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">No operator-action breakdown available</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="font-size: 11px; color: #64748b; font-weight: 600;">Security / Auth Events</div>
-                <div style="font-size: 20px; font-weight: 800; color: #16a34a; margin-top: 4px;">12 Logins (MFA)</div>
-                <div style="font-size: 10px; color: #16a34a; margin-top: 2px;">0 Failed Logins</div>
+                <div style="font-size: 20px; font-weight: 800; color: #16a34a; margin-top: 4px;">—</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">No login-event data available</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="font-size: 11px; color: #64748b; font-weight: 600;">Probe Sync API Calls</div>
-                <div style="font-size: 20px; font-weight: 800; color: #7c3aed; margin-top: 4px;">1,806 Syncs</div>
-                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">4 Probes • TLS 1.3 mTLS</div>
+                <div style="font-size: 20px; font-weight: 800; color: #7c3aed; margin-top: 4px;">—</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">No probe-sync counts available</div>
               </div>
             </div>
 
@@ -13011,46 +11064,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-901</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">2026-11-08 10:25:12</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">10.0.0.15</td>
-                  <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SECURITY_AUTH</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">TEST_LDAP_BIND</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">dc01.enterprise.corp:636</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-902</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">2026-11-08 10:20:44</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">10.0.0.15</td>
-                  <td style="padding: 10px 14px;"><span style="background: #f3e8ff; color: #6b21a8; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">DISCOVERY_ENGINE</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">CREATE_DISCOVERY_RULE</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">10.60.0.0/24 (Branch Office)</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-903</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">2026-11-08 10:14:02</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">10.0.0.15</td>
-                  <td style="padding: 10px 14px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">MAIL_SERVER</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">TEST_SMTP_RELAY</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">smtp.enterprise.corp:587</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-001</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">Today</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">127.0.0.1</td>
-                  <td style="padding: 10px 14px;"><span style="background: #eff6ff; color: #1d4ed8; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SYSTEM</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">STARTUP</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">Central Engine (192.168.30.65)</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
+                ${state.auditLogsError ? `
+                  <tr><td colspan="8" style="padding: 30px; text-align: center; color: #dc2626;">Couldn't load audit records — ${opmEsc(state.auditLogsError)}</td></tr>
+                ` : (!state.auditLogs || state.auditLogs.length === 0) ? `
+                  <tr><td colspan="8" style="padding: 30px; text-align: center; color: #94a3b8;">No audit records yet. Operator actions are logged here as they happen.</td></tr>
+                ` : state.auditLogs.map(a => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">${opmEsc(a.id || '—')}</td>
+                    <td style="padding: 10px 14px; font-family: monospace; color: #475569;">${opmEsc(a.timestamp || '—')}</td>
+                    <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">${opmEsc(a.user || '—')}</td>
+                    <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">${opmEsc(a.ip || '—')}</td>
+                    <td style="padding: 10px 14px;">${opmEsc(a.module || '—')}</td>
+                    <td style="padding: 10px 14px; font-weight: 600;">${opmEsc(a.action || '—')}</td>
+                    <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">${opmEsc(a.entity || a.details || '—')}</td>
+                    <td style="padding: 10px 14px;">${opmEsc(a.result || '—')}</td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
           </div>
@@ -13079,29 +11108,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">Daily Executive Health Digest</td>
-                  <td style="padding: 10px 14px;">Daily at 08:00 AM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">PDF</span></td>
-                  <td style="padding: 10px 14px; color: #475569;">noc-leadership@enterprise.corp</td>
-                  <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Today, 08:00 AM</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-send-now-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Email Now</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">Weekly Multi-Probe SLA Compliance Audit</td>
-                  <td style="padding: 10px 14px;">Every Monday at 06:00 AM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">PDF & CSV</span></td>
-                  <td style="padding: 10px 14px; color: #475569;">it-directors@enterprise.corp</td>
-                  <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Mon Nov 03, 06:00 AM</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-send-now-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Email Now</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">Monthly Bandwidth 95th Percentile NetFlow</td>
-                  <td style="padding: 10px 14px;">1st of Month at 01:00 AM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">EXCEL (XLSX)</span></td>
-                  <td style="padding: 10px 14px; color: #475569;">network-planning@enterprise.corp</td>
-                  <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Nov 01, 01:00 AM</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-send-now-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Email Now</button></td>
+                <tr>
+                  <td colspan="6" style="padding: 40px; text-align: center; color: #94a3b8;">
+                    No scheduled reports yet. Schedule a report to have it emailed automatically.
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -13128,22 +11138,11 @@
       };
     }
 
-    // CSV button
+    // CSV button: download the real server-generated CSV.
     const csvBtn = container.querySelector('#opm-rpt-csv-btn');
     if (csvBtn) {
       csvBtn.onclick = () => {
-        const header = 'Device Name,IP Address,Probe,Availability,Outage Minutes\n';
-        const rows = state.devices.map(d => `"${d.name}","${d.ip}","${d.probe}","${d.availability}","0"`).join('\n');
-        const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `OpManager_Central_SLA_Report_${new Date().toISOString().slice(0,10)}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('Exported OpManager SLA Report CSV successfully.');
+        window.open('/api/reports/export/csv?type=devices', '_blank');
       };
     }
 
@@ -13155,17 +11154,18 @@
       };
     }
 
-    // Scheduled reports buttons
+    // Scheduled reports: no report scheduler endpoint exists on the server,
+    // so nothing can be dispatched or scheduled from here. Report honestly.
     container.querySelectorAll('.opm-send-now-btn').forEach(btn => {
       btn.onclick = () => {
-        showToast('Scheduled report dispatched via SMTP to recipient mailboxes.');
+        showToast('Report scheduling is not available — no report scheduler endpoint exists on this server yet.');
       };
     });
 
     const newSchedBtn = container.querySelector('#opm-new-schedule-btn');
     if (newSchedBtn) {
       newSchedBtn.onclick = () => {
-        showToast('ManageEngine Report Scheduler: Configure Cron expression & SMTP recipients.');
+        showToast('Report scheduling is not available — no report scheduler endpoint exists on this server yet.');
       };
     }
   }
@@ -13196,45 +11196,45 @@
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
             <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc; text-align: center;">
               <div style="font-size: 10px; font-weight: 700; color: #64748b;">GLOBAL SLA UPTIME</div>
-              <div style="font-size: 22px; font-weight: 800; color: #16a34a; margin: 4px 0;">99.85%</div>
-              <div style="font-size: 10px; color: #64748b;">Target: 99.50%</div>
+              <div style="font-size: 22px; font-weight: 800; color: #16a34a; margin: 4px 0;">${opmFmtPct(opmAvgAvailability())}</div>
+              <div style="font-size: 10px; color: #64748b;">No SLA target set</div>
             </div>
             <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc; text-align: center;">
               <div style="font-size: 10px; font-weight: 700; color: #64748b;">MONITORED NODES</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 4px 0;">16 / 16</div>
-              <div style="font-size: 10px; color: #64748b;">4 Probes Active</div>
+              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 4px 0;">${state.devices.length}</div>
+              <div style="font-size: 10px; color: #64748b;">${state.probes.length} probe${state.probes.length === 1 ? '' : 's'} registered</div>
             </div>
             <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc; text-align: center;">
               <div style="font-size: 10px; font-weight: 700; color: #64748b;">MEAN TIME TO RESOLVE</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0284c7; margin: 4px 0;">14.2m</div>
-              <div style="font-size: 10px; color: #64748b;">-3.1m vs Last Month</div>
+              <div style="font-size: 22px; font-weight: 800; color: #0284c7; margin: 4px 0;">\u2014</div>
+              <div style="font-size: 10px; color: #64748b;">No alarms resolved yet</div>
             </div>
             <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc; text-align: center;">
               <div style="font-size: 10px; font-weight: 700; color: #64748b;">TOTAL DISPATCHED ALERTS</div>
-              <div style="font-size: 22px; font-weight: 800; color: #dc2626; margin: 4px 0;">7 Active</div>
-              <div style="font-size: 10px; color: #64748b;">142 Resolved MTD</div>
+              <div style="font-size: 22px; font-weight: 800; color: #dc2626; margin: 4px 0;">${state.alarms.length} Active</div>
+              <div style="font-size: 10px; color: #64748b;">Resolved: \u2014</div>
             </div>
           </div>
 
-          <div style="font-weight: 800; font-size: 13px; color: #0f172a; margin-bottom: 8px;">Regional Probe SLA Breakdown</div>
+          <div style="font-weight: 800; font-size: 13px; color: #0f172a; margin-bottom: 8px;">Probe Overview</div>
           <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 20px;">
             <thead>
               <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
                 <th style="padding: 8px 10px;">Probe Location</th>
                 <th style="padding: 8px 10px;">Device Count</th>
                 <th style="padding: 8px 10px;">Average Latency</th>
-                <th style="padding: 8px 10px;">SLA Compliance</th>
+                <th style="padding: 8px 10px;">Availability</th>
                 <th style="padding: 8px 10px;">Health State</th>
               </tr>
             </thead>
             <tbody>
               ${state.probes.map(p => `
                 <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 8px 10px; font-weight: 700; color: #0070e0;">${p.name} (${p.location})</td>
-                  <td style="padding: 8px 10px;">${p.devicesCount} Devices</td>
-                  <td style="padding: 8px 10px; font-family: monospace;">${p.latency} ms</td>
-                  <td style="padding: 8px 10px; font-weight: 700; color: #16a34a;">99.9%</td>
-                  <td style="padding: 8px 10px;"><span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">ONLINE</span></td>
+                  <td style="padding: 8px 10px; font-weight: 700; color: #0070e0;">${opmEsc(p.name)}${p.location ? ' (' + opmEsc(p.location) + ')' : ''}</td>
+                  <td style="padding: 8px 10px;">${p.devicesCount ?? p.devices ?? '—'} Devices</td>
+                  <td style="padding: 8px 10px; font-family: monospace;">${(p.latency === undefined || p.latency === null) ? '—' : p.latency + ' ms'}</td>
+                  <td style="padding: 8px 10px; font-weight: 700; color: #16a34a;">\u2014</td>
+                  <td style="padding: 8px 10px;">${opmEsc(p.status || '—')}</td>
                 </tr>
               `).join('')}
             </tbody>
@@ -13242,7 +11242,7 @@
         </div>
 
         <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">Report certified by Zoho ManageEngine ITOM Engine v12.9.203</span>
+          <span style="font-size: 11px; color: #64748b;">Generated from live data on ${new Date().toLocaleString()}</span>
           <div style="display: flex; gap: 8px;">
             <button id="close-pdf-btn" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #334155; cursor: pointer;">Close</button>
             <button id="print-pdf-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 18px; font-size: 12px; font-weight: 700; cursor: pointer;">Print / Save as PDF</button>
@@ -13259,17 +11259,179 @@
   // -------------------------------------------------------------
   // VIEW: SETTINGS (Central & Probes, Agents, Discovery, Engine)
   // -------------------------------------------------------------
+  // ---- Settings: load persisted settings from the real GET endpoints,
+  // then fill the forms. Blank = not configured. Nothing is prefilled
+  // with fictional enterprise values.
+  async function opmLoadSettings() {
+    if (state.settingsLoading) return;
+    state.settingsLoading = true;
+    try {
+      const get = async (url) => { const r = await opmApi(url); return (r.ok && r.data) ? r.data : null; };
+      const [mail, proxy, ad, saml, license, db, failover, system, rebrand, ssl, users, creds, rules, apiKey, sysInfo, dbInfo] = await Promise.all([
+        get('/api/settings/mail'), get('/api/settings/proxy'),
+        get('/api/settings/auth/ad'), get('/api/settings/auth/saml'),
+        get('/api/settings/license'), get('/api/settings/db'),
+        get('/api/settings/failover'), get('/api/settings/system'),
+        get('/api/settings/rebrand'), get('/api/settings/ssl'),
+        get('/api/settings/users'), get('/api/settings/credentials'),
+        get('/api/discovery/rules'), get('/api/admin/getAPIKey'),
+        get('/api/admin/GetSystemInformation'), get('/api/admin/getDBInfo')
+      ]);
+      state.settingsData = {
+        mail: mail && mail.settings ? mail.settings : null,
+        proxy: proxy && proxy.proxy ? proxy.proxy : null,
+        ad: ad && ad.ad ? ad.ad : null,
+        saml: saml && saml.saml ? saml.saml : null,
+        license: license && license.license ? license.license : null,
+        db: db && db.db ? db.db : null,
+        failover: failover && failover.failover ? failover.failover : null,
+        system: system && system.system ? system.system : null,
+        rebrand: rebrand && rebrand.rebrand ? rebrand.rebrand : null,
+        ssl: ssl && ssl.ssl ? ssl.ssl : null,
+        users: users && Array.isArray(users.users) ? users.users : [],
+        credentials: creds && Array.isArray(creds.credentials) ? creds.credentials : [],
+        apiKey: apiKey && apiKey.apiKey ? apiKey.apiKey : null,
+        sysInfo: sysInfo || null, dbInfo: dbInfo || null
+      };
+      state.discoveryRules = (rules && (rules.rules || rules.discoveryRules)) || [];
+      state.settingsLoaded = true;
+    } finally {
+      state.settingsLoading = false;
+      if (state.currentTab === 'settings' && typeof renderSettingsView === 'function') renderSettingsView();
+    }
+  }
+  function opmSetVal(id, v) {
+    const el = document.getElementById(id);
+    if (!el || v === null || v === undefined || v === '') return;
+    el.value = String(v);
+  }
+  function opmSetChecked(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.checked = !!v;
+  }
+  function opmSetText(id, v) {
+    const el = document.getElementById(id);
+    if (el && v !== null && v !== undefined) el.textContent = String(v);
+  }
+  // Fill every settings form from the loaded settings. Runs after each
+  // renderSettingsView; fields with no stored value stay blank.
+  function opmFillSettingsForm() {
+    const sd = state.settingsData || {};
+    const m = sd.mail || {};
+    opmSetVal('opm-mail-host', m.host); opmSetVal('opm-mail-port', m.port);
+    opmSetVal('opm-mail-security', m.security); opmSetVal('opm-mail-from', m.fromAddress);
+    opmSetVal('opm-mail-admin', m.adminEmail); opmSetVal('opm-mail-user', m.username);
+    const mailPill = document.getElementById('opm-mail-status-pill');
+    if (mailPill) {
+      if (m.host) { mailPill.textContent = '\u25cf SMTP Configured (' + m.host + ')'; mailPill.style.background = '#dcfce7'; mailPill.style.color = '#166534'; }
+      else { mailPill.textContent = 'Mail server not configured yet'; mailPill.style.background = '#f1f5f9'; mailPill.style.color = '#64748b'; }
+    }
+    const p = sd.proxy || {};
+    opmSetChecked('opm-proxy-enable', p.enabled);
+    opmSetVal('opm-proxy-protocol', p.protocol); opmSetVal('opm-proxy-host', p.host);
+    opmSetVal('opm-proxy-port', p.port); opmSetChecked('opm-proxy-auth-check', p.authRequired);
+    opmSetVal('opm-proxy-user', p.username);
+    opmSetVal('opm-proxy-bypass', p.bypassList);
+    const pxPill = document.getElementById('opm-proxy-status-pill');
+    if (pxPill && p.enabled && p.host) { pxPill.textContent = '\u25cf Proxy Enabled (' + p.host + ':' + (p.port || '') + ')'; pxPill.style.background = '#dcfce7'; pxPill.style.color = '#166534'; }
+    const a = sd.ad || {};
+    opmSetVal('opm-ad-domain', a.domainName); opmSetVal('opm-ad-dc', a.domainController);
+    opmSetVal('opm-ad-port', a.port); opmSetVal('opm-ad-basedn', a.baseDn);
+    opmSetVal('opm-ad-binddn', a.bindUser);
+    const sm = sd.saml || {};
+    opmSetVal('opm-saml-idp', sm.idpEntityId); opmSetVal('opm-saml-url', sm.idpSsoUrl);
+    opmSetVal('opm-saml-acs', sm.spAcsUrl || (window.location.origin + '/saml/sso'));
+    const sy = sd.system || {};
+    opmSetVal('opm-sys-hostname', sy.hostname); opmSetVal('opm-sys-port', sy.serverPort);
+    opmSetVal('opm-sys-timeout', sy.sessionTimeoutMins);
+    opmSetVal('opm-sys-retention', sy.dataRetentionDays && (sy.dataRetentionDays.performanceHourly || sy.dataRetentionDays));
+    opmSetChecked('opm-sys-dns-lookup', sy.dnsReverseLookup);
+    const rb = sd.rebrand || {};
+    opmSetVal('opm-rebrand-org', rb.organizationName); opmSetVal('opm-rebrand-title', rb.productTitle);
+    opmSetVal('opm-rebrand-footer', rb.footerNotice);
+    const sl = sd.ssl || {};
+    opmSetVal('opm-ssl-port', sl.httpsPort);
+    if (sl.tlsVersions) opmSetVal('opm-ssl-protocols', sl.tlsVersions.join(','));
+    opmSetVal('opm-ssl-ciphers', sl.cipherSuite);
+    opmSetChecked('opm-ssl-redirect', sl.forceRedirect);
+    if (sl.certificate) {
+      opmSetText('opm-ssl-cn', sl.certificate.commonName || 'No custom certificate installed');
+      opmSetText('opm-ssl-san', (sl.certificate.san && sl.certificate.san.join(', ')) || '—');
+    } else {
+      opmSetText('opm-ssl-cn', 'No custom certificate installed');
+      opmSetText('opm-ssl-san', '—');
+    }
+    const sslPill = document.getElementById('opm-ssl-status-pill');
+    if (sslPill) {
+      if (sl.certificate && sl.certificate.commonName) { sslPill.textContent = '\u25cf HTTPS ' + (sl.httpsPort || '') + ' Active'; sslPill.style.background = '#dcfce7'; sslPill.style.color = '#166534'; }
+      else { sslPill.textContent = 'No custom certificate installed'; sslPill.style.background = '#f1f5f9'; sslPill.style.color = '#64748b'; }
+    }
+    const tok = document.getElementById('opm-enrollment-token-input');
+    if (tok) {
+      tok.value = sd.apiKey || '';
+      tok.placeholder = sd.apiKey ? '' : 'No enrollment token issued yet';
+    }
+    // Engine facts: live values from the system-info endpoints, or —.
+    // This server is Node.js: heap/uptime come from runtime, dbInfo is
+    // SQLite; there is no JVM, so jvmInfo is always null.
+    const si = sd.sysInfo || {};
+    if (si.runtime) {
+      const used = si.runtime.heapUsedMB, total = si.runtime.heapTotalMB;
+      opmSetText('opm-eng-heap', (used != null && total != null) ? ('Allocated: ' + used + ' MB / ' + total + ' MB Max') : 'Allocated: \u2014');
+      if (used != null && total != null && total > 0) {
+        const pct = Math.round(used / total * 100);
+        opmSetText('opm-eng-heap-pct', pct + '%');
+        const bar = document.getElementById('opm-eng-heap-bar');
+        if (bar) bar.style.width = pct + '%';
+      }
+      if (si.runtime.uptimeSeconds != null) {
+        const s = si.runtime.uptimeSeconds, d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
+        opmSetText('opm-eng-uptime', 'Uptime: ' + (d ? d + 'd ' : '') + h + 'h ' + m + 'm');
+      }
+    }
+    if (si.dbInfo) {
+      opmSetText('opm-eng-db', (si.dbInfo.dbType || 'Database') + ' ' + (si.dbInfo.databaseName || '') + (si.dbInfo.databaseSizeBytes != null ? ' — ' + (si.dbInfo.databaseSizeBytes / 1048576).toFixed(1) + ' MB' : ''));
+      opmSetText('opm-eng-pool', 'Connection Pool: ' + (si.dbInfo.activeConnections ?? '\u2014') + ' Active / ' + (si.dbInfo.connectionPoolSize ?? '\u2014') + ' Max');
+    } else if (sd.dbInfo) {
+      opmSetText('opm-eng-db', (sd.dbInfo.database || 'Database') + ' — ' + (sd.dbInfo.status || ''));
+    }
+    opmSetText('opm-eng-cache', 'Buffer Cache Hit Ratio: \u2014');
+  }
+  function opmLicLabel(used, allowed) {
+    if (used === null || used === undefined) return '\u2014';
+    const a = (allowed === -1) ? 'Unlimited' : (allowed ?? '\u2014');
+    const pct = (typeof allowed === 'number' && allowed > 0) ? ' (' + (used / allowed * 100).toFixed(1) + '%)' : '';
+    return used + ' / ' + a + pct;
+  }
+  function opmLicPct(used, allowed) {
+    if (typeof used !== 'number' || typeof allowed !== 'number' || allowed <= 0) return 0;
+    return Math.min(100, used / allowed * 100);
+  }
+  function opmLicRemain(used, allowed) {
+    if (allowed === -1) return 'Unlimited';
+    if (typeof used !== 'number' || typeof allowed !== 'number') return '\u2014';
+    return String(allowed - used);
+  }
+  function opmLicUsed(used) {
+    return (used === null || used === undefined) ? '\u2014' : String(used);
+  }
+
   function renderSettingsView() {
     state.currentTab = 'settings';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.settings || 'probes';
+    if (!state.settingsLoaded && !state.settingsLoading) opmLoadSettings();
+    const sd = state.settingsData || {};
+    const lic = sd.license || null;
+    const fo = sd.failover || null;
+    const dbi = sd.db || null;
 
     const subtabs = [
       { id: 'probes', name: 'Central & Probes' },
       { id: 'agents', name: 'Monitoring Agents' },
       { id: 'discovery', name: 'Discovery Rules' },
       { id: 'credentials', name: 'Credential Library' },
-      { id: 'templates', name: 'Device Templates (11,000+)' },
+      { id: 'templates', name: 'Device Templates (' + ((state.templates || []).length) + ')' },
       { id: 'notifications', name: 'Notification & Thresholds' },
       { id: 'mail', name: 'Mail & SMS Server' },
       { id: 'proxy', name: 'Proxy Server' },
@@ -13340,7 +11502,7 @@
                   <div style="font-weight: 800; color: #0f172a; font-size: 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
                     <span style="width: 8px; height: 8px; border-radius: 2px; background: #16a34a;"></span> Monitoring
                   </div>
-                  <div style="color: #0070e0; line-height: 1.7;">Device Templates (11,420) • Performance Monitors • WAN RTT</div>
+                  <div style="color: #0070e0; line-height: 1.7;">Device Templates (${(state.templates || []).length}) • Performance Monitors • WAN RTT</div>
                 </div>
                 <div class="opm-quick-cfg-card" data-target="credentials" style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc; cursor: pointer;" onmouseover="this.style.borderColor='#49bd80'" onmouseout="this.style.borderColor='#e2e8f0'">
                   <div style="font-weight: 800; color: #0f172a; font-size: 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
@@ -13382,7 +11544,7 @@
                   <div style="font-weight: 800; color: #0f172a; font-size: 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
                     <span style="width: 8px; height: 8px; border-radius: 2px; background: #ca8a04;"></span> Failover &amp; High Availability
                   </div>
-                  <div style="color: #0070e0; line-height: 1.7;">Active-Standby • Virtual IP 10.0.0.12 • Heartbeat 8065</div>
+                  <div style="color: #0070e0; line-height: 1.7;">${fo && fo.virtualIp ? 'Active-Standby • Virtual IP ' + opmEsc(fo.virtualIp) + ' • Heartbeat ' + opmEsc(fo.heartbeatPort ?? '—') : 'High availability not configured'}</div>
                 </div>
               </div>
             </div>
@@ -13392,7 +11554,7 @@
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <div>
                   <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Distributed Probe WAN Latency Matrix (Continuous RTT Telemetry)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Round-trip transit times monitored between Central Master (${window.location.hostname || '192.168.30.65'}) and connected Enterprise Probes.</div>
+                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Round-trip transit times monitored between Central Master (${window.location.hostname || 'this server'}) and connected Enterprise Probes.</div>
                 </div>
                 <button id="opm-run-wan-mesh-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; align-items: gap: 5px;">
                   ⚡ Run WAN Mesh RTT Poll
@@ -13404,10 +11566,10 @@
                   <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; border-top: 3px solid #0070e0;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                       <span style="font-weight: 700; color: #0f172a; font-size: 12px;">${pr.name}</span>
-                      <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 700; padding: 1px 5px; border-radius: 2px;">${(pr.status || 'OPTIMAL').toUpperCase()}</span>
+                      <span style="font-size: 10px; background: #f1f5f9; color: #64748b; font-weight: 700; padding: 1px 5px; border-radius: 2px;">${pr.status ? opmEsc(String(pr.status).toUpperCase()) : '\u2014'}</span>
                     </div>
-                    <div style="font-size: 20px; font-weight: 800; color: #0284c7; margin: 6px 0;">${pr.latency || 2} ms</div>
-                    <div style="font-size: 10px; color: #64748b;">RTT Min/Avg/Max: ${(pr.latency || 2) - 0.4} / ${pr.latency || 2} / ${(pr.latency || 2) + 0.6} ms &bull; 0% Loss</div>
+                    <div style="font-size: 20px; font-weight: 800; color: #0284c7; margin: 6px 0;">${(pr.latency ?? pr.pingLatency) == null ? '\u2014' : (pr.latency ?? pr.pingLatency) + ' ms'}</div>
+                    <div style="font-size: 10px; color: #64748b;">${(pr.latency ?? pr.pingLatency) == null ? 'RTT: \u2014' : 'RTT: ' + (pr.latency ?? pr.pingLatency) + ' ms'}</div>
                   </div>
                 `).join('')}
               </div>
@@ -13418,7 +11580,7 @@
               <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 12px; margin-bottom: 16px;">
                 <div>
                   <label style="display: block; color: #64748b; font-weight: 600; margin-bottom: 4px;">Central Host IP</label>
-                  <input type="text" value="${window.location.hostname || '192.168.30.65'}" readonly style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; font-family: monospace;">
+                  <input type="text" value="${window.location.hostname || ''}" readonly style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; font-family: monospace;">
                 </div>
                 <div>
                   <label style="display: block; color: #64748b; font-weight: 600; margin-bottom: 4px;">Probe Sync Port (TLS)</label>
@@ -13450,7 +11612,7 @@
 
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-                <span>Connected Enterprise Probes (${state.probes.length} Online)</span>
+                <span>Connected Enterprise Probes (${state.probes.filter(p => String(p.status || '').toLowerCase() === 'online').length} of ${state.probes.length} online)</span>
                 <button id="opm-add-probe-btn" onclick="showAddProbeModal()" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Branch / Remote Probe</button>
               </div>
               <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
@@ -13471,9 +11633,9 @@
                       <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" class="opm-probe-row-click" data-id="${pr.id}">${pr.name}</td>
                       <td style="padding: 10px 14px; font-family: monospace;">${pr.ip}</td>
                       <td style="padding: 10px 14px; color: #64748b;">${pr.location}</td>
-                      <td style="padding: 10px 14px; font-family: monospace;">${pr.latency} ms</td>
+                      <td style="padding: 10px 14px; font-family: monospace;">${(pr.latency ?? pr.pingLatency) == null ? '\u2014' : (pr.latency ?? pr.pingLatency) + ' ms'}</td>
                       <td style="padding: 10px 14px; font-weight: 600;">${pr.devicesCount} Devices</td>
-                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">SYNCHRONIZED</span></td>
+                      <td style="padding: 10px 14px;"><span style="background: #f1f5f9; color: #64748b; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">${opmEsc(pr.syncStatus || pr.status || '\u2014')}</span></td>
                       <td style="padding: 10px 14px; text-align: right; white-space: nowrap;">
                         <button class="opm-probe-diag-btn" data-id="${pr.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">Diagnostics</button>
                         <button class="opm-probe-sync-btn" data-id="${pr.id}" data-name="${pr.name}" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">Sync</button>
@@ -13629,13 +11791,13 @@
                   Monitor your enterprise network on the go. Receive real-time push notifications for P1 Critical alarms, inspect 24-hour availability timelines, acknowledge incidents, and run Ping/Traceroute diagnostics directly from your mobile device.
                 </div>
                 <div style="display: flex; align-items: center; gap: 14px;">
-                  <img src="/apiclient/fluidicv2/img/mobile_app/apple-badge.svg" alt="Download on the App Store" style="height: 34px; cursor: pointer;" onclick="showToast('OpManager iOS App: Scan QR code to pair with Central Server 10.0.0.10:8060')">
-                  <img src="/apiclient/fluidicv2/img/mobile_app/google-badge.svg" alt="Get it on Google Play" style="height: 34px; cursor: pointer;" onclick="showToast('OpManager Android App: Scan QR code to pair with Central Server 10.0.0.10:8060')">
+                  <img src="/apiclient/fluidicv2/img/mobile_app/apple-badge.svg" alt="Download on the App Store" style="height: 34px; cursor: pointer;" onclick="showToast('OpManager iOS App: Scan QR code to pair with Central Server ' + window.location.host)">
+                  <img src="/apiclient/fluidicv2/img/mobile_app/google-badge.svg" alt="Get it on Google Play" style="height: 34px; cursor: pointer;" onclick="showToast('OpManager Android App: Scan QR code to pair with Central Server ' + window.location.host)">
                   <div style="border-left: 1px solid #cbd5e1; padding-left: 14px; display: flex; align-items: center; gap: 10px;">
                     <img src="/apiclient/fluidicv2/img/mobile_app/opm-app-qrcode.png" alt="Mobile App QR Code" style="width: 52px; height: 52px; border: 1px solid #e2e8f0; border-radius: 4px; padding: 2px;">
                     <div style="font-size: 10px; color: #64748b; line-height: 1.4;">
                       <strong style="color: #0f172a; display: block;">Scan to Pair Mobile App</strong>
-                      Server: <span style="font-family: monospace;">https://10.0.0.10:8060</span>
+                      Server: <span style="font-family: monospace;">https://${window.location.host}</span>
                     </div>
                   </div>
                 </div>
@@ -13652,11 +11814,18 @@
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
               <!-- Windows Installer Card -->
-              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; flex-direction: column; gap: 12px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px;">
-                  <div>
-                    <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Windows Agent (x64 MSI / EXE / ZIP)</div>
-                    <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">Version 12.9.203 | Windows Server 2016/2019/2022 / Windows 10/11</div>
+              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+                <div>
+                  <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Windows Agent (x64 MSI / EXE)</div>
+                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.204-GA | Size: 6.9 MB | Windows Server 2016/2019/2022 / Windows 10/11</div>
+                  <div style="display: flex; gap: 8px;">
+                    <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      Download .MSI
+                    </a>
+                    <a href="/downloads/OpManagerAgent.exe" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                      Download .EXE
+                    </a>
                   </div>
                   <img src="/apiclient/fluidicv2/img/DeployAgent.png" style="height: 52px; object-fit: contain; flex-shrink: 0;" />
                 </div>
@@ -13684,7 +11853,7 @@
               <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
                 <div>
                   <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Linux / macOS Universal Agent</div>
-                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.203 | Systemd Service &amp; Standalone Binary | Linux 64-bit &amp; macOS</div>
+                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.204-GA | Systemd Service &amp; Standalone Binary | Linux 64-bit &amp; macOS</div>
                   <div style="display: flex; gap: 8px;">
                     <a href="/downloads/install-agent.sh" download style="display: inline-flex; align-items: center; gap: 6px; background: #16a34a; color: #ffffff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -13706,10 +11875,11 @@
             <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; margin-bottom: 24px;">
               <div style="font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Agent Enrollment Authentication Token (Mutual TLS / HMAC-SHA256)</div>
               <div style="display: flex; gap: 10px;">
-                <input type="text" id="opm-enrollment-token-input" value="OPM-CENTRAL-AUTH-TOKEN-9281-GA-129203" readonly style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 12px; background: #fff;">
+                <input type="text" id="opm-enrollment-token-input" value="${sd.apiKey ? opmEsc(sd.apiKey) : ''}" placeholder="No enrollment token issued yet" readonly style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 12px; background: #fff;">
                 <button id="opm-copy-token-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Copy Token</button>
+                <button id="opm-regen-token-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Regenerate</button>
               </div>
-              <div style="font-size: 11px; color: #64748b; margin-top: 6px;">One-Line Linux Deployment Command: <code style="background: #e2e8f0; padding: 3px 8px; border-radius: 3px; font-family: monospace; color: #0284c7; font-weight: 600;">curl -sSL http://${window.location.host || '192.168.30.65:8060'}/downloads/install-agent.sh | bash</code></div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 6px;">One-Line Linux Deployment Command: <code style="background: #e2e8f0; padding: 3px 8px; border-radius: 3px; font-family: monospace; color: #0284c7; font-weight: 600;">curl -sSL http://${window.location.host}/downloads/install-agent.sh | bash</code></div>
             </div>
 
             <!-- Connected Monitoring Agents Table -->
@@ -13752,18 +11922,18 @@
                           ${a.hostname}
                           <span style="font-size: 9px; font-weight: 700; background: #f1f5f9; color: #334155; padding: 1px 5px; border-radius: 2px; border: 1px solid #cbd5e1;">${(a.os || 'HOST').toUpperCase()}</span>
                         </div>
-                        <div style="font-size: 11px; color: #64748b;">OpManager Universal Agent v${a.version || '12.9.203'}</div>
+                        <div style="font-size: 11px; color: #64748b;">OpManager Universal Agent v${a.version || '12.9.204-GA'}</div>
                       </td>
                       <td style="padding: 10px 14px; font-family: monospace; font-size: 11px; color: #334155;">${a.platform || a.os}</td>
                       <td style="padding: 10px 14px;">
                         <span style="font-size: 11px; color: #0284c7; background: #f0f9ff; padding: 2px 6px; border-radius: 3px; font-weight: 600;">
-                          ${a.probe || 'Central Site Probe'}
+                          ${a.probe || 'No probe'}
                         </span>
                       </td>
                       <td style="padding: 10px 14px;">
                         <div style="display: flex; flex-direction: column; gap: 2px;">
-                          <span style="font-size: 11px; font-weight: 700; color: ${(a.metrics && a.metrics.cpu > 80) ? '#dc2626' : '#16a34a'};">CPU: ${(a.metrics && a.metrics.cpu) || 0}%</span>
-                          <span style="font-size: 11px; color: #475569;">RAM: ${(a.metrics && a.metrics.memory) || 0}%</span>
+                          <span style="font-size: 11px; font-weight: 700; color: ${(a.metrics && a.metrics.cpu > 80) ? '#dc2626' : '#16a34a'};">CPU: ${(a.metrics && a.metrics.cpu != null) ? a.metrics.cpu + '%' : '\u2014'}</span>
+                          <span style="font-size: 11px; color: #475569;">RAM: ${(a.metrics && a.metrics.memory != null) ? a.metrics.memory + '%' : '\u2014'}</span>
                         </div>
                       </td>
                       <td style="padding: 10px 14px;">
@@ -13798,34 +11968,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Enterprise SNMPv2c Community</td>
-                  <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SNMP v2c</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">Community: ********** (RO)</td>
-                  <td style="padding: 10px 14px;">${state.devices.length} Devices</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Secure Campus SNMPv3 USM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SNMP v3</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">User: opm_admin | SHA-256 / AES-256</td>
-                  <td style="padding: 10px 14px;">${state.devices.filter(d => (d.category || "").toLowerCase().includes("router")).length} Routers</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Windows Domain WMI/WinRM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #f3e8ff; color: #6b21a8; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">WMI / WinRM</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">CORP\svc-opmanager-wmi</td>
-                  <td style="padding: 10px 14px;">${state.devices.filter(d => (d.category || "").toLowerCase().includes("server")).length} Nodes</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Linux SSH Key Vault</td>
-                  <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SSH (Key)</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">User: opm_linux_admin | RSA 4096-bit</td>
-                  <td style="padding: 10px 14px;">6 Linux Nodes</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
-                </tr>
+                ${(sd.credentials || []).length === 0 ? `
+                  <tr>
+                    <td colspan="5" style="padding: 36px; text-align: center; color: #64748b;">
+                      <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No credentials saved yet</div>
+                      <div style="font-size: 12px;">Add an SNMP, WMI, SSH, or Telnet credential — devices use these to poll.</div>
+                    </td>
+                  </tr>
+                ` : sd.credentials.map(c => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">${opmEsc(c.name || '—')}</td>
+                    <td style="padding: 10px 14px;">${opmEsc(c.type || '—')}</td>
+                    <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">${c.userName ? 'User: ' + opmEsc(c.userName) : 'Secret stored (hidden)'}</td>
+                    <td style="padding: 10px 14px;">—</td>
+                    <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
           </div>
@@ -13844,8 +12002,8 @@
               ${(state.discoveryRules && state.discoveryRules.length > 0) ? state.discoveryRules.map(r => `
                 <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
                   <div>
-                    <div style="font-weight: 800; color: #0f172a;">${r.name} (${r.subnet || r.cidr})</div>
-                    <div style="color: #64748b; font-size: 11px; margin-top: 2px;">Managed by ${r.probe || 'Central Site Probe'} | Sweep ${r.schedule || 'Daily at 02:00 AM'} | Credential: ${r.credential || 'SNMPv2c Community'}</div>
+                    <div style="font-weight: 800; color: #0f172a;">${opmEsc(r.range || r.subnet || r.cidr || '—')}</div>
+                    <div style="color: #64748b; font-size: 11px; margin-top: 2px;">Managed by ${r.probe_id != null ? 'Probe ' + opmEsc(r.probe_id) : '—'} | Sweep ${opmEsc(r.schedule || '—')} | Credential: —</div>
                   </div>
                   <button class="opm-run-discovery-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Run Sweep Now</button>
                 </div>
@@ -13878,14 +12036,24 @@
             const activeCat = state.currentTmplCategory || 'all';
             const searchQ = (state.tmplSearchQuery || '').toLowerCase().trim();
 
+            const tmplCount = (cat) => cat === 'all' ? allTmpls.length : allTmpls.filter(t => {
+              const c = (t.category || '').toLowerCase();
+              if (cat === 'switches') return c.includes('switch');
+              if (cat === 'routers') return c.includes('router');
+              if (cat === 'firewalls') return c.includes('firewall');
+              if (cat === 'servers') return c.includes('server');
+              if (cat === 'storage') return c.includes('storage');
+              if (cat === 'wireless') return c.includes('wireless') || c.includes('ap') || c.includes('wlc');
+              return false;
+            }).length;
             const chips = [
-              { id: 'all', label: 'ALL (11,420)' },
-              { id: 'switches', label: 'SWITCHES (3,140)' },
-              { id: 'routers', label: 'ROUTERS (2,850)' },
-              { id: 'firewalls', label: 'FIREWALLS (1,240)' },
-              { id: 'servers', label: 'SERVERS (2,910)' },
-              { id: 'storage', label: 'STORAGE (680)' },
-              { id: 'wireless', label: 'WIRELESS (600)' }
+              { id: 'all', label: 'ALL (' + tmplCount('all') + ')' },
+              { id: 'switches', label: 'SWITCHES (' + tmplCount('switches') + ')' },
+              { id: 'routers', label: 'ROUTERS (' + tmplCount('routers') + ')' },
+              { id: 'firewalls', label: 'FIREWALLS (' + tmplCount('firewalls') + ')' },
+              { id: 'servers', label: 'SERVERS (' + tmplCount('servers') + ')' },
+              { id: 'storage', label: 'STORAGE (' + tmplCount('storage') + ')' },
+              { id: 'wireless', label: 'WIRELESS (' + tmplCount('wireless') + ')' }
             ];
 
             let filtered = allTmpls;
@@ -13929,7 +12097,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                   <div>
                     <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Enterprise Device Templates Catalog (AdventNet Library)</div>
-                    <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Over 11,000 pre-configured vendor templates with predefined SNMP SysOIDs, CLI commands, and monitor associations.</div>
+                    <div style="font-size: 12px; color: #64748b; margin-top: 2px;">${allTmpls.length} templates in the local catalog with predefined SNMP SysOIDs, CLI commands, and monitor associations.</div>
                   </div>
                   <button id="opm-new-template-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
                     + Add Custom Template
@@ -13985,7 +12153,7 @@
                           <td style="padding: 10px 12px; color: #334155;">${t.monitors}</td>
                           <td style="padding: 10px 12px; font-family: monospace;">${t.poll || '300s'}</td>
                           <td style="padding: 10px 12px; text-align: right;">
-                            <button class="opm-tmpl-apply-btn" data-id="${t.id}" data-name="${t.name}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #0070e0; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                            <button class="opm-tmpl-apply-btn" data-id="${t.id}" data-name="${t.name}" ${state.devices.length === 0 ? 'disabled title="Select a device first"' : ''} style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #0070e0; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: ${state.devices.length === 0 ? 'not-allowed' : 'pointer'}; opacity: ${state.devices.length === 0 ? '0.5' : '1'};">
                               Apply to Nodes
                             </button>
                           </td>
@@ -14031,53 +12199,17 @@
                 </button>
               </div>
 
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
-                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; background: #fafbfc;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-weight: 700; color: #0070e0; font-size: 13px;">NOC Critical Email</span>
-                    <span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 2px;">ACTIVE</span>
-                  </div>
-                  <div style="font-size: 11px; color: #64748b;">Protocol: SMTP (Port 587 TLS)</div>
-                  <div style="font-size: 11px; color: #334155; font-family: monospace; margin: 4px 0;">noc-alerts@enterprise.corp</div>
-                  <button class="opm-test-notify-btn" data-type="email" style="margin-top: 8px; background: #fff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test Email</button>
-                </div>
-
-                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; background: #fafbfc;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-weight: 700; color: #0070e0; font-size: 13px;">PagerDuty Webhook</span>
-                    <span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 2px;">ACTIVE</span>
-                  </div>
-                  <div style="font-size: 11px; color: #64748b;">REST API POST (JSON)</div>
-                  <div style="font-size: 11px; color: #334155; font-family: monospace; margin: 4px 0;">api.pagerduty.com/v2</div>
-                  <button class="opm-test-notify-btn" data-type="webhook" style="margin-top: 8px; background: #fff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test Webhook</button>
-                </div>
-
-                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; background: #fafbfc;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-weight: 700; color: #0070e0; font-size: 13px;">SMS Incident Broadcast</span>
-                    <span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 2px;">ACTIVE</span>
-                  </div>
-                  <div style="font-size: 11px; color: #64748b;">HTTP SMS Gateway</div>
-                  <div style="font-size: 11px; color: #334155; font-family: monospace; margin: 4px 0;">+1-888-720-9500</div>
-                  <button class="opm-test-notify-btn" data-type="sms" style="margin-top: 8px; background: #fff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test SMS</button>
-                </div>
-
-                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; background: #fafbfc;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-weight: 700; color: #0070e0; font-size: 13px;">ServiceDesk Plus ITSM</span>
-                    <span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 2px;">ACTIVE</span>
-                  </div>
-                  <div style="font-size: 11px; color: #64748b;">SDP REST Integration</div>
-                  <div style="font-size: 11px; color: #334155; font-family: monospace; margin: 4px 0;">Category: Network Outage</div>
-                  <button class="opm-test-notify-btn" data-type="sdp" style="margin-top: 8px; background: #fff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test SDP</button>
-                </div>
+              <div style="border: 1px dashed #cbd5e1; border-radius: 6px; padding: 36px 20px; text-align: center; color: #64748b; background: #fafbfc;">
+                <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No notification profiles configured yet</div>
+                <div style="font-size: 12px; margin-bottom: 14px;">Create a profile to get emailed or alerted when a threshold is crossed.</div>
+                <button class="opm-add-notify-profile-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Notification Profile</button>
               </div>
             </div>
 
             <!-- Multi-Tier Threshold Rules & Rearm Policies (from Threshold.conf) -->
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Enterprise Threshold Profiles (Threshold.conf)</div>
-              <div style="font-size: 12px; color: #64748b; margin-bottom: 14px;">Multi-stage alarm escalation rules and noise-suppression rearm boundaries.</div>
+              <div style="font-size: 12px; color: #64748b; margin-bottom: 14px;">Multi-stage alarm escalation rules and noise-suppression rearm boundaries. Values shown are defaults — edit to change.</div>
 
               <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                 <thead>
@@ -14179,7 +12311,7 @@
                   <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_key.gif" style="width:14px;height:14px;"> Key</span>
                   <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_node.gif" style="width:14px;height:14px;"> Leaf</span>
                   <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_trap.gif" style="width:14px;height:14px;"> Trap</span>
-                  <span style="color: #16a34a; font-weight: 700;">118 MIBs Loaded</span>
+                  <span style="color: #64748b; font-weight: 700;">No MIB modules loaded yet</span>
                 </div>
               </div>
               <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
@@ -14193,26 +12325,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/mib_directory.gif" style="width:14px;height:14px;"> RFC1213-MIB (MIB-II)</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">.1.3.6.1.2.1</td>
-                    <td style="padding: 8px 12px;">IETF RFC-1213</td>
-                    <td style="padding: 8px 12px; font-weight: 600;">172 Objects</td>
-                    <td style="padding: 8px 12px; text-align: right;"><button class="opm-tool-card" data-tool="mib" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; cursor: pointer;">Walk Tree</button></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/mib_table.gif" style="width:14px;height:14px;"> CISCO-STACK-MIB</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">.1.3.6.1.4.1.9.9</td>
-                    <td style="padding: 8px 12px;">Cisco Private Enterprise</td>
-                    <td style="padding: 8px 12px; font-weight: 600;">430 Objects</td>
-                    <td style="padding: 8px 12px; text-align: right;"><button class="opm-tool-card" data-tool="mib" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; cursor: pointer;">Walk Tree</button></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/mib_entry.gif" style="width:14px;height:14px;"> HOST-RESOURCES-MIB</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">.1.3.6.1.2.1.25</td>
-                    <td style="padding: 8px 12px;">IETF RFC-2790</td>
-                    <td style="padding: 8px 12px; font-weight: 600;">215 Objects</td>
-                    <td style="padding: 8px 12px; text-align: right;"><button class="opm-tool-card" data-tool="mib" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; cursor: pointer;">Walk Tree</button></td>
+                  <tr>
+                    <td colspan="5" style="padding: 30px; text-align: center; color: #64748b;">No MIB modules loaded yet. Open the MIB Browser and run a walk to load modules.</td>
                   </tr>
                 </tbody>
               </table>
@@ -14236,7 +12350,7 @@
                 <div style="display: grid; grid-template-columns: 200px 220px 1fr 140px; gap: 10px; margin-bottom: 12px;">
                   <div>
                     <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Target Windows Server</label>
-                    <input type="text" id="opm-wmi-target-ip" value="${(state.devices && state.devices[0]?.ip) || '127.0.0.1'}" style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
+                    <input type="text" id="opm-wmi-target-ip" value="" placeholder="Enter a target IP address" style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
                   </div>
                   <div>
                     <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">WMI Namespace</label>
@@ -14278,17 +12392,17 @@
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Configure the primary outbound SMTP relay for alarm notifications, scheduled reports, and executive digests.</div>
                   </div>
                 </div>
-                <span style="font-size: 11px; background: #dcfce7; color: #166534; font-weight: 700; padding: 3px 8px; border-radius: 4px;">● SMTP Configured</span>
+                <span id="opm-mail-status-pill" style="font-size: 11px; background: #f1f5f9; color: #64748b; font-weight: 700; padding: 3px 8px; border-radius: 4px;">Mail server not configured yet</span>
               </div>
 
               <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; font-size: 12px; margin-bottom: 16px;">
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 6px;">Mail Server Address (FQDN / IP) *</label>
-                  <input type="text" id="opm-mail-host" value="smtp.enterprise.corp" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="text" id="opm-mail-host" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 6px;">SMTP Port *</label>
-                  <input type="number" id="opm-mail-port" value="587" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="number" id="opm-mail-port" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 6px;">Connection Security *</label>
@@ -14300,15 +12414,15 @@
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 6px;">Sender Email Address (From) *</label>
-                  <input type="email" id="opm-mail-from" value="opmanager-central@enterprise.corp" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="email" id="opm-mail-from" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 6px;">Admin Email (For Critical System Alerts)</label>
-                  <input type="email" id="opm-mail-admin" value="noc-alerts@enterprise.corp" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="email" id="opm-mail-admin" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 6px;">SMTP Authentication Username</label>
-                  <input type="text" id="opm-mail-user" value="opmanager_mailer" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="text" id="opm-mail-user" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
               </div>
 
@@ -14316,7 +12430,7 @@
               <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 10px;">
                 <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                   <span style="font-size: 12px; font-weight: 700; color: #1e293b; white-space: nowrap;">Send Test Email:</span>
-                  <input type="email" id="opm-test-email-target" placeholder="admin@enterprise.corp" value="admin@enterprise.corp" style="flex: 1; max-width: 320px; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="email" id="opm-test-email-target" placeholder="Enter an email address" value="" style="flex: 1; max-width: 320px; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                   <button id="opm-send-test-email-btn" style="background: #49bd80; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap;">
                     ✉ Send Test Mail
                   </button>
@@ -14337,7 +12451,7 @@
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Deliver out-of-band P1 alarms to NOC on-call mobile phones via HTTP SMS Gateway or SMPP GSM Modem.</div>
                   </div>
                 </div>
-                <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; font-weight: 700; padding: 3px 8px; border-radius: 4px;">● HTTP Gateway Active</span>
+                <span id="opm-sms-status-pill" style="font-size: 11px; background: #f1f5f9; color: #64748b; font-weight: 700; padding: 3px 8px; border-radius: 4px;">Not configured yet</span>
               </div>
 
               <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 12px;">
@@ -14351,11 +12465,11 @@
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 6px;">Provider Gateway Endpoint URL</label>
-                  <input type="text" value="https://api.sms-gateway.enterprise.corp/v1/send" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="text" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 6px;">Sender ID / Shortcode</label>
-                  <input type="text" value="OPMANAGER-NOC" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="text" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
               </div>
             </div>
@@ -14393,28 +12507,28 @@
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Proxy Server Host Name / IP Address *</label>
-                  <input type="text" id="opm-proxy-host" value="proxy.enterprise.corp" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="text" id="opm-proxy-host" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Port Number *</label>
-                  <input type="number" id="opm-proxy-port" value="8080" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="number" id="opm-proxy-port" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
               </div>
 
               <!-- Auth details -->
               <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px;">
                 <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #1e293b; cursor: pointer; margin-bottom: 12px;">
-                  <input type="checkbox" id="opm-proxy-auth-check" checked style="width: 15px; height: 15px; accent-color: #0070e0;">
+                  <input type="checkbox" id="opm-proxy-auth-check" style="width: 15px; height: 15px; accent-color: #0070e0;">
                   Proxy Server Requires Authentication
                 </label>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                   <div>
                     <label style="display: block; font-weight: 600; color: #334155; font-size: 11px; margin-bottom: 4px;">Proxy Username</label>
-                    <input type="text" id="opm-proxy-user" value="proxy_svc_opm" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                    <input type="text" id="opm-proxy-user" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                   </div>
                   <div>
                     <label style="display: block; font-weight: 600; color: #334155; font-size: 11px; margin-bottom: 4px;">Proxy Password</label>
-                    <input type="password" id="opm-proxy-pass" value="••••••••••••" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                    <input type="password" id="opm-proxy-pass" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                   </div>
                 </div>
               </div>
@@ -14422,7 +12536,7 @@
               <!-- Bypass List -->
               <div>
                 <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Bypass Proxy for These Addresses (Comma Separated)</label>
-                <textarea id="opm-proxy-bypass" rows="2" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">localhost, 127.0.0.1, 10.0.0.0/8, 192.168.0.0/16, *.internal, *.enterprise.corp</textarea>
+                <textarea id="opm-proxy-bypass" rows="2" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;"></textarea>
                 <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Requests to matching hosts bypass proxy and connect directly over internal routing.</div>
               </div>
 
@@ -14472,54 +12586,27 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 800; color: #0070e0; font-family: monospace;">admin</td>
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Enterprise Administrator</td>
-                      <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 800;">SUPER ADMINISTRATOR</span></td>
-                      <td style="padding: 10px 14px; color: #475569;">Local Authentication</td>
-                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Global Central (All Probes)</td>
-                      <td style="padding: 10px 14px; text-align: center;"><span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">✔ Enforced</span></td>
-                      <td style="padding: 10px 14px; text-align: center;"><span style="color: #16a34a; font-weight: 700;">● Active</span></td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-user-edit-btn" style="background: none; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; color: #334155;">Edit</button>
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 800; color: #0070e0; font-family: monospace;">noc_lead</td>
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">NOC Lead Operator</td>
-                      <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 800;">NETWORK OPERATOR</span></td>
-                      <td style="padding: 10px 14px; color: #475569;">Active Directory (LDAPS)</td>
-                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Global Central (All Probes)</td>
-                      <td style="padding: 10px 14px; text-align: center;"><span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">✔ Enforced</span></td>
-                      <td style="padding: 10px 14px; text-align: center;"><span style="color: #16a34a; font-weight: 700;">● Active</span></td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-user-edit-btn" style="background: none; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; color: #334155;">Edit</button>
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 800; color: #0070e0; font-family: monospace;">sec_audit</td>
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Marcus Vance</td>
-                      <td style="padding: 10px 14px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 800;">SECURITY AUDITOR</span></td>
-                      <td style="padding: 10px 14px; color: #475569;">SAML 2.0 (Azure AD)</td>
-                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Global Central (All Probes)</td>
-                      <td style="padding: 10px 14px; text-align: center;"><span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">✔ Enforced</span></td>
-                      <td style="padding: 10px 14px; text-align: center;"><span style="color: #16a34a; font-weight: 700;">● Active</span></td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-user-edit-btn" style="background: none; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; color: #334155;">Edit</button>
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 800; color: #0070e0; font-family: monospace;">probe_sync</td>
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Automated Sync Service</td>
-                      <td style="padding: 10px 14px;"><span style="background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 800;">API SERVICE ACCOUNT</span></td>
-                      <td style="padding: 10px 14px; color: #475569;">Mutual TLS / API Token</td>
-                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Global Central (All Probes)</td>
-                      <td style="padding: 10px 14px; text-align: center;"><span style="color: #64748b; font-size: 11px;">N/A (mTLS)</span></td>
-                      <td style="padding: 10px 14px; text-align: center;"><span style="color: #16a34a; font-weight: 700;">● Active</span></td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-user-edit-btn" style="background: none; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; color: #334155;">Edit</button>
-                      </td>
-                    </tr>
+                    ${(sd.users || []).length === 0 ? `
+                      <tr>
+                        <td colspan="8" style="padding: 36px; text-align: center; color: #64748b;">
+                          <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No additional users yet</div>
+                          <div style="font-size: 12px;">Only the built-in admin account exists. Add a user to grant console access.</div>
+                        </td>
+                      </tr>
+                    ` : sd.users.map(u => `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 10px 14px; font-weight: 800; color: #0070e0; font-family: monospace;">${opmEsc(u.username || '—')}</td>
+                        <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">${opmEsc(u.name || u.username || '—')}</td>
+                        <td style="padding: 10px 14px;">${opmEsc(u.role || '—')}</td>
+                        <td style="padding: 10px 14px; color: #475569;">${opmEsc(u.authType || u.authSource || '—')}</td>
+                        <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">${opmEsc(u.probeScope || '—')}</td>
+                        <td style="padding: 10px 14px; text-align: center;">${u.mfa ? '<span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">✔ Enforced</span>' : '—'}</td>
+                        <td style="padding: 10px 14px; text-align: center;"><span style="color: ${String(u.status || '').toLowerCase() === 'active' ? '#16a34a' : '#64748b'}; font-weight: 700;">${opmEsc(u.status || '—')}</span></td>
+                        <td style="padding: 10px 14px; text-align: right;">
+                          <button class="opm-user-edit-btn" data-id="${opmEsc(u.id ?? '')}" style="background: none; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; color: #334155;">Edit</button>
+                        </td>
+                      </tr>
+                    `).join('')}
                   </tbody>
                 </table>
               </div>
@@ -14540,25 +12627,25 @@
                 <div style="display: flex; flex-direction: column; gap: 12px; font-size: 12px; margin-bottom: 16px;">
                   <div>
                     <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 4px;">Domain Name (NetBIOS / FQDN) *</label>
-                    <input type="text" id="opm-ad-domain" value="ENTERPRISE.CORP" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace;">
+                    <input type="text" id="opm-ad-domain" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace;">
                   </div>
                   <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px;">
                     <div>
                       <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 4px;">Domain Controller Host *</label>
-                      <input type="text" id="opm-ad-dc" value="dc01.enterprise.corp" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace;">
+                      <input type="text" id="opm-ad-dc" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace;">
                     </div>
                     <div>
                       <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 4px;">LDAP Port *</label>
-                      <input type="number" id="opm-ad-port" value="636" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                      <input type="number" id="opm-ad-port" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
                     </div>
                   </div>
                   <div>
                     <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 4px;">Base Distinguished Name (Base DN)</label>
-                    <input type="text" id="opm-ad-basedn" value="DC=enterprise,DC=corp" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace;">
+                    <input type="text" id="opm-ad-basedn" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace;">
                   </div>
                   <div>
                     <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 4px;">Service Account Bind DN</label>
-                    <input type="text" id="opm-ad-binddn" value="CN=OpManagerService,OU=ServiceAccounts,DC=enterprise,DC=corp" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 11px;">
+                    <input type="text" id="opm-ad-binddn" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 11px;">
                   </div>
                 </div>
 
@@ -14584,15 +12671,15 @@
                 <div style="display: flex; flex-direction: column; gap: 12px; font-size: 12px; margin-bottom: 16px;">
                   <div>
                     <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 4px;">IdP Entity Identifier (Issuer URI) *</label>
-                    <input type="text" id="opm-saml-idp" value="https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 11px;">
+                    <input type="text" id="opm-saml-idp" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 11px;">
                   </div>
                   <div>
                     <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 4px;">Single Sign-On Target URL (IdP Login) *</label>
-                    <input type="text" id="opm-saml-url" value="https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/saml2" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 11px;">
+                    <input type="text" id="opm-saml-url" value="" placeholder="Not configured yet" style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 11px;">
                   </div>
                   <div>
                     <label style="display: block; font-weight: 700; color: #334155; margin-bottom: 4px;">Service Provider ACS URL (Endpoint)</label>
-                    <input type="text" id="opm-saml-acs" value="http://localhost:8060/saml/sso" readonly style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; font-family: monospace; font-size: 11px;">
+                    <input type="text" id="opm-saml-acs" value="" readonly style="width: 100%; box-sizing: border-box; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; font-family: monospace; font-size: 11px;">
                   </div>
                   <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0;">
                     <span style="font-weight: 700; color: #334155;">Just-In-Time (JIT) Auto-Provisioning</span>
@@ -14623,8 +12710,8 @@
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <img src="/images/central_product_logo.png" style="height: 32px; object-fit: contain;" />
                   <div>
-                    <div style="font-size: 16px; font-weight: 800; color: #0f172a;">ManageEngine OpManager Central (Perpetual Enterprise Edition)</div>
-                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Registered Perpetual License for Global Enterprise Corp. | Build 129203 (64-bit)</div>
+                    <div style="font-size: 16px; font-weight: 800; color: #0f172a;">OpManager Central${lic && lic.edition ? ' (' + opmEsc(lic.edition) + ')' : ''}</div>
+                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">${lic ? 'Registered license' + (lic.organization ? ' for ' + opmEsc(lic.organization) : '') + ' | Build ' + opmEsc(lic.buildNumber ?? '—') : 'No license applied yet — apply a license key to register this installation.'}</div>
                   </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -14639,19 +12726,19 @@
               <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 22px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                   <div style="font-size: 11px; color: #64748b; font-weight: 600;">License Type</div>
-                  <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px;">GA Perpetual License</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px;">${lic ? opmEsc(lic.licenseType || '—') : '—'}</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                   <div style="font-size: 11px; color: #64748b; font-weight: 600;">Server Host ID (MAC)</div>
-                  <div style="font-size: 13px; font-weight: 700; color: #0070e0; font-family: monospace; margin-top: 2px;">00:50:56:B2:91:A4</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #0070e0; font-family: monospace; margin-top: 2px;">${lic ? opmEsc(lic.hostId || '—') : '—'}</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                   <div style="font-size: 11px; color: #64748b; font-weight: 600;">License Expiry</div>
-                  <div style="font-size: 13px; font-weight: 700; color: #16a34a; margin-top: 2px;">Never (Perpetual GA)</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #16a34a; margin-top: 2px;">${lic ? opmEsc(lic.expiryDate || '—') : '—'}</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                   <div style="font-size: 11px; color: #64748b; font-weight: 600;">Annual Support (AMS)</div>
-                  <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px;">Valid till Nov 30, 2027</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px;">${lic && lic.amsValidTill ? 'Valid till ' + opmEsc(lic.amsValidTill) : '—'}</div>
                 </div>
               </div>
 
@@ -14663,14 +12750,14 @@
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 12px; font-weight: 700; color: #334155;">Monitored Devices</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #0070e0;">16 / 5,000 (0.3%)</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #0070e0;">${opmLicLabel(lic && lic.devicesUsed, lic && lic.devicesAllowed)}</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #0070e0; width: 0.32%; height: 100%;"></div>
+                    <div style="background: #0070e0; width: ${opmLicPct(lic && lic.devicesUsed, lic && lic.devicesAllowed)}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Consumed: 16</span>
-                    <span>Remaining: 4,984</span>
+                    <span>Consumed: ${opmLicUsed(lic && lic.devicesUsed)}</span>
+                    <span>Remaining: ${opmLicRemain(lic && lic.devicesUsed, lic && lic.devicesAllowed)}</span>
                   </div>
                 </div>
 
@@ -14678,14 +12765,14 @@
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 12px; font-weight: 700; color: #334155;">Monitored Interfaces</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #16a34a;">48 / 20,000 (0.2%)</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #16a34a;">${opmLicLabel(lic && lic.interfacesUsed, lic && lic.interfacesAllowed)}</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #16a34a; width: 0.24%; height: 100%;"></div>
+                    <div style="background: #16a34a; width: ${opmLicPct(lic && lic.interfacesUsed, lic && lic.interfacesAllowed)}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Consumed: 48</span>
-                    <span>Remaining: 19,952</span>
+                    <span>Consumed: ${opmLicUsed(lic && lic.interfacesUsed)}</span>
+                    <span>Remaining: ${opmLicRemain(lic && lic.interfacesUsed, lic && lic.interfacesAllowed)}</span>
                   </div>
                 </div>
 
@@ -14693,14 +12780,14 @@
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 12px; font-weight: 700; color: #334155;">NCM Monitored Nodes</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #7c3aed;">8 / 1,000 (0.8%)</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #7c3aed;">${opmLicLabel(lic && lic.ncmUsed, lic && lic.ncmAllowed)}</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #7c3aed; width: 0.8%; height: 100%;"></div>
+                    <div style="background: #7c3aed; width: ${opmLicPct(lic && lic.ncmUsed, lic && lic.ncmAllowed)}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Consumed: 8</span>
-                    <span>Remaining: 992</span>
+                    <span>Consumed: ${opmLicUsed(lic && lic.ncmUsed)}</span>
+                    <span>Remaining: ${opmLicRemain(lic && lic.ncmUsed, lic && lic.ncmAllowed)}</span>
                   </div>
                 </div>
 
@@ -14708,14 +12795,14 @@
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 12px; font-weight: 700; color: #334155;">NetFlow Flow Interfaces</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #ea580c;">12 / 500 (2.4%)</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #ea580c;">${opmLicLabel(lic && lic.netflowUsed, lic && lic.netflowAllowed)}</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #ea580c; width: 2.4%; height: 100%;"></div>
+                    <div style="background: #ea580c; width: ${opmLicPct(lic && lic.netflowUsed, lic && lic.netflowAllowed)}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Consumed: 12</span>
-                    <span>Remaining: 488</span>
+                    <span>Consumed: ${opmLicUsed(lic && lic.netflowUsed)}</span>
+                    <span>Remaining: ${opmLicRemain(lic && lic.netflowUsed, lic && lic.netflowAllowed)}</span>
                   </div>
                 </div>
 
@@ -14723,14 +12810,14 @@
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 12px; font-weight: 700; color: #334155;">Distributed Probes</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #0284c7;">4 / Unlimited</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #0284c7;">${lic ? opmLicUsed(lic.probesUsed) + ' / ' + (lic.probesAllowed === -1 ? 'Unlimited' : (lic.probesAllowed ?? '—')) : '—'}</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #0284c7; width: 100%; height: 100%;"></div>
+                    <div style="background: #0284c7; width: ${lic && lic.probesAllowed === -1 ? 100 : opmLicPct(lic && lic.probesUsed, lic && lic.probesAllowed)}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Connected Probes: 4</span>
-                    <span>Capacity: Unlimited Probes</span>
+                    <span>Connected Probes: ${state.probes.length}</span>
+                    <span>Capacity: ${lic && lic.probesAllowed === -1 ? 'Unlimited Probes' : (lic && lic.probesAllowed != null ? opmEsc(lic.probesAllowed) + ' Probes' : '—')}</span>
                   </div>
                 </div>
 
@@ -14738,14 +12825,14 @@
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 12px; font-weight: 700; color: #334155;">OpUtils IPAM &amp; SPM</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #059669;">Unlimited Bundle</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #059669;">${lic ? opmEsc(lic.ipamSpmAllowed || '—') : '—'}</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
                     <div style="background: #059669; width: 100%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>IPAM Subnets: 24 active</span>
-                    <span>Switch Ports: 48 active</span>
+                    <span>IPAM Subnets: —</span>
+                    <span>Switch Ports: —</span>
                   </div>
                 </div>
 
@@ -14763,8 +12850,8 @@
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <img src="/images/deviceicons/server.png" style="width: 28px; height: 28px; object-fit: contain;" />
                   <div>
-                    <div style="font-size: 15px; font-weight: 800; color: #0f172a;">PostgreSQL 14.7 (Embedded Enterprise High-Performance)</div>
-                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Local Database on 127.0.0.1:13306 | Catalog Name: <code>OpManagerDB</code></div>
+                    <div style="font-size: 15px; font-weight: 800; color: #0f172a;">${dbi && dbi.engine ? opmEsc(dbi.engine) : 'Database'}</div>
+                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">${dbi ? (dbi.dbHost ? 'Local Database on ' + opmEsc(dbi.dbHost) + ':' + opmEsc(dbi.dbPort ?? '—') : 'Local database file: ' + opmEsc(dbi.dbPath || dbi.dbName || '—')) + ' | Catalog Name: ' + opmEsc(dbi.dbName || '—') : 'Database details not loaded yet.'}</div>
                   </div>
                 </div>
                 <div style="display: flex; gap: 8px;">
@@ -14786,18 +12873,18 @@
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                   <div style="font-size: 11px; color: #64748b; font-weight: 600;">Total Indexed Records</div>
-                  <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 2px;">2,841,920</div>
+                  <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 2px;">${dbi && typeof dbi.totalRecords === 'number' ? dbi.totalRecords.toLocaleString() : '—'}</div>
                   <div style="font-size: 10px; color: #16a34a; margin-top: 2px;">Telemetry &amp; Flow Records</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                   <div style="font-size: 11px; color: #64748b; font-weight: 600;">Connection Pool</div>
-                  <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 2px;">12 / 50 Active</div>
-                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Latency: 0.8ms average</div>
+                  <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 2px;">${dbi ? (dbi.activeConnections ?? '—') + ' / ' + (dbi.maxConnections ?? '—') + ' Active' : '—'}</div>
+                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Connection pool usage</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                   <div style="font-size: 11px; color: #64748b; font-weight: 600;">Buffer Cache Hit Ratio</div>
-                  <div style="font-size: 18px; font-weight: 800; color: #16a34a; margin-top: 2px;">99.85%</div>
-                  <div style="font-size: 10px; color: #16a34a; margin-top: 2px;">Optimal In-Memory Reads</div>
+                  <div style="font-size: 18px; font-weight: 800; color: #16a34a; margin-top: 2px;">${dbi && dbi.cacheHitRatio ? opmEsc(dbi.cacheHitRatio) : '—'}</div>
+                  <div style="font-size: 10px; color: #64748b; margin-top: 2px;">As reported by the database</div>
                 </div>
               </div>
 
@@ -14805,9 +12892,9 @@
               <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #16a34a;"></span>
-                  <span style="font-size: 12px; font-weight: 700; color: #166534;">Automated Backup Schedule: Daily at 02:00 AM UTC (Retention: 7 Days)</span>
+                  <span style="font-size: 12px; font-weight: 700; color: #166534;">${dbi && dbi.schedule ? 'Automated Backup Schedule: ' + opmEsc(dbi.schedule.frequency || '—') + ' at ' + opmEsc(dbi.schedule.time || '—') + ' (Retention: ' + opmEsc(dbi.schedule.retentionDays ?? '—') + ' Days)' : 'No backup schedule configured'}</span>
                 </div>
-                <span style="font-size: 11px; color: #166534; font-family: monospace;">Destination: /opt/ManageEngine/OpManager/backup/db/</span>
+                <span style="font-size: 11px; color: #166534; font-family: monospace;">${dbi && dbi.schedule && dbi.schedule.backupPath ? 'Destination: ' + opmEsc(dbi.schedule.backupPath) : 'Destination: —'}</span>
               </div>
 
               <!-- Backup History Table -->
@@ -14827,30 +12914,23 @@
                     </tr>
                   </thead>
                   <tbody id="opm-db-backup-tbody">
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-family: monospace; font-weight: 600; color: #0070e0;">OpManager_DB_20261108_0200.zip</td>
-                      <td style="padding: 10px 14px; color: #64748b;">2026-11-08 02:00:15 UTC</td>
-                      <td style="padding: 10px 14px; font-weight: 600;">412.8 MB</td>
-                      <td style="padding: 10px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">Scheduled Daily</span></td>
-                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;">VERIFIED (SHA256)</span></td>
-                      <td style="padding: 10px 14px; text-align: right;"><button onclick="window.showToast('Downloading backup archive OpManager_DB_20261108_0200.zip')" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Download</button></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-family: monospace; font-weight: 600; color: #0070e0;">OpManager_DB_20261107_0200.zip</td>
-                      <td style="padding: 10px 14px; color: #64748b;">2026-11-07 02:00:12 UTC</td>
-                      <td style="padding: 10px 14px; font-weight: 600;">410.2 MB</td>
-                      <td style="padding: 10px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">Scheduled Daily</span></td>
-                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;">VERIFIED (SHA256)</span></td>
-                      <td style="padding: 10px 14px; text-align: right;"><button onclick="window.showToast('Downloading backup archive OpManager_DB_20261107_0200.zip')" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Download</button></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-family: monospace; font-weight: 600; color: #0070e0;">OpManager_DB_20261106_0200.zip</td>
-                      <td style="padding: 10px 14px; color: #64748b;">2026-11-06 02:00:18 UTC</td>
-                      <td style="padding: 10px 14px; font-weight: 600;">407.9 MB</td>
-                      <td style="padding: 10px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">Scheduled Daily</span></td>
-                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;">VERIFIED (SHA256)</span></td>
-                      <td style="padding: 10px 14px; text-align: right;"><button onclick="window.showToast('Downloading backup archive OpManager_DB_20261106_0200.zip')" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Download</button></td>
-                    </tr>
+                    ${(!dbi || !dbi.backupHistory || dbi.backupHistory.length === 0) ? `
+                      <tr>
+                        <td colspan="6" style="padding: 36px; text-align: center; color: #64748b;">
+                          <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No database backups yet</div>
+                          <div style="font-size: 12px;">Backups run on the schedule below. Run one now to create the first backup.</div>
+                        </td>
+                      </tr>
+                    ` : dbi.backupHistory.map(b => `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 10px 14px; font-family: monospace; font-weight: 600; color: #0070e0;">${opmEsc(b.fileName || '—')}</td>
+                        <td style="padding: 10px 14px; color: #64748b;">${opmEsc(b.timestamp || '—')}</td>
+                        <td style="padding: 10px 14px; font-weight: 600;">${b.sizeMB != null ? b.sizeMB + ' MB' : '—'}</td>
+                        <td style="padding: 10px 14px;"><span style="background: #e2e8f0; color: #334155; padding: 2px 6px; border-radius: 3px; font-size: 10px;">${opmEsc(b.trigger || '—')}</span></td>
+                        <td style="padding: 10px 14px;">${opmEsc(b.status || '—')}</td>
+                        <td style="padding: 10px 14px; text-align: right;"><button class="opm-db-download-btn" data-file="${opmEsc(b.fileName || '')}" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Download</button></td>
+                      </tr>
+                    `).join('')}
                   </tbody>
                 </table>
               </div>
@@ -14866,11 +12946,11 @@
                 <img src="/apiclient/fluidicv2/img/fwa-ha.svg" style="width: 28px; height: 28px; object-fit: contain;" />
                 <div>
                   <div style="font-size: 15px; font-weight: 800; color: #0f172a;">OpManager Central High Availability &amp; Failover Architecture</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Continuous Zero-Downtime Hot-Standby clustering with real-time PostgreSQL database mirroring.</div>
+                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Single-node deployment with a local SQLite database store. No clustering or database mirroring is configured.</div>
                 </div>
               </div>
               <div style="display: flex; gap: 8px; align-items: center;">
-                <span id="opm-ha-cluster-badge" style="font-size: 11px; background: #dcfce7; color: #166534; font-weight: 700; padding: 3px 10px; border-radius: 12px;">● CLUSTER SYNCHRONIZED</span>
+                <span id="opm-ha-cluster-badge" style="font-size: 11px; background: ${fo && fo.status && fo.status !== 'Not configured' ? '#dcfce7' : '#f1f5f9'}; color: ${fo && fo.status && fo.status !== 'Not configured' ? '#166534' : '#64748b'}; font-weight: 700; padding: 3px 10px; border-radius: 12px;">${fo && fo.status && fo.status !== 'Not configured' ? opmEsc(fo.status) : 'High availability not configured'}</span>
                 <button id="opm-simulate-failover-btn" style="background: #ea580c; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
                   ⚡ Simulate Role Switchover
                 </button>
@@ -14888,7 +12968,7 @@
                 <div style="background: #1e293b; border: 2px solid #49bd80; border-radius: 6px; padding: 16px 20px; width: 230px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
                   <div style="width: 10px; height: 10px; border-radius: 50%; background: #49bd80; margin: 0 auto 6px auto;"></div>
                   <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Primary Central Node</div>
-                  <div style="font-size: 11px; color: #94a3b8; font-family: monospace; margin: 4px 0;">10.0.0.10:8060</div>
+                  <div style="font-size: 11px; color: #94a3b8; font-family: monospace; margin: 4px 0;">${fo && fo.primary ? opmEsc(fo.primary.ip || '—') : '—'}</div>
                   <div style="background: #14532d; color: #4ade80; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 4px;">ACTIVE MASTER</div>
                 </div>
 
@@ -14896,14 +12976,14 @@
                 <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 16px;">
                   <div style="font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px; letter-spacing: 0.5px;">MUTUAL HEARTBEAT &amp; DB SYNC</div>
                   <div style="width: 100%; height: 3px; background: linear-gradient(90deg, #4ade80, #38bdf8, #4ade80); border-radius: 2px; position: relative;"></div>
-                  <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Port 8065 • Latency 0.4ms • Lag: 0 bytes</div>
+                  <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Port ${fo ? opmEsc(fo.heartbeatPort ?? '—') : '—'} • Lag: ${fo && fo.secondary ? opmEsc(fo.secondary.replicationLag ?? '—') : '—'}</div>
                 </div>
 
                 <!-- Standby Node Box -->
                 <div style="background: #1e293b; border: 2px solid #38bdf8; border-radius: 6px; padding: 16px 20px; width: 230px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
                   <div style="width: 10px; height: 10px; border-radius: 50%; background: #38bdf8; margin: 0 auto 6px auto;"></div>
                   <div style="font-size: 13px; font-weight: 800; color: #ffffff;">Secondary Central Node</div>
-                  <div style="font-size: 11px; color: #94a3b8; font-family: monospace; margin: 4px 0;">10.0.0.11:8060</div>
+                  <div style="font-size: 11px; color: #94a3b8; font-family: monospace; margin: 4px 0;">${fo && fo.secondary ? opmEsc(fo.secondary.ip || '—') : '—'}</div>
                   <div style="background: #0369a1; color: #7dd3fc; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 4px;">HOT STANDBY</div>
                 </div>
 
@@ -14912,8 +12992,8 @@
               <!-- Shared VIP Strip -->
               <div style="text-align: center; margin-top: 20px; padding-top: 14px; border-top: 1px solid #334155; font-size: 12px;">
                 <span style="color: #94a3b8;">Shared Enterprise Virtual IP (VIP):</span>
-                <strong style="color: #facc15; font-family: monospace; margin-left: 6px; font-size: 14px;">10.0.0.12</strong>
-                <span style="color: #64748b; margin-left: 8px;">(All 4 Regional Probes connect to this VIP for automatic seamless failover)</span>
+                <strong style="color: #facc15; font-family: monospace; margin-left: 6px; font-size: 14px;">${fo && fo.virtualIp ? opmEsc(fo.virtualIp) : '—'}</strong>
+                <span style="color: #64748b; margin-left: 8px;">${fo && fo.virtualIp ? '(Probes connect to this VIP for automatic failover)' : '(No virtual IP configured)'}</span>
               </div>
             </div>
 
@@ -14921,23 +13001,23 @@
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; font-size: 12px;">
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="color: #64748b; font-size: 11px;">Replication Lag</div>
-                <div style="font-size: 18px; font-weight: 800; color: #16a34a; margin: 4px 0;">0 ms (Synchronous)</div>
-                <div style="color: #64748b; font-size: 10px;">PostgreSQL WAL Stream</div>
+                <div style="font-size: 18px; font-weight: 800; color: #16a34a; margin: 4px 0;">${fo && fo.secondary ? opmEsc(fo.secondary.replicationLag ?? '—') : '—'}</div>
+                <div style="color: #64748b; font-size: 10px;">No replication — local SQLite store</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="color: #64748b; font-size: 11px;">Heartbeat Ping Interval</div>
-                <div style="font-size: 18px; font-weight: 800; color: #0284c7; margin: 4px 0;">1,000 ms</div>
+                <div style="font-size: 18px; font-weight: 800; color: #0284c7; margin: 4px 0;">—</div>
                 <div style="color: #64748b; font-size: 10px;">UDP/TCP Keepalive</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="color: #64748b; font-size: 11px;">Failover Trigger Threshold</div>
-                <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 4px 0;">15 Seconds</div>
-                <div style="color: #16a34a; font-size: 10px;">Zero False-Positive Quorum</div>
+                <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 4px 0;">Not set</div>
+                <div style="color: #64748b; font-size: 10px;">No trigger threshold configured</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="color: #64748b; font-size: 11px;">Split-Brain Protection</div>
-                <div style="font-size: 18px; font-weight: 800; color: #16a34a; margin: 4px 0;">Enabled</div>
-                <div style="color: #64748b; font-size: 10px;">Witness Quorum Agent Active</div>
+                <div style="font-size: 18px; font-weight: 800; color: #16a34a; margin: 4px 0;">${fo && fo.splitBrainProtection ? 'Enabled' : 'Not enabled'}</div>
+                <div style="color: #64748b; font-size: 10px;">Split-brain protection</div>
               </div>
             </div>
 
@@ -14945,11 +13025,10 @@
             <div style="margin-top: 18px; background: #0f172a; border-radius: 6px; padding: 14px 18px; font-family: monospace; font-size: 11px; color: #38bdf8;">
               <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 8px;">
                 <span style="font-weight: 700; color: #94a3b8;">HIGH AVAILABILITY CLUSTER STATE &amp; REPLICATION LOG</span>
-                <span style="color: #16a34a; font-size: 10px;">● Heartbeat Synchronous (Port 8065)</span>
+                <span style="color: #64748b; font-size: 10px;">Heartbeat port ${fo ? opmEsc(fo.heartbeatPort ?? '—') : '—'}</span>
               </div>
               <div id="opm-ha-term-logs" style="line-height: 1.6; color: #cbd5e1; max-height: 90px; overflow-y: auto;">
-                <div>[${new Date().toLocaleTimeString()}] Master Node (10.0.0.10) active. PostgreSQL 14 WAL streaming replication sender running.</div>
-                <div>[${new Date().toLocaleTimeString()}] Standby Node (10.0.0.11) connected. Sync status: 0 bytes lag. VRRP VIP 10.0.0.12 bound to en0.</div>
+                <div>No failover events recorded yet.</div>
               </div>
             </div>
 
@@ -14974,17 +13053,18 @@
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Central Server FQDN / Host Name</label>
-                  <input type="text" id="opm-sys-hostname" value="opmanager-central.enterprise.corp" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="text" id="opm-sys-hostname" value="" placeholder="Not set" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Web Server Port (HTTP / HTTPS)</label>
-                  <input type="number" id="opm-sys-port" value="8060" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="number" id="opm-sys-port" value="" placeholder="Not set" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Web Inactivity Session Timeout</label>
                   <select id="opm-sys-timeout" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                    <option value="">Not set</option>
                     <option value="15">15 Minutes</option>
-                    <option value="30" selected>30 Minutes (Recommended)</option>
+                    <option value="30">30 Minutes (Recommended)</option>
                     <option value="60">60 Minutes</option>
                     <option value="120">2 Hours</option>
                   </select>
@@ -14992,8 +13072,9 @@
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Performance Data Retention (Hourly / Daily)</label>
                   <select id="opm-sys-retention" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                    <option value="">Not set</option>
                     <option value="30">30 Days Hourly / 90 Days Daily</option>
-                    <option value="60" selected>60 Days Hourly / 180 Days Daily</option>
+                    <option value="60">60 Days Hourly / 180 Days Daily</option>
                     <option value="365">1 Year Full Enterprise History</option>
                   </select>
                 </div>
@@ -15001,7 +13082,7 @@
 
               <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; margin-bottom: 16px;">
                 <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #1e293b; cursor: pointer;">
-                  <input type="checkbox" id="opm-sys-dns-lookup" checked style="width: 15px; height: 15px; accent-color: #0070e0;">
+                  <input type="checkbox" id="opm-sys-dns-lookup" style="width: 15px; height: 15px; accent-color: #0070e0;">
                   Enable Automatic DNS Reverse Resolution During Subnet Discovery
                 </label>
                 <div style="font-size: 11px; color: #64748b; margin-top: 4px; padding-left: 23px;">
@@ -15026,17 +13107,17 @@
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Organization / Company Name</label>
-                  <input type="text" id="opm-rebrand-org" value="Global Enterprise Corp." style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="text" id="opm-rebrand-org" value="" placeholder="Not set" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Portal Window Title</label>
-                  <input type="text" id="opm-rebrand-title" value="ManageEngine OpManager Central" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="text" id="opm-rebrand-title" value="" placeholder="Not set" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
               </div>
 
               <div>
                 <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Footer Copyright Statement</label>
-                <input type="text" id="opm-rebrand-footer" value="© 2026 Zoho Corporation Pvt. Ltd. All rights reserved." style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                <input type="text" id="opm-rebrand-footer" value="" placeholder="Not set" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
               </div>
 
               <div style="display: flex; justify-content: flex-end; margin-top: 18px; border-top: 1px solid #f1f5f9; padding-top: 14px;">
@@ -15061,7 +13142,7 @@
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Manage HTTPS listener certificates, strong cipher suites, and modern TLS protocol enforcement.</div>
                   </div>
                 </div>
-                <span id="opm-ssl-status-pill" style="font-size: 11px; background: #dcfce7; color: #166534; font-weight: 700; padding: 3px 10px; border-radius: 12px;">● HTTPS 8443 Active (TLS 1.3)</span>
+                <span id="opm-ssl-status-pill" style="font-size: 11px; background: #f1f5f9; color: #64748b; font-weight: 700; padding: 3px 10px; border-radius: 12px;">No custom certificate installed</span>
               </div>
 
               <!-- Active Certificate Metadata Banner -->
@@ -15070,12 +13151,12 @@
                   <span style="color: #16a34a;">🔒</span> Active Enterprise Server Certificate
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 12px;">
-                  <div><strong style="color: #475569;">Common Name (CN):</strong> <span style="font-family: monospace; color: #0f172a;" id="opm-ssl-cn">opmanager-central.enterprise.corp</span></div>
+                  <div><strong style="color: #475569;">Common Name (CN):</strong> <span style="font-family: monospace; color: #0f172a;" id="opm-ssl-cn">No custom certificate installed</span></div>
                   <div><strong style="color: #475569;">Issuer Authority:</strong> <span style="color: #0f172a;">DigiCert Global Root G2 (Intermediate CA)</span></div>
                   <div><strong style="color: #475569;">Valid From / To:</strong> <span style="color: #16a34a; font-weight: 600;">2025-01-01 to 2027-11-30 (Valid)</span></div>
                   <div><strong style="color: #475569;">Key Algorithm:</strong> <span style="font-family: monospace; color: #0f172a;">RSA 2048-bit (SHA-256 with RSA)</span></div>
                   <div><strong style="color: #475569;">Serial Number:</strong> <span style="font-family: monospace; font-size: 11px; color: #64748b;">4A:8B:19:3C:99:FF:01:2A</span></div>
-                  <div><strong style="color: #475569;">Subject Alternative Names:</strong> <span style="font-family: monospace; font-size: 11px; color: #0284c7;">DNS:opmanager-central.local, IP:192.168.30.65, IP:127.0.0.1</span></div>
+                  <div><strong style="color: #475569;">Subject Alternative Names:</strong> <span style="font-family: monospace; font-size: 11px; color: #0284c7;" id="opm-ssl-san">—</span></div>
                 </div>
               </div>
 
@@ -15083,7 +13164,7 @@
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">HTTPS Secure Port</label>
-                  <input type="number" id="opm-ssl-port" value="8443" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  <input type="number" id="opm-ssl-port" value="" placeholder="Not set" style="width: 100%; box-sizing: border-box; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
                 </div>
                 <div>
                   <label style="display: block; font-weight: 700; color: #334155; font-size: 11px; margin-bottom: 6px;">Enabled TLS Protocols</label>
@@ -15102,7 +13183,7 @@
 
               <div style="background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; margin-bottom: 18px;">
                 <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #1e293b; cursor: pointer;">
-                  <input type="checkbox" id="opm-ssl-redirect" checked style="width: 15px; height: 15px; accent-color: #0070e0;">
+                  <input type="checkbox" id="opm-ssl-redirect" style="width: 15px; height: 15px; accent-color: #0070e0;">
                   Force Automatic HTTP (8060) to HTTPS (8443) Redirection
                 </label>
                 <div style="font-size: 11px; color: #64748b; margin-top: 4px; padding-left: 23px;">
@@ -15160,7 +13241,7 @@
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 11px; color: #64748b;">
               <span>Status: <strong style="color: #16a34a;">● Live Polling Active</strong> (Auto-buffered from Central Daemon)</span>
-              <span>ManageEngine SIF: Diagnostic archive includes JVM thread dumps, PostgreSQL stats & sync manifests.</span>
+              <span>Diagnostic archive: server log files plus a system snapshot (Node.js version, uptime, memory usage, SQLite database size and inventory counts).</span>
             </div>
           </div>
         ` : `
@@ -15168,8 +13249,8 @@
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">JVM & Backend Engine Health (Build 129203)</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Embedded PostgreSQL 14.7, JVM Heap Allocation, and Poller Thread Statistics.</div>
+                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">JVM & Backend Engine Health (12.9.204-GA)</div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">JVM heap, database, and poller statistics — live values only, or — when unavailable.</div>
               </div>
               <button id="opm-db-maint-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Run DB Maintenance</button>
             </div>
@@ -15178,46 +13259,46 @@
               <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #fafbfc;">
                 <div style="font-weight: 800; color: #0f172a; margin-bottom: 8px;">JVM Heap Memory</div>
                 <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px;">
-                  <span>Allocated: 2,450 MB / 8,192 MB Max</span>
-                  <span style="font-weight: 700; color: #16a34a;">30% (Healthy)</span>
+                  <span id="opm-eng-heap">Allocated: —</span>
+                  <span id="opm-eng-heap-pct" style="font-weight: 700; color: #16a34a;">—</span>
                 </div>
                 <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
-                  <div style="width: 30%; height: 100%; background: #16a34a;"></div>
+                  <div id="opm-eng-heap-bar" style="width: 0%; height: 100%; background: #16a34a;"></div>
                 </div>
-                <div style="font-size: 11px; color: #64748b;">Garbage Collector: G1GC | Uptime: 14 days 6 hours</div>
+                <div style="font-size: 11px; color: #64748b;"><span id="opm-eng-uptime">Uptime: —</span></div>
               </div>
 
               <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #fafbfc;">
                 <div style="font-weight: 800; color: #0f172a; margin-bottom: 8px;">Embedded Database</div>
-                <div style="color: #16a34a; font-weight: 800; margin-bottom: 4px;">PostgreSQL 14.7 Active (Port 13306)</div>
-                <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">Connection Pool: 14 Active / 150 Max | Database Size: 14.2 GB</div>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">Buffer Cache Hit Ratio: 99.4%</div>
+                <div style="color: #16a34a; font-weight: 800; margin-bottom: 4px;"><span id="opm-eng-db">Database: —</span></div>
+                <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;"><span id="opm-eng-pool">—</span></div>
+                <div style="font-size: 11px; color: #64748b; font-weight: 600;"><span id="opm-eng-cache">Buffer Cache Hit Ratio: —</span></div>
               </div>
             </div>
 
             <!-- Poller Worker Threads & Retention Policies -->
             <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #ffffff;">
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Data Retention & Archival Policies</div>
+              <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Data Retention &amp; Archival Policies (Not Configured)</div>
               <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; font-size: 12px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px;">
                   <div style="color: #64748b; font-size: 11px;">Raw Polling Data</div>
-                  <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 4px 0;">7 Days</div>
-                  <div style="color: #16a34a; font-size: 10px;">Automated Rollup</div>
+                  <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 4px 0;">Not configured</div>
+                  <div style="color: #64748b; font-size: 10px;">Kept until deleted</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px;">
                   <div style="color: #64748b; font-size: 11px;">Hourly Averages</div>
-                  <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 4px 0;">30 Days</div>
-                  <div style="color: #16a34a; font-size: 10px;">Trend Analysis</div>
+                  <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 4px 0;">Not configured</div>
+                  <div style="color: #64748b; font-size: 10px;">No automatic rollup</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px;">
                   <div style="color: #64748b; font-size: 11px;">Daily Summaries</div>
-                  <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 4px 0;">365 Days</div>
-                  <div style="color: #16a34a; font-size: 10px;">Annual SLA Reports</div>
+                  <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 4px 0;">Not configured</div>
+                  <div style="color: #64748b; font-size: 10px;">No automatic rollup</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px;">
-                  <div style="color: #64748b; font-size: 11px;">Syslog & Trap Logs</div>
-                  <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 4px 0;">15 Days</div>
-                  <div style="color: #16a34a; font-size: 10px;">Rotated Daily</div>
+                  <div style="color: #64748b; font-size: 11px;">Syslog &amp; Trap Logs</div>
+                  <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 4px 0;">Not configured</div>
+                  <div style="color: #64748b; font-size: 10px;">No automatic rotation</div>
                 </div>
               </div>
             </div>
@@ -15246,20 +13327,80 @@
       };
     });
 
-    // Save button
+    // Save button: delegate to the active sub-tab's own Save button.
     const saveBtn = container.querySelector('#opm-set-save-btn');
     if (saveBtn) {
       saveBtn.onclick = () => {
-        showToast('OpManager Central settings saved successfully.');
+        const saveTargets = {
+          mail: '#opm-save-mail-settings-btn',
+          proxy: '#opm-save-proxy-btn',
+          users: '#opm-save-ad-btn',
+          system: '#opm-save-system-btn',
+          ssl: '#opm-save-ssl-btn'
+        };
+        const target = container.querySelector(saveTargets[activeSub] || '');
+        if (target) { target.click(); return; }
+        showToast('Nothing to save on this tab.');
       };
     }
 
-    // Copy Token button
+    // Copy Token button: copies the server-issued key in the input, if any.
     const copyTokenBtn = container.querySelector('#opm-copy-token-btn');
     if (copyTokenBtn) {
-      copyTokenBtn.onclick = () => {
-        navigator.clipboard.writeText('OPM-CENTRAL-AUTH-TOKEN-9281-GA-129203');
-        showToast('Agent enrollment authentication token copied to clipboard.');
+      copyTokenBtn.onclick = async () => {
+        const input = container.querySelector('#opm-enrollment-token-input');
+        const val = input ? input.value.trim() : '';
+        if (!val) { showToast('No enrollment token issued yet — use Regenerate to request one from the server.'); return; }
+        try {
+          await navigator.clipboard.writeText(val);
+          showToast('Agent enrollment authentication token copied to clipboard.');
+        } catch (e) {
+          showToast('Could not copy the token: ' + e.message);
+        }
+      };
+    }
+
+    // Regenerate enrollment token: server issues a key, shown once.
+    const regenTokenBtn = container.querySelector('#opm-regen-token-btn');
+    if (regenTokenBtn) {
+      regenTokenBtn.onclick = async () => {
+        regenTokenBtn.disabled = true;
+        try {
+          const resp = await fetch('/api/admin/regenerateAPIKey', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+          });
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok || !data.apiKey) throw new Error(data.message || ('Token request failed (HTTP ' + resp.status + ')'));
+          const input = container.querySelector('#opm-enrollment-token-input');
+          if (input) { input.value = data.apiKey; input.placeholder = ''; }
+          if (state.settingsData) state.settingsData.apiKey = data.apiKey;
+          showToast(data.message || 'New enrollment token generated. Store it now — it is shown only once.');
+        } catch (e) {
+          showToast(e.message || 'Token request failed.');
+        }
+        regenTokenBtn.disabled = false;
+      };
+    }
+
+    // WAN RTT mesh refresh: re-fetch live probe latencies.
+    const wanMeshBtn = container.querySelector('#opm-run-wan-mesh-btn');
+    if (wanMeshBtn) {
+      wanMeshBtn.onclick = async () => {
+        wanMeshBtn.disabled = true;
+        try {
+          const resp = await fetch('/api/probes');
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Probe refresh failed (HTTP ' + resp.status + ')'));
+          const arr = Array.isArray(data) ? data : data.probes;
+          if (!Array.isArray(arr)) throw new Error('Probe refresh returned no probe list.');
+          state.probes = arr;
+          renderSettingsView();
+        } catch (e) {
+          showToast(e.message || 'Probe refresh failed.');
+          wanMeshBtn.disabled = false;
+        }
       };
     }
 
@@ -15299,11 +13440,9 @@
         testAdBtn.innerText = 'Testing...';
         try {
           const resp = await fetch('/api/settings/auth/ad/test', { method: 'POST' });
-          const data = await resp.json();
-          if (data.verified !== true) throw new Error(resp.ok ? 'Live LDAP verification requires a connected backend.' : data.message);
-          showToast(data.message || 'LDAP Bind successful with Domain Controller.');
-          const badge = container.querySelector('#opm-ad-status-badge');
-          if (badge) badge.innerText = '● SYNC ACTIVE (' + (data.usersIndexed || 148) + ' USERS)';
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('LDAP test failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'LDAP verification succeeded.');
         } catch(e) {
           showToast(e.message || 'LDAP test failed. Please retry.');
         }
@@ -15315,7 +13454,29 @@
     const saveAdBtn = container.querySelector('#opm-save-ad-btn');
     if (saveAdBtn) {
       saveAdBtn.onclick = async () => {
-        showToast('Active Directory domain settings saved successfully.');
+        const domainName = container.querySelector('#opm-ad-domain')?.value.trim();
+        const domainController = container.querySelector('#opm-ad-dc')?.value.trim();
+        if (!domainName || !domainController) { showToast('Enter an AD domain and a domain controller first.'); return; }
+        const body = { domainName, domainController };
+        const portRaw = container.querySelector('#opm-ad-port')?.value.trim();
+        if (portRaw) body.port = parseInt(portRaw, 10);
+        const baseDn = container.querySelector('#opm-ad-basedn')?.value.trim();
+        if (baseDn) body.baseDn = baseDn;
+        const bindUser = container.querySelector('#opm-ad-binddn')?.value.trim();
+        if (bindUser) body.bindUser = bindUser;
+        try {
+          const resp = await fetch('/api/settings/auth/ad', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('AD save failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'Active Directory domain settings saved successfully.');
+          opmLoadSettings();
+        } catch (e) {
+          showToast(e.message || 'Active Directory save failed.');
+        }
       };
     }
 
@@ -15326,10 +13487,11 @@
         testSamlBtn.innerText = 'Validating...';
         try {
           const resp = await fetch('/api/settings/auth/saml/test', { method: 'POST' });
-          const data = await resp.json();
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('SAML test failed (HTTP ' + resp.status + ')'));
           showToast(data.message || 'SAML 2.0 metadata validated.');
         } catch(e) {
-          showToast('SAML 2.0 configuration validated.');
+          showToast(e.message || 'SAML test failed.');
         }
         testSamlBtn.disabled = false;
         testSamlBtn.innerText = 'Validate SAML Metadata';
@@ -15338,8 +13500,27 @@
 
     const saveSamlBtn = container.querySelector('#opm-save-saml-btn');
     if (saveSamlBtn) {
-      saveSamlBtn.onclick = () => {
-        showToast('SAML 2.0 Single Sign-On configuration saved.');
+      saveSamlBtn.onclick = async () => {
+        const body = {};
+        const idp = container.querySelector('#opm-saml-idp')?.value.trim();
+        if (idp) body.idpEntityId = idp;
+        const url = container.querySelector('#opm-saml-url')?.value.trim();
+        if (url) body.idpSsoUrl = url;
+        const acs = container.querySelector('#opm-saml-acs')?.value.trim();
+        if (acs) body.spAcsUrl = acs;
+        try {
+          const resp = await fetch('/api/settings/auth/saml', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('SAML save failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'SAML 2.0 Single Sign-On configuration saved.');
+          opmLoadSettings();
+        } catch (e) {
+          showToast(e.message || 'SAML save failed.');
+        }
       };
     }
 
@@ -15393,18 +13574,55 @@
       };
     });
 
-    // Test credential button
+    // Test credential button: no credential-test endpoint exists.
     container.querySelectorAll('.opm-cred-test-btn').forEach(btn => {
       btn.onclick = () => {
-        showToast('Credential validated successfully against target nodes.');
+        showToast('Credential validation is not available — no credential-test endpoint exists on this server.');
       };
     });
 
-    // DB Maintenance button
+    // Add credential: no credential editor exists in this build.
+    const addCredBtn = container.querySelector('#opm-add-cred-btn');
+    if (addCredBtn) {
+      addCredBtn.onclick = () => {
+        showToast('Adding credentials is not available — no credential editor exists in this build.');
+      };
+    }
+
+    // User edit: no user-update endpoint exists (only add/delete, both 501).
+    container.querySelectorAll('.opm-user-edit-btn').forEach(btn => {
+      btn.onclick = () => {
+        showToast('User editing is not available — no user-update endpoint exists on this server.');
+      };
+    });
+
+    // Add notification profile: no notification-profile endpoint exists.
+    container.querySelectorAll('#opm-add-notify-profile-btn, .opm-add-notify-profile-btn').forEach(btn => {
+      btn.onclick = () => {
+        showToast('Notification profiles are not available — no notification-profile endpoint exists on this server.');
+      };
+    });
+
+    // DB backup download: no backup-download endpoint exists on this server.
+    container.querySelectorAll('.opm-db-download-btn').forEach(btn => {
+      btn.onclick = () => {
+        showToast('Backup download is not available on this server — no backup-download endpoint exists.');
+      };
+    });
+
+    // DB Maintenance button: real vacuum POST, report the real outcome.
     const dbBtn = container.querySelector('#opm-db-maint-btn');
     if (dbBtn) {
-      dbBtn.onclick = () => {
-        showToast('PostgreSQL VACUUM, ANALYZE & Reindex completed in 1.4s.');
+      dbBtn.onclick = async () => {
+        showToast('Running database vacuum...');
+        try {
+          const resp = await fetch('/api/settings/db/vacuum', { method: 'POST' });
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Vacuum failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || ('Database vacuum completed' + (data.durationMs != null ? ' in ' + data.durationMs + 'ms.' : '.')));
+        } catch (e) {
+          showToast(e.message || 'Database vacuum failed.');
+        }
       };
     }
 
@@ -15490,41 +13708,62 @@
           showApplyTemplateModal(id);
         } else {
           const name = btn.getAttribute('data-name');
-          showToast(`Template "${name}" applied across matching monitored nodes.`);
+          showToast('Template application is not available — the apply dialog did not load.');
         }
       };
     });
 
-    // Test Notification Profile button
+    // Test Notification Profile button: only email has a real test path.
     container.querySelectorAll('.opm-test-notify-btn').forEach(btn => {
-      btn.onclick = () => {
-        const t = btn.getAttribute('data-type');
-        showToast(`Test ${t.toUpperCase()} alert sent successfully.`);
+      btn.onclick = async () => {
+        const t = (btn.getAttribute('data-type') || '').toLowerCase();
+        if (t !== 'email') {
+          showToast('Test notification is not available — no notification-test endpoint exists on this server.');
+          return;
+        }
+        const to = (state.settingsData && state.settingsData.mail && state.settingsData.mail.adminEmail) || '';
+        if (!to) { showToast('Enter a notification email address in Mail Settings first.'); return; }
+        try {
+          const resp = await fetch('/api/settings/mail/test', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: to })
+          });
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Mail test failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'Test email sent.');
+        } catch (e) {
+          showToast(e.message || 'Mail test failed.');
+        }
       };
     });
 
-    // Edit Threshold Profile button
+    // Edit Threshold Profile button: no threshold endpoint exists.
     container.querySelectorAll('.opm-edit-thresh-btn').forEach(btn => {
       btn.onclick = () => {
-        showToast('Threshold boundaries saved to Threshold.conf.');
+        showToast('Threshold editing is not available — no threshold endpoint exists on this server.');
       };
     });
 
-    // Poll agent telemetry button
+    // Poll agent telemetry button: only values the API actually returns.
     const pollAgentBtn = container.querySelector('#opm-agent-test-telemetry-btn');
     if (pollAgentBtn) {
       pollAgentBtn.onclick = async () => {
         try {
           const resp = await fetch('/api/agent/list');
-          const data = await resp.json();
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Agent list unavailable (HTTP ' + resp.status + ')'));
           if (data && data.agents && data.agents.length > 0) {
             const ag = data.agents[0];
-            showToast(`Polled Agent ${ag.agentId}: CPU ${ag.metrics?.cpu || 90}%, RAM ${ag.metrics?.memory || 97}%, Interfaces: ${ag.metrics?.interfacesCount || 18}`);
+            const cpu = (ag.metrics && ag.metrics.cpu != null) ? ag.metrics.cpu + '%' : '—';
+            const ram = (ag.metrics && ag.metrics.memory != null) ? ag.metrics.memory + '%' : '—';
+            const ifaces = (ag.metrics && ag.metrics.interfacesCount != null) ? ag.metrics.interfacesCount : '—';
+            showToast(`Polled Agent ${ag.agentId || '—'}: CPU ${cpu}, RAM ${ram}, Interfaces: ${ifaces}`);
           } else {
-            showToast('Polled Agent: Live telemetry received successfully.');
+            showToast('No agents connected yet.');
           }
         } catch(e) {
-          showToast('Polled Agent: Heartbeat confirmed active.');
+          showToast(e.message || 'Agent poll failed.');
         }
       };
     }
@@ -15537,11 +13776,12 @@
       const sifBtn = container.querySelector('#opm-generate-sif-btn');
 
       const fetchLogs = async (fileName) => {
-        if (!term) return;
+        if (!term) return false;
         term.innerHTML = '<div style="color: #94a3b8; font-style: italic;">Fetching log stream from Central daemon...</div>';
         try {
           const resp = await fetch('/api/support/logs?file=' + encodeURIComponent(fileName || 'opmanager_server.log'));
           const data = await resp.json();
+          if (!resp.ok) throw new Error(data.message || ('Log fetch failed (HTTP ' + resp.status + ')'));
           if (data && data.logs && data.logs.length > 0) {
             term.innerHTML = data.logs.map(line => {
               let color = '#38bdf8';
@@ -15554,8 +13794,10 @@
           } else {
             term.innerHTML = '<div style="color: #94a3b8;">No log entries found in buffer.</div>';
           }
+          return true;
         } catch(e) {
           term.innerHTML = '<div style="color: #f87171;">Failed to fetch live logs: ' + e.message + '</div>';
+          return false;
         }
       };
 
@@ -15567,9 +13809,9 @@
         };
       }
       if (refreshBtn) {
-        refreshBtn.onclick = () => {
-          fetchLogs(logSelect ? logSelect.value : 'opmanager_server.log');
-          showToast('Diagnostic log stream refreshed.');
+        refreshBtn.onclick = async () => {
+          const ok = await fetchLogs(logSelect ? logSelect.value : 'opmanager_server.log');
+          if (ok) showToast('Diagnostic log stream refreshed.');
         };
       }
       if (sifBtn) {
@@ -15577,10 +13819,12 @@
           showToast('Generating ManageEngine SIF (Support Information File)...');
           try {
             const resp = await fetch('/api/support/sif');
-            const data = await resp.json();
-            showToast(`SIF Created: ${data.fileName} (${data.fileSize})`);
+            const data = await resp.json().catch(() => ({}));
+            if (!resp.ok || !data.fileName) throw new Error(data.message || ('SIF generation failed (HTTP ' + resp.status + ')'));
+            showToast(`SIF Created: ${data.fileName} (${data.fileSize || ''})`);
+            if (data.downloadPath) window.open(data.downloadPath, '_blank');
           } catch(e) {
-            showToast('SIF Archive generated successfully.');
+            showToast(e.message || 'SIF generation failed.');
           }
         };
       }
@@ -15593,7 +13837,8 @@
     if (testEmailBtn) {
       testEmailBtn.onclick = async () => {
         const emailInput = container.querySelector('#opm-test-email-target');
-        const email = emailInput ? emailInput.value.trim() : 'admin@enterprise.corp';
+        const email = emailInput ? emailInput.value.trim() : '';
+        if (!email) { showToast('Enter a recipient email address first.'); return; }
         showToast(`Dispatching test email to ${email}...`);
         try {
           const resp = await fetch('/api/settings/mail/test', {
@@ -15601,8 +13846,8 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
           });
-          const data = await resp.json();
-          if (data.verified !== true) throw new Error(resp.ok ? 'Live SMTP delivery requires a connected backend.' : data.message);
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Mail test failed (HTTP ' + resp.status + ')'));
           showToast(data.message || 'Test email sent.');
         } catch(e) {
           showToast(e.message || 'SMTP test failed. Please retry.');
@@ -15613,69 +13858,67 @@
     const saveMailBtn = container.querySelector('#opm-save-mail-settings-btn');
     if (saveMailBtn) {
       saveMailBtn.onclick = async () => {
-        const host = (container.querySelector('#opm-mail-host')?.value) || 'smtp.enterprise.corp';
-        const port = parseInt(container.querySelector('#opm-mail-port')?.value || '587', 10);
-        const security = (container.querySelector('#opm-mail-security')?.value) || 'STARTTLS';
-        const fromAddress = (container.querySelector('#opm-mail-from')?.value) || 'opmanager-central@enterprise.corp';
-        const adminEmail = (container.querySelector('#opm-mail-admin')?.value) || 'noc-alerts@enterprise.corp';
-        const username = (container.querySelector('#opm-mail-user')?.value) || 'opmanager_mailer';
-
+        const host = container.querySelector('#opm-mail-host')?.value.trim();
+        const fromAddress = container.querySelector('#opm-mail-from')?.value.trim();
+        if (!host || !fromAddress) { showToast('Enter a mail server host and a sender address first.'); return; }
+        const body = { host, fromAddress };
+        const portRaw = container.querySelector('#opm-mail-port')?.value.trim();
+        if (portRaw) body.port = parseInt(portRaw, 10);
+        const security = container.querySelector('#opm-mail-security')?.value;
+        if (security) body.security = security;
+        const adminEmail = container.querySelector('#opm-mail-admin')?.value.trim();
+        if (adminEmail) body.adminEmail = adminEmail;
+        const username = container.querySelector('#opm-mail-user')?.value.trim();
+        if (username) body.username = username;
         try {
           const resp = await fetch('/api/settings/mail', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ host, port, security, fromAddress, adminEmail, username })
+            body: JSON.stringify(body)
           });
-          showToast(`Mail server (${host}:${port}) saved and synchronized across all probes.`);
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Mail save failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'Mail server settings saved.');
+          opmLoadSettings();
         } catch(e) {
-          showToast(`Mail server (${host}:${port}) saved.`);
+          showToast(e.message || 'Mail server save failed.');
         }
       };
     }
 
-    // Failover Heartbeat Test Handler
+    // Failover Heartbeat Test Handler: real TCP-connect test to the
+    // configured standby, or an honest refusal when none is configured.
     const testHaBtn = container.querySelector('#opm-test-ha-btn');
     if (testHaBtn) {
       testHaBtn.onclick = async () => {
-        showToast('Pinging Standby Central Node 10.0.0.11:8065...');
+        const fo = state.settingsData && state.settingsData.failover;
+        const standby = (fo && fo.secondary && fo.secondary.ip) || 'the configured standby';
+        showToast('Testing failover heartbeat to ' + standby + '...');
         try {
           const resp = await fetch('/api/settings/failover/test', { method: 'POST' });
-          const data = await resp.json();
-          showToast(data.message || 'Heartbeat verified. Replication lag: 0ms.');
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Failover heartbeat test failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'Heartbeat test completed.');
         } catch(e) {
-          showToast('Heartbeat OK. Standby node synchronized (0.4ms RTT).');
+          showToast(e.message || 'Failover heartbeat test failed.');
         }
       };
     }
 
-    // Failover Role Switchover Simulation
+    // Failover Role Switchover Simulation: no switchover endpoint exists
+    // in this build, so this runs the real heartbeat test and says so.
     const simFailoverBtn = container.querySelector('#opm-simulate-failover-btn');
     if (simFailoverBtn) {
-      simFailoverBtn.onclick = () => {
-        simFailoverBtn.disabled = true;
-        simFailoverBtn.innerHTML = '⚡ Switching Roles...';
-        const term = container.querySelector('#opm-ha-term-logs');
-        if (term) {
-          term.innerHTML += `<div style="color: #facc15;">[${new Date().toLocaleTimeString()}] INITIATING GRACEFUL ROLE SWITCHOVER...</div>`;
-          term.innerHTML += `<div style="color: #cbd5e1;">[${new Date().toLocaleTimeString()}] Step 1: Pausing inbound writes on Primary (10.0.0.10). Flushing WAL buffers...</div>`;
+      simFailoverBtn.onclick = async () => {
+        showToast('Role switchover is not available in this build — no switchover endpoint exists. Running a failover heartbeat test instead.');
+        try {
+          const resp = await fetch('/api/settings/failover/test', { method: 'POST' });
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Failover heartbeat test failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'Heartbeat test completed.');
+        } catch (e) {
+          showToast(e.message || 'Failover heartbeat test failed.');
         }
-        setTimeout(() => {
-          if (term) {
-            term.innerHTML += `<div style="color: #cbd5e1;">[${new Date().toLocaleTimeString()}] Step 2: Promoting Secondary (10.0.0.11) to Active Master...</div>`;
-            term.innerHTML += `<div style="color: #cbd5e1;">[${new Date().toLocaleTimeString()}] Step 3: Gratuitous ARP re-announcing VIP 10.0.0.12 to gateway switches...</div>`;
-            term.innerHTML += `<div style="color: #4ade80; font-weight: bold;">[${new Date().toLocaleTimeString()}] Step 4: ✔ Switchover complete! Node 10.0.0.11 is now ACTIVE MASTER. Downtime: 0.18s.</div>`;
-            term.scrollTop = term.scrollHeight;
-          }
-          simFailoverBtn.disabled = false;
-          simFailoverBtn.innerHTML = '⚡ Simulate Role Switchover';
-          const badge = container.querySelector('#opm-ha-cluster-badge');
-          if (badge) {
-            badge.style.background = '#e0f2fe';
-            badge.style.color = '#0369a1';
-            badge.innerText = '● STANDBY PROMOTED TO MASTER';
-          }
-          showToast('Graceful failover switchover completed in 180ms. VIP 10.0.0.12 re-bound.');
-        }, 1500);
       };
     }
 
@@ -15683,8 +13926,9 @@
     const testProxyBtn = container.querySelector('#opm-test-proxy-btn');
     if (testProxyBtn) {
       testProxyBtn.onclick = async () => {
-        const host = container.querySelector('#opm-proxy-host')?.value || 'proxy.enterprise.corp';
-        const port = container.querySelector('#opm-proxy-port')?.value || '8080';
+        const host = container.querySelector('#opm-proxy-host')?.value.trim();
+        const port = container.querySelector('#opm-proxy-port')?.value.trim();
+        if (!host || !port) { showToast('Enter a proxy host and port first.'); return; }
         showToast(`Testing outbound proxy connection to ${host}:${port}...`);
         try {
           const resp = await fetch('/api/settings/proxy/test', {
@@ -15692,16 +13936,17 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ host, port })
           });
-          const data = await resp.json();
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Proxy test failed (HTTP ' + resp.status + ')'));
           const pill = container.querySelector('#opm-proxy-status-pill');
           if (pill) {
-            pill.textContent = '● Proxy Verified (14ms Latency)';
+            pill.textContent = '● Proxy Verified' + (data.latencyMs != null ? ' (' + data.latencyMs + 'ms Latency)' : '');
             pill.style.background = '#dcfce7';
             pill.style.color = '#166534';
           }
           showToast(data.message || `Outbound connection verified via ${host}:${port}.`);
         } catch (e) {
-          showToast(`Proxy connection verified via ${host}:${port}.`);
+          showToast(e.message || 'Proxy test failed.');
         }
       };
     }
@@ -15711,17 +13956,30 @@
       saveProxyBtn.onclick = async () => {
         const enabled = container.querySelector('#opm-proxy-enable')?.checked || false;
         const protocol = container.querySelector('#opm-proxy-protocol')?.value || 'HTTP';
-        const host = container.querySelector('#opm-proxy-host')?.value || 'proxy.enterprise.corp';
-        const port = parseInt(container.querySelector('#opm-proxy-port')?.value || '8080', 10);
+        const host = container.querySelector('#opm-proxy-host')?.value.trim();
+        const portRaw = container.querySelector('#opm-proxy-port')?.value.trim();
+        if (enabled && (!host || !portRaw)) { showToast('Enter a proxy host and port to enable the proxy.'); return; }
+        const body = { enabled, protocol, authRequired: container.querySelector('#opm-proxy-auth-check')?.checked || false };
+        if (host) body.host = host;
+        if (portRaw) body.port = parseInt(portRaw, 10);
+        const username = container.querySelector('#opm-proxy-user')?.value.trim();
+        if (username) body.username = username;
+        const password = container.querySelector('#opm-proxy-pass')?.value;
+        if (password) body.password = password;
+        const bypass = container.querySelector('#opm-proxy-bypass')?.value.trim();
+        if (bypass) body.bypassList = bypass;
         try {
-          await fetch('/api/settings/proxy', {
+          const resp = await fetch('/api/settings/proxy', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ enabled, protocol, host, port })
+            body: JSON.stringify(body)
           });
-          showToast('Proxy server configuration saved successfully.');
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('Proxy save failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'Proxy server configuration saved successfully.');
+          opmLoadSettings();
         } catch (e) {
-          showToast('Proxy server settings saved.');
+          showToast(e.message || 'Proxy save failed.');
         }
       };
     }
@@ -15738,27 +13996,15 @@
     const dbBackupBtn = container.querySelector('#opm-db-backup-now-btn');
     if (dbBackupBtn) {
       dbBackupBtn.onclick = async () => {
-        showToast('Initiating live PostgreSQL snapshot backup...');
+        showToast('Initiating live database backup...');
         try {
           const resp = await fetch('/api/settings/db/backup', { method: 'POST' });
-          const data = await resp.json();
-          const tbody = container.querySelector('#opm-db-backup-tbody');
-          if (tbody && data.backup) {
-            const tr = document.createElement('tr');
-            tr.style.cssText = 'border-bottom: 1px solid #f1f5f9; background: #f0fdf4;';
-            tr.innerHTML = `
-              <td style="padding: 10px 14px; font-family: monospace; font-weight: 600; color: #0070e0;">${data.backup.fileName}</td>
-              <td style="padding: 10px 14px; color: #64748b;">${data.backup.timestamp}</td>
-              <td style="padding: 10px 14px; font-weight: 600;">${data.backup.sizeMB} MB</td>
-              <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-size: 10px;">Manual On-Demand</span></td>
-              <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;">VERIFIED (SHA256)</span></td>
-              <td style="padding: 10px 14px; text-align: right;"><button onclick="window.showToast('Downloading backup archive')" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Download</button></td>
-            `;
-            tbody.insertBefore(tr, tbody.firstChild);
-          }
-          showToast(data.message || 'Database snapshot created successfully.');
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok || !data.backup) throw new Error(data.message || ('Database backup failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'Database backup created successfully.');
+          opmLoadSettings();
         } catch (e) {
-          showToast('Database backup created successfully.');
+          showToast(e.message || 'Database backup failed.');
         }
       };
     }
@@ -15766,56 +14012,75 @@
     const dbVacuumBtn = container.querySelector('#opm-db-vacuum-btn');
     if (dbVacuumBtn) {
       dbVacuumBtn.onclick = async () => {
-        showToast('Running PostgreSQL VACUUM ANALYZE & Reindex...');
+        showToast('Running SQLite VACUUM & ANALYZE...');
         try {
           const resp = await fetch('/api/settings/db/vacuum', { method: 'POST' });
-          const data = await resp.json();
-          showToast(data.message || 'VACUUM ANALYZE completed. Dead tuples reclaimed.');
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('SQLite VACUUM failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || ('SQLite VACUUM & ANALYZE completed' + (data.durationMs != null ? ' in ' + data.durationMs + 'ms.' : '.')));
         } catch (e) {
-          showToast('VACUUM ANALYZE completed.');
+          showToast(e.message || 'SQLite VACUUM & ANALYZE failed.');
         }
       };
     }
 
-    // System Settings & Rebranding Save Handler
+    // System Settings & Rebranding Save Handler: only filled values.
     const saveSysBtn = container.querySelector('#opm-save-system-btn');
     if (saveSysBtn) {
       saveSysBtn.onclick = async () => {
-        const hostname = container.querySelector('#opm-sys-hostname')?.value || 'opmanager-central.enterprise.corp';
-        const serverPort = parseInt(container.querySelector('#opm-sys-port')?.value || '8060', 10);
-        const sessionTimeoutMins = parseInt(container.querySelector('#opm-sys-timeout')?.value || '30', 10);
-        const orgName = container.querySelector('#opm-rebrand-org')?.value || 'Global Enterprise Corp.';
+        const hostname = container.querySelector('#opm-sys-hostname')?.value.trim();
+        const portRaw = container.querySelector('#opm-sys-port')?.value.trim();
+        const timeoutRaw = container.querySelector('#opm-sys-timeout')?.value;
+        const retentionRaw = container.querySelector('#opm-sys-retention')?.value;
+        const orgName = container.querySelector('#opm-rebrand-org')?.value.trim();
+        const prodTitle = container.querySelector('#opm-rebrand-title')?.value.trim();
+        const footer = container.querySelector('#opm-rebrand-footer')?.value.trim();
+        const sysBody = { dnsReverseLookup: container.querySelector('#opm-sys-dns-lookup')?.checked || false };
+        if (hostname) sysBody.hostname = hostname;
+        if (portRaw) sysBody.serverPort = parseInt(portRaw, 10);
+        if (timeoutRaw) sysBody.sessionTimeoutMins = parseInt(timeoutRaw, 10);
+        if (retentionRaw) sysBody.dataRetentionDays = parseInt(retentionRaw, 10);
+        const brandBody = {};
+        if (orgName) brandBody.organizationName = orgName;
+        if (prodTitle) brandBody.productTitle = prodTitle;
+        if (footer) brandBody.footerNotice = footer;
 
         showToast('Saving system and white-label branding configuration...');
         try {
-          await fetch('/api/settings/system', {
+          const r1 = await fetch('/api/settings/system', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ hostname, serverPort, sessionTimeoutMins })
+            body: JSON.stringify(sysBody)
           });
-          await fetch('/api/settings/rebrand', {
+          const d1 = await r1.json().catch(() => ({}));
+          if (!r1.ok) throw new Error(d1.message || ('System save failed (HTTP ' + r1.status + ')'));
+          const r2 = await fetch('/api/settings/rebrand', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ organizationName: orgName })
+            body: JSON.stringify(brandBody)
           });
-          showToast(`System settings & white-label brand (${orgName}) updated successfully.`);
+          const d2 = await r2.json().catch(() => ({}));
+          if (!r2.ok) throw new Error(d2.message || ('Rebrand save failed (HTTP ' + r2.status + ')'));
+          showToast(d1.message || d2.message || 'System settings saved.');
+          opmLoadSettings();
         } catch (e) {
-          showToast('System configuration saved successfully.');
+          showToast(e.message || 'System configuration save failed.');
         }
       };
     }
 
-    // WMI Query Execution Handler
+    // WMI Query Execution Handler: host required, real outcome only.
     const wmiExecBtn = container.querySelector('#opm-wmi-exec-btn');
     if (wmiExecBtn) {
       wmiExecBtn.onclick = async () => {
-        const host = container.querySelector('#opm-wmi-target-ip')?.value || (state.devices && state.devices[0]?.ip) || '127.0.0.1';
+        const host = container.querySelector('#opm-wmi-target-ip')?.value.trim();
+        if (!host) { showToast('Enter a target IP address first.'); return; }
         const namespace = container.querySelector('#opm-wmi-namespace')?.value || 'root\\cimv2';
         const query = container.querySelector('#opm-wmi-query-sql')?.value || 'SELECT Name, PercentProcessorTime FROM Win32_PerfFormattedData_PerfOS_Processor';
         const outBox = container.querySelector('#opm-wmi-output-box');
 
         if (outBox) {
-          outBox.innerHTML = `<div style="color: #64748b;">Executing WQL query on ${host}...</div>`;
+          outBox.innerHTML = `<div style="color: #64748b;">Executing WQL query on ${opmEsc(host)}...</div>`;
         }
 
         try {
@@ -15824,24 +14089,26 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ host, namespace, query })
           });
-          const data = await resp.json();
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('WMI query failed (HTTP ' + resp.status + ')'));
           if (outBox && data.records) {
             let rowsHtml = '';
             data.records.forEach(r => {
-              const keys = Object.keys(r);
-              rowsHtml += `<tr style="border-bottom: 1px solid #f1f5f9; color: #0f172a;"><td>${r.Name || r.DeviceID || r.Caption}</td><td>${r.PercentProcessorTime || r.FreeSpace || r.Version}</td><td><span style="color:#16a34a;">● OK</span></td></tr>`;
+              rowsHtml += `<tr style="border-bottom: 1px solid #f1f5f9; color: #0f172a;"><td>${opmEsc(r.Name || r.DeviceID || r.Caption || '—')}</td><td>${opmEsc(r.PercentProcessorTime ?? r.FreeSpace ?? r.Version ?? '—')}</td><td><span style="color:#16a34a;">● OK</span></td></tr>`;
             });
+            const count = data.count != null ? data.count : data.records.length;
             outBox.innerHTML = `
-              <div style="color: #16a34a; font-weight: 700;">WMI Query executed in ${data.executionTimeMs}ms. Returned ${data.count} objects from ${host}:</div>
+              <div style="color: #16a34a; font-weight: 700;">WMI Query executed${data.executionTimeMs != null ? ' in ' + data.executionTimeMs + 'ms' : ''}. Returned ${count} objects from ${opmEsc(host)}:</div>
               <table style="width: 100%; margin-top: 8px; border-collapse: collapse;">
                 <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;"><th>Property / Identifier</th><th>Value</th><th>Status</th></tr>
                 ${rowsHtml}
               </table>
             `;
           }
-          showToast(`WMI query executed on ${host} in 14ms.`);
-        } catch (e) {
           showToast(`WMI query executed on ${host}.`);
+        } catch (e) {
+          if (outBox) outBox.innerHTML = `<div style="color: #dc2626;">WMI query failed: ${opmEsc(e.message)}</div>`;
+          showToast(e.message || `WMI query failed on ${host}.`);
         }
       };
     }
@@ -15858,14 +14125,13 @@
     const testSslBtn = container.querySelector('#opm-test-ssl-btn');
     if (testSslBtn) {
       testSslBtn.onclick = async () => {
-        showToast('Initiating TLSv1.3 cryptographic handshake on port 8443...');
         try {
           const resp = await fetch('/api/settings/ssl/test', { method: 'POST' });
-          const data = await resp.json();
-          if (data.verified !== true) throw new Error(resp.ok ? 'Live TLS verification requires a connected backend.' : data.message);
-          showToast(`SSL Handshake OK: ${data.handshake} | OCSP: ${data.ocspStapling}`);
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('TLS test failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'TLS verification succeeded.');
           const pill = container.querySelector('#opm-ssl-status-pill');
-          if (pill) pill.innerText = '● Handshake Verified (TLS 1.3 Active)';
+          if (pill && data.handshake) pill.innerText = '● Handshake Verified';
         } catch (e) {
           showToast(e.message || 'TLS test failed. Please retry.');
         }
@@ -15875,21 +14141,33 @@
     const saveSslBtn = container.querySelector('#opm-save-ssl-btn');
     if (saveSslBtn) {
       saveSslBtn.onclick = async () => {
-        const httpsPort = parseInt(container.querySelector('#opm-ssl-port')?.value || '8443', 10);
+        const portRaw = container.querySelector('#opm-ssl-port')?.value.trim();
+        if (!portRaw) { showToast('Enter an HTTPS port first.'); return; }
+        const httpsPort = parseInt(portRaw, 10);
         const forceRedirect = container.querySelector('#opm-ssl-redirect')?.checked || false;
+        const body = { httpsPort, forceRedirect };
+        const protos = container.querySelector('#opm-ssl-protocols')?.value.trim();
+        if (protos) body.tlsVersions = protos.split(',').map(s => s.trim()).filter(Boolean);
+        const ciphers = container.querySelector('#opm-ssl-ciphers')?.value.trim();
+        if (ciphers) body.cipherSuite = ciphers;
         showToast('Saving SSL/TLS encryption parameters...');
         try {
-          await fetch('/api/settings/ssl', {
+          const resp = await fetch('/api/settings/ssl', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ httpsPort, forceRedirect })
+            body: JSON.stringify(body)
           });
-          showToast(`SSL parameters saved. HTTPS listener active on port ${httpsPort}.`);
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.message || ('SSL save failed (HTTP ' + resp.status + ')'));
+          showToast(data.message || 'SSL parameters saved.');
+          opmLoadSettings();
         } catch (e) {
-          showToast('SSL parameters saved.');
+          showToast(e.message || 'SSL save failed.');
         }
       };
     }
+
+    opmFillSettingsForm();
   }
 
 
@@ -15919,6 +14197,11 @@
   }
 
   function renderActiveTab(tab) {
+    // Auth gate (defense in depth): never render the console unless a live
+    // session has been verified. initSuite sets suiteAuthenticated only
+    // after GET /api/auth/session succeeds; the route guard clears it
+    // again if the session dies mid-use.
+    if (!suiteAuthenticated) return;
     const container = ensureOverlayContainer();
     ensureLayoutPlacement();
     setupHeaderBrandingAndIcons();
@@ -15955,7 +14238,29 @@
     }
   }
 
+  // Route guard: every hash-route change re-checks the live session before
+  // rendering. If the session has died mid-use, redirect to login instead
+  // of rendering with stale/empty data. The session check is de-duplicated
+  // while one is in flight (see checkAuthSession).
   function handleRoute() {
+    if (!suiteAuthenticated) return;
+    checkAuthSession().then((authenticated) => {
+      if (!authenticated) {
+        suiteAuthenticated = false;
+        redirectToLogin();
+        return;
+      }
+      renderCurrentRoute();
+    }).catch(() => {
+      suiteAuthenticated = false;
+      redirectToLogin();
+    });
+  }
+
+  // Render the route named by the current hash. Only ever called after a
+  // verified session (from handleRoute, or directly from initSuite right
+  // after its own session check). Routing table and hash routes unchanged.
+  function renderCurrentRoute() {
     const tab = resolveTabFromHash();
     state.currentTab = tab;
 
@@ -16074,6 +14379,8 @@
 
   // 1-second auto-refresh countdown timer
   setInterval(() => {
+    // Never re-render the dashboard without a verified session.
+    if (!suiteAuthenticated) return;
     if (state.currentTab === 'dashboard') {
       state.autoRefreshCountdown--;
       const span = document.getElementById('opm-refresh-countdown-span');
@@ -16258,29 +14565,22 @@
     } catch (e) {}
   }
 
-  // Patch ItomUtils service to provide stable security score and eliminate redundant fetch loops
-  function patchItomServices() {
-    try {
-      if (typeof window.require === 'function') {
-        const itomUtilsMod = window.require('itom/services/itom-utils');
-        if (itomUtilsMod && itomUtilsMod.default && itomUtilsMod.default.prototype) {
-          const u = itomUtilsMod.default.prototype;
-          u.securityScore = 96;
-          u.getSecurityScore = function() {
-            this.securityScore = 96;
-            return Promise.resolve({ SecurityScore: 96, score: 96 });
-          };
-        }
-      }
-    } catch (e) {}
-  }
+  // NOTE (audit G1): the former patchItomServices() hardcoded the ITOM
+  // security score to 96 by monkey-patching the vendored itom-utils
+  // service. It has been removed entirely — the service's real value is
+  // now shown (or "not available" when it provides none). No fake score
+  // is injected anywhere in this file.
 
-  // Eagerly patch WebSocket and ITOM service prototypes immediately on module evaluation
+  // Eagerly patch the WebSocket service prototype immediately on module evaluation.
+  // (The former patchItomServices() call was removed with audit item G1 — it
+  // hardcoded the security score to 96. This patch only installs message
+  // handlers; it renders nothing and fetches no data.)
   patchEmberWebSocketService();
-  patchItomServices();
 
   // Live WebSocket Connection for Real-Time ITOM Alarms & Telemetry
   function initWebSocketConnection() {
+    // Never open the live feed without a verified session.
+    if (!suiteAuthenticated) return;
     patchEmberWebSocketService();
 
     try {
@@ -16332,7 +14632,9 @@
       };
 
       ws.onclose = () => {
-        setTimeout(initWebSocketConnection, 3000);
+        // Reconnect only while the session is alive; if the session died
+        // mid-use the route guard redirects to login instead of reconnecting.
+        if (suiteAuthenticated) setTimeout(initWebSocketConnection, 3000);
       };
     } catch (err) {}
   }
@@ -16370,6 +14672,9 @@
   }
 
   function loadBackendData() {
+    // Never fetch data without a verified session. Initial state stays
+    // empty until the API responses below populate it — nothing is seeded.
+    if (!suiteAuthenticated) return;
     fetch('/api/devices')
       .then(r => r.json())
       .then(res => {
@@ -16441,41 +14746,91 @@
       }).catch(() => {});
   }
 
-  // Initialize Suite
+  // --- Auth gating -------------------------------------------------------
+  // The session is verified against the server (GET /api/auth/session),
+  // never against a client-side flag: no localStorage/sessionStorage
+  // login flag is read or written anywhere in this file.
+  let suiteInitStarted = false;
+  let suiteAuthenticated = false;
+  let suiteAuthCheckPromise = null;
+
+  // Resolves to true only when the server confirms an authenticated
+  // session ({ authenticated: true }). Any non-OK status (including 401),
+  // malformed body, or network failure resolves to false (fail closed).
+  // Concurrent callers share the single in-flight request.
+  function checkAuthSession() {
+    if (suiteAuthCheckPromise) return suiteAuthCheckPromise;
+    suiteAuthCheckPromise = fetch('/api/auth/session', { credentials: 'same-origin' })
+      .then((res) => {
+        if (!res.ok) return false;
+        return res.json().then((data) => !!(data && data.authenticated)).catch(() => false);
+      })
+      .catch(() => false);
+    suiteAuthCheckPromise.then(() => { suiteAuthCheckPromise = null; });
+    return suiteAuthCheckPromise;
+  }
+
+  function redirectToLogin() {
+    if (window.location.pathname !== '/login.html') {
+      window.location.href = '/login.html';
+    }
+  }
+
+  // Initialize Suite — auth-first, exactly once.
   function initSuite() {
-    registerEmberRoutesAndTemplates();
-    patchEmberWebSocketService();
-    patchItomServices();
-    ensureOverlayContainer();
-    ensureLayoutPlacement();
-    setupHeaderBrandingAndIcons();
-    hookMainHeaderEvents();
-    loadBackendData();
-    handleRoute();
-    initWebSocketConnection();
-    initContainerGuard();
+    // Double-init guard (audit correctness note): initSuite is invoked both
+    // immediately when document.body exists and again on DOMContentLoaded
+    // when the script loads while the document is still loading. Without
+    // this guard the 8 s poller and the WebSocket connection were started
+    // twice. The first call wins; later calls are no-ops.
+    if (suiteInitStarted) return;
+    suiteInitStarted = true;
 
-    // Periodic live background telemetry sync (every 8 seconds)
-    setInterval(loadBackendData, 8000);
+    // Auth FIRST: verify the live session before rendering the console,
+    // fetching any data, or opening the WebSocket. Unauthenticated users
+    // go to /login.html and nothing else below runs.
+    checkAuthSession().then((authenticated) => {
+      if (!authenticated) {
+        redirectToLogin();
+        return;
+      }
+      suiteAuthenticated = true;
 
-    // Fast check for layout placement during Ember mount
-    const mountInterval = setInterval(() => {
+      registerEmberRoutesAndTemplates();
       patchEmberWebSocketService();
+      ensureOverlayContainer();
       ensureLayoutPlacement();
       setupHeaderBrandingAndIcons();
       hookMainHeaderEvents();
-      syncHeaderTabs(state.currentTab);
-    }, 200);
+      loadBackendData();
+      renderCurrentRoute();
+      initWebSocketConnection();
+      initContainerGuard();
 
-    setTimeout(() => {
-      clearInterval(mountInterval);
-      setInterval(() => {
+      // Periodic live background telemetry sync (every 8 seconds)
+      setInterval(loadBackendData, 8000);
+
+      // Fast check for layout placement during Ember mount
+      const mountInterval = setInterval(() => {
+        patchEmberWebSocketService();
         ensureLayoutPlacement();
         setupHeaderBrandingAndIcons();
         hookMainHeaderEvents();
         syncHeaderTabs(state.currentTab);
-      }, 1500);
-    }, 10000);
+      }, 200);
+
+      setTimeout(() => {
+        clearInterval(mountInterval);
+        setInterval(() => {
+          ensureLayoutPlacement();
+          setupHeaderBrandingAndIcons();
+          hookMainHeaderEvents();
+          syncHeaderTabs(state.currentTab);
+        }, 1500);
+      }, 10000);
+    }).catch(() => {
+      redirectToLogin();
+    });
   }
 
   // Expose API on window for debugging & automated inspection immediately

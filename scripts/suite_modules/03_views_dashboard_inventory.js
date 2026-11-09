@@ -1,4 +1,123 @@
   // -------------------------------------------------------------
+  // REAL-DATA NORMALIZATION (real-data rebuild, 2026-11-09)
+  // The real APIs return raw store rows, not the legacy view fields the
+  // old demo UI used. These helpers map raw rows to display fields using
+  // ONLY values the API returned. Anything the API did not return is
+  // null, and the renderers below show '—' for it — never an invented
+  // value. Field names accept both the real store names (cpu_pct,
+  // latency_ms, probe_id) and legacy names, so the view keeps working
+  // while the backend migration lands.
+  // -------------------------------------------------------------
+  function opmNum(v) {
+    return (typeof v === 'number' && !Number.isNaN(v)) ? v : null;
+  }
+  function opmProbeById(id) {
+    if (id === null || id === undefined) return null;
+    return (state.probes || []).find(p => String(p.id) === String(id)) || null;
+  }
+  function opmDeviceById(id) {
+    if (id === null || id === undefined) return null;
+    return (state.devices || []).find(d => String(d.id) === String(id)) || null;
+  }
+  function opmDeviceName(d) {
+    if (!d) return '—';
+    return d.sys_name || d.hostname || d.name || d.ip || '—';
+  }
+  function opmProbeNameForDevice(d) {
+    if (!d) return '—';
+    if (d.probe) return d.probe;
+    const pr = opmProbeById(d.probeId !== undefined ? d.probeId : d.probe_id);
+    return (pr && (pr.name || pr.ip)) || '—';
+  }
+  function opmNormDevice(d) {
+    const cpu = opmNum(d.cpu !== undefined ? d.cpu : d.cpu_pct);
+    const memory = opmNum(d.memory !== undefined ? d.memory : d.mem_used_pct);
+    const responseTime = opmNum(d.responseTime !== undefined ? d.responseTime : d.response_ms);
+    return {
+      id: d.id,
+      name: opmDeviceName(d),
+      ip: d.ip || '—',
+      vendor: d.vendor || '—',
+      model: d.model || d.sys_descr || null,
+      type: d.type || d.model || d.sys_descr || d.category || '—',
+      category: d.category || 'Unknown',
+      status: d.status || 'Unknown',
+      probeId: (d.probeId !== undefined ? d.probeId : d.probe_id),
+      probe: opmProbeNameForDevice(d),
+      cpu: cpu,
+      memory: memory,
+      responseTime: responseTime,
+      // Availability is NOT in the /api/devices list response (it is
+      // computed per-device from the metrics table). Null until polled.
+      availability: opmNum(d.availability),
+      interfaces: Array.isArray(d.interfaces) ? d.interfaces : [],
+      configDrift: !!d.configDrift,
+      lastBackup: d.lastBackup || null,
+      lastPolled: d.lastPolled || d.last_polled_at || null
+    };
+  }
+  function opmNormAlarm(a) {
+    const dev = opmDeviceById(a.device_id !== undefined ? a.device_id : a.deviceId);
+    const probeId = (a.probeId !== undefined ? a.probeId : (dev ? (dev.probeId !== undefined ? dev.probeId : dev.probe_id) : null));
+    return {
+      id: a.id,
+      device: a.device || opmDeviceName(dev),
+      deviceId: (a.device_id !== undefined ? a.device_id : a.deviceId),
+      ip: a.ip || (dev && dev.ip) || '—',
+      severity: a.severity || 'Attention',
+      category: a.category || a.source || '—',
+      message: a.message || '—',
+      entity: a.entity || a.source || '—',
+      probe: a.probe || (dev ? opmProbeNameForDevice(dev) : '—'),
+      probeId: probeId,
+      technician: a.technician || a.ack_by || '—',
+      time: a.time || (a.created_at ? new Date(a.created_at).toLocaleString() : '—'),
+      status: a.status || 'active'
+    };
+  }
+  function opmProbeIsOnline(pr) {
+    return (pr.status || '').toString().toLowerCase() === 'online';
+  }
+  function opmProbeLatency(pr) {
+    return opmNum(pr.latency !== undefined ? pr.latency : (pr.latency_ms !== undefined ? pr.latency_ms : pr.pingLatency));
+  }
+  function opmProbeDeviceCount(pr) {
+    return (state.devices || []).filter(d => String(d.probeId !== undefined ? d.probeId : d.probe_id) === String(pr.id)).length;
+  }
+  function opmProbeAlarmCount(pr) {
+    return (state.alarms || []).filter(a => {
+      if (a.probeId !== undefined && a.probeId !== null) return String(a.probeId) === String(pr.id);
+      const dev = opmDeviceById(a.device_id !== undefined ? a.device_id : a.deviceId);
+      if (!dev) return false;
+      const pid = dev.probeId !== undefined ? dev.probeId : dev.probe_id;
+      return String(pid) === String(pr.id);
+    }).length;
+  }
+  function opmNormProbe(pr) {
+    return {
+      id: pr.id,
+      name: pr.name || pr.ip || 'Probe',
+      ip: pr.ip || '—',
+      status: pr.status || 'Unknown',
+      location: pr.location || '—',
+      latency: opmProbeLatency(pr),
+      syncStatus: pr.syncStatus || null,
+      commPort: pr.commPort || null,
+      devicesCount: (pr.devicesCount !== undefined ? pr.devicesCount : (typeof pr.devices === 'number' ? pr.devices : opmProbeDeviceCount(pr))),
+      alarmsCount: (pr.alarmsCount !== undefined ? pr.alarmsCount : (typeof pr.alarms === 'number' ? pr.alarms : opmProbeAlarmCount(pr)))
+    };
+  }
+  async function opmPostJson(url, body) {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body || {})
+    });
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok && !(data && data.status === 'error'), status: res.status, data: data || {} };
+  }
+
+  // -------------------------------------------------------------
   // VIEW: DASHBOARD (Overview, Summary, Servers, Virt, Storage, Network, NOC)
   // -------------------------------------------------------------
   function renderDashboardView() {
@@ -21,15 +140,28 @@
       { id: 'noc', name: 'NOC View ↗' }
     ];
 
-    // Filter devices based on probe selection
-    const filteredDevices = state.selectedProbe === 'all'
+    // Filter devices based on probe selection, then normalize raw API rows
+    // to display fields (only real values; missing metrics stay null).
+    const rawFilteredDevices = state.selectedProbe === 'all'
       ? state.devices
-      : state.devices.filter(d => d.probeId == state.selectedProbe);
+      : state.devices.filter(d => (d.probeId !== undefined ? d.probeId : d.probe_id) == state.selectedProbe);
+    const filteredDevices = rawFilteredDevices.map(opmNormDevice);
+    const probes = (state.probes || []).map(opmNormProbe);
 
-    // Filter alarms based on probe selection
-    const filteredAlarms = state.selectedProbe === 'all'
+    // Filter alarms based on probe selection, then normalize.
+    const rawFilteredAlarms = state.selectedProbe === 'all'
       ? state.alarms
-      : state.alarms.filter(a => a.probeId == state.selectedProbe);
+      : state.alarms.filter(a => String(opmNormAlarm(a).probeId) === String(state.selectedProbe));
+    const filteredAlarms = rawFilteredAlarms.map(opmNormAlarm);
+    const onlineProbes = probes.filter(opmProbeIsOnline).length;
+    const healthPct = (list) => {
+      if (!list || list.length === 0) return null;
+      const healthy = list.filter(d => ['clear', 'up'].includes((d.status || '').toLowerCase())).length;
+      return Math.round((healthy / list.length) * 100);
+    };
+    const routerHealth = healthPct(filteredDevices.filter(d => (d.category || '').toLowerCase().includes('router')));
+    const switchHealth = healthPct(filteredDevices.filter(d => (d.category || '').toLowerCase().includes('switch')));
+    const serverHealth = healthPct(filteredDevices.filter(d => (d.category || '').toLowerCase().includes('server')));
 
     // Calculate metrics
     const totalDevices = filteredDevices.length;
@@ -114,51 +246,46 @@
     const virtVmsCount = (state.virtualMachines || []).filter(vm => state.selectedProbe === 'all' || vm.probeId == state.selectedProbe).length;
 
     const flowCount = (state.flowExporters || []).length;
-    let netflowBarsHtml = '';
-    if (flowCount === 0) {
-      netflowBarsHtml = `
-        <div style="display: flex; align-items: flex-end; gap: 2px; height: 24px;">
-          <div style="width: 4px; height: 4px; background: #334155;"></div>
-          <div style="width: 4px; height: 4px; background: #334155;"></div>
-          <div style="width: 4px; height: 4px; background: #334155;"></div>
-          <div style="width: 4px; height: 4px; background: #334155;"></div>
-        </div>
-      `;
-    } else {
-      netflowBarsHtml = `
-        <div style="display: flex; align-items: flex-end; gap: 2px; height: 24px;">
-          <div style="width: 4px; height: 12px; background: #38bdf8;"></div>
-          <div style="width: 4px; height: 20px; background: #49bd80;"></div>
-          <div style="width: 4px; height: 16px; background: #38bdf8;"></div>
-          <div style="width: 4px; height: 24px; background: #f59e0b;"></div>
-        </div>
-      `;
-    }
+    // No flow-volume data is returned by the API, so bar heights cannot be
+    // derived from real traffic. Render flat bars (no invented shape).
+    let netflowBarsHtml = `
+      <div style="display: flex; align-items: flex-end; gap: 2px; height: 24px;">
+        <div style="width: 4px; height: 4px; background: #334155;"></div>
+        <div style="width: 4px; height: 4px; background: #334155;"></div>
+        <div style="width: 4px; height: 4px; background: #334155;"></div>
+        <div style="width: 4px; height: 4px; background: #334155;"></div>
+      </div>
+    `;
 
     const ncmChangesCount = (state.ncmAudits || []).length;
     const ncmDriftCount = filteredDevices.filter(d => d.configDrift).length;
     const firewallAttacksCount = filteredAlarms.filter(a => ((a.category || '') + ' ' + (a.message || '')).toLowerCase().includes('attack') || ((a.category || '')).toLowerCase() === 'security').length;
 
-    const slaPct = totalDevices === 0 ? '100.0%' : (criticalDevices > 0 ? ((1 - (criticalDevices / totalDevices) * 0.05) * 100).toFixed(2) + '%' : '99.99%');
-    const slaTarget = totalDevices === 0 ? 'Optimal SLA' : 'Tier 4 Target Met';
-    const slaDowntime = totalDevices === 0 ? '0m Downtime' : 'Past 30d';
-    const mttrString = filteredAlarms.length === 0 ? 'MTTR: 0m (No Active Incidents)' : 'MTTR: 18m 42s';
-    const probeAvgRtt = state.probes.length > 0 && state.probes[0].pingLatency ? `${state.probes[0].pingLatency} ms` : '1.2 ms';
+    // No availability-history source exists yet: SLA is unknown, never
+    // invented. MTTR is unknown until a real alarm is resolved.
+    const slaPct = '—';
+    const slaTarget = 'No SLA target set';
+    const slaDowntime = 'No availability history yet';
+    const mttrString = filteredAlarms.length === 0 ? 'MTTR: 0m (No Active Incidents)' : 'MTTR: —';
+    const probeLatencies = probes.map(p => p.latency).filter(v => typeof v === 'number' && !Number.isNaN(v));
+    const probeAvgRtt = probeLatencies.length > 0 ? `${(probeLatencies.reduce((a, b) => a + b, 0) / probeLatencies.length).toFixed(1)} ms` : '—';
 
     // --- Pre-calculated clean empty states for Overview widgets ---
+    const cpuDevices = filteredDevices.filter(d => typeof d.cpu === 'number').sort((a, b) => b.cpu - a.cpu);
+    const memDevices = filteredDevices.filter(d => typeof d.memory === 'number').sort((a, b) => b.memory - a.memory);
     let widgetCpuBody = '';
-    if (totalDevices === 0) {
+    if (cpuDevices.length === 0) {
       widgetCpuBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No CPU Telemetry Available</div><div style="font-size: 11px;">Deploy the OpManager Agent or add SNMP credentials to stream real-time processor load.</div></div>';
     } else {
       widgetCpuBody = `
         <div style="display: flex; align-items: center; justify-content: space-around; gap: 4px; margin-bottom: 12px; overflow-x: auto;">
-          ${[...filteredDevices].sort((a,b) => b.cpu - a.cpu).slice(0, 3).map(d => 
+          ${cpuDevices.slice(0, 3).map(d => 
             createSpeedometerGauge(d.cpu, 'CPU Load', d.name, d.ip, 145)
           ).join('')}
         </div>
         <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;">
           <tbody>
-            ${[...filteredDevices].sort((a,b) => b.cpu - a.cpu).slice(0, 4).map(d => {
+            ${cpuDevices.slice(0, 4).map(d => {
               const barColor = d.cpu >= 85 ? '#dc2626' : (d.cpu >= 70 ? '#ea580c' : '#16a34a');
               return `
                 <tr style="border-top: 1px solid #f1f5f9;">
@@ -181,18 +308,18 @@
     }
 
     let widgetMemBody = '';
-    if (totalDevices === 0) {
+    if (memDevices.length === 0) {
       widgetMemBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No Memory Telemetry Available</div><div style="font-size: 11px;">Deploy the OpManager Agent or add SNMP credentials to stream real-time RAM metrics.</div></div>';
     } else {
       widgetMemBody = `
         <div style="display: flex; align-items: center; justify-content: space-around; gap: 4px; margin-bottom: 12px; overflow-x: auto;">
-          ${[...filteredDevices].sort((a,b) => b.memory - a.memory).slice(0, 3).map(d => 
+          ${memDevices.slice(0, 3).map(d => 
             createSpeedometerGauge(d.memory, 'RAM Load', d.name, d.ip, 145)
           ).join('')}
         </div>
         <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;">
           <tbody>
-            ${[...filteredDevices].sort((a,b) => b.memory - a.memory).slice(0, 4).map(d => {
+            ${memDevices.slice(0, 4).map(d => {
               const barColor = d.memory >= 85 ? '#dc2626' : (d.memory >= 70 ? '#ea580c' : '#16a34a');
               return `
                 <tr style="border-top: 1px solid #f1f5f9;">
@@ -215,25 +342,22 @@
     }
 
     let widgetIfaceBody = '';
-    if (state.topInterfaces.length === 0) {
+    if ((state.topInterfaces || []).length === 0) {
       widgetIfaceBody = '<tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">No network interface traffic recorded. Discovered switch/router interfaces will stream live telemetry here.</td></tr>';
     } else {
-      widgetIfaceBody = state.topInterfaces.slice(0, 5).map((iface, idx) => {
-        const trends = [
-          [120, 150, 180, 240, 310, 380, 420],
-          [850, 890, 810, 780, 800, 840, 820],
-          [2100, 2250, 2300, 2400, 2380, 2450, 2400],
-          [1100, 1250, 1180, 1300, 1400, 1390, 1450],
-          [90, 110, 105, 120, 95, 100, 110]
-        ];
-        const spark = createSparkline(trends[idx % trends.length], 75, 22, '#0070e0');
+      widgetIfaceBody = (state.topInterfaces || []).slice(0, 5).map((iface, idx) => {
+        // No per-interface history is returned by the API yet: draw a
+        // sparkline only when the interface carries its own real history.
+        const spark = Array.isArray(iface.history) && iface.history.length > 1
+          ? createSparkline(iface.history, 75, 22, '#0070e0')
+          : '<span style="color: #94a3b8;">—</span>';
         return `
           <tr style="border-bottom: 1px solid #f8fafc;">
             <td style="padding: 6px 4px; font-weight: 700; color: #0f172a;">${iface.name}</td>
             <td style="padding: 6px 4px; color: #0070e0; font-weight: 600;">${iface.device}</td>
             <td style="padding: 6px 4px;">${spark}</td>
-            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #0284c7;">${iface.inTraffic}</td>
-            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #64748b;">${iface.outTraffic}</td>
+            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #0284c7;">${iface.inTraffic ?? '—'}</td>
+            <td style="padding: 6px 4px; font-family: monospace; font-weight: 700; color: #64748b;">${iface.outTraffic ?? '—'}</td>
             <td style="padding: 6px 4px;">
               <span style="font-size: 10px; font-weight: 700; padding: 2px 5px; border-radius: 2px; ${iface.status === 'UP' ? 'background: #dcfce7; color: #166534;' : 'background: #fee2e2; color: #991b1b;'}">${iface.status}</span>
             </td>
@@ -267,12 +391,12 @@
       widgetNcmBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No NCM Devices Enrolled</div><div style="font-size: 11px;">Automated backup and configuration drift audits will activate once network devices are added.</div></div>';
     } else {
       widgetNcmBody = `
-        ${state.configDriftFixed ? `
+        ${ncmDriftCount === 0 ? `
           <div style="padding: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
             <span style="color: #16a34a; font-size: 18px;">✓</span>
             <div>
               <div style="font-size: 12px; font-weight: 700; color: #166534;">Configurations in Sync</div>
-              <div style="font-size: 11px; color: #15803d;">Startup and Running configs are identical across monitored devices.</div>
+              <div style="font-size: 11px; color: #15803d;">No config drift reported on monitored devices.</div>
             </div>
           </div>
         ` : `
@@ -281,7 +405,7 @@
               <span style="color: #d97706; font-size: 18px;">⚠</span>
               <div>
                 <div style="font-size: 12px; font-weight: 700; color: #92400e;">Config Drift Detected</div>
-                <div style="font-size: 11px; color: #b45309;">Running configuration has uncommitted changes vs NVRAM startup.</div>
+                <div style="font-size: 11px; color: #b45309;">Running configuration has uncommitted changes on ${ncmDriftCount} monitored device(s).</div>
               </div>
             </div>
             <button id="opm-dash-ncm-diff-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
@@ -292,11 +416,11 @@
         <div style="font-size: 11px; color: #64748b; display: flex; flex-direction: column; gap: 6px;">
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
             <span>Last Automated Backup Run</span>
-            <span style="font-weight: 600; color: #334155;">Today at 04:00 AM UTC (Completed)</span>
+            <span style="font-weight: 600; color: #64748b;">No backup recorded yet</span>
           </div>
           <div style="display: flex; justify-content: space-between;">
             <span>PCI-DSS 4.0 Compliance Rate</span>
-            <span style="font-weight: 600; color: #16a34a;">100% Compliant</span>
+            <span style="font-weight: 600; color: #64748b;">No compliance data yet</span>
           </div>
         </div>
       `;
@@ -306,27 +430,24 @@
     if (totalDevices === 0) {
       widgetZiaBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #4338ca; margin-bottom: 4px;">Zia AI Telemetry Standby</div><div style="font-size: 11px;">Machine-learning anomaly correlation standby for live node telemetry.</div></div>';
     } else {
-      widgetZiaBody = `
-        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between;">
-          <div>
-            <div style="font-size: 11px; font-weight: 700; color: #166534;">Enterprise Anomaly Detection Engine</div>
-            <div style="font-size: 11px; color: #15803d;">All monitors operating strictly within dynamic seasonality thresholds.</div>
-          </div>
-          <span style="font-size: 11px; font-weight: 700; color: #166534; background: #dcfce7; padding: 2px 8px; border-radius: 10px;">NORMAL</span>
-        </div>
-      `;
+      widgetZiaBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #4338ca; margin-bottom: 4px;">Zia AI Telemetry Standby</div><div style="font-size: 11px;">Machine-learning anomaly correlation standby for live node telemetry.</div></div>';
     }
 
     let widgetHeatmapBody = '';
     if (networkCount === 0) {
       widgetHeatmapBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b; width: 100%;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No Switch Interface Telemetry</div><div style="font-size: 11px;">Real-time 48-port ifOperStatus heatmap will render once switches are discovered.</div></div>';
     } else {
+      const heatIfaces = (state.interfaces && state.interfaces.length ? state.interfaces : (state.topInterfaces || []));
+      const heatUp = heatIfaces.filter(i => (i.status || i.oper || '').toString().toUpperCase() === 'UP').length;
+      const heatDown = heatIfaces.filter(i => (i.status || i.oper || '').toString().toUpperCase() === 'DOWN').length;
+      const heatUnknown = heatIfaces.length - heatUp - heatDown;
       widgetHeatmapBody = `
         <div style="display: flex; gap: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
-          <span style="color: #16a34a; font-weight: 700; border-bottom: 2px solid #16a34a; padding-bottom: 4px;">Link Up</span>
-          <span style="color: #64748b;">Unknown (0)</span>
-          <span style="color: #dc2626; font-weight: 600;">Link Down (0)</span>
+          <span style="color: #16a34a; font-weight: 700; border-bottom: 2px solid #16a34a; padding-bottom: 4px;">Link Up (${heatUp})</span>
+          <span style="color: #64748b;">Unknown (${heatUnknown})</span>
+          <span style="color: #dc2626; font-weight: 600;">Link Down (${heatDown})</span>
         </div>
+        ${heatIfaces.length === 0 ? '<div style="padding: 12px 0; font-size: 11px; color: #64748b;">No interface link states reported yet. Discovered switch/router interfaces will stream live telemetry here.</div>' : ''}
       `;
     }
 
@@ -335,7 +456,7 @@
       widgetSdwanBody = '<div style="padding: 30px 14px; text-align: center; color: #64748b; width: 100%;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No SD-WAN Controllers Connected</div><div style="font-size: 11px;">Connect Cisco vManage or NetFlow exporters to view SD-WAN fabric and tunnel health.</div></div>';
     } else {
       widgetSdwanBody = `
-        <div style="padding: 10px; font-size: 11px; color: #64748b;">SD-WAN Telemetry Synchronized</div>
+        <div style="padding: 30px 14px; text-align: center; color: #64748b;"><div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No SD-WAN Telemetry Yet</div><div style="font-size: 11px;">Connect an SD-WAN controller or NetFlow exporter to view fabric and tunnel health.</div></div>
       `;
     }
 
@@ -392,16 +513,16 @@
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Monitored Devices</div>
               <div style="display: flex; align-items: baseline; gap: 8px;">
                 <span style="font-size: 24px; font-weight: 800; color: #0f172a;">${totalDevices}</span>
-                <span style="font-size: 11px; font-weight: 600; color: #16a34a;">100% Licensed</span>
+                <span style="font-size: 11px; font-weight: 600; color: #64748b;">${totalDevices === 0 ? 'No devices yet' : 'Licence: —'}</span>
               </div>
-              <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Across ${state.probes.length} Enterprise Probes</div>
+              <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Across ${probes.length} Enterprise Probe${probes.length === 1 ? '' : 's'}</div>
             </div>
 
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Enterprise Probes</div>
               <div style="display: flex; align-items: baseline; gap: 8px;">
-                <span style="font-size: 24px; font-weight: 800; color: #16a34a;">${state.probes.length} / ${state.probes.length}</span>
-                <span style="font-size: 11px; font-weight: 600; color: #16a34a;">● Synchronized</span>
+                <span style="font-size: 24px; font-weight: 800; color: #16a34a;">${onlineProbes} / ${probes.length}</span>
+                <span style="font-size: 11px; font-weight: 600; color: ${onlineProbes === probes.length && probes.length > 0 ? '#16a34a' : '#94a3b8'};">${onlineProbes === probes.length && probes.length > 0 ? '● Synchronized' : '● No heartbeat yet'}</span>
               </div>
               <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Avg Central RTT: ${probeAvgRtt}</div>
             </div>
@@ -427,8 +548,8 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Peak Bandwidth Ingress</div>
               <div style="display: flex; align-items: baseline; gap: 8px;">
-                <span style="font-size: 24px; font-weight: 800; color: #0284c7;">0.00 Mbps</span>
-                <span style="font-size: 11px; font-weight: 600; color: #64748b;">No active flow</span>
+                <span style="font-size: 24px; font-weight: 800; color: #0284c7;">—</span>
+                <span style="font-size: 11px; font-weight: 600; color: #64748b;">No flow data</span>
               </div>
               <div style="margin-top: 6px; font-size: 11px; color: #94a3b8;">Real-Time Flow Ingress</div>
             </div>
@@ -462,10 +583,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    ${state.probes.map(pr => `
+                    ${probes.length === 0 ? '<tr><td colspan="5" style="padding: 24px; text-align: center; color: #64748b;">No probes registered yet. Register a remote probe to monitor branch sites.</td></tr>' : probes.map(pr => `
                       <tr style="border-bottom: 1px solid #f8fafc;">
                         <td style="padding: 8px; font-weight: 600; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">
-                          <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #16a34a; margin-right: 6px;"></span>
+                          <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: ${opmProbeIsOnline(pr) ? '#16a34a' : '#dc2626'}; margin-right: 6px;"></span>
                           ${pr.name}
                         </td>
                         <td style="padding: 8px; color: #475569; font-family: monospace;">${pr.ip}</td>
@@ -473,13 +594,13 @@
                         <td style="padding: 8px;">
                           <div style="display: flex; align-items: center; gap: 8px;">
                             <div style="width: 50px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                              <div style="width: ${Math.min(100, (pr.latency / 60) * 100)}%; height: 100%; background: ${pr.latency > 40 ? '#ea580c' : '#16a34a'};"></div>
+                              <div style="width: ${pr.latency === null ? 0 : Math.min(100, (pr.latency / 60) * 100)}%; height: 100%; background: ${pr.latency !== null && pr.latency > 40 ? '#ea580c' : '#16a34a'};"></div>
                             </div>
-                            <span style="font-size: 11px; color: #64748b;">${pr.latency}ms</span>
+                            <span style="font-size: 11px; color: #64748b;">${pr.latency === null ? '—' : pr.latency + 'ms'}</span>
                           </div>
                         </td>
                         <td style="padding: 8px;">
-                          <span style="font-size: 11px; font-weight: 600; color: #166534; background: #dcfce7; padding: 2px 6px; border-radius: 3px;">Online</span>
+                          <span style="font-size: 11px; font-weight: 600; color: ${opmProbeIsOnline(pr) ? '#166534' : '#991b1b'}; background: ${opmProbeIsOnline(pr) ? '#dcfce7' : '#fee2e2'}; padding: 2px 6px; border-radius: 3px;">${opmProbeIsOnline(pr) ? 'Online' : pr.status}</span>
                         </td>
                       </tr>
                     `).join('')}
@@ -511,28 +632,28 @@
                     <div>
                       <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
                         <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Routers')} Routers (${routerCount})</span>
-                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                        <span style="color: ${routerHealth === null ? '#94a3b8' : '#16a34a'}; font-weight: 600;">${routerHealth === null ? 'No devices' : routerHealth + '% Healthy'}</span>
                       </div>
                       <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                        <div style="width: 100%; background: #16a34a;"></div>
+                        <div style="width: ${routerHealth === null ? 0 : routerHealth}%; background: #16a34a;"></div>
                       </div>
                     </div>
                     <div>
                       <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
                         <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Switches')} Switches (${switchCount})</span>
-                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                        <span style="color: ${switchHealth === null ? '#94a3b8' : '#16a34a'}; font-weight: 600;">${switchHealth === null ? 'No devices' : switchHealth + '% Healthy'}</span>
                       </div>
                       <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                        <div style="width: 100%; background: #16a34a;"></div>
+                        <div style="width: ${switchHealth === null ? 0 : switchHealth}%; background: #16a34a;"></div>
                       </div>
                     </div>
                     <div>
                       <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
                         <span style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 5px;">${getCategoryIcon('Servers')} Servers (${serverCount})</span>
-                        <span style="color: #16a34a; font-weight: 600;">100% Healthy</span>
+                        <span style="color: ${serverHealth === null ? '#94a3b8' : '#16a34a'}; font-weight: 600;">${serverHealth === null ? 'No devices' : serverHealth + '% Healthy'}</span>
                       </div>
                       <div style="height: 8px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: flex;">
-                        <div style="width: 100%; background: #16a34a;"></div>
+                        <div style="width: ${serverHealth === null ? 0 : serverHealth}%; background: #16a34a;"></div>
                       </div>
                     </div>
                   </div>
@@ -739,14 +860,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    ${state.probes.map(pr => `
+                    ${probes.length === 0 ? '<tr><td colspan="5" style="padding: 24px; text-align: center; color: #64748b;">No probes registered yet. Register a remote probe to monitor branch sites.</td></tr>' : probes.map(pr => `
                       <tr style="border-bottom: 1px solid #f8fafc;">
                         <td style="padding: 7px 8px; font-weight: 600; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
                         <td style="padding: 7px 8px; font-weight: 700; color: #0f172a;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
-                        <td style="padding: 7px 8px; color: #64748b;">0</td>
-                        <td style="padding: 7px 8px; font-family: monospace; color: #334155;">${(typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)) * 3}</td>
+                        <td style="padding: 7px 8px; color: #64748b;">—</td>
+                        <td style="padding: 7px 8px; font-family: monospace; color: #334155;">—</td>
                         <td style="padding: 7px 8px;">
-                          <span style="font-size: 10px; font-weight: 700; color: #166534; background: #dcfce7; padding: 1px 6px; border-radius: 2px;">SYNC OK</span>
+                          <span style="font-size: 10px; font-weight: 700; color: ${opmProbeIsOnline(pr) ? '#166534' : '#991b1b'}; background: ${opmProbeIsOnline(pr) ? '#dcfce7' : '#fee2e2'}; padding: 1px 6px; border-radius: 2px;">${opmProbeIsOnline(pr) ? 'SYNC OK' : pr.status.toUpperCase()}</span>
                         </td>
                       </tr>
                     `).join('')}
@@ -838,15 +959,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  ${state.probes.map(pr => `
+                  ${probes.length === 0 ? '<tr><td colspan="7" style="padding: 24px; text-align: center; color: #64748b;">No probes registered yet. Register a remote probe to monitor branch sites.</td></tr>' : probes.map(pr => `
                     <tr style="border-bottom: 1px solid #f1f5f9;">
                       <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
                       <td style="padding: 10px 14px; font-family: monospace;">${pr.ip}</td>
                       <td style="padding: 10px 14px; color: #64748b;">${pr.location}</td>
                       <td style="padding: 10px 14px; font-weight: 700;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
                       <td style="padding: 10px 14px;"><span style="font-weight: 700; color: ${(pr.alarmsCount || pr.alarms || 0) > 0 ? '#dc2626' : '#16a34a'};">${pr.alarmsCount || pr.alarms || 0}</span></td>
-                      <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency} ms</td>
-                      <td style="padding: 10px 14px; text-align: right;"><span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 10px;">CONNECTED</span></td>
+                      <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency === null ? '—' : pr.latency + ' ms'}</td>
+                      <td style="padding: 10px 14px; text-align: right;"><span style="background: ${opmProbeIsOnline(pr) ? '#dcfce7' : '#fee2e2'}; color: ${opmProbeIsOnline(pr) ? '#166534' : '#991b1b'}; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 10px;">${opmProbeIsOnline(pr) ? 'CONNECTED' : pr.status.toUpperCase()}</span></td>
                     </tr>
                   `).join('')}
                 </tbody>
@@ -897,10 +1018,10 @@
                     <div>
                       <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
                         <span>CPU Utilization</span>
-                        <strong style="color: ${srv.cpu > 80 ? '#dc2626' : '#16a34a'};">${srv.cpu}%</strong>
+                        <strong style="color: ${srv.cpu !== null && srv.cpu > 80 ? '#dc2626' : '#16a34a'};">${srv.cpu === null ? '—' : srv.cpu + '%'}</strong>
                       </div>
                       <div style="height: 5px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                        <div style="width: ${srv.cpu}%; height: 100%; background: ${srv.cpu > 80 ? '#dc2626' : '#16a34a'};"></div>
+                        <div style="width: ${srv.cpu === null ? 0 : srv.cpu}%; height: 100%; background: ${srv.cpu !== null && srv.cpu > 80 ? '#dc2626' : '#16a34a'};"></div>
                       </div>
                     </div>
                   </div>
@@ -1038,7 +1159,7 @@
               <div style="display: flex; align-items: center; gap: 10px;">
                 <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #16a34a; box-shadow: 0 0 8px #16a34a;"></span>
                 <span style="font-size: 18px; font-weight: 800; color: #38bdf8; letter-spacing: 0.5px;">OPMANAGER CENTRAL OPERATIONS WALLBOARD (NOC)</span>
-                <span style="background: #1e293b; color: #4ade80; border: 1px solid #334155; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px;">LIVE STREAMING</span>
+                <span style="background: #1e293b; color: ${totalDevices === 0 ? '#94a3b8' : '#4ade80'}; border: 1px solid #334155; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px;">${totalDevices === 0 ? 'STANDBY' : 'LIVE STREAMING'}</span>
               </div>
               <div style="display: flex; align-items: center; gap: 10px;">
                 <button id="opm-noc-fullscreen-btn" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
@@ -1069,51 +1190,38 @@
 
             <!-- Dynamic Slide Content -->
             ${(state.nocSlide || 0) === 0 ? `
-              <!-- SLIDE 0: PROBES HEALTH & LATENCIES -->
+              <!-- SLIDE 0: PROBES HEALTH & LATENCIES (one card per real probe) -->
               <div>
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
+                  ${probes.length === 0 ? `
+                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155; grid-column: 1 / -1; text-align: center; color: #94a3b8;">
+                    No remote probes registered. Register a remote probe to see probe health here.
+                  </div>` : probes.map(pr => `
                   <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">NEW YORK PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
+                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">${(pr.name || '').toUpperCase()}</span>
+                      <span style="font-size: 10px; background: ${opmProbeIsOnline(pr) ? '#064e3b' : '#450a0a'}; color: ${opmProbeIsOnline(pr) ? '#34d399' : '#fca5a5'}; padding: 1px 6px; border-radius: 2px;">${pr.status.toUpperCase()}</span>
                     </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>12ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
-                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">LONDON PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
-                    </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>28ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
-                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">SINGAPORE PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
-                    </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>45ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
+                    <div style="font-size: 26px; font-weight: 800; color: ${opmProbeIsOnline(pr) ? '#34d399' : '#fca5a5'}; margin: 8px 0;">${opmProbeIsOnline(pr) ? 'HEALTHY' : pr.status.toUpperCase()}</div>
+                    <div style="font-size: 11px; color: #cbd5e1;">${pr.devicesCount} Managed Nodes &bull; Latency: <strong>${pr.latency === null ? '—' : pr.latency + 'ms'}</strong> &bull; Sync: ${opmProbeIsOnline(pr) ? 'Synchronized' : '—'}</div>
+                  </div>`).join('')}
                   <div style="background: #0f172a; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                       <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">ENTERPRISE PROBES</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #6ee7b7; padding: 1px 6px; border-radius: 2px;">${totalDevices > 0 ? 'HEALTHY' : 'STANDBY'}</span>
+                      <span style="font-size: 10px; background: #064e3b; color: #6ee7b7; padding: 1px 6px; border-radius: 2px;">${onlineProbes === probes.length && probes.length > 0 ? 'HEALTHY' : 'STANDBY'}</span>
                     </div>
                     <div style="font-size: 26px; font-weight: 800; color: #4ade80; margin: 8px 0;">${filteredAlarms.length} ACTIVE ALARMS</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">All registered probe nodes synchronized</div>
+                    <div style="font-size: 11px; color: #cbd5e1;">${probes.length} registered probe(s) &bull; ${onlineProbes} online</div>
                   </div>
                 </div>
 
                 <!-- Central Telemetry Status Bar -->
                 <div style="background: #1e293b; border-radius: 6px; padding: 14px 18px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
                   <div style="display: flex; gap: 24px;">
-                    <span>PostgreSQL Database: <strong style="color: #4ade80;">Active (Cluster Primary)</strong></span>
-                    <span>Active Probe Sync: <strong style="color: #38bdf8;">4 / 4 Live Heartbeats</strong></span>
-                    <span>Central Engine Uptime: <strong style="color: #cbd5e1;">184 Days 14 Hours</strong></span>
+                    <span>Active Probe Sync: <strong style="color: #38bdf8;">${onlineProbes} / ${probes.length} Live Heartbeats</strong></span>
+                    <span>Central Engine Uptime: <strong style="color: #cbd5e1;">—</strong></span>
                   </div>
-                  <div style="color: #94a3b8; font-family: monospace;">OpManager Central v12.9.203 GA Build 129203</div>
+                  <div style="color: #94a3b8; font-family: monospace;">OpManager Central v12.9.204-GA</div>
                 </div>
               </div>
             ` : state.nocSlide === 1 ? `
@@ -1123,8 +1231,8 @@
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 16px;">✨</span>
                     <div>
-                      <div style="font-weight: 800; font-size: 13px; color: #4ade80;">All Systems Operational &bull; 0 Correlated Incidents</div>
-                      <div style="font-size: 11px; color: #94a3b8;">Central Master telemetry engine active &bull; Baseline healthy</div>
+                      <div style="font-weight: 800; font-size: 13px; color: ${filteredAlarms.length === 0 ? '#4ade80' : '#f87171'};">${filteredAlarms.length === 0 ? (totalDevices === 0 ? 'No devices monitored yet' : 'All Systems Operational &bull; 0 Correlated Incidents') : filteredAlarms.length + ' Active Alarm' + (filteredAlarms.length === 1 ? '' : 's') + ' &bull; ' + filteredAlarms.length + ' Correlated Incident' + (filteredAlarms.length === 1 ? '' : 's')}</div>
+                      <div style="font-size: 11px; color: #94a3b8;">${filteredAlarms.length === 0 ? 'Central Master telemetry engine active &bull; Baseline healthy' : 'Review the active alarms below.'}</div>
                     </div>
                   </div>
                   <button onclick="window.location.hash='#/alarms'" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Open Alarms Studio &rarr;</button>
@@ -1132,7 +1240,7 @@
 
                 <div style="background: #1e293b; border-radius: 6px; padding: 16px; font-size: 12px; border: 1px solid #334155;">
                   <div style="font-weight: 700; color: #38bdf8; margin-bottom: 12px; font-size: 13px;">ACTIVE CENTRAL ALARMS TICKER</div>
-                  ${state.alarms.length === 0 ? `
+                  ${filteredAlarms.length === 0 ? `
                     <div style="padding: 30px; text-align: center; color: #94a3b8;">
                       No active alarms detected across monitored infrastructure.
                     </div>
@@ -1150,7 +1258,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        ${state.alarms.map(a => `
+                        ${filteredAlarms.map(a => `
                           <tr style="border-bottom: 1px solid #283347;">
                             <td style="padding: 8px 8px;">${getStatusBadge(a.severity)}</td>
                             <td style="padding: 8px 8px; font-weight: 700; color: #38bdf8; cursor: pointer;" onclick="showDeviceSnapshotModal('${a.device}')">${a.device}</td>
@@ -1171,7 +1279,7 @@
               <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
                 <div style="font-weight: 800; font-size: 14px; color: #38bdf8; margin-bottom: 14px;">ENTERPRISE INTERFACES BANDWIDTH CONSUMPTION MATRIX</div>
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
-                  ${(state.topInterfaces || []).slice(0, 6).map(inf => `
+                  ${(state.topInterfaces || []).length === 0 ? '<div style="grid-column: 1 / -1; padding: 30px; text-align: center; color: #94a3b8;">No bandwidth data yet. Bandwidth fills in once interfaces are discovered and polled.</div>' : (state.topInterfaces || []).slice(0, 6).map(inf => `
                     <div style="background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 14px;">
                       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <div>
@@ -1206,34 +1314,9 @@
               <!-- SLIDE 3: POWER & THERMAL SENSORS -->
               <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
                 <div style="font-weight: 800; font-size: 14px; color: #38bdf8; margin-bottom: 14px;">FACILITY POWER, UPS RUNTIME &amp; THERMAL METRICS</div>
-                ${state.devices.length === 0 ? `
-                  <div style="padding: 30px; text-align: center; color: #94a3b8;">
-                    No hardware sensor telemetry available. Connect SNMP-enabled UPS, PDUs, or chassis thermal sensors to monitor facility power.
-                  </div>
-                ` : `
-                  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px;">
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">FACILITY UPS METRIC</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">0.0% LOAD</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Normal Operation</div>
-                    </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">CHASSIS TEMPERATURE</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">24 °C</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Thermal Baseline Optimal</div>
-                    </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">POWER CONSUMPTION</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #38bdf8; margin: 6px 0;">0.00 kW</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Across ${state.devices.length} Assets</div>
-                    </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">PSU REDUNDANCY</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #34d399; margin: 6px 0;">HEALTHY</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Zero Faults Reported</div>
-                    </div>
-                  </div>
-                `}
+                <div style="padding: 30px; text-align: center; color: #94a3b8;">
+                  No power or thermal data yet. Power, UPS runtime and thermal metrics appear once server hosts or UPS units report them.
+                </div>
               </div>
             `}
           </div>
@@ -1330,7 +1413,7 @@
     if (refreshAllBtn) {
       refreshAllBtn.onclick = () => {
         state.autoRefreshCountdown = 30;
-        showToast('Refreshing all dashboard telemetry metrics...');
+        showToast('Dashboard refreshed from the latest polled data.');
         renderDashboardView();
       };
     }
@@ -1365,7 +1448,7 @@
     const ziaFixBtn = container.querySelector('#opm-dash-zia-action-btn');
     if (ziaFixBtn) {
       ziaFixBtn.onclick = () => {
-        showToast('Zia AI applied rate-limiting policy map.');
+        showToast('No automated Zia AI fix is available yet.');
       };
     }
 
@@ -1390,7 +1473,8 @@
     // Widget Refresh buttons
     container.querySelectorAll('.opm-widget-btn-refresh').forEach(btn => {
       btn.onclick = () => {
-        showToast('Telemetry updated.');
+        renderDashboardView();
+        showToast('Dashboard refreshed from the latest polled data.');
       };
     });
   }
@@ -1399,9 +1483,11 @@
   // VIEW: INVENTORY (Devices, Interfaces, Probes, Virt, Storage)
   // -------------------------------------------------------------
   function renderInventoryView() {
+    const normDevices = (state.devices || []).map(opmNormDevice);
+    const probes = (state.probes || []).map(opmNormProbe);
     // --- Pre-calculated clean empty states for Inventory subtabs ---
     let invVirtContent = '';
-    const virtDevices = (state.devices || []).filter(d => ['virtualization','vm','hypervisor'].includes((d.type||'').toLowerCase()));
+    const virtDevices = normDevices.filter(d => ['virtualization','vm','hypervisor'].includes((d.type||'').toLowerCase()));
     if (virtDevices.length === 0) {
       invVirtContent = `
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
@@ -1420,7 +1506,7 @@
     }
 
     let invFwaContent = '';
-    const fwaDevices = (state.devices || []).filter(d => (d.category||'').toLowerCase().includes('firewall'));
+    const fwaDevices = normDevices.filter(d => (d.category||'').toLowerCase().includes('firewall'));
     if (fwaDevices.length === 0) {
       invFwaContent = `
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
@@ -1468,10 +1554,10 @@
 
     // Subtab definitions
     const subtabs = [
-      { id: 'devices', name: `Devices (${state.devices.length})` },
+      { id: 'devices', name: `Devices (${normDevices.length})` },
       { id: 'interfaces', name: `Interfaces (${state.interfaces ? state.interfaces.length : 0})` },
-      { id: 'probes', name: `Enterprise Probes (${state.probes.length})` },
-      { id: 'virtualization', name: `Virtualization (${state.devices.filter(d => (d.category || '').toLowerCase().includes('virt')).length} VMs)` },
+      { id: 'probes', name: `Enterprise Probes (${probes.length})` },
+      { id: 'virtualization', name: `Virtualization (${normDevices.filter(d => (d.category || '').toLowerCase().includes('virt')).length} VMs)` },
       { id: 'firewall_rules', name: 'Firewall Rules (0)' },
       { id: 'storage', name: `Storage (${(state.diskVolumes && state.diskVolumes.length) || 0})` }
     ];
@@ -1493,8 +1579,8 @@
     categories.forEach(cat => {
       const isSel = state.inventoryFilter.toUpperCase() === cat;
       const count = cat === 'ALL'
-        ? state.devices.length
-        : state.devices.filter(d => d.category.toUpperCase() === cat).length;
+        ? normDevices.length
+        : normDevices.filter(d => (d.category || '').toUpperCase() === cat).length;
       categoryChipsHtml += `
         <button class="opm-inv-cat-chip" data-cat="${cat.toLowerCase()}" style="padding: 4px 12px; border-radius: 14px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1px solid ${isSel ? '#49bd80' : '#cbd5e1'}; background: ${isSel ? '#49bd80' : '#ffffff'}; color: ${isSel ? '#ffffff' : '#475569'}; transition: all 0.15s;">
           ${cat} (${count})
@@ -1503,7 +1589,7 @@
     });
 
     // Filter devices based on category, probe, and search
-    let list = state.devices;
+    let list = normDevices;
     if (state.selectedProbe !== 'all') {
       list = list.filter(d => d.probeId == state.selectedProbe);
     }
@@ -1594,7 +1680,7 @@
                 </tr>
               </thead>
               <tbody>
-                ${state.devices.length === 0 ? `
+                ${normDevices.length === 0 ? `
                   <tr>
                     <td colspan="11" style="padding: 50px 20px; text-align: center;">
                       <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
@@ -1653,21 +1739,21 @@
                     <td style="padding: 10px 12px;">
                       <div style="display: flex; align-items: center; gap: 6px;">
                         <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                          <div style="width: ${dev.cpu}%; height: 100%; background: ${dev.cpu >= 90 ? '#dc2626' : (dev.cpu >= 75 ? '#ea580c' : '#16a34a')};"></div>
+                          <div style="width: ${dev.cpu === null ? 0 : dev.cpu}%; height: 100%; background: ${dev.cpu !== null && dev.cpu >= 90 ? '#dc2626' : (dev.cpu !== null && dev.cpu >= 75 ? '#ea580c' : '#16a34a')};"></div>
                         </div>
-                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.cpu}%</span>
+                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.cpu === null ? '—' : dev.cpu + '%'}</span>
                       </div>
                     </td>
                     <td style="padding: 10px 12px;">
                       <div style="display: flex; align-items: center; gap: 6px;">
                         <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                          <div style="width: ${dev.memory}%; height: 100%; background: ${dev.memory >= 90 ? '#dc2626' : (dev.memory >= 75 ? '#ea580c' : '#0284c7')};"></div>
+                          <div style="width: ${dev.memory === null ? 0 : dev.memory}%; height: 100%; background: ${dev.memory !== null && dev.memory >= 90 ? '#dc2626' : (dev.memory !== null && dev.memory >= 75 ? '#ea580c' : '#0284c7')};"></div>
                         </div>
-                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.memory}%</span>
+                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.memory === null ? '—' : dev.memory + '%'}</span>
                       </div>
                     </td>
-                    <td style="padding: 10px 12px; font-size: 11px; color: #64748b;">${dev.responseTime} ms</td>
-                    <td style="padding: 10px 12px; font-weight: 600; font-size: 11px; color: #166534;">${dev.availability}</td>
+                    <td style="padding: 10px 12px; font-size: 11px; color: #64748b;">${dev.responseTime === null ? '—' : dev.responseTime + ' ms'}</td>
+                    <td style="padding: 10px 12px; font-weight: 600; font-size: 11px; color: #166534;">${dev.availability === null ? '—' : dev.availability + '%'}</td>
                     <td style="padding: 10px 12px; text-align: right;" onclick="event.stopPropagation();">
                       <div style="display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end;">
                         ${(dev.category === 'Servers' || dev.type === 'Windows' || dev.type === 'Linux') ? `
@@ -1718,101 +1804,32 @@
               </tbody>
             </table>
 
-            <!-- Pagination Footer -->
+            <!-- Result count (no pagination: the table shows every matching device) -->
             <div style="padding: 10px 16px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #64748b;">
-              <div>Showing 1-${list.length} of ${list.length} devices</div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <span>Rows per page: <strong>25</strong></span>
-                <div style="display: flex; gap: 4px;">
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>⏮</button>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>◀</button>
-                  <span style="padding: 3px 8px; font-weight: 600; color: #0f172a;">Page 1 of 1</span>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>▶</button>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>⏭</button>
-                </div>
-              </div>
+              <div>Showing ${list.length} of ${normDevices.length} device${normDevices.length === 1 ? '' : 's'}</div>
             </div>
           </div>
         ` : activeSub === 'interfaces' ? `
-          <!-- Interfaces Subtab (With Shipped 95th Percentile Graph, Statistical Box & port_up.gif / port_down.gif) -->
+          <!-- Interfaces Subtab -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
               <div>
                 <div style="font-size: 13px; font-weight: 700; color: #1e293b;">Enterprise Interface Traffic Summary (1-Minute Average &amp; 95th Percentile Threshold)</div>
-                <div style="font-size: 11px; color: #64748b;">Aggregated across 48 Monitored SNMP/NetFlow Ports | Today (00:00 - 24:00)</div>
+                <div style="font-size: 11px; color: #64748b;">${(state.topInterfaces || []).length} interface(s) with polled data</div>
               </div>
               <div style="display: flex; gap: 14px; font-size: 11px; font-weight: 600;">
                 <span><span style="color:#49bd80;">■</span> IN Traffic</span>
                 <span><span style="color:#38bdf8;">■</span> OUT Traffic</span>
-                <span><span style="color:#ef4444;">―</span> IN 95th Percentile (9.35 Gbps)</span>
-                <span><span style="color:#dc2626;">--</span> OUT 95th Percentile (7.12 Gbps)</span>
               </div>
             </div>
-            <svg width="100%" height="150" viewBox="0 0 900 150" style="background: #fafbfc; border: 1px solid #f1f5f9; border-radius: 4px; margin-bottom: 14px;">
-              <line x1="50" y1="30" x2="880" y2="30" stroke="#e2e8f0" stroke-dasharray="2,2"/>
-              <line x1="50" y1="70" x2="880" y2="70" stroke="#e2e8f0" stroke-dasharray="2,2"/>
-              <line x1="50" y1="110" x2="880" y2="110" stroke="#e2e8f0" stroke-dasharray="2,2"/>
-              <text x="8" y="34" font-size="9" fill="#64748b">12 Gbps</text>
-              <text x="8" y="74" font-size="9" fill="#64748b">6 Gbps</text>
-              <text x="8" y="114" font-size="9" fill="#64748b">2 Gbps</text>
-              <!-- IN Area & Line -->
-              <polygon points="50,130 50,82 140,68 230,52 320,60 410,36 500,44 590,32 680,48 770,40 880,45 880,130" fill="rgba(73,189,128,0.22)"/>
-              <polyline points="50,82 140,68 230,52 320,60 410,36 500,44 590,32 680,48 770,40 880,45" fill="none" stroke="#49bd80" stroke-width="2"/>
-              <!-- OUT Area & Line -->
-              <polygon points="50,130 50,98 140,88 230,76 320,84 410,64 500,72 590,58 680,70 770,62 880,68 880,130" fill="rgba(56,189,248,0.22)"/>
-              <polyline points="50,98 140,88 230,76 320,84 410,64 500,72 590,58 680,70 770,62 880,68" fill="none" stroke="#38bdf8" stroke-width="2"/>
-              <!-- Red 95th Percentile Threshold Lines -->
-              <line x1="50" y1="42" x2="880" y2="42" stroke="#ef4444" stroke-width="1.5"/>
-              <text x="740" y="38" font-size="9" font-weight="700" fill="#ef4444">IN 95th Percentile</text>
-              <line x1="50" y1="63" x2="880" y2="63" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="4,3"/>
-              <text x="735" y="59" font-size="9" font-weight="700" fill="#dc2626">OUT 95th Percentile</text>
-            </svg>
-            <!-- Authentic ManageEngine 95th Percentile Statistical Summary Box (Matches netflow_addon_inventory.png) -->
-            <div style="display: flex; border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; background: #ffffff;">
-              <div style="width: 150px; background: #f8fafc; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
-                <div style="font-size: 18px; color: #64748b;">🕒</div>
-                <div style="font-size: 11px; font-weight: 700; color: #334155; margin-top: 2px;">00:00 - 24:00</div>
-                <div style="font-size: 9px; color: #94a3b8;">1-Min Granularity</div>
-              </div>
-              <table style="flex: 1; border-collapse: collapse; font-size: 11px;">
-                <thead>
-                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                    <th style="padding: 7px 12px;">Category</th>
-                    <th style="padding: 7px 12px;">Total Volume</th>
-                    <th style="padding: 7px 12px;">Maximum</th>
-                    <th style="padding: 7px 12px;">Minimum</th>
-                    <th style="padding: 7px 12px;">Average</th>
-                    <th style="padding: 7px 12px;">Standard Deviation</th>
-                    <th style="padding: 7px 12px;">95th Percentile</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 7px 12px; font-weight: 700; color: #16a34a;">Traffic IN</td>
-                    <td style="padding: 7px 12px; font-family: monospace; font-weight: 700;">450.94 GB</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">11.42 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">1.18 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">5.84 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">1.92 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace; font-weight: 700; color: #dc2626;">9.35 Gbps</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 7px 12px; font-weight: 700; color: #0284c7;">Traffic OUT</td>
-                    <td style="padding: 7px 12px; font-family: monospace; font-weight: 700;">318.62 GB</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">8.64 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">840.5 Mbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">4.12 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace;">1.34 Gbps</td>
-                    <td style="padding: 7px 12px; font-family: monospace; font-weight: 700; color: #dc2626;">7.12 Gbps</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div style="padding: 18px; text-align: center; color: #64748b; font-size: 12px; background: #fafbfc; border: 1px solid #f1f5f9; border-radius: 4px; margin-bottom: 14px;">
+              No interface traffic history recorded yet. Traffic history charts will appear once interfaces are polled over time.
             </div>
           </div>
 
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="padding: 14px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Monitored Enterprise Interfaces (48 Active Ports)</span>
+              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Monitored Enterprise Interfaces (${(state.topInterfaces || []).length} Active Ports)</span>
               <span style="font-size: 11px; color: #64748b;">Telemetry interval: 60 seconds</span>
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
@@ -1830,7 +1847,7 @@
                 </tr>
               </thead>
               <tbody>
-                ${state.topInterfaces.map(it => `
+                ${(state.topInterfaces || []).length === 0 ? '<tr><td colspan="9" style="padding: 24px; text-align: center; color: #64748b;">No network interface traffic recorded. Discovered switch/router interfaces will stream live telemetry here.</td></tr>' : (state.topInterfaces || []).map(it => `
                   <tr style="border-bottom: 1px solid #f1f5f9;">
                     <td style="padding: 10px 12px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 6px;">
                       <img src="/apiclient/fluidicv2/img/${it.status === 'UP' ? 'port_up.gif' : 'port_down.gif'}" alt="${it.status}" style="width: 14px; height: 14px;">
@@ -1838,12 +1855,12 @@
                     </td>
                     <td style="padding: 10px 12px; color: #0070e0; font-weight: 600;">${it.device}</td>
                     <td style="padding: 10px 12px; color: #64748b;">${it.probe}</td>
-                    <td style="padding: 10px 12px; font-family: monospace;">${it.speed}</td>
-                    <td style="padding: 10px 12px; font-family: monospace; color: #0284c7; font-weight: 600;">${it.inTraffic} Mbps (${it.inPercent}%)</td>
-                    <td style="padding: 10px 12px; font-family: monospace; color: #64748b; font-weight: 600;">${it.outTraffic} Mbps (${it.outPercent}%)</td>
-                    <td style="padding: 10px 12px;"><span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 2px;"><img src="/apiclient/fluidicv2/img/port_up.gif" style="width:10px;height:10px;"> UP</span></td>
+                    <td style="padding: 10px 12px; font-family: monospace;">${it.speed || '—'}</td>
+                    <td style="padding: 10px 12px; font-family: monospace; color: #0284c7; font-weight: 600;">${it.inTraffic ?? '—'} Mbps (${it.inPercent ?? '—'}%)</td>
+                    <td style="padding: 10px 12px; font-family: monospace; color: #64748b; font-weight: 600;">${it.outTraffic ?? '—'} Mbps (${it.outPercent ?? '—'}%)</td>
+                    <td style="padding: 10px 12px;"><span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; ${(it.admin || '').toString().toUpperCase() === 'UP' ? 'background: #dcfce7; color: #166534;' : 'background: #f1f5f9; color: #64748b;'} padding: 2px 6px; border-radius: 2px;">${it.admin || '—'}</span></td>
                     <td style="padding: 10px 12px;"><span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; ${it.status === 'UP' ? 'background: #dcfce7; color: #166534;' : 'background: #fee2e2; color: #991b1b;'} padding: 2px 6px; border-radius: 2px;"><img src="/apiclient/fluidicv2/img/${it.status === 'UP' ? 'port_up.gif' : 'port_down.gif'}" style="width:10px;height:10px;"> ${it.status}</span></td>
-                    <td style="padding: 10px 12px; font-weight: 600; color: ${it.errors > 0 ? '#dc2626' : '#16a34a'};">${it.errors}</td>
+                    <td style="padding: 10px 12px; font-weight: 600; color: ${(it.errors || 0) > 0 ? '#dc2626' : '#16a34a'};">${it.errors ?? '—'}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -1852,17 +1869,17 @@
         ` : activeSub === 'probes' ? `
           <!-- Probes Subtab -->
           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
-            ${state.probes.map(pr => `
+            ${probes.length === 0 ? '<div style="grid-column: 1 / -1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 40px; text-align: center; color: #64748b;">No probes registered yet. Register a remote probe to monitor branch sites.</div>' : probes.map(pr => `
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
                   <div>
                     <div style="font-size: 15px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-                      <span style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a;"></span>
+                      <span style="width: 8px; height: 8px; border-radius: 50%; background: ${opmProbeIsOnline(pr) ? '#16a34a' : '#dc2626'};"></span>
                       ${pr.name}
                     </div>
-                    <div style="font-size: 12px; color: #64748b; font-family: monospace; margin-top: 2px;">IP: ${pr.ip} | Port: 8060</div>
+                    <div style="font-size: 12px; color: #64748b; font-family: monospace; margin-top: 2px;">IP: ${pr.ip}${pr.commPort ? ' | Port: ' + pr.commPort : ''}</div>
                   </div>
-                  <span style="font-size: 11px; font-weight: 700; background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 4px;">Connected</span>
+                  <span style="font-size: 11px; font-weight: 700; background: ${opmProbeIsOnline(pr) ? '#dcfce7' : '#fee2e2'}; color: ${opmProbeIsOnline(pr) ? '#166534' : '#991b1b'}; padding: 3px 8px; border-radius: 4px;">${opmProbeIsOnline(pr) ? 'Connected' : pr.status}</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #f8fafc; padding: 10px; border-radius: 4px; font-size: 12px; margin-bottom: 12px;">
                   <div>
@@ -1875,7 +1892,7 @@
                   </div>
                   <div>
                     <div style="color: #64748b; font-size: 11px;">RTT Latency</div>
-                    <div style="font-weight: 700; color: #0284c7; font-size: 14px;">${pr.latency} ms</div>
+                    <div style="font-weight: 700; color: #0284c7; font-size: 14px;">${pr.latency === null ? '—' : pr.latency + ' ms'}</div>
                   </div>
                 </div>
                 <div style="display: flex; justify-content: flex-end;">
@@ -1922,9 +1939,13 @@
     const exportCsvBtn = container.querySelector('#opm-inv-export-csv-btn');
     if (exportCsvBtn) {
       exportCsvBtn.onclick = () => {
+        if (normDevices.length === 0) {
+          showToast('Nothing to export yet.');
+          return;
+        }
         const header = 'Device Name,IP Address,Category,Vendor,Model Type,Probe Location,Status,CPU %,Memory %,Response Time (ms),Availability\n';
-        const rows = state.devices.map(d =>
-          `"${d.name}","${d.ip}","${d.category}","${d.vendor}","${d.type}","${d.probe}","${d.status}",${d.cpu},${d.memory},${d.responseTime},"${d.availability}"`
+        const rows = normDevices.map(d =>
+          `"${d.name}","${d.ip}","${d.category}","${d.vendor}","${d.type}","${d.probe}","${d.status}",${d.cpu === null ? '' : d.cpu},${d.memory === null ? '' : d.memory},${d.responseTime === null ? '' : d.responseTime},"${d.availability === null ? '' : d.availability + '%'}"`
         ).join('\n');
         const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
@@ -2077,12 +2098,28 @@
       };
     });
 
-    // Row Poll button
+    // Row Poll button — real pollNow call; local state updates only from
+    // the server's returned device, and failures report the server message.
     container.querySelectorAll('.opm-inv-row-poll-btn').forEach(btn => {
-      btn.onclick = (e) => {
+      btn.onclick = async (e) => {
         e.stopPropagation();
+        const id = btn.getAttribute('data-id');
         const name = btn.getAttribute('data-name');
-        showToast('Polling ' + name + ' now... SNMP OIDs & ICMP updated.');
+        try {
+          const r = await opmPostJson('/api/json/device/pollNow', { deviceId: id });
+          if (!r.ok) {
+            showToast('Poll failed for ' + name + ': ' + ((r.data && r.data.message) || ('HTTP ' + r.status)));
+            return;
+          }
+          if (r.data && r.data.device) {
+            const idx = state.devices.findIndex(d => String(d.id) === String(id));
+            if (idx >= 0) state.devices[idx] = r.data.device;
+          }
+          showToast((r.data && r.data.message) || ('Polled ' + name + ' successfully.'));
+          renderInventoryView();
+        } catch (err) {
+          showToast('Poll failed for ' + name + ': ' + (err && err.message ? err.message : 'network error'));
+        }
       };
     });
 
@@ -2147,57 +2184,104 @@
       };
     }
 
-    // Bulk actions buttons
+    // Bulk actions buttons — every action reports only what the server
+    // actually did. Actions with no server endpoint (rediscover, polling
+    // interval, maintenance window, template assignment) say so instead
+    // of claiming success. Local state changes only after server success.
     container.querySelectorAll('.opm-bulk-action-btn').forEach(btn => {
-      btn.onclick = () => {
+      btn.onclick = async () => {
         const act = btn.getAttribute('data-action');
         const selectedCbs = Array.from(container.querySelectorAll('.opm-inv-row-cb:checked'));
-        const ids = selectedCbs.map(c => parseInt(c.getAttribute('data-id'), 10));
+        const ids = selectedCbs.map(c => parseInt(c.getAttribute('data-id'), 10)).filter(n => !Number.isNaN(n));
 
-                if (act === 'clear') {
+        if (act === 'clear') {
           container.querySelectorAll('.opm-inv-row-cb').forEach(cb => cb.checked = false);
           const selectAll = container.querySelector('#opm-inv-select-all');
           if (selectAll) selectAll.checked = false;
           state.selectedDeviceCheckboxCount = 0;
           const bulkBar = document.getElementById('opm-bulk-bar');
           if (bulkBar) bulkBar.style.display = 'none';
-        } else if (act === 'poll') {
-          state.devices.forEach(d => {
-            if (ids.includes(d.id)) {
-              d.lastBackup = 'Just now';
-              d.responseTime = Math.max(8, d.responseTime + Math.floor(Math.random() * 4 - 2));
+          return;
+        }
+        if (ids.length === 0) {
+          showToast('Select at least one device first.');
+          return;
+        }
+        if (act === 'poll') {
+          let okCount = 0;
+          let firstFailure = '';
+          for (const id of ids) {
+            const r = await opmPostJson('/api/json/device/pollNow', { deviceId: id });
+            if (r.ok) {
+              okCount++;
+              if (r.data && r.data.device) {
+                const idx = state.devices.findIndex(d => String(d.id) === String(id));
+                if (idx >= 0) state.devices[idx] = r.data.device;
+              }
+            } else if (!firstFailure) {
+              firstFailure = (r.data && r.data.message) || ('Device ' + id + ': HTTP ' + r.status);
             }
-          });
-          showToast(`Initiated live parallel SNMP poll across ${ids.length} selected devices. Telemetry synchronized.`);
-          renderInventoryView();
-        } else if (act === 'interval') {
-          showToast(`Updated polling frequency to 1-minute high-frequency interval for ${ids.length} devices.`);
-        } else if (act === 'maintenance') {
-          showToast(`Configured 2-hour Maintenance Window. Alarms suppressed for ${ids.length} devices.`);
-        } else if (act === 'delete') {
-          if (confirm(`Are you sure you want to remove ${ids.length} device(s) from OpManager Central Inventory?`)) {
-            state.devices = state.devices.filter(d => !ids.includes(d.id));
-            state.selectedDeviceCheckboxCount = 0;
-            showToast(`Successfully removed ${ids.length} device(s) from Central Inventory.`);
-            renderInventoryView();
           }
-        } else if (act === 'rediscover') {
-          state.devices.forEach(d => {
-            if (ids.includes(d.id)) {
-              d.lastBackup = 'Just now';
-              d.responseTime = Math.floor(Math.random() * 15 + 8);
-            }
-          });
-          showToast(`Triggered background rediscovery for ${ids.length} devices.`);
+          showToast(okCount === ids.length
+            ? `Polled ${okCount} device(s) successfully.`
+            : `Polled ${okCount} of ${ids.length} device(s). ${firstFailure}`);
+          renderInventoryView();
+        } else if (act === 'delete') {
+          if (!confirm(`Are you sure you want to remove ${ids.length} device(s) from OpManager Central Inventory?`)) return;
+          const deletedIds = [];
+          let firstFailure = '';
+          for (const id of ids) {
+            const r = await opmPostJson('/api/json/device/delete', { deviceId: id });
+            if (r.ok) deletedIds.push(id);
+            else if (!firstFailure) firstFailure = (r.data && r.data.message) || ('Device ' + id + ': HTTP ' + r.status);
+          }
+          if (deletedIds.length > 0) {
+            const gone = new Set(deletedIds.map(String));
+            state.devices = state.devices.filter(d => !gone.has(String(d.id)));
+            state.selectedDeviceCheckboxCount = 0;
+          }
+          showToast(deletedIds.length === ids.length
+            ? `Removed ${deletedIds.length} device(s) from Central Inventory.`
+            : `Removed ${deletedIds.length} of ${ids.length} device(s). ${firstFailure}`);
           renderInventoryView();
         } else if (act === 'testcred') {
-          showToast(`SNMP Credential Test completed: ${ids.length} / ${ids.length} PASSED (SNMPv2c & SNMPv3).`);
+          let passed = 0;
+          let failed = 0;
+          let firstFailure = '';
+          for (const id of ids) {
+            const r = await opmPostJson('/api/json/device/testCredential', { deviceId: id });
+            const result = r.data && r.data.result;
+            if (r.ok && result === 'SUCCESS') passed++;
+            else {
+              failed++;
+              if (!firstFailure) firstFailure = (r.data && r.data.message) || ('Device ' + id + ': HTTP ' + r.status);
+            }
+          }
+          showToast(failed === 0
+            ? `SNMP Credential Test completed: ${passed} / ${passed} PASSED.`
+            : `SNMP Credential Test: ${passed} passed, ${failed} failed. ${firstFailure}`);
         } else if (act === 'manage') {
-          showToast(`Management status toggled for ${ids.length} monitored nodes.`);
+          let okCount = 0;
+          let firstFailure = '';
+          for (const id of ids) {
+            const r = await opmPostJson('/api/json/device/setManaged', { deviceId: id, managed: true });
+            if (r.ok) okCount++;
+            else if (!firstFailure) firstFailure = (r.data && r.data.message) || ('Device ' + id + ': HTTP ' + r.status);
+          }
+          showToast(okCount === ids.length
+            ? `Set ${okCount} device(s) to Managed.`
+            : `Set ${okCount} of ${ids.length} device(s) to Managed. ${firstFailure}`);
+          renderInventoryView();
+        } else if (act === 'rediscover') {
+          showToast('Rediscovery is not available yet — there is no server endpoint for it.');
+        } else if (act === 'interval') {
+          showToast('Polling-interval changes are not available yet — there is no server endpoint for them.');
+        } else if (act === 'maintenance') {
+          showToast('Maintenance windows are not available yet — there is no server endpoint for them.');
         } else if (act === 'template') {
-          showToast(`Applied Enterprise Device Template across ${ids.length} selected nodes.`);
+          showToast('Template assignment is not available yet — there is no server endpoint for it.');
         } else {
-          showToast(`Executed bulk action "${act}" across ${state.selectedDeviceCheckboxCount} devices.`);
+          showToast(`Bulk action "${act}" is not available — there is no server endpoint for it.`);
         }
       };
     });

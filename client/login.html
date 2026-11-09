@@ -127,27 +127,11 @@
       border-color: #0070e0;
       box-shadow: 0 0 0 3px rgba(0, 112, 224, 0.15);
     }
-    select.form-control {
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      background-size: 16px;
-      padding-right: 32px;
-    }
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .hint-row {
       font-size: 12px;
       color: #64748b;
       margin-bottom: 20px;
-    }
-    .checkbox-row label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
+      text-align: right;
     }
     .btn-submit {
       width: 100%;
@@ -171,31 +155,6 @@
     .btn-submit:disabled {
       background: #94a3b8;
       cursor: not-allowed;
-    }
-    .demo-pill {
-      margin-top: 14px;
-      padding: 10px;
-      background: #f1f5f9;
-      border: 1px dashed #cbd5e1;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 11px;
-      color: #475569;
-    }
-    .demo-pill button {
-      background: #1d824e;
-      color: #ffffff;
-      border: none;
-      padding: 4px 10px;
-      border-radius: 3px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .demo-pill button:hover {
-      background: #15693c;
     }
     .alert-box {
       display: none;
@@ -233,7 +192,7 @@
       <span class="header-tag">ENTERPRISE EDITION</span>
     </div>
     <div class="header-edition">
-      Release 12.9.203 GA &nbsp;|&nbsp; Build 129203 (64-bit)
+      Release 12.9.204-GA (64-bit)
     </div>
   </div>
 
@@ -251,116 +210,166 @@
         <form id="loginForm">
           <div class="form-group">
             <label class="form-label" for="username">Username</label>
-            <input type="text" id="username" class="form-control" value="admin" autocomplete="username" required>
+            <input type="text" id="username" class="form-control" autocomplete="username" required>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="password">Password</label>
-            <input type="password" id="password" class="form-control" value="admin" autocomplete="current-password" required>
+            <input type="password" id="password" class="form-control" autocomplete="current-password" required>
           </div>
 
-          <div class="form-group">
-            <label class="form-label" for="probe">Target Probe / Central Scope</label>
-            <select id="probe" class="form-control">
-              <option value="all" selected>All Probes (Consolidated Enterprise Central)</option>
-              <option value="1">Probe 1 - New York (HQ Core Backbone)</option>
-              <option value="2">Probe 2 - London (EMEA Cloud Hub)</option>
-              <option value="3">Probe 3 - Singapore (APAC Datacenter)</option>
-              <option value="4">Probe 4 - Dubai (MENA Regional Node)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="domain">Authentication Domain</label>
-            <select id="domain" class="form-control">
-              <option value="local" selected>Local OpManager Database</option>
-              <option value="ad">corp.enterprise.local (Active Directory / LDAP)</option>
-              <option value="radius">RADIUS / TACACS+ Enterprise</option>
-            </select>
-          </div>
-
-          <div class="checkbox-row">
-            <label>
-              <input type="checkbox" id="keepSignedIn" checked>
-              <span>Keep me signed in</span>
-            </label>
-            <span style="color: #0070e0; cursor: pointer;" onclick="alert('Please contact your OpManager Central Enterprise Administrator or Security Operations Center to reset credentials.');">Forgot Password?</span>
+          <div class="hint-row">
+            <span>Forgot your password? Contact your administrator to reset it.</span>
           </div>
 
           <button type="submit" id="submitBtn" class="btn-submit">
             <span>Sign In to OpManager Central</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
+        </form>
 
-          <div class="demo-pill">
-            <span>Enterprise Defaults: <strong>admin</strong> / <strong>admin</strong></span>
-            <button type="button" onclick="fillAdmin()">Fill Admin</button>
+        <form id="changePasswordForm" style="display: none;">
+          <p style="font-size: 13px; color: #475569; margin-bottom: 16px;">
+            Your password must be changed before you can continue.
+            Enter your current password and choose a new one (at least 10 characters).
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="currentPassword">Current Password</label>
+            <input type="password" id="currentPassword" class="form-control" autocomplete="current-password" required>
           </div>
+
+          <div class="form-group">
+            <label class="form-label" for="newPassword">New Password</label>
+            <input type="password" id="newPassword" class="form-control" autocomplete="new-password" minlength="10" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="confirmPassword">Confirm New Password</label>
+            <input type="password" id="confirmPassword" class="form-control" autocomplete="new-password" minlength="10" required>
+          </div>
+
+          <button type="submit" id="changeBtn" class="btn-submit">
+            <span>Change Password &amp; Continue</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
         </form>
       </div>
     </div>
   </div>
 
   <div class="footer-bar">
-    ManageEngine OpManager Central (Version 12.9.203 GA Build 129203) &nbsp;|&nbsp; 
-    Licensed to Global Enterprise Infrastructure (5,000 Managed Nodes) &nbsp;|&nbsp; 
+    ManageEngine OpManager Central (Version 12.9.204-GA) &nbsp;|&nbsp;
+    Unlicensed — no license applied &nbsp;|&nbsp;
     &copy; 2026 Zoho Corporation Pvt. Ltd. All rights reserved.
   </div>
 
   <script>
-    function fillAdmin() {
-      document.getElementById('username').value = 'admin';
-      document.getElementById('password').value = 'admin';
-    }
-
-    const form = document.getElementById('loginForm');
+    const loginForm = document.getElementById('loginForm');
+    const changeForm = document.getElementById('changePasswordForm');
     const alertBox = document.getElementById('alertBox');
     const submitBtn = document.getElementById('submitBtn');
+    const changeBtn = document.getElementById('changeBtn');
+    const submitBtnHtml = submitBtn.innerHTML;
+    const changeBtnHtml = changeBtn.innerHTML;
 
-    form.onsubmit = async (e) => {
+    function showAlert(message, isSuccess) {
+      alertBox.className = 'alert-box ' + (isSuccess ? 'alert-success' : 'alert-danger');
+      alertBox.innerText = message;
+      alertBox.style.display = 'block';
+    }
+
+    function hideAlert() {
+      alertBox.style.display = 'none';
+    }
+
+    function showChangePasswordForm() {
+      loginForm.style.display = 'none';
+      changeForm.style.display = 'block';
+      document.getElementById('currentPassword').focus();
+    }
+
+    // Already signed in (valid session cookie)? Go straight to the console.
+    fetch('/api/auth/session', { credentials: 'same-origin' })
+      .then((res) => {
+        if (res.ok) window.location.href = '/';
+      })
+      .catch(() => { /* Not signed in; stay on the login page. */ });
+
+    loginForm.onsubmit = async (e) => {
       e.preventDefault();
       const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const probe = document.getElementById('probe').value;
-      const domain = document.getElementById('domain').value;
+      const password = document.getElementById('password').value;
 
-      alertBox.style.display = 'none';
+      hideAlert();
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>Authenticating...</span>';
 
       try {
         const res = await fetch('/api/auth/login', {
           method: 'POST',
+          credentials: 'same-origin',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password, probe, domain })
+          body: JSON.stringify({ username, password })
         });
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
 
-        if (res.ok && data.status === 'success') {
-          alertBox.className = 'alert-box alert-success';
-          alertBox.innerText = 'Authenticated successfully! Loading OpManager Central Console...';
-          alertBox.style.display = 'block';
-
-          localStorage.setItem('opm_auth_user', JSON.stringify(data.user));
-          localStorage.setItem('opm_auth_token', data.token);
-          if (probe !== 'all') {
-            localStorage.setItem('selectedProbe', probe);
-          } else {
-            localStorage.removeItem('selectedProbe');
+        if (res.ok && (data.ok === true || data.status === 'success')) {
+          if (data.mustChangePassword) {
+            showAlert('Signed in. Please change your password to continue.', true);
+            showChangePasswordForm();
+            return;
           }
-
-          setTimeout(() => {
-            window.location.href = '/apiclient/fluidicv3/itom/index.html#/dashboard';
-          }, 600);
+          showAlert('Authenticated successfully! Loading OpManager Central Console...', true);
+          setTimeout(() => { window.location.href = '/'; }, 600);
         } else {
-          throw new Error(data.message || 'Invalid username or password');
+          throw new Error(data.error || 'Invalid username or password');
         }
       } catch (err) {
-        alertBox.className = 'alert-box alert-danger';
-        alertBox.innerText = err.message || 'Authentication failed. Please verify credentials.';
-        alertBox.style.display = 'block';
+        showAlert(err.message || 'Authentication failed. Please verify credentials.');
         submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>Sign In to OpManager Central</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+        submitBtn.innerHTML = submitBtnHtml;
+      }
+    };
+
+    changeForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (newPassword !== confirmPassword) {
+        showAlert('New passwords do not match.');
+        return;
+      }
+      if (newPassword.length < 10) {
+        showAlert('New password must be at least 10 characters.');
+        return;
+      }
+
+      hideAlert();
+      changeBtn.disabled = true;
+      changeBtn.innerHTML = '<span>Changing password...</span>';
+
+      try {
+        const res = await fetch('/api/auth/change-password', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && (data.ok === true || data.status === 'success')) {
+          showAlert('Password changed. Loading OpManager Central Console...', true);
+          setTimeout(() => { window.location.href = '/'; }, 600);
+        } else {
+          throw new Error(data.error || 'Password change failed. Please try again.');
+        }
+      } catch (err) {
+        showAlert(err.message || 'Password change failed. Please try again.');
+        changeBtn.disabled = false;
+        changeBtn.innerHTML = changeBtnHtml;
       }
     };
   </script>

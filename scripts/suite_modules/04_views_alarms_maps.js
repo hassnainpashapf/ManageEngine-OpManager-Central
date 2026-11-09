@@ -1,19 +1,221 @@
   // -------------------------------------------------------------
+  // REAL-DATA HELPERS (04): no invented values. Every number,
+  // timestamp and status below comes from a real API response.
+  // Unknown fields render as '—', never as a plausible default.
+  // -------------------------------------------------------------
+  function alarmTech(alm) {
+    return (alm && (alm.technician || alm.who)) || '—';
+  }
+
+  function alarmTime(alm) {
+    return (alm && (alm.time || alm.prettyTime)) || '—';
+  }
+
+  function fmtTime(ts) {
+    if (ts === null || ts === undefined || ts === '') return '—';
+    const d = new Date(ts);
+    return isNaN(d.getTime()) ? '—' : d.toLocaleString();
+  }
+
+  function probeLatency(pr) {
+    if (!pr) return null;
+    const v = pr.latency_ms ?? pr.latency;
+    return (typeof v === 'number' && Number.isFinite(v)) ? v : null;
+  }
+
+  function probeDeviceCount(pr) {
+    if (!pr) return 0;
+    return state.devices.filter(d => String(d.probeId ?? d.probe_id) === String(pr.id)).length;
+  }
+
+  function escHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  }
+
+  function authHeaders() {
+    const headers = { 'Content-Type': 'application/json' };
+    try {
+      const token = localStorage.getItem('opm_auth_token');
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+    } catch (e) { /* storage unavailable — proceed without a token */ }
+    return headers;
+  }
+
+  async function apiPost(path, body) {
+    const res = await fetch(path, { method: 'POST', headers: authHeaders(), body: JSON.stringify(body || {}) });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) throw new Error((data && data.message) || ('Request failed (' + res.status + ')'));
+    return data || {};
+  }
+
+  function apiGetJson(path) {
+    return fetch(path).then(async res => {
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error((data && data.message) || ('Request failed (' + res.status + ')'));
+      return data || {};
+    });
+  }
+
+  // Alarm aux counts (traps / syslog / suppression) — fetched at most
+  // once every 30 s; the view re-renders only when a count changes.
+  let alarmAuxLastFetch = 0;
+  let alarmAuxFetching = false;
+  function refreshAlarmAuxData() {
+    const now = Date.now();
+    if (alarmAuxFetching || now - alarmAuxLastFetch < 30000) return;
+    alarmAuxFetching = true;
+    alarmAuxLastFetch = now;
+    Promise.all([
+      apiGetJson('/api/traps/list').catch(() => null),
+      apiGetJson('/api/syslog/list').catch(() => null),
+      apiGetJson('/api/alarm/getSuppressionCount').catch(() => null)
+    ]).then(([traps, syslog, supp]) => {
+      const nextCounts = {
+        traps: traps && typeof traps.total === 'number' ? traps.total : (traps && Array.isArray(traps.traps) ? traps.traps.length : null),
+        syslog: syslog && typeof syslog.total === 'number' ? syslog.total : (syslog && Array.isArray(syslog.messages) ? syslog.messages.length : null)
+      };
+      const nextSupp = supp ? { suppressedCount: supp.suppressedCount ?? 0, activeProblems: supp.activeProblems ?? 0, noiseReductionPercent: supp.noiseReductionPercent ?? null } : null;
+      const changed = JSON.stringify(nextCounts) !== JSON.stringify(state.alarmAuxCounts) || JSON.stringify(nextSupp) !== JSON.stringify(state.alarmSuppression);
+      state.alarmAuxCounts = nextCounts;
+      state.alarmSuppression = nextSupp;
+      if (changed && state.currentTab === 'alarms' && typeof renderAlarmsView === 'function') renderAlarmsView();
+    }).finally(() => { alarmAuxFetching = false; });
+  }
+
+  // RCA incidents — real stored alarms grouped by device.
+  let rcaLastFetch = 0;
+  let rcaFetching = false;
+  function loadRcaIncidents() {
+    const now = Date.now();
+    if (rcaFetching || now - rcaLastFetch < 30000) return;
+    rcaFetching = true;
+    rcaLastFetch = now;
+    apiGetJson('/api/alarm/getRCAIncidents')
+      .then(data => {
+        const incidents = Array.isArray(data.incidents) ? data.incidents : [];
+        if (JSON.stringify(incidents) !== JSON.stringify(state.rcaIncidents)) {
+          state.rcaIncidents = incidents;
+          if (state.currentTab === 'alarms' && state.subTabs.alarms === 'rca' && typeof renderAlarmsView === 'function') renderAlarmsView();
+        }
+      })
+      .catch(() => {})
+      .finally(() => { rcaFetching = false; });
+  }
+
+  // Racks — only racks actually created via POST /api/racks/create.
+  let racksLoading = false;
+  async function loadRacks() {
+    if (racksLoading) return;
+    racksLoading = true;
+    try {
+      const data = await apiGetJson('/api/racks/list');
+      const racks = Array.isArray(data.racks) ? data.racks : [];
+      if (JSON.stringify(racks) !== JSON.stringify(state.racks)) {
+        state.racks = racks;
+        if (state.currentTab === 'maps' && state.subTabs.maps === 'rack' && typeof renderMapsView === 'function') renderMapsView();
+      }
+    } catch (err) {
+      state.racks = null;
+      state.racksError = err.message;
+      if (state.currentTab === 'maps' && state.subTabs.maps === 'rack' && typeof renderMapsView === 'function') renderMapsView();
+    } finally {
+      racksLoading = false;
+    }
+  }
+
+  // Rack sub-tab body: real racks from /api/racks/list, or an honest
+  // empty / loading / error state. Never invented racks.
+  function renderRackSubtab() {
+    if (state.racks === undefined) {
+      loadRacks();
+      return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Loading racks…</div>
+            <div style="font-size: 12px; color: #64748b;">Fetching racks created via the API.</div>
+          </div>`;
+    }
+    if (state.racks === null) {
+      return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Couldn’t load racks</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">${escHtml(state.racksError || 'The rack list could not be loaded.')}</div>
+            <button id="opm-racks-retry-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Retry</button>
+          </div>`;
+    }
+    if (state.racks.length === 0) {
+      return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No 3D Datacenter Racks Configured</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">
+              Create 3D datacenter racks and mount servers, switches, and UPS units to visualize rack space, thermal capacity, and front/rear port connectivity.
+            </div>
+            <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+              + Create New Rack
+            </button>
+          </div>`;
+    }
+    const selected = state.racks.find(r => String(r.id) === String(state.selectedRackId)) || state.racks[0];
+    const assignments = Array.isArray(selected.assignments) ? selected.assignments : [];
+    const byUnit = {};
+    assignments.forEach(a => { byUnit[a.unit] = a; });
+    const totalUnits = Math.min(selected.units || 0, 100);
+    const occupied = Object.keys(byUnit).filter(u => Number(u) >= 1 && Number(u) <= totalUnits).length;
+    let unitRows = '';
+    for (let u = totalUnits; u >= 1; u--) {
+      const a = byUnit[u];
+      unitRows += a ? `
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #f1f5f9;">
+              <span style="width: 44px; font-size: 11px; font-weight: 700; color: #64748b;">U${u}</span>
+              <span style="font-size: 12px; font-weight: 700; color: #0f172a;">${escHtml(a.deviceName || '—')}</span>
+              <span style="font-size: 11px; color: #64748b;">${escHtml(a.deviceIp || '—')}</span>
+              <span style="font-size: 11px; color: #64748b;">${escHtml(a.deviceCategory || '')}</span>
+            </div>` : `
+            <div style="display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #f1f5f9; opacity: 0.6;">
+              <span style="width: 44px; font-size: 11px; font-weight: 700; color: #64748b;">U${u}</span>
+              <span style="font-size: 11px; color: #475569; font-style: italic;">Empty slot</span>
+            </div>`;
+    }
+    return `
+          <div style="padding: 20px 24px;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div style="padding: 14px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <span style="font-size: 13px; font-weight: 700; color: #0f172a;">${escHtml(selected.name || '—')}</span>
+                  <span style="font-size: 11px; color: #64748b; margin-left: 8px;">${occupied} of ${selected.units || 0} units occupied</span>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <select id="opm-rack-select" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                    ${state.racks.map(r => `<option value="${r.id}" ${String(r.id) === String(selected.id) ? 'selected' : ''}>${escHtml(r.name || '—')} (${r.units || 0}U)</option>`).join('')}
+                  </select>
+                  <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">+ Create New Rack</button>
+                </div>
+              </div>
+              ${unitRows || '<div style="padding: 40px; text-align: center; color: #94a3b8;">No units in this rack yet.</div>'}
+            </div>
+          </div>`;
+  }
+
+  // -------------------------------------------------------------
   // VIEW: ALARMS (Active, Problems, All, EventLog, Syslog, Traps, Custom)
   // -------------------------------------------------------------
   function renderAlarmsView() {
     state.currentTab = 'alarms';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.alarms || 'active';
+    refreshAlarmAuxData();
+    if (activeSub === 'rca') loadRcaIncidents();
 
     const subtabs = [
       { id: 'active', name: `Active Alarms (${state.alarms.length})` },
       { id: 'rca', name: 'Root Cause Analysis (RCA)' },
       { id: 'problems', name: 'Problems & Correlated Events' },
       { id: 'all', name: `All Alarms (${state.alarms.length})` },
-      { id: 'eventlog', name: 'Windows Event Logs (0)' },
-      { id: 'syslog', name: 'Syslog (0)' },
-      { id: 'traps', name: 'SNMP Traps (0)' },
+      { id: 'eventlog', name: 'Windows Event Logs' },
+      { id: 'syslog', name: state.alarmAuxCounts && state.alarmAuxCounts.syslog != null ? `Syslog (${state.alarmAuxCounts.syslog})` : 'Syslog' },
+      { id: 'traps', name: state.alarmAuxCounts && state.alarmAuxCounts.traps != null ? `SNMP Traps (${state.alarmAuxCounts.traps})` : 'SNMP Traps' },
       { id: 'nfa', name: 'NetFlow Alarms' },
       { id: 'ncm', name: 'NCM Alarms' },
       { id: 'fwa', name: 'Firewall Alarms' },
@@ -39,7 +241,7 @@
     const countAttn = state.alarms.filter(a => a.severity === 'Attention').length;
     const countSvc = state.alarms.filter(a => a.severity === 'Service Down').length;
     const countClr = state.alarms.filter(a => a.severity === 'Clear').length;
-    const countAck = state.alarms.filter(a => a.technician && a.technician !== 'Unacknowledged').length;
+    const countAck = state.alarms.filter(a => { const t = a.technician || a.who; return t && t !== 'Unacknowledged'; }).length;
     const countUnack = countAll - countAck;
     const oputilsAlarmCount = state.alarms.filter(a => ['Switch','Router','Port','IPAM'].includes(a.category)).length;
     const critMatches = state.alarms.filter(a => a.severity === 'Critical' && ['Routers', 'Switches', 'Switch', 'Router'].includes(a.category)).length;
@@ -55,17 +257,41 @@
       list = list.filter(a => a.severity.toLowerCase() === state.alarmsSeverityFilter.toLowerCase());
     }
 
+    // All Alarms archive — real stored alarms only; no invented totals.
+    const archiveFilter = state.alarmsArchiveFilter || { range: '7d', severity: 'all', status: 'cleared', search: '' };
+    const archiveRangeMs = (range) => range === '24h' ? 86400000 : range === '7d' ? 7 * 86400000 : range === '30d' ? 30 * 86400000 : 0;
+    const archiveRangeCount = (range) => {
+      const ms = archiveRangeMs(range);
+      if (!ms) return state.alarms.length;
+      return state.alarms.filter(a => { const ts = a.timestamp || a.created_at || 0; return ts === 0 || ts >= Date.now() - ms; }).length;
+    };
+    const archiveClearedCount = state.alarms.filter(a => String(a.severity || '').toLowerCase() === 'clear').length;
+    const archiveRows = state.alarms.filter(a => {
+      const ts = a.timestamp || a.created_at || 0;
+      const ms = archiveRangeMs(archiveFilter.range);
+      if (ms && ts !== 0 && ts < Date.now() - ms) return false;
+      if (archiveFilter.severity !== 'all' && String(a.severity || '').toLowerCase() !== String(archiveFilter.severity).toLowerCase()) return false;
+      if (archiveFilter.status === 'cleared' && String(a.severity || '').toLowerCase() !== 'clear') return false;
+      if (archiveFilter.search) {
+        const q = archiveFilter.search.toLowerCase();
+        const hay = `${a.message || ''} ${a.device || ''} ${a.entity || ''} ${a.probe || ''}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+
     container.innerHTML = `
       <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; overflow-x: auto;">
         <div style="display: flex; align-items: center; gap: 2px;">
           ${subtabNavHtml}
         </div>
         <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; padding-left: 12px;">
-          <!-- Noise Reduction Pill Badge (Reverse Engineered) -->
-          <div title="Event Correlation Noise Reduction: 116 raw alerts suppressed into actionable incidents" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 5px; cursor: default;">
+          ${state.alarmSuppression && state.alarmSuppression.suppressedCount > 0 ? `
+          <div title="Event Correlation Noise Reduction: ${state.alarmSuppression.suppressedCount} raw alerts suppressed into ${state.alarmSuppression.activeProblems} actionable incidents" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 5px; cursor: default;">
             <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #16a34a;"></span>
-            82% Noise Reduction
+            ${state.alarmSuppression.noiseReductionPercent || ''} Noise Reduction
           </div>
+          ` : ''}
 
           <!-- Zia AI Summarize Action Button (Reverse Engineered) -->
           <button id="opm-alarms-zia-summarize-btn" data-fsoqa="alarms-actions-summarize-btn" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; padding: 5px 11px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
@@ -92,7 +318,7 @@
               Grid View
             </button>
           </div>
-          <button id="opm-alarms-export-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 11px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+          <button id="opm-alarms-export-btn" ${list.length === 0 ? 'disabled title="Nothing to export yet"' : ''} style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 11px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Export
           </button>
@@ -215,11 +441,11 @@
                       <td style="padding: 9px 14px;">${getStatusBadge(alm.severity)}</td>
                       <td style="padding: 9px 14px; color: #0f172a;">
                         <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${sevDotColor}; margin-right: 6px; vertical-align: middle;"></span>
-                        <span style="font-weight: 600; color: #1e293b;">${alm.message}</span>
-                        <span style="color: #64748b; font-size: 11px; margin-left: 6px;">| ${alm.ip || '127.0.0.1'} | ${alm.device} | ${alm.probe} | ${alm.technician || 'NOC Admin'} | ${alm.severity} |</span>
+                        <span style="font-weight: 600; color: #1e293b;">${escHtml(alm.message || '—')}</span>
+                        <span style="color: #64748b; font-size: 11px; margin-left: 6px;">| ${alm.ip || '—'} | ${alm.device || '—'} | ${alm.probe || '—'} | ${alarmTech(alm)} | ${alm.severity} |</span>
                       </td>
-                      <td style="padding: 9px 14px; font-weight: 600; color: #475569; font-size: 11px;">${alm.entity}</td>
-                      <td style="padding: 9px 14px; font-size: 11px; color: #64748b;">${alm.time}</td>
+                      <td style="padding: 9px 14px; font-weight: 600; color: #475569; font-size: 11px;">${escHtml(alm.entity || '—')}</td>
+                      <td style="padding: 9px 14px; font-size: 11px; color: #64748b;">${escHtml(alarmTime(alm))}</td>
                       <td style="padding: 9px 14px; text-align: right; white-space: nowrap;" onclick="event.stopPropagation();">
                         <button class="opm-alarm-row-rca-btn" data-id="${alm.id}" title="Zia AI Root Cause Analysis" style="background: #ede9fe; border: 1px solid #c4b5fd; color: #5b21b6; padding: 3px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; cursor: pointer; margin-right: 4px;">
                           🧠 Zia RCA
@@ -256,6 +482,32 @@
 
         </div>
       ` : activeSub === 'rca' ? `
+          ${state.rcaIncidents && state.rcaIncidents.length > 0 ? `
+          <div style="padding: 20px 24px;">
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                    <th style="padding: 10px 14px;">Device</th>
+                    <th style="padding: 10px 14px;">Alarms</th>
+                    <th style="padding: 10px 14px;">Started</th>
+                    <th style="padding: 10px 14px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${state.rcaIncidents.map(inc => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 9px 14px; font-weight: 600; color: #0f172a;">${escHtml(inc.deviceName || '—')}</td>
+                    <td style="padding: 9px 14px; color: #475569;">${inc.alarmCount || 0}</td>
+                    <td style="padding: 9px 14px; color: #64748b;">${fmtTime(inc.startedAt)}</td>
+                    <td style="padding: 9px 14px; color: #475569;">${inc.status === 'open' ? 'Open' : 'Cleared'}</td>
+                  </tr>`).join('')}
+                </tbody>
+              </table>
+              <div style="padding: 10px 16px; background: #fafbfc; border-top: 1px solid #e2e8f0; font-size: 11px; color: #64748b;">Showing ${state.rcaIncidents.length} of ${state.rcaIncidents.length} root cause incidents</div>
+            </div>
+          </div>
+          ` : `
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -265,40 +517,40 @@
               Zia AI machine-learning correlation engine is standby. Root cause blast-radius graphs will render here if critical incidents occur.
             </div>
           </div>
-        ` : activeSub === 'problems' ? `
+          `}
+      ` : activeSub === 'problems' ? `
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">Zero Correlated Network Problems</div>
+            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No problems detected</div>
             <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
-              Cross-device event correlation has zero open tickets. All distributed services operating within SLA.
+              Correlated problem events will appear here when alarms cluster on the same device or service.
             </div>
           </div>
         ` : activeSub === 'all' ? `
-        <!-- SUBTAB: ALL ALARMS (HISTORICAL ARCHIVE - 142 ALARMS) -->
+        <!-- SUBTAB: ALL ALARMS (HISTORICAL ARCHIVE — real stored alarms) -->
         <div style="padding: 20px 24px;">
           <!-- Filter Toolbar -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option>Past 24 Hours</option>
-                <option selected>Past 7 Days (142 Alarms)</option>
-                <option>Past 30 Days</option>
-                <option>Custom Date Range</option>
+              <select id="opm-archive-range" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                <option value="24h" ${archiveFilter.range === '24h' ? 'selected' : ''}>Past 24 Hours (${archiveRangeCount('24h')})</option>
+                <option value="7d" ${archiveFilter.range === '7d' ? 'selected' : ''}>Past 7 Days (${archiveRangeCount('7d')})</option>
+                <option value="30d" ${archiveFilter.range === '30d' ? 'selected' : ''}>Past 30 Days (${archiveRangeCount('30d')})</option>
+                <option value="all" ${archiveFilter.range === 'all' ? 'selected' : ''}>All Time (${state.alarms.length})</option>
               </select>
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option value="all">All Severities</option>
-                <option value="Critical">Critical Only</option>
-                <option value="Trouble">Trouble Only</option>
-                <option value="Attention">Attention Only</option>
+              <select id="opm-archive-severity" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                <option value="all" ${archiveFilter.severity === 'all' ? 'selected' : ''}>All Severities</option>
+                <option value="Critical" ${archiveFilter.severity === 'Critical' ? 'selected' : ''}>Critical Only</option>
+                <option value="Trouble" ${archiveFilter.severity === 'Trouble' ? 'selected' : ''}>Trouble Only</option>
+                <option value="Attention" ${archiveFilter.severity === 'Attention' ? 'selected' : ''}>Attention Only</option>
               </select>
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option value="all">All Statuses</option>
-                <option value="cleared" selected>Cleared Only (135)</option>
-                <option value="suppressed">Suppressed (116)</option>
+              <select id="opm-archive-status" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                <option value="all" ${archiveFilter.status === 'all' ? 'selected' : ''}>All Statuses</option>
+                <option value="cleared" ${archiveFilter.status === 'cleared' ? 'selected' : ''}>Cleared Only (${archiveClearedCount})</option>
               </select>
-              <input type="text" placeholder="Search archive alarms..." style="padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; width: 220px;">
+              <input id="opm-archive-search" type="text" placeholder="Search archive alarms..." value="${escHtml(archiveFilter.search)}" style="padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; width: 220px;">
             </div>
             <button id="opm-export-archive-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Export Archive CSV</button>
           </div>
@@ -318,16 +570,28 @@
                 </tr>
               </thead>
               <tbody>
+                ${archiveRows.length === 0 ? `
                 <tr>
                   <td colspan="7" style="padding: 40px; text-align: center; color: #94a3b8;">
-                    No historical alarms recorded. All monitored systems are operating normally.
+                    ${state.alarms.length === 0 ? 'No historical alarms recorded. All monitored systems are operating normally.' : 'No alarms match these filters.'}
+                    ${state.alarms.length === 0 ? '' : `<br><button id="opm-archive-clear-filters" style="margin-top: 10px; background: #f8fafc; border: 1px solid #cbd5e1; color: #0070e0; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Clear filters</button>`}
                   </td>
                 </tr>
+                ` : archiveRows.map(alm => `
+                <tr style="border-bottom: 1px solid #f1f5f9;">
+                  <td style="padding: 9px 14px;">${getStatusBadge(alm.severity)}</td>
+                  <td style="padding: 9px 14px;"><div style="font-weight: 600; color: #0f172a;">${escHtml(alm.device || '—')}</div><div style="font-size: 11px; color: #64748b;">${escHtml(alm.probe || '—')}</div></td>
+                  <td style="padding: 9px 14px; color: #475569;">${escHtml(alm.entity || '—')}</td>
+                  <td style="padding: 9px 14px; color: #0f172a;">${escHtml(alm.message || '—')}</td>
+                  <td style="padding: 9px 14px; color: #64748b;">—</td>
+                  <td style="padding: 9px 14px; color: #64748b;">${String(alm.severity || '').toLowerCase() === 'clear' ? escHtml(alarmTech(alm)) : '—'}</td>
+                  <td style="padding: 9px 14px; color: #475569;">${String(alm.severity || '').toLowerCase() === 'clear' ? 'Cleared' : escHtml(alm.status || 'Active')}</td>
+                </tr>`).join('')}
               </tbody>
             </table>
             <div style="padding: 10px 16px; background: #fafbfc; border-top: 1px solid #e2e8f0; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Showing 4 of 142 historical alarms</span>
-              <span>Page 1 of 36</span>
+              <span>Showing ${archiveRows.length} of ${state.alarms.length} historical alarms</span>
+              <span>Page 1 of 1</span>
             </div>
           </div>
         </div>
@@ -412,18 +676,18 @@
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ea580c;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">IP Address Conflict</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Conflicts</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">No Duplicates Detected</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">—</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">No IPAM data yet — run discovery first</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #ca8a04;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Switch Port Flap</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Flaps</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">All Ports Stable</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">—</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">No port data yet — run discovery first</div>
             </div>
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 18px; border-left: 4px solid #0070e0;">
               <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Rogue Detection</div>
-              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">0 Rogue Devices</div>
-              <div style="font-size: 11px; color: #16a34a; margin-top: 2px;">Perimeter Clean</div>
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">—</div>
+              <div style="font-size: 11px; color: #64748b; margin-top: 2px;">No rogue scan data yet</div>
             </div>
           </div>
 
@@ -532,6 +796,7 @@
     const expBtn = container.querySelector('#opm-alarms-export-btn');
     if (expBtn) {
       expBtn.onclick = () => {
+        if (state.alarms.length === 0) { showToast('Nothing to export yet.'); return; }
         const header = 'Alarm ID,Severity,Device,Entity,Probe,Message,Timestamp,Technician\n';
         const rows = state.alarms.map(a =>
           `"${a.id}","${a.severity}","${a.device}","${a.entity}","${a.probe}","${a.message}","${a.time}","${a.technician}"`
@@ -546,6 +811,38 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         showToast('Exported OpManager Central Alarms CSV successfully.');
+      };
+    }
+
+    // Archive filter controls (real stored alarms only)
+    const archiveRange = container.querySelector('#opm-archive-range');
+    if (archiveRange) archiveRange.onchange = (e) => { state.alarmsArchiveFilter = { ...archiveFilter, range: e.target.value }; renderAlarmsView(); };
+    const archiveSeverity = container.querySelector('#opm-archive-severity');
+    if (archiveSeverity) archiveSeverity.onchange = (e) => { state.alarmsArchiveFilter = { ...archiveFilter, severity: e.target.value }; renderAlarmsView(); };
+    const archiveStatus = container.querySelector('#opm-archive-status');
+    if (archiveStatus) archiveStatus.onchange = (e) => { state.alarmsArchiveFilter = { ...archiveFilter, status: e.target.value }; renderAlarmsView(); };
+    const archiveSearch = container.querySelector('#opm-archive-search');
+    if (archiveSearch) archiveSearch.onchange = (e) => { state.alarmsArchiveFilter = { ...archiveFilter, search: e.target.value.trim() }; renderAlarmsView(); };
+    const archiveClear = container.querySelector('#opm-archive-clear-filters');
+    if (archiveClear) archiveClear.onclick = () => { state.alarmsArchiveFilter = { range: '7d', severity: 'all', status: 'all', search: '' }; renderAlarmsView(); };
+    const archiveExportBtn = container.querySelector('#opm-export-archive-btn');
+    if (archiveExportBtn) {
+      archiveExportBtn.onclick = () => {
+        if (archiveRows.length === 0) { showToast('Nothing to export yet.'); return; }
+        const header = 'Alarm ID,Severity,Device,Entity,Probe,Message,Timestamp,Technician\n';
+        const rows = archiveRows.map(a =>
+          `"${a.id}","${a.severity}","${(a.device || '').replace(/"/g, '""')}","${(a.entity || '').replace(/"/g, '""')}","${(a.probe || '').replace(/"/g, '""')}","${(a.message || '').replace(/"/g, '""')}","${alarmTime(a)}","${alarmTech(a)}"`
+        ).join('\n');
+        const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `OpManager_Central_Alarm_Archive_${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Exported alarm archive CSV successfully.');
       };
     }
 
@@ -588,16 +885,31 @@
       };
     });
 
-    // Quick Ack
+    // Quick Ack — real POST to /api/json/alarms/acknowledge; local state
+    // changes only when the server confirms.
     container.querySelectorAll('.opm-alarm-quick-ack').forEach(btn => {
-      btn.onclick = (e) => {
+      btn.onclick = async (e) => {
         e.stopPropagation();
         const id = btn.getAttribute('data-id');
-        const alm = state.alarms.find(a => a.id === id);
-        if (alm) {
-          alm.technician = alm.technician === 'Unacknowledged' ? 'admin' : 'Unacknowledged';
-          showToast(`Alarm ${alm.id} marked as ${alm.technician}.`);
+        const alm = state.alarms.find(a => String(a.id) === String(id));
+        if (!alm) return;
+        const tech = alm.technician || alm.who;
+        if (alm.acknowledged || (tech && tech !== 'Unacknowledged')) {
+          showToast(`Alarm ${alm.id} is already acknowledged.`);
+          return;
+        }
+        btn.disabled = true;
+        try {
+          const data = await apiPost('/api/json/alarms/acknowledge', { alarmId: alm.id });
+          alm.acknowledged = true;
+          alm.status = 'Acknowledged';
+          if (data && data.alarm) alm.who = data.alarm.ackUser || data.alarm.acknowledgedBy || alm.who;
+          if (!alm.who || alm.who === 'Unacknowledged') alm.who = 'administrator';
+          showToast((data && data.message) || `Alarm ${alm.id} acknowledged.`);
           renderAlarmsView();
+        } catch (err) {
+          showToast(`Acknowledge failed: ${err.message}`);
+          btn.disabled = false;
         }
       };
     });
@@ -627,7 +939,7 @@
       btn.onclick = (e) => {
         e.stopPropagation();
         const id = btn.getAttribute('data-id');
-        const alm = state.alarms.find(a => a.id === id) || state.alarms[0];
+        const alm = state.alarms.find(a => String(a.id) === String(id)) || state.alarms[0];
         if (typeof showZiaRcaModal === 'function') {
           showZiaRcaModal(alm);
         }
@@ -664,14 +976,24 @@
       };
     }
 
-    // Network Alarms Ack & Actions
+    // Network Alarms Ack — real POST; button changes only on success.
     container.querySelectorAll('.opm-net-alarm-ack-btn').forEach(btn => {
-      btn.onclick = () => {
-        const orig = btn.textContent;
-        btn.textContent = 'Acknowledged';
-        btn.disabled = true;
-        btn.style.opacity = '0.6';
-        showToast(`${orig} action executed successfully.`);
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        const alm = id ? state.alarms.find(a => String(a.id) === String(id)) : null;
+        if (!alm) { showToast('No alarm selected to acknowledge.'); return; }
+        try {
+          const data = await apiPost('/api/json/alarms/acknowledge', { alarmId: alm.id });
+          alm.acknowledged = true;
+          alm.status = 'Acknowledged';
+          btn.textContent = 'Acknowledged';
+          btn.disabled = true;
+          btn.style.opacity = '0.6';
+          showToast((data && data.message) || `Alarm ${alm.id} acknowledged.`);
+          renderAlarmsView();
+        } catch (err) {
+          showToast(`Acknowledge failed: ${err.message}`);
+        }
       };
     });
 
@@ -679,15 +1001,13 @@
     const remediateBtn = container.querySelector('#opm-rca-remediate-btn');
     if (remediateBtn) {
       remediateBtn.onclick = () => {
-        remediateBtn.innerText = '✓ Remediation Executed (Failover Active)';
-        remediateBtn.style.background = '#0070e0';
-        showToast('Automated failover initiated: Core interface switched to secondary trunk.');
+        showToast('No remediation workflow is configured for this incident yet.');
       };
     }
     const rcaExportBtn = container.querySelector('#opm-rca-export-btn');
     if (rcaExportBtn) {
       rcaExportBtn.onclick = () => {
-        showToast('Generated Root Cause Analysis PDF Post-Mortem Report.');
+        showToast('No RCA report export is available yet.');
       };
     }
 
@@ -695,20 +1015,23 @@
     const noteBtn = container.querySelector('#opm-rca-add-note-btn');
     const noteInput = container.querySelector('#opm-rca-note-input');
     if (noteBtn && noteInput) {
-      noteBtn.onclick = () => {
+      noteBtn.onclick = async () => {
         const val = noteInput.value.trim();
-        if (val) {
-          fetch('/api/json/alarm/addRCANotes', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ alarmId: 'alm_801', note: val, technician: 'admin@opmanager' })
-          }).catch(() => {});
-          showToast('Investigation note saved to incident #PRB-9201.');
-          noteInput.value = '';
-          const notesBox = container.querySelector('#opm-rca-notes-container');
-          if (notesBox) {
-            notesBox.innerHTML += `<br>[Just now] admin@opmanager: ${val}`;
-          }
+        if (!val) return;
+        const alm = state.alarms[0];
+        if (!alm) { showToast('No alarm to attach this note to yet.'); return; }
+        try {
+          const data = await apiPost('/api/alarm/addRCANotes', { alarmId: alm.id, note: val, technician: 'admin@opmanager' });
+          showToast((data && data.message) || 'Investigation note saved.');
+        } catch (err) {
+          // Server honestly refuses (501): notes are not stored in this build.
+          showToast(`Note not saved: ${err.message}`);
+          return;
+        }
+        noteInput.value = '';
+        const notesBox = container.querySelector('#opm-rca-notes-container');
+        if (notesBox) {
+          notesBox.innerHTML += `<br>[${escHtml(new Date().toLocaleTimeString())}] admin@opmanager: ${escHtml(val)}`;
         }
       };
     }
@@ -716,7 +1039,7 @@
     const bounceBtn = container.querySelector('#opm-prb-bounce-btn');
     if (bounceBtn) {
       bounceBtn.onclick = () => {
-        showToast('Interface TenGigabitEthernet1/0/48 bounce command executed successfully.');
+        showToast('Port bounce is not available yet — no bounce endpoint.');
       };
     }
 
@@ -726,7 +1049,7 @@
         if (typeof showSnmpTrapSimulatorModal === 'function') {
           showSnmpTrapSimulatorModal();
         } else {
-          showToast('Simulated SNMP linkDown trap ingested via UDP 162.');
+          showToast('Trap simulator is not available.');
         }
       };
     }
@@ -741,7 +1064,7 @@
 
   // Drawer renderer (Module Scope)
   function openAlarmDrawer(id) {
-      const alm = state.alarms.find(a => a.id === id);
+      const alm = state.alarms.find(a => String(a.id) === String(id));
       if (!alm) return;
 
       const drawer = document.getElementById('opm-alarm-drawer');
@@ -762,128 +1085,50 @@
           <!-- Key Attributes -->
           <div style="margin-bottom: 20px;">
             <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">Target Entity</div>
-            <div style="font-size: 15px; font-weight: 800; color: #0070e0; cursor: pointer;" id="opm-drawer-device-link">${alm.device}</div>
-            <div style="font-size: 12px; color: #475569; margin-top: 2px;">${alm.entity} | Managed by ${alm.probe}</div>
+            <div style="font-size: 15px; font-weight: 800; color: #0070e0; cursor: pointer;" id="opm-drawer-device-link">${escHtml(alm.device || '—')}</div>
+            <div style="font-size: 12px; color: #475569; margin-top: 2px;">${escHtml(alm.entity || '—')} | Managed by ${escHtml(alm.probe || '—')}</div>
           </div>
 
           <!-- Message Box -->
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; margin-bottom: 20px;">
             <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 4px;">Alarm Message</div>
-            <div style="font-size: 13px; color: #0f172a; line-height: 1.4;">${alm.message}</div>
-            <div style="font-size: 11px; color: #94a3b8; margin-top: 6px;">Reported: ${alm.time}</div>
+            <div style="font-size: 13px; color: #0f172a; line-height: 1.4;">${escHtml(alm.message || '—')}</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-top: 6px;">Reported: ${escHtml(alarmTime(alm))}</div>
           </div>
 
-          <!-- Zia AI RCA Analysis Section -->
+          <!-- Zia AI RCA Analysis Section (real data only) -->
           <div style="background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 6px; padding: 14px; margin-bottom: 16px;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
               <span style="font-size: 12px; font-weight: 800; color: #3730a3; display: flex; align-items: center; gap: 5px;">
                 <span>✨</span> Zia AI Root Cause Analysis
               </span>
-              <span style="font-size: 10px; font-weight: 800; background: #c7d2fe; color: #312e81; padding: 2px 6px; border-radius: 4px;">CONFIDENCE 94%</span>
             </div>
-            <div style="font-size: 12px; color: #1e1b4b; line-height: 1.4;">
-              ${alm.severity === 'Critical' 
-                ? `High correlation with network traffic on ${alm.probe || 'Enterprise Site LAN'}. Recommend checking optical transceiver diagnostics or suppressing non-essential polling threads.`
-                : 'Metric deviation detected during standard shift handoff. Threshold crossed baseline by 14%. No immediate service impact predicted.'}
+            <div id="opm-drawer-rca-body" style="font-size: 12px; color: #1e1b4b; line-height: 1.4;">
+              Loading root-cause analysis…
             </div>
           </div>
 
-          <!-- ManageEngine 24-Hour Availability Time Line Bar (from mobile-app-opm.png) -->
+          <!-- Device Availability (no history source yet) -->
           <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; background: #ffffff; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span style="font-size: 11px; font-weight: 800; color: #1e293b; text-transform: uppercase;">Time Line (Last 24 Hours)</span>
-              <div style="display: flex; align-items: center; gap: 8px; font-size: 10px; color: #475569;">
-                <span style="display: flex; align-items: center; gap: 3px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #9333ea;"></span> Maint (0%)</span>
-                <span style="display: flex; align-items: center; gap: 3px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #49bd80;"></span> Up (98.4%)</span>
-                <span style="display: flex; align-items: center; gap: 3px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444;"></span> Down (1.6%)</span>
-              </div>
-            </div>
-            <div style="height: 12px; width: 100%; border-radius: 6px; overflow: hidden; display: flex; background: #e2e8f0;">
-              <div style="width: 82%; background: #49bd80;" title="Up Time (10:00 - 06:15)"></div>
-              <div style="width: 4%; background: #ef4444;" title="Alert Window (06:15 - 06:40)"></div>
-              <div style="width: 14%; background: #49bd80;" title="Up Time (06:40 - 09:59)"></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; margin-top: 4px; font-family: monospace;">
-              <span>10:00</span>
-              <span>22:00</span>
-              <span>09:59</span>
-            </div>
+            <div style="font-size: 11px; font-weight: 800; color: #1e293b; text-transform: uppercase; margin-bottom: 4px;">Availability (Last 24 Hours)</div>
+            <div style="font-size: 12px; color: #64748b;">No availability history recorded for this device yet.</div>
           </div>
 
-          <!-- Official NetFlow Alert Traffic Drilldown (Exact replica of NFA_Alert_Sample.png) -->
+          <!-- NetFlow Alert Traffic Drilldown (no flow source yet) -->
           <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; background: #fafbfc; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <span style="font-size: 11px; font-weight: 800; color: #0f172a; text-transform: uppercase;">NetFlow Alert Traffic Drilldown (IN / OUT)</span>
-              <div style="display: flex; align-items: center; gap: 10px; font-size: 10px; font-weight: 700;">
-                <span style="display: flex; align-items: center; gap: 4px; color: #334155;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #29c5f6;"></span> IN</span>
-                <span style="display: flex; align-items: center; gap: 4px; color: #334155;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #f8a346;"></span> OUT</span>
-              </div>
-            </div>
-            <!-- Cyan IN & Orange OUT Grouped Bar Chart (matching NFA_Alert_Sample.png) -->
-            <svg width="100%" height="78" viewBox="0 0 380 78" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 10px;">
-              <line x1="28" y1="15" x2="370" y2="15" stroke="#f1f5f9" stroke-width="1" />
-              <line x1="28" y1="38" x2="370" y2="38" stroke="#f1f5f9" stroke-width="1" />
-              <line x1="28" y1="60" x2="370" y2="60" stroke="#cbd5e1" stroke-width="1" />
-              <text x="4" y="18" font-size="8" fill="#64748b">15M</text>
-              <text x="4" y="41" font-size="8" fill="#64748b">7.5M</text>
-              <text x="4" y="62" font-size="8" fill="#64748b">0</text>
-              ${[
-                { x: 42, inH: 38, outH: 20, t: '17:04' },
-                { x: 96, inH: 44, outH: 18, t: '17:05' },
-                { x: 150, inH: 35, outH: 26, t: '17:06' },
-                { x: 204, inH: 46, outH: 39, t: '17:07' },
-                { x: 258, inH: 34, outH: 29, t: '17:08' },
-                { x: 312, inH: 42, outH: 33, t: '17:09' }
-              ].map(b => `
-                <rect x="${b.x}" y="${60 - b.inH}" width="11" height="${b.inH}" fill="#29c5f6" rx="1" />
-                <rect x="${b.x + 13}" y="${60 - b.outH}" width="11" height="${b.outH}" fill="#f8a346" rx="1" />
-                <text x="${b.x + 12}" y="72" font-size="8" fill="#64748b" text-anchor="middle">${b.t}</text>
-              `).join('')}
-            </svg>
-            <div style="font-size: 10px; font-weight: 800; color: #334155; margin-bottom: 4px;">Top Application &amp; Conversation</div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 10px; background: #ffffff; border: 1px solid #e2e8f0;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
-                  <th style="padding: 4px 6px;">Application</th>
-                  <th style="padding: 4px 6px;">Source &rarr; Dest</th>
-                  <th style="padding: 4px 6px;">DSCP</th>
-                  <th style="padding: 4px 6px; text-align: right;">Traffic</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 4px 6px; font-weight: 700; color: #0284c7;">Menu (TCP/1111)</td>
-                  <td style="padding: 4px 6px; font-family: monospace;">11.0.2.100 &rarr; 172.21.149.155</td>
-                  <td style="padding: 4px 6px;">CS0</td>
-                  <td style="padding: 4px 6px; text-align: right; font-weight: 700;">161.34 MB</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 4px 6px; font-weight: 700; color: #16a34a;">SmartCard_Port</td>
-                  <td style="padding: 4px 6px; font-family: monospace;">192.168.100.104 &rarr; 172.16.1.2</td>
-                  <td style="padding: 4px 6px;">AF21</td>
-                  <td style="padding: 4px 6px; text-align: right; font-weight: 700;">101.66 MB</td>
-                </tr>
-                <tr>
-                  <td style="padding: 4px 6px; font-weight: 700; color: #7c3aed;">HTTPS_TLS</td>
-                  <td style="padding: 4px 6px; font-family: monospace;">192.168.1.10 &rarr; 192.168.1.50</td>
-                  <td style="padding: 4px 6px;">EF</td>
-                  <td style="padding: 4px 6px; text-align: right; font-weight: 700;">96.26 MB</td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="font-size: 11px; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-bottom: 4px;">NetFlow Alert Traffic Drilldown (IN / OUT)</div>
+            <div style="font-size: 12px; color: #64748b;">No flow data available for this alarm. Configure a NetFlow exporter first.</div>
           </div>
 
           <!-- Actions & Notes -->
           <div style="margin-bottom: 20px;">
             <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">Technician Assignment</div>
             <div style="display: flex; align-items: center; gap: 10px;">
-              <select id="opm-drawer-tech-select" style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
-                <option ${alm.technician === 'Unacknowledged' ? 'selected' : ''}>Unacknowledged</option>
-                <option ${alm.technician === 'admin@opmanager' ? 'selected' : ''}>admin@opmanager</option>
-                <option ${alm.technician === 'johndoe' ? 'selected' : ''}>johndoe</option>
-                <option ${alm.technician === 'noc_lead' ? 'selected' : ''}>noc_lead</option>
+              <select id="opm-drawer-tech-select" disabled title="Technician assignment is not available yet — no assignment endpoint." style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                <option>Unacknowledged</option>
+                ${(() => { const t = alm.technician || alm.who; return (t && t !== 'Unacknowledged') ? `<option selected>${escHtml(t)}</option>` : ''; })()}
               </select>
-              <button id="opm-drawer-assign-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Assign</button>
+              <button id="opm-drawer-assign-btn" disabled title="Technician assignment is not available yet — no assignment endpoint." style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; opacity: 0.6;">Assign</button>
             </div>
           </div>
 
@@ -895,7 +1140,7 @@
             <button id="opm-drawer-clear-btn" style="width: 100%; background: #16a34a; color: #ffffff; border: none; padding: 8px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
               Clear Alarm (Mark Resolved)
             </button>
-            <button id="opm-drawer-suppress-btn" style="width: 100%; background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+            <button id="opm-drawer-suppress-btn" disabled title="Alarm suppression is not available yet." style="width: 100%; background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; opacity: 0.6;">
               Suppress Similar Alarms (2 Hours)
             </button>
           </div>
@@ -904,6 +1149,28 @@
       `;
 
       drawer.style.display = 'flex';
+
+      // Load real RCA data for this alarm — no invented confidence,
+      // hypothesis or cascade. Empty when the API has nothing.
+      (async () => {
+        const body = drawer.querySelector('#opm-drawer-rca-body');
+        if (!body) return;
+        try {
+          const data = await apiGetJson(`/api/alarm/getRCAData?alarmId=${encodeURIComponent(alm.id)}`);
+          const parts = [];
+          if (data.hypothesis) parts.push(`<div>${escHtml(data.hypothesis)}</div>`);
+          if (data.latestMetric) {
+            const m = data.latestMetric;
+            parts.push(`<div style="margin-top: 6px;">Latest device metric: CPU ${m.cpuPct ?? '—'}% · Memory ${m.memUsedPct ?? '—'}% · Response ${m.responseMs ?? '—'} ms</div>`);
+          }
+          if (Array.isArray(data.correlatedEvents) && data.correlatedEvents.length > 0) {
+            parts.push('<div style="margin-top: 6px; font-weight: 700;">Related alarms on this device:</div>' + data.correlatedEvents.map(ev => `<div>• ${escHtml(ev.message || '—')} (${escHtml(ev.severity || '—')})</div>`).join(''));
+          }
+          body.innerHTML = parts.length > 0 ? parts.join('') : 'No root-cause data available for this alarm yet.';
+        } catch (err) {
+          body.textContent = `Root-cause analysis is not available: ${err.message}`;
+        }
+      })();
 
       // Close drawer event
       const closeBtn = drawer.querySelector('#opm-close-alarm-drawer');
@@ -918,18 +1185,6 @@
         };
       }
 
-      // Assign technician
-      const assignBtn = drawer.querySelector('#opm-drawer-assign-btn');
-      if (assignBtn) {
-        assignBtn.onclick = () => {
-          const select = drawer.querySelector('#opm-drawer-tech-select');
-          alm.technician = select.value;
-          showToast(`Alarm ${alm.id} assigned to ${alm.technician}.`);
-          renderAlarmsView();
-          openAlarmDrawer(alm.id);
-        };
-      }
-
       // ServiceDesk Plus incident
       const sdpBtn = drawer.querySelector('#opm-drawer-sdp-btn');
       if (sdpBtn) {
@@ -938,23 +1193,21 @@
         };
       }
 
-      // Clear alarm
+      // Clear alarm — real POST to /api/json/alarms/clear.
       const clearBtn = drawer.querySelector('#opm-drawer-clear-btn');
       if (clearBtn) {
-        clearBtn.onclick = () => {
-          alm.severity = 'Clear';
-          showToast(`Alarm ${alm.id} marked as Clear.`);
-          drawer.style.display = 'none';
-          renderAlarmsView();
-        };
-      }
-
-      // Suppress alarm
-      const suppBtn = drawer.querySelector('#opm-drawer-suppress-btn');
-      if (suppBtn) {
-        suppBtn.onclick = () => {
-          showToast(`Alarm ${alm.id} suppressed for 2 hours.`);
-          drawer.style.display = 'none';
+        clearBtn.onclick = async () => {
+          clearBtn.disabled = true;
+          try {
+            const data = await apiPost('/api/json/alarms/clear', { alarmId: alm.id });
+            state.alarms = state.alarms.filter(a => String(a.id) !== String(alm.id));
+            showToast((data && data.message) || `Alarm ${alm.id} cleared.`);
+            drawer.style.display = 'none';
+            renderAlarmsView();
+          } catch (err) {
+            showToast(`Clear failed: ${err.message}`);
+            clearBtn.disabled = false;
+          }
         };
       }
     }
@@ -966,6 +1219,7 @@
     state.currentTab = 'maps';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.maps || 'business';
+    const worldOnlineCount = state.probes.filter(p => p.status === 'Online').length;
 
     if (state.devices.length === 0) {
       container.innerHTML = `
@@ -978,7 +1232,7 @@
           </div>
           <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No Topology Mapped Yet</div>
           <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 20px auto; line-height: 1.5;">
-            All demo devices have been cleared. Once you install the host agent or discover devices via SNMP, your network topology, 3D rack elevations, and business service views will be rendered here automatically.
+            No devices discovered yet. Once you install the host agent or discover devices via SNMP, your network topology, 3D rack elevations, and business service views will be rendered here automatically.
           </div>
           <div style="display: flex; justify-content: center; gap: 10px;">
             <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none;">
@@ -1050,7 +1304,7 @@
                 ${state.probes.map(pr => `
                   <div class="opm-topo-node" data-probe="${pr.id}" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="showProbeDetailsModal(${pr.id})">
                     <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> ${pr.name}</span>
-                    <span style="font-size: 10px; color: #64748b;">${pr.devicesCount || 0} Nodes</span>
+                    <span style="font-size: 10px; color: #64748b;">${probeDeviceCount(pr)} Nodes</span>
                   </div>
                 `).join('')}
               </div>
@@ -1068,19 +1322,8 @@
             <div style="flex: 1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
               <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                  <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Multi-Probe WAN Topology (Global Map View)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central Master coordinating ${state.probes.length} distributed Remote Probes across enterprise sites.</div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 12px;">
-                  <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #475569;">
-                    <span style="font-weight: 700;">Map Theme:</span>
-                    <select id="opm-bv-bg-select" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #334155; outline: none; cursor: pointer;">
-                      <option value="/images/maps/world_map_02.jpg" selected>ManageEngine Ocean Blue Grid (Official)</option>
-                      <option value="/images/maps/WorldMap_Blue.jpg">ManageEngine Continent Blue</option>
-                      <option value="/images/maps/WorldMap_BlackGreen.jpg">ManageEngine Dark Emerald</option>
-                      <option value="/images/maps/WorldMap_Gray.jpg">ManageEngine Executive Gray</option>
-                    </select>
-                  </div>
+                  <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Multi-Probe Topology</div>
+                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central coordinating ${state.probes.length} registered probe${state.probes.length === 1 ? '' : 's'}. Node positions are schematic — probes report no geographic coordinates.</div>
                 </div>
               </div>
 
@@ -1096,7 +1339,7 @@
                     { label: 'Properties', ico: '/apiclient/fluidicv2/img/bv/bvPropsIcon.png' },
                     { label: 'Delete Node', ico: '/apiclient/fluidicv2/img/bv/delete_default.png' }
                   ].map(tool => `
-                    <button class="opm-bv-tool-btn" data-tool="${tool.label}" style="display: inline-flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #1e293b; cursor: pointer;" onclick="showToast('Business View Designer: ' + '${tool.label}' + ' mode activated')">
+                    <button class="opm-bv-tool-btn" data-tool="${tool.label}" style="display: inline-flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #1e293b; cursor: pointer;" onclick="showToast('Business View Designer is not available yet.')">
                       <img src="${tool.ico}" style="width: 14px; height: 14px; object-fit: contain;" />
                       <span>${tool.label}</span>
                     </button>
@@ -1135,7 +1378,7 @@
                 </div>
               </div>
 
-              <div id="opm-business-view-canvas" style="width: 100%; height: 470px; background: #cfe2f3 url('/images/maps/world_map_02.jpg') no-repeat center center; background-size: 100% 100%; border: 1px solid #cbd5e1; border-radius: 4px; position: relative; overflow: hidden;">
+              <div id="opm-business-view-canvas" style="width: 100%; height: 470px; background: #eef2f7; border: 1px solid #cbd5e1; border-radius: 4px; position: relative; overflow: hidden;">
                 <svg width="100%" height="100%" viewBox="0 0 900 470" style="position: absolute; top:0; left:0;">
                   <defs>
                     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
@@ -1148,18 +1391,19 @@
                   ${state.probes.map((pr, idx) => {
                     const x = 320 + (idx * 160);
                     const y = 175 + (idx % 2 === 0 ? -35 : 35);
-                    const isOk = pr.status === 'Online' || pr.status === 'Synchronized';
+                    const isOk = pr.status === 'Online';
                     const strokeColor = isOk ? '#00f000' : '#dc2626';
+                    const lat = probeLatency(pr);
                     return `
                       <line class="opm-packet-flow" x1="145" y1="175" x2="${x}" y2="${y}" stroke="${strokeColor}" stroke-width="2.8" stroke-dasharray="5 3" />
                       <rect x="${Math.round((145 + x) / 2) - 35}" y="${Math.round((175 + y) / 2) - 8}" width="70" height="16" rx="3" fill="#0f172a" opacity="0.9" />
-                      <text x="${Math.round((145 + x) / 2)}" y="${Math.round((175 + y) / 2) + 4}" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="bold" font-family="monospace">${pr.latency || 2}ms | 0%</text>
+                      <text x="${Math.round((145 + x) / 2)}" y="${Math.round((175 + y) / 2) + 4}" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="bold" font-family="monospace">${lat != null ? lat + 'ms' : '—'}</text>
 
                       <g class="opm-topo-node" data-probe="${pr.id}" style="cursor: pointer;" onclick="if(typeof showProbeDetailsModal==='function') showProbeDetailsModal(${pr.id})">
                         <circle cx="${x}" cy="${y}" r="28" fill="#0f172a" stroke="${isOk ? '#16a34a' : '#dc2626'}" stroke-width="2.5" />
                         <image href="/images/deviceicons/server.png" x="${x - 12}" y="${y - 20}" width="24" height="24" />
-                        <text x="${x}" y="${y + 12}" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="bold">${pr.name}</text>
-                        <text x="${x}" y="${y + 22}" text-anchor="middle" fill="#4ade80" font-size="7.5">${pr.ip} (${pr.devicesCount || 0})</text>
+                        <text x="${x}" y="${y + 12}" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="bold">${pr.name || '—'}</text>
+                        <text x="${x}" y="${y + 22}" text-anchor="middle" fill="#4ade80" font-size="7.5">${pr.ip || '—'} (${probeDeviceCount(pr)})</text>
                       </g>
                     `;
                   }).join('')}
@@ -1190,19 +1434,7 @@
             </button>
           </div>
         ` : activeSub === 'rack' ? `
-          <!-- 3D Rack Views -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No 3D Datacenter Racks Configured</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">
-              Create 3D datacenter racks and mount servers, switches, and UPS units to visualize rack space, thermal capacity, and front/rear port connectivity.
-            </div>
-            <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-              + Create New Rack
-            </button>
-          </div>
+          ${renderRackSubtab()}
         ` : activeSub === 'layer2' ? `
           <!-- Layer 2 Maps -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
@@ -1218,20 +1450,30 @@
             </button>
           </div>
         ` : `
-          <!-- Global Probes WAN World Map (ManageEngine Central Flagship View) -->
+          ${state.probes.length <= 1 ? `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No remote probes to map yet</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto;">
+              Only one probe is registered. Register a remote probe to see it on the world map.
+            </div>
+          </div>
+          ` : `
           <div style="background: #0b1120; border: 1px solid #1e293b; border-radius: 6px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); color: #fff;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 12px; margin-bottom: 16px;">
               <div>
                 <div style="font-size: 15px; font-weight: 800; color: #38bdf8; display: flex; align-items: center; gap: 8px;">
-                  <span style="font-size: 16px;">🌐</span> GLOBAL MULTI-PROBE WAN TOPOLOGY &amp; LATENCY MAP
+                  <span style="font-size: 16px;">🌐</span> GLOBAL MULTI-PROBE TOPOLOGY &amp; LATENCY MAP
                 </div>
                 <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">
-                  Real-time inter-probe synchronization across America, Europe, Middle East, and Asia Pacific datacenters.
+                  Probe status from live probe heartbeats. Pin positions are schematic — probes report no geographic coordinates.
                 </div>
               </div>
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="font-size: 11px; color: #4ade80; background: #064e3b; border: 1px solid #047857; padding: 3px 8px; border-radius: 4px; font-weight: 700;">
-                  ● ALL ${state.probes.length} PROBES ONLINE
+                  ● ${worldOnlineCount} OF ${state.probes.length} PROBE${state.probes.length === 1 ? '' : 'S'} ONLINE
                 </div>
                 <button id="opm-worldmap-sync-all-btn" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                   Initiate Global Sync
@@ -1239,60 +1481,46 @@
               </div>
             </div>
 
-            <!-- World Map SVG Canvas (1000 x 480) -->
             <div style="position: relative; background: #0f172a; border: 1px solid #1e293b; border-radius: 6px; overflow: hidden; height: 480px;">
               <svg width="100%" height="100%" viewBox="0 0 1000 480" style="background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f19 100%);">
-                <!-- Continents Silhouettes SVG -->
-                <!-- North America -->
-                <path d="M 80,60 L 220,50 L 320,70 L 340,110 L 290,140 L 260,190 L 200,240 L 170,270 L 190,290 L 160,280 L 140,240 L 120,200 L 90,150 L 70,100 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- South America -->
-                <path d="M 220,290 L 280,300 L 320,330 L 300,390 L 270,440 L 230,460 L 210,410 L 200,340 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- Europe -->
-                <path d="M 440,70 L 520,60 L 550,90 L 530,140 L 480,160 L 450,140 L 430,100 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- Africa -->
-                <path d="M 450,170 L 530,160 L 580,200 L 580,260 L 550,330 L 510,380 L 470,350 L 440,280 L 430,220 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- Asia -->
-                <path d="M 530,60 L 750,50 L 880,90 L 920,150 L 850,210 L 780,260 L 710,230 L 630,210 L 560,150 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-                <!-- Australia -->
-                <path d="M 800,330 L 890,320 L 930,370 L 890,420 L 820,410 L 780,360 Z" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1"/>
-
-                <!-- Dynamic WAN Links & Probe Pins from state.probes -->
                 ${state.probes.map((pr, idx) => {
-                  const cx = 260 + (idx * 220);
-                  const cy = 150 + (idx % 2 === 0 ? 0 : 70);
-                  const isOk = pr.status === 'Online' || pr.status === 'Synchronized';
+                  const spacing = state.probes.length > 1 ? Math.min(220, 760 / (state.probes.length - 1)) : 220;
+                  const cx = 120 + (idx * spacing);
+                  const cy = 210;
+                  const isOk = pr.status === 'Online';
+                  const lat = probeLatency(pr);
                   return `
                     <g class="opm-world-pin" data-probe="${pr.id}" style="cursor: pointer;" onclick="if(typeof showProbeDetailsModal==='function') showProbeDetailsModal(${pr.id})">
                       <circle cx="${cx}" cy="${cy}" r="14" fill="${isOk ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.25)'}" stroke="${isOk ? '#22c55e' : '#ef4444'}" stroke-width="1.5" />
                       <circle cx="${cx}" cy="${cy}" r="6" fill="${isOk ? '#22c55e' : '#ef4444'}" />
                       <rect x="${cx - 80}" y="${cy + 20}" width="160" height="42" rx="4" fill="#1e293b" stroke="#334155" />
-                      <text x="${cx}" y="${cy + 36}" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🌐 ${pr.name}</text>
-                      <text x="${cx}" y="${cy + 50}" text-anchor="middle" font-size="9" fill="${isOk ? '#4ade80' : '#f87171'}">● ${pr.status || 'Online'} • ${pr.latency || 2}ms RTT</text>
+                      <text x="${cx}" y="${cy + 36}" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🌐 ${pr.name || '—'}</text>
+                      <text x="${cx}" y="${cy + 50}" text-anchor="middle" font-size="9" fill="${isOk ? '#4ade80' : '#f87171'}">● ${pr.status || '—'} • ${lat != null ? lat + 'ms RTT' : '—'}</text>
                     </g>
                   `;
                 }).join('')}
               </svg>
             </div>
 
-            <!-- Bottom Selected Probe Telemetry Matrix -->
             <div id="opm-worldmap-probe-details" style="margin-top: 16px; background: #1e293b; border-radius: 6px; padding: 14px 18px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
               <div style="display: flex; align-items: center; gap: 14px;">
                 <span style="font-size: 18px;">🌐</span>
                 <div>
-                  <div style="font-weight: 800; color: #38bdf8;">${state.probes[0]?.name || 'Central Site Probe'} (${state.probes[0]?.location || 'Local Server Node'})</div>
-                  <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">IP: ${state.probes[0]?.ip || '127.0.0.1'} &bull; ${state.probes[0]?.devicesCount || 0} Managed Nodes &bull; Sync State: ${state.probes[0]?.syncStatus || 'Synchronized'} &bull; Comm Port: ${state.probes[0]?.commPort || 8060}</div>
+                  <div style="font-weight: 800; color: #38bdf8;">${state.probes[0]?.name || '—'}</div>
+                  <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">IP: ${state.probes[0]?.ip || '—'} &bull; ${probeDeviceCount(state.probes[0])} Managed Nodes &bull; ${state.probes[0]?.last_heartbeat_at ? 'Last heartbeat ' + fmtTime(state.probes[0].last_heartbeat_at) : 'No heartbeat yet'}</div>
                 </div>
               </div>
               <div style="display: flex; gap: 8px;">
-                <button id="opm-world-inspect-probe-btn" data-probe="${state.probes[0]?.id || 101}" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
+                <button id="opm-world-inspect-probe-btn" data-probe="${state.probes[0] ? state.probes[0].id : ''}" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
                   View Probe CIs in Inventory &rarr;
                 </button>
-                <button id="opm-world-diag-probe-btn" data-probe="${state.probes[0]?.id || 101}" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                <button id="opm-world-diag-probe-btn" data-probe="${state.probes[0] ? state.probes[0].id : ''}" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                   Probe Diagnostics
                 </button>
               </div>
             </div>
           </div>
+          `}
         `}
       </div>
     `;
@@ -1328,29 +1556,15 @@
       };
     }
 
-    // Fullscreen button
+    // Fullscreen button — real fullscreen on the topology canvas.
     const fullBtn = container.querySelector('#opm-maps-fullscreen-btn');
     if (fullBtn) {
       fullBtn.onclick = () => {
-        showToast('Entering Fullscreen Topology Canvas...');
-      };
-    }
-
-    // World Map Background Selector
-    const bgSel = container.querySelector('#opm-bv-bg-select');
-    if (bgSel) {
-      bgSel.onchange = (e) => {
         const canvas = document.getElementById('opm-business-view-canvas');
-        if (canvas) {
-          if (e.target.value === 'none') {
-            canvas.style.backgroundImage = 'none';
-            canvas.style.backgroundColor = '#0b1120';
-          } else {
-            canvas.style.backgroundImage = `url('${e.target.value}')`;
-            canvas.style.backgroundSize = '100% 100%';
-            canvas.style.backgroundPosition = 'center';
-          }
-          showToast(`Map background changed to: ${e.target.options[e.target.selectedIndex].text}`);
+        if (canvas && canvas.requestFullscreen) {
+          canvas.requestFullscreen().catch(() => showToast('Fullscreen is not available in this browser.'));
+        } else {
+          showToast('Fullscreen is not available in this browser.');
         }
       };
     }
@@ -1374,13 +1588,62 @@
     const worldDiagBtn = container.querySelector('#opm-world-diag-probe-btn');
     if (worldDiagBtn) {
       worldDiagBtn.onclick = () => {
-        showProbeDetailsModal(4);
+        const prId = parseInt(worldDiagBtn.getAttribute('data-probe'), 10);
+        if (Number.isInteger(prId) && typeof showProbeDetailsModal === 'function') showProbeDetailsModal(prId);
       };
     }
     const worldSyncBtn = container.querySelector('#opm-worldmap-sync-all-btn');
     if (worldSyncBtn) {
-      worldSyncBtn.onclick = () => {
-        showToast('Initiated global multi-probe synchronization across all enterprise probes.');
+      worldSyncBtn.onclick = async () => {
+        worldSyncBtn.disabled = true;
+        try {
+          const data = await apiPost('/api/json/enterprise/syncAllProbes', {});
+          showToast((data && data.message) || 'Probe sync completed.');
+          if (typeof loadBackendData === 'function') loadBackendData();
+        } catch (err) {
+          showToast(`Probe sync failed: ${err.message}`);
+        } finally {
+          worldSyncBtn.disabled = false;
+        }
+      };
+    }
+
+    // Rack controls — selector switches the rendered rack; create posts
+    // to the real endpoint and reports its actual outcome.
+    const rackSelect = container.querySelector('#opm-rack-select');
+    if (rackSelect) {
+      rackSelect.onchange = (e) => { state.selectedRackId = e.target.value; renderMapsView(); };
+    }
+    const racksRetryBtn = container.querySelector('#opm-racks-retry-btn');
+    if (racksRetryBtn) {
+      racksRetryBtn.onclick = () => { state.racks = undefined; state.racksError = null; renderMapsView(); };
+    }
+    const createRackBtn = container.querySelector('#opm-create-rack-btn');
+    if (createRackBtn) {
+      createRackBtn.onclick = async () => {
+        const name = window.prompt('Rack name (e.g. DC-Core-Rack-01):');
+        if (name === null || name.trim() === '') return;
+        const unitsRaw = window.prompt('Rack size in units (e.g. 42):', '42');
+        if (unitsRaw === null) return;
+        const units = Number(unitsRaw);
+        if (!Number.isInteger(units) || units <= 0) { showToast('Units must be a positive whole number.'); return; }
+        try {
+          const data = await apiPost('/api/racks/create', { name: name.trim(), units });
+          showToast((data && data.message) || `Rack "${name.trim()}" created.`);
+          state.racks = undefined;
+          await loadRacks();
+          if (state.currentTab === 'maps') renderMapsView();
+        } catch (err) {
+          showToast(`Create rack failed: ${err.message}`);
+        }
+      };
+    }
+
+    // Layer 2 discovery — no Layer 2 endpoint exists; say so.
+    const l2Btn = container.querySelector('#opm-run-l2-discovery-btn');
+    if (l2Btn) {
+      l2Btn.onclick = () => {
+        showToast('Layer 2 discovery is not available yet — add network switches via SNMP to map switch-to-port connections.');
       };
     }
 
