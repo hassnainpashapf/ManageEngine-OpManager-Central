@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+// Credentials are configurable via environment so this isn't a hardcoded
+// backdoor in a real deployment; default stays admin/admin for local use.
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin';
+
 // Authentic ManageEngine OpManager Login Endpoint
 router.post('/api/auth/login', (req, res) => {
   const { username, password, domain } = req.body;
 
-  // Accept admin/admin or any valid enterprise credentials
-  if ((username === 'admin' && password === 'admin') || (username && password)) {
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
     return res.json({
       status: 'success',
       responseCode: 200,

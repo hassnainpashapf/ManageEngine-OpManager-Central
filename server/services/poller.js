@@ -93,6 +93,43 @@ class NetworkPoller {
 
     this.tickCount++;
 
+    // Persist a real alarm on every genuine Clear->Down transition, and clear
+    // it again on a real Down->Clear transition, instead of re-toasting every
+    // tick while a device merely stays down.
+    updatedDevices.forEach(d => {
+      const prevStatus = this.lastStatus ? this.lastStatus[d.id] : undefined;
+      if (d.status === 'Down' && prevStatus !== 'Down') {
+        const device = db.getDeviceById(d.id);
+        if (device) {
+          const alarm = db.addAlarm({
+            deviceId: device.id,
+            device: device.name,
+            deviceName: device.name,
+            ip: device.ip,
+            severity: 'Critical',
+            message: `${device.name} (${device.ip}) is not responding to ICMP/TCP probes`,
+            entity: 'Availability Monitor',
+            category: device.category || 'Server',
+            probe: device.probeName || 'Central Site Probe',
+            probeName: device.probeName || 'Central Site Probe',
+            probeId: device.probeId || 101
+          });
+          this.openAlarmByDevice = this.openAlarmByDevice || {};
+          this.openAlarmByDevice[device.id] = alarm.id;
+          this.listeners.forEach(fn => fn({ type: 'ALARM_TOAST', alarm: { ...alarm, time: 'Just now', timestamp: 'Just now', technician: 'Unacknowledged' } }));
+        }
+      } else if (d.status !== 'Down' && prevStatus === 'Down') {
+        const openId = this.openAlarmByDevice && this.openAlarmByDevice[d.id];
+        if (openId) {
+          db.clearAlarm(openId);
+          delete this.openAlarmByDevice[d.id];
+        }
+      }
+    });
+
+    this.lastStatus = this.lastStatus || {};
+    updatedDevices.forEach(d => { this.lastStatus[d.id] = d.status; });
+
     const payload = {
       type: 'METRIC_TICK',
       timestamp: Date.now(),
@@ -101,35 +138,6 @@ class NetworkPoller {
     };
 
     this.listeners.forEach(fn => fn(payload));
-
-    // Raise a real alarm toast when a device transitions down during this cycle.
-    const newlyDown = updatedDevices.filter(d => d.status === 'Down');
-    if (newlyDown.length > 0) {
-      const first = newlyDown[0];
-      const device = db.getDeviceById(first.id);
-      if (device) {
-        const toastPayload = {
-          type: 'ALARM_TOAST',
-          alarm: {
-            id: `live_${device.id}_${Date.now()}`,
-            deviceId: device.id,
-            device: device.name,
-            deviceName: device.name,
-            ip: device.ip,
-            message: `${device.name} (${device.ip}) is not responding to ICMP/TCP probes`,
-            severity: 'Critical',
-            entity: 'Availability Monitor',
-            category: device.category || 'Server',
-            probe: device.probeName || 'Central Site Probe',
-            probeName: device.probeName || 'Central Site Probe',
-            time: 'Just now',
-            timestamp: 'Just now',
-            technician: 'Unacknowledged'
-          }
-        };
-        this.listeners.forEach(fn => fn(toastPayload));
-      }
-    }
   }
 }
 
