@@ -10,6 +10,16 @@
  *   - CPU % via CISCO-PROCESS-MIB cpmCPUTotal5minRev (fallback .5min)
  *   - Memory % via CISCO-MEMORY-POOL-MIB Processor pool Used/Free
  *   - Interface table via IF-MIB ifTable + ifXTable ifName
+ * SNMP version is resolved per device by resolveSnmpConfig(): a device
+ * record carrying device.snmp = { version: 'v3', v3: { user,
+ * authProtocol, authPass, privProtocol, privPass } } (or the flat /
+ * JSON equivalents) is polled over a real SNMPv3 session created by
+ * server/services/snmp.js createV3Session(); anything else polls v2c
+ * exactly as before. A v3 auth failure, timeout, or unknown user throws
+ * inside the SNMP layer and lands here as an honest 'Down' / 'SNMP
+ * Error' with the real error recorded — metrics stay null, never
+ * invented. A v3 device with missing/invalid credentials fails the
+ * same way at validation time, before any packet is sent.
  *
  * Removed, with no replacement:
  *   - the 4 s Math.random random-walk cycle (CPU/memory/response-time drift)
@@ -144,6 +154,90 @@ function deviceCommunity(device) {
   // Store rows are raw DB rows: snmp_community (snake_case). CamelCase
   // fallbacks are kept for any caller that builds device objects by hand.
   return device.snmp_community || device.snmpCommunity || device.community || 'public';
+}
+
+// ---------------------------------------------------------------------------
+// SNMP version / credential resolution (v2c + v3)
+// ---------------------------------------------------------------------------
+// Canonical device shape (SHARED.md):
+//   device.snmp = { version: 'v2c'|'v3', community,
+//                   v3: { user, authProtocol, authPass,
+//                         privProtocol, privPass } }
+// Store rows are flat (snmp_version / snmp_community columns, no v3
+// columns yet — the snmpv3-service track owns v3 credential storage),
+// so this resolver also reads flat v3_* fields and a JSON blob
+// (snmp_v3_json / snmp_v3) when present, so a future storage migration
+// starts working with no poller change. Precedence: device.snmp object
+// first, then flat fields, then the JSON blob. A v3 device with no
+// usable credentials resolves to version 'v3' with v3 === null — the
+// poll then fails honestly (see pollOneDeviceInner) instead of ever
+// polling with invented or default credentials.
+const FLAT_V3_FIELDS = [
+  ['user', ['snmp_v3_user', 'v3User', 'v3_user', 'snmpV3User']],
+  ['authProtocol', ['snmp_v3_auth_protocol', 'v3AuthProtocol', 'v3_auth_protocol', 'snmpV3AuthProtocol']],
+  ['authPass', ['snmp_v3_auth_pass', 'v3AuthPass', 'v3_auth_pass', 'snmpV3AuthPass']],
+  ['privProtocol', ['snmp_v3_priv_protocol', 'v3PrivProtocol', 'v3_priv_protocol', 'snmpV3PrivProtocol']],
+  ['privPass', ['snmp_v3_priv_pass', 'v3PrivPass', 'v3_priv_pass', 'snmpV3PrivPass']],
+];
+
+function readFlatV3(device) {
+  if (!device) return null;
+  const out = {};
+  let found = false;
+  for (const [key, names] of FLAT_V3_FIELDS) {
+    for (const name of names) {
+      if (device[name] !== undefined && device[name] !== null && device[name] !== '') {
+        out[key] = device[name];
+        found = true;
+        break;
+      }
+    }
+  }
+  return found ? out : null;
+}
+
+function readV3JsonBlob(device) {
+  if (!device) return null;
+  const raw = device.snmp_v3_json || device.snmp_v3 || device.snmpV3Json || null;
+  if (!raw) return null;
+  try {
+    const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    if (parsed && typeof parsed === 'object') {
+      const v3 = parsed.v3 && typeof parsed.v3 === 'object' ? parsed.v3 : parsed;
+      if (v3.user) return v3;
+    }
+  } catch (_err) {
+    // A corrupt blob is not valid credentials — the poll fails honestly
+    // below (v3 === null), it is never papered over here.
+  }
+  return null;
+}
+
+function resolveSnmpConfig(device) {
+  const cfg = { version: 'v2c', community: deviceCommunity(device), v3: null };
+  const s = device && device.snmp && typeof device.snmp === 'object' ? device.snmp : null;
+  if (s) {
+    if (typeof s.version === 'string' && s.version.trim()) {
+      cfg.version = s.version.trim().toLowerCase();
+    }
+    if (typeof s.community === 'string' && s.community) {
+      cfg.community = s.community;
+    }
+    if (s.v3 && typeof s.v3 === 'object') cfg.v3 = { ...s.v3 };
+  }
+  if (!s || !s.version) {
+    const flatVersion = device.snmp_version || device.snmpVersion || device.version;
+    if (typeof flatVersion === 'string' && flatVersion.trim()) {
+      cfg.version = flatVersion.trim().toLowerCase();
+    }
+  }
+  if (!cfg.v3) cfg.v3 = readFlatV3(device);
+  if (!cfg.v3) cfg.v3 = readV3JsonBlob(device);
+  return cfg;
+}
+
+function isSnmpV3Config(cfg) {
+  return cfg && cfg.version === 'v3';
 }
 
 function devicePort(device) {
@@ -443,9 +537,14 @@ class RealPoller {
       return result;
     }
 
-    const community = deviceCommunity(device);
+    const snmpConfig = resolveSnmpConfig(device);
     const port = devicePort(device);
-    const snmpOptions = { port };
+    // The SNMP primitives in server/services/snmp.js take
+    // { version: 'v2c'|'v3', v3: {...} } in options and open the matching
+    // session (v2c community session, or createV3Session for v3). The
+    // v2c call shape is unchanged: same function, same options minus
+    // version/v3, so v2c devices poll exactly as before.
+    const snmpOptions = { port, version: snmpConfig.version, v3: snmpConfig.v3 };
 
     // 1. ICMP echo latency (real measurement; null when ICMP is unavailable).
     try {
@@ -454,15 +553,33 @@ class RealPoller {
       result.response_ms = null;
     }
 
+    // 1b. SNMPv3 credential validation — before any SNMP packet, so a
+    // v3 device with missing/invalid credentials fails with the exact
+    // reason (no user, unknown protocol, short passphrase) instead of
+    // a misleading timeout. This goes through the same Down / SNMP
+    // Error branch as a real SNMP failure below.
+    let snmpConfigError = null;
+    if (isSnmpV3Config(snmpConfig)) {
+      try {
+        snmp.validateV3(snmpConfig.v3);
+      } catch (err) {
+        snmpConfigError = (err && err.message) || String(err);
+      }
+    } else if (snmpConfig.version !== 'v2c') {
+      snmpConfigError = `SNMP: unsupported SNMP version '${snmpConfig.version}' (supported: 'v2c', 'v3')`;
+    }
+
     // 2. SNMP system identity — the reachability proof for the SNMP path.
     let sysinfo = null;
-    let snmpError = null;
+    let snmpError = snmpConfigError;
     try {
-      sysinfo = await withTimeout(
-        snmp.getSystemInfo(ip, community, snmpOptions),
-        DEVICE_POLL_TIMEOUT_MS,
-        'SNMP system info'
-      );
+      if (!snmpConfigError) {
+        sysinfo = await withTimeout(
+          snmp.getSystemInfo(ip, snmpConfig.community, snmpOptions),
+          DEVICE_POLL_TIMEOUT_MS,
+          'SNMP system info'
+        );
+      }
     } catch (err) {
       snmpError = err.message;
     }
@@ -477,8 +594,11 @@ class RealPoller {
         this.resolveAlarm(store, result.id, 'snmp');
       } else {
         result.status = 'SNMP Error';
+        const hint = isSnmpV3Config(snmpConfig)
+          ? 'Check the SNMPv3 user, auth/priv protocols and passphrases, SNMP enablement, and ACLs.'
+          : 'Check community string, SNMP enablement, and ACLs.';
         this.raiseAlarmOnce(store, result.id, 'snmp', 'Critical',
-          `SNMP failed on ${result.name} (${ip}) while ICMP ping answered (${result.response_ms} ms): ${result.error}. Check community string, SNMP enablement, and ACLs.`);
+          `SNMP failed on ${result.name} (${ip}) while ICMP ping answered (${result.response_ms} ms): ${result.error}. ${hint}`);
         this.resolveAlarm(store, result.id, 'availability');
       }
       this.persistMetrics(store, result);
@@ -503,8 +623,8 @@ class RealPoller {
     let ifacesSettled;
     try {
       [cpuMemSettled, ifacesSettled] = await Promise.allSettled([
-        withTimeout(snmp.getCpuMem(ip, community, snmpOptions), DEVICE_POLL_TIMEOUT_MS, 'SNMP CPU/memory'),
-        withTimeout(snmp.getInterfaces(ip, community, snmpOptions), DEVICE_POLL_TIMEOUT_MS, 'SNMP interfaces'),
+        withTimeout(snmp.getCpuMem(ip, snmpConfig.community, snmpOptions), DEVICE_POLL_TIMEOUT_MS, 'SNMP CPU/memory'),
+        withTimeout(snmp.getInterfaces(ip, snmpConfig.community, snmpOptions), DEVICE_POLL_TIMEOUT_MS, 'SNMP interfaces'),
       ]);
     } catch (err) {
       // SNMP identity already answered, so the device stays 'Up'; the
@@ -666,7 +786,7 @@ class RealPoller {
     this.timer = setInterval(() => {
       this.pollCycle().catch((err) => console.error(`[Poller] cycle failed: ${err.message}`));
     }, this.intervalMs);
-    console.log(`[OpManager Poller] Real-data polling engine active (interval: ${seconds}s, ICMP + SNMPv2c)`);
+    console.log(`[OpManager Poller] Real-data polling engine active (interval: ${seconds}s, ICMP + SNMPv2c/v3)`);
     this.pollCycle().catch((err) => console.error(`[Poller] initial cycle failed: ${err.message}`));
     return this;
   }
@@ -740,7 +860,7 @@ class RealPoller {
       this.timer = setInterval(() => {
         this.pollCycle().catch((err) => console.error(`[Poller] cycle failed: ${err.message}`));
       }, this.intervalMs);
-      console.log(`[OpManager Poller] Real-data polling engine active (interval: ${intervalMs}ms, ICMP + SNMPv2c)`);
+      console.log(`[OpManager Poller] Real-data polling engine active (interval: ${intervalMs}ms, ICMP + SNMPv2c/v3)`);
       this.pollCycle().catch((err) => console.error(`[Poller] initial cycle failed: ${err.message}`));
       return this;
     }
@@ -765,4 +885,5 @@ const poller = new RealPoller();
 module.exports = poller;
 module.exports.RealPoller = RealPoller;
 module.exports.resolveDeviceThresholds = resolveDeviceThresholds;
+module.exports.resolveSnmpConfig = resolveSnmpConfig;
 module.exports.DEFAULT_THRESHOLDS = { cpuCritical: CPU_CRITICAL, cpuTrouble: CPU_TROUBLE, memCritical: MEM_CRITICAL };

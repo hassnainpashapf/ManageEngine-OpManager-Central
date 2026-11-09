@@ -4,7 +4,22 @@
  * snmp.js — Real SNMP client for the OpManager Central real-data poller.
  *
  * Uses the `net-snmp` library (SNMPv2c, UDP/161) against each device's own
- * community string. Every value returned here came back in a real varbind.
+ * community string, plus SNMPv3 USM sessions (noAuthNoPriv, authNoPriv
+ * MD5/SHA, authPriv MD5/SHA + DES/AES) via createV3Session() and the
+ * snmpGetV3 / snmpWalkV3 / getSystemInfoV3 / getCpuMemV3 / getInterfacesV3
+ * primitives. Every value returned here came back in a real varbind.
+ *
+ * CANONICAL SNMPv3 (Phase 4 merge, branch p4m-snmpv3): ONE createV3Session
+ * (returns the raw net-snmp session), ONE throwing validator validateV3,
+ * narrow protocols only (md5/sha + des/aes — sha224/256/384/512 and
+ * aes256b/aes256r are rejected), createSnmpSession dispatcher + openSession
+ * routing for the v2c primitives, wrapV3Error/isV3AuthError at the
+ * snmpGetV3/snmpWalkV3 layer, sessionWalk loop-guard. Merged from the
+ * Phase 3 snmpv3-service (proof 28/28, loop-guard, V3 error mapping),
+ * snmpv3-poller (dispatcher/openSession, {port,timeout,retries,transport,
+ * context,engineID} options), snmpv3-tools (describeSnmpV3) and
+ * snmpv3-proof (validateV3 name/shape) tracks; the alias names
+ * buildV3User / validateV3Credentials / validateSnmpV3 are deleted.
  *
  * Honesty rules:
  *  - An OID the agent does not implement (NoSuchObject / NoSuchInstance)
@@ -65,13 +80,270 @@ const NO_SUCH_INSTANCE = snmp.ObjectType.NoSuchInstance; // 129
 // --- Session helpers -------------------------------------------------------
 
 function createSession(ip, community, options = {}) {
-  return snmp.createSession(ip, community || DEFAULT_COMMUNITY, {
+  const sessionOptions = {
     port: options.port || DEFAULT_PORT,
     version: snmp.Version2c,
     timeout: options.timeout || DEFAULT_TIMEOUT_MS,
     retries: options.retries !== undefined ? options.retries : DEFAULT_RETRIES,
     transport: 'udp4',
-  });
+  };
+  // Test-only injection point (in-memory datagram shim for hosts whose
+  // sandbox blocks UDP); production callers never pass it.
+  if (options.dgramModule) sessionOptions.dgramModule = options.dgramModule;
+  return snmp.createSession(ip, community || DEFAULT_COMMUNITY, sessionOptions);
+}
+
+// --- SNMPv3 (USM) ----------------------------------------------------------
+
+// Canonical device.snmp.v3 fields (see ~/workspace/opm-p3/SHARED.md):
+//   { user, authProtocol: 'md5'|'sha', authPass,
+//     privProtocol: 'des'|'aes', privPass }
+// Absent authProtocol  -> noAuthNoPriv. authProtocol without privProtocol
+// -> authNoPriv. Both present -> authPriv. privProtocol without
+// authProtocol is rejected: authPriv requires authentication (RFC 3414).
+const V3_AUTH_PROTOCOLS = {
+  md5: snmp.AuthProtocols.md5,
+  sha: snmp.AuthProtocols.sha,
+};
+const V3_PRIV_PROTOCOLS = {
+  des: snmp.PrivProtocols.des,
+  aes: snmp.PrivProtocols.aes,
+};
+// RFC 3414 section 11.2: a USM passphrase must be at least 8 octets.
+// Shorter passphrases cannot be localised into a valid key.
+const MIN_V3_PASSPHRASE_LEN = 8;
+
+const SECURITY_LEVEL_NAMES = {
+  [snmp.SecurityLevel.noAuthNoPriv]: 'noAuthNoPriv',
+  [snmp.SecurityLevel.authNoPriv]: 'authNoPriv',
+  [snmp.SecurityLevel.authPriv]: 'authPriv',
+};
+
+/**
+ * validateV3(v3) -> normalised { user, authProtocol, authPass,
+ * privProtocol, privPass, level, levelName }.
+ *
+ * THE single throwing SNMPv3 validator for this codebase (canonical,
+ * Phase 4 merge — replaces buildV3User / validateV3Credentials /
+ * validateSnmpV3). Validates the canonical device.snmp.v3 fields and
+ * derives the security level. THROWS on any invalid shape — never
+ * silently downgrades the security level (a downgrade would turn an
+ * authPriv request into an unauthenticated one) and never silently
+ * defaults a protocol from a passphrase's presence. Passphrases are
+ * never included in error messages. Absent protocols/passphrases come
+ * back as null.
+ *
+ *   absent authProtocol         -> noAuthNoPriv (authPass must be absent too)
+ *   authProtocol without priv   -> authNoPriv
+ *   both present                -> authPriv
+ *   privProtocol without auth   -> throws (RFC 3414: priv implies auth)
+ *   either passphrase < 8 chars -> throws (RFC 3414 section 11.2)
+ *   unknown protocol name       -> throws (narrow set only: md5/sha + des/aes)
+ */
+function validateV3(v3) {
+  if (!v3 || typeof v3 !== 'object') {
+    throw new Error('SNMPv3: no v3 credentials supplied (expected device.snmp.v3)');
+  }
+  const user = typeof v3.user === 'string' ? v3.user.trim() : '';
+  if (!user) {
+    throw new Error('SNMPv3: v3.user is required (non-empty user name)');
+  }
+  const authName = typeof v3.authProtocol === 'string'
+    ? v3.authProtocol.trim().toLowerCase() : '';
+  const privName = typeof v3.privProtocol === 'string'
+    ? v3.privProtocol.trim().toLowerCase() : '';
+  const authPass = v3.authPass === undefined || v3.authPass === null ? '' : String(v3.authPass);
+  const privPass = v3.privPass === undefined || v3.privPass === null ? '' : String(v3.privPass);
+  if (authName) {
+    if (!Object.prototype.hasOwnProperty.call(V3_AUTH_PROTOCOLS, authName)) {
+      throw new Error(
+        `SNMPv3: unsupported authProtocol '${v3.authProtocol}' for user '${user}' (supported: md5, sha)`
+      );
+    }
+    if (authPass.length < MIN_V3_PASSPHRASE_LEN) {
+      throw new Error(
+        `SNMPv3: authPass for user '${user}' must be at least ${MIN_V3_PASSPHRASE_LEN} characters (RFC 3414)`
+      );
+    }
+  } else if (authPass) {
+    throw new Error(
+      `SNMPv3: authPass supplied for user '${user}' without authProtocol (supply authProtocol 'md5' or 'sha')`
+    );
+  }
+  if (privName) {
+    if (!authName) {
+      throw new Error(
+        `SNMPv3: privProtocol '${v3.privProtocol}' for user '${user}' requires authProtocol (authPriv without auth is not valid USM)`
+      );
+    }
+    if (!Object.prototype.hasOwnProperty.call(V3_PRIV_PROTOCOLS, privName)) {
+      throw new Error(
+        `SNMPv3: unsupported privProtocol '${v3.privProtocol}' for user '${user}' (supported: des, aes)`
+      );
+    }
+    if (privPass.length < MIN_V3_PASSPHRASE_LEN) {
+      throw new Error(
+        `SNMPv3: privPass for user '${user}' must be at least ${MIN_V3_PASSPHRASE_LEN} characters (RFC 3414)`
+      );
+    }
+  } else if (privPass) {
+    throw new Error(
+      `SNMPv3: privPass supplied for user '${user}' without privProtocol (supply privProtocol 'des' or 'aes')`
+    );
+  }
+  const level = privName
+    ? snmp.SecurityLevel.authPriv
+    : authName
+      ? snmp.SecurityLevel.authNoPriv
+      : snmp.SecurityLevel.noAuthNoPriv;
+  return {
+    user,
+    authProtocol: authName || null,
+    authPass: authPass || null,
+    privProtocol: privName || null,
+    privPass: privPass || null,
+    level,
+    levelName: SECURITY_LEVEL_NAMES[level],
+  };
+}
+
+/**
+ * Describe validated v3 creds for API responses / logs: identity,
+ * protocol names and security level only — passphrases are NEVER
+ * included.
+ */
+function describeSnmpV3(creds) {
+  if (!creds) return null;
+  return {
+    user: creds.user || null,
+    authProtocol: creds.authProtocol || null,
+    privProtocol: creds.privProtocol || null,
+    securityLevel: creds.levelName || null,
+  };
+}
+
+/**
+ * createV3Session(ip, v3, options) — SNMPv3 USM session for one device.
+ * `v3` is the canonical device.snmp.v3 object ({ user, authProtocol,
+ * authPass, privProtocol, privPass }). Supports noAuthNoPriv, authNoPriv
+ * (MD5/SHA) and authPriv (MD5/SHA + DES/AES). Returns the raw net-snmp
+ * session (NOT a wrapper object).
+ *
+ * The session is lazy: engine-ID discovery and USM authentication happen
+ * on the first request, so a bad passphrase surfaces as a thrown error
+ * from the GET/WALK call (see wrapV3Error), not from this constructor.
+ * options: { port, timeout, retries, transport, context, engineID,
+ * dgramModule? } — dgramModule is a test-only injection point (see
+ * createSession above); context/engineID are passed through to net-snmp.
+ */
+function createV3Session(ip, v3, options = {}) {
+  if (!ip) throw new Error('createV3Session: no target IP supplied');
+  const creds = validateV3(v3);
+  const user = { name: creds.user, level: creds.level };
+  if (creds.authProtocol) {
+    user.authProtocol = V3_AUTH_PROTOCOLS[creds.authProtocol];
+    user.authKey = creds.authPass;
+  }
+  if (creds.privProtocol) {
+    user.privProtocol = V3_PRIV_PROTOCOLS[creds.privProtocol];
+    user.privKey = creds.privPass;
+  }
+  const sessionOptions = {
+    port: options.port || DEFAULT_PORT,
+    timeout: options.timeout || DEFAULT_TIMEOUT_MS,
+    retries: options.retries !== undefined ? options.retries : DEFAULT_RETRIES,
+    transport: options.transport || 'udp4',
+  };
+  if (options.context !== undefined) sessionOptions.context = options.context;
+  if (options.engineID !== undefined) sessionOptions.engineID = options.engineID;
+  if (options.dgramModule) sessionOptions.dgramModule = options.dgramModule;
+  return snmp.createV3Session(ip, user, sessionOptions);
+}
+
+/**
+ * createSnmpSession(ip, snmpConfig, options = {}) — version dispatcher.
+ * snmpConfig: { version: 'v2c'|'v3', community, v3 } (canonical
+ * device.snmp shape). v2c returns the existing community session;
+ * v3 returns createV3Session. Any other version throws — v1 is not
+ * supported by this codebase, and an unknown version must fail loudly
+ * rather than silently polling as v2c.
+ */
+function createSnmpSession(ip, snmpConfig, options = {}) {
+  const cfg = snmpConfig && typeof snmpConfig === 'object' ? snmpConfig : {};
+  const version = String(cfg.version || 'v2c').trim().toLowerCase();
+  if (version === 'v3') return createV3Session(ip, cfg.v3, options);
+  if (version === 'v2c') return createSession(ip, cfg.community, options);
+  throw new Error(`SNMP: unsupported SNMP version '${cfg.version}' (supported: 'v2c', 'v3')`);
+}
+
+/**
+ * openSession(ip, community, options) — session factory for the
+ * get/walk primitives below. Backward compatible: options without a
+ * version still opens the v2c community session exactly as before.
+ * options { version: 'v3', v3: {...} } opens a v3 session instead.
+ */
+function openSession(ip, community, options = {}) {
+  if (options.version !== undefined && String(options.version).trim().toLowerCase() === 'v3') {
+    return createV3Session(ip, options.v3, options);
+  }
+  if (options.version !== undefined && String(options.version).trim().toLowerCase() !== 'v2c') {
+    throw new Error(`SNMP: unsupported SNMP version '${options.version}' (supported: 'v2c', 'v3')`);
+  }
+  return createSession(ip, community, options);
+}
+
+/**
+ * isV3AuthError(err) — true when net-snmp reports a USM authentication /
+ * privacy failure (wrong passphrase, unknown user, unsupported security
+ * level, decryption failure, engine time-window failure) rather than a
+ * transport problem. net-snmp 3.29.2 surfaces these as Report-PDU
+ * failures naming the usmStats counter (usmStatsWrongDigests,
+ * usmStatsUnknownUserNames, usmStatsUnsupportedSecLevels,
+ * usmStatsNotInTimeWindows, usmStatsUnknownEngineIDs,
+ * usmStatsDecryptionError) or as "Authentication failed".
+ *
+ * A timeout is NOT an auth error: per RFC 3414 section 3.2 an agent
+ * silently DROPS a message that fails authentication (wrong passphrase)
+ * or decryption (wrong privacy key) and sends no response at all, so on
+ * the client a wrong passphrase looks exactly like an unreachable host:
+ * "Request timed out". Timeouts therefore stay timeouts and are reported
+ * as such — never re-labelled as auth failures. (wrapV3Error adds a
+ * factual note to v3 timeouts pointing at this possibility.)
+ */
+function isV3AuthError(err) {
+  if (!err) return false;
+  const msg = String((err && err.message) || err);
+  return /authentication fail|wrong digest|usmStatsWrongDigests|usmStatsUnknownUserNames?|unknown user|unknown security name|usmStatsUnsupportedSecLevels|unsupported security level|usmStatsDecryptionError|decryption (error|failed)|decrypt/i.test(msg);
+}
+
+/**
+ * wrapV3Error(err, ip, userName) — turn a USM failure into an honest,
+ * actionable error naming the user and the device, without ever leaking
+ * a passphrase. A Report-PDU auth failure (unknown user, unsupported
+ * security level, ...) becomes an explicit authentication error. A
+ * timeout passes through as a timeout, with a factual note: it can ALSO
+ * mean the device silently dropped the request for bad USM credentials
+ * (RFC 3414 — agents do not answer such messages), which is
+ * indistinguishable from an unreachable host. Any other error passes
+ * through unchanged.
+ */
+function wrapV3Error(err, ip, userName) {
+  if (isV3AuthError(err)) {
+    const detail = String((err && err.message) || err);
+    return new Error(
+      `SNMPv3 authentication/privacy failed for user '${userName || '?'}' on ${ip}: ${detail} ` +
+      '(check the v3 user, auth/priv protocols and passphrases configured on the device; no value was returned)'
+    );
+  }
+  if (isTimeoutError(err)) {
+    return new Error(
+      `${(err && err.message) || err} (SNMPv3 note: a timeout can also mean the device silently ` +
+      `dropped the request — e.g. wrong USM user/passphrase for '${userName || '?'}' on ${ip}; ` +
+      'per RFC 3414 an agent does not answer a message that fails authentication or decryption, ' +
+      'so that looks identical to an unreachable host)'
+    );
+  }
+  return err;
 }
 
 function isTimeoutError(err) {
@@ -175,10 +447,24 @@ function sessionWalk(session, oid) {
   return new Promise((resolve, reject) => {
     const rows = [];
     const base = String(oid);
+    // Highest OID returned so far. A batch whose OIDs do not advance past
+    // it means the agent is answering the same OID again instead of the
+    // next one — net-snmp's in-process Agent does exactly this for an
+    // unimplemented table (20x NoSuchObject for the base OID, forever),
+    // and net-snmp's subtree() only stops when the feed callback returns
+    // true. A correct agent always returns strictly increasing OIDs, so a
+    // real walk never trips this guard; without it, a walk against such
+    // an agent spins forever instead of returning [].
+    let maxOid = null;
     session.subtree(oid, 20, (varbinds) => {
+      let progressed = false;
       for (const vb of varbinds) {
-        if (snmp.isVarbindError(vb)) continue;
         const vbOid = String(vb.oid);
+        if (maxOid === null || compareOids(vbOid, maxOid) > 0) {
+          maxOid = vbOid;
+          progressed = true;
+        }
+        if (snmp.isVarbindError(vb)) continue;
         if (vbOid !== base && !vbOid.startsWith(`${base}.`)) continue;
         try {
           rows.push(normaliseVarbind(vb));
@@ -188,6 +474,10 @@ function sessionWalk(session, oid) {
           continue;
         }
       }
+      // No OID advanced past the previous batch: the agent is looping
+      // on the same OID. Stop the walk instead of spinning forever.
+      if (!progressed) return true;
+      return undefined;
     }, (error) => {
       if (error) return reject(error);
       resolve(rows);
@@ -201,6 +491,22 @@ function rowIndex(oid, columnBase) {
   return suffix;
 }
 
+/**
+ * compareOids(a, b) — numeric per-component OID comparison (-1 / 0 / 1).
+ * Plain string comparison is wrong here (".10" < ".9" lexicographically).
+ */
+function compareOids(a, b) {
+  const pa = String(a).split('.').map(Number);
+  const pb = String(b).split('.').map(Number);
+  const len = Math.max(pa.length, pb.length);
+  for (let i = 0; i < len; i++) {
+    const x = i < pa.length ? pa[i] : 0;
+    const y = i < pb.length ? pb[i] : 0;
+    if (x !== y) return x < y ? -1 : 1;
+  }
+  return 0;
+}
+
 function numericValue(vb) {
   if (!vb || vb.value === null || vb.value === undefined) return null;
   const n = Number(vb.value);
@@ -210,15 +516,17 @@ function numericValue(vb) {
 // --- Generic primitives (exported for routes/tools) ------------------------
 
 /**
- * snmpGet(ip, community, oids) — real SNMP GET for one or more OIDs.
+ * snmpGet(ip, community, oids, options) — real SNMP GET for one or more OIDs.
  * Returns [{ oid, type, typeName, value, error? }]; a NoSuchObject varbind
  * is returned with value null and error 'NoSuchObject', NOT thrown.
  * Throws on timeout / unreachable host / other transport errors.
+ * For SNMPv3 pass options { version: 'v3', v3: { user, authProtocol,
+ * authPass, privProtocol, privPass } }; community is ignored for v3.
  */
 async function snmpGet(ip, community, oids, options = {}) {
   if (!ip) throw new Error('snmpGet: no target IP supplied');
   const list = Array.isArray(oids) ? oids : [oids];
-  const session = createSession(ip, community, options);
+  const session = openSession(ip, community, options);
   try {
     return await sessionGet(session, list);
   } finally {
@@ -227,13 +535,14 @@ async function snmpGet(ip, community, oids, options = {}) {
 }
 
 /**
- * snmpWalk(ip, community, oid) — real SNMP walk of one subtree.
+ * snmpWalk(ip, community, oid, options) — real SNMP walk of one subtree.
  * Returns the varbinds the device actually returned (possibly []).
  * Throws on timeout / unreachable host / other transport errors.
+ * For SNMPv3 pass options { version: 'v3', v3: {...} }.
  */
 async function snmpWalk(ip, community, oid, options = {}) {
   if (!ip) throw new Error('snmpWalk: no target IP supplied');
-  const session = createSession(ip, community, options);
+  const session = openSession(ip, community, options);
   try {
     return await sessionWalk(session, oid);
   } finally {
@@ -241,24 +550,47 @@ async function snmpWalk(ip, community, oid, options = {}) {
   }
 }
 
-// --- System identity -------------------------------------------------------
+/**
+ * snmpGetV3(ip, v3, oids, options) — real SNMPv3 GET for one or more OIDs.
+ * `v3` is the canonical device.snmp.v3 object. Returns the same varbind
+ * shape as snmpGet. Throws on timeout / unreachable host, and throws an
+ * honest authentication/privacy error (via wrapV3Error) when the device
+ * rejects the USM credentials — never a null or fabricated value.
+ */
+async function snmpGetV3(ip, v3, oids, options = {}) {
+  if (!ip) throw new Error('snmpGetV3: no target IP supplied');
+  const list = Array.isArray(oids) ? oids : [oids];
+  const session = createV3Session(ip, v3, options);
+  try {
+    return await sessionGet(session, list);
+  } catch (err) {
+    throw wrapV3Error(err, ip, v3 && v3.user);
+  } finally {
+    session.close();
+  }
+}
 
 /**
- * getSystemInfo(ip, community) → { sysDescr, sysObjectID, sysUpTime,
- * sysName, sysLocation, sysContact }.
- * One real GET of the six SNMPv2-MIB system scalars. Any scalar the agent
- * does not implement comes back null. Throws on timeout/unreachable.
- * sysUpTime is TimeTicks (hundredths of a second) or null.
+ * snmpWalkV3(ip, v3, oid, options) — real SNMPv3 walk of one subtree.
+ * Same contract as snmpWalk, over a USM session. Throws on timeout /
+ * unreachable host and on USM authentication/privacy failure.
  */
-async function getSystemInfo(ip, community, options = {}) {
-  const varbinds = await snmpGet(ip, community, [
-    OID.sysDescr,
-    OID.sysObjectID,
-    OID.sysUpTime,
-    OID.sysName,
-    OID.sysLocation,
-    OID.sysContact,
-  ], options);
+async function snmpWalkV3(ip, v3, oid, options = {}) {
+  if (!ip) throw new Error('snmpWalkV3: no target IP supplied');
+  const session = createV3Session(ip, v3, options);
+  try {
+    return await sessionWalk(session, oid);
+  } catch (err) {
+    throw wrapV3Error(err, ip, v3 && v3.user);
+  } finally {
+    session.close();
+  }
+}
+
+// --- System identity -------------------------------------------------------
+
+/** Shared scalar mapping for getSystemInfo / getSystemInfoV3. */
+function parseSystemInfo(varbinds) {
   const byOid = {};
   for (const vb of varbinds) byOid[vb.oid] = vb;
   const text = (oid) => {
@@ -278,7 +610,59 @@ async function getSystemInfo(ip, community, options = {}) {
   };
 }
 
+/**
+ * getSystemInfo(ip, community) → { sysDescr, sysObjectID, sysUpTime,
+ * sysName, sysLocation, sysContact }.
+ * One real GET of the six SNMPv2-MIB system scalars. Any scalar the agent
+ * does not implement comes back null. Throws on timeout/unreachable.
+ * sysUpTime is TimeTicks (hundredths of a second) or null.
+ */
+async function getSystemInfo(ip, community, options = {}) {
+  const varbinds = await snmpGet(ip, community, [
+    OID.sysDescr,
+    OID.sysObjectID,
+    OID.sysUpTime,
+    OID.sysName,
+    OID.sysLocation,
+    OID.sysContact,
+  ], options);
+  return parseSystemInfo(varbinds);
+}
+
+/**
+ * getSystemInfoV3(ip, v3, options) — same six system scalars as
+ * getSystemInfo, over an SNMPv3 USM session. Throws on timeout/unreachable
+ * and on USM authentication/privacy failure; an unimplemented scalar is
+ * null, never invented.
+ */
+async function getSystemInfoV3(ip, v3, options = {}) {
+  const varbinds = await snmpGetV3(ip, v3, [
+    OID.sysDescr,
+    OID.sysObjectID,
+    OID.sysUpTime,
+    OID.sysName,
+    OID.sysLocation,
+    OID.sysContact,
+  ], options);
+  return parseSystemInfo(varbinds);
+}
+
 // --- CPU + memory ----------------------------------------------------------
+
+/**
+ * v3UserFromOptions(options) — the v3 user name when the caller routed
+ * through openSession with { version: 'v3', v3 }, else null. Lets the
+ * shared getCpuMem/getInterfaces cores map a USM failure to an honest
+ * auth error (instead of degrading to nulls) exactly like the dedicated
+ * getCpuMemV3 / getInterfacesV3 variants do.
+ */
+function v3UserFromOptions(options = {}) {
+  return options.version !== undefined
+    && String(options.version).trim().toLowerCase() === 'v3'
+    && options.v3 && typeof options.v3.user === 'string'
+    ? options.v3.user
+    : null;
+}
 
 /**
  * getCpuMem(ip, community) → { cpu5min: number|null, memUsedPct: number|null }.
@@ -297,8 +681,38 @@ async function getSystemInfo(ip, community, options = {}) {
  * Throws only on transport timeout/unreachable; a merely absent MIB is null.
  */
 async function getCpuMem(ip, community, options = {}) {
-  const session = createSession(ip, community, options);
+  const session = openSession(ip, community, options);
   try {
+    return await getCpuMemWithSession(session, ip, v3UserFromOptions(options));
+  } finally {
+    session.close();
+  }
+}
+
+/**
+ * getCpuMemV3(ip, v3, options) — same CPU/memory reading as getCpuMem,
+ * over an SNMPv3 USM session. A USM authentication/privacy failure
+ * THROWS (honest error); a device without CISCO-PROCESS-MIB /
+ * CISCO-MEMORY-POOL-MIB returns nulls, exactly as the v2c variant does.
+ */
+async function getCpuMemV3(ip, v3, options = {}) {
+  const session = createV3Session(ip, v3, options);
+  try {
+    return await getCpuMemWithSession(session, ip, v3 && v3.user);
+  } catch (err) {
+    throw wrapV3Error(err, ip, v3 && v3.user);
+  } finally {
+    session.close();
+  }
+}
+
+/**
+ * getCpuMemWithSession(session, ip, v3UserName) — session-agnostic core of
+ * getCpuMem / getCpuMemV3. v3UserName is null for v2c (auth-error mapping
+ * disabled, behaviour identical to the pre-v3 code) and the v3 user name
+ * for v3 sessions (a USM failure throws instead of degrading to nulls).
+ */
+async function getCpuMemWithSession(session, ip, v3UserName) {
     // --- CPU: Rev walk and legacy walk in parallel; prefer Rev. ---
     const [revSettled, legacySettled] = await Promise.allSettled([
       sessionWalk(session, OID.cpmCPUTotal5minRev),
@@ -309,6 +723,12 @@ async function getCpuMem(ip, community, options = {}) {
     );
     if (timedOut) {
       throw new Error(`SNMP request to ${ip} timed out`);
+    }
+    const authFailure = [revSettled, legacySettled].find(
+      (r) => r.status === 'rejected' && v3UserName && isV3AuthError(r.reason)
+    );
+    if (authFailure) {
+      throw wrapV3Error(authFailure.reason, ip, v3UserName);
     }
     let cpu5min = null;
     const pickMaxCpu = (rows) => {
@@ -329,6 +749,7 @@ async function getCpuMem(ip, community, options = {}) {
         `${OID.cpmCPUTotal5min}.1`,
       ]).catch((err) => {
         if (isTimeoutError(err)) throw new Error(`SNMP request to ${ip} timed out`);
+        if (v3UserName && isV3AuthError(err)) throw wrapV3Error(err, ip, v3UserName);
         return [];
       });
       for (const vb of gets) {
@@ -343,6 +764,7 @@ async function getCpuMem(ip, community, options = {}) {
     const nameRows = await sessionWalk(session, OID.ciscoMemoryPoolName)
       .catch((err) => {
         if (isTimeoutError(err)) throw new Error(`SNMP request to ${ip} timed out`);
+        if (v3UserName && isV3AuthError(err)) throw wrapV3Error(err, ip, v3UserName);
         return [];
       });
     const processorRow = (nameRows || []).find(
@@ -354,6 +776,7 @@ async function getCpuMem(ip, community, options = {}) {
       `${OID.ciscoMemoryPoolFree}.${poolIndex}`,
     ]).catch((err) => {
       if (isTimeoutError(err)) throw new Error(`SNMP request to ${ip} timed out`);
+      if (v3UserName && isV3AuthError(err)) throw wrapV3Error(err, ip, v3UserName);
       return [];
     });
     const used = numericValue(memGets.find((vb) => vb.oid === `${OID.ciscoMemoryPoolUsed}.${poolIndex}`));
@@ -363,9 +786,6 @@ async function getCpuMem(ip, community, options = {}) {
     }
 
     return { cpu5min, memUsedPct };
-  } finally {
-    session.close();
-  }
 }
 
 // --- Interfaces ------------------------------------------------------------
@@ -381,8 +801,36 @@ async function getCpuMem(ip, community, options = {}) {
  * Throws on timeout/unreachable.
  */
 async function getInterfaces(ip, community, options = {}) {
-  const session = createSession(ip, community, options);
+  const session = openSession(ip, community, options);
   try {
+    return await getInterfacesWithSession(session, ip, v3UserFromOptions(options));
+  } finally {
+    session.close();
+  }
+}
+
+/**
+ * getInterfacesV3(ip, v3, options) — same ifTable reading as
+ * getInterfaces, over an SNMPv3 USM session. A USM authentication/privacy
+ * failure THROWS; a device with no interfaces returns [].
+ */
+async function getInterfacesV3(ip, v3, options = {}) {
+  const session = createV3Session(ip, v3, options);
+  try {
+    return await getInterfacesWithSession(session, ip, v3 && v3.user);
+  } catch (err) {
+    throw wrapV3Error(err, ip, v3 && v3.user);
+  } finally {
+    session.close();
+  }
+}
+
+/**
+ * getInterfacesWithSession(session, ip, v3UserName) — session-agnostic core
+ * of getInterfaces / getInterfacesV3. v3UserName is null for v2c (auth-error
+ * mapping disabled, behaviour identical to the pre-v3 code).
+ */
+async function getInterfacesWithSession(session, ip, v3UserName) {
     const settled = await Promise.allSettled([
       sessionWalk(session, OID.ifDescr),
       sessionWalk(session, OID.ifSpeed),
@@ -393,6 +841,12 @@ async function getInterfaces(ip, community, options = {}) {
     ]);
     if (settled.some((r) => r.status === 'rejected' && isTimeoutError(r.reason))) {
       throw new Error(`SNMP request to ${ip} timed out`);
+    }
+    const authFailure = settled.find(
+      (r) => r.status === 'rejected' && v3UserName && isV3AuthError(r.reason)
+    );
+    if (authFailure) {
+      throw wrapV3Error(authFailure.reason, ip, v3UserName);
     }
     const [descrRows, speedRows, operRows, inRows, outRows, nameRows] = settled.map(
       (r) => (r.status === 'fulfilled' ? r.value : [])
@@ -433,19 +887,30 @@ async function getInterfaces(ip, community, options = {}) {
       if (!r.descr) r.descr = r.name;
     }
     return rows;
-  } finally {
-    session.close();
-  }
 }
 
 module.exports = {
   OID,
   DEFAULT_TIMEOUT_MS,
   DEFAULT_RETRIES,
+  V3_AUTH_PROTOCOLS,
+  V3_PRIV_PROTOCOLS,
   getSystemInfo,
+  getSystemInfoV3,
   getCpuMem,
+  getCpuMemV3,
   getInterfaces,
+  getInterfacesV3,
   snmpGet,
+  snmpGetV3,
   snmpWalk,
+  snmpWalkV3,
+  createV3Session,
+  createSnmpSession,
+  openSession,
+  validateV3,
+  describeSnmpV3,
+  isV3AuthError,
+  wrapV3Error,
   isTimeoutError,
 };

@@ -1,0 +1,233 @@
+{
+  "generatedAt": "2026-11-09T11:29:08.602Z",
+  "agent": "127.0.0.1:161 (local test service only; in-memory datagram shim — this VM blocks UDP send)",
+  "server": "own instance, in-process on :8160, throwaway DB /home/hatch/workspace/opm-p4/m1-work/test-snmpv3.db",
+  "summary": {
+    "pass": 17,
+    "fail": 0,
+    "gap": 0
+  },
+  "results": [
+    {
+      "case": "0 v3 happy path",
+      "verdict": "PASS",
+      "detail": "sysDescr=\"Test Agent (local test service only) v3-negtest\" sysName=\"v3-negtest-agent\" sysUpTime=7654321 (80ms)",
+      "ms": 80,
+      "sysDescr": "Test Agent (local test service only) v3-negtest",
+      "sysName": "v3-negtest-agent"
+    },
+    {
+      "case": "1 v3 wrong auth passphrase (service)",
+      "verdict": "PASS",
+      "detail": "honest throw: RequestTimedOutError: Request timed out (6012ms)",
+      "ms": 6012,
+      "error": "Request timed out",
+      "errorName": "RequestTimedOutError"
+    },
+    {
+      "case": "2 v3 wrong priv passphrase (service)",
+      "verdict": "PASS",
+      "detail": "honest throw: RequestTimedOutError: Request timed out (6006ms)",
+      "ms": 6006,
+      "error": "Request timed out",
+      "errorName": "RequestTimedOutError"
+    },
+    {
+      "case": "3 v3 unknown v3 user (service)",
+      "verdict": "PASS",
+      "detail": "honest throw: ResponseInvalidError: Unknown User Name (2ms)",
+      "ms": 2,
+      "error": "Unknown User Name",
+      "errorName": "ResponseInvalidError"
+    },
+    {
+      "case": "1 v3 wrong auth passphrase (poller)",
+      "verdict": "PASS",
+      "detail": "status=Down cpu=null mem=null error=\"Request timed out\" (6074ms)",
+      "ms": 6074,
+      "status": "Down",
+      "error": "Request timed out"
+    },
+    {
+      "case": "2 v3 wrong priv passphrase (poller)",
+      "verdict": "PASS",
+      "detail": "status=Down cpu=null mem=null error=\"Request timed out\" (6045ms)",
+      "ms": 6045,
+      "status": "Down",
+      "error": "Request timed out"
+    },
+    {
+      "case": "3 v3 unknown v3 user (poller)",
+      "verdict": "PASS",
+      "detail": "status=Down cpu=null mem=null error=\"Unknown User Name\" (26ms)",
+      "ms": 26,
+      "status": "Down",
+      "error": "Unknown User Name"
+    },
+    {
+      "case": "4 v3 missing user (HTTP snmp-query)",
+      "verdict": "PASS",
+      "detail": "HTTP 400 {\"status\":\"error\",\"message\":\"SNMPv3: v3.user is required (non-empty user name)\"} (14ms)",
+      "ms": 14,
+      "httpStatus": 400,
+      "body": {
+        "status": "error",
+        "message": "SNMPv3: v3.user is required (non-empty user name)"
+      }
+    },
+    {
+      "case": "4b v3 full creds (HTTP snmp-query)",
+      "verdict": "PASS",
+      "detail": "HTTP 200 {\"status\":\"success\",\"target\":\"127.0.0.1\",\"resolvedIp\":\"127.0.0.1\",\"version\":\"v3\",\"v3\":{\"user\":\"opmtest\",\"authProtocol\":\"sha\",\"privProtocol\":\"des\",\"securityLevel\":\"authPriv\"},\"securityLevel\":\"authPriv\",\"user\":\"opmtest\",\"oid\":\"1.3.6.1.2.1.1.1.0\",\"name\":\"sysDescr\",\"type\":\"OctetString\",\"description\":null,\"value\":\"Test Agent (local test service only) v3-negtest\",\"timestamp\":\"2026-11-09T11:28:52.398Z\"} (68ms)",
+      "ms": 68,
+      "httpStatus": 200,
+      "body": {
+        "status": "success",
+        "target": "127.0.0.1",
+        "resolvedIp": "127.0.0.1",
+        "version": "v3",
+        "v3": {
+          "user": "opmtest",
+          "authProtocol": "sha",
+          "privProtocol": "des",
+          "securityLevel": "authPriv"
+        },
+        "securityLevel": "authPriv",
+        "user": "opmtest",
+        "oid": "1.3.6.1.2.1.1.1.0",
+        "name": "sysDescr",
+        "type": "OctetString",
+        "description": null,
+        "value": "Test Agent (local test service only) v3-negtest",
+        "timestamp": "2026-11-09T11:28:52.398Z"
+      }
+    },
+    {
+      "case": "4c v3 missing user (service validation)",
+      "verdict": "PASS",
+      "detail": "threw: \"SNMPv3: v3.user is required (non-empty user name)\""
+    },
+    {
+      "case": "5 v3 dead port (service)",
+      "verdict": "PASS",
+      "detail": "threw: Request timed out (elapsed 4003ms)",
+      "ms": 4003,
+      "error": "Request timed out"
+    },
+    {
+      "case": "5 v3 dead port (poller)",
+      "verdict": "PASS",
+      "detail": "status=Down error=\"Request timed out\" (elapsed 6041ms)",
+      "ms": 6041,
+      "status": "Down",
+      "error": "Request timed out"
+    },
+    {
+      "case": "5 unreachable host (HTTP snmp-query)",
+      "verdict": "PASS",
+      "detail": "HTTP 502 {\"status\":\"error\",\"message\":\"SNMP GET to 192.0.2.1 failed: Request timed out\"} (elapsed 6008ms)",
+      "ms": 6008,
+      "httpStatus": 502,
+      "body": {
+        "status": "error",
+        "message": "SNMP GET to 192.0.2.1 failed: Request timed out"
+      }
+    },
+    {
+      "case": "6 v2c query (HTTP, regression)",
+      "verdict": "PASS",
+      "detail": "HTTP 200 value=\"Test Agent (local test service only) v3-negtest\" (24ms)",
+      "ms": 24,
+      "httpStatus": 200,
+      "body": {
+        "status": "success",
+        "target": "127.0.0.1",
+        "resolvedIp": "127.0.0.1",
+        "community": "******",
+        "version": "v2c",
+        "oid": "1.3.6.1.2.1.1.1.0",
+        "name": "sysDescr",
+        "type": "OctetString",
+        "description": null,
+        "value": "Test Agent (local test service only) v3-negtest",
+        "timestamp": "2026-11-09T11:29:08.472Z"
+      }
+    },
+    {
+      "case": "6 v2c poll-now (HTTP, regression)",
+      "verdict": "PASS",
+      "detail": "HTTP 200 poll.status=Up cpu=23 mem=37.6 error=null (114ms)",
+      "ms": 114,
+      "httpStatus": 200,
+      "body": {
+        "status": "success",
+        "message": "Device v3-negtest-agent (127.0.0.1) polled successfully",
+        "device": {
+          "id": 1,
+          "ip": "127.0.0.1",
+          "hostname": "v3-negtest-agent",
+          "sys_name": "v3-negtest-agent",
+          "sys_descr": "Test Agent (local test service only) v3-negtest",
+          "sys_object_id": null,
+          "vendor": null,
+          "model": null,
+          "category": null,
+          "snmp_version": "v2c",
+          "snmp_v3_user": null,
+          "snmp_v3_auth_protocol": null,
+          "snmp_v3_priv_protocol": null,
+          "probe_id": null,
+          "managed": 1,
+          "status": "Up",
+          "cpu_pct": 23,
+          "mem_used_pct": 37.6,
+          "uptime_ticks": 7654321,
+          "response_ms": null,
+          "last_polled_at": 1794223748484,
+          "created_at": 1794223720146,
+          "snmp": {
+            "version": "v2c",
+            "community": null,
+            "v3": null
+          }
+        },
+        "poll": {
+          "id": 1,
+          "name": "v3-negtest-agent",
+          "ip": "127.0.0.1",
+          "cpu_pct": 23,
+          "mem_used_pct": 37.6,
+          "uptime_ticks": 7654321,
+          "response_ms": null,
+          "status": "Up",
+          "last_polled_at": "2026-11-09T11:29:08.484Z",
+          "error": null
+        },
+        "polledAt": "2026-11-09T11:29:08.590Z"
+      }
+    },
+    {
+      "case": "6 v2c GET (service, regression)",
+      "verdict": "PASS",
+      "detail": "sysDescr=\"Test Agent (local test service only) v3-negtest\" sysName=\"v3-negtest-agent\" (1ms)",
+      "ms": 1,
+      "sysDescr": "Test Agent (local test service only) v3-negtest"
+    },
+    {
+      "case": "7 walk unimplemented subtree (HTTP snmp-walk)",
+      "verdict": "PASS",
+      "detail": "HTTP 200 {\"status\":\"success\",\"target\":\"127.0.0.1\",\"resolvedIp\":\"127.0.0.1\",\"rootOid\":\"1.3.6.1.4.1.9.9.999\",\"count\":0,\"results\":[],\"timestamp\":\"2026-11-09T11:29:08.600Z\"} (9ms)",
+      "ms": 9,
+      "httpStatus": 200,
+      "body": {
+        "status": "success",
+        "target": "127.0.0.1",
+        "resolvedIp": "127.0.0.1",
+        "rootOid": "1.3.6.1.4.1.9.9.999",
+        "count": 0,
+        "results": [],
+        "timestamp": "2026-11-09T11:29:08.600Z"
+      }
+    }
+  ]
+}

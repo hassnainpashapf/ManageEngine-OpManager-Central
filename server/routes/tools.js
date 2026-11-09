@@ -452,7 +452,91 @@ function snmpServiceUnavailable(res) {
   });
 }
 
+// --- SNMPv3 credentials ----------------------------------------------------
+// A v3 request may carry its credentials as a nested `v3` object
+// ({ user, authProtocol, authPass, privProtocol, privPass }) or as
+// top-level fields of the same names. Returns the credential object, or
+// null when the body carries no v3 credential at all. The returned object
+// may hold real passphrases: it is passed only to the SNMP service, and
+// is NEVER logged or echoed in a response (see describeSnmpV3).
+function extractV3Input(body) {
+  const b = body || {};
+  if (b.v3 && typeof b.v3 === 'object' && !Array.isArray(b.v3)) return b.v3;
+  const top = {};
+  let any = false;
+  for (const k of ['user', 'authProtocol', 'authPass', 'privProtocol', 'privPass']) {
+    if (b[k] !== undefined && b[k] !== null) { top[k] = b[k]; any = true; }
+  }
+  return any ? top : null;
+}
+
+// Stored v3 credentials for a managed device (matched by hostname /
+// sys_name / IP), for v3 requests that supply no credentials of their
+// own. Returns the raw credential object or null. Server-side only.
+function storedV3For(requested) {
+  const dev = safeListDevices().find((d) => d.hostname === requested || d.sys_name === requested || d.ip === requested);
+  if (!dev) return null;
+  const stored = store.snmpFromRow ? store.snmpFromRow(dev) : null;
+  return stored && stored.v3 && stored.v3.user ? stored.v3 : null;
+}
+
+// Resolve v3 credentials for a request: body first, stored device
+// credentials second. Returns { creds } (validated, normalised by the
+// canonical validateV3) or { error } (a 400 message). `snmp` is the
+// loaded SNMP service.
+function resolveV3Creds(snmp, body, requested) {
+  let input = extractV3Input(body);
+  if (!input) input = storedV3For(requested);
+  if (!input) {
+    return { error: 'SNMPv3 credentials are required: supply v3 { user, authProtocol, authPass, privProtocol, privPass } in the request body, or target a managed device with stored v3 credentials.' };
+  }
+  try {
+    return { creds: snmp.validateV3(input) };
+  } catch (err) {
+    return { error: (err && err.message) || String(err) };
+  }
+}
+
+// Normalise the requested SNMP version. Only 'v2c' (alias '2c') and 'v3'
+// are served: v1 is rejected (the poller/service never speak v1 — the
+// old endpoint accepted it and silently polled as v2c), the '3' alias is
+// dropped, and anything else is a 400. Returns { version } or { error }.
+function resolveSnmpVersion(version) {
+  const ver = String(version || 'v2c').trim().toLowerCase();
+  if (ver === 'v2c' || ver === '2c') return { version: 'v2c' };
+  if (ver === 'v3') return { version: 'v3' };
+  if (ver === 'v1') {
+    return { error: "SNMPv1 is not supported by this endpoint (supported: 'v2c', 'v3')." };
+  }
+  return { error: `Invalid SNMP version '${version}'. Expected 'v2c' or 'v3'.` };
+}
+
+// Optional UDP port from the request body (default 161). Returns
+// { port } (null when absent) or { error } on an out-of-range value.
+function resolveSnmpPort(body) {
+  const raw = (body || {}).port;
+  if (raw === undefined || raw === null || raw === '') return { port: null };
+  const port = Number(raw);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    return { error: `Invalid SNMP port '${raw}': expected an integer 1-65535.` };
+  }
+  return { port };
+}
+
+// The ONE 501 message in this file: the v3 branches below answer 501
+// only when the loaded SNMP service has no v3 implementation at all.
+const SNMPV3_NOT_IMPLEMENTED = 'SNMPv3 is not implemented by the loaded SNMP service.';
+
 // POST /api/tools/snmp-query - Real SNMP GET operation
+// v1/v2c: community-based, unchanged. v3: authPriv/authNoPriv/noAuthNoPriv
+// via server/services/snmp.js (snmpGetV3); credentials come from the
+// request body (v3 object or top-level fields) or, when none are supplied,
+// from the target managed device's stored v3 credentials. Passphrases are
+// never logged or echoed: the response carries only the v3 identity,
+// protocol names and security level (see describeSnmpV3). Bad v3
+// credentials are a 400; transport failures are a 502. v3 is fully
+// implemented here — the only 501 left in this file is the
+// service-missing guard in the v3 branch below.
 router.post('/api/tools/snmp-query', async (req, res) => {
   const { ip, oid = '.1.3.6.1.2.1.1.1.0', community = 'public_monitor_ro', version = 'v2c' } = req.body || {};
   if (!ip || typeof ip !== 'string' || !ip.trim()) {
@@ -462,14 +546,16 @@ router.post('/api/tools/snmp-query', async (req, res) => {
   if (!/^(\d+\.)*\d+$/.test(cleanOid)) {
     return res.status(400).json({ status: 'error', message: `Invalid OID '${cleanOid}'. Expected a numeric dotted OID.` });
   }
-  const ver = String(version || 'v2c').toLowerCase();
-  if (ver !== 'v1' && ver !== 'v2c' && ver !== '2c') {
-    return res.status(501).json({
-      status: 'error',
-      error: 'not_implemented',
-      message: `SNMP ${version} is not supported by this endpoint: the SNMP service only carries community-based v1/v2c credentials, so no v3 authentication/privacy can be performed.`
-    });
+  const verResolved = resolveSnmpVersion(version);
+  if (verResolved.error) {
+    return res.status(400).json({ status: 'error', message: verResolved.error });
   }
+  const ver = verResolved.version;
+  const portResolved = resolveSnmpPort(req.body);
+  if (portResolved.error) {
+    return res.status(400).json({ status: 'error', message: portResolved.error });
+  }
+  const snmpOptions = portResolved.port ? { port: portResolved.port } : {};
   const snmp = loadSnmpService();
   if (!snmp || typeof snmp.snmpGet !== 'function') return snmpServiceUnavailable(res);
 
@@ -478,9 +564,53 @@ router.post('/api/tools/snmp-query', async (req, res) => {
     return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
   }
 
+  // --- SNMPv3 path ---
+  if (ver === 'v3') {
+    if (typeof snmp.snmpGetV3 !== 'function' || typeof snmp.validateV3 !== 'function') {
+      return res.status(501).json({
+        status: 'error',
+        error: 'not_implemented',
+        message: SNMPV3_NOT_IMPLEMENTED
+      });
+    }
+    const { creds, error } = resolveV3Creds(snmp, req.body, requested);
+    if (error) {
+      return res.status(400).json({ status: 'error', message: error });
+    }
+    let varbinds;
+    try {
+      varbinds = await snmp.snmpGetV3(address, creds, [cleanOid], snmpOptions);
+    } catch (err) {
+      return res.status(502).json({ status: 'error', message: `SNMPv3 GET to ${address} failed: ${err.message}` });
+    }
+    const vb = normalizeVarbinds(varbinds)[0];
+    if (!vb || !vb.oid) {
+      return res.status(502).json({ status: 'error', message: `SNMPv3 GET to ${address} returned no varbind for ${cleanOid}.` });
+    }
+    if (vb.error) {
+      return res.status(502).json({ status: 'error', message: `SNMPv3 error for ${cleanOid} on ${address}: ${vb.error}` });
+    }
+    const info = lookupMibOid(cleanOid);
+    return res.json({
+      status: 'success',
+      target: requested,
+      resolvedIp: address,
+      version: 'v3',
+      v3: snmp.describeSnmpV3(creds),
+      securityLevel: creds.levelName,
+      user: creds.user,
+      oid: cleanOid,
+      name: info ? info.name : null,
+      type: vb.type || (info ? info.type : null),
+      description: info ? info.desc : null,
+      value: vb.value,
+      timestamp: new Date().toISOString()
+    });
+  }
+
   let varbinds;
   try {
-    varbinds = await snmp.snmpGet(address, community, [cleanOid]);
+    varbinds = await snmp.snmpGet(address, community, [cleanOid], snmpOptions);
   } catch (err) {
     return res.status(502).json({ status: 'error', message: `SNMP GET to ${address} failed: ${err.message}` });
   }
@@ -509,6 +639,8 @@ router.post('/api/tools/snmp-query', async (req, res) => {
 });
 
 // POST /api/tools/snmp-walk - Real SNMP WALK operation (subtree traversal)
+// v3 handled exactly like snmp-query above (same credential sources,
+// same 400/502 contract, no 501); v1/v2c unchanged.
 router.post('/api/tools/snmp-walk', async (req, res) => {
   const { ip, rootOid = '.1.3.6.1.2.1.1', community = 'public_monitor_ro', version = 'v2c' } = req.body || {};
   if (!ip || typeof ip !== 'string' || !ip.trim()) {
@@ -518,14 +650,16 @@ router.post('/api/tools/snmp-walk', async (req, res) => {
   if (!/^(\d+\.)*\d+$/.test(cleanRoot)) {
     return res.status(400).json({ status: 'error', message: `Invalid root OID '${cleanRoot}'. Expected a numeric dotted OID.` });
   }
-  const ver = String(version || 'v2c').toLowerCase();
-  if (ver !== 'v1' && ver !== 'v2c' && ver !== '2c') {
-    return res.status(501).json({
-      status: 'error',
-      error: 'not_implemented',
-      message: `SNMP ${version} is not supported by this endpoint: the SNMP service only carries community-based v1/v2c credentials, so no v3 authentication/privacy can be performed.`
-    });
+  const verResolved = resolveSnmpVersion(version);
+  if (verResolved.error) {
+    return res.status(400).json({ status: 'error', message: verResolved.error });
   }
+  const ver = verResolved.version;
+  const portResolved = resolveSnmpPort(req.body);
+  if (portResolved.error) {
+    return res.status(400).json({ status: 'error', message: portResolved.error });
+  }
+  const snmpOptions = portResolved.port ? { port: portResolved.port } : {};
   const snmp = loadSnmpService();
   if (!snmp || typeof snmp.snmpWalk !== 'function') return snmpServiceUnavailable(res);
 
@@ -534,9 +668,54 @@ router.post('/api/tools/snmp-walk', async (req, res) => {
     return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
   }
 
+  // --- SNMPv3 path ---
+  if (ver === 'v3') {
+    if (typeof snmp.snmpWalkV3 !== 'function' || typeof snmp.validateV3 !== 'function') {
+      return res.status(501).json({
+        status: 'error',
+        error: 'not_implemented',
+        message: SNMPV3_NOT_IMPLEMENTED
+      });
+    }
+    const { creds, error } = resolveV3Creds(snmp, req.body, requested);
+    if (error) {
+      return res.status(400).json({ status: 'error', message: error });
+    }
+    let raw;
+    try {
+      raw = await snmp.snmpWalkV3(address, creds, cleanRoot, snmpOptions);
+    } catch (err) {
+      return res.status(502).json({ status: 'error', message: `SNMPv3 walk of ${cleanRoot} on ${address} failed: ${err.message}` });
+    }
+    const results = normalizeVarbinds(raw)
+      .filter((vb) => vb.oid && !vb.error)
+      .map((vb) => {
+        const info = lookupMibOid(vb.oid);
+        return {
+          oid: vb.oid,
+          name: info ? info.name : null,
+          type: vb.type || (info ? info.type : null),
+          value: vb.value
+        };
+      });
+    return res.json({
+      status: 'success',
+      target: requested,
+      resolvedIp: address,
+      version: 'v3',
+      v3: snmp.describeSnmpV3(creds),
+      securityLevel: creds.levelName,
+      user: creds.user,
+      rootOid: cleanRoot,
+      count: results.length,
+      results,
+      timestamp: new Date().toISOString()
+    });
+  }
+
   let raw;
   try {
-    raw = await snmp.snmpWalk(address, community, cleanRoot);
+    raw = await snmp.snmpWalk(address, community, cleanRoot, snmpOptions);
   } catch (err) {
     return res.status(502).json({ status: 'error', message: `SNMP walk of ${cleanRoot} on ${address} failed: ${err.message}` });
   }
