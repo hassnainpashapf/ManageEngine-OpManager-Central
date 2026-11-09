@@ -38,6 +38,8 @@ const express = require('express');
 const router = express.Router();
 const store = require('../services/store');
 const { requireAuth, requireRole } = require('../services/session');
+const sshclient = require('../services/sshclient');
+const dns = require('node:dns/promises');
 
 // Store contract: store.workflows.createWorkflow, listWorkflows,
 // saveWorkflowRun, listWorkflowRuns. (The store also exposes flat
@@ -144,9 +146,27 @@ router.post(
   }
 );
 
-// POST /api/workflows/execute — honest 501: no step executor exists on
-// this server, so nothing is run and no step output is fabricated.
-// Unknown workflowId -> 404; missing workflowId -> 400.
+// A step executes for real only when it declares type 'ssh' (or 'cli') with
+// a host and command. Any other/missing type stays honestly unsupported -
+// nothing is fabricated for it.
+const SSH_STEP_TYPES = new Set(['ssh', 'cli']);
+
+async function resolveHost(target) {
+  if (!target || typeof target !== 'string') return null;
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(target)) return target;
+  try {
+    const { address } = await dns.lookup(target, { family: 4 });
+    return address;
+  } catch {
+    return null;
+  }
+}
+
+// POST /api/workflows/execute — runs real SSH steps (type 'ssh'/'cli') via
+// services/sshclient.js. A workflow containing any step of an unsupported
+// type (WMI, notification, service-restart, ...) is refused entirely with
+// an honest 501 naming the unsupported types, rather than silently running
+// only part of it. Unknown workflowId -> 404; missing workflowId -> 400.
 router.post('/api/workflows/execute', async (req, res, next) => {
   try {
     const { workflowId } = req.body || {};
@@ -166,26 +186,79 @@ router.post('/api/workflows/execute', async (req, res, next) => {
         message: `Workflow ${workflowId} not found`,
       });
     }
+
+    const steps = parseSteps(wf.steps_json);
     const startedAt = Date.now();
-    const message =
-      `Workflow execution is not implemented: this server has no step ` +
-      `executor (no SSH/WMI/CLI runner), so workflow "${wf.name}" ` +
-      `(id ${wf.id}) was not run and no step was executed.`;
-    // Record the refused attempt with real timestamps; status
-    // 'not_implemented' is excluded from executionCount / lastExecuted.
+
+    const unsupported = [...new Set(
+      steps
+        .filter((s) => !s || !SSH_STEP_TYPES.has(String(s.type || '').toLowerCase()))
+        .map((s) => (s && s.type) || '(missing type)')
+    )];
+
+    if (steps.length === 0 || unsupported.length > 0) {
+      const message = steps.length === 0
+        ? `Workflow "${wf.name}" (id ${wf.id}) has no steps to run.`
+        : `Workflow "${wf.name}" (id ${wf.id}) was not run: step type(s) ${unsupported.join(', ')} have no real executor. Only 'ssh'/'cli' steps (host + command, using a Credential Library SSH credential) can run for real.`;
+      await workflows.saveWorkflowRun({
+        workflow_id: wf.id,
+        status: 'not_implemented',
+        log: message,
+        started_at: startedAt,
+        finished_at: Date.now(),
+      });
+      return res.status(501).json({
+        status: 'error',
+        error: 'not_implemented',
+        message,
+        workflowId: wf.id,
+        unsupportedStepTypes: unsupported,
+        logs: [message],
+      });
+    }
+
+    const cred = sshclient.findSshCredential(store);
+    if (!cred || !cred.username || !cred.password) {
+      // Not an execution attempt - nothing ever reached a device - so this
+      // stays out of EXECUTED_STATUSES the same way the unsupported-step-type
+      // refusal above does.
+      const message = 'No SSH/CLI credential with a username and password is configured in the Credential Library.';
+      await workflows.saveWorkflowRun({
+        workflow_id: wf.id, status: 'not_implemented', log: message, started_at: startedAt, finished_at: Date.now()
+      });
+      return res.status(400).json({ status: 'error', message, workflowId: wf.id });
+    }
+
+    const logs = [];
+    let allOk = true;
+    for (const step of steps) {
+      const address = await resolveHost(step.host);
+      if (!address) {
+        allOk = false;
+        logs.push(`Step on '${step.host}': could not resolve to an IPv4 address.`);
+        continue;
+      }
+      try {
+        const result = await sshclient.execCommand(address, cred, step.command);
+        allOk = allOk && (result.exitCode === 0 || result.exitCode === null);
+        logs.push(`Step on ${step.host} (${address}): exit ${result.exitCode}\n${result.stdout}${result.stderr ? '\nstderr: ' + result.stderr : ''}`);
+      } catch (err) {
+        allOk = false;
+        logs.push(`Step on ${step.host} (${address}): SSH failed - ${err.message}`);
+      }
+    }
+
+    const finishedAt = Date.now();
+    const status = allOk ? 'success' : 'failed';
     await workflows.saveWorkflowRun({
-      workflow_id: wf.id,
-      status: 'not_implemented',
-      log: message,
-      started_at: startedAt,
-      finished_at: Date.now(),
+      workflow_id: wf.id, status, log: logs.join('\n---\n'), started_at: startedAt, finished_at: finishedAt
     });
-    return res.status(501).json({
-      status: 'error',
-      error: 'not_implemented',
-      message,
+
+    res.json({
+      status: allOk ? 'success' : 'error',
+      message: `Workflow "${wf.name}" (id ${wf.id}) ${allOk ? 'completed' : 'completed with failures'}.`,
       workflowId: wf.id,
-      logs: [message],
+      logs,
     });
   } catch (err) {
     next(err);
