@@ -13,6 +13,8 @@ const net = require('node:net');
 const fs = require('node:fs');
 const run = promisify(execFile);
 
+const sshclient = require('../services/sshclient');
+
 // SNMP service (built by the parallel SNMP-engine track). Loaded lazily so
 // this router still loads if the service file is not present yet; the SNMP
 // endpoints then answer 502 instead of crashing the whole server.
@@ -626,22 +628,63 @@ router.get(['/api/tools/switch-ports', '/api/tools/spm'], (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
-// Outside-scope canned endpoints (audit E1–E4). There is no real backend for
-// any of these in this server — no SSH/Telnet session runner, no WMI/WinRM
-// client, no ARP/MAC-table source — so they answer an honest 501 instead of
-// returning canned template output. Paths are unchanged.
+// Outside-scope canned endpoints (audit E1–E4). WMI/MAC resolution still have
+// no real backend (no WMI/WinRM client, no ARP/MAC-table source) and answer
+// an honest 501. Terminal/CLI execution now has a real SSH backend
+// (services/sshclient.js) and runs exactly the command the logged-in
+// operator supplied against the real host - nothing fabricated, and nothing
+// automated beyond what was explicitly typed.
 // ---------------------------------------------------------------------------
 
-// Interactive Web CLI Terminal Command Executor
-router.post('/api/tools/terminal-exec', (req, res) => {
-  return res.status(501).json({
-    status: 'error',
-    error: 'not_implemented',
-    message: 'Terminal execution is not implemented: no safe allow-listed command runner (SSH/Telnet session) exists on this server, so no command is executed and no output is fabricated.',
-    hostname: req.body?.hostname ?? null,
-    command: req.body?.command ?? null,
-    timestamp: new Date().toISOString()
-  });
+function sshCredentialOrError(res) {
+  const cred = sshclient.findSshCredential(store);
+  if (!cred || !cred.username || !cred.password) {
+    res.status(400).json({
+      status: 'error',
+      message: 'No SSH/CLI credential with a username and password is configured in the Credential Library. Add one under Settings > Credentials first.'
+    });
+    return null;
+  }
+  return cred;
+}
+
+// Interactive Web CLI Terminal Command Executor - real SSH exec against the
+// resolved host, using the Credential Library's SSH/CLI credential.
+router.post('/api/tools/terminal-exec', async (req, res) => {
+  const hostname = req.body?.hostname;
+  const command = req.body?.command;
+  if (!hostname || typeof hostname !== 'string' || !command || typeof command !== 'string') {
+    return res.status(400).json({ status: 'error', message: 'hostname and command are both required.' });
+  }
+
+  const { requested, address } = await resolveSnmpTarget(hostname);
+  if (!address) {
+    return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
+  }
+
+  const cred = sshCredentialOrError(res);
+  if (!cred) return;
+
+  try {
+    const result = await sshclient.execCommand(address, cred, command);
+    res.json({
+      status: 'success',
+      hostname: requested,
+      resolvedIp: address,
+      command,
+      exitCode: result.exitCode,
+      output: result.stdout,
+      stderr: result.stderr || null,
+      timestamp: new Date().toISOString()
+    });
+  } catch (err) {
+    res.status(502).json({
+      status: 'error',
+      message: `SSH command failed on ${requested} (${address}): ${err.message}`,
+      hostname: requested,
+      command
+    });
+  }
 });
 
 // WMI QUERY TOOL
@@ -658,18 +701,51 @@ router.post('/api/tools/wmi-query', (req, res) => {
   });
 });
 
-// CLI QUERY TOOL
-router.post('/api/tools/cli-query', (req, res) => {
-  const { host = '127.0.0.1', protocol = 'SSHv2', command = 'show version' } = req.body || {};
-  return res.status(501).json({
-    status: 'error',
-    error: 'not_implemented',
-    message: 'CLI query is not implemented: no SSH session runner exists on this server, so no command is executed against the host.',
-    host,
-    protocol,
-    command,
-    timestamp: new Date().toISOString()
-  });
+// CLI QUERY TOOL - real SSH exec, same backend as terminal-exec above.
+router.post('/api/tools/cli-query', async (req, res) => {
+  const host = req.body?.host || '127.0.0.1';
+  const protocol = req.body?.protocol || 'SSHv2';
+  const command = req.body?.command || 'show version';
+
+  if (!/ssh/i.test(protocol)) {
+    return res.status(501).json({
+      status: 'error',
+      error: 'not_implemented',
+      message: `CLI query over ${protocol} is not implemented: only a real SSH backend exists on this server.`,
+      host, protocol, command,
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  const { requested, address } = await resolveSnmpTarget(host);
+  if (!address) {
+    return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
+  }
+
+  const cred = sshCredentialOrError(res);
+  if (!cred) return;
+
+  try {
+    const result = await sshclient.execCommand(address, cred, command);
+    res.json({
+      status: 'success',
+      host: requested,
+      resolvedIp: address,
+      protocol: 'SSHv2',
+      command,
+      exitCode: result.exitCode,
+      output: result.stdout,
+      stderr: result.stderr || null,
+      timestamp: new Date().toISOString()
+    });
+  } catch (err) {
+    res.status(502).json({
+      status: 'error',
+      message: `SSH command failed on ${requested} (${address}): ${err.message}`,
+      host: requested,
+      command
+    });
+  }
 });
 
 // ADDRESS RESOLVER & MAC TOOL
