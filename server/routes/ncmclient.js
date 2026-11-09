@@ -361,7 +361,7 @@ function buildUserMeta(req) {
 // GET /ncmclient/getClientServiceData — identity, product and licence for
 // the authenticated caller only. No CSRF cookie is issued here (the old
 // hardcoded constant CSRF value is gone, A-09/A-10).
-router.get(['/ncmclient/getClientServiceData', '/api/json/ncmclient/getClientServiceData'], (req, res) => {
+router.get(['/ncmclient/getClientServiceData', '/api/ncmclient/getClientServiceData', '/api/json/ncmclient/getClientServiceData'], (req, res) => {
   const probes = listProbes() || [];
   const devices = listDevices() || [];
 
@@ -415,7 +415,7 @@ router.get(['/ncmclient/getClientServiceData', '/api/json/ncmclient/getClientSer
 // — but the menu sub-items for them are unchanged here; wiring them into the
 // menu is UI work, not this route.)
 // A role with no read permissions gets [].
-router.get(['/ncmclient/getMainMenuTabs', '/api/json/ncmclient/getMainMenuTabs'], (req, res) => {
+router.get(['/ncmclient/getMainMenuTabs', '/api/ncmclient/getMainMenuTabs', '/api/json/ncmclient/getMainMenuTabs'], (req, res) => {
   const perms = permissionsForRole(resolveUser(req).role);
   const can = (p) => perms[p] === true;
   const tabs = [];
@@ -654,7 +654,7 @@ router.get(['/ncmclient/getMainMenuTabs', '/api/json/ncmclient/getMainMenuTabs']
 // User Preference Endpoint
 // Static UI default (audit: keep as a default); no per-user preference
 // store exists yet, so there is nothing real to read here.
-router.get(['/ncmclient/getUserPreference', '/api/json/ncmclient/getUserPreference'], (req, res) => {
+router.get(['/ncmclient/getUserPreference', '/api/ncmclient/getUserPreference', '/api/json/ncmclient/getUserPreference'], (req, res) => {
   res.json({
     DGroupNewView: false,
     theme: 'itom-grey-text-theme'

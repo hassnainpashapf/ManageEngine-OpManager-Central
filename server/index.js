@@ -224,7 +224,7 @@ const PASSWORD_CHANGE_ROUTES = new Set([
 // only /dashboard/* JSON endpoints are.)
 const LEGACY_API_PREFIXES = [
   '/admin/', '/alarm/', '/device/', '/enterprise/', '/fwaenterprise/',
-  '/maps/', '/ncmclient/', '/ncmcompliance/', '/ncmconfig/',
+  '/inventory/', '/maps/', '/ncmclient/', '/ncmcompliance/', '/ncmconfig/',
   '/ncmdashboard/', '/ncmeol/', '/ncmreports/', '/nfaee/', '/reports/',
   '/tab/', '/user/', '/v2/', '/dashboard/',
   // '/settings/' and '/support/' are console API routes too (mail /
@@ -406,12 +406,15 @@ app.get(['/apiclient/ember/index.jsp', '/apiclient/ember', '/apiclient/fluidicv3
 // matches case-insensitively; isApiPath() itself is case-sensitive, so the
 // pathname is lowercased first. Unauthenticated API calls never reach
 // this handler: apiAuthGuard above already 401s them.
-// NOTE: /inventory/ bare forms hit the same collision but are NOT in
-// LEGACY_API_PREFIXES, so apiAuthGuard does not protect them and they
-// intentionally still redirect — un-redirecting them first needs the auth
-// track to add that prefix to LEGACY_API_PREFIXES (its router has no
-// per-route auth guard; see ROUTING-1 report). /settings/ was in the same
-// position but FIX-A4SEC (Phase 5) added '/settings/' (and '/support/') to
+// NOTE (W2-5, Phase 5): /inventory/ bare forms used to hit the same
+// collision but were NOT in LEGACY_API_PREFIXES, so apiAuthGuard did not
+// protect them and they 302d to the SPA shell (ROUTING-1 report). W2-5
+// added '/inventory/' to LEGACY_API_PREFIXES, so the bare forms now fall
+// through to the devices router like the other legacy prefixes — and are
+// session-guarded by apiAuthGuard above (the devices router itself has no
+// per-route auth guard, so this guard is what protects them; same pattern
+// as /settings/ via FIX-A4SEC). /settings/ was in the same position but
+// FIX-A4SEC (Phase 5) added '/settings/' (and '/support/') to
 // LEGACY_API_PREFIXES and guarded the settings routes, so /settings/ API
 // paths now fall through above like the others.
 app.get(['/Inventory*', '/Home*', '/Settings*', '/NCM*', '/Maps*', '/Reports*'], (req, res, next) => {
