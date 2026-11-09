@@ -1321,3 +1321,89 @@ structurally impossible in a Node build — §23.6).
 - **Never removed:** NCM config push stays DRY-RUN + HUMAN-REVIEW GATE.
   JVM heap stays 501 N/A. H1 hardcoded probe key stays unfixed for
   already-registered agents (fix plan in §25.4).
+
+## 26. Phase-5 wave-2 close-out — audit-gap fixes, verification (2026-11-09)
+
+Branch `p4-exe-audit`, base `46db9cb` (wave-1 close-out), merged tip
+`f8504ba` (NOT pushed — GitHub credential unavailable; parent pushes).
+5 tracks, all completed and merged; coordinator verification ran on a
+throwaway copy of the merged tree (fresh DB, port 8060) — see `REALDATA.md`
+§14.
+
+### 26.1 Counts after the wave-2 merge
+
+**232 route definitions — 227 REAL, 4 HONEST-EMPTY, 1 unconditional
+NOT-IMPLEMENTED (501), 0 FAKE. Unchanged from wave 1.** No new route
+definitions were added in wave 2: the `clearAlarm` alias shares its
+handler (alarms still 17 definitions), and the 4 ncmclient registrations
+are path aliases on existing definitions (`router.*()` call count is 236
+at both `46db9cb` and the merge tip — the 4-call gap vs 232 definitions
+is pre-existing: shared/alias registrations counted once).
+
+### 26.2 What each track fixed (all live-verified in its own clone)
+
+| Track | Fix | Live proof |
+| --- | --- | --- |
+| W2-1 (`54b2784`, merged `12de0cf`) | D-01: `normalizeDevice()` maps stored `cpu_pct`/`mem_used_pct`/`response_ms`/`hostname` to the display shape (`cpu`/`memory`/`responseTime`/`name`) at load, on METRIC_TICK and on pollNow merge — Top CPU/Memory, heatmap, inventory, snapshot dials, CSV now show real values. S-05: `loadDeviceInterfaces()` feeds the Interfaces (IF-MIB) view + snapshot tab from real `listInterfaces` (60 s cache, honest empty state). Also fixed the ifOperStatus enum-vs-string mismatch (RFC 2863 enum; store returns TEXT `'1.0'`/`'4.0'`). | :8181, verify-auth 11/11, verify-empty 16/16; 17/17 live API checks; 24/24 mapping proof on real payloads (Top CPU 59.2% / mem 85.5% live-measured from /proc). `response_ms` stays `null` in this sandbox (no wire poll possible) and the UI shows `—`. |
+| W2-2 (`de858b3`, merged `74b8295`) | X-01: discovery resolves the credential profile server-side (v2c → community sweep, v3 → USM sweep); the old client habit of sending the credential id as `snmpVersion` is still accepted as a legacy alias. Write side: add/update run every version spelling through canonical `normalizeSnmpVersion()` (`'2c'`→`v2c`); v1 is a strict 400. A `credential` id is resolved first (unknown → 400) and fills version/community/v3-user. | :8182, verify-auth 11/11, verify-empty 16/16; discovery with a real profile → 202 `snmpVersion: v2c`; `'2c'` create stores `v2c` in the DB and `pollNow` fails only with `send EPERM` (VM UDP block, not a version rejection); 0 "unsupported SNMP version" lines. Library v3 profiles resolve user-only (noAuthNoPriv) by design. |
+| W2-3 (`4ed9b1a`, merged `f73782e`) | A2-13: alarm statuses normalized at the fetch boundary (lowercase → `Active`/`Acknowledged`/`Cleared`) + case-insensitive comparisons — badge, Ack button, Acknowledged tab work. A2-07: in-memory dedup Set deleted; `store.alarms.raiseAlarmOnce()` transactional upsert per `(device_id, source)` with durable `prev_severity`/`escalated_at`/`updated_at` + partial unique index on open alarms; load-time migration collapses legacy duplicate open alarms. `POST /api/alarm/clearAlarm` (+ `/api/json/` form) added as an alias. | :8183, verify-auth 11/11, verify-empty 16/16; 18/18 client proof on real API rows; restart survival proven (same alarm id, escalation kept, post-restart resolve); clearAlarm 200 × 3 forms, 404 unknown id, 401 unauthenticated. No real-browser check (functions run in Node on real rows). |
+| W2-4 (`019970d`, merged `5ef6b45`) | R-01: rack view TypeError fixed (`(rack.units \|\| []).forEach` on an integer count). The invented 42U cabinet, faceplate images, and temperature/power/cooling/ASHRAE/PDU telemetry are deleted; the view renders only stored fields (name, unit count, real placements, utilization) with an honest empty state. `GET /api/racks/list` surfaces non-integer `units` as `null` and filters out-of-range placements. | :8184, verify-auth 11/11, verify-empty 16/16; headless-Chromium proof of the populated view ("W2-4 Test Rack, 4U, U2: Network-Core 192.168.30.2 • Switch, 1 of 4 Units Occupied (25.0%)"), zero page exceptions. |
+| W2-5 (`dad2e8c`, merged `cfdf0d3`) | `/inventory/` added to `LEGACY_API_PREFIXES` (bare forms were 302); 3 missing `/api/ncmclient/` registrations (`getClientServiceData`, `getMainMenuTabs`, `getUserPreference`); 6 wrong `/ncmclient/` prefixes in §11 corrected (verified live: old forms 404, real mounts 200). Merge follow-up (`f8504ba`): 4th registration `/api/user/getDeviceGroupViewPreference` (was 404). | :8185, verify-auth 11/11, verify-empty 16/16; all five fixed paths 200 + real JSON with a session, 401 without; genuine page routes still 302 as intended. |
+
+### 26.3 Coordinator verification of the merged tree (throwaway copy :8060)
+
+- `node --check` clean on all changed JS files; `git diff --check` clean
+  (no conflict markers left from the three merge resolutions — all in
+  the wave-2 lists + one `fetchInitialData` hunk keeping BOTH the
+  `normalizeDevice` and `normalizeAlarmRow` mappings).
+- Fresh boot (bootstrap password changed first): `verify-auth.sh`
+  **11/11**, `verify-empty.sh` **16/16**, `verify-p3.sh` **10/10**
+  (the `1-snmpv3` line fails with `send EPERM` — this VM blocks outbound
+  UDP; the endpoint genuinely attempts the v3 query, exactly as in phase 3
+  and wave 1).
+- Wave-2 spot checks live on the merged tree: `/inventory/virtualization`
+  + `/inventory/firewall-rules` → 200 (were 302); all three fixed
+  `/api/ncmclient/` routes + `/api/user/getDeviceGroupViewPreference` →
+  200 (were 404; the old `/ncmclient/getDeviceGroupViewPreference` form
+  correctly 404s); `POST /api/alarm/clearAlarm {}` → 400 "alarmId is
+  required" (route exists), unauthenticated → 401; discovery with a real
+  v2c profile → 202 `snmpVersion: v2c`; `'2c'` device create → 201 with
+  stored `snmp_version: 'v2c'`; DASH-1 widget jsdom render on the merged
+  tree: ALL PASS (Online row 31/55.5/66.6), zero page errors.
+- Grep: 0 fake markers, 0 hardcoded tokens, 0 demo-server refs in shipped
+  code (one added comment says "never faked"; test fixtures + historical
+  audit docs excluded).
+- `server/build-info.json` was regenerated at the wave-1 tip — regenerate
+  again at packaging time (the tip has moved to `f8504ba`).
+
+### 26.4 What remains (wave 3 + decisions, NOT in this merge)
+
+- **Wave 3 (triage by user value):** A2-28 alarm notifications (real SMTP
+  consumer); A3 G-02 compliance engine (17 real policy files); A3 G-05
+  trap parsers/MIB resolution/forwarding/correlation; A2-37+ reports
+  expansion (scheduled/custom, PDF); A4 G-04 TOTP/MFA; A4 G-05 AD/LDAP/
+  RADIUS console login; A6's 28 missing features (app monitors,
+  virtualization guests, integrations, etc.); G-08 backup transports
+  (TELNET/SNMP/TFTP/SCP/SFTP/REST + startup-config fetch + key auth).
+  Remaining audit gaps from wave 2: D-02 (avg latency shows 0), V-07
+  interface rates/graphs/admin-status, S-02/S-04 (performance tab,
+  disk/temp dials), A2-01/02/03 (un-acknowledge, false-alarm, note
+  edit/delete), A2-15 (cleared alarms listed under Active), A2-26/27/28
+  (notification profiles/escalation rules).
+- **Decisions needed:** real Maps → Rack Builder vs blessing the
+  honest-empty/minimal rack view (W2-4 left the nav "3D Datacenter Rack
+  View" label + spotlight entry advertising 42U/thermal/power, and the
+  now-unused `client/images/racks/front/*.png`); credential-library /
+  device-template / DB-backup / notification-clear role gating; staging
+  routes (`POST /api/ccm/push`, `/resolve-drift`) any-authenticated
+  follow-up; G-29 unauthenticated stubs; Windows service-handler proof on
+  DESKTOP-SDN3CJD; macOS agent rebuild on a Mac; DASH-1 visual layout in
+  a real browser; H1 key rotation check on the relay (see §25.4).
+- **Incidental findings (not fixed):** deleting a device does not clear
+  its notification rows (a verify-empty check briefly failed on leftover
+  rows in W2-4); `REALDATA.md` §7.3 still claims `deleteAlarm` returns
+  501 (it is REAL now — doc drift); `POST /api/auth/login` returns no raw
+  token in JSON (cookie only).
+- **Never removed:** NCM config push stays DRY-RUN + HUMAN-REVIEW GATE.
+  JVM heap stays 501 N/A. H1 hardcoded probe key stays unfixed for
+  already-registered agents (fix plan in §25.4).

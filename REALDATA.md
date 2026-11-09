@@ -31,6 +31,9 @@
 > 227 REAL, 4 HONEST-EMPTY, 1 unconditional 501 (JVM heap), 0 FAKE —
 > see §13 below and `API.md` §25.** Branch `p4-exe-audit`, merged tip
 > `a0f2af3`.
+> **Phase-5 wave-2 close-out (2026-11-09, NOT pushed): counts unchanged
+> (232 — 227 REAL, 4 HONEST-EMPTY, 1 501, 0 FAKE) — see §14 below and
+> `API.md` §26.** Branch `p4-exe-audit`, merged tip `f8504ba`.
 
 ---
 
@@ -1330,3 +1333,77 @@ G-29 stubs; Windows service-handler proof on DESKTOP-SDN3CJD; macOS agent
 rebuild on a Mac; DASH-1 visual layout in a real browser; H1 key rotation
 check on the relay. NCM push stays DRY-RUN + HUMAN-REVIEW GATE. JVM heap
 stays 501 N/A.
+
+## 14. Phase-5 wave-2 close-out (2026-11-09) — audit-gap fixes, verification
+
+Branch `p4-exe-audit`, base `46db9cb` (wave-1 close-out), merged tip
+`f8504ba` (NOT pushed). 5 tracks, all completed and merged; coordinator
+verification ran on a throwaway copy of the merged tree (fresh DB, port
+8060, bootstrap password changed first) — evidence below.
+
+### 14.1 Counts
+
+**232 route definitions — 227 REAL, 4 HONEST-EMPTY, 1 unconditional 501
+(JVM heap), 0 FAKE. Unchanged from wave 1.** No new route definitions:
+the `clearAlarm` alias shares its handler and the 4 ncmclient
+registrations are path aliases.
+
+### 14.2 What was built and fixed
+
+- **W2-1:** D-01 field mapping (`normalizeDevice()`) + S-05 interfaces
+  wiring (`loadDeviceInterfaces()` from real `listInterfaces`); fixed the
+  ifOperStatus enum-vs-string mismatch.
+- **W2-2:** X-01 discovery resolves the credential profile server-side;
+  device writes canonicalize versions (`'2c'`→`v2c`, v1 strictly 400);
+  credential ids are resolved before anything is stored.
+- **W2-3:** A2-13 alarm status casing (badge/Ack/Acknowledged tab work);
+  A2-07 durable dedup/escalation (`raiseAlarmOnce()`, unique index on
+  open alarms, migration collapsing legacy duplicates); `POST
+  /api/alarm/clearAlarm` alias added.
+- **W2-4:** R-01 rack TypeError fixed; invented 42U cabinet + faceplate /
+  thermal / power telemetry deleted; view renders only stored rack data
+  with an honest empty state.
+- **W2-5:** `/inventory/` bare forms fixed (were 302); 3 missing
+  `/api/ncmclient/` registrations + 6 §11 prefix corrections; merge
+  follow-up added the 4th registration
+  (`/api/user/getDeviceGroupViewPreference`).
+
+### 14.3 Verification evidence (merged tree, throwaway copy :8060)
+
+- `node --check` clean on all changed JS files; `git diff --check`
+  clean. Three merge conflicts (all in the wave-2 doc lists + one
+  `fetchInitialData` hunk) resolved keeping BOTH sides' changes.
+- Fresh boot: `verify-auth.sh` **11/11**, `verify-empty.sh` **16/16**,
+  `verify-p3.sh` **10/10** (the `1-snmpv3` line fails with `send EPERM` —
+  this VM blocks outbound UDP; the endpoint genuinely attempts the v3
+  query).
+- Wave-2 spot checks live on the merged tree: `/inventory/*` bare forms
+  → 200; all three fixed `/api/ncmclient/` routes +
+  `/api/user/getDeviceGroupViewPreference` → 200 (old `/ncmclient/` form
+  correctly 404s); `POST /api/alarm/clearAlarm {}` → 400 "alarmId is
+  required", unauthenticated → 401; discovery with a real v2c profile →
+  202 `snmpVersion: v2c`; `'2c'` device create → 201, stored
+  `snmp_version: 'v2c'`; DASH-1 widget jsdom render on the merged tree:
+  ALL PASS (Online row 31/55.5/66.6), zero page errors.
+- Grep: 0 fake markers, 0 hardcoded tokens, 0 demo-server refs in shipped
+  code.
+- `server/build-info.json` was regenerated at the wave-1 tip — regenerate
+  again at packaging time.
+
+### 14.4 What remains (wave 3 + decisions)
+
+Wave 3 (triage by value): alarm notifications (real SMTP consumer),
+compliance engine, trap parsers/MIB resolution, reports expansion
+(scheduled/custom, PDF), TOTP/MFA, AD/LDAP/RADIUS console login, A6's 28
+missing features, backup transports. Remaining audit gaps: D-02, V-07,
+S-02/S-04, A2-01/02/03, A2-15, A2-26/27/28. Decisions needed: real Rack
+Builder vs honest-empty rack view (nav label + spotlight entry still
+advertise 42U/thermal/power; `client/images/racks/front/*.png` unused);
+role gating for credential-library / device-template / DB-backup /
+notification-clear; staging-route auth; G-29 stubs; Windows
+service-handler proof on DESKTOP-SDN3CJD; macOS agent rebuild on a Mac;
+DASH-1 visual layout in a real browser; H1 key rotation check on the
+relay. Incidental: deleting a device does not clear its notification
+rows; `REALDATA.md` §7.3 still claims `deleteAlarm` returns 501 (doc
+drift — it is REAL now). NCM push stays DRY-RUN + HUMAN-REVIEW GATE. JVM
+heap stays 501 N/A.
