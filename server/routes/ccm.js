@@ -3,6 +3,14 @@ const router = express.Router();
 const store = require('../services/store');
 const ncm = require('../services/ncm');
 const { fetchDeviceConfig } = require('../services/sshConfigFetch');
+const { requireAuth, requireRole } = require('../services/session');
+
+// Approval decisions are admin-only, matching the canonical NCM approval
+// routes (server/routes/ncm.js): an Operator is read-only everywhere else
+// and must not be able to approve a staged push (audit A3 G-24).
+// requireAuth is already enforced globally by the /api auth guard; it is
+// listed here so this router uses exactly the same ADMIN guard as ncm.js.
+const ADMIN = [requireAuth, requireRole('admin')];
 
 // Canonical NCM service (Phase 4 merge, branch p4m-ncm): the ncm-push
 // track's own ncm.js (stagePush/approveApproval/executeDryRun,
@@ -225,7 +233,13 @@ router.post(['/api/json/enterprise/pushCentralConfig', '/enterprise/pushCentralC
     approvalId: approval.id,
     approval,
     commands: resolved.commands,
-    dryRun: false,
+    // This 202 stages an approval only: it is a dry run in the sense that
+    // nothing has been sent anywhere (audit A3 G-18 — the previous
+    // `dryRun: false` read as if a live push had happened). `sent` states
+    // the same fact explicitly for any future UI/API consumer.
+    dryRun: true,
+    sent: false,
+    sentToDevice: false,
     config: {
       configName: configurationType,
       lastPushed: null,
@@ -251,8 +265,9 @@ router.get('/api/ccm/approvals/:id', (req, res) => {
 });
 
 // POST /api/ccm/approvals/:id/approve — pending -> approved. 404 when the
-// id does not exist, 409 when it is already decided.
-router.post('/api/ccm/approvals/:id/approve', (req, res) => {
+// id does not exist, 409 when it is already decided. Admin-only (G-24),
+// matching the canonical NCM approval routes.
+router.post('/api/ccm/approvals/:id/approve', ADMIN, (req, res) => {
   try {
     const approval = ncmService.approve(req.params.id, currentUser(req) || 'system');
     auditLog(currentUser(req), 'ncm.push.approve', { approvalId: approval.id });
@@ -267,8 +282,8 @@ router.post('/api/ccm/approvals/:id/approve', (req, res) => {
 });
 
 // POST /api/ccm/approvals/:id/reject — pending -> rejected. 404 when the
-// id does not exist, 409 when it is already decided.
-router.post('/api/ccm/approvals/:id/reject', (req, res) => {
+// id does not exist, 409 when it is already decided. Admin-only (G-24).
+router.post('/api/ccm/approvals/:id/reject', ADMIN, (req, res) => {
   try {
     const approval = ncmService.reject(req.params.id, currentUser(req) || 'system');
     auditLog(currentUser(req), 'ncm.push.reject', { approvalId: approval.id });
@@ -290,7 +305,8 @@ router.post('/api/ccm/approvals/:id/reject', (req, res) => {
 // transport exists yet and none is called here. Unapproved execute is
 // refused with 403 (pending or rejected); unknown id answers 404; an
 // explicit {"dryRun": false} is refused 422 (dry_run_only).
-router.post('/api/ccm/approvals/:id/execute', (req, res) => {
+// Admin-only (G-24), matching the canonical NCM approval routes.
+router.post('/api/ccm/approvals/:id/execute', ADMIN, (req, res) => {
   const existing = ncmService.getApproval(req.params.id);
   if (!existing) {
     return res.status(404).json({ status: 'error', message: `Approval ${req.params.id} not found` });

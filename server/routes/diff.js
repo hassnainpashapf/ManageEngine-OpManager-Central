@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const store = require('../services/store');
 const ncm = require('../services/ncm');
+const { requireAuth, requireRole } = require('../services/session');
+
+// Approval decisions are admin-only, matching the canonical NCM approval
+// routes (server/routes/ncm.js): an Operator is read-only everywhere else
+// and must not be able to approve a staged drift remediation (audit A3
+// G-24). requireAuth is already enforced globally by the /api auth guard;
+// it is listed here so this router uses exactly the same ADMIN guard as
+// ncm.js.
+const ADMIN = [requireAuth, requireRole('admin')];
 
 // Bound NCM approval-gate service (server/services/ncm.js, the canonical
 // Phase 4 service — strict state machine, re-runnable dry-run, store key
@@ -417,7 +426,8 @@ router.get('/api/ccm/drift-approvals/:id', (req, res) => {
 
 // POST /api/ccm/drift-approvals/:id/approve — pending -> approved only.
 // Records decidedBy/decidedAt. Approving does NOT execute anything.
-router.post('/api/ccm/drift-approvals/:id/approve', (req, res) => {
+// Admin-only (G-24), matching the canonical NCM approval routes.
+router.post('/api/ccm/drift-approvals/:id/approve', ADMIN, (req, res) => {
   let approval;
   try {
     approval = ncmService.approve(req.params.id, actorName(req));
@@ -433,7 +443,8 @@ router.post('/api/ccm/drift-approvals/:id/approve', (req, res) => {
 });
 
 // POST /api/ccm/drift-approvals/:id/reject — pending -> rejected only.
-router.post('/api/ccm/drift-approvals/:id/reject', (req, res) => {
+// Admin-only (G-24), matching the canonical NCM approval routes.
+router.post('/api/ccm/drift-approvals/:id/reject', ADMIN, (req, res) => {
   let approval;
   try {
     approval = ncmService.reject(req.params.id, actorName(req));
@@ -454,7 +465,8 @@ router.post('/api/ccm/drift-approvals/:id/reject', (req, res) => {
 // On success the service returns the exact staged commands with
 // dryRun: true and sentToDevice: false: no connection is opened and no
 // configuration is written to any device. The approval moves to 'dry-run'.
-router.post('/api/ccm/drift-approvals/:id/execute', (req, res) => {
+// Admin-only (G-24), matching the canonical NCM approval routes.
+router.post('/api/ccm/drift-approvals/:id/execute', ADMIN, (req, res) => {
   const approval = ncmService.getApproval(req.params.id);
   if (!approval) {
     return res.status(404).json({ status: 'error', error: 'not_found', message: `Approval ${req.params.id} not found` });
