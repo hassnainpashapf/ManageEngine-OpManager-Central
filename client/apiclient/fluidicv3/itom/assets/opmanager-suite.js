@@ -13859,6 +13859,21 @@
             </div>
           </div>
         ` : activeSub === 'templates' ? (() => {
+            if (!state._templatesLoading && (!state.templates || state.templates.length <= 14)) {
+              state._templatesLoading = true;
+              fetch('/api/settings/templates')
+                .then(r => r.json())
+                .then(res => {
+                  state._templatesLoading = false;
+                  if (res && Array.isArray(res.templates) && res.templates.length > 0) {
+                    state.templates = res.templates;
+                    if (state.currentTab === 'settings' && state.subTabs.settings === 'templates') {
+                      renderSettingsView();
+                    }
+                  }
+                })
+                .catch(() => { state._templatesLoading = false; });
+            }
             const allTmpls = (state.templates && state.templates.length > 0) ? state.templates : [];
             const activeCat = state.currentTmplCategory || 'all';
             const searchQ = (state.tmplSearchQuery || '').toLowerCase().trim();
@@ -13896,6 +13911,17 @@
                 (t.monitors || '').toLowerCase().includes(searchQ)
               );
             }
+
+            const pageSize = state.tmplPageSize || 25;
+            const totalFiltered = filtered.length;
+            const totalPages = Math.max(1, Math.ceil(totalFiltered / pageSize));
+            let curPage = Math.max(1, state.tmplCurrentPage || 1);
+            if (curPage > totalPages) curPage = totalPages;
+            state.tmplCurrentPage = curPage;
+
+            const startIndex = (curPage - 1) * pageSize;
+            const endIndex = Math.min(startIndex + pageSize, totalFiltered);
+            const paged = filtered.slice(startIndex, endIndex);
 
             return `
               <!-- Device Templates Subtab -->
@@ -13940,13 +13966,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      ${filtered.length === 0 ? `
+                      ${paged.length === 0 ? `
                         <tr>
                           <td colspan="7" style="padding: 36px; text-align: center; color: #94a3b8;">
                             No device templates found matching "<strong>${activeCat !== 'all' ? activeCat : state.tmplSearchQuery}</strong>".
                           </td>
                         </tr>
-                      ` : filtered.map(t => `
+                      ` : paged.map(t => `
                         <tr style="border-bottom: 1px solid #f1f5f9;">
                           <td style="padding: 10px 12px;">
                             <a href="javascript:void(0)" class="opm-tmpl-name-link" data-id="${t.id}" style="font-weight: 700; color: #0070e0; text-decoration: none; cursor: pointer;">
@@ -13968,9 +13994,24 @@
                     </tbody>
                   </table>
                 </div>
-                <div style="margin-top: 10px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-                  <span>Showing <strong>${filtered.length}</strong> of ${allTmpls.length} templates in catalog</span>
-                  <span>AdventNet MIB & OID Architecture Synchronized</span>
+                <div style="margin-top: 14px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                  <span>
+                    Showing <strong>${totalFiltered === 0 ? 0 : startIndex + 1} - ${endIndex}</strong> of <strong>${totalFiltered.toLocaleString()}</strong> templates in catalog
+                    ${searchQ ? `(filtered from ${allTmpls.length.toLocaleString()})` : ''}
+                  </span>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <button id="opm-tmpl-first-btn" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; ${curPage === 1 ? 'opacity: 0.5; pointer-events: none;' : ''}">« First</button>
+                    <button id="opm-tmpl-prev-btn" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; ${curPage === 1 ? 'opacity: 0.5; pointer-events: none;' : ''}">‹ Prev</button>
+                    <span style="font-size: 11px; color: #475569; padding: 0 4px;">Page <strong>${curPage}</strong> of <strong>${totalPages}</strong></span>
+                    <button id="opm-tmpl-next-btn" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; ${curPage >= totalPages ? 'opacity: 0.5; pointer-events: none;' : ''}">Next ›</button>
+                    <button id="opm-tmpl-last-btn" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; ${curPage >= totalPages ? 'opacity: 0.5; pointer-events: none;' : ''}">Last »</button>
+                    <span style="border-left: 1px solid #cbd5e1; height: 16px; margin: 0 4px;"></span>
+                    <select id="opm-tmpl-limit-sel" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 6px; font-size: 11px; color: #334155;">
+                      <option value="25" ${pageSize === 25 ? 'selected' : ''}>25 per page</option>
+                      <option value="50" ${pageSize === 50 ? 'selected' : ''}>50 per page</option>
+                      <option value="100" ${pageSize === 100 ? 'selected' : ''}>100 per page</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             `;
@@ -15372,6 +15413,7 @@
       chip.onclick = () => {
         const cat = chip.getAttribute('data-cat');
         state.currentTmplCategory = cat;
+        state.tmplCurrentPage = 1;
         renderSettingsView();
       };
     });
@@ -15381,12 +15423,51 @@
     if (tmplSearchInput) {
       tmplSearchInput.oninput = (e) => {
         state.tmplSearchQuery = e.target.value;
+        state.tmplCurrentPage = 1;
         renderSettingsView();
         const nextInput = container.querySelector('#opm-tmpl-search-input');
         if (nextInput) {
           nextInput.focus();
           nextInput.selectionStart = nextInput.selectionEnd = nextInput.value.length;
         }
+      };
+    }
+
+    // Template Pagination Controls
+    const tmplFirstBtn = container.querySelector('#opm-tmpl-first-btn');
+    if (tmplFirstBtn) {
+      tmplFirstBtn.onclick = () => {
+        state.tmplCurrentPage = 1;
+        renderSettingsView();
+      };
+    }
+    const tmplPrevBtn = container.querySelector('#opm-tmpl-prev-btn');
+    if (tmplPrevBtn) {
+      tmplPrevBtn.onclick = () => {
+        state.tmplCurrentPage = Math.max(1, (state.tmplCurrentPage || 1) - 1);
+        renderSettingsView();
+      };
+    }
+    const tmplNextBtn = container.querySelector('#opm-tmpl-next-btn');
+    if (tmplNextBtn) {
+      tmplNextBtn.onclick = () => {
+        state.tmplCurrentPage = (state.tmplCurrentPage || 1) + 1;
+        renderSettingsView();
+      };
+    }
+    const tmplLastBtn = container.querySelector('#opm-tmpl-last-btn');
+    if (tmplLastBtn) {
+      tmplLastBtn.onclick = () => {
+        state.tmplCurrentPage = 999999;
+        renderSettingsView();
+      };
+    }
+    const tmplLimitSel = container.querySelector('#opm-tmpl-limit-sel');
+    if (tmplLimitSel) {
+      tmplLimitSel.onchange = (e) => {
+        state.tmplPageSize = parseInt(e.target.value, 10) || 25;
+        state.tmplCurrentPage = 1;
+        renderSettingsView();
       };
     }
 

@@ -360,8 +360,20 @@ class Database {
     return null;
   }
 
-  // Device Templates Catalog (AdventNet Library)
+  // Device Templates Catalog (AdventNet Library - 11,420 Templates)
   getTemplates() {
+    if (this._templatesCache && this._templatesCache.length > 0) {
+      return this._templatesCache;
+    }
+    const tmplFile = path.join(DATA_DIR, 'templates.json');
+    if (fs.existsSync(tmplFile)) {
+      try {
+        this._templatesCache = JSON.parse(fs.readFileSync(tmplFile, 'utf8'));
+        return this._templatesCache;
+      } catch (e) {
+        console.error('[DB] Error loading templates.json:', e.message);
+      }
+    }
     if (!this.data.templates || this.data.templates.length === 0) {
       this.data.templates = [
         { id: 'cisco-cat-9500', name: 'Cisco Catalyst 9500-48Y4C', category: 'Switch', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.2520', monitors: 'CPU 5s, RAM Buffer, Temp, 48x Port Stats', poll: '300s', cliCommands: 'show version\nshow running-config\nshow interfaces status' },
@@ -381,7 +393,8 @@ class Database {
       ];
       this.save();
     }
-    return this.data.templates;
+    this._templatesCache = this.data.templates;
+    return this._templatesCache;
   }
 
   addTemplate(tmplData) {
