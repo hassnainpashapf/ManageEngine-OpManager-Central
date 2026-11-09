@@ -4913,67 +4913,433 @@
       modal = document.createElement('div');
       modal.id = 'opm-new-tmpl-modal';
       modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Roboto, -apple-system, sans-serif;';
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 540px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); overflow: hidden;">
-          <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 15px; font-weight: 700; color: #0f172a;">Add Custom Device Template</span>
-            <button id="close-new-tmpl-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
+      document.body.appendChild(modal);
+    }
+    modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 6px; width: 540px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); overflow: hidden;">
+        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 15px; font-weight: 700; color: #0f172a;">Add Custom Device Template</span>
+          <button id="close-new-tmpl-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
+        </div>
+        <div style="padding: 22px; font-size: 12px; color: #334155;">
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 4px;">Template Name *</label>
+            <input type="text" id="new-tmpl-name" placeholder="e.g. Cisco Nexus 9300-FX3" value="Cisco Nexus 9300-FX3 Series" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
           </div>
-          <div style="padding: 22px; font-size: 12px; color: #334155;">
-            <div style="margin-bottom: 14px;">
-              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Template Name *</label>
-              <input type="text" id="new-tmpl-name" placeholder="e.g. Cisco Nexus 9300-FX3" value="Cisco Nexus 9300-FX3 Series" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Hardware Vendor *</label>
+              <input type="text" id="new-tmpl-vendor" value="Cisco Systems" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
-              <div>
-                <label style="display: block; font-weight: 600; margin-bottom: 4px;">Hardware Vendor *</label>
-                <input type="text" id="new-tmpl-vendor" value="Cisco Systems" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
-              </div>
-              <div>
-                <label style="display: block; font-weight: 600; margin-bottom: 4px;">Device Category *</label>
-                <select id="new-tmpl-cat" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff; box-sizing: border-box;">
-                  <option>Switches</option>
-                  <option>Routers</option>
-                  <option>Firewalls</option>
-                  <option>Servers</option>
-                  <option>Storage</option>
-                  <option>Wireless</option>
-                </select>
-              </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Device Category *</label>
+              <select id="new-tmpl-cat" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff; box-sizing: border-box;">
+                <option value="Switch">Switch</option>
+                <option value="Router">Router</option>
+                <option value="Firewall">Firewall</option>
+                <option value="Server">Server</option>
+                <option value="Storage">Storage</option>
+                <option value="Wireless">Wireless</option>
+              </select>
             </div>
-            <div style="margin-bottom: 14px;">
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">Enterprise SysOID String *</label>
               <input type="text" id="new-tmpl-sysoid" value=".1.3.6.1.4.1.9.1.2840" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; font-family: monospace;">
             </div>
-            <div style="margin-bottom: 14px;">
-              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Performance Monitors Associated</label>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px;">
-                <label><input type="checkbox" checked> CPU Utilization</label>
-                <label><input type="checkbox" checked> Memory Buffer</label>
-                <label><input type="checkbox" checked> Temperature Gauge</label>
-                <label><input type="checkbox" checked> Power Supply Redundancy</label>
-              </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Polling Interval *</label>
+              <select id="new-tmpl-poll" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff; box-sizing: border-box;">
+                <option value="60s">60s</option>
+                <option value="180s">180s</option>
+                <option value="300s" selected>300s</option>
+                <option value="600s">600s</option>
+              </select>
             </div>
           </div>
-          <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end; gap: 8px;">
-            <button id="cancel-new-tmpl-btn" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Cancel</button>
-            <button id="save-new-tmpl-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Save Template</button>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 4px;">Performance Monitors Associated</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px;">
+              <label><input type="checkbox" checked> CPU Utilization</label>
+              <label><input type="checkbox" checked> Memory Buffer</label>
+              <label><input type="checkbox" checked> Temperature Gauge</label>
+              <label><input type="checkbox" checked> Power Supply Redundancy</label>
+            </div>
           </div>
         </div>
-      `;
-      document.body.appendChild(modal);
-    }
+        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end; gap: 8px;">
+          <button id="cancel-new-tmpl-btn" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Cancel</button>
+          <button id="save-new-tmpl-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Save Template</button>
+        </div>
+      </div>
+    `;
     modal.style.display = 'flex';
     document.getElementById('close-new-tmpl-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('cancel-new-tmpl-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('save-new-tmpl-btn').onclick = () => {
       const nm = document.getElementById('new-tmpl-name').value.trim() || 'Custom Device Template';
+      const vendor = document.getElementById('new-tmpl-vendor').value.trim() || 'Generic';
+      const cat = document.getElementById('new-tmpl-cat').value;
+      const sysoid = document.getElementById('new-tmpl-sysoid').value.trim() || '.1.3.6.1.4.1.9.1';
+      const poll = document.getElementById('new-tmpl-poll') ? document.getElementById('new-tmpl-poll').value : '300s';
+      
+      const checkedMonitors = [];
+      modal.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+        const lbl = cb.parentElement ? cb.parentElement.textContent.trim() : '';
+        if (lbl) checkedMonitors.push(lbl);
+      });
+      const monitors = checkedMonitors.length > 0 ? checkedMonitors.join(', ') : 'CPU Utilization, Memory Buffer, Temperature';
+
+      const newTmplObj = {
+        id: 'tmpl-' + Date.now(),
+        name: nm,
+        category: cat,
+        vendor: vendor,
+        oid: sysoid,
+        monitors: monitors,
+        poll: poll,
+        cliCommands: 'show version\nshow running-config'
+      };
+
+      if (!state.templates) state.templates = [];
+      state.templates.unshift(newTmplObj);
+
+      fetch('/api/settings/templates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newTmplObj)
+      }).catch(() => {});
+
       showToast(`Device Template "${nm}" added to AdventNet template repository.`);
       modal.style.display = 'none';
-      if (state.currentTab === 'settings') {
+      if (state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
         renderSettingsView();
       }
     };
+  }
+
+  function showTemplateDetailsModal(tmplId) {
+    let tmpl = (state.templates || []).find(t => t.id === tmplId || t.name === tmplId);
+    if (!tmpl) {
+      showToast('Template not found', 'error');
+      return;
+    }
+
+    let modal = document.getElementById('opm-tmpl-details-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'opm-tmpl-details-modal';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Roboto, -apple-system, sans-serif;';
+      document.body.appendChild(modal);
+    }
+
+    const assignedNodesCount = (state.devices || []).filter(d => (d.template === tmpl.name) || (d.category && d.category.toLowerCase() === (tmpl.category || '').toLowerCase())).length;
+
+    modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); overflow: hidden;">
+        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 15px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+              <span>${tmpl.name}</span>
+              <span style="background: #e0f2fe; color: #0369a1; font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 700;">${tmpl.category}</span>
+            </div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 2px;">AdventNet Device Template Library &bull; Vendor: <strong>${tmpl.vendor}</strong></div>
+          </div>
+          <button id="close-tmpl-details-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
+        </div>
+        <div style="padding: 20px; font-size: 12px; color: #334155; overflow-y: auto;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Template / Model Name *</label>
+              <input type="text" id="edit-tmpl-name" value="${tmpl.name}" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Hardware Vendor *</label>
+              <input type="text" id="edit-tmpl-vendor" value="${tmpl.vendor}" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box;">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Device Category *</label>
+              <select id="edit-tmpl-cat" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff; box-sizing: border-box;">
+                <option value="Switch" ${tmpl.category === 'Switch' ? 'selected' : ''}>Switch</option>
+                <option value="Router" ${tmpl.category === 'Router' ? 'selected' : ''}>Router</option>
+                <option value="Firewall" ${tmpl.category === 'Firewall' ? 'selected' : ''}>Firewall</option>
+                <option value="Server" ${tmpl.category === 'Server' ? 'selected' : ''}>Server</option>
+                <option value="Storage" ${tmpl.category === 'Storage' ? 'selected' : ''}>Storage</option>
+                <option value="Wireless" ${tmpl.category === 'Wireless' ? 'selected' : ''}>Wireless</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Polling Interval *</label>
+              <select id="edit-tmpl-poll" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; background: #fff; box-sizing: border-box;">
+                <option value="60s" ${tmpl.poll === '60s' ? 'selected' : ''}>60s (Critical Nodes)</option>
+                <option value="120s" ${tmpl.poll === '120s' ? 'selected' : ''}>120s</option>
+                <option value="180s" ${tmpl.poll === '180s' ? 'selected' : ''}>180s</option>
+                <option value="300s" ${tmpl.poll === '300s' || !tmpl.poll ? 'selected' : ''}>300s (Standard Default)</option>
+                <option value="600s" ${tmpl.poll === '600s' ? 'selected' : ''}>600s</option>
+                <option value="900s" ${tmpl.poll === '900s' ? 'selected' : ''}>900s (Telemetry Aggregator)</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 4px;">System Object Identifier (sysObjectID) *</label>
+            <input type="text" id="edit-tmpl-oid" value="${tmpl.oid}" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; box-sizing: border-box; font-family: monospace;">
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 4px;">Associated Performance Monitors</label>
+            <div id="tmpl-monitors-list" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 4px; background: #f8fafc; margin-bottom: 8px;">
+              ${(tmpl.monitors || '').split(',').map(m => m.trim()).filter(Boolean).map(m => `
+                <span class="tmpl-mon-pill" style="display: inline-flex; align-items: center; gap: 4px; background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600;">
+                  <span>${m}</span>
+                  <span class="remove-mon-btn" style="cursor: pointer; color: #94a3b8; font-weight: bold; margin-left: 2px;" title="Remove monitor">&times;</span>
+                </span>
+              `).join('')}
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="add-mon-input" placeholder="e.g. Optical Transceiver Power, Interface Error Rate" style="flex: 1; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px; font-size: 12px;">
+              <button id="add-mon-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">+ Add Monitor</button>
+            </div>
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 4px;">CLI Discovery & Backup Command Sets</label>
+            <textarea id="edit-tmpl-cli" rows="3" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px; font-size: 11px; font-family: monospace; box-sizing: border-box;">${tmpl.cliCommands || 'show version\nshow running-config'}</textarea>
+          </div>
+          <div style="background: #f1f5f9; border-radius: 4px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 12px; color: #475569;">Currently Associated Nodes: <strong>${assignedNodesCount} device(s)</strong></span>
+            <button id="modal-apply-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">⚡ Apply to Nodes</button>
+          </div>
+        </div>
+        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 20px; display: flex; justify-content: flex-end; gap: 8px;">
+          <button id="close-tmpl-details-btn2" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Close</button>
+          <button id="save-tmpl-details-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Save Changes</button>
+        </div>
+      </div>
+    `;
+
+    modal.style.display = 'flex';
+
+    const closeHandler = () => { modal.style.display = 'none'; };
+    modal.querySelector('#close-tmpl-details-btn').onclick = closeHandler;
+    modal.querySelector('#close-tmpl-details-btn2').onclick = closeHandler;
+
+    // Monitor removal
+    modal.querySelectorAll('.remove-mon-btn').forEach(btn => {
+      btn.onclick = () => {
+        btn.parentElement.remove();
+      };
+    });
+
+    // Monitor addition
+    const addMonInput = modal.querySelector('#add-mon-input');
+    const addMonBtn = modal.querySelector('#add-mon-btn');
+    const monList = modal.querySelector('#tmpl-monitors-list');
+    addMonBtn.onclick = () => {
+      const val = addMonInput.value.trim();
+      if (!val) return;
+      const span = document.createElement('span');
+      span.className = 'tmpl-mon-pill';
+      span.style.cssText = 'display: inline-flex; align-items: center; gap: 4px; background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600;';
+      span.innerHTML = `<span>${val}</span><span class="remove-mon-btn" style="cursor: pointer; color: #94a3b8; font-weight: bold; margin-left: 2px;" title="Remove monitor">&times;</span>`;
+      span.querySelector('.remove-mon-btn').onclick = () => span.remove();
+      monList.appendChild(span);
+      addMonInput.value = '';
+    };
+
+    // Save changes
+    modal.querySelector('#save-tmpl-details-btn').onclick = () => {
+      const nm = modal.querySelector('#edit-tmpl-name').value.trim() || tmpl.name;
+      const vendor = modal.querySelector('#edit-tmpl-vendor').value.trim() || tmpl.vendor;
+      const cat = modal.querySelector('#edit-tmpl-cat').value;
+      const poll = modal.querySelector('#edit-tmpl-poll').value;
+      const oid = modal.querySelector('#edit-tmpl-oid').value.trim() || tmpl.oid;
+      const cli = modal.querySelector('#edit-tmpl-cli').value;
+
+      const monitorsArr = [];
+      monList.querySelectorAll('.tmpl-mon-pill span:first-child').forEach(s => {
+        monitorsArr.push(s.textContent.trim());
+      });
+      const monitors = monitorsArr.join(', ');
+
+      tmpl.name = nm;
+      tmpl.vendor = vendor;
+      tmpl.category = cat;
+      tmpl.poll = poll;
+      tmpl.oid = oid;
+      tmpl.cliCommands = cli;
+      tmpl.monitors = monitors;
+
+      fetch(`/api/settings/templates/${tmpl.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(tmpl)
+      }).catch(() => {});
+
+      showToast(`Device Template "${nm}" updated successfully.`);
+      modal.style.display = 'none';
+      if (state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
+        renderSettingsView();
+      }
+    };
+
+    // Apply to Nodes button
+    modal.querySelector('#modal-apply-btn').onclick = () => {
+      modal.style.display = 'none';
+      showApplyTemplateModal(tmpl.id);
+    };
+  }
+
+  function showApplyTemplateModal(tmplId) {
+    let tmpl = (state.templates || []).find(t => t.id === tmplId || t.name === tmplId);
+    if (!tmpl) {
+      showToast('Template not found', 'error');
+      return;
+    }
+
+    let modal = document.getElementById('opm-apply-tmpl-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'opm-apply-tmpl-modal';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: Roboto, -apple-system, sans-serif;';
+      document.body.appendChild(modal);
+    }
+
+    const devices = state.devices || [];
+
+    modal.innerHTML = `
+      <div style="background: #ffffff; border-radius: 6px; width: 660px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); overflow: hidden;">
+        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 15px; font-weight: 700; color: #0f172a;">Apply Device Template to Nodes</div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Template: <strong style="color: #0070e0;">${tmpl.name}</strong> (${tmpl.category} &bull; ${tmpl.vendor})</div>
+          </div>
+          <button id="close-apply-tmpl-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
+        </div>
+        <div style="padding: 20px; font-size: 12px; color: #334155; overflow-y: auto;">
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; padding: 10px 14px; margin-bottom: 16px; font-size: 11px; color: #166534;">
+            <strong>Template Monitors to Associate:</strong> ${tmpl.monitors || 'Standard Performance Monitors'} &bull; Polling: <strong>${tmpl.poll || '300s'}</strong>
+          </div>
+
+          ${devices.length === 0 ? `
+            <div style="border: 1px dashed #cbd5e1; border-radius: 6px; padding: 36px 20px; text-align: center; color: #64748b; background: #fafbfc;">
+              <div style="font-size: 32px; margin-bottom: 10px;">🔌</div>
+              <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">No Monitored Nodes in Central Architecture</div>
+              <div style="font-size: 12px; margin-bottom: 18px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+                There are currently 0 active network devices or servers enrolled in your inventory. Add real devices via SNMP/WMI credentials or run a CIDR network sweep to associate this template.
+              </div>
+              <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="apply-modal-add-dev-btn" style="background: #0070e0; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">+ Add Real Device</button>
+                <button id="apply-modal-sweep-btn" style="background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">🔍 Discover CIDR Subnet</button>
+              </div>
+            </div>
+          ` : `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-size: 12px; font-weight: 600; color: #475569;">Select devices to apply template:</span>
+              <button id="apply-select-all-btn" style="background: none; border: none; color: #0070e0; font-size: 11px; font-weight: 700; cursor: pointer;">Select All Nodes</button>
+            </div>
+            <div style="border: 1px solid #e2e8f0; border-radius: 4px; max-height: 260px; overflow-y: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-size: 11px;">
+                    <th style="padding: 8px 10px; width: 30px;"><input type="checkbox" id="apply-check-master"></th>
+                    <th style="padding: 8px 10px;">Device Name</th>
+                    <th style="padding: 8px 10px;">IP Address</th>
+                    <th style="padding: 8px 10px;">Category</th>
+                    <th style="padding: 8px 10px;">Current Template</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${devices.map(d => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 8px 10px;"><input type="checkbox" class="apply-dev-check" value="${d.id}"></td>
+                      <td style="padding: 8px 10px; font-weight: 600; color: #0f172a;">${d.name}</td>
+                      <td style="padding: 8px 10px; font-family: monospace; font-size: 11px; color: #64748b;">${d.ip}</td>
+                      <td style="padding: 8px 10px;"><span style="background: #f1f5f9; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 600;">${d.category || 'Unknown'}</span></td>
+                      <td style="padding: 8px 10px; color: #64748b; font-size: 11px;">${d.template || 'Default Template'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          `}
+        </div>
+        <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 20px; display: flex; justify-content: flex-end; gap: 8px;">
+          <button id="close-apply-tmpl-btn2" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Cancel</button>
+          ${devices.length > 0 ? `
+            <button id="confirm-apply-tmpl-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Apply Template to Selected</button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+
+    modal.style.display = 'flex';
+
+    const closeHandler = () => { modal.style.display = 'none'; };
+    modal.querySelector('#close-apply-tmpl-btn').onclick = closeHandler;
+    modal.querySelector('#close-apply-tmpl-btn2').onclick = closeHandler;
+
+    const addDevBtn = modal.querySelector('#apply-modal-add-dev-btn');
+    if (addDevBtn) {
+      addDevBtn.onclick = () => {
+        modal.style.display = 'none';
+        showAddDeviceModal();
+      };
+    }
+
+    const sweepBtn = modal.querySelector('#apply-modal-sweep-btn');
+    if (sweepBtn) {
+      sweepBtn.onclick = () => {
+        modal.style.display = 'none';
+        showSubnetDiscoveryModal();
+      };
+    }
+
+    const masterCheck = modal.querySelector('#apply-check-master');
+    const devChecks = modal.querySelectorAll('.apply-dev-check');
+    if (masterCheck) {
+      masterCheck.onchange = () => {
+        devChecks.forEach(cb => cb.checked = masterCheck.checked);
+      };
+    }
+
+    const selectAllBtn = modal.querySelector('#apply-select-all-btn');
+    if (selectAllBtn) {
+      selectAllBtn.onclick = () => {
+        const anyUnchecked = Array.from(devChecks).some(cb => !cb.checked);
+        devChecks.forEach(cb => cb.checked = anyUnchecked);
+        if (masterCheck) masterCheck.checked = anyUnchecked;
+      };
+    }
+
+    const confirmBtn = modal.querySelector('#confirm-apply-tmpl-btn');
+    if (confirmBtn) {
+      confirmBtn.onclick = () => {
+        const selectedIds = Array.from(devChecks).filter(cb => cb.checked).map(cb => cb.value);
+        if (selectedIds.length === 0) {
+          showToast('Please select at least one device to apply template', 'error');
+          return;
+        }
+
+        fetch('/api/settings/templates/apply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ templateId: tmpl.id, deviceIds: selectedIds })
+        }).catch(() => {});
+
+        selectedIds.forEach(id => {
+          const dev = (state.devices || []).find(d => String(d.id) === String(id));
+          if (dev) {
+            dev.template = tmpl.name;
+            dev.monitors = tmpl.monitors;
+            dev.pollInterval = tmpl.poll;
+          }
+        });
+
+        showToast(`Template "${tmpl.name}" successfully applied to ${selectedIds.length} monitored node(s).`);
+        modal.style.display = 'none';
+      };
+    }
   }
 
   function showApplyLicenseModal() {

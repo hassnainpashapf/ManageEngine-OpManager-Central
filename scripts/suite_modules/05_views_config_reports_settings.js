@@ -1718,68 +1718,123 @@
               `}
             </div>
           </div>
-        ` : activeSub === 'templates' ? `
-          <!-- Device Templates Subtab -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-              <div>
-                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Enterprise Device Templates Catalog (AdventNet Library)</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Over 11,000 pre-configured vendor templates with predefined SNMP SysOIDs, CLI commands, and monitor associations.</div>
-              </div>
-              <button id="opm-new-template-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
-                + Add Custom Template
-              </button>
-            </div>
+        ` : activeSub === 'templates' ? (() => {
+            const allTmpls = (state.templates && state.templates.length > 0) ? state.templates : [];
+            const activeCat = state.currentTmplCategory || 'all';
+            const searchQ = (state.tmplSearchQuery || '').toLowerCase().trim();
 
-            <!-- Category Filter Chips -->
-            <div style="display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px;">
-              ${['ALL (11,420)', 'SWITCHES (3,140)', 'ROUTERS (2,850)', 'FIREWALLS (1,240)', 'SERVERS (2,910)', 'STORAGE (680)', 'WIRELESS (600)'].map((c, i) => `
-                <button class="opm-tmpl-chip" style="padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1px solid ${i===0 ? '#0070e0' : '#cbd5e1'}; background: ${i===0 ? '#0070e0' : '#fff'}; color: ${i===0 ? '#fff' : '#475569'};">
-                  ${c}
-                </button>
-              `).join('')}
-            </div>
+            const chips = [
+              { id: 'all', label: 'ALL (11,420)' },
+              { id: 'switches', label: 'SWITCHES (3,140)' },
+              { id: 'routers', label: 'ROUTERS (2,850)' },
+              { id: 'firewalls', label: 'FIREWALLS (1,240)' },
+              { id: 'servers', label: 'SERVERS (2,910)' },
+              { id: 'storage', label: 'STORAGE (680)' },
+              { id: 'wireless', label: 'WIRELESS (600)' }
+            ];
 
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                  <th style="padding: 10px 12px;">Template / Model Name</th>
-                  <th style="padding: 10px 12px;">Category</th>
-                  <th style="padding: 10px 12px;">Vendor</th>
-                  <th style="padding: 10px 12px;">System OID (sysObjectID)</th>
-                  <th style="padding: 10px 12px;">Associated Performance Monitors</th>
-                  <th style="padding: 10px 12px;">Poll Interval</th>
-                  <th style="padding: 10px 12px; text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${[
-                  { name: 'Cisco Catalyst 9500-48Y4C', cat: 'Switch', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.2520', monitors: 'CPU 5s, RAM Buffer, Temp, 48x Port Stats', poll: '300s' },
-                  { name: 'Cisco ASR 9006 Core Aggregator', cat: 'Router', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.1890', monitors: 'Route Processor CPU, Dual PSUs, BGP Peers', poll: '300s' },
-                  { name: 'Palo Alto PA-5250 Next-Gen FW', cat: 'Firewall', vendor: 'Palo Alto', oid: '.1.3.6.1.4.1.25461.2.3.43', monitors: 'Active Sessions, Threat Drops, Data Plane CPU', poll: '180s' },
-                  { name: 'Dell PowerEdge R750 Rack Server', cat: 'Server', vendor: 'Dell EMC', oid: '.1.3.6.1.4.1.674.10892.5', monitors: 'iDRAC Health, CPU Load, Physical Disk Arrays', poll: '300s' },
-                  { name: 'Fortinet FortiGate 600E Enterprise', cat: 'Firewall', vendor: 'Fortinet', oid: '.1.3.6.1.4.1.12356.101.1', monitors: 'FortiOS Memory, IPS Drop Rate, VPN Tunnels', poll: '180s' },
-                  { name: 'NetApp AFF A400 NVMe Storage', cat: 'Storage', vendor: 'NetApp', oid: '.1.3.6.1.4.1.789.2.1', monitors: 'Volume IOPS, Read/Write Latency, NVRAM Battery', poll: '300s' },
-                  { name: 'Juniper MX960 3D Universal Edge', cat: 'Router', vendor: 'Juniper', oid: '.1.3.6.1.4.1.2636.1.1.1.2.1', monitors: 'Routing Engine CPU, Ambient Temp, FPC Linecards', poll: '300s' }
-                ].map(t => `
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 10px 12px; font-weight: 700; color: #0070e0;">${t.name}</td>
-                    <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #334155; padding: 2px 6px; border-radius: 3px; font-weight: 600; font-size: 11px;">${t.cat}</span></td>
-                    <td style="padding: 10px 12px; font-weight: 600; color: #475569;">${t.vendor}</td>
-                    <td style="padding: 10px 12px; font-family: monospace; font-size: 11px; color: #64748b;">${t.oid}</td>
-                    <td style="padding: 10px 12px; color: #334155;">${t.monitors}</td>
-                    <td style="padding: 10px 12px; font-family: monospace;">${t.poll}</td>
-                    <td style="padding: 10px 12px; text-align: right;">
-                      <button class="opm-tmpl-apply-btn" data-name="${t.name}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #0070e0; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                        Apply to Nodes
+            let filtered = allTmpls;
+            if (activeCat !== 'all') {
+              filtered = filtered.filter(t => {
+                const cat = (t.category || '').toLowerCase();
+                if (activeCat === 'switches') return cat.includes('switch');
+                if (activeCat === 'routers') return cat.includes('router');
+                if (activeCat === 'firewalls') return cat.includes('firewall');
+                if (activeCat === 'servers') return cat.includes('server');
+                if (activeCat === 'storage') return cat.includes('storage');
+                if (activeCat === 'wireless') return cat.includes('wireless') || cat.includes('ap') || cat.includes('wlc');
+                return cat === activeCat;
+              });
+            }
+
+            if (searchQ) {
+              filtered = filtered.filter(t => 
+                (t.name || '').toLowerCase().includes(searchQ) ||
+                (t.vendor || '').toLowerCase().includes(searchQ) ||
+                (t.oid || '').toLowerCase().includes(searchQ) ||
+                (t.category || '').toLowerCase().includes(searchQ) ||
+                (t.monitors || '').toLowerCase().includes(searchQ)
+              );
+            }
+
+            return `
+              <!-- Device Templates Subtab -->
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                  <div>
+                    <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Enterprise Device Templates Catalog (AdventNet Library)</div>
+                    <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Over 11,000 pre-configured vendor templates with predefined SNMP SysOIDs, CLI commands, and monitor associations.</div>
+                  </div>
+                  <button id="opm-new-template-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+                    + Add Custom Template
+                  </button>
+                </div>
+
+                <!-- Category Filter Chips & Real-Time Search Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+                  <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px;">
+                    ${chips.map(c => `
+                      <button class="opm-tmpl-chip" data-cat="${c.id}" style="padding: 5px 12px; border-radius: 12px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1px solid ${activeCat === c.id ? '#0070e0' : '#cbd5e1'}; background: ${activeCat === c.id ? '#0070e0' : '#fff'}; color: ${activeCat === c.id ? '#fff' : '#475569'}; transition: all 0.15s ease;">
+                        ${c.label}
                       </button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        ` : activeSub === 'notifications' ? `
+                    `).join('')}
+                  </div>
+
+                  <div style="position: relative; width: 280px;">
+                    <span style="position: absolute; left: 10px; top: 6px; color: #94a3b8; font-size: 12px;">🔍</span>
+                    <input type="text" id="opm-tmpl-search-input" value="${state.tmplSearchQuery || ''}" placeholder="Filter templates or SysOID..." style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px 6px 30px; font-size: 12px; outline: none; box-sizing: border-box;">
+                  </div>
+                </div>
+
+                <div style="border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden;">
+                  <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                    <thead>
+                      <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                        <th style="padding: 10px 12px;">Template / Model Name</th>
+                        <th style="padding: 10px 12px;">Category</th>
+                        <th style="padding: 10px 12px;">Vendor</th>
+                        <th style="padding: 10px 12px;">System OID (sysObjectID)</th>
+                        <th style="padding: 10px 12px;">Associated Performance Monitors</th>
+                        <th style="padding: 10px 12px;">Poll Interval</th>
+                        <th style="padding: 10px 12px; text-align: right;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${filtered.length === 0 ? `
+                        <tr>
+                          <td colspan="7" style="padding: 36px; text-align: center; color: #94a3b8;">
+                            No device templates found matching "<strong>${activeCat !== 'all' ? activeCat : state.tmplSearchQuery}</strong>".
+                          </td>
+                        </tr>
+                      ` : filtered.map(t => `
+                        <tr style="border-bottom: 1px solid #f1f5f9;">
+                          <td style="padding: 10px 12px;">
+                            <a href="javascript:void(0)" class="opm-tmpl-name-link" data-id="${t.id}" style="font-weight: 700; color: #0070e0; text-decoration: none; cursor: pointer;">
+                              ${t.name}
+                            </a>
+                          </td>
+                          <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #334155; padding: 2px 6px; border-radius: 3px; font-weight: 600; font-size: 11px;">${t.category}</span></td>
+                          <td style="padding: 10px 12px; font-weight: 600; color: #475569;">${t.vendor}</td>
+                          <td style="padding: 10px 12px; font-family: monospace; font-size: 11px; color: #64748b;">${t.oid}</td>
+                          <td style="padding: 10px 12px; color: #334155;">${t.monitors}</td>
+                          <td style="padding: 10px 12px; font-family: monospace;">${t.poll || '300s'}</td>
+                          <td style="padding: 10px 12px; text-align: right;">
+                            <button class="opm-tmpl-apply-btn" data-id="${t.id}" data-name="${t.name}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #0070e0; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                              Apply to Nodes
+                            </button>
+                          </td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+                <div style="margin-top: 10px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
+                  <span>Showing <strong>${filtered.length}</strong> of ${allTmpls.length} templates in catalog</span>
+                  <span>AdventNet MIB & OID Architecture Synchronized</span>
+                </div>
+              </div>
+            `;
+          })() : activeSub === 'notifications' ? `
           <!-- Notification Profiles & Threshold Rules Subtab -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
             
@@ -3145,11 +3200,50 @@
       };
     }
 
-    // Template Apply button
+    // Template Category Chips
+    container.querySelectorAll('.opm-tmpl-chip').forEach(chip => {
+      chip.onclick = () => {
+        const cat = chip.getAttribute('data-cat');
+        state.currentTmplCategory = cat;
+        renderSettingsView();
+      };
+    });
+
+    // Template Real-Time Search Input
+    const tmplSearchInput = container.querySelector('#opm-tmpl-search-input');
+    if (tmplSearchInput) {
+      tmplSearchInput.oninput = (e) => {
+        state.tmplSearchQuery = e.target.value;
+        renderSettingsView();
+        const nextInput = container.querySelector('#opm-tmpl-search-input');
+        if (nextInput) {
+          nextInput.focus();
+          nextInput.selectionStart = nextInput.selectionEnd = nextInput.value.length;
+        }
+      };
+    }
+
+    // Template Name Click -> Template Details Modal
+    container.querySelectorAll('.opm-tmpl-name-link').forEach(link => {
+      link.onclick = (e) => {
+        e.preventDefault();
+        const id = link.getAttribute('data-id');
+        if (typeof showTemplateDetailsModal === 'function') {
+          showTemplateDetailsModal(id);
+        }
+      };
+    });
+
+    // Template Apply button -> Apply Template Modal
     container.querySelectorAll('.opm-tmpl-apply-btn').forEach(btn => {
       btn.onclick = () => {
-        const name = btn.getAttribute('data-name');
-        showToast(`Template "${name}" applied across matching monitored nodes.`);
+        const id = btn.getAttribute('data-id');
+        if (typeof showApplyTemplateModal === 'function') {
+          showApplyTemplateModal(id);
+        } else {
+          const name = btn.getAttribute('data-name');
+          showToast(`Template "${name}" applied across matching monitored nodes.`);
+        }
       };
     });
 

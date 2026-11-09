@@ -29,6 +29,38 @@ router.post('/api/settings/credentials', (req, res) => {
   });
 });
 
+// Device Templates Catalog (AdventNet Library) Endpoints
+router.get('/api/settings/templates', (req, res) => {
+  res.json({
+    status: 'success',
+    templates: db.getTemplates()
+  });
+});
+
+router.post('/api/settings/templates', (req, res) => {
+  const tmpl = db.addTemplate(req.body);
+  res.status(201).json({
+    status: 'success',
+    message: `Template "${tmpl.name}" added successfully.`,
+    template: tmpl
+  });
+});
+
+router.put('/api/settings/templates/:id', (req, res) => {
+  const updated = db.updateTemplate(req.params.id, req.body);
+  if (updated) {
+    res.json({ status: 'success', template: updated });
+  } else {
+    res.status(404).json({ status: 'error', message: 'Template not found' });
+  }
+});
+
+router.post('/api/settings/templates/apply', (req, res) => {
+  const { templateId, deviceIds } = req.body;
+  const result = db.applyTemplate(templateId, deviceIds || []);
+  res.json({ status: 'success', ...result });
+});
+
 // Authentic ManageEngine Admin endpoints
 router.get(['/admin/isMailServerConfigured', '/api/admin/isMailServerConfigured'], (req, res) => {
   res.json({ isConfigured: true, server: 'smtp.enterprise.corp', port: 587 });

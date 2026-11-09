@@ -41,7 +41,25 @@
     alarms: [],
     topInterfaces: [],
     diskVolumes: [],
-    agents: []
+    agents: [],
+    currentTmplCategory: 'all',
+    tmplSearchQuery: '',
+    templates: [
+      { id: 'cisco-cat-9500', name: 'Cisco Catalyst 9500-48Y4C', category: 'Switch', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.2520', monitors: 'CPU 5s, RAM Buffer, Temp, 48x Port Stats', poll: '300s', cliCommands: 'show version\nshow running-config\nshow interfaces status' },
+      { id: 'cisco-asr-9006', name: 'Cisco ASR 9006 Core Aggregator', category: 'Router', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.1890', monitors: 'Route Processor CPU, Dual PSUs, BGP Peers', poll: '300s', cliCommands: 'show version\nshow platform\nshow bgp summary' },
+      { id: 'paloalto-pa-5250', name: 'Palo Alto PA-5250 Next-Gen FW', category: 'Firewall', vendor: 'Palo Alto', oid: '.1.3.6.1.4.1.25461.2.3.43', monitors: 'Active Sessions, Threat Drops, Data Plane CPU', poll: '180s', cliCommands: 'show system info\nshow running resource-monitor' },
+      { id: 'dell-pe-r750', name: 'Dell PowerEdge R750 Rack Server', category: 'Server', vendor: 'Dell EMC', oid: '.1.3.6.1.4.1.674.10892.5', monitors: 'iDRAC Health, CPU Load, Physical Disk Arrays', poll: '300s', cliCommands: 'racadm getsysinfo\nracadm storage get pdisks' },
+      { id: 'fortinet-fg-600e', name: 'Fortinet FortiGate 600E Enterprise', category: 'Firewall', vendor: 'Fortinet', oid: '.1.3.6.1.4.1.12356.101.1', monitors: 'FortiOS Memory, IPS Drop Rate, VPN Tunnels', poll: '180s', cliCommands: 'get system status\nget system performance status' },
+      { id: 'netapp-aff-a400', name: 'NetApp AFF A400 NVMe Storage', category: 'Storage', vendor: 'NetApp', oid: '.1.3.6.1.4.1.789.2.1', monitors: 'Volume IOPS, Read/Write Latency, NVRAM Battery', poll: '300s', cliCommands: 'system node show\nstorage aggregate show' },
+      { id: 'juniper-mx960', name: 'Juniper MX960 3D Universal Edge', category: 'Router', vendor: 'Juniper', oid: '.1.3.6.1.4.1.2636.1.1.1.2.1', monitors: 'Routing Engine CPU, Ambient Temp, FPC Linecards', poll: '300s', cliCommands: 'show version\nshow chassis hardware' },
+      { id: 'arista-7150', name: 'Arista 7150 Network Switch', category: 'Switch', vendor: 'Arista', oid: '.1.3.6.1.4.1.30065.1.3011', monitors: 'Switch Fabric CPU, Fan Trays, 10G/40G SFP Stats', poll: '300s', cliCommands: 'show version\nshow inventory' },
+      { id: 'cisco-isr-4451', name: 'Cisco ISR 4451-X Gateway', category: 'Router', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.1861', monitors: 'DSP Health, WAN Throughput, NAT Sessions', poll: '300s', cliCommands: 'show version\nshow ip interface brief' },
+      { id: 'hpe-dl380-g10', name: 'HPE ProLiant DL380 Gen10', category: 'Server', vendor: 'HPE', oid: '.1.3.6.1.4.1.232.9.4.10', monitors: 'iLO 5 Health, Smart Array RAID, Thermal Zones', poll: '300s', cliCommands: 'show system\nshow server status' },
+      { id: 'pure-flasharray-x70', name: 'Pure Storage FlashArray//X70', category: 'Storage', vendor: 'Pure Storage', oid: '.1.3.6.1.4.1.40482', monitors: 'Array Latency, Compression Ratio, Flash Module Health', poll: '300s', cliCommands: 'purearray list' },
+      { id: 'cisco-cat-9800', name: 'Cisco Catalyst 9800-CL Wireless Controller', category: 'Wireless', vendor: 'Cisco', oid: '.1.3.6.1.4.1.9.1.2721', monitors: 'Associated APs, Client Density, RF Interference, Rogue SSIDs', poll: '180s', cliCommands: 'show ap summary\nshow wireless client summary' },
+      { id: 'aruba-ap-555', name: 'Aruba AP-555 Wi-Fi 6 Access Point', category: 'Wireless', vendor: 'Aruba', oid: '.1.3.6.1.4.1.14823.1.2.89', monitors: 'Radio 2.4/5GHz Load, Channel Busy%, AirWave Metrics', poll: '180s', cliCommands: 'show ap active' },
+      { id: 'checkpoint-quantum-6600', name: 'Check Point Quantum 6600', category: 'Firewall', vendor: 'Check Point', oid: '.1.3.6.1.4.1.2620.1.1', monitors: 'SecureXL State, CoreXL Dispatch, Threat Emulation Rate', poll: '180s', cliCommands: 'cpstat os\ncpstat fw' }
+    ]
   };
   state.interfaces = [];
 

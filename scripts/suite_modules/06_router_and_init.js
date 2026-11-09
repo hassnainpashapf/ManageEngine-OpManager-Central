@@ -519,6 +519,18 @@
         }
       }).catch(() => {});
 
+    fetch('/api/settings/templates')
+      .then(r => r.json())
+      .then(res => {
+        if (res && Array.isArray(res.templates)) {
+          const changed = !state.templates || state.templates.length !== res.templates.length;
+          state.templates = res.templates;
+          if (changed && state.currentTab === 'settings' && state.subTabs.settings === 'templates' && typeof renderSettingsView === 'function') {
+            renderSettingsView();
+          }
+        }
+      }).catch(() => {});
+
     fetch('/api/probes')
       .then(r => r.json())
       .then(res => {
