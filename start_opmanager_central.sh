@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-# ManageEngine OpManager Central (Version 12.9.203 GA Build 129203)
+# ManageEngine OpManager Central (Version 12.9.204-GA)
 # One-Click Unified Launcher (Server + Live Monitoring Agent + Desktop GUI Window)
 # ==============================================================================
 
@@ -9,7 +9,7 @@ cd "$DIR"
 
 echo "=========================================================="
 echo " Starting ManageEngine OpManager Central Enterprise Suite "
-echo " Version 12.9.203 GA (Build 129203)                      "
+echo " Version 12.9.204-GA                      "
 echo "=========================================================="
 
 # 1. Kill any existing instances on port 8060 or agent
@@ -33,8 +33,14 @@ done
 
 # 3. Start Native Host Monitoring Agent
 echo "-> Starting OpManager Host Monitoring Agent (AGT-DARWIN-1-D52F)..."
-if [ -f "./agent_src/OpManagerAgent" ]; then
-  nohup ./agent_src/OpManagerAgent -server http://localhost:8060 -probe 1 -interval 5 > agent.log 2>&1 &
+# Agent binary: Linux build on Linux, macOS build on Darwin.
+case "$(uname -s)" in
+  Linux)  AGENT_BIN="./agent_src/OpManagerAgent-linux-amd64" ;;
+  Darwin) AGENT_BIN="./agent_src/OpManagerAgent" ;;
+  *)      AGENT_BIN="./agent_src/OpManagerAgent-linux-amd64" ;;
+esac
+if [ -f "$AGENT_BIN" ]; then
+  nohup "$AGENT_BIN" -server http://localhost:8060 -probe 1 -interval 5 > agent.log 2>&1 &
   AGENT_PID=$!
   echo "   Agent started (PID: $AGENT_PID) streaming live telemetry every 5s"
 fi
@@ -43,14 +49,24 @@ fi
 echo "-> Launching OpManager Central GUI in Desktop App Window..."
 APP_URL="http://localhost:8060/apiclient/fluidicv3/itom/index.html#/dashboard"
 
-if [ -d "/Applications/Google Chrome.app" ]; then
-  open -n -a "/Applications/Google Chrome.app" --args --app="$APP_URL" --window-size=1920,1080
-elif [ -d "/Applications/Brave Browser.app" ]; then
-  open -n -a "/Applications/Brave Browser.app" --args --app="$APP_URL" --window-size=1920,1080
-elif [ -d "/Applications/Microsoft Edge.app" ]; then
-  open -n -a "/Applications/Microsoft Edge.app" --args --app="$APP_URL" --window-size=1920,1080
+if [ "$(uname -s)" = "Darwin" ]; then
+  if [ -d "/Applications/Google Chrome.app" ]; then
+    open -n -a "/Applications/Google Chrome.app" --args --app="$APP_URL" --window-size=1920,1080
+  elif [ -d "/Applications/Brave Browser.app" ]; then
+    open -n -a "/Applications/Brave Browser.app" --args --app="$APP_URL" --window-size=1920,1080
+  elif [ -d "/Applications/Microsoft Edge.app" ]; then
+    open -n -a "/Applications/Microsoft Edge.app" --args --app="$APP_URL" --window-size=1920,1080
+  else
+    open "$APP_URL"
+  fi
+elif command -v google-chrome >/dev/null 2>&1; then
+  google-chrome --app="$APP_URL" --window-size=1920,1080 >/dev/null 2>&1 &
+elif command -v chromium-browser >/dev/null 2>&1; then
+  chromium-browser --app="$APP_URL" --window-size=1920,1080 >/dev/null 2>&1 &
+elif command -v chromium >/dev/null 2>&1; then
+  chromium --app="$APP_URL" --window-size=1920,1080 >/dev/null 2>&1 &
 else
-  open "$APP_URL"
+  echo "   No Chrome/Chromium found — open this URL manually: $APP_URL"
 fi
 
 echo "=========================================================="

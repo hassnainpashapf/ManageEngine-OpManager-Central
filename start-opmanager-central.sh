@@ -1,18 +1,23 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# ManageEngine OpManager Central Enterprise v12.9.203 (Build 129203 • 64-Bit)
+# ManageEngine OpManager Central Enterprise v12.9.204-GA (64-Bit)
 # Unified Startup Script (Central Web/API Server + Go Host Monitoring Agent)
 # ==============================================================================
 set -e
 
-ROOT_DIR="/Users/hussnainpasha/.gemini/antigravity/scratch/opmanager-central"
-EXTRACTED_ASSET="/Users/hussnainpasha/.gemini/antigravity/scratch/opmanager-extracted/product_home/apiclient/fluidicv3/itom/assets/opmanager-suite.js"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "$ROOT_DIR"
 
-echo "[1/3] Building unified OpManager Central v12.9.203 frontend suite..."
-cat scripts/suite_modules/*.js > "$EXTRACTED_ASSET"
-node -c "$EXTRACTED_ASSET"
+# Host monitoring agent binary: Linux build on Linux, macOS build on Darwin.
+case "$(uname -s)" in
+  Linux)  AGENT_BIN="./agent_src/OpManagerAgent-linux-amd64" ;;
+  Darwin) AGENT_BIN="./agent_src/OpManagerAgent" ;;
+  *)      AGENT_BIN="./agent_src/OpManagerAgent-linux-amd64" ;;
+esac
+
+echo "[1/3] Building unified OpManager Central v12.9.204-GA frontend suite..."
+node scripts/rebuild_bundle.js
 
 echo "[2/3] Checking Port 8060 status..."
 if lsof -i :8060 >/dev/null 2>&1; then
@@ -28,12 +33,12 @@ if pgrep -f "OpManagerAgent" >/dev/null 2>&1; then
   echo "  ✔ OpManagerAgent daemon is already running and streaming live telemetry."
 else
   echo "  Starting OpManagerAgent daemon..."
-  nohup ./agent_src/OpManagerAgent -server http://localhost:8060 -probe 1 -interval 5 > /tmp/opmanager-agent.log 2>&1 &
+  nohup "$AGENT_BIN" -server http://localhost:8060 -probe 1 -interval 5 > /tmp/opmanager-agent.log 2>&1 &
   sleep 1
 fi
 
 echo "=============================================================================="
-echo " ManageEngine OpManager Central v12.9.203 (Build 129203) is LIVE!"
+echo " ManageEngine OpManager Central v12.9.204-GA is LIVE!"
 echo " • Main ITOM Console : http://localhost:8060/apiclient/fluidicv3/itom/index.html#/dashboard"
 echo " • Login Portal      : http://localhost:8060/login.html"
 echo " • NOC Wallboard     : http://localhost:8060/noc"
