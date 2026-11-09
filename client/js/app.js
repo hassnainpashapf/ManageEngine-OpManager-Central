@@ -263,6 +263,63 @@
     return (v === null || v === undefined || v === '') ? '—' : v;
   }
 
+  // D-01 (W2-1): the API returns stored DB columns (cpu_pct, mem_used_pct,
+  // response_ms, hostname); every UI consumer reads the display shape
+  // (cpu, memory, responseTime, name). Normalise once at the boundary so
+  // all views render the last real polled values on load — previously the
+  // only writer of cpu/memory/responseTime was handleMetricTick(), fed by
+  // the WebSocket, so every widget showed '—' / 0-width bars until a tick
+  // arrived (and name rendered as 'undefined' for API-created devices).
+  // Raw columns are kept alongside the aliases — nothing is dropped, and
+  // a display field already set (e.g. by a tick) is never overwritten.
+  function normalizeDevice(dev) {
+    if (!dev || typeof dev !== 'object') return dev;
+    if (dev.cpu === undefined || dev.cpu === null) dev.cpu = dev.cpu_pct ?? null;
+    if (dev.memory === undefined || dev.memory === null) dev.memory = dev.mem_used_pct ?? null;
+    if (dev.responseTime === undefined || dev.responseTime === null) dev.responseTime = dev.response_ms ?? null;
+    if (!dev.name) dev.name = dev.hostname || dev.sys_name || null;
+    return dev;
+  }
+
+  // S-05 (W2-1): the listInterfaces endpoint returns stored rows in the
+  // server shape (ifIndex, descr, oper, inOctets, ...). Normalise one row
+  // to the shape the interface renderers read (name, operStatus/status,
+  // ifDescr, inTraffic/outTraffic). Traffic rates stay null — no rate
+  // history exists yet, so they render as '—', never as 0.
+  // The poller stores ifOperStatus as the numeric IF-MIB enum (RFC 2863:
+  // 1 up, 2 down, 3 testing, 4 unknown, 5 dormant, 6 notPresent,
+  // 7 lowerLayerDown) while the renderers compare against the string
+  // 'up'/'down' — map the enum to its display string here so the badge
+  // and status text are right for real polled rows.
+  function normalizeInterfaceRow(row) {
+    if (!row || typeof row !== 'object') return row;
+    const OPER_STATUS = { 1: 'up', 2: 'down', 3: 'testing', 4: 'unknown', 5: 'dormant', 6: 'notPresent', 7: 'lowerLayerDown' };
+    const rawOper = row.operStatus ?? row.oper ?? row.status ?? null;
+    // The store returns the enum as the TEXT '1.0'/'4.0' (node:sqlite
+    // binds the poller's number into the TEXT oper_status column), so
+    // accept a decimal string as well as an integer.
+    const oper = (typeof rawOper === 'number' || /^\d+(\.\d+)?$/.test(String(rawOper ?? '')))
+      ? (OPER_STATUS[Number(rawOper)] ?? String(rawOper))
+      : rawOper;
+    return {
+      ...row,
+      ifIndex: row.ifIndex ?? row.if_index ?? null,
+      name: row.name ?? row.ifName ?? null,
+      descr: row.descr ?? row.ifDescr ?? null,
+      ifDescr: row.ifDescr ?? row.descr ?? null,
+      oper,
+      operStatus: oper,
+      status: oper,
+      admin: row.admin ?? row.adminStatus ?? null,
+      adminStatus: row.adminStatus ?? row.admin ?? null,
+      speed: row.speed ?? null,
+      inOctets: row.inOctets ?? row.in_octets ?? null,
+      outOctets: row.outOctets ?? row.out_octets ?? null,
+      inTraffic: row.inTraffic ?? null,
+      outTraffic: row.outTraffic ?? null,
+    };
+  }
+
   function fmtTime(v) {
     if (v === null || v === undefined || v === '') return '—';
     const d = new Date(typeof v === 'number' ? v : v);
@@ -551,7 +608,7 @@
       ]);
 
       state.probes = probesRes.result || probesRes.probes || [];
-      state.devices = devicesRes.devices || [];
+      state.devices = (devicesRes.devices || []).map(normalizeDevice);
       state.alarms = alarmsRes.alarms || [];
       state.central = centralRes.central || centralRes || {};
 
@@ -634,9 +691,12 @@
     tickDevices.forEach(t => {
       const dev = state.devices.find(d => d.id === t.id);
       if (dev) {
-        dev.cpu = t.cpu;
-        dev.memory = t.memory;
-        dev.responseTime = t.responseTime;
+        // D-01: ticks carry the display shape, but accept the stored
+        // column names too so either producer feeds the same fields.
+        dev.cpu = t.cpu ?? t.cpu_pct ?? dev.cpu;
+        dev.memory = t.memory ?? t.mem_used_pct ?? dev.memory;
+        dev.responseTime = t.responseTime ?? t.response_ms ?? dev.responseTime;
+        if (t.hostname && !dev.name) dev.name = t.hostname;
         if (t.temperature) dev.temperature = t.temperature;
         if (dev.cpu > 92 || dev.memory > 92) {
           hasCriticalTick = true;
@@ -1574,21 +1634,62 @@
     `;
   }
 
-  function renderInterfacesInventory() {
-    const devices = getFilteredDevices();
-    const interfacesList = [];
+  // S-05 (W2-1): interfaces are stored per device by the poller, but no
+  // code ever loaded them — both the Interfaces inventory and the snapshot
+  // Interfaces tab read dev.interfaces, which was always undefined.
+  // Load them from the real listInterfaces endpoint, on demand, and cache
+  // them on the device for 60 s (one poll cycle) so a later poll can
+  // replace them. A failed load leaves interfacesLoaded false so the next
+  // open retries instead of showing a false "no interfaces" empty state.
+  async function loadDeviceInterfaces(dev) {
+    if (!dev) return [];
+    const fresh = dev.interfacesLoadedAt && (Date.now() - dev.interfacesLoadedAt < 60000);
+    if (dev.interfacesLoaded && fresh) return dev.interfaces || [];
+    try {
+      const res = await apiJson(`/api/json/device/listInterfaces?deviceId=${encodeURIComponent(dev.id)}`);
+      dev.interfaces = (res.interfaces || []).map(normalizeInterfaceRow);
+      dev.interfacesLoaded = true;
+      dev.interfacesLoadedAt = Date.now();
+    } catch (e) {
+      dev.interfacesLoaded = false;
+      throw e;
+    }
+    return dev.interfaces || [];
+  }
 
-    devices.forEach(dev => {
-      (dev.interfaces || []).forEach(intf => {
-        interfacesList.push({
-          deviceName: dev.name || dev.hostname,
-          deviceId: dev.id,
-          ip: dev.ip,
-          probeName: probeDisplayName(dev),
-          ...intf
+  async function renderInterfacesInventory() {
+    const devices = getFilteredDevices();
+
+    // Paint a loading state synchronously (this function is called
+    // without await from renderInventoryView), then fill it from the
+    // real poller data once every visible device's interfaces load.
+    DOM.workspace.innerHTML = `
+      <div class="me-card">
+        <div class="me-card-header">
+          <span class="me-card-title">🌐 Monitored Network Interfaces (IF-MIB)</span>
+        </div>
+      </div>
+      <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading interfaces from polled devices…</div>
+    `;
+
+    const interfacesList = [];
+    const loadErrors = [];
+    for (const dev of devices) {
+      try {
+        const rows = await loadDeviceInterfaces(dev);
+        rows.forEach(intf => {
+          interfacesList.push({
+            deviceName: dev.name || dev.hostname,
+            deviceId: dev.id,
+            ip: dev.ip,
+            probeName: probeDisplayName(dev),
+            ...intf
+          });
         });
-      });
-    });
+      } catch (e) {
+        loadErrors.push({ deviceName: dev.name || dev.hostname || dev.ip, message: e.message });
+      }
+    }
 
     if (!interfacesList.length) {
       DOM.workspace.innerHTML = `
@@ -1598,6 +1699,7 @@
           </div>
         </div>
         ${emptyStateHtml('No network interface traffic recorded.', 'Discovered switch/router interfaces will stream live telemetry here. Add a device or run discovery first.')}
+        ${loadErrors.length ? `<div style="font-size: 11px; color: var(--severity-critical); padding: 8px 14px;">Could not load interfaces for ${loadErrors.length} device${loadErrors.length === 1 ? '' : 's'} (${escapeHtml(loadErrors[0].deviceName)}: ${escapeHtml(loadErrors[0].message)}). The empty state above is not a measurement — retry by reopening this tab.</div>` : ''}
       `;
       return;
     }
@@ -1618,6 +1720,8 @@
                 <th>Port Speed</th>
                 <th>Inbound Traffic (Mbps)</th>
                 <th>Outbound Traffic (Mbps)</th>
+                <th>In Octets</th>
+                <th>Out Octets</th>
                 <th>Remote Probe</th>
                 <th>Actions</th>
               </tr>
@@ -1631,6 +1735,8 @@
                   <td>${displayVal(intf.speed)}</td>
                   <td><span style="font-weight: 700;">${displayVal(intf.inTraffic)}</span></td>
                   <td><span style="font-weight: 700;">${displayVal(intf.outTraffic)}</span></td>
+                  <td>${displayVal(intf.inOctets)}</td>
+                  <td>${displayVal(intf.outOctets)}</td>
                   <td>📍 ${escapeHtml(String(intf.probeName || '—'))}</td>
                   <td>
                     <button class="btn-me-secondary" style="padding: 2px 8px; font-size: 10px;" onclick="window.OpManager.openSwitchPorts('${escapeHtml(String(intf.deviceName || ''))}', '${escapeHtml(String(intf.ip || ''))}')">Port Mapper</button>
@@ -3658,6 +3764,14 @@
 
     renderDeviceModalBody(dev);
     DOM.deviceSnapshotModal.classList.add('active');
+    // S-05: interfaces load on demand from listInterfaces; re-render the
+    // modal once they arrive so the Interfaces tab shows real rows (or
+    // its honest empty state) instead of staying empty forever.
+    if (!dev.interfacesLoaded) {
+      loadDeviceInterfaces(dev).then(() => {
+        if (state.activeModalDevice && state.activeModalDevice.id === dev.id) renderDeviceModalBody(dev);
+      }).catch(() => {});
+    }
   }
 
   function renderDeviceModalBody(dev) {
@@ -3752,6 +3866,8 @@
                 <th>Speed</th>
                 <th>In Traffic (Mbps)</th>
                 <th>Out Traffic (Mbps)</th>
+                <th>In Octets</th>
+                <th>Out Octets</th>
               </tr>
             </thead>
             <tbody>
@@ -3763,6 +3879,8 @@
                   <td>${displayVal(i.speed)}</td>
                   <td>${displayVal(i.inTraffic)}</td>
                   <td>${displayVal(i.outTraffic)}</td>
+                  <td>${displayVal(i.inOctets)}</td>
+                  <td>${displayVal(i.outOctets)}</td>
                 </tr>
               `).join('')}
             </tbody>
@@ -3834,6 +3952,14 @@
       renderDeviceModalBody(state.activeModalDevice);
       if (tabName === 'hardware') {
         loadHardwareSpecs(state.activeModalDevice.id);
+      }
+      if (tabName === 'interfaces') {
+        // S-05: fetch the device's real interfaces, then re-render so
+        // the tab fills in (or shows its honest empty state).
+        const dev = state.activeModalDevice;
+        loadDeviceInterfaces(dev).then(() => {
+          if (state.activeModalDevice && state.activeModalDevice.id === dev.id && state.activeSnapTab === 'interfaces') renderDeviceModalBody(dev);
+        }).catch(() => {});
       }
     }
   }
@@ -4050,15 +4176,19 @@
         }).then(r => r.json());
 
         if (res.status === 'success' && res.device) {
-          Object.assign(state.activeModalDevice, res.device);
+          // D-01: pollNow returns the stored-column shape (cpu_pct, ...);
+          // normalise before merging so the modal dials and the toast
+          // below read real values instead of undefined.
+          Object.assign(state.activeModalDevice, normalizeDevice(res.device));
           renderDeviceModalBody(state.activeModalDevice);
+          const d = state.activeModalDevice;
           showAlarmToast({
             id: `poll-${Date.now()}`,
             severity: 'Clear',
             deviceName: res.device.name,
             ip: res.device.ip,
             probeName: res.device.probeName || '—',
-            message: `Instant SNMP Poll completed (Ping: ${res.device.responseTime}ms, CPU: ${res.device.cpu}%, Mem: ${res.device.memory}%)`
+            message: `Instant SNMP Poll completed (Ping: ${d.responseTime != null ? d.responseTime + ' ms' : '—'}, CPU: ${d.cpu != null ? d.cpu + '%' : '—'}, Mem: ${d.memory != null ? d.memory + '%' : '—'})`
           });
         }
       } catch (err) {

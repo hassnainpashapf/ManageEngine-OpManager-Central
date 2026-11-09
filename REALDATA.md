@@ -1283,7 +1283,17 @@ route definitions were added in phase 5.
 
 ### 13.4 What remains (wave 2 + wave 3)
 
-Wave 2 (scoped): W2-1 D-01 field mapping + S-05 interfaces; W2-2 X-01
+Wave 2 (scoped): W2-1 D-01 field mapping + S-05 interfaces — DONE in the
+W2-1 clone (unpushed, branch `p4-exe-audit`): client-side normalisation
+(`normalizeDevice()` in `client/js/app.js`) maps stored `cpu_pct` /
+`mem_used_pct` / `response_ms` / `hostname` to the display shape the
+views read, applied at load, on METRIC_TICK and on the pollNow merge;
+`loadDeviceInterfaces()` feeds the Interfaces (IF-MIB) inventory view
+and the snapshot Interfaces tab from the real `listInterfaces` endpoint
+(+ `operStatus`/`status`/`ifDescr`/`adminStatus` aliases on that
+endpoint), with an honest empty state per device with no polled
+interfaces. No new route definitions; counts unchanged (227 REAL / 4
+HONEST-EMPTY / 1 501 / 0 FAKE). W2-2 X-01
 discovery credential + write-side normalization; W2-3 A2-13 status casing
 + A2-07 persistent dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4
 R-01 rack crash fix (crash fix only — the "invented cabinet" scope needs
