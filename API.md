@@ -24,6 +24,21 @@
 > unchanged from phase 2. Full detail in §24 below; the phase-2 tables in
 > §§3–19 and the §23 triage are kept as the phase-2 record.
 >
+> **Phase-5 close-out recount — 2026-11-09, merged tree on branch
+> `p4-exe-audit`, tip `a0f2af3` (NOT pushed).** Re-counted from the merged
+> tree by the same method: **232 route definitions — 227 REAL, 4
+> HONEST-EMPTY, 1 unconditional NOT-IMPLEMENTED (501), 0 FAKE.** No new
+> route definitions were added in phase 5; 17 of the 21 HONEST-EMPTY
+> became REAL (HE-1: `getUserNotification`, `getNewFeatures`; HE-2:
+> virtualization + firewall-rules; HE-3a: 8 ncmclient routes; HE-3b: 4
+> ncmclient routes; `getRCANotes` was already REAL on a stale claim).
+> The 4 remaining HONEST-EMPTY are all in `ncmclient.js` (`getLayer2Maps`,
+> both CVE severity routes, `getUpcomingEolDevices`) — each with the exact
+> reason in its table row (§11). The one 501 is still `updateJvmHeapSize`
+> (JVM heap, structurally impossible in a Node build). Full detail in §25
+> below; the §24.5 H1 paragraph is corrected there too (the static key is
+> no longer served unauthenticated — see §25.4).
+>
 > **What changed vs the phase-1 count (181 defs: 138 REAL, 21 HE, 22 501):**
 > 14 former 501s are now REAL (alarms delete/addNotes/addRCANotes/changeRCAStatus;
 > settings templates create/update/apply, mail test, users create/delete, AD test,
@@ -981,30 +996,32 @@ them is a route that always refuses.
   /api/settings/ssl` now return `privateKey: null` +
   `privateKeyConfigured`. The certificate is public key material and is
   kept. Verified live.
-- **H1 (CRITICAL, hardcoded probe AuthKey — NOT fixed, deliberate).**
-  `server/routes/agents.js` `serverInfoData` still serves, with no
-  authentication, `AuthKey: "ee-probe-101-central-key"` and
-  `customerid: "OPM_ENTERPRISE_KEY_129203"` (same values in the static
-  `client/OPMAgentServerInfo.json` and
-  `client/downloads/OPMAgentServerInfo.json`). Verified live:
-  unauthenticated `GET /OPMAgentServerInfo.json` → 200 with both values.
-  **Why not fixed here:** the Go agent's bootstrap flow reads this
-  endpoint for its key, and the live relay deploy (phase-2 code) has
-  registered agents/probes whose stored key hashes cannot be checked
-  from here — removing the published value could break live agent auth.
-  Also established: the constant is **not** accepted as a credential
-  by this server — `authenticateAgent` only accepts a key whose SHA-256
-  matches a stored `api_keys` (`agent:<id>`) or probe row, and no seed
-  data exists, so on a fresh DB the published key authenticates nothing.
-  **Fix plan (for the parent/user to approve with relay access):** (1)
-  confirm on the relay whether any registered agent/probe key hash
-  equals SHA-256 of `ee-probe-101-central-key`
+- **H1 (CRITICAL, hardcoded probe AuthKey — endpoint closed in phase 5,
+  key rotation still pending).** Phase-5 FIX-A4SEC closed the unauthenticated
+  exposure: unauthenticated `GET /OPMAgentServerInfo.json` (and the five
+  sibling paths) now return **401**; the admin/keyed route returns a
+  live-derived payload with **no `AuthKey` field**; the tracked static
+  files `client/OPMAgentServerInfo.json` and
+  `client/downloads/OPMAgentServerInfo.json` are **deleted**; the shipped
+  `client/downloads/OpManagerAgent.zip` was rebuilt in phase 5 without
+  them (new agent exe, real MSI kept, README + bats fixed). Verified live
+  on the merged tree (:8060): unauthenticated + wrong-key requests 401
+  and create no agent rows; a valid admin-issued key still acks telemetry.
+  **What remains:** the old key value itself is still the live credential
+  for agents already registered against the relay deploy (phase-2 code),
+  so it cannot be rotated from here. **Fix plan (for the parent/user to
+  approve with relay access):** (1) confirm on the relay whether any
+  registered agent/probe key hash equals SHA-256 of the old value
   (`12d2e97939be5d0c1dc56fd4e80a024339cf01daf15d033e7166db7418ffd450`);
-  (2) if none, strip `AuthKey`/`customerid` from `serverInfoData` and
-  the two static JSON files and re-issue per-agent one-time keys via
-  `POST /api/agents/register`; (3) if one does match, rotate that
-  agent/probe to a fresh one-time key first, then strip.
-  Residual code-level items from the audit baseline (L5–L10:
+  (2) if none, nothing further is needed — the value is already unpublished;
+  (3) if one does match, rotate that agent/probe to a fresh one-time key
+  first (re-register via `POST /api/agents/register`), then the old value
+  is dead. Also established: the constant is **not** accepted as a
+  credential by this server — `authenticateAgent` only accepts a key whose
+  SHA-256 matches a stored `api_keys` (`agent:<id>`) or probe row, and no
+  seed data exists, so on a fresh DB the old key authenticates nothing.
+  The old key value itself is deliberately **not reproduced** in this
+  document. Residual code-level items from the audit baseline (L5–L10:
   `?community=` on test-monitors, token folding, plaintext credential
   columns at rest, missing error middleware) remain open — not re-verified
   in this pass.
@@ -1056,3 +1073,172 @@ view); the settings form opens on demand from a button inside it.
   this phase — dry-run only; `NCM_EXECUTED` has no producer.
 - ORTG/UniFi logins are **not** part of this build and are not missing
   pieces for it.
+
+## 25. Phase-5 close-out — audit, all-bugs fix, honest-empty elimination, verification (2026-11-09)
+
+Branch `p4-exe-audit`, base `b1de62c`, merged tip `a0f2af3` (NOT pushed —
+GitHub credential unavailable; parent pushes). 14 tracks, all completed;
+wave-1 audit catalogs in `~/workspace/opm-p5/audit/` (A1–A4, A6).
+Coordinator verification ran on a throwaway copy of the merged tree
+(`~/workspace/opm-verify`, fresh DB, port 8060) — see `REALDATA.md` §13.
+
+### 25.1 Counts after the phase-5 merge
+
+**232 route definitions — 227 REAL, 4 HONEST-EMPTY, 1 unconditional
+NOT-IMPLEMENTED (501), 0 FAKE.** No new route definitions were added;
+17 of the 21 HONEST-EMPTY became REAL:
+
+| Track | Conversions (EMPTY → REAL) | Notes |
+| --- | --- | --- |
+| HE-1 (`a771492`, merged `634bd1a`) | `getUserNotification`, `getNewFeatures` | New `notifications` table fed by real events only; build metadata from live git + baked `server/build-info.json`. `getRCANotes` was already REAL (stale claim corrected, no code change). |
+| HE-2 (`732e421`) | Virtualization summary, firewall-rules list | Hypervisor hosts derived from stored device identity (sysObjectID 6876 = VMware, vendor keywords); guest VMs never enumerated (poller polls no VM MIB table — documented limit). Firewall rules parsed from stored NCM running configs (Cisco IOS ACLs + pfSense `<rule>` blocks). |
+| HE-3a (`6db862f`, merged `4f746b6`) | 8 ncmclient routes | Dashboards, messages, custom views, CCTV, tab details, floors, alarm sounds, logical groups. `getLayer2Maps` stays EMPTY (no LLDP/CDP/MAC-ARP collection). |
+| HE-3b (`1fe28db`, merged `fbe78e6`) | 4 ncmclient routes | `getSecurityScore`, `getComplianceStatus`, `getconfigChangesStatus`, `getFirmVulnDetails` (REAL firmware inventory; vuln fields honest-empty). |
+| DASH-1 (`086bfed`, merged `18362a1`) | — (widget, not a route) | Host Agents card on the main dashboard, fed by `GET /api/agent/list`. See §25.3. |
+| AGENT (`58cd669`, merged `533248a`) | — (Go agent, not a route) | All 3 live-probe bugs fixed. See §25.3. |
+| ROUTING-1 (`e3441b0`, merged `9c8d840`) | — (routing, not a route) | Fixed the `server/index.js` classic-module redirect collision (13 ncmclient endpoints 302d). API.md §11 prefixes corrected to the real mounts. |
+| FIX-A3Q (`9963ec8`, merged `d5d57f6`) | — (poller + gate fixes) | `normalizeSnmpVersion()` (`2c`/`2`→`v2c`); CCM/drift admin-only; CCM push 202 now honestly `dryRun: true`. |
+| FIX-A4SEC (`c2beeb8`, merged `908ec39`) | — (auth fixes) | A4 G-01/G-02/G-03/G-27 closed. See §25.4. |
+| Coordinator fix (`a0f2af3`) | — (agent default + guard) | No demo Central default in the Go agent; logout exempt from the must-change guard. See §25.3/§25.5. |
+
+Remaining HONEST-EMPTY (4, all `ncmclient.js`, each with the exact
+reason in its §11 row): `getLayer2Maps` (no LLDP/CDP/MAC-ARP collection),
+`getFirmVulCveSeverityStatus` + `getFirmVulDeviceSeverityStatus` (no CVE
+feed anywhere in the repo), `getUpcomingEolDevices` (no lifecycle source).
+`getFirmVulnDetails` is REAL for firmware inventory with honest-empty
+vulnerability fields. The one 501 is still `updateJvmHeapSize` (JVM heap,
+structurally impossible in a Node build — §23.6).
+
+### 25.2 Audit catalogs (wave 1 — what was found)
+
+- **A1** (`~/workspace/opm-p5/audit/A1-gaps.md`, 33 gaps): poller rejects
+  stored `2c`; REST↔UI field mismatch (D-01); discovery sends credential
+  id as `snmpVersion` (X-01); rack view TypeError + invented cabinet
+  (R-01/R-02); interfaces never shown anywhere (S-05); add/update device
+  routes copy flat `snmpVersion` with no normalization.
+- **A2** (`A2-gaps.md`, 47 gaps): nothing ever notifies on alarm raise
+  (A2-28); status-casing mismatch breaks the alarm UI (A2-13); severity
+  escalation lost / restart duplicates alarms (A2-07); no notification
+  profiles, zero of 19 real `*Mail.html` templates (A2-27+33); reports are
+  a 7-report stub vs 491 real REPORTIDs (A2-37–41).
+- **A3** (`A3-gaps.md`, 24 gaps): G-01 poller rejects `2c` (FIXED by
+  FIX-A3Q); G-02 no compliance engine (17 real policy files); G-04 no
+  real config-push delivery (by design — gate stays); G-05 traps are raw
+  stored rows only; G-08 backup is SSH-only (1 of 7 transports); drift
+  resolve always 422s.
+- **A4** (`A4-gaps.md`, 33 gaps): 4 HIGH security bugs, all FIXED by
+  FIX-A4SEC (G-01 unauthenticated agent self-register; G-02
+  unauthenticated telemetry auto-create; G-03 `requireRole()` with zero
+  callers; G-27 hardcoded Central identity served unauthenticated at six
+  paths). Plus: no TOTP/MFA (G-04), no AD/LDAP/RADIUS console login
+  (G-05), no role CRUD (G-10), no SMS settings (G-16), no probe installer
+  generation (G-24).
+- **A6** (`A6-api-gaps.md`, 1,872 methods classified into 73 features):
+  3 COVERED / 42 PARTIAL / 28 MISSING features; 71 methods covered /
+  1,798 missing. Classified at `b1de62c`, so verdicts predate the HE
+  merges — recount after the next merge. 10 correctness risks flagged
+  (R1–R10, incl. R8 hardcoded probe key — fixed by FIX-A4SEC).
+
+### 25.3 Bugs fixed in phase 5
+
+- **Go agent (a) sc.exe 1639** — `sc.exe create` argv now passes name/value
+  as separate elements; unit tests incl. spaced paths. **(b) No Windows
+  service handler** — real `windows/svc` handler vendored (`x/sys`
+  v0.28.0); `GOOS=windows go build` + vet clean. **NOT proven on a real
+  Windows host** — must be tested on DESKTOP-SDN3CJD before claiming it
+  works there. **(c) CWD-dependent config** — `os.Executable()`-anchored
+  `agent.conf`/`agent.id`/`agent.log`; 3/3 heartbeats from a foreign CWD;
+  wrong key → 401. Go tests 10/10 (incl. 2 new no-demo-default tests).
+- **Demo Central default removed (coordinator, `a0f2af3`)** — the agent no
+  longer defaults to a baked-in demo server address: `DefaultServer` is
+  empty, the `OPMAgentServerInfo.json` host fallback is empty, and a fresh
+  agent with no server configured refuses to start with a clear error
+  (verified end-to-end: exit 1, no key and with key). `-server` flag help
+  uses a neutral example. `client/downloads/` rebuilt: `OpManagerAgent.zip`
+  (new 5,529,600-byte exe, real MSI kept, **no** `OPMAgentServerInfo.json`
+  copies, fixed README + bats), `OpManagerAgent-Windows-x64.zip`,
+  `OpManagerAgent-linux.tar.gz`. Zero demo-server refs and zero key
+  material in the shipped packages. macOS universal binary NOT rebuilt
+  (`lipo` unavailable on Linux; `darwin/arm64` itself compiles).
+- **DASH-1 Host Agents widget** — main-dashboard card (app.js only,
+  +99/−1) fed by session-guarded `GET /api/agent/list`; rows show
+  status/hostname/IP/CPU%/mem%/disk%/last heartbeat; honest empty and
+  error states; "View All →" links to Inventory → Host Agents. Proven on
+  the merged tree with a real agent row (admin register → keyed telemetry
+  → Online 23.5/61.2/44.8) and a jsdom render with zero page errors.
+  Reaches the live console only after push + redeploy. Visual layout in
+  a real browser is still unconfirmed (jsdom only).
+- **Logout blocked by the must-change guard (coordinator, `a0f2af3`)** —
+  found by coordinator verification: a fresh bootstrap admin's logout
+  403d and the session stayed valid. `POST /api/auth/logout` is now
+  exempt from `requirePasswordChanged` alongside change-password
+  (`server/index.js` + `server/services/session.js` comment).
+
+### 25.4 Security fixes in phase 5 (FIX-A4SEC)
+
+- G-01: `/servlets/RegisterAgent` + alias → 410 (never a registration).
+- G-02: `/servlets/DataAgentHandlerServlet` + alias → 401 without a valid
+  admin-issued key, nothing auto-created; valid key → 200 `ack:true`.
+- G-03: `requireRole('admin')` on all user-management + admin-settings
+  mutations (users CRUD, AD/LDAP/SAML save+test, mail, proxy,
+  failover/HA, license, system/SSL, agent registration, probe add/delete).
+- G-27: unauthenticated `/OPMAgentServerInfo.json` etc. → 401 on all six
+  paths; admin/key → 200 with live-derived payload (primary host = first
+  non-internal IPv4, port = actual listen port, probe = first registered
+  probe or null, **no AuthKey field**); tracked static JSON files deleted.
+- `/settings/` + `/support/` added to `LEGACY_API_PREFIXES` (ROUTING-1
+  follow-up: `POST /settings/saveMailServer` was dead, not open — now
+  401 unauthenticated / 403 Operator / 200 admin). §24.5 H1 paragraph
+  corrected accordingly (the static key is no longer served
+  unauthenticated; rotation of already-registered agents still pending —
+  needs relay access).
+- Deliberately NOT role-gated (needs a decision): credential-library POST,
+  device-template POST/PUT/DELETE/apply, DB backup/vacuum, notification
+  clear/hide. `AgentActionServlet`/`FileCollector`/`AgentDownloadServlet`
+  still answer unauthenticated with `actions: []` / download redirect
+  (G-29 stub, no state change).
+
+### 25.5 Close-out verification (merged tree, 2026-11-09, throwaway copy :8060)
+
+- `node --check` clean on all changed JS files since `b1de62c`.
+- Fresh boot on :8060 (fresh DB, bootstrap password changed first):
+  `verify-auth.sh` **11/11**, `verify-empty.sh` **16/16**,
+  `verify-p3.sh` **10/10** (the `1-snmpv3` line fails with `send EPERM` —
+  this VM blocks outbound UDP; the endpoint genuinely attempts the v3
+  query, exactly as in phase 3).
+- DASH-1 flow: admin register → keyed telemetry (`eeauthkey`) → Online
+  with metrics 23.5/61.2/44.8 in `GET /api/agent/list`; jsdom render of
+  the merged dashboard shows both rows, zero page errors.
+- Grep: 0 fake markers, 0 hardcoded tokens (`ee-probe-101-central-key`,
+  `OPM_ENTERPRISE_KEY`, `OPM_CENTRAL_SESSION_`) in shipped code; 0
+  demo-server refs in shipped code (test fixtures + historical audit
+  docs excluded). The `opmcsrfcookie` hits are the real product's own
+  fluidic client code (CSRF cookie name), not our token.
+- `server/build-info.json` regenerated at the merge tip (commit recorded
+  inside) — regenerate again at packaging time.
+
+### 25.6 What remains (wave 2 + wave 3, NOT in this merge)
+
+- **Wave 2 (scoped, spawn from `a0f2af3`):** W2-1 D-01 field mapping +
+  S-05 interfaces wiring; W2-2 X-01 discovery credential + write-side
+  version normalization; W2-3 A2-13 status casing + A2-07 persistent
+  dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4 R-01 rack crash
+  fix (crash fix only — the "invented cabinet" scope needs a product
+  decision); W2-5 `/inventory/` bare forms still 302 + the 3 missing
+  `/api/ncmclient` registrations (`getClientServiceData`,
+  `getMainMenuTabs`, `getUserPreference`).
+- **Wave 3 (triage by user value):** A2-28 alarm notifications (real SMTP
+  consumer); A3 G-02 compliance engine; A3 G-05 trap parsers/MIB
+  resolution/forwarding/correlation; A2-37+ reports expansion (scheduled/
+  custom, PDF); A4 G-04 TOTP/MFA; A4 G-05 AD/LDAP/RADIUS console login;
+  A6's 28 missing features; G-08 backup transports (TELNET/SNMP/TFTP/SCP/
+  SFTP/REST + startup-config fetch + key auth).
+- **Decisions needed:** credential-library / device-template / DB-backup /
+  notification-clear role gating; staging routes (`POST /api/ccm/push`,
+  `/resolve-drift`) any-authenticated follow-up; G-29 unauthenticated
+  stubs; Windows service-handler proof on DESKTOP-SDN3CJD; macOS agent
+  rebuild on a Mac; DASH-1 visual layout in a real browser; H1 key
+  rotation check on the relay (see §25.4).
+- **Never removed:** NCM config push stays DRY-RUN + HUMAN-REVIEW GATE.
+  JVM heap stays 501 N/A. H1 hardcoded probe key stays unfixed for
+  already-registered agents (fix plan in §25.4).

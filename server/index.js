@@ -205,12 +205,16 @@ const KEY_AUTH_API_ROUTES = new Set([
   'GET /api/ha/status',
 ]);
 
-// Password-change route: the ONLY session-authenticated API route a
-// must-change-password session may call (besides GET /api/auth/session,
-// already public-exempt above). It must stay reachable or a flagged
-// session could never clear its own flag.
+// Password-change + logout routes: the ONLY session-authenticated API
+// routes a must-change-password session may call (besides
+// GET /api/auth/session, already public-exempt above). Change-password
+// must stay reachable or a flagged session could never clear its own
+// flag; logout must stay reachable or a flagged session could never end
+// (phase-5 verification: logout 403d for a fresh bootstrap admin and the
+// session stayed valid — a logout is a safe way out, not data access).
 const PASSWORD_CHANGE_ROUTES = new Set([
   'POST /api/auth/change-password',
+  'POST /api/auth/logout',
 ]);
 
 // Legacy ManageEngine paths served by the same routers without an /api

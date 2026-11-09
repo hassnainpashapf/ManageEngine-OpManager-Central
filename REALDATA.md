@@ -27,6 +27,10 @@
 > **Phase 3 + Phase 4 close-out (2026-11-09, NOT pushed): 232 route
 > definitions — 210 REAL, 21 HONEST-EMPTY, 1 unconditional 501 (JVM heap,
 > permanently N/A), 0 FAKE — see §12 below and `API.md` §24.**
+> **Phase-5 close-out (2026-11-09, NOT pushed): 232 route definitions —
+> 227 REAL, 4 HONEST-EMPTY, 1 unconditional 501 (JVM heap), 0 FAKE —
+> see §13 below and `API.md` §25.** Branch `p4-exe-audit`, merged tip
+> `a0f2af3`.
 
 ---
 
@@ -1210,3 +1214,86 @@ prefer AES privacy on v3 devices; use DES only with
   this phase — dry-run only; `NCM_EXECUTED` has no producer.
 - ORTG/UniFi logins are **not** part of this build and are not missing
   pieces for it.
+
+## 13. Phase-5 close-out (2026-11-09) — audit, all-bugs fix, honest-empty elimination, verification
+
+Branch `p4-exe-audit`, base `b1de62c`, merged tip `a0f2af3` (NOT pushed).
+14 tracks, all completed; wave-1 audit catalogs in
+`~/workspace/opm-p5/audit/` (A1–A4, A6). Coordinator verification ran on a
+throwaway copy of the merged tree (`~/workspace/opm-verify`, fresh DB,
+port 8060, bootstrap password changed first) — evidence below.
+
+### 13.1 Counts
+
+**232 route definitions — 227 REAL, 4 HONEST-EMPTY, 1 unconditional 501
+(JVM heap), 0 FAKE.** 17 of the 21 HONEST-EMPTY became REAL (HE-1: 2 +
+1 stale claim corrected; HE-2: 2; HE-3a: 8; HE-3b: 4). Remaining EMPTY:
+`getLayer2Maps`, both CVE severity routes, `getUpcomingEolDevices` — all
+in `ncmclient.js`, each with the exact reason in `API.md` §11. No new
+route definitions were added in phase 5.
+
+### 13.2 What was built and fixed
+
+- **Audit catalogs:** A1 (33 gaps), A2 (47), A3 (24), A4 (33), A6 (1,872
+  methods → 73 features: 3 COVERED / 42 PARTIAL / 28 MISSING). Full detail
+  in `API.md` §25.2.
+- **All 3 Go agent bugs fixed** (sc.exe 1639 argv, Windows service
+  handler, CWD-dependent config) — plus the baked-in demo Central server
+  default removed (a fresh agent with no server now refuses to start with
+  a clear error; verified end-to-end, exit 1). Shipped packages rebuilt:
+  `OpManagerAgent.zip` (new exe, real MSI kept, no
+  `OPMAgentServerInfo.json` copies, fixed README + bats),
+  `OpManagerAgent-Windows-x64.zip`, `OpManagerAgent-linux.tar.gz`.
+  macOS universal binary NOT rebuilt (`lipo` unavailable on Linux).
+- **DASH-1 Host Agents widget** on the main dashboard (user requirement
+  2026-11-09 ~19:05 PKT: probe data must be visible ON the dashboard).
+  Fed by `GET /api/agent/list`; honest empty + error states.
+- **FIX-A4SEC closed all 4 HIGH security bugs** (unauthenticated agent
+  self-register + telemetry auto-create, `requireRole()` with zero
+  callers, hardcoded Central identity served unauthenticated). Static
+  key files deleted; unauthenticated key endpoints now 401.
+- **FIX-A3Q:** poller accepts stored `2c` (`normalizeSnmpVersion()`);
+  CCM/drift admin-only; CCM push 202 honestly `dryRun: true`.
+- **ROUTING-1:** the `server/index.js` redirect collision fixed (13
+  ncmclient endpoints 302d); `API.md` §11 prefixes corrected.
+- **Coordinator fix:** logout exempt from the must-change guard (a fresh
+  bootstrap admin's logout 403d and the session stayed valid).
+
+### 13.3 Verification evidence (merged tree, throwaway copy :8060)
+
+- `node --check` clean on all changed JS files since `b1de62c`.
+- Fresh boot: `verify-auth.sh` **11/11**, `verify-empty.sh` **16/16**,
+  `verify-p3.sh` **10/10** (the `1-snmpv3` line fails with `send EPERM` —
+  this VM blocks outbound UDP; the endpoint genuinely attempts the v3
+  query, exactly as in phase 3). Before the password change,
+  verify-auth was 10/11 — the one failure was the logout guard bug, fixed
+  in `a0f2af3` (logout now 200, session invalidated, 401 after).
+- DASH-1 flow on the merged tree: admin register → keyed telemetry
+  (`eeauthkey` header) → Online with metrics 23.5/61.2/44.8 in
+  `GET /api/agent/list`; jsdom render of the merged dashboard shows both
+  test rows (Online + Pending) with zero page errors. Note: the telemetry
+  endpoint reads `cpuUsage`/`memoryUsage`/`diskUsage` — the field names
+  the real Go agent sends; a payload using bare `cpu`/`memory`/`disk`
+  is (correctly, per the handler) stored as null metrics.
+- Grep: 0 fake markers, 0 hardcoded tokens, 0 demo-server refs in shipped
+  code. The `opmcsrfcookie` hits are the real product's own fluidic
+  client code (CSRF cookie name), not our token.
+- `server/build-info.json` regenerated at the merge tip — regenerate again
+  at packaging time.
+
+### 13.4 What remains (wave 2 + wave 3)
+
+Wave 2 (scoped): W2-1 D-01 field mapping + S-05 interfaces; W2-2 X-01
+discovery credential + write-side normalization; W2-3 A2-13 status casing
++ A2-07 persistent dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4
+R-01 rack crash fix (crash fix only — the "invented cabinet" scope needs
+a product decision); W2-5 `/inventory/` bare forms + 3 missing
+`/api/ncmclient` registrations. Wave 3 (triage by value): alarm
+notifications, compliance engine, trap parsers, reports expansion, TOTP/
+MFA, AD/LDAP/RADIUS console login, A6's 28 missing features, backup
+transports. Decisions needed: role gating for credential-library /
+device-template / DB-backup / notification-clear; staging-route auth;
+G-29 stubs; Windows service-handler proof on DESKTOP-SDN3CJD; macOS agent
+rebuild on a Mac; DASH-1 visual layout in a real browser; H1 key rotation
+check on the relay. NCM push stays DRY-RUN + HUMAN-REVIEW GATE. JVM heap
+stays 501 N/A.

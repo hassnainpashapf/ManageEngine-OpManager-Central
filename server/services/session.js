@@ -188,12 +188,13 @@ async function requireAuth(req, res, next) {
 /**
  * Require that the session's user is NOT flagged must-change-password.
  * Apply AFTER requireAuth (req.user must already be set). A flagged
- * session may only call POST /api/auth/change-password and
- * GET /api/auth/session — those two routes are exempted by the API guard
- * in server/index.js; every other API route behind this middleware
- * answers 403 { error: 'password change required' } until the password
- * is changed (change-password clears the flag, so the next request
- * passes). No user at all => 401, same as requireAuth.
+ * session may only call POST /api/auth/change-password,
+ * POST /api/auth/logout and GET /api/auth/session — those three routes
+ * are exempted by the API guard in server/index.js; every other API
+ * route behind this middleware answers 403 { error: 'password change
+ * required' } until the password is changed (change-password clears
+ * the flag, so the next request passes). No user at all => 401, same
+ * as requireAuth.
  */
 function requirePasswordChanged(req, res, next) {
   if (!req.user) {
