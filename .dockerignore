@@ -1,0 +1,18 @@
+# Build context exclusions — keeps dev artifacts, VCS data and runtime
+# state out of the Docker image. server/data/templates/ and server/data/mibs/
+# are intentionally NOT excluded: they are real vendor reference data the
+# server needs. Only the seed/runtime data files are excluded.
+.git
+node_modules
+scripts
+*.md
+agent_dist
+opmanager-central-check
+server/data/seed.json
+server/data/db.json
+server/data/opmanager.db
+server/data/.admin-initial
+*.log
+debug_*.png
+test_*.png
+.DS_Store

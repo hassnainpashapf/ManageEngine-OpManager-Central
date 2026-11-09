@@ -11,8 +11,14 @@ COPY package*.json ./
 # Install production dependencies
 RUN npm ci --only=production
 
-# Copy project files
+# Copy project files (.dockerignore excludes .git, node_modules, scripts,
+# docs, and the runtime/seed data files — no seed.json, db.json, SQLite DB,
+# or hardcoded API key is ever baked into the image; server/data/templates/
+# and server/data/mibs/ ARE copied — they are real reference data)
 COPY . .
+
+# SQLite DB lives on a volume so data survives container rebuilds
+VOLUME /app/server/data
 
 # Expose OpManager Central default port
 EXPOSE 8060

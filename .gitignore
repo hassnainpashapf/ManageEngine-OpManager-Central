@@ -14,3 +14,9 @@ Thumbs.db
 # Temporary Debug Screenshots
 debug_*.png
 test_*.png
+
+# Runtime Data (SQLite DB + first-run markers — never commit)
+server/data/opmanager.db
+server/data/.admin-initial
+server/data/db.json
+server/data/seed.json

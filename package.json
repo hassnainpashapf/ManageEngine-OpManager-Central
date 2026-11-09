@@ -5,12 +5,15 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "dev": "node server/index.js"
+    "dev": "node server/index.js",
+    "build": "node scripts/rebuild_bundle.js",
+    "test": "node --check server/index.js && node --check server/services/store.js"
   },
   "dependencies": {
     "compression": "^1.8.2",
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "net-snmp": "^3.29.2",
     "ws": "^8.18.0"
   }
 }

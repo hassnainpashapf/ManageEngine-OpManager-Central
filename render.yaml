@@ -8,5 +8,8 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 8060
+      # NOTE: no PORT here — Render injects $PORT dynamically and the server
+      # listens on process.env.PORT (see server/index.js).
+      # NOTE: free plan has NO persistent disk, so server/data (SQLite DB)
+      # resets on every redeploy/restart. Data loss on redeploy is expected
+      # on this plan; use a paid plan with a persistent disk for durability.
