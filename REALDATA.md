@@ -410,6 +410,29 @@ Probes and host agents are different things — do not confuse them:
 - Agent config: server URL (default `http://localhost:8060`), telemetry
   interval (default **5 s**, `-interval` flag), installable as a Windows
   service / macOS daemon / Linux binary (`agent_dist/`).
+- **Phase 5 agent fixes (2026-11-09, `agent_src/`):** (a) `-install`'s
+  `sc.exe create` passed `binPath= <value>` / `start= auto` /
+  `DisplayName= ...` each as one argv element, which Go quoted into a
+  blob sc.exe could not parse (exit 1639 "Invalid start=") — the name
+  (`binPath=` etc.) and value are now separate argv elements
+  (`scCreateArgs`, unit-tested in `agent_src/main_test.go`); (b) the
+  agent now has a real Windows service handler
+  (`golang.org/x/sys/windows/svc`, `agent_src/service_windows.go`;
+  `svc.Run`, StartPending/Running/StopPending, Stop/Shutdown stops the
+  telemetry loop cleanly) so a created service no longer fails 1053 —
+  console / scheduled-task runs are unchanged; (c) `agent.conf`,
+  `agent.id` and `agent.log` are resolved from the executable's
+  directory (`os.Executable()`), never the working directory — a run
+  with CWD=System32 previously failed with "No auth key configured"
+  although `<execDir>/agent.conf` existed. Config format, registration
+  and telemetry protocol are unchanged, so already-registered agents
+  keep working. **Caveat (honest):** the Windows service install/run
+  path is compiled and vetted (`GOOS=windows go vet` clean, svc handler
+  linked) but has NOT been exercised on a real Windows host yet — it
+  must be tested on the Techub PC (DESKTOP-SDN3CJD) before being
+  claimed working there. The macOS agent was not rebuilt in this pass
+  (`lipo` unavailable on the Linux build host), so `agent_dist/macos/`
+  still holds the pre-fix binary.
 - **Registration is admin-only now:** `POST /api/agents/register`
   (session) with `{agentId, hostname}` issues a one-time agent key,
   stored only as a SHA-256 hash under `api_keys` with name

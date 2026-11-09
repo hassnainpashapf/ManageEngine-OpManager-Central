@@ -117,8 +117,11 @@ func main() {
 
 	flag.Parse()
 
-	// Open local log file for troubleshooting
-	f, err := os.OpenFile("agent.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	// Open the local log file for troubleshooting. The log lives next to
+	// the executable, never in the working directory: a service (or a
+	// scheduled task) starts with CWD=System32, where the agent cannot
+	// and must not write. See executableDir / bug (c).
+	f, err := os.OpenFile(logFilePath(executableDir()), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err == nil {
 		logFile = f
 		defer logFile.Close()
@@ -163,6 +166,20 @@ func main() {
 
 	printBanner(cfg)
 
+	// Bug (b): when the Service Control Manager starts this process, run
+	// as a real Windows service (service handler in service_windows.go)
+	// instead of the console loop, so SCM Stop/Shutdown works and the
+	// process no longer fails with 1053. On non-Windows, and on Windows
+	// when started from a console / scheduled task, isWindowsService()
+	// is false and the console loop below runs unchanged.
+	if isWindowsService() {
+		if err := runAsWindowsService(cfg); err != nil {
+			fmt.Fprintf(os.Stderr, "[ERROR] Windows service failed: %v\n", err)
+			os.Exit(1)
+		}
+		return
+	}
+
 	if *installFlag {
 		installService(cfg)
 		return
@@ -189,7 +206,57 @@ func printBanner(cfg AgentConfig) {
 	fmt.Println("------------------------------------------------------------------")
 }
 
+// executableDir returns the directory holding this executable, resolved
+// through symlinks. All agent state (agent.conf, agent.id, agent.log)
+// is resolved from here — never from the working directory.
+//
+// Bug (c): the old loadConfig searched "agent.conf" / "./agent.conf"
+// (i.e. the CWD) before the executable's directory, and the log file was
+// opened as a bare relative "agent.log". A run whose CWD is System32
+// (a Windows service, or a scheduled task started without "Start in")
+// therefore failed with "No auth key configured" even though
+// <execDir>/agent.conf existed and was readable. Nothing in this file
+// may resolve agent state from the CWD any more.
+func executableDir() string {
+	exePath, err := os.Executable()
+	if err != nil {
+		logWarn(fmt.Sprintf("Could not determine executable path (%v); using working directory as a last resort", err))
+		return "."
+	}
+	if resolved, err := filepath.EvalSymlinks(exePath); err == nil {
+		exePath = resolved
+	}
+	return filepath.Dir(exePath)
+}
+
+// logFilePath returns the agent log path for the given executable dir.
+func logFilePath(execDir string) string {
+	return filepath.Join(execDir, "agent.log")
+}
+
+// agentIDPath returns the stable-ID file path for the given executable dir.
+func agentIDPath(execDir string) string {
+	return filepath.Join(execDir, "agent.id")
+}
+
 func loadConfig() AgentConfig {
+	return loadConfigFromDir(executableDir())
+}
+
+// loadConfigFromDir loads configuration with execDir as the anchor.
+// Search order (first readable file wins):
+//  1. <execDir>/OPMAgentServerInfo.json, then <execDir>/agent.conf
+//  2. The fixed install locations (C:\OpManagerAgent, Program Files
+//     ManageEngine path, /etc/opmanager on Unix)
+//  3. Environment variables (SERVER_URL / PROBE_ID / AUTH_KEY /
+//     POLL_INTERVAL) when no config file was found.
+//
+// The working directory is deliberately NOT searched: a service or
+// scheduled task can start with any CWD (System32 is the usual one),
+// and a stray agent.conf in that CWD must never shadow the installed
+// configuration. The agent.conf format is unchanged (SERVER_URL,
+// PROBE_ID, AUTH_KEY, POLL_INTERVAL, CUSTOM_NAME).
+func loadConfigFromDir(execDir string) AgentConfig {
 	cfg := AgentConfig{
 		ServerURL:    DefaultServer,
 		ProbeID:      DefaultProbe,
@@ -197,13 +264,8 @@ func loadConfig() AgentConfig {
 		PollInterval: DefaultInterval,
 	}
 
-	execPath, _ := os.Executable()
-	execDir := filepath.Dir(execPath)
-
 	// 1. Search for ManageEngine OPMAgentServerInfo.json
 	jsonPaths := []string{
-		"OPMAgentServerInfo.json",
-		filepath.Join(".", "OPMAgentServerInfo.json"),
 		filepath.Join(execDir, "OPMAgentServerInfo.json"),
 		"C:\\OpManagerAgent\\OPMAgentServerInfo.json",
 		"C:\\Program Files\\ManageEngine\\OpManagerAgent\\OPMAgentServerInfo.json",
@@ -258,10 +320,9 @@ func loadConfig() AgentConfig {
 
 	// 2. Search for agent.conf
 	searchPaths := []string{
-		"agent.conf",
-		filepath.Join(".", "agent.conf"),
 		filepath.Join(execDir, "agent.conf"),
 		"/etc/opmanager/agent.conf",
+		"C:\\OpManagerAgent\\agent.conf",
 		"C:\\Program Files\\ManageEngine\\OpManagerAgent\\agent.conf",
 	}
 
@@ -335,18 +396,26 @@ func loadConfig() AgentConfig {
 // loadOrCreateAgentID returns the stable identity for this host. The ID is
 // generated once (a random UUID) and stored in agent.id next to the binary,
 // so the same host keeps the same ID across restarts instead of
-// re-registering as a different agent on every launch.
+// re-registering as a different agent on every launch. The file is
+// resolved from the executable directory (bug (c)); the working
+// directory is never used. If the binary's directory is not writable,
+// the ID is persisted under the per-user config directory instead.
 func loadOrCreateAgentID() string {
-	exePath, err := os.Executable()
-	dir := "."
-	if err == nil {
-		dir = filepath.Dir(exePath)
-	}
-	idFile := filepath.Join(dir, "agent.id")
+	return loadOrCreateAgentIDIn(executableDir())
+}
 
-	if data, err := os.ReadFile(idFile); err == nil {
-		if id := strings.TrimSpace(string(data)); id != "" {
-			return id
+func loadOrCreateAgentIDIn(dir string) string {
+	idFile := agentIDPath(dir)
+	fallback := fallbackAgentIDPath()
+
+	for _, p := range []string{idFile, fallback} {
+		if p == "" {
+			continue
+		}
+		if data, err := os.ReadFile(p); err == nil {
+			if id := strings.TrimSpace(string(data)); id != "" {
+				return id
+			}
 		}
 	}
 
@@ -360,11 +429,11 @@ func loadOrCreateAgentID() string {
 	id := fmt.Sprintf("AGT-%08x-%04x-%04x-%04x-%012x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:16])
 
 	if err := os.WriteFile(idFile, []byte(id+"\n"), 0600); err != nil {
-		// The binary's directory may be read-only; fall back to the
-		// working directory so the ID is still persisted when possible.
-		fallback := filepath.Join(".", "agent.id")
-		if err2 := os.WriteFile(fallback, []byte(id+"\n"), 0600); err2 != nil {
-			logWarn(fmt.Sprintf("Could not persist agent ID to %s or %s (%v / %v); this run will use a one-off ID.", idFile, fallback, err, err2))
+		// The binary's directory may be read-only (e.g. Program Files
+		// without elevation); fall back to the per-user config dir so
+		// the ID is still persisted when possible.
+		if fallback == "" || os.MkdirAll(filepath.Dir(fallback), 0700) != nil || os.WriteFile(fallback, []byte(id+"\n"), 0600) != nil {
+			logWarn(fmt.Sprintf("Could not persist agent ID to %s or %s (%v); this run will use a one-off ID.", idFile, fallback, err))
 		} else {
 			logInfo(fmt.Sprintf("Agent ID created and stored in %s", fallback))
 		}
@@ -374,7 +443,33 @@ func loadOrCreateAgentID() string {
 	return id
 }
 
+// fallbackAgentIDPath is where the stable ID is persisted when the
+// binary's directory is not writable: %AppData%\opmanager-agent\
+// agent.id on Windows, ~/.config/opmanager-agent/agent.id on Unix.
+// Empty when no per-user config directory can be determined.
+func fallbackAgentIDPath() string {
+	cfgDir, err := os.UserConfigDir()
+	if err != nil {
+		return ""
+	}
+	return filepath.Join(cfgDir, "opmanager-agent", "agent.id")
+}
+
 func runAgent(cfg AgentConfig) {
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+	stop := make(chan struct{})
+	go func() {
+		<-sigChan
+		close(stop)
+	}()
+	runAgentLoop(cfg, stop)
+}
+
+// runAgentLoop is the agent main loop. It returns (instead of exiting)
+// when stop is closed, so the Windows service handler can stop it on an
+// SCM Stop/Shutdown request; runAgent above feeds stop from SIGINT/SIGTERM.
+func runAgentLoop(cfg AgentConfig, stop <-chan struct{}) {
 	hostname, _ := os.Hostname()
 	if cfg.CustomName != "" {
 		hostname = cfg.CustomName
@@ -399,9 +494,6 @@ func runAgent(cfg AgentConfig) {
 	ticker := time.NewTicker(time.Duration(cfg.PollInterval) * time.Second)
 	defer ticker.Stop()
 
-	sigChan := make(chan os.Signal, 1)
-	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
-
 	logSuccess(fmt.Sprintf("Agent started successfully. Polling every %d seconds. Press Ctrl+C to terminate.", cfg.PollInterval))
 
 	// Initial poll immediately
@@ -409,7 +501,7 @@ func runAgent(cfg AgentConfig) {
 
 	for {
 		select {
-		case <-sigChan:
+		case <-stop:
 			logInfo("Received termination signal. Notifying OpManager Central...")
 			sendDeregister(cfg)
 			logInfo("OpManager Agent stopped cleanly.")
@@ -583,9 +675,88 @@ func testConnection(cfg AgentConfig) {
 	logSuccess(fmt.Sprintf("Successfully connected to OpManager Central at %s: agent API answered (totalAgents=%d, activeAgents=%d)", cfg.ServerURL, listResp.TotalAgents, listResp.ActiveAgents))
 }
 
-// serviceArgs returns the command-line arguments the installed service must
-// run with, so the daemon reports to the configured server/probe with the
-// configured key instead of silently falling back to defaults.
+// quoteCmdArg quotes one command-line argument the way the Windows
+// command-line parser (CommandLineToArgvW, which sc.exe's parser follows
+// for quoted values) expects: arguments without spaces/tabs/quotes are
+// passed bare; anything else is wrapped in double quotes with inner
+// quotes escaped as \" and trailing backslashes doubled.
+func quoteCmdArg(s string) string {
+	if s == "" {
+		return `""`
+	}
+	if !strings.ContainsAny(s, " \t\"") {
+		return s
+	}
+	var b strings.Builder
+	b.WriteByte('"')
+	for i := 0; i < len(s); i++ {
+		if s[i] == '"' {
+			b.WriteString(`\"`)
+		} else if s[i] == '\\' {
+			// Count a run of backslashes: double them when they precede
+			// a quote or the closing quote, else pass through.
+			j := i
+			for j < len(s) && s[j] == '\\' {
+				j++
+			}
+			if j >= len(s) || s[j] == '"' {
+				for k := i; k < j; k++ {
+					b.WriteString(`\\`)
+				}
+			} else {
+				for k := i; k < j; k++ {
+					b.WriteByte('\\')
+				}
+			}
+			i = j - 1
+		} else {
+			b.WriteByte(s[i])
+		}
+	}
+	b.WriteByte('"')
+	return b.String()
+}
+
+// scBinPath builds the value for sc.exe's binPath= parameter: the quoted
+// executable path followed by the service arguments, each quoted as
+// needed. The whole value is ONE argv element (see scCreateArgs); Go's
+// Windows command-line builder then wraps it in outer quotes, producing
+// exactly the form sc.exe documents, e.g.
+// binPath= ""C:\Program Files\OpManagerAgent\OpManagerAgent.exe" -server http://... -probe 101 -key <key> -interval 5"
+// (outer quotes delimit the value, inner quotes protect a spaced path).
+func scBinPath(exePath string, args []string) string {
+	parts := []string{quoteCmdArg(exePath)}
+	for _, a := range args {
+		parts = append(parts, quoteCmdArg(a))
+	}
+	return strings.Join(parts, " ")
+}
+
+// scCreateArgs returns the exact argv for `sc.exe create` for this agent.
+//
+// Bug (a): the old code built "binPath= <value>", "start= auto" and
+// "DisplayName= ..." each as a SINGLE argv element. Go's exec.Command
+// quotes any argv element containing spaces, so sc.exe received
+// `"binPath= \"C:\...\" ..."` — a quoted blob whose leading token is
+// `"binPath=` — and its own command-line parser could not find the
+// binPath/start values, failing with exit 1639 ("Invalid start=").
+// sc.exe requires the parameter name (with its mandatory space after
+// `=`) and the value as SEPARATE whitespace-separated tokens, so each
+// `name=` and its value must be separate argv elements; Go then quotes
+// only the values that contain spaces, and sc.exe parses them correctly.
+func scCreateArgs(exePath string, args []string) []string {
+	return []string{
+		"create", "OpManagerCentralAgent",
+		"binPath=", scBinPath(exePath, args),
+		"start=", "auto",
+		"DisplayName=", "ManageEngine OpManager Central Agent",
+	}
+}
+
+// buildScCreateCmd builds the sc.exe create command for -install.
+func buildScCreateCmd(exePath string, args []string) *exec.Cmd {
+	return exec.Command("sc.exe", scCreateArgs(exePath, args)...)
+}
 func serviceArgs(cfg AgentConfig) []string {
 	return []string{
 		"-server", cfg.ServerURL,
@@ -619,14 +790,8 @@ func installService(cfg AgentConfig) {
 	if runtime.GOOS == "windows" {
 		fmt.Println("[INSTALL] Registering Windows Service: OpManagerCentralAgent...")
 		exePath, _ := os.Executable()
-		binPath := fmt.Sprintf("\"%s\"", exePath)
-		for _, a := range args {
-			binPath += fmt.Sprintf(" \"%s\"", a)
-		}
-		cmd := exec.Command("sc.exe", "create", "OpManagerCentralAgent",
-			"binPath= "+binPath,
-			"start= auto",
-			"DisplayName= ManageEngine OpManager Central Agent")
+		cmd := buildScCreateCmd(exePath, args)
+		fmt.Printf("[INFO] sc.exe command line: sc.exe %s\n", strings.Join(cmd.Args[1:], " "))
 		out, err := cmd.CombinedOutput()
 		if err != nil {
 			fmt.Printf("[ERROR] sc.exe failed: %v, Output: %s\n", err, string(out))
@@ -634,7 +799,7 @@ func installService(cfg AgentConfig) {
 			os.Exit(1)
 		}
 		fmt.Println("[SUCCESS] Windows Service 'OpManagerCentralAgent' created successfully!")
-		fmt.Printf("[INFO] Service command line: %s\n", binPath)
+		fmt.Printf("[INFO] Service command line: %s\n", scBinPath(exePath, args))
 		startCmd := exec.Command("sc.exe", "start", "OpManagerCentralAgent")
 		if out, err := startCmd.CombinedOutput(); err != nil {
 			fmt.Printf("[WARN] Service created but could not be started: %v, Output: %s\n", err, string(out))
