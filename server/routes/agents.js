@@ -442,6 +442,24 @@ router.post('/api/agent/telemetry', (req, res) => {
   });
 });
 
+// Read-only connectivity check for the agent's -test flag: validates the
+// agentId + key the same way telemetry does, but never records anything.
+// Key-authenticated like telemetry/register/deregister (see index.js's
+// KEY_AUTH_API_ROUTES), never a session-only route like /api/agent/list.
+router.get('/api/agent/ping', (req, res) => {
+  const agentId = req.query && req.query.agentId;
+  if (!agentId) {
+    return res.status(400).json({ status: 'error', message: 'agentId is required' });
+  }
+  if (!store.agents.getAgent(agentId)) {
+    return res.status(401).json({ status: 'error', message: 'Unknown agent: register first via POST /api/agents/register' });
+  }
+  if (!authenticateAgent(req, agentId)) {
+    return res.status(401).json({ status: 'error', message: 'Invalid or missing agent auth key' });
+  }
+  return res.json({ status: 'success', ack: true, agentId, timestamp: new Date().toISOString() });
+});
+
 // List all registered agents, with their last real telemetry (null fields
 // when never reported) and staleness-derived status.
 router.get(['/api/agent/list', '/api/agents'], (req, res) => {

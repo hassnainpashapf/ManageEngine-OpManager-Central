@@ -148,6 +148,7 @@ const KEY_AUTH_API_ROUTES = new Set([
   'POST /api/agent/register',
   'POST /api/agent/telemetry',
   'POST /api/agent/deregister',
+  'GET /api/agent/ping',
 ]);
 
 // Legacy ManageEngine paths served by the same routers without an /api

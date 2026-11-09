@@ -93,12 +93,6 @@ type RegisterResponse struct {
 	Heartbeat int    `json:"heartbeat"`
 }
 
-type agentListResponse struct {
-	TotalAgents  int               `json:"totalAgents"`
-	ActiveAgents int               `json:"activeAgents"`
-	Agents       []json.RawMessage `json:"agents"`
-}
-
 var (
 	startTime = time.Now()
 	agentID   string
@@ -162,6 +156,10 @@ func main() {
 	}
 
 	printBanner(cfg)
+
+	// Needed by both -test (to ping as this agent's real identity) and the
+	// normal run path below; computing it here is idempotent and harmless.
+	agentID = loadOrCreateAgentID()
 
 	if *installFlag {
 		installService(cfg)
@@ -542,13 +540,13 @@ func sendDeregister(cfg AgentConfig) {
 }
 
 // testConnection verifies the server actually answers the agent API: it
-// performs an authenticated GET of /api/agent/list and checks the response
-// is really an OpManager agent list (JSON with an "agents" array). Any
-// other status, a non-JSON body, or a body without that shape is a failure —
-// a bare HTTP 200 from some other endpoint proves nothing.
+// performs an authenticated GET of /api/agent/ping (the key-authenticated,
+// read-only connectivity check - the same auth path telemetry/register use,
+// unlike /api/agent/list which requires an admin browser session and will
+// always 401 an agent's key). Any non-200 or non-success body is a failure.
 func testConnection(cfg AgentConfig) {
 	logInfo(fmt.Sprintf("Testing Central agent API at %s...", cfg.ServerURL))
-	url := fmt.Sprintf("%s/api/agent/list", cfg.ServerURL)
+	url := fmt.Sprintf("%s/api/agent/ping?agentId=%s", cfg.ServerURL, agentID)
 
 	client := &http.Client{Timeout: 5 * time.Second}
 	req, err := http.NewRequest("GET", url, nil)
@@ -566,21 +564,24 @@ func testConnection(cfg AgentConfig) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		logError(fmt.Sprintf("Connection test failed: server replied HTTP %d to GET %s (expected 200 with an agent list)", resp.StatusCode, url))
+		logError(fmt.Sprintf("Connection test failed: server replied HTTP %d to GET %s (expected 200 with ack:true) - check the agent ID and auth key match a registration from POST /api/agents/register", resp.StatusCode, url))
 		os.Exit(1)
 	}
 
-	var listResp agentListResponse
-	if err := json.NewDecoder(resp.Body).Decode(&listResp); err != nil {
-		logError(fmt.Sprintf("Connection test failed: server replied HTTP 200 but the body is not a valid agent-list response (%v)", err))
+	var pingResp struct {
+		Status string `json:"status"`
+		Ack    bool   `json:"ack"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&pingResp); err != nil {
+		logError(fmt.Sprintf("Connection test failed: server replied HTTP 200 but the body is not a valid ping response (%v)", err))
 		os.Exit(1)
 	}
-	if listResp.Agents == nil {
-		logError("Connection test failed: server replied HTTP 200 but the body has no \"agents\" array — this does not look like the OpManager agent API")
+	if pingResp.Status != "success" || !pingResp.Ack {
+		logError("Connection test failed: server replied HTTP 200 but did not acknowledge the agent - this does not look like the OpManager agent API")
 		os.Exit(1)
 	}
 
-	logSuccess(fmt.Sprintf("Successfully connected to OpManager Central at %s: agent API answered (totalAgents=%d, activeAgents=%d)", cfg.ServerURL, listResp.TotalAgents, listResp.ActiveAgents))
+	logSuccess(fmt.Sprintf("Successfully connected to OpManager Central at %s as agent '%s': the server authenticated the key and acknowledged the agent.", cfg.ServerURL, agentID))
 }
 
 // serviceArgs returns the command-line arguments the installed service must
