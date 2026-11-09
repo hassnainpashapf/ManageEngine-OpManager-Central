@@ -74,8 +74,14 @@
  * has not landed, reads honestly answer 501 instead of failing open.
  */
 const express = require('express');
+const { requireAuth, requireRole } = require('../services/session');
 
 const router = express.Router();
+
+// A4 G-03: HA settings mutations are admin-only (same pattern as the NCM
+// approval routes). The peer endpoints (/api/ha/register, /api/ha/heartbeat)
+// deliberately stay peer-secret authenticated — they carry no user session.
+const ADMIN = [requireAuth, requireRole('admin')];
 
 const HA_UNAVAILABLE =
   'HA service is not available in this build: server/services/ha.js has not landed yet.';
@@ -344,7 +350,7 @@ router.post('/api/ha/register', (req, res) => {
 // trigger given current liveness. This handler never promotes, never
 // changes settings.ha, and never calls any device or firewall.
 
-router.post('/api/ha/failover/test', async (req, res) => {
+router.post('/api/ha/failover/test', ADMIN, async (req, res) => {
   const ha = haOr501(req, res);
   if (!ha) return;
   try {
@@ -387,7 +393,7 @@ router.get('/api/settings/ha', (req, res) => {
   }
 });
 
-router.post('/api/settings/ha', (req, res) => {
+router.post('/api/settings/ha', ADMIN, (req, res) => {
   const ha = haOr501(req, res);
   if (!ha) return;
   const body = req.body || {};
@@ -436,7 +442,7 @@ router.post('/api/settings/ha', (req, res) => {
   res.json({ status: 'success', message: 'HA settings saved.', ha: config, ticker });
 });
 
-router.post('/api/settings/ha/test', async (req, res) => {
+router.post('/api/settings/ha/test', ADMIN, async (req, res) => {
   const ha = haOr501(req, res);
   if (!ha) return;
   try {

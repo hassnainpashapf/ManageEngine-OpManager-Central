@@ -35,6 +35,12 @@ const fs = require('node:fs');
 const { execFile } = require('node:child_process');
 const { promisify } = require('node:util');
 const store = require('../services/store');
+const { requireAuth, requireRole } = require('../services/session');
+
+// A4 G-03: probe add/delete are admin-only (same pattern as the NCM
+// approval routes). Heartbeat stays key-authenticated; sync/test stay
+// session-only console operations.
+const ADMIN = [requireAuth, requireRole('admin')];
 
 const router = express.Router();
 const run = promisify(execFile);
@@ -242,6 +248,16 @@ function probeDevicesAndAlarms(probeId) {
 router.all(['/api/json/enterprise/deleteProbe', '/api/probes/:id/delete', '/api/probes/:id'], (req, res, next) => {
   if (req.method !== 'POST' && req.method !== 'DELETE') return next();
   // '/api/probes/sync-all' also matches '/api/probes/:id' (:id = 'sync-all');
+  // this route is registered first, so let the sync-all handler below own
+  // it — the admin check must not 403 a session-only sync operation.
+  if (req.params.id === 'sync-all') return next();
+  return requireAuth(req, res, (err) => {
+    if (err) return next(err);
+    return requireRole('admin')(req, res, next);
+  });
+}, (req, res, next) => {
+  if (req.method !== 'POST' && req.method !== 'DELETE') return next();
+  // '/api/probes/sync-all' also matches '/api/probes/:id' (:id = 'sync-all');
   // this route is registered first, so let the sync-all handler below own it.
   if (req.params.id === 'sync-all') return next();
   const probeId = parseProbeId((req.body && req.body.probeId) || req.params.id);
@@ -410,7 +426,7 @@ router.get(['/enterprise/getProbeDetails', '/api/json/enterprise/getProbeDetails
 // must prove the host is up, otherwise nothing is registered (502). The
 // auth key is a fresh random value; only its SHA-256 hash is stored, and
 // the key itself is shown exactly once in this response.
-router.post(['/api/json/enterprise/addProbe', '/enterprise/addProbe', '/api/probes'], async (req, res) => {
+router.post(['/api/json/enterprise/addProbe', '/enterprise/addProbe', '/api/probes'], ADMIN, async (req, res) => {
   const { name, ip } = req.body || {};
   const portRaw = req.body && req.body.port !== undefined ? Number(req.body.port) : DEFAULT_PROBE_PORT;
   const port = Number.isInteger(portRaw) && portRaw >= 1 && portRaw <= 65535 ? portRaw : DEFAULT_PROBE_PORT;
