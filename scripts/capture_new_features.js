@@ -35,7 +35,7 @@ async function captureNewFeatures() {
   // 3. Open Device Snapshot Modal and switch to "Diagnostic CLI & SNMP" Tab
   console.log('3. Capturing Device Snapshot Diagnostic CLI Tab...');
   await page.evaluate(() => {
-    const dev = window.OpManagerSuite.state.devices[0]; // DXB-CORE-SW-01
+    const dev = window.OpManagerSuite.state.devices[0];
     window.OpManagerSuite.showDeviceSnapshotModal(dev);
   });
   await new Promise(r => setTimeout(r, 600));

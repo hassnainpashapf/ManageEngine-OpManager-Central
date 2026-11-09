@@ -1,23 +1,46 @@
+// Verifies 3 UI issues against the REAL OpManager Central server:
+//   1. Header active tab stays confined to its row (no enlargement/overlap).
+//   2. Dashboard Summary subtab shows the honest empty state — no fake
+//      "8 Devices / Core Fabric", "Palo Alto & Fortinet NGFW" or
+//      "NetApp AFF A400 NVMe" seed copy.
+//   3. Non-standard pills [BGP-4], [SD-WAN], [DPI], [NDR] are gone.
+//
+// Usage:
+//   OPM_BASE_URL=http://localhost:8060 CHROME_BIN=google-chrome \
+//     node scripts/verify_user_3_issues.js
+//
+// The console route requires a logged-in session: unauthenticated requests
+// are redirected to /login.html. If the dashboard shell never loads this
+// script FAILS with a clear message instead of passing vacuously. To run
+// authenticated, point CHROME_USER_DATA_DIR at a Chrome profile that already
+// holds a session, or use the live harness under
+// ~/workspace/opm-check/real-data/verify/.
+// No credentials are hardcoded or read here.
 const { spawn } = require('child_process');
 const http = require('http');
-const WebSocket = require('/Users/hussnainpasha/.gemini/antigravity/scratch/opmanager-central/node_modules/ws');
+const WebSocket = require('ws');
 const fs = require('fs');
 const path = require('path');
 
 const port = 9652;
-const artifactDir = '/Users/hussnainpasha/.gemini/antigravity/brain/31e74a1e-a0ce-4ee5-a5c6-1e026db3577c';
-const userDataDir = `/tmp/chrome-test-${Date.now()}`;
-const targetUrl = 'http://192.168.30.65:8060/apiclient/fluidicv3/itom/index.html#/dashboard';
+const baseUrl = (process.env.OPM_BASE_URL || 'http://localhost:8060').replace(/\/$/, '');
+const chromeBin = process.env.CHROME_BIN || 'google-chrome';
+const artifactDir = process.env.OPM_ARTIFACT_DIR || path.join(__dirname, '..', 'artifacts', 'verify-user-3-issues');
+fs.mkdirSync(artifactDir, { recursive: true });
+const userDataDir = process.env.CHROME_USER_DATA_DIR || `/tmp/chrome-test-${Date.now()}`;
+const targetUrl = `${baseUrl}/apiclient/fluidicv3/itom/index.html#/dashboard`;
 
 async function main() {
-  console.log('1. Launching Chrome to verify all 3 user issues on live CT 108...');
-  const chrome = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', [
+  const failures = [];
+  console.log('1. Launching Chrome to verify all 3 user issues on the real server...');
+  const chrome = spawn(chromeBin, [
     '--headless',
     '--disable-gpu',
     `--remote-debugging-port=${port}`,
     `--user-data-dir=${userDataDir}`,
     '--no-first-run',
     '--no-default-browser-check',
+    '--no-sandbox',
     '--window-size=1600,1000'
   ]);
 
@@ -89,9 +112,26 @@ async function main() {
     console.log(`  ✓ Saved screenshot: ${filename} (${(buffer.length / 1024).toFixed(1)} KB)`);
   }
 
-  console.log('2. Navigating to CT 108 with cache disabled:', targetUrl);
+  console.log('2. Navigating to real server with cache disabled:', targetUrl);
   await send('Page.navigate', { url: targetUrl });
   await new Promise(r => setTimeout(r, 4500));
+
+  // Honesty gate: the console route redirects unauthenticated browsers to
+  // /login.html. If the suite shell never mounted, the checks below would
+  // pass vacuously — fail instead.
+  const loaded = await evaluate(`(() => ({
+    onLoginPage: window.location.pathname.includes('login'),
+    suiteMounted: !!document.getElementById('opm-custom-suite-container')
+  }))()`);
+  console.log('Dashboard load gate:', JSON.stringify(loaded));
+  if (!loaded || loaded.onLoginPage || !loaded.suiteMounted) {
+    console.error('FAIL: dashboard shell did not load — likely unauthenticated (redirected to login).');
+    console.error('Run with CHROME_USER_DATA_DIR pointing at a profile with a live console session,');
+    console.error('or use the live harness under ~/workspace/opm-check/real-data/verify/.');
+    ws.close();
+    chrome.kill();
+    process.exit(1);
+  }
 
   // --- ISSUE 1 VERIFICATION: Active tab height and row confinement ---
   console.log('3. Verifying Issue 1: Header Active Tab Row Confinement (No enlargement, no overlap):');
@@ -117,6 +157,7 @@ async function main() {
     };
   })()`);
   console.log('Header Tab Geometry:', JSON.stringify(headerCheck, null, 2));
+  if (headerCheck.overlapsSubnav) failures.push('Issue 1: active tab overlaps the subnav row');
 
   // --- ISSUE 3 VERIFICATION: Non-standard pills [BGP-4], [SD-WAN], [DPI], [NDR] removed ---
   console.log('4. Verifying Issue 3: Purge of non-standard pills [BGP-4], [SD-WAN], [DPI], [NDR]:');
@@ -129,8 +170,11 @@ async function main() {
     };
   })()`);
   console.log('Toolbar Pills Status (all must be false):', JSON.stringify(toolbarCheck, null, 2));
+  if (toolbarCheck.bgpPill || toolbarCheck.sdwanPill || toolbarCheck.dpiPill || toolbarCheck.ndrPill) {
+    failures.push('Issue 3: a non-standard pill is still present');
+  }
 
-  await captureScreenshot('ct108_verified_header_and_dashboard.png');
+  await captureScreenshot('verified_header_and_dashboard.png');
 
   // --- ISSUE 2 VERIFICATION: Summary subtab clean state ---
   console.log('5. Verifying Issue 2: Dashboard Summary subtab:');
@@ -148,6 +192,7 @@ async function main() {
   const summaryCheck = await evaluate(`(() => {
     const text = document.body.innerText;
     return {
+      // Any of these true means fake/seeded summary copy leaked back in.
       hasFake8Devices: text.includes('8 Devices') && text.includes('Core Fabric & Edge Gateways'),
       hasFakeServers: text.includes('5 Servers') && text.includes('Database, Mail, Web, Cache'),
       hasFakeFirewalls: text.includes('Palo Alto & Fortinet NGFW'),
@@ -156,7 +201,13 @@ async function main() {
     };
   })()`);
   console.log('Summary Subtab Verification:', JSON.stringify(summaryCheck, null, 2));
-  await captureScreenshot('ct108_verified_summary.png');
+  if (summaryCheck.hasFake8Devices || summaryCheck.hasFakeServers || summaryCheck.hasFakeFirewalls || summaryCheck.hasFakeSAN) {
+    failures.push('Issue 2: fake/seeded summary copy present');
+  }
+  if (!summaryCheck.hasCleanZeroState) {
+    failures.push('Issue 2: honest empty state not shown on Summary subtab');
+  }
+  await captureScreenshot('verified_summary.png');
 
   // Test clicking other header tabs:
   console.log('6. Testing clicking other header tabs to confirm strict 50px constraint:');
@@ -174,10 +225,15 @@ async function main() {
     console.log(`  Tab '${t}':`, hMetric);
   }
 
-  await captureScreenshot('ct108_verified_settings.png');
+  await captureScreenshot('verified_settings.png');
 
   ws.close();
   chrome.kill();
+  if (failures.length) {
+    console.error('FAILURES:');
+    failures.forEach(f => console.error('  - ' + f));
+    process.exit(1);
+  }
   console.log('Verification completed successfully!');
 }
 

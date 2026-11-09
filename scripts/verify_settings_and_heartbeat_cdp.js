@@ -125,7 +125,7 @@ async function main() {
       hasSettingsEnterpriseHeader: text.includes('Enterprise Admin Console'),
       hasProbesMatrix: text.includes('OpManager Central Quick Configuration Matrix') && text.includes('Distributed Probe WAN Latency Matrix'),
       hasCentralMasterArchitecture: text.includes('OpManager Central Master Node & Distributed Probe Architecture'),
-      isConfigShowing: text.includes('Startup-Running Conflict Diff') || text.includes('NCM Module v12.9.203'),
+      isConfigShowing: text.includes('Startup-Running Conflict Diff') || text.includes('NCM Module v12.9.204-GA'),
       subtabButtonsCount: subtabBtns.length,
       subtabNamesSample: subtabBtns.slice(0, 6),
       activeSubtab: activeSubtab,

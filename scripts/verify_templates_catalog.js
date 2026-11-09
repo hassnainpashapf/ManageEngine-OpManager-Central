@@ -1,23 +1,47 @@
+// Exercises the Device Templates catalog UI against the REAL OpManager
+// Central server: initial load, SWITCHES / FIREWALLS / ALL filters,
+// real-time search, template-details modal, "Apply to Nodes" modal.
+//
+// The templates catalog is a static vendor/template definition (not
+// collected site data), so exercising it is legitimate against the real
+// server. This script asserts no device counts and no seeded demo data —
+// it only reports what the catalog UI actually shows.
+//
+// Usage:
+//   OPM_BASE_URL=http://localhost:8060 CHROME_BIN=google-chrome \
+//     node scripts/verify_templates_catalog.js
+//
+// The console route requires a logged-in session: unauthenticated requests
+// are redirected to /login.html. If the dashboard shell never loads this
+// script FAILS with a clear message instead of passing vacuously. To run
+// authenticated, point CHROME_USER_DATA_DIR at a Chrome profile that already
+// holds a session, or use the live harness under
+// ~/workspace/opm-check/real-data/verify/.
+// No credentials are hardcoded or read here.
 const { spawn } = require('child_process');
 const http = require('http');
-const WebSocket = require('/Users/hussnainpasha/.gemini/antigravity/scratch/opmanager-central/node_modules/ws');
+const WebSocket = require('ws');
 const fs = require('fs');
 const path = require('path');
 
 const port = 9655;
-const artifactDir = '/Users/hussnainpasha/.gemini/antigravity/brain/31e74a1e-a0ce-4ee5-a5c6-1e026db3577c';
-const userDataDir = `/tmp/chrome-test-templates-${Date.now()}`;
-const targetUrl = 'http://192.168.30.65:8060/apiclient/fluidicv3/itom/index.html#/settings/templates';
+const baseUrl = (process.env.OPM_BASE_URL || 'http://localhost:8060').replace(/\/$/, '');
+const chromeBin = process.env.CHROME_BIN || 'google-chrome';
+const artifactDir = process.env.OPM_ARTIFACT_DIR || path.join(__dirname, '..', 'artifacts', 'verify-templates-catalog');
+fs.mkdirSync(artifactDir, { recursive: true });
+const userDataDir = process.env.CHROME_USER_DATA_DIR || `/tmp/chrome-test-templates-${Date.now()}`;
+const targetUrl = `${baseUrl}/apiclient/fluidicv3/itom/index.html#/settings/templates`;
 
 async function main() {
-  console.log('1. Launching Headless Chrome to test Device Templates Catalog on CT 108...');
-  const chrome = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', [
+  console.log('1. Launching Headless Chrome to test Device Templates Catalog on the real server...');
+  const chrome = spawn(chromeBin, [
     '--headless',
     '--disable-gpu',
     `--remote-debugging-port=${port}`,
     `--user-data-dir=${userDataDir}`,
     '--no-first-run',
     '--no-default-browser-check',
+    '--no-sandbox',
     '--window-size=1600,1000'
   ]);
 
@@ -92,6 +116,23 @@ async function main() {
   console.log('2. Navigating directly to Settings -> Templates:', targetUrl);
   await send('Page.navigate', { url: targetUrl });
   await new Promise(r => setTimeout(r, 4500));
+
+  // Honesty gate: the console route redirects unauthenticated browsers to
+  // /login.html. If the suite shell never mounted, the checks below would
+  // report an empty catalog instead of a real result — fail instead.
+  const loaded = await evaluate(`(() => ({
+    onLoginPage: window.location.pathname.includes('login'),
+    suiteMounted: !!document.getElementById('opm-custom-suite-container')
+  }))()`);
+  console.log('Dashboard load gate:', JSON.stringify(loaded));
+  if (!loaded || loaded.onLoginPage || !loaded.suiteMounted) {
+    console.error('FAIL: dashboard shell did not load — likely unauthenticated (redirected to login).');
+    console.error('Run with CHROME_USER_DATA_DIR pointing at a profile with a live console session,');
+    console.error('or use the live harness under ~/workspace/opm-check/real-data/verify/.');
+    ws.close();
+    chrome.kill();
+    process.exit(1);
+  }
 
   // 1. Initial Catalog Check
   console.log('3. Verifying Templates Table Initial Load:');

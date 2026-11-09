@@ -1,23 +1,43 @@
+// Verifies the REAL OpManager Central server renders a clean dashboard with
+// NO seeded/demo device names (DXB-CORE-SW-01, NY-DB-PROD-SQL,
+// LON-MAIL-EXCH-01). Fresh-store expectation: 0 devices, 0 probes — the
+// dashboard must not invent demo hardware.
+//
+// Usage:
+//   OPM_BASE_URL=http://localhost:8060 CHROME_BIN=google-chrome \
+//     node scripts/verify_live_ct108_clean.js
+//
+// The console route requires a logged-in session: unauthenticated requests
+// are redirected to /login.html. Headless Chrome starts with a fresh profile
+// by default, so if the dashboard shell never loads this script FAILS with a
+// clear message instead of passing vacuously. To run authenticated, point
+// CHROME_USER_DATA_DIR at a Chrome profile that already holds a session, or
+// use the live harness under ~/workspace/opm-check/real-data/verify/.
+// No credentials are hardcoded or read here.
 const { spawn } = require('child_process');
 const http = require('http');
-const WebSocket = require('/Users/hussnainpasha/.gemini/antigravity/scratch/opmanager-central/node_modules/ws');
+const WebSocket = require('ws');
 const fs = require('fs');
 const path = require('path');
 
 const port = 9648;
-const artifactDir = '/Users/hussnainpasha/.gemini/antigravity/brain/31e74a1e-a0ce-4ee5-a5c6-1e026db3577c';
-const userDataDir = `/tmp/chrome-test-${Date.now()}`;
-const targetUrl = 'http://192.168.30.65:8060/apiclient/fluidicv3/itom/index.html#/dashboard';
+const baseUrl = (process.env.OPM_BASE_URL || 'http://localhost:8060').replace(/\/$/, '');
+const chromeBin = process.env.CHROME_BIN || 'google-chrome';
+const artifactDir = process.env.OPM_ARTIFACT_DIR || path.join(__dirname, '..', 'artifacts', 'verify-live-clean');
+fs.mkdirSync(artifactDir, { recursive: true });
+const userDataDir = process.env.CHROME_USER_DATA_DIR || `/tmp/chrome-test-${Date.now()}`;
+const targetUrl = `${baseUrl}/apiclient/fluidicv3/itom/index.html#/dashboard`;
 
 async function main() {
   console.log('1. Launching isolated Chrome instance on port', port);
-  const chrome = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', [
+  const chrome = spawn(chromeBin, [
     '--headless',
     '--disable-gpu',
     `--remote-debugging-port=${port}`,
     `--user-data-dir=${userDataDir}`,
     '--no-first-run',
     '--no-default-browser-check',
+    '--no-sandbox',
     '--window-size=1600,1000'
   ]);
 
@@ -89,11 +109,28 @@ async function main() {
     console.log(`  ✓ Saved screenshot: ${filename} (${(buffer.length / 1024).toFixed(1)} KB)`);
   }
 
-  console.log('2. Navigating to CT 108 Dashboard with cache disabled:', targetUrl);
+  console.log('2. Navigating to real-server Dashboard with cache disabled:', targetUrl);
   await send('Page.navigate', { url: targetUrl });
   await new Promise(r => setTimeout(r, 4500));
 
-  console.log('3. Inspecting UI elements on CT 108:');
+  // Honesty gate: the console route redirects unauthenticated browsers to
+  // /login.html. If the suite shell never mounted, the "no mock names"
+  // checks below would pass vacuously — fail instead.
+  const loaded = await evaluate(`(() => ({
+    onLoginPage: window.location.pathname.includes('login'),
+    suiteMounted: !!document.getElementById('opm-custom-suite-container')
+  }))()`);
+  console.log('Dashboard load gate:', JSON.stringify(loaded));
+  if (!loaded || loaded.onLoginPage || !loaded.suiteMounted) {
+    console.error('FAIL: dashboard shell did not load — likely unauthenticated (redirected to login).');
+    console.error('Run with CHROME_USER_DATA_DIR pointing at a profile with a live console session,');
+    console.error('or use the live harness under ~/workspace/opm-check/real-data/verify/.');
+    ws.close();
+    chrome.kill();
+    process.exit(1);
+  }
+
+  console.log('3. Inspecting UI elements:');
   const inspectReport = await evaluate(`(() => {
     const subnav = document.getElementById('opm-header-subnav-bar');
     const customLauncher = document.getElementById('opm-app-launcher-btn');
@@ -113,6 +150,7 @@ async function main() {
       sdwanBtnVisible: sdwanBtn ? window.getComputedStyle(sdwanBtn).display !== 'none' : false,
       dpiBtnVisible: dpiBtn ? window.getComputedStyle(dpiBtn).display !== 'none' : false,
       ndrBtnVisible: ndrBtn ? window.getComputedStyle(ndrBtn).display !== 'none' : false,
+      // Any of these true means seeded/demo device names leaked into the UI.
       containsMockDxb: bodyText.includes('DXB-CORE-SW-01'),
       containsMockNy: bodyText.includes('NY-DB-PROD-SQL'),
       containsMockLon: bodyText.includes('LON-MAIL-EXCH-01')
@@ -121,26 +159,32 @@ async function main() {
 
   console.log('UI Verification Report:\n', JSON.stringify(inspectReport, null, 2));
 
-  await captureScreenshot('screenshot_ct108_clean_dashboard.png');
+  await captureScreenshot('screenshot_clean_dashboard.png');
 
   console.log('4. Navigating to Inventory:');
   await evaluate(`window.location.hash = '#/inventory'`);
   await new Promise(r => setTimeout(r, 2000));
-  await captureScreenshot('screenshot_ct108_clean_inventory.png');
+  await captureScreenshot('screenshot_clean_inventory.png');
 
   console.log('5. Navigating to Alarms:');
   await evaluate(`window.location.hash = '#/alarms'`);
   await new Promise(r => setTimeout(r, 2000));
-  await captureScreenshot('screenshot_ct108_clean_alarms.png');
+  await captureScreenshot('screenshot_clean_alarms.png');
 
   console.log('6. Navigating to Configuration:');
   await evaluate(`window.location.hash = '#/configuration'`);
   await new Promise(r => setTimeout(r, 2000));
-  await captureScreenshot('screenshot_ct108_clean_configuration.png');
+  await captureScreenshot('screenshot_clean_configuration.png');
 
   ws.close();
   chrome.kill();
-  console.log('7. CT 108 Verification Complete!');
+
+  const mockLeaked = inspectReport.containsMockDxb || inspectReport.containsMockNy || inspectReport.containsMockLon;
+  if (mockLeaked) {
+    console.error('FAIL: seeded/demo device names present in the UI — the server is not clean.');
+    process.exit(1);
+  }
+  console.log('7. Verification complete: no seeded/demo device names found.');
 }
 
 main().catch(err => {
