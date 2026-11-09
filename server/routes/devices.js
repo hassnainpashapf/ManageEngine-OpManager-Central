@@ -360,18 +360,37 @@ router.get(['/device/getDeviceSummary', '/device/getDeviceDetails', '/api/json/d
 // List Interfaces for a Device
 // D7 fixed: returns ONLY interfaces actually discovered via SNMP and stored
 // for this device. Empty array when none — never invented interfaces/traffic.
+// S-05 (W2-1): this endpoint is the feed for the Interfaces (IF-MIB)
+// inventory view and the snapshot Interfaces tab (client/js/app.js
+// loadDeviceInterfaces). Rows carry the alias fields those renderers read
+// (operStatus/status, ifDescr, adminStatus). `oper` is the stored value
+// verbatim — the poller stores the numeric IF-MIB ifOperStatus enum
+// (RFC 2863: 1 up, 2 down, 3 testing, 4 unknown, 5 dormant, 6 notPresent,
+// 7 lowerLayerDown) — while `operStatus`/`status` carry the same value as
+// its display string, which is what the renderers compare against.
+// Admin state is still null: the poller does not collect ifAdminStatus
+// yet (see V-07).
 router.get(['/device/listInterfaces', '/api/json/device/listInterfaces', '/device/:id/interfaces', '/api/devices/:id/interfaces'], (req, res) => {
   const { device } = findDevice(req);
   if (!device) {
     return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
   const rows = store.listInterfaces(device.id);
-  const interfaces = rows.map((r) => ({
+  const OPER_STATUS = { 1: 'up', 2: 'down', 3: 'testing', 4: 'unknown', 5: 'dormant', 6: 'notPresent', 7: 'lowerLayerDown' };
+  const interfaces = rows.map((r) => {
+    const operRaw = r.oper_status === null || r.oper_status === undefined ? null : r.oper_status;
+    const operStr = operRaw === null ? null
+      : (OPER_STATUS[Number(operRaw)] !== undefined ? OPER_STATUS[Number(operRaw)] : String(operRaw));
+    return {
     ifIndex: r.if_index,
     name: r.name || null,
     descr: r.descr || null,
+    ifDescr: r.descr || null,
     admin: null,
-    oper: r.oper_status || null,
+    adminStatus: null,
+    oper: operRaw,
+    operStatus: operStr,
+    status: operStr,
     speed: r.speed === null || r.speed === undefined ? null : r.speed,
     inOctets: r.in_octets === null || r.in_octets === undefined ? null : r.in_octets,
     outOctets: r.out_octets === null || r.out_octets === undefined ? null : r.out_octets,
@@ -382,7 +401,8 @@ router.get(['/device/listInterfaces', '/api/json/device/listInterfaces', '/devic
     inPercent: null,
     outPercent: null,
     errors: null
-  }));
+    };
+  });
   res.json({
     status: 'success',
     deviceId: device.id,

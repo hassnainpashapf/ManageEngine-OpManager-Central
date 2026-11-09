@@ -295,7 +295,7 @@ recorded polls report `null` — absence of history is not evidence of 100% upti
 | --- | --- | --- | --- | --- |
 | `GET /api/json/device/listDevices`, `/api/devices` | Session (guard) | Query: `probeId`, `category`, `status`, `search` | Stored devices matching the filters. | **REAL** |
 | `GET /api/json/device/getDeviceSummary`, `/api/devices/:id/summary`; `GET /api/json/device/getDeviceDetails`, `/api/devices/:id` | Session (guard) | Query/path: device id | Stored device + 24 h availability (see definition above). `404` unknown device. | **REAL** |
-| `GET /api/json/device/listInterfaces`, `/api/devices/:id/interfaces` | Session (guard) | Query/path: device id | Stored interface rows only; fields unknown for a device are `null` — never invented. | **REAL** |
+| `GET /api/json/device/listInterfaces`, `/api/devices/:id/interfaces` | Session (guard) | Query/path: device id | Stored interface rows only; fields unknown for a device are `null` — never invented. Rows carry the renderers' alias fields (`operStatus`/`status`, `ifDescr`, `adminStatus`). W2-1: feeds the Interfaces (IF-MIB) inventory view and the snapshot Interfaces tab, which load it per device on demand. | **REAL** |
 | `GET /api/json/device/getPingResponse`, `/api/devices/:id/ping` | Session (guard) | Query/path: device id | Real ICMP ping, 4 attempts via the ping service. | **REAL** |
 | `POST /device/testCredential`, `/api/json/device/testCredential` | Session (guard) | `{ip?, community?, deviceId?, credentialType?, username?}` | Real SNMP GET (`snmp.getSystemInfo`); falls back to the device's stored community. Success: `{status:'success', result:'SUCCESS', latencyMs, sysDescr, sysName}`. Failure (no response / no community): `{status:'success', result:'FAILURE', message, latencyMs}` — note the HTTP 200 with `result:'FAILURE'`; `400` only when no target IP can be determined at all. | **REAL** |
 | `POST /device/setManaged`, `/api/json/device/setManaged` | Session (guard) | `{deviceId, managed}` | Persists the `managed` flag via `store.updateDevice`; returns the stored state. | **REAL** |
@@ -1280,7 +1280,17 @@ structurally impossible in a Node build — §23.6).
 ### 25.6 What remains (wave 2 + wave 3, NOT in this merge)
 
 - **Wave 2 (scoped, spawn from `a0f2af3`):** W2-1 D-01 field mapping +
-  S-05 interfaces wiring; W2-2 X-01 discovery credential + write-side
+  S-05 interfaces wiring — DONE in this clone (live-proven on PORT=8181):
+  client `normalizeDevice()` maps the stored columns (`cpu_pct` /
+  `mem_used_pct` / `response_ms` / `hostname`) to the display shape
+  (`cpu` / `memory` / `responseTime` / `name`) in `fetchInitialData()`,
+  `handleMetricTick()` and the pollNow merge, so Top CPU/Memory,
+  heatmap, inventory, snapshot dials and CSV render the last real polled
+  values on load; `loadDeviceInterfaces()` feeds the Interfaces (IF-MIB)
+  inventory view and the snapshot Interfaces tab from the real
+  `listInterfaces` endpoint (honest empty state when a device has no
+  polled interfaces). No new route definitions — counts unchanged
+  (227 REAL / 4 HONEST-EMPTY / 1 501 / 0 FAKE). W2-2 X-01 discovery credential + write-side
   version normalization — DONE in this clone (live-proven on PORT=8182;
   see §7/§9 rows); W2-3 A2-13 status casing + A2-07 persistent
   dedup/escalation + `/api/alarm/clearAlarm` alias — DONE in this clone

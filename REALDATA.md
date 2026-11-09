@@ -1319,13 +1319,7 @@ route definitions were added in phase 5.
 
 ### 13.4 What remains (wave 2 + wave 3)
 
-Wave 2 (scoped): W2-1 D-01 field mapping + S-05 interfaces; W2-2 X-01
-discovery credential + write-side normalization — DONE in the W2-2 clone
-(live-proven on PORT=8182: verify-auth 11/11, verify-empty 16/16, 34/35
-proof checks with the 1 failure being the proof script's own history
-filter; discovery with a real credential profile returns 202 with the
-resolved version, `'2c'` creates store canonical `v2c` and polls, `v1`
-creates 400); W2-3 A2-13 status casing
+Wave 2 (scoped): W2-1 D-01 field mapping + S-05 interfaces — DONE in this clone (live-proven on PORT=8181: client-side normalisation (`normalizeDevice()` in `client/js/app.js`) maps stored `cpu_pct` / `mem_used_pct` / `response_ms` / `hostname` to the display shape the views read, applied at load, on METRIC_TICK and on the pollNow merge; `loadDeviceInterfaces()` feeds the Interfaces (IF-MIB) inventory view and the snapshot Interfaces tab from the real `listInterfaces` endpoint (+ `operStatus`/`status`/`ifDescr`/`adminStatus` aliases on that endpoint), with an honest empty state per device with no polled interfaces. No new route definitions; counts unchanged (227 REAL / 4 HONEST-EMPTY / 1 501 / 0 FAKE). W2-2 X-01 discovery credential + write-side normalization — DONE in the W2-2 clone (live-proven on PORT=8182: verify-auth 11/11, verify-empty 16/16, 34/35 proof checks with the 1 failure being the proof script's own history filter; discovery with a real credential profile returns 202 with the resolved version, `'2c'` creates store canonical `v2c` and polls, `v1` creates 400); W2-3 A2-13 status casing
 + A2-07 persistent dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4
 R-01 rack crash fix — DONE (Phase 5, 2026-11-09, W2-4): crash fixed, invented cabinet replaced with a real-data-only view + honest empty state; the real Rack Builder scope still needs a product decision; W2-5 `/inventory/` bare forms + 3 missing `/api/ncmclient` registrations — DONE by W2-5 (Phase 5, 2026-11-09, this clone): `/inventory/` in `LEGACY_API_PREFIXES`, 3 `/api/ncmclient/...` registrations added, `API.md` §11 prefixes corrected; verified live on :8185. Route-definition count unchanged: 232 (227 REAL, 4 HONEST-EMPTY, 1 × 501) — the 3 registrations are path aliases, not new definitions. Wave 3 (triage by value): alarm
 notifications, compliance engine, trap parsers, reports expansion, TOTP/
