@@ -23,6 +23,7 @@ const net = require('net');
 const os = require('os');
 const path = require('path');
 const tls = require('tls');
+const { execFileSync } = require('child_process');
 const { DatabaseSync } = require('node:sqlite');
 const store = require('../services/store');
 const retention = require('../services/retention');
@@ -46,6 +47,31 @@ let pkg = {};
 try {
   pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf8'));
 } catch { /* version/build stay null */ }
+
+// Build metadata for GET /admin/getNewFeatures (HE-1, phase 5).
+// Precedence: live git checkout (rev-parse HEAD + log date) > baked
+// server/build-info.json (generated at packaging time from the same
+// commands — regenerate with:
+//   node -e "const {execSync}=require('child_process');const fs=require('fs');fs.writeFileSync('server/build-info.json',JSON.stringify({version:require('./package.json').version,commit:execSync('git rev-parse HEAD').toString().trim(),commitDate:execSync('git log -1 --format=%cI').toString().trim(),branch:execSync('git rev-parse --abbrev-ref HEAD').toString().trim()},null,2)+'\n')"
+// ) > nulls. No git in the packaged image → the baked file is used;
+// no baked file either → build/commit/date stay null, never invented.
+let buildInfo = null;
+try {
+  buildInfo = JSON.parse(fs.readFileSync(path.join(__dirname, 'build-info.json'), 'utf8'));
+} catch { /* build metadata stays null unless git below fills it in */ }
+try {
+  const repoRoot = path.join(__dirname, '..', '..');
+  const commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repoRoot, timeout: 5000, encoding: 'utf8' }).trim();
+  const commitDate = execFileSync('git', ['log', '-1', '--format=%cI'], { cwd: repoRoot, timeout: 5000, encoding: 'utf8' }).trim();
+  if (/^[0-9a-f]{40}$/.test(commit) && commitDate) {
+    buildInfo = {
+      ...(buildInfo || {}),
+      version: (buildInfo && buildInfo.version) || pkg.version || null,
+      commit,
+      commitDate,
+    };
+  }
+} catch { /* not a git checkout (packaged build): keep the baked file */ }
 
 const SERVER_PORT = Number(process.env.PORT) || 8060;
 const NOT_IMPLEMENTED = (message) => ({
@@ -974,24 +1000,61 @@ router.get(['/admin/GetNFACentralMailServerSettings', '/api/admin/GetNFACentralM
 });
 
 // --------------------------------------------------------- notifications ---
-// No notification source exists in this build: nothing is ever generated,
-// so the list is honestly empty and clear/hide honestly report 0 cleared.
+// Real notification store (HE-1, phase 5): rows are written ONLY by real
+// events — alarm raised/cleared (server/services/store.js), discovery run
+// finished (store.saveDiscoveryRun), configuration backup finished
+// (server/routes/ccm.js). Nothing is seeded, so an empty store means an
+// honestly empty list. Shape kept: alarm events → webAlarmNotification,
+// scheduled-job events (discovery, backup) → scheduleNotification,
+// upgradeNotification stays null — no upgrade event exists in this build.
+
+function unreadNotifications() {
+  const list =
+    store.notifications && typeof store.notifications.listUnreadNotifications === 'function'
+      ? store.notifications.listUnreadNotifications(100)
+      : store.listUnreadNotifications(100);
+  return Array.isArray(list) ? list : [];
+}
+
+function notificationView(n) {
+  return {
+    id: n.id,
+    type: n.type,
+    title: n.title,
+    message: n.message ?? null,
+    refType: n.ref_type ?? null,
+    refId: n.ref_id ?? null,
+    createdAt: n.created_at ? new Date(n.created_at).toISOString() : null,
+    status: n.status,
+  };
+}
 
 router.get(['/dashboard/getUserNotification', '/api/dashboard/getUserNotification'], (req, res) => {
+  const unread = unreadNotifications();
   res.json({
-    webAlarmNotification: [],
-    scheduleNotification: [],
+    webAlarmNotification: unread.filter((n) => n.type === 'alarm').map(notificationView),
+    scheduleNotification: unread
+      .filter((n) => n.type === 'discovery' || n.type === 'backup')
+      .map(notificationView),
     upgradeNotification: null,
-    systemAlerts: [],
+    systemAlerts: unread.filter((n) => n.type === 'system').map(notificationView),
   });
 });
 
 router.post(['/dashboard/clearUserNotification', '/api/dashboard/clearUserNotification'], (req, res) => {
-  res.json({ status: 'success', cleared: 0 });
+  const result =
+    store.notifications && typeof store.notifications.clearNotifications === 'function'
+      ? store.notifications.clearNotifications()
+      : store.clearNotifications();
+  res.json({ status: 'success', cleared: (result && result.cleared) || 0 });
 });
 
 router.post(['/dashboard/hideNotifications', '/api/dashboard/hideNotifications'], (req, res) => {
-  res.json({ status: 'success', hidden: 0 });
+  const result =
+    store.notifications && typeof store.notifications.hideNotifications === 'function'
+      ? store.notifications.hideNotifications()
+      : store.hideNotifications();
+  res.json({ status: 'success', hidden: (result && result.hidden) || 0 });
 });
 
 // -------------------------------------------------------------- licence ---
@@ -1089,13 +1152,48 @@ router.get(['/admin/getSearchResult', '/api/admin/getSearchResult'], (req, res) 
 });
 
 // --------------------------------------------------------- new features ---
-// No changelog exists in this repo, so there are no release notes to report.
+// Real build metadata (HE-1, phase 5): version + commit + commit date
+// come from the repo itself (live git, else baked server/build-info.json),
+// never invented. The features list names only capabilities this build
+// actually implements, each documented as REAL in API.md / REALDATA.md:
+//   1. poller.js + REALDATA.md §9.3 — live SNMPv2c/ICMP polling
+//   2. store.js header — SQLite store, no seed/demo data
+//   3. REALDATA.md §2 — scrypt admin, lockout, must-change-password
+//   4. REALDATA.md §5.2 — Go host agent, key auth, persisted telemetry
+//   5. discovery.js — real ICMP+SNMP sweep, persisted run history
+//   6. ccm.js — NCM backup over real SSH, versioned revisions
+//   7. alarms.js + store.js alarm_notes — RCA notes, ack/clear/status
+//   8. store.js notifications — notifications from real events only
+//   9. REALDATA.md §6.3 — VACUUM INTO backup with SHA-256
+//  10. settings.js API-key routes — random keys, hash-only storage
+//  11. ha.js + store.js ha — peer heartbeat and lease handling
+//  12. settings.js SIF routes — support bundle zipped from real logs
+// No roadmap items, no upstream-ManageEngine features this rebuild lacks.
+const NEW_FEATURES = [
+  'Real SNMPv2c + ICMP poller with per-device thresholds and live CPU, memory and availability alarms',
+  'SQLite data store with no seed or demo data — every device, probe, alarm and note is stored, never invented',
+  'Scrypt-hashed admin login with brute-force lockout and forced password change on first login',
+  'Go host agent with key authentication and persisted 5-second CPU, memory and disk telemetry',
+  'Real network discovery sweep (ICMP + SNMP) with persisted run history',
+  'NCM configuration backup over real SSH, stored as versioned running-config revisions',
+  'RCA notes stored per alarm, with acknowledge, clear and RCA-status tracking',
+  'User notifications fed only by real alarm, discovery and backup events',
+  'Database backup via real VACUUM INTO, with SHA-256 verification',
+  'API keys generated with crypto-random bytes, hash-only storage, plaintext returned once',
+  'HA peer heartbeat and lease handling for Central failover',
+  'Support bundle (SIF) built as a real zip of the server log files',
+];
 
 router.get(['/admin/getNewFeatures', '/api/admin/getNewFeatures'], (req, res) => {
+  const version = (buildInfo && buildInfo.version) || pkg.version || null;
+  const commit = (buildInfo && buildInfo.commit) || null;
+  const commitDate = (buildInfo && buildInfo.commitDate) || null;
   res.json({
-    build: pkg.version || null,
-    releaseDate: null,
-    features: [],
+    build: version,
+    buildCommit: commit,
+    buildDate: commitDate,
+    releaseDate: commitDate,
+    features: NEW_FEATURES.slice(),
   });
 });
 

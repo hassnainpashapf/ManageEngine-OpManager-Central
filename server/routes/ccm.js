@@ -405,6 +405,25 @@ router.post(['/api/ccm/backup-device', '/api/ccm/backup'], async (req, res) => {
   const row = saveConfig(dev.id, 'running-config', result.content);
   const revision = row && row.id !== undefined ? row.id : null;
   const backupTime = row && row.fetched_at ? toIso(row.fetched_at) : new Date().toISOString();
+  // HE-1 (phase 5): a finished configuration backup is a real
+  // notification event. Best-effort: it must never break the response.
+  try {
+    const notify =
+      store.notifications && typeof store.notifications.addNotification === 'function'
+        ? store.notifications.addNotification
+        : store.addNotification;
+    if (typeof notify === 'function') {
+      notify({
+        type: 'backup',
+        title: `Configuration backup finished: ${deviceLabel(dev)}`,
+        message: `running-config revision #${revision}, ${result.lines} line(s), ${result.bytes} byte(s), at ${backupTime}.`,
+        ref_type: 'device',
+        ref_id: dev.id,
+      });
+    }
+  } catch {
+    // Notification is a record, not a gate.
+  }
   return res.json({
     status: 'success',
     retrieval: 'ssh',

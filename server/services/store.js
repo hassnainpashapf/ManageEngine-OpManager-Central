@@ -147,6 +147,22 @@ CREATE TABLE IF NOT EXISTS alarm_notes (
 );
 CREATE INDEX IF NOT EXISTS idx_alarm_notes_alarm ON alarm_notes(alarm_id, created_at);
 
+-- User notifications (HE-1, phase 5): fed ONLY by real events — alarm
+-- raised/cleared, discovery run finished, configuration backup finished
+-- (see the notifications section below). Never seeded: an empty store
+-- means an empty notification list.
+CREATE TABLE IF NOT EXISTS notifications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  type TEXT NOT NULL,
+  title TEXT NOT NULL,
+  message TEXT,
+  ref_type TEXT,
+  ref_id INTEGER,
+  created_at INTEGER NOT NULL,
+  status TEXT NOT NULL DEFAULT 'unread'
+);
+CREATE INDEX IF NOT EXISTS idx_notifications_status_created ON notifications(status, created_at);
+
 CREATE TABLE IF NOT EXISTS probes (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
@@ -730,12 +746,15 @@ function getAlarm(id) {
 
 function raiseAlarm(alarm) {
   const a = alarm || {};
-  return insertAndGet(
+  const inserted = insertAndGet(
     'alarms',
     ['device_id', 'severity', 'message', 'source', 'status', 'created_at'],
     [a.device_id ?? null, a.severity ?? null, a.message ?? null, a.source ?? null, a.status || 'active', now()],
     getAlarm
   );
+  // HE-1 (phase 5): a genuinely new alarm is a real notification event.
+  notifyAlarmEvent('raised', inserted);
+  return inserted;
 }
 
 function listAlarms(filter) {
@@ -764,16 +783,33 @@ function acknowledgeAlarm(id, user) {
 }
 
 function clearAlarm(id) {
+  const before = getAlarm(id);
   db.prepare("UPDATE alarms SET status = 'cleared', cleared_at = ? WHERE id = ?").run(now(), id);
-  return getAlarm(id);
+  const after = getAlarm(id);
+  // HE-1 (phase 5): notify only on a real transition — clearing an
+  // already-cleared (or unknown) alarm is not an event.
+  if (before && before.status !== 'cleared') notifyAlarmEvent('cleared', after || before);
+  return after;
 }
 
 function resolveAlarmByKey(deviceId, source) {
+  const open = toRows(
+    db
+      .prepare(
+        "SELECT * FROM alarms WHERE device_id = ? AND source = ? AND status IN ('active', 'acknowledged')"
+      )
+      .all(deviceId, source)
+  );
   const info = db
     .prepare(
       "UPDATE alarms SET status = 'cleared', cleared_at = ? WHERE device_id = ? AND source = ? AND status IN ('active', 'acknowledged')"
     )
     .run(now(), deviceId, source);
+  // HE-1 (phase 5): one notification per alarm that actually cleared.
+  // A resolve that matches nothing (info.changes === 0) is not an event.
+  if (info.changes > 0) {
+    for (const a of open) notifyAlarmEvent('cleared', { ...a, status: 'cleared', cleared_at: now() });
+  }
   return { cleared: info.changes };
 }
 
@@ -806,6 +842,84 @@ function setRcaStatus(alarmId, status) {
   if (!getAlarm(alarmId)) return null;
   db.prepare('UPDATE alarms SET rca_status = ? WHERE id = ?').run(status ?? null, alarmId);
   return getAlarm(alarmId);
+}
+
+// -------------------------------------------------------- notifications ---
+// User notifications (HE-1, phase 5), fed ONLY by real events:
+//   - alarm raised / cleared: raiseAlarm / clearAlarm / resolveAlarmByKey
+//     above (via notifyAlarmEvent)
+//   - discovery run finished: saveDiscoveryRun below
+//   - configuration backup finished: the CCM backup-device route calls
+//     addNotification explicitly (server/routes/ccm.js) — the store
+//     cannot see that event on its own
+// Nothing is ever seeded and no other type is ever written: an empty
+// store means an empty notification list, and `upgradeNotification`
+// stays null in the API because no upgrade event exists in this build.
+// A failed notification write must never break the event that caused
+// it, so every emit site is wrapped in try/catch.
+
+function getNotification(id) {
+  return toRow(db.prepare('SELECT * FROM notifications WHERE id = ?').get(id));
+}
+
+function addNotification(n) {
+  const v = n || {};
+  if (typeof v.type !== 'string' || v.type.trim() === '') return null;
+  if (typeof v.title !== 'string' || v.title.trim() === '') return null;
+  return insertAndGet(
+    'notifications',
+    ['type', 'title', 'message', 'ref_type', 'ref_id', 'created_at', 'status'],
+    [v.type, v.title, v.message ?? null, v.ref_type ?? null, v.ref_id ?? null, now(), 'unread'],
+    getNotification
+  );
+}
+
+function listUnreadNotifications(limit) {
+  const n = Math.min(Math.max(Number(limit) || 100, 1), 1000);
+  return toRows(
+    db
+      .prepare("SELECT * FROM notifications WHERE status = 'unread' ORDER BY created_at DESC, id DESC LIMIT ?")
+      .all(n)
+  );
+}
+
+function clearNotifications() {
+  const info = db
+    .prepare("UPDATE notifications SET status = 'cleared' WHERE status IN ('unread', 'read')")
+    .run();
+  return { cleared: info.changes };
+}
+
+function hideNotifications() {
+  const info = db.prepare("UPDATE notifications SET status = 'hidden' WHERE status = 'unread'").run();
+  return { hidden: info.changes };
+}
+
+function alarmDeviceLabel(deviceId) {
+  if (deviceId === null || deviceId === undefined) return null;
+  const dev = getDevice(deviceId);
+  if (!dev) return `device ${deviceId}`;
+  return dev.hostname || dev.sys_name || dev.ip || `device ${deviceId}`;
+}
+
+function notifyAlarmEvent(kind, alarm) {
+  try {
+    if (!alarm) return;
+    const what = alarm.message || alarm.source || `alarm ${alarm.id}`;
+    const title =
+      kind === 'cleared'
+        ? `Alarm cleared: ${what}`
+        : `${alarm.severity ? `${alarm.severity} alarm raised` : 'Alarm raised'}: ${what}`;
+    addNotification({
+      type: 'alarm',
+      title,
+      message: `${alarmDeviceLabel(alarm.device_id) || 'Unknown device'} — source ${alarm.source ?? 'unknown'}. Alarm #${alarm.id}.`,
+      ref_type: 'alarm',
+      ref_id: alarm.id,
+    });
+  } catch {
+    // A notification must never break the alarm write that caused it.
+  }
 }
 
 // ------------------------------------------------------- data retention ---
@@ -987,7 +1101,25 @@ function saveDiscoveryRun(run) {
       r.finished_at !== undefined ? r.finished_at : now(),
       r.status || 'completed'
     );
-  return toRow(db.prepare('SELECT * FROM discovery_runs WHERE id = ?').get(Number(info.lastInsertRowid)));
+  const saved = toRow(db.prepare('SELECT * FROM discovery_runs WHERE id = ?').get(Number(info.lastInsertRowid)));
+  // HE-1 (phase 5): a finished discovery run is a real notification event.
+  try {
+    if (saved) {
+      const failed = saved.status === 'failed';
+      addNotification({
+        type: 'discovery',
+        title: failed
+          ? `Discovery run failed: ${saved.range ?? 'unknown range'} — ${saved.found_count ?? 0} device(s) found`
+          : `Discovery run finished: ${saved.range ?? 'unknown range'} — ${saved.found_count ?? 0} device(s) found`,
+        message: `Run #${saved.id} ${failed ? 'failed' : 'completed'} at ${new Date(saved.finished_at).toISOString()}.`,
+        ref_type: 'discovery_run',
+        ref_id: saved.id,
+      });
+    }
+  } catch {
+    // A notification must never break the run record that caused it.
+  }
+  return saved;
 }
 
 function listDiscoveryRuns(limit) {
@@ -1351,6 +1483,12 @@ module.exports = {
   addNote,
   listNotes,
   setRcaStatus,
+  // notifications (HE-1, phase 5)
+  addNotification,
+  getNotification,
+  listUnreadNotifications,
+  clearNotifications,
+  hideNotifications,
   // probes
   createProbe,
   getProbe,
@@ -1449,6 +1587,13 @@ module.exports = {
     addNote,
     listNotes,
     setRcaStatus,
+  },
+  notifications: {
+    addNotification,
+    getNotification,
+    listUnreadNotifications,
+    clearNotifications,
+    hideNotifications,
   },
   probes: {
     createProbe,

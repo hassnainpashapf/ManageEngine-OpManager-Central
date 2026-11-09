@@ -217,7 +217,7 @@ against the stored hash. Unknown agent or bad key → `401`.
 | `POST /api/agent/deregister` | Agent key | `{agentId}` | `401` unknown agent / bad key. Marks the agent Offline. | **REAL** |
 | `GET /api/agent/downloads` | Session (guard) | — | Static list of agent installers, version `12.9.204-GA`, build `20261106`. | **REAL** (static reference) — **OPEN O-16**: the version was re-verified (12.9.204-GA in `agents.js:289`); whether the listed files actually exist on disk was not verified. |
 
-## 5. `server/routes/alarms.js` — 17 definitions: 16 REAL, 1 HONEST-EMPTY, 0 × 501 (phase-2: the 4 former 501s are now REAL)
+## 5. `server/routes/alarms.js` — 17 definitions: all REAL (phase-2: the 4 former 501s are now REAL; phase-5 HE-1: `getRCANotes` now REAL — the `alarm_notes` store was already there, the table was stale)
 
 List endpoint is `router.all` with 6 alias paths; filters `probeId`/`severity`/`status`;
 real pagination (`page`, `pageSize` clamped 1–1000, default 200).
@@ -232,7 +232,7 @@ real pagination (`page`, `pageSize` clamped 1–1000, default 200).
 | `POST /alarm/addNotes`, `/api/alarm/addNotes` | Session (guard) | `{id, note}` | Store-backed (`store.alarms.addNote`); `404` unknown alarm. | **REAL** (phase-2: was 501) |
 | `GET /alarm/summary`, `/api/alarm/summary` | Session (guard) | — | Severity counts computed from the store. | **REAL** |
 | `GET /alarm/getRCAData`, `/api/alarm/getRCAData` | Session (guard) | Query: alarm `id` | Hypothesis + correlation tree built from the stored alarm and its latest metric; `confidenceScore: null`, `confidencePercent: null` (no inference to score); `correlatedEvents` from related stored alarms. | **REAL** |
-| `GET /alarm/getRCANotes`, `/api/alarm/getRCANotes` | Session (guard) | Query: alarm `id` | `{notes: []}` — no notes table exists, so the stored set is honestly empty. `404` if the alarm id is unknown. | **HONEST-EMPTY** |
+| `GET /alarm/getRCANotes`, `/api/alarm/getRCANotes` | Session (guard) | Query: alarm `id` | Stored notes from the `alarm_notes` table (`store.alarms.listNotes`, created_at order, author + text + timestamp); `[]` only when the alarm genuinely has no notes. `404` if the alarm id is unknown. Write path `POST /alarm/addRCANotes` already REAL (phase-2). | **REAL** (phase-5 HE-1: was HONEST-EMPTY on a stale claim — the notes table and both endpoints already existed; verified live on :8171: add → get round-trip, `[]` before any note, `404` unknown alarm) |
 | `POST /alarm/addRCANotes`, `/api/alarm/addRCANotes` | Session (guard) | `{id, note}` | Store-backed RCA note (`store.alarms.addNote`); `404` unknown alarm. | **REAL** (phase-2: was 501) |
 | `POST /alarm/changeRCAStatus`, `/api/alarm/changeRCAStatus` | Session (guard) | `{id, status}` | Persisted in `alarms.rca_status` (`store.alarms.setRcaStatus`); `404` unknown alarm. | **REAL** (phase-2: was 501) |
 | `GET /alarm/getSuppressionCount`, `/api/alarm/getSuppressionCount` | Session (guard) | — | `{suppressedCount: 0, totalRawEvents: <alarm count>, noiseReductionPercent: 0% or null, activeProblems: <count>}` — computed from the store; suppression itself is not implemented, so the count is honestly 0. | **REAL** |
@@ -424,7 +424,7 @@ from the draft inventory. Re-counted 2026-11-09.)
 | `GET /reports/getAdvancedReportData`, `/api/reports/getAdvancedReportData` | Session (guard) | Query: `range` (default 30 d) | 30-day SLA / MTTR computed from real alarm raise→clear durations in the store. | **REAL** |
 | `GET /reports/getReportsList`, `/reports/listAllAdvancedReports`, `/api/reports/list` | Session (guard) | — | `REPORT_CATALOGUE` grouped by category, each entry with a count of report definitions that exist. | **REAL** — **OPEN O-18**: the exact catalogue contents were not fully captured in this draft. |
 
-## 15. `server/routes/settings.js` — 58 definitions: 55 REAL, 2 HONEST-EMPTY, 1 × 501 (phase-2: 9 former 501s now REAL; only `updateJvmHeapSize` still 501)
+## 15. `server/routes/settings.js` — 58 definitions: 57 REAL, 0 HONEST-EMPTY, 1 × 501 (phase-2: 9 former 501s now REAL; only `updateJvmHeapSize` still 501; phase-5 HE-1: `getUserNotification` + `getNewFeatures` now REAL)
 
 Settings are persisted in the store (`store.getSetting` / `store.setSetting` via
 `getStored`/`putStored`); there is no module-level `let` persistence. Secrets are
@@ -446,14 +446,14 @@ All settings routes are behind the session guard unless noted.
 | `POST /api/settings/templates/apply` | Records template assignments (nothing consumes them yet — see §23.5). | **REAL** (phase-2: was 501) |
 | `GET /admin/isMailServerConfigured`, `/api/admin/isMailServerConfigured` | Boolean + summary from the stored mail record. | **REAL** |
 | `GET /admin/GetNFACentralMailServerSettings`, `/api/admin/GetNFACentralMailServerSettings` | Stored mail-server settings (secrets redacted). | **REAL** |
-| `GET /dashboard/getUserNotification`, `/api/dashboard/getUserNotification` | All notification lists `[]` / `null` — no notification store. | **HONEST-EMPTY** |
-| `POST /dashboard/clearUserNotification`, `/api/dashboard/clearUserNotification` | Reports `{cleared:0}` — nothing to clear. | **REAL** |
-| `POST /dashboard/hideNotifications`, `/api/dashboard/hideNotifications` | Reports `{hidden:0}`. | **REAL** |
+| `GET /dashboard/getUserNotification`, `/api/dashboard/getUserNotification` | Real unread rows from the `notifications` table (`store.notifications`): alarm raised/cleared → `webAlarmNotification`, discovery-run / config-backup finished → `scheduleNotification`, system → `systemAlerts`. `upgradeNotification: null` — no upgrade event exists in this build. Empty only when no unread events exist; nothing is seeded. | **REAL** (phase-5 HE-1: was HONEST-EMPTY; verified live on :8171 — poller-raised availability alarm, seeded CPU alarm raise/clear, and two discovery runs all appeared as real rows; clear/hide round-trips below) |
+| `POST /dashboard/clearUserNotification`, `/api/dashboard/clearUserNotification` | Marks all unread/read notifications `cleared` in the store; reports the real `{cleared:<n>}`. | **REAL** (phase-5 HE-1: was honest-zero; verified live on :8171 — `{cleared:2}`) |
+| `POST /dashboard/hideNotifications`, `/api/dashboard/hideNotifications` | Marks all unread notifications `hidden` in the store; reports the real `{hidden:<n>}`. | **REAL** (phase-5 HE-1: was honest-zero; verified live on :8171 — `{hidden:1}`) |
 | `GET /admin/getBasicLicenseDetails`, `/api/admin/getBasicLicenseDetails` | All limits / expiry / add-ons `null`, `status:'Unlicensed'` unless a licence record is stored. | **REAL** |
 | `GET /api/settings/license` | Stored licence record (or the unlicensed nulls above). | **REAL** |
 | `POST /api/settings/license/apply` | `400` if neither `licenseXml` nor `keyString` is supplied; otherwise stores the SHA-256 fingerprint of the supplied key/XML with `status:'Unvalidated'` — it never claims the licence was validated. | **REAL** |
 | `GET /admin/getSearchResult`, `/api/admin/getSearchResult` | Searches stored devices, probes and alarms for the query string. | **REAL** |
-| `GET /admin/getNewFeatures`, `/api/admin/getNewFeatures` | `{build, releaseDate:null, features:[]}`. | **HONEST-EMPTY** |
+| `GET /admin/getNewFeatures`, `/api/admin/getNewFeatures` | Real build metadata: `{build:'12.9.204-GA', buildCommit:<git HEAD>, buildDate/releaseDate:<git commit date>, features:[12 capabilities this build actually implements]}`. Commit/date come from the live git checkout, falling back to baked `server/build-info.json` (regenerate from `git log` at packaging time); `null` when neither exists — never invented. The features list is derived from `API.md`/`REALDATA.md` (see `settings.js` `NEW_FEATURES` source comments); no roadmap or upstream-only items. | **REAL** (phase-5 HE-1: was HONEST-EMPTY; verified live on :8171 at `b1de62c` — `buildCommit` was that HEAD, `buildDate: 2026-11-09T12:12:38+00:00`, 12 features) |
 | `GET /admin/GetOpManagerSettings`, `/api/admin/GetOpManagerSettings` | Real host IP/port, `protocol:'HTTP'`; replication / trap / syslog fields `null` (not configured). | **REAL** |
 | `GET /admin/GetSystemInformation`, `/api/admin/GetSystemInformation`, `/admin/getSystemInfo` | Real `os` module data + `process.memoryUsage()` (platform, CPU, memory, uptime). | **REAL** |
 | `GET /admin/getDBInfo`, `/api/admin/getDBInfo` | Real SQLite stats: DB file size, table count, total records across all tables (read-only connection). | **REAL** |
