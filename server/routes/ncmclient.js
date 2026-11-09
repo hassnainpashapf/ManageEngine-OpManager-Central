@@ -1153,7 +1153,7 @@ router.post(['/ncmclient/createLogicalGroup', '/api/ncmclient/createLogicalGroup
 });
 
 // Device group view preference
-router.get(['/api/json/user/getDeviceGroupViewPreference', '/user/getDeviceGroupViewPreference'], (req, res) => {
+router.get(['/api/json/user/getDeviceGroupViewPreference', '/user/getDeviceGroupViewPreference', '/api/user/getDeviceGroupViewPreference'], (req, res) => {
   res.json({ preference: 'tree' });
 });
 
