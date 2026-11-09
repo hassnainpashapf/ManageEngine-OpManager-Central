@@ -46,6 +46,8 @@ server.on('upgrade', (request, socket, head) => {
 app.use(compression());
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.text({ type: ['text/*', 'application/xml', 'application/x-www-form-urlencoded'] }));
 
 // Set CSRF cookie on all HTTP responses
 app.use((req, res, next) => {

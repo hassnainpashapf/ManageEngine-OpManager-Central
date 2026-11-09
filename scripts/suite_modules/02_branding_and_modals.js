@@ -914,8 +914,8 @@
         else if (action === 'add-probe') showAddProbeModal();
         else if (action === 'add-widget') showAddWidgetModal();
         else if (action === 'download-agent') {
-          window.open('/downloads/OpManagerAgent.msi', '_blank');
-          showToast('Downloading OpManager Host Monitoring Agent (MSI)...');
+          window.open('/downloads/OpManagerAgent-Windows-x64.zip', '_blank');
+          showToast('Downloading OpManager Windows Agent Package (.ZIP with OPMAgentServerInfo.json)...');
         }
       };
     });
@@ -6195,12 +6195,17 @@
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No BGP Routers Discovered</div>
             <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add edge routers with BGP MIB (RFC 4273) enabled to monitor Autonomous System topology, peering states, and prefix exchanges.</div>
-            <button onclick="document.getElementById('opm-bgp-modal').style.display='none'; showAddDeviceModal();" style="background: #6d28d9; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Router</button>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="document.getElementById('opm-bgp-modal').style.display='none'; showAddDeviceModal();" style="background: #6d28d9; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Router</button>
+              <button id="opm-bgp-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
+            </div>
           </div>
         </div>
       `;
       modal.style.display = 'flex';
       modal.querySelector('#close-bgp-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      const demoBtn = modal.querySelector('#opm-bgp-live-demo-btn');
+      if (demoBtn) demoBtn.onclick = () => showBgpMonitoringModal({ name: 'Cisco-ASR-9006-Core', ip: '192.168.30.1' });
       return;
     }
 
@@ -6465,12 +6470,17 @@
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No SD-WAN Gateways Configured</div>
             <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Connect Cisco vManage, Fortinet Secure SD-WAN, or Silver Peak appliances to track BFD tunnels, jitter, and application steering policies.</div>
-            <button onclick="document.getElementById('opm-sdwan-modal').style.display='none'; showAddDeviceModal();" style="background: #047857; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add SD-WAN Edge</button>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="document.getElementById('opm-sdwan-modal').style.display='none'; showAddDeviceModal();" style="background: #047857; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add SD-WAN Edge</button>
+              <button id="opm-sdwan-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
+            </div>
           </div>
         </div>
       `;
       modal.style.display = 'flex';
       modal.querySelector('#close-sdwan-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      const sdwanDemoBtn = modal.querySelector('#opm-sdwan-live-demo-btn');
+      if (sdwanDemoBtn) sdwanDemoBtn.onclick = () => showSdwanPerformanceModal({ name: 'Cisco-vEdge-2000-Core', ip: '192.168.30.2' });
       return;
     }
 
@@ -6706,12 +6716,17 @@
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No DPI Interfaces Monitored</div>
             <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Deploy NetFlow / IPFIX packet sampling or configure Cisco NBAR2 on router interfaces to inspect Layer-7 applications.</div>
-            <button onclick="document.getElementById('opm-dpi-modal').style.display='none'; showAddDeviceModal();" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Device</button>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="document.getElementById('opm-dpi-modal').style.display='none'; showAddDeviceModal();" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Device</button>
+              <button id="opm-dpi-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
+            </div>
           </div>
         </div>
       `;
       modal.style.display = 'flex';
       modal.querySelector('#close-dpi-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      const dpiDemoBtn = modal.querySelector('#opm-dpi-live-demo-btn');
+      if (dpiDemoBtn) dpiDemoBtn.onclick = () => showDpiTrafficModal({ name: 'GigabitEthernet0/0/1 - WAN Gateway' });
       return;
     }
 
@@ -6931,12 +6946,17 @@
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Security Threats Detected</div>
             <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Central Network Detection & Response engine is continuously monitoring flow traffic across probes. No anomalous lateral movement or botnet telemetry identified.</div>
-            <button onclick="document.getElementById('opm-ndr-modal').style.display='none';" style="background: #dc2626; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Dismiss</button>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="document.getElementById('opm-ndr-modal').style.display='none';" style="background: #dc2626; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Dismiss</button>
+              <button id="opm-ndr-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Threat Forensics Console</button>
+            </div>
           </div>
         </div>
       `;
       modal.style.display = 'flex';
       modal.querySelector('#close-ndr-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      const ndrDemoBtn = modal.querySelector('#opm-ndr-live-demo-btn');
+      if (ndrDemoBtn) ndrDemoBtn.onclick = () => showNdrForensicsModal({ name: 'Central NDR Threat Intelligence Engine' });
       return;
     }
 

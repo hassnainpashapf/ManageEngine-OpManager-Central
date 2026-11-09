@@ -652,6 +652,10 @@
   window.showProbeDetailsModal = showProbeDetailsModal;
   window.showDeviceSnapshotModal = showDeviceSnapshotModal;
   window.showToast = showToast;
+  window.showBgpMonitoringModal = showBgpMonitoringModal;
+  window.showSdwanPerformanceModal = showSdwanPerformanceModal;
+  window.showDpiTrafficModal = showDpiTrafficModal;
+  window.showNdrForensicsModal = showNdrForensicsModal;
   window.renderConfigurationView = renderConfigurationView;
   window.renderDashboardView = renderDashboardView;
   window.renderInventoryView = renderInventoryView;

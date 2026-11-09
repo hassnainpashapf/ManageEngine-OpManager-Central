@@ -1892,21 +1892,32 @@
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
               <!-- Windows Installer Card -->
-              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Windows Agent (x64 MSI / EXE)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.203 | Size: 6.9 MB | Windows Server 2016/2019/2022 / Windows 10/11</div>
-                  <div style="display: flex; gap: 8px;">
-                    <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                      Download .MSI
-                    </a>
-                    <a href="/downloads/OpManagerAgent.exe" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
-                      Download .EXE
-                    </a>
+              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+                  <div>
+                    <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Windows Agent (x64 MSI / EXE / ZIP)</div>
+                    <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">Version 12.9.203 | Windows Server 2016/2019/2022 / Windows 10/11</div>
                   </div>
+                  <img src="/apiclient/fluidicv2/img/DeployAgent.png" style="height: 52px; object-fit: contain; flex-shrink: 0;" />
                 </div>
-                <img src="/apiclient/fluidicv2/img/DeployAgent.png" style="height: 64px; object-fit: contain; flex-shrink: 0;" />
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <a href="/downloads/OpManagerAgent-Windows-x64.zip" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    📦 Windows Agent Package (.ZIP)
+                  </a>
+                  <a href="/downloads/OPMAgentServerInfo.json" download style="display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;" title="Download required config file">
+                    📄 OPMAgentServerInfo.json
+                  </a>
+                  <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                    .MSI
+                  </a>
+                  <a href="/downloads/OpManagerAgent.exe" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                    .EXE
+                  </a>
+                </div>
+                <div style="font-size: 11px; color: #0369a1; background: #f0f9ff; border: 1px solid #bae6fd; padding: 6px 10px; border-radius: 4px; line-height: 1.4;">
+                  ℹ️ <strong>Windows Notice:</strong> <code>OpManagerAgent.exe</code> requires <code>OPMAgentServerInfo.json</code> in the same folder. Use the <strong>.ZIP</strong> package, or put <code>OPMAgentServerInfo.json</code> alongside the .exe before running.
+                </div>
               </div>
 
               <!-- Linux / macOS Card -->

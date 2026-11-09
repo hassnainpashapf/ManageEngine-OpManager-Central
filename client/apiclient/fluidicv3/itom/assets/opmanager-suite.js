@@ -1871,8 +1871,8 @@
         else if (action === 'add-probe') showAddProbeModal();
         else if (action === 'add-widget') showAddWidgetModal();
         else if (action === 'download-agent') {
-          window.open('/downloads/OpManagerAgent.msi', '_blank');
-          showToast('Downloading OpManager Host Monitoring Agent (MSI)...');
+          window.open('/downloads/OpManagerAgent-Windows-x64.zip', '_blank');
+          showToast('Downloading OpManager Windows Agent Package (.ZIP with OPMAgentServerInfo.json)...');
         }
       };
     });
@@ -7152,12 +7152,17 @@
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No BGP Routers Discovered</div>
             <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add edge routers with BGP MIB (RFC 4273) enabled to monitor Autonomous System topology, peering states, and prefix exchanges.</div>
-            <button onclick="document.getElementById('opm-bgp-modal').style.display='none'; showAddDeviceModal();" style="background: #6d28d9; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Router</button>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="document.getElementById('opm-bgp-modal').style.display='none'; showAddDeviceModal();" style="background: #6d28d9; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Router</button>
+              <button id="opm-bgp-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
+            </div>
           </div>
         </div>
       `;
       modal.style.display = 'flex';
       modal.querySelector('#close-bgp-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      const demoBtn = modal.querySelector('#opm-bgp-live-demo-btn');
+      if (demoBtn) demoBtn.onclick = () => showBgpMonitoringModal({ name: 'Cisco-ASR-9006-Core', ip: '192.168.30.1' });
       return;
     }
 
@@ -7422,12 +7427,17 @@
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No SD-WAN Gateways Configured</div>
             <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Connect Cisco vManage, Fortinet Secure SD-WAN, or Silver Peak appliances to track BFD tunnels, jitter, and application steering policies.</div>
-            <button onclick="document.getElementById('opm-sdwan-modal').style.display='none'; showAddDeviceModal();" style="background: #047857; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add SD-WAN Edge</button>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="document.getElementById('opm-sdwan-modal').style.display='none'; showAddDeviceModal();" style="background: #047857; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add SD-WAN Edge</button>
+              <button id="opm-sdwan-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
+            </div>
           </div>
         </div>
       `;
       modal.style.display = 'flex';
       modal.querySelector('#close-sdwan-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      const sdwanDemoBtn = modal.querySelector('#opm-sdwan-live-demo-btn');
+      if (sdwanDemoBtn) sdwanDemoBtn.onclick = () => showSdwanPerformanceModal({ name: 'Cisco-vEdge-2000-Core', ip: '192.168.30.2' });
       return;
     }
 
@@ -7663,12 +7673,17 @@
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No DPI Interfaces Monitored</div>
             <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Deploy NetFlow / IPFIX packet sampling or configure Cisco NBAR2 on router interfaces to inspect Layer-7 applications.</div>
-            <button onclick="document.getElementById('opm-dpi-modal').style.display='none'; showAddDeviceModal();" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Device</button>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="document.getElementById('opm-dpi-modal').style.display='none'; showAddDeviceModal();" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Device</button>
+              <button id="opm-dpi-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
+            </div>
           </div>
         </div>
       `;
       modal.style.display = 'flex';
       modal.querySelector('#close-dpi-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      const dpiDemoBtn = modal.querySelector('#opm-dpi-live-demo-btn');
+      if (dpiDemoBtn) dpiDemoBtn.onclick = () => showDpiTrafficModal({ name: 'GigabitEthernet0/0/1 - WAN Gateway' });
       return;
     }
 
@@ -7888,12 +7903,17 @@
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Security Threats Detected</div>
             <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Central Network Detection & Response engine is continuously monitoring flow traffic across probes. No anomalous lateral movement or botnet telemetry identified.</div>
-            <button onclick="document.getElementById('opm-ndr-modal').style.display='none';" style="background: #dc2626; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Dismiss</button>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button onclick="document.getElementById('opm-ndr-modal').style.display='none';" style="background: #dc2626; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Dismiss</button>
+              <button id="opm-ndr-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Threat Forensics Console</button>
+            </div>
           </div>
         </div>
       `;
       modal.style.display = 'flex';
       modal.querySelector('#close-ndr-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      const ndrDemoBtn = modal.querySelector('#opm-ndr-live-demo-btn');
+      if (ndrDemoBtn) ndrDemoBtn.onclick = () => showNdrForensicsModal({ name: 'Central NDR Threat Intelligence Engine' });
       return;
     }
 
@@ -8447,8 +8467,20 @@
         <div style="display: flex; align-items: center; gap: 4px; height: 100%;">
           ${subtabNavHtml}
         </div>
-        <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; height: 100%;">
-          <span id="opm-refresh-countdown-span" style="font-size: 11px; color: #64748b; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 3px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; height: 100%;">
+          <button id="opm-dash-bgp-btn" title="RFC 4271 BGP-4 Routing & Autonomous System Peering" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+            <span>📡</span> BGP-4
+          </button>
+          <button id="opm-dash-sdwan-btn" title="Cisco Catalyst & Multi-Vendor SD-WAN BFD Tunnels" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+            <span>🚀</span> SD-WAN
+          </button>
+          <button id="opm-dash-dpi-btn" title="Deep Packet Inspection & NBAR2 Application Traffic" style="background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+            <span>📊</span> DPI
+          </button>
+          <button id="opm-dash-ndr-btn" title="Network Detection & Response (NDR) Threat Forensics" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+            <span>🛡️</span> NDR
+          </button>
+          <span id="opm-refresh-countdown-span" style="font-size: 11px; color: #64748b; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 3px; height: 26px; box-sizing: border-box;">
             <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #49bd80;"></span>
             Auto Refresh: ${state.autoRefreshCountdown}s
           </span>
@@ -8943,9 +8975,12 @@
               Deploy the lightweight OpManager Agent on your Linux and Windows server hosts to stream real-time CPU, RAM, Disk, and Process daemon metrics.
             </div>
             <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-              <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+              <a href="/downloads/OpManagerAgent-Windows-x64.zip" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Download Windows MSI Agent
+                Download Windows Agent (.ZIP Package)
+              </a>
+              <a href="/downloads/OPMAgentServerInfo.json" download style="display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                📄 OPMAgentServerInfo.json
               </a>
               <a href="/downloads/install-agent.sh" download style="display: inline-flex; align-items: center; gap: 6px; background: #16a34a; color: #ffffff; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -9375,6 +9410,24 @@
       };
     }
 
+    // Enterprise Feature Badges: BGP, SD-WAN, DPI, NDR
+    const bgpBtn = container.querySelector('#opm-dash-bgp-btn');
+    if (bgpBtn) bgpBtn.onclick = () => {
+      if (typeof showBgpMonitoringModal === 'function') showBgpMonitoringModal();
+    };
+    const sdwanBtn = container.querySelector('#opm-dash-sdwan-btn');
+    if (sdwanBtn) sdwanBtn.onclick = () => {
+      if (typeof showSdwanPerformanceModal === 'function') showSdwanPerformanceModal();
+    };
+    const dpiBtn = container.querySelector('#opm-dash-dpi-btn');
+    if (dpiBtn) dpiBtn.onclick = () => {
+      if (typeof showDpiTrafficModal === 'function') showDpiTrafficModal();
+    };
+    const ndrBtn = container.querySelector('#opm-dash-ndr-btn');
+    if (ndrBtn) ndrBtn.onclick = () => {
+      if (typeof showNdrForensicsModal === 'function') showNdrForensicsModal();
+    };
+
     // Add Widget Button
     const addWidgetBtn = container.querySelector('#opm-dash-add-widget-btn');
     if (addWidgetBtn) {
@@ -9662,9 +9715,12 @@
                       <div style="font-size: 12px; color: #64748b; max-width: 500px; margin: 0 auto 18px auto;">
                         OpManager Central is ready for real production monitoring. Install the real agent on your Windows or Linux servers, or add network switches/routers via SNMP.
                       </div>
-                      <div style="display: flex; justify-content: center; gap: 10px;">
-                        <a href="/downloads/OpManagerAgent.msi" download style="background: #0070e0; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
-                          ⬇ Download Windows Agent (MSI)
+                      <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                        <a href="/downloads/OpManagerAgent-Windows-x64.zip" download style="background: #0070e0; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                          📦 Download Windows Agent (.ZIP Package)
+                        </a>
+                        <a href="/downloads/OPMAgentServerInfo.json" download style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                          📄 OPMAgentServerInfo.json
                         </a>
                         <a href="/downloads/install-agent.sh" download style="background: #1e293b; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
                           ⬇ Download Linux Agent (.sh)
@@ -13596,21 +13652,32 @@
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
               <!-- Windows Installer Card -->
-              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Windows Agent (x64 MSI / EXE)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-bottom: 12px;">Version 12.9.203 | Size: 6.9 MB | Windows Server 2016/2019/2022 / Windows 10/11</div>
-                  <div style="display: flex; gap: 8px;">
-                    <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                      Download .MSI
-                    </a>
-                    <a href="/downloads/OpManagerAgent.exe" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
-                      Download .EXE
-                    </a>
+              <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; background: #fafbfc; display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+                  <div>
+                    <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Windows Agent (x64 MSI / EXE / ZIP)</div>
+                    <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">Version 12.9.203 | Windows Server 2016/2019/2022 / Windows 10/11</div>
                   </div>
+                  <img src="/apiclient/fluidicv2/img/DeployAgent.png" style="height: 52px; object-fit: contain; flex-shrink: 0;" />
                 </div>
-                <img src="/apiclient/fluidicv2/img/DeployAgent.png" style="height: 64px; object-fit: contain; flex-shrink: 0;" />
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <a href="/downloads/OpManagerAgent-Windows-x64.zip" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    📦 Windows Agent Package (.ZIP)
+                  </a>
+                  <a href="/downloads/OPMAgentServerInfo.json" download style="display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;" title="Download required config file">
+                    📄 OPMAgentServerInfo.json
+                  </a>
+                  <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                    .MSI
+                  </a>
+                  <a href="/downloads/OpManagerAgent.exe" download style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                    .EXE
+                  </a>
+                </div>
+                <div style="font-size: 11px; color: #0369a1; background: #f0f9ff; border: 1px solid #bae6fd; padding: 6px 10px; border-radius: 4px; line-height: 1.4;">
+                  ℹ️ <strong>Windows Notice:</strong> <code>OpManagerAgent.exe</code> requires <code>OPMAgentServerInfo.json</code> in the same folder. Use the <strong>.ZIP</strong> package, or put <code>OPMAgentServerInfo.json</code> alongside the .exe before running.
+                </div>
               </div>
 
               <!-- Linux / macOS Card -->
@@ -16399,6 +16466,10 @@
   window.showProbeDetailsModal = showProbeDetailsModal;
   window.showDeviceSnapshotModal = showDeviceSnapshotModal;
   window.showToast = showToast;
+  window.showBgpMonitoringModal = showBgpMonitoringModal;
+  window.showSdwanPerformanceModal = showSdwanPerformanceModal;
+  window.showDpiTrafficModal = showDpiTrafficModal;
+  window.showNdrForensicsModal = showNdrForensicsModal;
   window.renderConfigurationView = renderConfigurationView;
   window.renderDashboardView = renderDashboardView;
   window.renderInventoryView = renderInventoryView;

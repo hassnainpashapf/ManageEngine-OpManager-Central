@@ -356,8 +356,20 @@
         <div style="display: flex; align-items: center; gap: 4px; height: 100%;">
           ${subtabNavHtml}
         </div>
-        <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; height: 100%;">
-          <span id="opm-refresh-countdown-span" style="font-size: 11px; color: #64748b; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 3px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; height: 100%;">
+          <button id="opm-dash-bgp-btn" title="RFC 4271 BGP-4 Routing & Autonomous System Peering" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+            <span>📡</span> BGP-4
+          </button>
+          <button id="opm-dash-sdwan-btn" title="Cisco Catalyst & Multi-Vendor SD-WAN BFD Tunnels" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+            <span>🚀</span> SD-WAN
+          </button>
+          <button id="opm-dash-dpi-btn" title="Deep Packet Inspection & NBAR2 Application Traffic" style="background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+            <span>📊</span> DPI
+          </button>
+          <button id="opm-dash-ndr-btn" title="Network Detection & Response (NDR) Threat Forensics" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+            <span>🛡️</span> NDR
+          </button>
+          <span id="opm-refresh-countdown-span" style="font-size: 11px; color: #64748b; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 3px; height: 26px; box-sizing: border-box;">
             <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #49bd80;"></span>
             Auto Refresh: ${state.autoRefreshCountdown}s
           </span>
@@ -852,9 +864,12 @@
               Deploy the lightweight OpManager Agent on your Linux and Windows server hosts to stream real-time CPU, RAM, Disk, and Process daemon metrics.
             </div>
             <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-              <a href="/downloads/OpManagerAgent.msi" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+              <a href="/downloads/OpManagerAgent-Windows-x64.zip" download style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Download Windows MSI Agent
+                Download Windows Agent (.ZIP Package)
+              </a>
+              <a href="/downloads/OPMAgentServerInfo.json" download style="display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
+                📄 OPMAgentServerInfo.json
               </a>
               <a href="/downloads/install-agent.sh" download style="display: inline-flex; align-items: center; gap: 6px; background: #16a34a; color: #ffffff; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -1284,6 +1299,24 @@
       };
     }
 
+    // Enterprise Feature Badges: BGP, SD-WAN, DPI, NDR
+    const bgpBtn = container.querySelector('#opm-dash-bgp-btn');
+    if (bgpBtn) bgpBtn.onclick = () => {
+      if (typeof showBgpMonitoringModal === 'function') showBgpMonitoringModal();
+    };
+    const sdwanBtn = container.querySelector('#opm-dash-sdwan-btn');
+    if (sdwanBtn) sdwanBtn.onclick = () => {
+      if (typeof showSdwanPerformanceModal === 'function') showSdwanPerformanceModal();
+    };
+    const dpiBtn = container.querySelector('#opm-dash-dpi-btn');
+    if (dpiBtn) dpiBtn.onclick = () => {
+      if (typeof showDpiTrafficModal === 'function') showDpiTrafficModal();
+    };
+    const ndrBtn = container.querySelector('#opm-dash-ndr-btn');
+    if (ndrBtn) ndrBtn.onclick = () => {
+      if (typeof showNdrForensicsModal === 'function') showNdrForensicsModal();
+    };
+
     // Add Widget Button
     const addWidgetBtn = container.querySelector('#opm-dash-add-widget-btn');
     if (addWidgetBtn) {
@@ -1571,9 +1604,12 @@
                       <div style="font-size: 12px; color: #64748b; max-width: 500px; margin: 0 auto 18px auto;">
                         OpManager Central is ready for real production monitoring. Install the real agent on your Windows or Linux servers, or add network switches/routers via SNMP.
                       </div>
-                      <div style="display: flex; justify-content: center; gap: 10px;">
-                        <a href="/downloads/OpManagerAgent.msi" download style="background: #0070e0; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
-                          ⬇ Download Windows Agent (MSI)
+                      <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                        <a href="/downloads/OpManagerAgent-Windows-x64.zip" download style="background: #0070e0; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                          📦 Download Windows Agent (.ZIP Package)
+                        </a>
+                        <a href="/downloads/OPMAgentServerInfo.json" download style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                          📄 OPMAgentServerInfo.json
                         </a>
                         <a href="/downloads/install-agent.sh" download style="background: #1e293b; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
                           ⬇ Download Linux Agent (.sh)
