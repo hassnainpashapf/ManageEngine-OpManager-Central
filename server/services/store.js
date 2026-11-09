@@ -271,6 +271,37 @@ CREATE TABLE IF NOT EXISTS api_keys (
   key_hash TEXT NOT NULL,
   created_at INTEGER NOT NULL
 );
+
+-- HA failover state (server/services/ha.js, Phase 3 ha-service track).
+-- ha_peers: one row per known peer node. node_id is the peer's peerId
+-- (its settings.ha.nodeId). last_seen_at is epoch ms of the last
+-- heartbeat received from, or successfully sent to, that peer; missed
+-- counts consecutive failed outbound heartbeats to it; heartbeat_count
+-- counts heartbeats received from it. url may be NULL when a peer
+-- heartbeats without one — the local node then reaches it via its own
+-- settings.ha.primaryUrl / standbyUrl instead.
+CREATE TABLE IF NOT EXISTS ha_peers (
+  node_id TEXT PRIMARY KEY,
+  role TEXT NOT NULL,
+  url TEXT,
+  last_seen_at INTEGER NOT NULL,
+  missed INTEGER NOT NULL DEFAULT 0,
+  heartbeat_count INTEGER NOT NULL DEFAULT 0,
+  created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+
+-- ha_leases: exactly one row (id = 1), the failover lease. Only the
+-- holder may act as primary — this is the split-brain guard. A lease
+-- is live while expires_at is in the future; acquireHaLease() takes it
+-- in a single BEGIN IMMEDIATE transaction so two racing nodes can
+-- never both win.
+CREATE TABLE IF NOT EXISTS ha_leases (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  holder TEXT NOT NULL,
+  acquired_at INTEGER NOT NULL,
+  expires_at INTEGER NOT NULL
+);
 `);
 
 // Migration: alarms.rca_status was added after the initial schema, so
@@ -1156,6 +1187,121 @@ function listTraps(limit) {
   return toRows(db.prepare('SELECT * FROM traps ORDER BY received_at DESC, id DESC LIMIT ?').all(n));
 }
 
+// ------------------------------------------------------------------- ha ---
+// HA failover peer registry + lease (server/services/ha.js, Phase 3).
+// All timestamps are explicit epoch-ms arguments (default Date.now())
+// so the HA service's tests can drive liveness with a fixed clock.
+// Prepared statements only; no caller-supplied value reaches SQL text.
+
+function getHaPeer(nodeId) {
+  return toRow(db.prepare('SELECT * FROM ha_peers WHERE node_id = ?').get(nodeId));
+}
+
+function getHaPeerByUrl(url) {
+  if (url === null || url === undefined) return null;
+  return toRow(db.prepare('SELECT * FROM ha_peers WHERE url = ?').get(url));
+}
+
+function listHaPeers() {
+  return toRows(db.prepare('SELECT * FROM ha_peers ORDER BY node_id ASC').all());
+}
+
+function registerHaPeer(peer, atMs) {
+  const p = peer || {};
+  const at = atMs !== undefined ? atMs : now();
+  db.prepare(
+    `INSERT INTO ha_peers (node_id, role, url, last_seen_at, missed, heartbeat_count, created_at, updated_at)
+     VALUES (?, ?, ?, ?, 0, 0, ?, ?)
+     ON CONFLICT(node_id) DO UPDATE SET
+       role = excluded.role,
+       url = excluded.url,
+       last_seen_at = excluded.last_seen_at,
+       missed = 0,
+       updated_at = excluded.updated_at`
+  ).run(p.nodeId, p.role, p.url ?? null, at, at, at);
+  return getHaPeer(p.nodeId);
+}
+
+function recordHaHeartbeat(peer, atMs) {
+  const p = peer || {};
+  const at = atMs !== undefined ? atMs : now();
+  db.prepare(
+    `INSERT INTO ha_peers (node_id, role, url, last_seen_at, missed, heartbeat_count, created_at, updated_at)
+     VALUES (?, ?, ?, ?, 0, 1, ?, ?)
+     ON CONFLICT(node_id) DO UPDATE SET
+       role = excluded.role,
+       url = COALESCE(excluded.url, ha_peers.url),
+       last_seen_at = excluded.last_seen_at,
+       missed = 0,
+       heartbeat_count = ha_peers.heartbeat_count + 1,
+       updated_at = excluded.updated_at`
+  ).run(p.nodeId, p.role, p.url ?? null, at, at, at);
+  return getHaPeer(p.nodeId);
+}
+
+function markHaPeerMissed(nodeId, atMs) {
+  const at = atMs !== undefined ? atMs : now();
+  db.prepare('UPDATE ha_peers SET missed = missed + 1, updated_at = ? WHERE node_id = ?').run(at, nodeId);
+  return getHaPeer(nodeId);
+}
+
+function removeHaPeer(nodeId) {
+  const info = db.prepare('DELETE FROM ha_peers WHERE node_id = ?').run(nodeId);
+  return { deleted: info.changes };
+}
+
+function getHaLease() {
+  return toRow(db.prepare('SELECT * FROM ha_leases WHERE id = 1').get());
+}
+
+// Atomic lease acquire: one BEGIN IMMEDIATE transaction, so two nodes
+// racing to promote can never both win. Succeeds when there is no
+// lease, the lease is expired, or this node already holds it (renewal).
+// Returns { acquired, holder, acquiredAt, expiresAt }.
+function acquireHaLease(holder, termMs, atMs) {
+  const at = atMs !== undefined ? atMs : now();
+  const term = Number(termMs);
+  if (!holder || !Number.isFinite(term) || term <= 0) {
+    throw new Error('acquireHaLease: holder and a positive termMs are required');
+  }
+  db.exec('BEGIN IMMEDIATE');
+  try {
+    const current = getHaLease();
+    if (current && current.expires_at > at && current.holder !== holder) {
+      db.exec('COMMIT');
+      return { acquired: false, holder: current.holder, acquiredAt: current.acquired_at, expiresAt: current.expires_at };
+    }
+    const expiresAt = at + term;
+    db.prepare(
+      `INSERT INTO ha_leases (id, holder, acquired_at, expires_at) VALUES (1, ?, ?, ?)
+       ON CONFLICT(id) DO UPDATE SET holder = excluded.holder, acquired_at = excluded.acquired_at, expires_at = excluded.expires_at`
+    ).run(holder, at, expiresAt);
+    db.exec('COMMIT');
+    return { acquired: true, holder, acquiredAt: at, expiresAt };
+  } catch (err) {
+    db.exec('ROLLBACK');
+    throw err;
+  }
+}
+
+// Renew only when this node still holds a live lease; a lapsed or
+// foreign lease is never silently taken over here (that is acquire's job).
+function renewHaLease(holder, termMs, atMs) {
+  const at = atMs !== undefined ? atMs : now();
+  const current = getHaLease();
+  if (!current || current.holder !== holder || current.expires_at <= at) return false;
+  db.prepare('UPDATE ha_leases SET expires_at = ? WHERE id = 1 AND holder = ?').run(
+    at + Number(termMs),
+    holder
+  );
+  return true;
+}
+
+function releaseHaLease(holder) {
+  const info = db.prepare('DELETE FROM ha_leases WHERE id = 1 AND holder = ?').run(holder);
+  return { deleted: info.changes };
+}
+
 // --------------------------------------------------------------- exports ---
 
 module.exports = {
@@ -1258,6 +1404,18 @@ module.exports = {
   // traps
   saveTrap,
   listTraps,
+  // ha failover (Phase 3 ha-service track)
+  registerHaPeer,
+  getHaPeer,
+  getHaPeerByUrl,
+  listHaPeers,
+  recordHaHeartbeat,
+  markHaPeerMissed,
+  removeHaPeer,
+  getHaLease,
+  acquireHaLease,
+  renewHaLease,
+  releaseHaLease,
 
   // Namespaced aliases — same functions, grouped for route code that
   // uses store.devices.getDevice / store.configs.getLatestConfig / etc.
@@ -1318,4 +1476,17 @@ module.exports = {
   audit: { log, listAudit },
   apiKeys: { createApiKey, listApiKeys, getApiKeyByHash, deleteApiKey, rotateApiKey },
   traps: { saveTrap, listTraps },
+  ha: {
+    registerHaPeer,
+    getHaPeer,
+    getHaPeerByUrl,
+    listHaPeers,
+    recordHaHeartbeat,
+    markHaPeerMissed,
+    removeHaPeer,
+    getHaLease,
+    acquireHaLease,
+    renewHaLease,
+    releaseHaLease,
+  },
 };

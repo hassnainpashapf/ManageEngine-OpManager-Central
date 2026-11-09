@@ -37,6 +37,8 @@ const hardwareRoute = require('./routes/hardware');
 const diffRoute = require('./routes/diff');
 const ncmRoute = require('./routes/ncm'); // Phase 4 merge (p4m-ncm): canonical NCM approvals on server/services/ncm.js
 const adRoute = require('./routes/ad');
+const haRoute = require('./routes/ha'); // Phase 4 merge p4m-ha: /api/ha/* + /api/settings/ha
+const ha = require('./services/ha'); // Phase 4 merge p4m-ha: HA failover service
 const poller = require('./services/poller');
 // NOTE: the old JSON store (server/services/db.js) was deleted by the store
 // track and replaced by server/services/store.js (SQLite). index.js reads
@@ -186,6 +188,15 @@ const KEY_AUTH_API_ROUTES = new Set([
   'POST /api/agent/telemetry',
   'POST /api/agent/deregister',
   'GET /api/agent/list',
+  // HA peer endpoints (Phase 4 merge p4m-ha): no user session exists
+  // between two servers, so they authenticate with the shared peer
+  // secret instead (header x-ha-peer-secret, env OPM_HA_PEER_SECRET).
+  // server/routes/ha.js enforces the secret itself and fails CLOSED
+  // (401/503) without it; GET /api/ha/status additionally accepts a
+  // valid user session. No HA route is ever open.
+  'POST /api/ha/register',
+  'POST /api/ha/heartbeat',
+  'GET /api/ha/status',
 ]);
 
 // Password-change route: the ONLY session-authenticated API route a
@@ -450,6 +461,14 @@ app.use(agentsRoute);
 // not be intercepted by ncmclient's guard (which would 401 them before
 // their own auth runs). No path overlap with ncmclient.js (/ncmclient/*).
 app.use(ncmRoute);
+// haRoute mounts here too, BEFORE ncmclientRoute, for the same reason:
+// POST /api/ha/register and /api/ha/heartbeat authenticate by peer
+// secret (not a user session), so ncmclient's router-level guard would
+// 401 them before the peer-secret check could run. The other /api/ha/*
+// routes are session-authenticated by the global apiAuthGuard either
+// way, and haRoute only serves /api/ha/* + /api/settings/ha (no path
+// overlap with ncmclient).
+app.use(haRoute);
 app.use(ncmclientRoute);
 app.use(toolsRoute);
 app.use(ziaRoute);
@@ -628,17 +647,66 @@ server.listen(PORT, () => {
   } catch (e) {
     console.error('[Auth] ensureFirstAdmin FAILED (startup continues; no admin was seeded):', e && e.message ? e.message : e);
   }
+  // HA first (Phase 4 merge p4m-ha): it decides whether this node may
+  // poll, and starts the heartbeat ticker. A configured standby must
+  // NOT poll while a primary is alive — it starts polling only when it
+  // promotes on failover (onPromote), and stops again if the primary
+  // re-registers (onDemote). A primary polls from the start. A node
+  // with no peer configured at all is standalone and polls exactly as
+  // before — the canonical default role is 'standby', so the gate is
+  // "peer configured AND role standby", never the bare default role.
+  // NOTE: a role change via POST /api/settings/ha takes effect for the
+  // heartbeat ticker immediately, but poller gating follows the role
+  // at process start and on promotion/demotion — restart the node
+  // after changing its configured role for polling to follow.
+  let haShouldPoll = true;
   try {
-    if (typeof poller.startPoller === 'function') {
-      poller.startPoller();
-    } else if (typeof poller.start === 'function') {
-      // Back-compat with the pre-rebuild poller API.
-      poller.start(4000);
-    } else {
-      console.error('[Poller] startPoller/start NOT AVAILABLE — poller was not started.');
+    ha.setCallbacks({
+      onPromote: () => {
+        try {
+          if (typeof poller.startPoller === 'function') poller.startPoller();
+          else if (typeof poller.start === 'function') poller.start(4000);
+        } catch (e) {
+          console.error('[HA] onPromote could not start poller:', e && e.message ? e.message : e);
+        }
+      },
+      onDemote: () => {
+        try {
+          if (typeof poller.stopPoller === 'function') poller.stopPoller();
+          else if (typeof poller.stop === 'function') poller.stop();
+        } catch (e) {
+          console.error('[HA] onDemote could not stop poller:', e && e.message ? e.message : e);
+        }
+      },
+    });
+    const haCfg = ha.getConfig();
+    const haPeerConfigured = Boolean(haCfg.standbyUrl || haCfg.primaryUrl);
+    haShouldPoll = !haPeerConfigured || haCfg.role !== 'standby';
+    const haStart = ha.start();
+    console.log(`[HA] role=${haCfg.role} peer=${haCfg.standbyUrl || haCfg.primaryUrl || 'none'} heartbeat=${haCfg.heartbeatSec}s ticker=${haStart.started ? 'started' : `not-started (${haStart.reason || 'unknown'})`} poll=${haShouldPoll ? 'on' : 'paused (standby)'}`);
+    if (haCfg.role === 'primary' && haPeerConfigured) {
+      ha.registerWithPeer().then((r) => {
+        if (!r.ok) console.error(`[HA] registration with standby FAILED (ticker retries): ${r.error}`);
+      }).catch((e) => console.error('[HA] registration error:', e && e.message ? e.message : e));
     }
   } catch (e) {
-    console.error('[Poller] startPoller FAILED (startup continues; polling is off):', e && e.message ? e.message : e);
+    console.error('[HA] init FAILED (startup continues; HA disabled, polling as standalone):', e && e.message ? e.message : e);
+  }
+  if (!haShouldPoll) {
+    console.log('[Poller] standby node — polling paused until failover promotion.');
+  } else {
+    try {
+      if (typeof poller.startPoller === 'function') {
+        poller.startPoller();
+      } else if (typeof poller.start === 'function') {
+        // Back-compat with the pre-rebuild poller API.
+        poller.start(4000);
+      } else {
+        console.error('[Poller] startPoller/start NOT AVAILABLE — poller was not started.');
+      }
+    } catch (e) {
+      console.error('[Poller] startPoller FAILED (startup continues; polling is off):', e && e.message ? e.message : e);
+    }
   }
 });
 

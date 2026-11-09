@@ -1,0 +1,1722 @@
+{
+  "tool": "scripts/test-ha.js",
+  "track": "ha-tests",
+  "runAt": "2026-11-09T11:38:26.252Z",
+  "primary": {
+    "dir": "/home/hatch/workspace/opm-p4/merge-ha",
+    "port": 8164,
+    "url": "http://127.0.0.1:8164"
+  },
+  "standby": {
+    "dir": "/home/hatch/workspace/opm-p4/m5-work/ha-standby",
+    "port": 18164,
+    "url": "http://127.0.0.1:18164"
+  },
+  "note": "Two real local instances of the same checkout; each has its own throwaway DB. No credentials are recorded in this file.",
+  "cases": [
+    {
+      "id": "C0",
+      "title": "Baseline probe — canonical HA surface exists and answers",
+      "expectation": "GET /api/settings/failover returns the stored pair; heartbeat test does a real TCP connect; the canonical surface answers: GET /api/ha/status (200, healthy with both nodes up), GET /api/settings/ha (200, canonical settings), GET /api/ha/decisions (200, array), and POST /api/ha/heartbeat answers 401 without the peer secret.",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "name": "failover config stored on primary",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "failover config stored on standby",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "canonical HA config stored on primary",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "canonical HA config stored on standby",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "heartbeat test succeeds while standby is up",
+          "pass": true,
+          "detail": "{\"status\":\"success\",\"message\":\"Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.\",\"latencyMs\":1,\"reachable\":true}"
+        },
+        {
+          "name": "GET /api/ha/status exists (200, healthy, role primary)",
+          "pass": true,
+          "detail": "HTTP 200 status=\"healthy\""
+        },
+        {
+          "name": "GET /api/settings/ha exists (200, heartbeatSec 5)",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "GET /api/ha/decisions exists (200, decisions array)",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "POST /api/ha/heartbeat without peer secret is 401",
+          "pass": true,
+          "detail": "HTTP 401"
+        }
+      ],
+      "responses": [
+        {
+          "label": "primary POST /api/settings/failover (pair config)",
+          "at": "2026-11-09T11:38:41.696Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 35,
+            "body": {
+              "status": "success",
+              "message": "Failover configuration saved.",
+              "failover": {
+                "mode": "active-standby",
+                "status": "Configured",
+                "virtualIp": null,
+                "heartbeatPort": 18164,
+                "splitBrainProtection": "none",
+                "primary": {
+                  "ip": "127.0.0.1",
+                  "port": 8164
+                },
+                "secondary": {
+                  "ip": "127.0.0.1",
+                  "port": 18164
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "standby POST /api/settings/failover (pair config)",
+          "at": "2026-11-09T11:38:41.696Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 35,
+            "body": {
+              "status": "success",
+              "message": "Failover configuration saved.",
+              "failover": {
+                "mode": "active-standby",
+                "status": "Configured",
+                "virtualIp": null,
+                "heartbeatPort": 18164,
+                "splitBrainProtection": "none",
+                "primary": {
+                  "ip": "127.0.0.1",
+                  "port": 8164
+                },
+                "secondary": {
+                  "ip": "127.0.0.1",
+                  "port": 18164
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "primary POST /api/settings/ha (canonical config)",
+          "at": "2026-11-09T11:38:41.696Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/ha"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 74,
+            "body": {
+              "status": "success",
+              "message": "HA settings saved.",
+              "ha": {
+                "role": "primary",
+                "standbyUrl": "http://127.0.0.1:18164",
+                "primaryUrl": null,
+                "nodeUrl": "http://127.0.0.1:8164",
+                "nodeId": null,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "leaseTermMs": 15000,
+                "requestTimeoutMs": 3000,
+                "promotedByFailover": false
+              },
+              "ticker": {
+                "started": true,
+                "heartbeatSec": 5
+              }
+            }
+          }
+        },
+        {
+          "label": "standby POST /api/settings/ha (canonical config)",
+          "at": "2026-11-09T11:38:41.696Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/ha"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 50,
+            "body": {
+              "status": "success",
+              "message": "HA settings saved.",
+              "ha": {
+                "role": "standby",
+                "standbyUrl": null,
+                "primaryUrl": "http://127.0.0.1:8164",
+                "nodeUrl": "http://127.0.0.1:18164",
+                "nodeId": null,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "leaseTermMs": 15000,
+                "requestTimeoutMs": 3000,
+                "promotedByFailover": false
+              },
+              "ticker": {
+                "started": true,
+                "heartbeatSec": 5
+              }
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/settings/failover",
+          "at": "2026-11-09T11:38:41.705Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/settings/failover"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 8,
+            "body": {
+              "status": "success",
+              "failover": {
+                "mode": "active-standby",
+                "status": "Configured",
+                "virtualIp": null,
+                "heartbeatPort": 18164,
+                "splitBrainProtection": "none",
+                "primary": {
+                  "ip": "127.0.0.1",
+                  "port": 8164
+                },
+                "secondary": {
+                  "ip": "127.0.0.1",
+                  "port": 18164
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/settings/failover",
+          "at": "2026-11-09T11:38:41.714Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/settings/failover"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 9,
+            "body": {
+              "status": "success",
+              "failover": {
+                "mode": "active-standby",
+                "status": "Configured",
+                "virtualIp": null,
+                "heartbeatPort": 18164,
+                "splitBrainProtection": "none",
+                "primary": {
+                  "ip": "127.0.0.1",
+                  "port": 8164
+                },
+                "secondary": {
+                  "ip": "127.0.0.1",
+                  "port": 18164
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "primary POST /api/settings/failover/test (standby up)",
+          "at": "2026-11-09T11:38:41.719Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover/test"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 5,
+            "body": {
+              "status": "success",
+              "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.",
+              "latencyMs": 1,
+              "reachable": true
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/ha/status",
+          "at": "2026-11-09T11:38:41.724Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/status"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 5,
+            "body": {
+              "status": "success",
+              "ha": {
+                "status": "healthy",
+                "role": "primary",
+                "nodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                "promotedByFailover": false,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "graceMs": 15000,
+                "leaseTermMs": 15000,
+                "primaryAlive": true,
+                "standbyAlive": true,
+                "primaryUrl": "http://127.0.0.1:18164",
+                "peers": [
+                  {
+                    "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                    "role": "standby",
+                    "url": "http://127.0.0.1:18164",
+                    "lastSeenAt": 1794224319681,
+                    "msSinceSeen": 2039,
+                    "missed": 0,
+                    "heartbeatCount": 2,
+                    "alive": true,
+                    "status": "alive"
+                  },
+                  {
+                    "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:18164",
+                    "lastSeenAt": 1794224319613,
+                    "msSinceSeen": 2107,
+                    "missed": 0,
+                    "heartbeatCount": 2,
+                    "alive": true,
+                    "status": "alive"
+                  }
+                ],
+                "lease": {
+                  "id": 1,
+                  "holder": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                  "acquired_at": 1794224309597,
+                  "expires_at": 1794224334613
+                },
+                "checkedAt": 1794224321720,
+                "probes": [
+                  {
+                    "url": "http://127.0.0.1:18164",
+                    "reachable": true,
+                    "latencyMs": 0
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/settings/ha",
+          "at": "2026-11-09T11:38:41.726Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/settings/ha"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "success",
+              "ha": {
+                "role": "primary",
+                "standbyUrl": "http://127.0.0.1:18164",
+                "primaryUrl": null,
+                "nodeUrl": "http://127.0.0.1:8164",
+                "nodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "leaseTermMs": 15000,
+                "requestTimeoutMs": 3000,
+                "promotedByFailover": false
+              }
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/ha/decisions",
+          "at": "2026-11-09T11:38:41.729Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/decisions"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "success",
+              "decisions": [
+                {
+                  "id": 4,
+                  "at": "2026-11-09T11:38:29.569Z",
+                  "createdAt": 1794224309569,
+                  "action": "ha.settings.save",
+                  "type": "settings.save",
+                  "detail": {
+                    "role": "primary",
+                    "standbyUrl": "http://127.0.0.1:18164",
+                    "primaryUrl": null,
+                    "heartbeatSec": 5,
+                    "user": "admin"
+                  }
+                }
+              ],
+              "count": 1
+            }
+          }
+        },
+        {
+          "label": "primary POST /api/ha/heartbeat (no peer secret)",
+          "at": "2026-11-09T11:38:41.731Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/ha/heartbeat",
+            "body": {
+              "peerId": "probe"
+            }
+          },
+          "response": {
+            "status": 401,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "error",
+              "error": "unauthorized",
+              "message": "Invalid or missing HA peer secret."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C1",
+      "title": "Standby killed -> primary reports degraded/unavailable, no false promotion",
+      "expectation": "With the standby process dead, the primary heartbeat test must report unreachable, the primary must surface the failure in GET /api/ha/status (degraded while the peer row is within grace, unavailable once past it — the canonical service counts registered peers, not itself), the primary must stay up, and nothing may promote.",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "name": "standby TCP port is actually down",
+          "pass": true,
+          "detail": "tcpProbe=false"
+        },
+        {
+          "name": "heartbeat test honestly reports standby unreachable",
+          "pass": true,
+          "detail": "{\"status\":\"error\",\"message\":\"Heartbeat TCP connect to standby 127.0.0.1:18164 failed: connect ECONNREFUSED 127.0.0.1:18164\",\"latencyMs\":1,\"reachable\":false}"
+        },
+        {
+          "name": "primary GET /api/ha/status surfaces the failure (degraded|unavailable)",
+          "pass": true,
+          "detail": "ha.status=\"unavailable\" standbyAlive=false"
+        },
+        {
+          "name": "primary stays up and serving (session 200)",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "no false promotion (primary stays the only primary)",
+          "pass": true,
+          "detail": "GET /api/ha/status HTTP 200 role=\"primary\""
+        },
+        {
+          "name": "standby restart restores heartbeat success",
+          "pass": true,
+          "detail": "{\"status\":\"success\",\"message\":\"Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.\",\"latencyMs\":1,\"reachable\":true}"
+        },
+        {
+          "name": "standby is healthy again after restart (role standby)",
+          "pass": true,
+          "detail": "ha.status=\"healthy\" role=\"standby\""
+        }
+      ],
+      "responses": [
+        {
+          "label": "standby process killed (SIGTERM)",
+          "at": "2026-11-09T11:38:41.732Z",
+          "request": {
+            "action": "kill",
+            "pid": 31256
+          },
+          "response": {
+            "status": null,
+            "exitCode": 0,
+            "signal": "SIGTERM"
+          }
+        },
+        {
+          "label": "primary POST /api/settings/failover/test (standby dead)",
+          "at": "2026-11-09T11:38:42.988Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover/test"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 4,
+            "body": {
+              "status": "error",
+              "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 failed: connect ECONNREFUSED 127.0.0.1:18164",
+              "latencyMs": 1,
+              "reachable": false
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/settings/failover (standby dead)",
+          "at": "2026-11-09T11:38:42.991Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/settings/failover"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 3,
+            "body": {
+              "status": "success",
+              "failover": {
+                "mode": "active-standby",
+                "status": "Configured",
+                "virtualIp": null,
+                "heartbeatPort": 18164,
+                "splitBrainProtection": "none",
+                "primary": {
+                  "ip": "127.0.0.1",
+                  "port": 8164
+                },
+                "secondary": {
+                  "ip": "127.0.0.1",
+                  "port": 18164
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/auth/session (liveness, standby dead)",
+          "at": "2026-11-09T11:38:42.993Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/auth/session"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "authenticated": true,
+              "ok": true,
+              "user": {
+                "id": 1,
+                "username": "admin",
+                "role": "admin"
+              }
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/ha/status (standby dead, +1s)",
+          "at": "2026-11-09T11:38:42.996Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/status"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 3,
+            "body": {
+              "status": "success",
+              "ha": {
+                "status": "healthy",
+                "role": "primary",
+                "nodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                "promotedByFailover": false,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "graceMs": 15000,
+                "leaseTermMs": 15000,
+                "primaryAlive": true,
+                "standbyAlive": true,
+                "primaryUrl": "http://127.0.0.1:18164",
+                "peers": [
+                  {
+                    "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                    "role": "standby",
+                    "url": "http://127.0.0.1:18164",
+                    "lastSeenAt": 1794224319681,
+                    "msSinceSeen": 3313,
+                    "missed": 0,
+                    "heartbeatCount": 2,
+                    "alive": true,
+                    "status": "alive"
+                  },
+                  {
+                    "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:18164",
+                    "lastSeenAt": 1794224319613,
+                    "msSinceSeen": 3381,
+                    "missed": 0,
+                    "heartbeatCount": 2,
+                    "alive": true,
+                    "status": "alive"
+                  }
+                ],
+                "lease": {
+                  "id": 1,
+                  "holder": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                  "acquired_at": 1794224309597,
+                  "expires_at": 1794224334613
+                },
+                "checkedAt": 1794224322994,
+                "probes": [
+                  {
+                    "url": "http://127.0.0.1:18164",
+                    "reachable": false,
+                    "error": "connect ECONNREFUSED 127.0.0.1:18164",
+                    "latencyMs": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/ha/status (standby dead, past grace)",
+          "at": "2026-11-09T11:38:55.021Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/status"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 4,
+            "body": {
+              "status": "success",
+              "ha": {
+                "status": "unavailable",
+                "role": "primary",
+                "nodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                "promotedByFailover": false,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "graceMs": 15000,
+                "leaseTermMs": 15000,
+                "primaryAlive": false,
+                "standbyAlive": false,
+                "primaryUrl": "http://127.0.0.1:18164",
+                "peers": [
+                  {
+                    "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                    "role": "standby",
+                    "url": "http://127.0.0.1:18164",
+                    "lastSeenAt": 1794224319681,
+                    "msSinceSeen": 15338,
+                    "missed": 0,
+                    "heartbeatCount": 2,
+                    "alive": false,
+                    "status": "dead"
+                  },
+                  {
+                    "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:18164",
+                    "lastSeenAt": 1794224319613,
+                    "msSinceSeen": 15406,
+                    "missed": 3,
+                    "heartbeatCount": 2,
+                    "alive": false,
+                    "status": "dead"
+                  }
+                ],
+                "lease": {
+                  "id": 1,
+                  "holder": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                  "acquired_at": 1794224309597,
+                  "expires_at": 1794224349614
+                },
+                "checkedAt": 1794224335019,
+                "probes": [
+                  {
+                    "url": "http://127.0.0.1:18164",
+                    "reachable": false,
+                    "error": "connect ECONNREFUSED 127.0.0.1:18164",
+                    "latencyMs": 0
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "primary POST /api/settings/failover/test (standby back up)",
+          "at": "2026-11-09T11:38:56.207Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover/test"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "success",
+              "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.",
+              "latencyMs": 1,
+              "reachable": true
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/ha/status (after restart)",
+          "at": "2026-11-09T11:39:03.217Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/status"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 7,
+            "body": {
+              "status": "success",
+              "ha": {
+                "status": "healthy",
+                "role": "standby",
+                "nodeId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                "promotedByFailover": false,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "graceMs": 15000,
+                "leaseTermMs": 15000,
+                "primaryAlive": true,
+                "standbyAlive": true,
+                "primaryUrl": "http://127.0.0.1:8164",
+                "peers": [
+                  {
+                    "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                    "role": "standby",
+                    "url": "http://127.0.0.1:8164",
+                    "lastSeenAt": 1794224340423,
+                    "msSinceSeen": 2791,
+                    "missed": 0,
+                    "heartbeatCount": 3,
+                    "alive": true,
+                    "status": "alive"
+                  },
+                  {
+                    "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:8164",
+                    "lastSeenAt": 1794224339621,
+                    "msSinceSeen": 3593,
+                    "missed": 0,
+                    "heartbeatCount": 3,
+                    "alive": true,
+                    "status": "alive"
+                  }
+                ],
+                "lease": null,
+                "checkedAt": 1794224343214,
+                "probes": [
+                  {
+                    "url": "http://127.0.0.1:8164",
+                    "reachable": true,
+                    "latencyMs": 0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "title": "Primary killed -> standby promotes with a real decision record (exact timestamps)",
+      "expectation": "With the primary process dead, the standby must promote itself to primary and record the decision (when, why, gapMs) in GET /api/ha/decisions. Canonical grace is heartbeatSec(5) x missThreshold(3) = 15s from the last heartbeat, so the harness polls up to 45s for the promotion.",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "name": "primary TCP port is actually down",
+          "pass": true,
+          "detail": "tcpProbe=false"
+        },
+        {
+          "name": "standby reports role primary after primary death",
+          "pass": true,
+          "detail": "ha.role=\"primary\" gapMs=13292"
+        },
+        {
+          "name": "a ha.promote decision record exists with timestamps",
+          "pass": true,
+          "detail": "GET /api/ha/decisions HTTP 200 promote={\"id\":7,\"at\":\"2026-11-09T11:39:15.471Z\",\"createdAt\":1794224355471,\"action\":\"ha.promote\",\"type\":\"promote\",\"detail\":{\"reason\":\"primary missed threshold heartbeats and lease acquired\",\"primaryNodeId\":\"node-cf0908f7-7ad9-438e-b351-0d2f84d0df33\",\"msSinceSeen\":15802,\"graceMs\":15000,\"leaseExpiresAt\":1794224370423,\"promotedNodeId\":\"node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8\"},\"gapMs\":15802}"
+        },
+        {
+          "name": "promotion gap is within the grace window (10s..45s)",
+          "pass": true,
+          "detail": "gapMs=13292"
+        },
+        {
+          "name": "standby stays up and serving (session 200)",
+          "pass": true,
+          "detail": "HTTP 200"
+        }
+      ],
+      "responses": [
+        {
+          "label": "primary process killed (SIGTERM)",
+          "at": "2026-11-09T11:39:03.217Z",
+          "request": {
+            "action": "kill",
+            "pid": 31255
+          },
+          "response": {
+            "status": null,
+            "exitCode": 0,
+            "signal": "SIGTERM"
+          }
+        },
+        {
+          "label": "standby GET /api/ha/status (primary dead, +3s)",
+          "at": "2026-11-09T11:39:06.486Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/status"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 12,
+            "body": {
+              "status": "success",
+              "ha": {
+                "status": "healthy",
+                "role": "standby",
+                "nodeId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                "promotedByFailover": false,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "graceMs": 15000,
+                "leaseTermMs": 15000,
+                "primaryAlive": true,
+                "standbyAlive": true,
+                "primaryUrl": "http://127.0.0.1:8164",
+                "peers": [
+                  {
+                    "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                    "role": "standby",
+                    "url": "http://127.0.0.1:8164",
+                    "lastSeenAt": 1794224340423,
+                    "msSinceSeen": 6058,
+                    "missed": 0,
+                    "heartbeatCount": 3,
+                    "alive": true,
+                    "status": "alive"
+                  },
+                  {
+                    "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:8164",
+                    "lastSeenAt": 1794224339621,
+                    "msSinceSeen": 6860,
+                    "missed": 1,
+                    "heartbeatCount": 3,
+                    "alive": true,
+                    "status": "alive"
+                  }
+                ],
+                "lease": null,
+                "checkedAt": 1794224346481,
+                "probes": [
+                  {
+                    "url": "http://127.0.0.1:8164",
+                    "reachable": false,
+                    "error": "connect ECONNREFUSED 127.0.0.1:8164",
+                    "latencyMs": 2
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/ha/status (promoted)",
+          "at": "2026-11-09T11:39:16.509Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/status"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 3,
+            "body": {
+              "status": "success",
+              "ha": {
+                "status": "unavailable",
+                "role": "primary",
+                "nodeId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                "promotedByFailover": true,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "graceMs": 15000,
+                "leaseTermMs": 15000,
+                "primaryAlive": false,
+                "standbyAlive": false,
+                "primaryUrl": null,
+                "peers": [
+                  {
+                    "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                    "role": "standby",
+                    "url": "http://127.0.0.1:8164",
+                    "lastSeenAt": 1794224340423,
+                    "msSinceSeen": 16084,
+                    "missed": 0,
+                    "heartbeatCount": 3,
+                    "alive": false,
+                    "status": "dead"
+                  },
+                  {
+                    "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:8164",
+                    "lastSeenAt": 1794224339621,
+                    "msSinceSeen": 16886,
+                    "missed": 3,
+                    "heartbeatCount": 3,
+                    "alive": false,
+                    "status": "dead"
+                  }
+                ],
+                "lease": {
+                  "id": 1,
+                  "holder": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                  "acquired_at": 1794224355423,
+                  "expires_at": 1794224370423
+                },
+                "checkedAt": 1794224356507,
+                "probes": [
+                  {
+                    "url": "http://127.0.0.1:8164",
+                    "reachable": false,
+                    "error": "connect ECONNREFUSED 127.0.0.1:8164",
+                    "latencyMs": 0
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/ha/decisions (primary dead)",
+          "at": "2026-11-09T11:39:16.512Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/decisions"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 3,
+            "body": {
+              "status": "success",
+              "decisions": [
+                {
+                  "id": 7,
+                  "at": "2026-11-09T11:39:15.471Z",
+                  "createdAt": 1794224355471,
+                  "action": "ha.promote",
+                  "type": "promote",
+                  "detail": {
+                    "reason": "primary missed threshold heartbeats and lease acquired",
+                    "primaryNodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "msSinceSeen": 15802,
+                    "graceMs": 15000,
+                    "leaseExpiresAt": 1794224370423,
+                    "promotedNodeId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8"
+                  },
+                  "gapMs": 15802
+                },
+                {
+                  "id": 5,
+                  "at": "2026-11-09T11:38:29.692Z",
+                  "createdAt": 1794224309692,
+                  "action": "ha.register",
+                  "type": "register",
+                  "detail": {
+                    "peerNodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:8164"
+                  }
+                },
+                {
+                  "id": 4,
+                  "at": "2026-11-09T11:38:29.645Z",
+                  "createdAt": 1794224309645,
+                  "action": "ha.settings.save",
+                  "type": "settings.save",
+                  "detail": {
+                    "role": "standby",
+                    "standbyUrl": null,
+                    "primaryUrl": "http://127.0.0.1:8164",
+                    "heartbeatSec": 5,
+                    "user": "admin"
+                  }
+                }
+              ],
+              "count": 3
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/auth/session (liveness, primary dead)",
+          "at": "2026-11-09T11:39:16.515Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/auth/session"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 3,
+            "body": {
+              "authenticated": true,
+              "ok": true,
+              "user": {
+                "id": 1,
+                "username": "admin",
+                "role": "admin"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "title": "Primary returns -> re-registration demotes the promoted standby, no dual-primary",
+      "expectation": "After the primary restarts, exactly one node may report role primary. The returning primary re-registers (POST /api/ha/register on boot); the promoted standby demotes on that handshake and records an ha.demote (primary-rejoined) decision. A second primary is a split-brain bug.",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "name": "exactly one node reports role primary (no dual-primary)",
+          "pass": true,
+          "detail": "nodes reporting primary: [\"primary\"]"
+        },
+        {
+          "name": "returned primary is primary, standby is standby again",
+          "pass": true,
+          "detail": "primary=\"primary\" standby=\"standby\""
+        },
+        {
+          "name": "both nodes serve again after primary restart",
+          "pass": true,
+          "detail": "primary HTTP 200, standby HTTP 200"
+        },
+        {
+          "name": "heartbeat succeeds with both nodes up",
+          "pass": true,
+          "detail": "{\"status\":\"success\",\"message\":\"Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.\",\"latencyMs\":0,\"reachable\":true}"
+        },
+        {
+          "name": "re-registration demote is recorded (ha.demote primary-rejoined)",
+          "pass": true,
+          "detail": "standby decisions=[\"ha.demote\",\"ha.promote\",\"ha.register\",\"ha.settings.save\"]"
+        }
+      ],
+      "responses": [
+        {
+          "label": "primary GET /api/ha/status (after restart)",
+          "at": "2026-11-09T11:39:17.731Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/status"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 3,
+            "body": {
+              "status": "success",
+              "ha": {
+                "status": "unavailable",
+                "role": "primary",
+                "nodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                "promotedByFailover": false,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "graceMs": 15000,
+                "leaseTermMs": 15000,
+                "primaryAlive": false,
+                "standbyAlive": false,
+                "primaryUrl": "http://127.0.0.1:18164",
+                "peers": [
+                  {
+                    "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                    "role": "standby",
+                    "url": "http://127.0.0.1:18164",
+                    "lastSeenAt": 1794224340447,
+                    "msSinceSeen": 17281,
+                    "missed": 0,
+                    "heartbeatCount": 3,
+                    "alive": false,
+                    "status": "dead"
+                  },
+                  {
+                    "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:18164",
+                    "lastSeenAt": 1794224339616,
+                    "msSinceSeen": 18112,
+                    "missed": 0,
+                    "heartbeatCount": 3,
+                    "alive": false,
+                    "status": "dead"
+                  }
+                ],
+                "lease": {
+                  "id": 1,
+                  "holder": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                  "acquired_at": 1794224357158,
+                  "expires_at": 1794224372158
+                },
+                "checkedAt": 1794224357728,
+                "probes": [
+                  {
+                    "url": "http://127.0.0.1:18164",
+                    "reachable": true,
+                    "latencyMs": 0
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/ha/status (primary back)",
+          "at": "2026-11-09T11:39:17.731Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/status"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "success",
+              "ha": {
+                "status": "degraded",
+                "role": "standby",
+                "nodeId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                "promotedByFailover": false,
+                "heartbeatSec": 5,
+                "missThreshold": 3,
+                "graceMs": 15000,
+                "leaseTermMs": 15000,
+                "primaryAlive": true,
+                "standbyAlive": false,
+                "primaryUrl": "http://127.0.0.1:8164",
+                "peers": [
+                  {
+                    "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                    "role": "standby",
+                    "url": "http://127.0.0.1:8164",
+                    "lastSeenAt": 1794224340423,
+                    "msSinceSeen": 17307,
+                    "missed": 0,
+                    "heartbeatCount": 3,
+                    "alive": false,
+                    "status": "dead"
+                  },
+                  {
+                    "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:8164",
+                    "lastSeenAt": 1794224357228,
+                    "msSinceSeen": 502,
+                    "missed": 0,
+                    "heartbeatCount": 3,
+                    "alive": true,
+                    "status": "alive"
+                  }
+                ],
+                "lease": null,
+                "checkedAt": 1794224357730,
+                "probes": [
+                  {
+                    "url": "http://127.0.0.1:8164",
+                    "reachable": true,
+                    "latencyMs": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/settings/failover (after restart)",
+          "at": "2026-11-09T11:39:17.738Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/settings/failover"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 7,
+            "body": {
+              "status": "success",
+              "failover": {
+                "mode": "active-standby",
+                "status": "Configured",
+                "virtualIp": null,
+                "heartbeatPort": 18164,
+                "splitBrainProtection": "none",
+                "primary": {
+                  "ip": "127.0.0.1",
+                  "port": 8164
+                },
+                "secondary": {
+                  "ip": "127.0.0.1",
+                  "port": 18164
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/settings/failover (primary back)",
+          "at": "2026-11-09T11:39:17.745Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/settings/failover"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 7,
+            "body": {
+              "status": "success",
+              "failover": {
+                "mode": "active-standby",
+                "status": "Configured",
+                "virtualIp": null,
+                "heartbeatPort": 18164,
+                "splitBrainProtection": "none",
+                "primary": {
+                  "ip": "127.0.0.1",
+                  "port": 8164
+                },
+                "secondary": {
+                  "ip": "127.0.0.1",
+                  "port": 18164
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/ha/decisions (primary back)",
+          "at": "2026-11-09T11:39:17.748Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/decisions"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "success",
+              "decisions": [
+                {
+                  "id": 8,
+                  "at": "2026-11-09T11:39:17.272Z",
+                  "createdAt": 1794224357272,
+                  "action": "ha.demote",
+                  "type": "demote",
+                  "detail": {
+                    "reason": "primary-rejoined: original primary re-registered",
+                    "peerNodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "promotedAt": "2026-11-09T11:39:15.471Z",
+                    "demotedAt": "2026-11-09T11:39:17.228Z"
+                  }
+                },
+                {
+                  "id": 7,
+                  "at": "2026-11-09T11:39:15.471Z",
+                  "createdAt": 1794224355471,
+                  "action": "ha.promote",
+                  "type": "promote",
+                  "detail": {
+                    "reason": "primary missed threshold heartbeats and lease acquired",
+                    "primaryNodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "msSinceSeen": 15802,
+                    "graceMs": 15000,
+                    "leaseExpiresAt": 1794224370423,
+                    "promotedNodeId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8"
+                  },
+                  "gapMs": 15802
+                },
+                {
+                  "id": 5,
+                  "at": "2026-11-09T11:38:29.692Z",
+                  "createdAt": 1794224309692,
+                  "action": "ha.register",
+                  "type": "register",
+                  "detail": {
+                    "peerNodeId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                    "role": "primary",
+                    "url": "http://127.0.0.1:8164"
+                  }
+                },
+                {
+                  "id": 4,
+                  "at": "2026-11-09T11:38:29.645Z",
+                  "createdAt": 1794224309645,
+                  "action": "ha.settings.save",
+                  "type": "settings.save",
+                  "detail": {
+                    "role": "standby",
+                    "standbyUrl": null,
+                    "primaryUrl": "http://127.0.0.1:8164",
+                    "heartbeatSec": 5,
+                    "user": "admin"
+                  }
+                }
+              ],
+              "count": 4
+            }
+          }
+        },
+        {
+          "label": "primary POST /api/settings/failover/test (both up again)",
+          "at": "2026-11-09T11:39:17.754Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover/test"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 6,
+            "body": {
+              "status": "success",
+              "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.",
+              "latencyMs": 0,
+              "reachable": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "title": "Heartbeat storm (rapid heartbeats) -> no crash, liveness stays correct",
+      "expectation": "50 concurrent heartbeat tests + 50 concurrent failover status reads must not crash either instance, must not produce 5xx, and liveness + heartbeat results must stay correct afterwards.",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "name": "all storm heartbeat tests returned reachable:true",
+          "pass": true,
+          "detail": "50/50 reachable:true, 0 non-200"
+        },
+        {
+          "name": "no 5xx during the storm",
+          "pass": true,
+          "detail": "0 5xx"
+        },
+        {
+          "name": "all storm status reads returned 200",
+          "pass": true,
+          "detail": "50/50"
+        },
+        {
+          "name": "both processes still alive after the storm",
+          "pass": true,
+          "detail": "primary alive=true, standby alive=true"
+        },
+        {
+          "name": "liveness correct after storm (both sessions 200)",
+          "pass": true,
+          "detail": "primary 200, standby 200"
+        },
+        {
+          "name": "heartbeat still correct after storm",
+          "pass": true,
+          "detail": "{\"status\":\"success\",\"message\":\"Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.\",\"latencyMs\":0,\"reachable\":true}"
+        }
+      ],
+      "responses": [
+        {
+          "label": "storm: 50x POST /api/settings/failover/test (concurrent)",
+          "at": "2026-11-09T11:39:17.755Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover/test",
+            "count": 50
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": null,
+            "body": {
+              "total": 50,
+              "reachableTrue": 50,
+              "non200": 0,
+              "fiveXx": 0,
+              "latencyMs": {
+                "min": 19,
+                "p50": 69,
+                "p95": 82,
+                "max": 85
+              },
+              "sampleBodies": [
+                {
+                  "status": "success",
+                  "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.",
+                  "latencyMs": 0,
+                  "reachable": true
+                },
+                {
+                  "status": "success",
+                  "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.",
+                  "latencyMs": 34,
+                  "reachable": true
+                },
+                {
+                  "status": "success",
+                  "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.",
+                  "latencyMs": 34,
+                  "reachable": true
+                }
+              ],
+              "non200Bodies": []
+            }
+          }
+        },
+        {
+          "label": "storm: 50x GET /api/settings/failover (concurrent)",
+          "at": "2026-11-09T11:39:17.755Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/settings/failover",
+            "count": 50
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": null,
+            "body": {
+              "total": 50,
+              "http200": 50,
+              "sampleBody": {
+                "status": "success",
+                "failover": {
+                  "mode": "active-standby",
+                  "status": "Configured",
+                  "virtualIp": null,
+                  "heartbeatPort": 18164,
+                  "splitBrainProtection": "none",
+                  "primary": {
+                    "ip": "127.0.0.1",
+                    "port": 8164
+                  },
+                  "secondary": {
+                    "ip": "127.0.0.1",
+                    "port": 18164
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/auth/session (after storm)",
+          "at": "2026-11-09T11:39:17.922Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/auth/session"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "authenticated": true,
+              "ok": true,
+              "user": {
+                "id": 1,
+                "username": "admin",
+                "role": "admin"
+              }
+            }
+          }
+        },
+        {
+          "label": "standby GET /api/auth/session (after storm)",
+          "at": "2026-11-09T11:39:17.922Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/auth/session"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "authenticated": true,
+              "ok": true,
+              "user": {
+                "id": 1,
+                "username": "admin",
+                "role": "admin"
+              }
+            }
+          }
+        },
+        {
+          "label": "primary POST /api/settings/failover/test (after storm)",
+          "at": "2026-11-09T11:39:17.925Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover/test"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "success",
+              "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.",
+              "latencyMs": 0,
+              "reachable": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "title": "Stale heartbeat (old sentAt) -> rejected 400 stale_heartbeat, fresh accepted",
+      "expectation": "A canonical heartbeat carrying sentAt 24h old must be rejected (400 stale_heartbeat), never treated as a live heartbeat; the same heartbeat with a fresh sentAt must be accepted (200).",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "name": "stale heartbeat explicitly rejected (400 stale_heartbeat)",
+          "pass": true,
+          "detail": "HTTP 400 body={\"status\":\"error\",\"error\":\"stale_heartbeat\",\"message\":\"ha.recordHeartbeat: stale heartbeat — sentAt 2026-11-08T11:39:17.925Z is 86400002ms from receipt (grace 15000ms)\"}"
+        },
+        {
+          "name": "fresh heartbeat accepted (200 ack)",
+          "pass": true,
+          "detail": "HTTP 200 body={\"status\":\"success\",\"message\":\"Heartbeat accepted from peer 'node-standby-probe'.\",\"ack\":true,\"fenced\":false,\"peer\":{\"peerId\":\"node-standby-probe\",\"role\":\"standby\",\"url\":\"http://127.0.0.1:18164\",\"lastSeenAt\":\"2026-11-09T11:39:17.929Z\",\"ageMs\":15,\"heartbeatCount\":1,\"alive\":true,\"ack\":true,\"fenced\":false},\"serverTime\":\"2026-11-09T11:39:17.944Z\",\"serverRole\":\"primary\"}"
+        },
+        {
+          "name": "TCP probe ignores the stale stamp by design (still reachable:true)",
+          "pass": true,
+          "detail": "HTTP 200 body={\"status\":\"success\",\"message\":\"Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.\",\"latencyMs\":0,\"reachable\":true}"
+        },
+        {
+          "name": "probe peer liveness comes from the fresh heartbeat (heartbeatCount>=1)",
+          "pass": true,
+          "detail": "peer row={\"peerId\":\"node-standby-probe\",\"role\":\"standby\",\"url\":\"http://127.0.0.1:18164\",\"lastSeenAt\":1794224357929,\"msSinceSeen\":19,\"missed\":0,\"heartbeatCount\":1,\"alive\":true,\"status\":\"alive\"}"
+        }
+      ],
+      "responses": [
+        {
+          "label": "primary POST /api/ha/heartbeat with sentAt 24h old",
+          "at": "2026-11-09T11:39:17.928Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/ha/heartbeat",
+            "body": {
+              "peerId": "node-standby-probe",
+              "role": "standby",
+              "sentAt": 1794137957925
+            }
+          },
+          "response": {
+            "status": 400,
+            "error": null,
+            "ms": 3,
+            "body": {
+              "status": "error",
+              "error": "stale_heartbeat",
+              "message": "ha.recordHeartbeat: stale heartbeat — sentAt 2026-11-08T11:39:17.925Z is 86400002ms from receipt (grace 15000ms)"
+            }
+          }
+        },
+        {
+          "label": "primary POST /api/ha/heartbeat with fresh sentAt (control)",
+          "at": "2026-11-09T11:39:17.944Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/ha/heartbeat",
+            "body": {
+              "peerId": "node-standby-probe",
+              "role": "standby",
+              "sentAt": "now"
+            }
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 16,
+            "body": {
+              "status": "success",
+              "message": "Heartbeat accepted from peer 'node-standby-probe'.",
+              "ack": true,
+              "fenced": false,
+              "peer": {
+                "peerId": "node-standby-probe",
+                "role": "standby",
+                "url": "http://127.0.0.1:18164",
+                "lastSeenAt": "2026-11-09T11:39:17.929Z",
+                "ageMs": 15,
+                "heartbeatCount": 1,
+                "alive": true,
+                "ack": true,
+                "fenced": false
+              },
+              "serverTime": "2026-11-09T11:39:17.944Z",
+              "serverRole": "primary"
+            }
+          }
+        },
+        {
+          "label": "primary POST /api/settings/failover/test with 24h-old timestamp in body (TCP probe, by design)",
+          "at": "2026-11-09T11:39:17.947Z",
+          "request": {
+            "method": "POST",
+            "path": "/api/settings/failover/test",
+            "body": {
+              "nodeId": "standby",
+              "timestamp": "2026-11-08T11:39:17.925Z"
+            }
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "success",
+              "message": "Heartbeat TCP connect to standby 127.0.0.1:18164 succeeded.",
+              "latencyMs": 0,
+              "reachable": true
+            }
+          }
+        },
+        {
+          "label": "primary GET /api/ha/peers (after stale + fresh)",
+          "at": "2026-11-09T11:39:17.949Z",
+          "request": {
+            "method": "GET",
+            "path": "/api/ha/peers"
+          },
+          "response": {
+            "status": 200,
+            "error": null,
+            "ms": 2,
+            "body": {
+              "status": "success",
+              "peers": [
+                {
+                  "peerId": "node-3b5eca7e-5b9a-44c8-b5bf-887297a480f8",
+                  "role": "standby",
+                  "url": "http://127.0.0.1:18164",
+                  "lastSeenAt": 1794224340447,
+                  "msSinceSeen": 17501,
+                  "missed": 0,
+                  "heartbeatCount": 3,
+                  "alive": false,
+                  "status": "dead"
+                },
+                {
+                  "peerId": "node-cf0908f7-7ad9-438e-b351-0d2f84d0df33",
+                  "role": "primary",
+                  "url": "http://127.0.0.1:18164",
+                  "lastSeenAt": 1794224339616,
+                  "msSinceSeen": 18332,
+                  "missed": 0,
+                  "heartbeatCount": 3,
+                  "alive": false,
+                  "status": "dead"
+                },
+                {
+                  "peerId": "node-standby-probe",
+                  "role": "standby",
+                  "url": "http://127.0.0.1:18164",
+                  "lastSeenAt": 1794224357929,
+                  "msSinceSeen": 19,
+                  "missed": 0,
+                  "heartbeatCount": 1,
+                  "alive": true,
+                  "status": "alive"
+                }
+              ],
+              "count": 3
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "bugs": [],
+  "tip": "ff51df6",
+  "branch": "p4m-ha",
+  "summary": {
+    "cases": 6,
+    "pass": 6,
+    "fail": 0,
+    "missing": 0,
+    "bugs": []
+  }
+}
