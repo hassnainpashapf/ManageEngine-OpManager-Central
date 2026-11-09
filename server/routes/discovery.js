@@ -19,9 +19,17 @@
  *    until a real poll measures them. response_ms is the measured ICMP
  *    round-trip time; uptime_ticks is the real sysUpTime when SNMP
  *    answered. No invented serial, no fake backup status.
- *  - D4: the supplied SNMP version/community are actually used — the
- *    snmp service speaks SNMPv2c only, so any other version is rejected
- *    with 400 instead of being stored as a label.
+ *  - D4: the supplied SNMP version/community are actually used. The
+ *    credential profile chosen in the form is resolved server-side
+ *    (devices.resolveCredentialProfile — audit A1 X-01, phase 5 W2-2):
+ *    a v2c profile supplies its community, a v3 profile its USM user,
+ *    and the sweep speaks that version (v2c via getSystemInfo, v3 via
+ *    getSystemInfoV3). The version spelling itself goes through the
+ *    canonical map (snmp.normalizeSnmpVersion) — there is no second
+ *    normalizer in this file. An unknown profile, a non-SNMP profile,
+ *    or an unsupported version (incl. v1) is a 400, never a silent
+ *    fall-back to v2c. Discovered devices store the resolved version
+ *    (and v3 user), never a hard-coded 'v2c'.
  *  - D5: rules are persisted in store.discovery_rules via
  *    createDiscoveryRule/listDiscoveryRules/deleteDiscoveryRule. A rule
  *    stores only what the user submitted — no invented subnet, probe,
@@ -61,6 +69,10 @@ const router = express.Router();
 const store = require('../services/store');
 const snmp = require('../services/snmp');
 const ping = require('../services/ping');
+// Credential-profile resolution is owned by the device write paths
+// (server/routes/devices.js resolveCredentialProfile); the sweep uses
+// the same function so a profile means the same thing on both paths.
+const { resolveCredentialProfile } = require('./devices');
 
 // A sweep is bounded so one request cannot scan the whole internet.
 const MAX_SWEEP_HOSTS = 256;
@@ -235,14 +247,10 @@ function defaultCommunity() {
   }
 }
 
-// The snmp service speaks SNMPv2c only; anything else is rejected
-// rather than stored as a label on a v2c poll.
-function normalizeSnmpVersion(raw) {
-  if (raw === undefined || raw === null || String(raw).trim() === '') return 'v2c';
-  const v = String(raw).toLowerCase().replace(/[^a-z0-9]/g, '');
-  if (v === 'v2c' || v === '2c' || v === 'v2') return 'v2c';
-  return null;
-}
+// Version spellings go through the canonical map in the snmp service
+// (snmp.normalizeSnmpVersion, audit A3 G-01) at the call site — there is
+// no local normalizer in this file, so the sweep, the poller and the
+// device write paths can never disagree about what '2c' means again.
 
 // --- Discovery profiles / rules / history ---------------------------------
 
@@ -324,7 +332,15 @@ async function discoverHost(ip, opts) {
   let info = null;
   let snmpError = null;
   try {
-    info = await snmp.getSystemInfo(ip, opts.community);
+    // The sweep speaks the resolved version: v2c via the community GET,
+    // v3 via the USM GET with the resolved v3 user (see POST
+    // /api/discovery/run). A v3 profile from the credential library
+    // carries the user only (no auth/priv protocols are stored there),
+    // so it attempts noAuthNoPriv — a device that needs auth answers
+    // nothing, and the host is honestly undiscovered, never faked.
+    info = opts.version === 'v3'
+      ? await snmp.getSystemInfoV3(ip, opts.v3)
+      : await snmp.getSystemInfo(ip, opts.community);
   } catch (e) {
     // SNMP down / wrong community / SNMP disabled / host unreachable.
     // Record the error, never a guess.
@@ -371,11 +387,13 @@ async function discoverHost(ip, opts) {
     vendor,
     model: null,
     category,
-    // The community is stored only once it has proven to work (SNMP
-    // answered with it); a failed community is not recorded as the
-    // device's credential.
-    snmp_community: info ? opts.community : null,
-    snmp_version: 'v2c',
+    // The community / v3 user is stored only once it has proven to work
+    // (SNMP answered with it); a failed credential is not recorded as
+    // the device's credential. The stored version is the resolved sweep
+    // version — never a hard-coded 'v2c' (audit A1 X-01).
+    snmp_community: info && opts.version !== 'v3' ? opts.community : null,
+    snmp_version: opts.version || 'v2c',
+    snmp_v3_user: info && opts.version === 'v3' && opts.v3 && opts.v3.user ? opts.v3.user : null,
     probe_id: opts.probeId,
     managed: 1,
     status: null,
@@ -411,12 +429,12 @@ async function mapPool(items, size, fn) {
   return results;
 }
 
-async function runSweep({ rangeLabel, ips, community, probeId }) {
+async function runSweep({ rangeLabel, ips, community, probeId, version, v3 }) {
   const startedAt = Date.now();
   let found = [];
   try {
     const results = await mapPool(ips, SWEEP_CONCURRENCY, (ip) =>
-      discoverHost(ip, { community, probeId })
+      discoverHost(ip, { community, probeId, version, v3 })
     );
     found = results.filter((d) => d !== null);
     console.log(
@@ -450,6 +468,24 @@ async function runSweep({ rangeLabel, ips, community, probeId }) {
 
 // Run network discovery (async — see header). Returns a run id + status
 // immediately; the finished run is persisted to discovery_runs.
+//
+// Credential / version resolution (audit A1 X-01, phase 5 W2-2) — the
+// form sends the selected credential profile as `credentialId`
+// (`credential` / `credentialProfileId` also accepted). The profile is
+// resolved server-side via devices.resolveCredentialProfile: a v2c
+// profile supplies its community, a v3 profile its USM user, and the
+// sweep speaks that version. An explicit `snmpVersion` (canonical map —
+// '2c'/'2' → 'v2c', '3' → 'v3') wins over the profile's version; when
+// neither is given the version defaults to 'v2c' (missing version only —
+// a present-but-unknown version is never defaulted). Older clients sent
+// the credential id AS `snmpVersion`; that is still accepted as a legacy
+// alias when the value is not a version spelling — but a value that
+// LOOKS like a version ('v1', 'v9', 'snmpv9') is a version error, not a
+// profile lookup, and a numeric id in `snmpVersion` is a version
+// spelling first ('3' → 'v3'): numeric profile ids belong in
+// `credentialId`. Unknown profiles, non-SNMP profiles (WMI/SSH/Telnet —
+// the sweep is SNMP-only) and unsupported versions (incl. v1) are 400s
+// with the offending value named; nothing is silently coerced.
 router.post('/api/discovery/run', (req, res) => {
   const b = req.body || {};
   let range;
@@ -459,15 +495,55 @@ router.post('/api/discovery/run', (req, res) => {
     return res.status(400).json({ status: 'error', message: e.message });
   }
 
-  const snmpVersion = normalizeSnmpVersion(b.snmpVersion);
-  if (snmpVersion === null) {
+  const rawVersion = b.snmpVersion !== undefined ? b.snmpVersion : b.version;
+  const rawVersionText = rawVersion !== undefined && rawVersion !== null
+    ? String(rawVersion).trim() : '';
+  const explicitVersion = rawVersionText !== ''
+    ? snmp.normalizeSnmpVersion(rawVersion) : null;
+  if (rawVersionText !== '' && explicitVersion === null
+    && /^(v|snmp)?\d+[a-z]*$/i.test(rawVersionText)) {
+    // Looks like a version spelling, but not a supported one.
     return res.status(400).json({
       status: 'error',
-      message: `SNMP version ${b.snmpVersion} is not supported; this build polls SNMPv2c only`
+      message: `SNMP version ${rawVersion} is not supported; supported versions are 'v2c' and 'v3' (SNMPv1 is not supported)`
     });
   }
 
-  const community = b.community || b.snmpCommunity || defaultCommunity() || 'public';
+  const credentialRef = b.credentialId !== undefined ? b.credentialId
+    : b.credential !== undefined ? b.credential
+    : b.credentialProfileId !== undefined ? b.credentialProfileId
+    : (rawVersionText !== '' && explicitVersion === null ? rawVersion : undefined);
+  const profile = resolveCredentialProfile(credentialRef);
+  if (profile.error) {
+    return res.status(400).json({ status: 'error', message: profile.error });
+  }
+  if (profile.nonSnmp) {
+    return res.status(400).json({
+      status: 'error',
+      message: `Credential profile '${credentialRef}' is a ${profile.nonSnmpType || 'non-SNMP'} credential, not an SNMP credential; discovery sweeps use SNMP only`
+    });
+  }
+
+  // Version: explicit request value > profile version > default v2c.
+  const version = explicitVersion || profile.version || 'v2c';
+  // Community: explicit request value > profile community > stored
+  // default setting > 'public' (pre-existing fallback chain).
+  const community = b.community || b.snmpCommunity || profile.community || defaultCommunity() || 'public';
+  // v3 USM credentials: explicit `snmp.v3` / `v3` object on the request
+  // wins; otherwise the profile's v3 user (user-only — see
+  // resolveCredentialProfile for why no passphrase is copied).
+  let v3 = null;
+  if (version === 'v3') {
+    const bodyV3 = (b.snmp && typeof b.snmp === 'object' && b.snmp.v3) || b.v3 || null;
+    v3 = (bodyV3 && typeof bodyV3 === 'object') ? bodyV3 : profile.v3;
+    if (!v3 || !v3.user) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'SNMPv3 discovery needs a v3 user: pick an SNMPv3 credential profile or supply snmp.v3.user'
+      });
+    }
+  }
+
   const probeId = resolveProbeId(b.probeId);
   const runId = `DISC-${Date.now()}`;
   const startedAt = Date.now();
@@ -477,7 +553,9 @@ router.post('/api/discovery/run', (req, res) => {
     rangeLabel: range.rangeLabel,
     ips: range.ips,
     community,
-    probeId
+    probeId,
+    version,
+    v3
   }).catch(() => {});
 
   res.status(202).json({
@@ -487,6 +565,8 @@ router.post('/api/discovery/run', (req, res) => {
     runStatus: 'running',
     ipRange: range.rangeLabel,
     probeId,
+    snmpVersion: version,
+    credentialProfile: profile.profile ? (profile.profile.name || profile.profile.id) : null,
     startedAt
   });
 });

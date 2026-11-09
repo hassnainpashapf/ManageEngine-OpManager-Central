@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const store = require('../services/store');
 const poller = require('../services/poller');
+const snmpService = require('../services/snmp');
 const { requireAuth, requireRole } = require('../services/session');
 
 // ---------------------------------------------------------------------------
@@ -58,9 +59,11 @@ function snmpBodyToFields(body, existing) {
   }
   const fields = {};
   if (snmpObj.version !== undefined) {
-    const v = String(snmpObj.version).trim().toLowerCase();
-    const norm = v === '2c' ? 'v2c' : v;
-    if (norm !== 'v2c' && norm !== 'v3') {
+    // Canonical version map (server/services/snmp.js normalizeSnmpVersion,
+    // audit A3 G-01): '2c'/'2'/'V2C' → 'v2c', '3' → 'v3'; anything else —
+    // including 'v1'/'1' — is null and strictly rejected, never coerced.
+    const norm = snmpService.normalizeSnmpVersion(snmpObj.version);
+    if (norm === null) {
       return { error: `Invalid snmp.version '${snmpObj.version}': expected 'v2c' or 'v3' (SNMPv1 is not supported).` };
     }
     fields.snmp_version = norm;
@@ -119,6 +122,105 @@ function snmpBodyToFields(body, existing) {
     }
   }
   return { fields };
+}
+
+// ---------------------------------------------------------------------------
+// resolveCredentialProfile(raw) — credential-library profile → SNMP version
+// + credentials (audit A1 V-02 / X-01, phase 5 W2-2). The Add Device form
+// and the discovery form both let the operator pick a credential profile;
+// before this fix the chosen profile was silently ignored on both paths.
+//
+// Accepts, in order:
+//   - nothing / blank → { profile: null, ... } (no credential selected).
+//   - the legacy Add Device modal values (client/noc.html #devCred,
+//     hard-coded option values, NOT library ids): 'v2c' → version v2c,
+//     'v3' → version v3. These take precedence over a library row of the
+//     same name — a stored row literally named 'v3' cannot be addressed
+//     by name; use its numeric id instead.
+//   - a stored library row, by numeric id or by exact name (case-insensitive
+//     fallback). Its SNMP version comes from the row's `type`:
+//     snmp/snmpv2c → 'v2c' (community = row.community); snmpv3 → 'v3'
+//     (v3.user = row.username). An untyped row is inferred from its stored
+//     fields (community → v2c, username → v3), never guessed.
+//   - a known non-SNMP reference ('wmi'/'ssh'/'telnet', modal value or
+//     library type) → { nonSnmp: true }: it carries no SNMP version or
+//     community, so no SNMP field is stored from it. Callers decide what
+//     that means (device add/update: nothing SNMP is stored; the discovery
+//     sweep is SNMP-only and rejects it with a 400).
+//
+// Returns { profile, version, community, v3 } or { error } (unknown
+// profile id/name, SNMPv1 profile, v3 profile with no username, or a
+// profile with neither community nor v3 user — all 400s, never a silent
+// drop and never a silent default to v2c).
+//
+// LIMIT (honest, not papered over): credentials rows carry no auth/priv
+// protocol columns, so a library v3 profile resolves to the user ONLY
+// (noAuthNoPriv). Its stored password is NOT copied to snmp_v3_auth_pass:
+// snmp.validateV3 rejects a passphrase without its protocol, so copying
+// it would store an invalid USM set that throws on every poll. Full USM
+// credentials (user + auth/priv protocols + passphrases) must come from
+// the canonical `snmp.v3` object on the request itself.
+function resolveCredentialProfile(raw) {
+  const none = { profile: null, version: null, community: null, v3: null };
+  if (raw === undefined || raw === null) return none;
+  const text = String(raw).trim();
+  if (text === '') return none;
+  const lower = text.toLowerCase();
+
+  // Legacy Add Device modal values (client/noc.html #devCred).
+  if (lower === 'v2c') return { ...none, version: 'v2c' };
+  if (lower === 'v3') return { ...none, version: 'v3' };
+  if (lower === 'wmi' || lower === 'ssh' || lower === 'telnet') {
+    return { ...none, nonSnmp: true, nonSnmpType: lower };
+  }
+
+  // Stored library row: numeric id first, then name.
+  let row = null;
+  if (/^\d+$/.test(text)) {
+    try {
+      row = (store.credentials ? store.credentials.getCredential(Number(text)) : store.getCredential(Number(text))) || null;
+    } catch (e) {
+      row = null;
+    }
+  }
+  if (!row) {
+    try {
+      const all = (store.credentials ? store.credentials.listCredentials() : store.listCredentials()) || [];
+      row = all.find((c) => c && c.name === text)
+        || all.find((c) => c && typeof c.name === 'string' && c.name.toLowerCase() === lower)
+        || null;
+    } catch (e) {
+      row = null;
+    }
+  }
+  if (!row) {
+    return { error: `Credential profile '${text}' not found in the credential library.` };
+  }
+  const label = row.name || row.id;
+  const type = String(row.type || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+
+  if (type === 'v3' || type === 'snmpv3' || type === 'snmp3') {
+    if (!row.username || !String(row.username).trim()) {
+      return { error: `Credential profile '${label}' is an SNMPv3 profile with no username stored.` };
+    }
+    return { profile: row, version: 'v3', community: null, v3: { user: String(row.username).trim() } };
+  }
+  if (type === 'v2c' || type === 'snmpv2c' || type === 'snmpv2' || type === 'snmp'
+    || type === 'snmp2c' || type === 'snmp2') {
+    return { profile: row, version: 'v2c', community: row.community || null, v3: null };
+  }
+  if (type === 'v1' || type === 'snmpv1' || type === 'snmp1') {
+    return { error: `Credential profile '${label}' uses SNMPv1, which is not supported (expected 'v2c' or 'v3').` };
+  }
+  if (type === 'wmi' || type === 'ssh' || type === 'telnet') {
+    return { profile: row, version: null, community: null, v3: null, nonSnmp: true, nonSnmpType: type };
+  }
+  // Untyped/unknown type: infer from the stored fields, never guess.
+  if (row.community) return { profile: row, version: 'v2c', community: row.community, v3: null };
+  if (row.username && String(row.username).trim()) {
+    return { profile: row, version: 'v3', community: null, v3: { user: String(row.username).trim() } };
+  }
+  return { error: `Credential profile '${label}' has no SNMP community or SNMPv3 user stored, so no SNMP version can be resolved from it.` };
 }
 
 function findDevice(req) {
@@ -502,14 +604,35 @@ router.get(['/device/getPerformanceMonitorDetails', '/api/json/device/getPerform
 // ({ version, community, v3: {...} }) is accepted and persisted to the
 // flat snmp_* columns (see snmpBodyToFields); the response device is
 // masked via store.publicDevice, so no credential secret is returned.
+//
+// Version handling (audit A1 V-02, phase 5 W2-2): the flat
+// `snmpVersion`/`version` field is normalised through the canonical map
+// (snmpService.normalizeSnmpVersion) — '2c'/'2'/'V2C' store as 'v2c',
+// '3' as 'v3' — and anything else, including 'v1', is a 400, never
+// silently coerced and never stored verbatim. The `credential` /
+// `credentialId` / `credentialProfileId` profile reference is resolved
+// via resolveCredentialProfile: an unknown profile is a 400 (never
+// silently dropped), and a known profile fills the version/community/v3
+// user the request did not spell out. Explicit request values always win
+// over the profile. A known non-SNMP profile (WMI/SSH/Telnet) stores no
+// SNMP field — it carries no SNMP version or community.
 router.post(['/api/json/device/add', '/device/add', '/api/devices'], (req, res) => {
-  const { ip, name, category, probeId, community, snmpCommunity, snmpVersion, version } = req.body || {};
+  const { ip, name, category, probeId, community, snmpCommunity, snmpVersion, version, credential, credentialId, credentialProfileId } = req.body || {};
   if (!ip) {
     return res.status(400).json({ status: 'error', message: 'Device IP is required' });
   }
   const existing = store.getDeviceByIp(ip);
   if (existing) {
     return res.status(409).json({ status: 'error', message: `Device with IP ${ip} already exists`, device: store.publicDevice(existing) });
+  }
+  // Resolve the credential profile FIRST: an unknown profile fails before
+  // anything is stored, so a bad profile can never create a device that
+  // silently lacks the credential the operator picked.
+  const credentialRef = credential !== undefined ? credential
+    : credentialId !== undefined ? credentialId : credentialProfileId;
+  const profile = resolveCredentialProfile(credentialRef);
+  if (profile.error) {
+    return res.status(400).json({ status: 'error', message: profile.error });
   }
   const fields = { ip };
   if (name !== undefined) fields.hostname = name;
@@ -518,12 +641,22 @@ router.post(['/api/json/device/add', '/device/add', '/api/devices'], (req, res) 
   const suppliedCommunity = community !== undefined ? community : snmpCommunity;
   if (suppliedCommunity !== undefined) fields.snmp_community = suppliedCommunity;
   const suppliedVersion = snmpVersion !== undefined ? snmpVersion : version;
-  if (suppliedVersion !== undefined) fields.snmp_version = suppliedVersion;
+  if (suppliedVersion !== undefined && suppliedVersion !== null && String(suppliedVersion).trim() !== '') {
+    const norm = snmpService.normalizeSnmpVersion(suppliedVersion);
+    if (norm === null) {
+      return res.status(400).json({ status: 'error', message: `Invalid snmpVersion '${suppliedVersion}': expected 'v2c' or 'v3' (SNMPv1 is not supported).` });
+    }
+    fields.snmp_version = norm;
+  }
   const snmpMapped = snmpBodyToFields(req.body, null);
   if (snmpMapped.error) {
     return res.status(400).json({ status: 'error', message: snmpMapped.error });
   }
   Object.assign(fields, snmpMapped.fields);
+  // Credential profile fills whatever the request did not spell out.
+  if (profile.version && fields.snmp_version === undefined) fields.snmp_version = profile.version;
+  if (profile.community && fields.snmp_community === undefined) fields.snmp_community = profile.community;
+  if (profile.v3 && fields.snmp_v3_user === undefined) fields.snmp_v3_user = profile.v3.user;
   let newDevice;
   try {
     newDevice = store.createDevice(fields);
@@ -553,20 +686,43 @@ router.put('/api/devices/:id', requireAuth, requireRole('admin'), (req, res) => 
   if (!device) {
     return res.status(404).json({ status: 'error', message: 'Device not found' });
   }
-  const { name, category, probeId, community, snmpCommunity, snmpVersion, version } = req.body || {};
+  const { name, category, probeId, community, snmpCommunity, snmpVersion, version, credential, credentialId, credentialProfileId } = req.body || {};
+  // Same credential-profile resolution as add (see above): unknown profile
+  // is a 400 before anything is persisted.
+  const credentialRef = credential !== undefined ? credential
+    : credentialId !== undefined ? credentialId : credentialProfileId;
+  const profile = resolveCredentialProfile(credentialRef);
+  if (profile.error) {
+    return res.status(400).json({ status: 'error', message: profile.error });
+  }
   const fields = {};
   if (name !== undefined) fields.hostname = name;
   if (category !== undefined) fields.category = category;
   if (probeId !== undefined && probeId !== null && probeId !== '') fields.probe_id = probeId;
   const suppliedCommunity = community !== undefined ? community : snmpCommunity;
   if (suppliedCommunity !== undefined) fields.snmp_community = suppliedCommunity;
+  // Flat version, strictly normalised through the canonical map (V-02):
+  // aliases store canonical, anything else (incl. v1) is a 400.
   const suppliedVersion = snmpVersion !== undefined ? snmpVersion : version;
-  if (suppliedVersion !== undefined) fields.snmp_version = suppliedVersion;
+  if (suppliedVersion !== undefined && suppliedVersion !== null && String(suppliedVersion).trim() !== '') {
+    const norm = snmpService.normalizeSnmpVersion(suppliedVersion);
+    if (norm === null) {
+      return res.status(400).json({ status: 'error', message: `Invalid snmpVersion '${suppliedVersion}': expected 'v2c' or 'v3' (SNMPv1 is not supported).` });
+    }
+    fields.snmp_version = norm;
+  }
   const snmpMapped = snmpBodyToFields(req.body, device);
   if (snmpMapped.error) {
     return res.status(400).json({ status: 'error', message: snmpMapped.error });
   }
   Object.assign(fields, snmpMapped.fields);
+  // Credential profile fills whatever this update did not spell out. The
+  // `=== undefined` checks matter on update: an explicit `snmp.v3: null`
+  // clears stored v3 credentials (snmpBodyToFields sets nulls), and the
+  // profile must not resurrect them.
+  if (profile.version && fields.snmp_version === undefined) fields.snmp_version = profile.version;
+  if (profile.community && fields.snmp_community === undefined) fields.snmp_community = profile.community;
+  if (profile.v3 && fields.snmp_v3_user === undefined) fields.snmp_v3_user = profile.v3.user;
   let updated;
   try {
     updated = store.updateDevice(deviceId, fields);
@@ -1287,3 +1443,8 @@ router.delete('/api/devices/:id/thresholds', requireAuth, requireRole('admin'), 
 });
 
 module.exports = router;
+// Shared with server/routes/discovery.js (audit A1 X-01): the discovery
+// sweep resolves the chosen credential profile through the same function
+// the device write paths use, so a profile means the same thing on both
+// paths. No second resolver exists anywhere in this codebase.
+module.exports.resolveCredentialProfile = resolveCredentialProfile;

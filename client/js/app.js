@@ -3065,7 +3065,13 @@
     const submitBtn = document.querySelector('#discoveryForm button[type="submit"]');
     const subnet = document.getElementById('discSubnet').value.trim();
     const probeId = document.getElementById('discProbeSelect').value;
-    const snmpVersion = document.getElementById('discCred').value || undefined;
+    // X-01 (phase 5 W2-2): the credential dropdown holds a credential
+    // PROFILE id — it used to be posted as `snmpVersion`, so selecting
+    // any saved credential made the sweep 400. Send it as `credentialId`
+    // and let the server resolve the profile to its real SNMP version +
+    // community; no version field is sent from this form (the version
+    // comes from the profile, defaulting to v2c server-side).
+    const credentialId = document.getElementById('discCred').value || undefined;
 
     if (!subnet) {
       alert('Enter a subnet CIDR or IP range to scan.');
@@ -3090,7 +3096,7 @@
       const res = await apiJson('/api/discovery/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ probeId, ipRange: subnet, snmpVersion })
+        body: JSON.stringify({ probeId, ipRange: subnet, credentialId })
       });
       if (!stillCurrent()) return;
 

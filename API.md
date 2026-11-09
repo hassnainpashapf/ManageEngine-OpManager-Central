@@ -301,7 +301,7 @@ recorded polls report `null` — absence of history is not evidence of 100% upti
 | `POST /device/setManaged`, `/api/json/device/setManaged` | Session (guard) | `{deviceId, managed}` | Persists the `managed` flag via `store.updateDevice`; returns the stored state. | **REAL** |
 | `GET /api/json/device/getAvailabilityGraphData`, `/api/devices/:id/availability` | Session (guard) | Query/path: device id | 24 h hourly availability history from stored metrics (`{timestamp, availability, downtimeMinutes, samples}` per bucket; `null` when a bucket has no polls). | **REAL** |
 | `GET /api/json/device/getPerformanceMonitorDetails`, `/api/devices/:id/performance` | Session (guard) | Query/path: device id | Latest stored metric for the device. | **REAL** |
-| `POST /api/json/device/addDevice`, `/api/devices` | Session (guard) | `{ip, …}` (IP required) | `400` no IP; `409` duplicate IP; otherwise creates the stored device row. | **REAL** |
+| `POST /api/json/device/addDevice`, `/api/devices` | Session (guard) | `{ip, …}` (IP required) | `400` no IP; `409` duplicate IP; otherwise creates the stored device row. SNMP version (flat `snmpVersion`/`version` or canonical `snmp.version`) is normalised through the canonical map (`'2c'`/`'2'`/`'V2C'` → `'v2c'`, `'3'` → `'v3'`); anything else, incl. `'v1'`, is a `400`, never stored verbatim. `credential`/`credentialId`/`credentialProfileId` resolves a credential-library profile server-side (unknown profile → `400`): a v2c profile fills version + community, a v3 profile fills version + v3 user; explicit request values win over the profile. (W2-2, live-proven on PORT=8182.) | **REAL** |
 | `POST /api/json/device/deleteDevice`, `/api/devices/:id/delete` | Session (guard) | `{deviceId}` / path id | `404` unknown device; otherwise deletes the row (cascades to its interfaces/metrics/alarms per the store — `store.js` `deleteDevice` deletes the device's alarms in the same transaction; added as a fix during verification). Cascade proven live on local + relay (alarm 1→0 on device delete, 2026-11-09). | **REAL** |
 | `POST /api/json/device/pollNow`, `/api/devices/:id/poll-now` | Session (guard) | `{deviceId}` / path id | `404` unknown device; otherwise runs `poller.pollDeviceNow(deviceId)` synchronously and returns `{status:'success', message, device:<refreshed row>, poll:<poller result>, polledAt}`; poll failure → `502` with the same shape. | **REAL** |
 | `GET /api/json/device/testMonitors`, `/api/devices/:id/test-monitors` | Session (guard) | Query/path: device id | Every monitor runs a real check: ICMP Ping Echo (real RTT), SNMP `sysDescr`, `hrProcessorLoad`, `hrStorageUsed`, `ifOperStatus` (real SNMP GETs, `Success`/`Failed` with measured RTT and real values). CISCO-ENVMON temperature reports `Unknown` with `null` value — no temperature source exists in the SNMP service, so the old invented 34 °C is gone. No community → the four SNMP monitors report `Failed` with the reason. | **REAL** |
@@ -318,13 +318,23 @@ recorded polls report `null` — absence of history is not evidence of 100% upti
 
 ## 9. `server/routes/discovery.js` — 6 definitions, all REAL
 
-Discovery is a real ICMP sweep + SNMP `sysDescr`/`sysObjectID` lookup (SNMPv2c only —
-any other version → `400`). A host that answers ping but not SNMP is discovered as
-category `unknown` with `sysDescr: null`. The community used is
-`body.community || body.snmpCommunity || defaultCommunity() || 'public'`, where
+Discovery is a real ICMP sweep + SNMP `sysDescr`/`sysObjectID` lookup (SNMPv2c
+or SNMPv3 — any other version → `400`). A host that answers ping but not SNMP is discovered as
+category `unknown` with `sysDescr: null`. The credential profile chosen in
+the form is sent as `credentialId` and resolved server-side
+(`devices.resolveCredentialProfile`): a v2c profile supplies its community
+and the sweep uses `getSystemInfo`, a v3 profile supplies its USM user and
+the sweep uses `getSystemInfoV3`; the version spelling itself goes through
+the canonical map (`snmp.normalizeSnmpVersion` — no second normalizer).
+An explicit `snmpVersion` wins over the profile's version; with neither,
+the version defaults to `v2c`. Unknown profiles, non-SNMP profiles
+(WMI/SSH/Telnet) and unsupported versions (incl. v1) are `400`s. The
+community used is
+`body.community || body.snmpCommunity || profile.community || defaultCommunity() || 'public'`, where
 `defaultCommunity()` reads the stored setting `discovery.defaultCommunity`.
-A community is stored on the device row only once it has proven to work (SNMP answered
-with it); a failed community is never recorded. `runId = DISC-<epoch-ms>`.
+A community / v3 user is stored on the device row only once it has proven to work (SNMP answered
+with it); a failed credential is never recorded. Discovered devices store
+the resolved version, never a hard-coded `'v2c'`. `runId = DISC-<epoch-ms>`.
 
 | Method + path | Auth | Request | Response | Status |
 | --- | --- | --- | --- | --- |
@@ -333,7 +343,7 @@ with it); a failed community is never recorded. `runId = DISC-<epoch-ms>`.
 | `POST /api/discovery/rules` | Session (guard) | `{range, probe_id, schedule, …}` | `201`; stores only the submitted `range`/`probe_id`/`schedule`. The probe must exist (foreign key). | **REAL** |
 | `DELETE /api/discovery/rules/:id` | Session (guard) | Path id | `400` bad id; `404` unknown rule; otherwise deletes the stored rule. | **REAL** |
 | `GET /api/discovery/history` | Session (guard) | — | `store.listDiscoveryRuns()` — real past runs; empty store → `[]`. | **REAL** |
-| `POST /api/discovery/run` | Session (guard) | `{range?, community?, snmpCommunity?, probeId?}` | `202 {runId:'DISC-<epoch>', …}` — the sweep runs (ICMP + SNMP per host, discovered hosts are created as real device rows). | **REAL** — **OPEN O-15**: no settings/UI surface for `discovery.defaultCommunity` was verified. |
+| `POST /api/discovery/run` | Session (guard) | `{range?, community?, snmpCommunity?, probeId?, credentialId?, snmpVersion?}` | `202 {runId:'DISC-<epoch>', snmpVersion:<resolved 'v2c'\|'v3'>, credentialProfile:<name\|null>, …}` — the sweep runs (ICMP + SNMP per host, discovered hosts are created as real device rows). `400` on unknown credential profile, non-SNMP profile, or unsupported version (incl. v1). Live-proven on PORT=8182 (W2-2): credential-profile runs return 202 with the resolved version; 5 runs on 127.0.0.1 completed with `found_count: 0` (nothing answers there — ICMP blocked, no SNMP agent). | **REAL** — **OPEN O-15**: no settings/UI surface for `discovery.defaultCommunity` was verified. |
 
 ## 10. `server/routes/hardware.js` — 1 definition, REAL
 
@@ -1113,9 +1123,16 @@ structurally impossible in a Node build — §23.6).
 
 - **A1** (`~/workspace/opm-p5/audit/A1-gaps.md`, 33 gaps): poller rejects
   stored `2c`; REST↔UI field mismatch (D-01); discovery sends credential
-  id as `snmpVersion` (X-01); rack view TypeError + invented cabinet
+  id as `snmpVersion` (X-01 — FIXED by W2-2: client sends `credentialId`,
+  server resolves the profile to its real version/community, sweep speaks
+  v2c/v3); rack view TypeError + invented cabinet
   (R-01/R-02); interfaces never shown anywhere (S-05); add/update device
-  routes copy flat `snmpVersion` with no normalization.
+  routes copy flat `snmpVersion` with no normalization (FIXED by W2-2:
+  canonical `normalizeSnmpVersion` on every write path, strict 400 incl.
+  v1, credential profile honoured — live-proven on PORT=8182, 34/35 proof
+  checks passed, the 1 failure being the proof script's own history-range
+  filter, corrected by direct history read: 5 runs completed,
+  `found_count: 0`).
 - **A2** (`A2-gaps.md`, 47 gaps): nothing ever notifies on alarm raise
   (A2-28); status-casing mismatch breaks the alarm UI (A2-13); severity
   escalation lost / restart duplicates alarms (A2-07); no notification
@@ -1221,7 +1238,8 @@ structurally impossible in a Node build — §23.6).
 
 - **Wave 2 (scoped, spawn from `a0f2af3`):** W2-1 D-01 field mapping +
   S-05 interfaces wiring; W2-2 X-01 discovery credential + write-side
-  version normalization; W2-3 A2-13 status casing + A2-07 persistent
+  version normalization — DONE in this clone (live-proven on PORT=8182;
+  see §7/§9 rows); W2-3 A2-13 status casing + A2-07 persistent
   dedup/escalation + `/api/alarm/clearAlarm` alias; W2-4 R-01 rack crash
   fix (crash fix only — the "invented cabinet" scope needs a product
   decision); W2-5 `/inventory/` bare forms still 302 + the 3 missing
