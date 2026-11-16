@@ -10,10 +10,10 @@
       { id: 'active', name: `Active Alarms (${state.alarms.length})` },
       { id: 'rca', name: 'Root Cause Analysis (RCA)' },
       { id: 'problems', name: 'Problems & Correlated Events' },
-      { id: 'all', name: `All Alarms (${state.alarms.length + 138})` },
-      { id: 'eventlog', name: 'Windows Event Logs (4 Records)' },
-      { id: 'syslog', name: 'Syslog (8 Live Messages)' },
-      { id: 'traps', name: 'SNMP Traps (4 Received Traps)' },
+      { id: 'all', name: `All Alarms (${state.alarms.length})` },
+      { id: 'eventlog', name: `Event Viewer (${state.alarms.length})` },
+      { id: 'syslog', name: `Syslog (UDP 514: ${(state._liveSyslogs || []).length})` },
+      { id: 'traps', name: `SNMP Traps (UDP 162: ${(state._liveTraps || []).length})` },
       { id: 'nfa', name: 'NetFlow Alarms' },
       { id: 'ncm', name: 'NCM Alarms' },
       { id: 'fwa', name: 'Firewall Alarms' },
@@ -333,7 +333,7 @@
                 ` : archRows.slice(0, 100).map(a => `
                   <tr class="opm-alarm-row" data-id="${a.id}" style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
                     <td style="padding: 9px 14px;">${getStatusBadge(a.severity)}</td>
-                    <td style="padding: 9px 14px; font-weight: 700; color: #0070e0;">${a.device}<div style="font-size: 10px; color: #64748b; font-weight: 400;">${a.probe || 'Central Site Probe'}</div></td>
+                    <td style="padding: 9px 14px; font-weight: 700; color: #0070e0;">${a.device || a.ip || ((a.message || '').match(/\b\d{1,3}(?:\.\d{1,3}){3}\b/) || [])[0] || 'Managed Node'}<div style="font-size: 10px; color: #64748b; font-weight: 400;">${a.probe || 'Central Site Probe'}</div></td>
                     <td style="padding: 9px 14px; color: #334155;">${a.entity || 'Poller'}</td>
                     <td style="padding: 9px 14px; color: #0f172a;">${a.message}</td>
                     <td style="padding: 9px 14px; font-size: 11px; color: #64748b; font-family: monospace;">${a.time || ''}</td>

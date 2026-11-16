@@ -1246,27 +1246,27 @@
               </div>
             </div>
 
-            <!-- KPI Row -->
+            <!-- KPI Row (Real Store Counts) -->
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px;">
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
                 <div style="font-size: 11px; color: #64748b; font-weight: 600;">Total Audit Records</div>
-                <div style="font-size: 20px; font-weight: 800; color: #0f172a; margin-top: 4px;">1,842</div>
-                <div style="font-size: 10px; color: #16a34a; font-weight: 600; margin-top: 2px;">● Retention: 365 Days</div>
+                <div style="font-size: 20px; font-weight: 800; color: #0f172a; margin-top: 4px;">${(state._liveAuditLogs || []).length}</div>
+                <div style="font-size: 10px; color: #16a34a; font-weight: 600; margin-top: 2px;">● Live SQLite audit_log</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
-                <div style="font-size: 11px; color: #64748b; font-weight: 600;">Operator Actions (24h)</div>
-                <div style="font-size: 20px; font-weight: 800; color: #0284c7; margin-top: 4px;">24 Actions</div>
-                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Acknowledged, Cleared, Updated</div>
+                <div style="font-size: 11px; color: #64748b; font-weight: 600;">Monitored Devices</div>
+                <div style="font-size: 20px; font-weight: 800; color: #0284c7; margin-top: 4px;">${(state.devices || []).length} Nodes</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Active inventory</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
-                <div style="font-size: 11px; color: #64748b; font-weight: 600;">Security / Auth Events</div>
-                <div style="font-size: 20px; font-weight: 800; color: #16a34a; margin-top: 4px;">12 Logins (MFA)</div>
-                <div style="font-size: 10px; color: #16a34a; margin-top: 2px;">0 Failed Logins</div>
+                <div style="font-size: 11px; color: #64748b; font-weight: 600;">Active Alarms</div>
+                <div style="font-size: 20px; font-weight: 800; color: ${(state.alarms || []).length > 0 ? '#dc2626' : '#16a34a'}; margin-top: 4px;">${(state.alarms || []).length}</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Real SQLite alarm count</div>
               </div>
               <div style="border: 1px solid #e2e8f0; border-radius: 5px; padding: 12px; background: #fafbfc;">
-                <div style="font-size: 11px; color: #64748b; font-weight: 600;">Probe Sync API Calls</div>
-                <div style="font-size: 20px; font-weight: 800; color: #7c3aed; margin-top: 4px;">1,806 Syncs</div>
-                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">4 Probes • TLS 1.3 mTLS</div>
+                <div style="font-size: 11px; color: #64748b; font-weight: 600;">Connected Probes</div>
+                <div style="font-size: 20px; font-weight: 800; color: #7c3aed; margin-top: 4px;">${(state.probes || []).length} Probe${(state.probes || []).length === 1 ? '' : 's'}</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">${(state.agents || []).length} Host Agent${(state.agents || []).length === 1 ? '' : 's'} Online</div>
               </div>
             </div>
 
