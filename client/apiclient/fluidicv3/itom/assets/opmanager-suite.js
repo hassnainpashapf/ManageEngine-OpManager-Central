@@ -9547,7 +9547,7 @@
               .then(d => {
                 state.netflowTelemetry = d;
                 state._dashNfLoading = false;
-                if (state.currentView === 'dashboard' && state.activeSubTab === 'netflow') renderDashboardView();
+                if (state.currentTab === 'dashboard' && state.subTabs && state.subTabs.dashboard === 'netflow') renderDashboardView();
               })
               .catch(() => { state._dashNfLoading = false; });
           }
@@ -14573,7 +14573,7 @@
               .then(d => {
                 state.netflowTelemetry = d;
                 state._nfTelemetryLoading = false;
-                if (state.currentView === 'reports' && state.activeSubTab === 'performance') renderReportsView();
+                if (state.currentTab === 'reports' && state.subTabs && state.subTabs.reports === 'performance') renderReportsView();
               })
               .catch(() => { state._nfTelemetryLoading = false; });
           }

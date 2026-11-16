@@ -1119,7 +1119,7 @@
               .then(d => {
                 state.netflowTelemetry = d;
                 state._nfTelemetryLoading = false;
-                if (state.currentView === 'reports' && state.activeSubTab === 'performance') renderReportsView();
+                if (state.currentTab === 'reports' && state.subTabs && state.subTabs.reports === 'performance') renderReportsView();
               })
               .catch(() => { state._nfTelemetryLoading = false; });
           }

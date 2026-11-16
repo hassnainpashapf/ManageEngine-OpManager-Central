@@ -1126,7 +1126,7 @@
               .then(d => {
                 state.netflowTelemetry = d;
                 state._dashNfLoading = false;
-                if (state.currentView === 'dashboard' && state.activeSubTab === 'netflow') renderDashboardView();
+                if (state.currentTab === 'dashboard' && state.subTabs && state.subTabs.dashboard === 'netflow') renderDashboardView();
               })
               .catch(() => { state._dashNfLoading = false; });
           }
