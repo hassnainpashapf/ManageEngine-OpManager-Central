@@ -12958,7 +12958,7 @@
             return `
               <g class="opm-bv-device-node" data-id="${dev.id}" style="cursor: pointer;">
                 <title>${escSvg(dev.displayName || dev.name)} (${ipTxt}) • ${escSvg(dev.category || 'Node')} • Status: ${escSvg(dev.status || 'Unknown')}</title>
-                <circle cx="${x}" cy="${y}" r="22" fill="#0f172a" stroke="${selectedLink ? '#a855f7' : ring}" stroke-width="${selectedLink ? 3.5 : 2.5}" />
+                <circle cx="${x}" cy="${y}" r="22" fill="#e2e8f0" stroke="${selectedLink ? '#a855f7' : ring}" stroke-width="${selectedLink ? 3.5 : 3}" />
                 <image href="/images/deviceicons/${iconFor(dev)}" x="${x - 12}" y="${y - 12}" width="24" height="24" />
                 <circle cx="${x + 16}" cy="${y - 16}" r="5" fill="${ring}" stroke="#0f172a" stroke-width="1.5" />
                 <rect x="${x - 52}" y="${y + 26}" width="104" height="26" rx="3" fill="rgba(15,23,42,0.88)" stroke="#334155" stroke-width="0.8" />
@@ -13262,7 +13262,7 @@
                 <span style="font-size: 18px;">🌐</span>
                 <div>
                   <div style="font-weight: 800; color: #38bdf8;">${state.probes[0]?.name || 'Central Site Probe'} (${state.probes[0]?.location || 'Local Server Node'})</div>
-                  <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">IP: ${state.probes[0]?.ip || '127.0.0.1'} &bull; ${state.probes[0]?.devicesCount || 0} Managed Nodes &bull; Sync State: ${state.probes[0]?.syncStatus || 'Synchronized'} &bull; Comm Port: ${state.probes[0]?.commPort || 8060}</div>
+                  <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">IP: ${state.probes[0]?.ip || '127.0.0.1'} &bull; ${state.devices.filter(d => String(d.probeId || 1) === String(state.probes[0]?.id || 1)).length || state.probes[0]?.devicesCount || 0} Managed Nodes &bull; Sync State: ${state.probes[0]?.syncStatus || 'Synchronized'} &bull; Comm Port: ${state.probes[0]?.commPort || 8060}</div>
                 </div>
               </div>
               <div style="display: flex; gap: 8px;">
