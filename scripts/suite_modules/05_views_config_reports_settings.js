@@ -68,6 +68,42 @@
             </div>
           `;
 
+          const backedDevs = (state.devices || []).filter(d => d.hasConfig || d.runningConfig || d.startupConfig);
+          const networkDevs = (state.devices || []).filter(d => /router|switch|firewall|wireless/i.test(d.category || ''));
+          const escNcm = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          const computeConfigDiff = (sText, rText) => {
+            const sArr = (sText || '').split(/\r?\n/).filter(l => l.trim());
+            const rArr = (rText || '').split(/\r?\n/).filter(l => l.trim());
+            const sSet = new Set(sArr.map(l => l.trim()));
+            const rSet = new Set(rArr.map(l => l.trim()));
+            const removed = sArr.filter(l => !rSet.has(l.trim()));
+            const added = rArr.filter(l => !sSet.has(l.trim()));
+            return { removed, added, diffLines: removed.length + added.length };
+          };
+          const auditDevice = (d) => {
+            const cfg = `${d.runningConfig || ''}\n${d.startupConfig || ''}`;
+            const isForti = /forti|#config-version=FG/i.test(cfg) || /forti/i.test(d.vendor || '');
+            const pwdOk = isForti ? /password-policy|set private-key|set admin-https/i.test(cfg) : /service password-encryption|enable secret/i.test(cfg);
+            const snmpOk = !(/snmp-server community\s+["']?public\b|set name\s+"public"/i.test(cfg));
+            const sshOk = isForti ? /allowaccess.*ssh|allowaccess.*https|set strong-crypto enable/i.test(cfg) : /ip ssh version 2|transport input ssh|transport input.*ssh/i.test(cfg);
+            const logOk = isForti ? /config log|syslogd/i.test(cfg) : /logging\s+/i.test(cfg);
+            return [
+              { id: 'pwd', dev: d, rule: isForti ? 'Strong Password / Admin Key Policy Configured' : 'Service Password Encryption Enabled (service password-encryption)', standard: 'CIS Benchmark 1.2', severity: 'CRITICAL', passed: pwdOk },
+              { id: 'snmp', dev: d, rule: "Default SNMP Community 'public' Disabled", standard: 'PCI-DSS 4.0 (Req 2.1)', severity: 'MAJOR', passed: snmpOk },
+              { id: 'ssh', dev: d, rule: 'Encrypted Management Transport (SSHv2 / HTTPS)', standard: 'HIPAA Security §164.312', severity: 'HIGH', passed: sshOk },
+              { id: 'syslog', dev: d, rule: 'Syslog / Timestamp Audit Logging Enabled', standard: 'SOX Section 404', severity: 'LOW', passed: logOk }
+            ];
+          };
+          const extractFirmware = (d) => {
+            if (d.osVersion) return d.osVersion;
+            const cfg = d.runningConfig || d.startupConfig || '';
+            const fgMatch = cfg.match(/#config-version=([^\s:\r\n]+)-([\d.]+-build\d+)/i);
+            if (fgMatch) return `FortiOS ${fgMatch[2]} (${fgMatch[1]})`;
+            const iosMatch = cfg.match(/^version\s+([^\s\r\n]+)/im);
+            if (iosMatch) return `Cisco IOS / IOS-XE ${iosMatch[1]}`;
+            return null;
+          };
+
           if (activeSub === 'compliance') {
             if (!hasDevices) {
               return renderCleanEmptyState(
@@ -76,58 +112,76 @@
               );
             }
 
-            const isDriftFixed = Boolean(state.configDriftFixed);
-            const isPwdRemediated = state.remediatedRules && state.remediatedRules['pwd'];
-            const isSnmpRemediated = state.remediatedRules && state.remediatedRules['snmp'];
+            const allChecks = backedDevs.flatMap(auditDevice);
+            const pctFor = (stdKey) => {
+              const rows = allChecks.filter(c => c.standard.toLowerCase().includes(stdKey));
+              if (rows.length === 0) return { pct: '—', pass: 0, fail: 0, total: 0 };
+              const pass = rows.filter(r => r.passed).length;
+              return { pct: ((pass / rows.length) * 100).toFixed(1) + '%', pass, fail: rows.length - pass, total: rows.length };
+            };
+            const cis = pctFor('cis');
+            const pci = pctFor('pci');
+            const hipaa = pctFor('hipaa');
+            const sox = pctFor('sox');
+
+            const selDiffDev = state.devices.find(d => String(d.id) === String(state.selectedNcmDeviceId)) || backedDevs[0] || primaryDev;
+            const selDiff = (selDiffDev && selDiffDev.runningConfig && selDiffDev.startupConfig)
+              ? computeConfigDiff(selDiffDev.startupConfig, selDiffDev.runningConfig)
+              : { removed: [], added: [], diffLines: 0 };
+            const selHasBoth = Boolean(selDiffDev && selDiffDev.runningConfig && selDiffDev.startupConfig);
 
             return `
-              <!-- Compliance Executive Summary KPI Cards -->
+              <!-- Compliance Executive Summary KPI Cards (Computed from Real Stored Configs) -->
               <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                   <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">CIS Cisco IOS Hardening</span>
-                    <span style="font-size: 10px; background: #fef3c7; color: #92400e; font-weight: 800; padding: 2px 6px; border-radius: 3px;">AUDIT ACTIVE</span>
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">CIS Benchmark</span>
+                    <span style="font-size: 10px; background: ${cis.fail > 0 ? '#fef3c7' : '#dcfce7'}; color: ${cis.fail > 0 ? '#92400e' : '#166534'}; font-weight: 800; padding: 2px 6px; border-radius: 3px;">${cis.total} CHECKED</span>
                   </div>
-                  <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">${isPwdRemediated ? '100.0%' : '85.7%'}</div>
-                  <div style="font-size: 11px; color: ${isPwdRemediated ? '#16a34a' : '#d97706'}; margin-top: 4px; font-weight: 600;">
-                    ${isPwdRemediated ? '✔ All 14 Benchmark Rules Passed' : '⚠ 12 Passed &bull; 2 Critical Violations'}
+                  <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">${cis.pct}</div>
+                  <div style="font-size: 11px; color: ${cis.fail === 0 && cis.total > 0 ? '#16a34a' : '#d97706'}; margin-top: 4px; font-weight: 600;">
+                    ${cis.total === 0 ? 'Capture running-config to audit' : `${cis.pass} Passed • ${cis.fail} Violation(s)`}
                   </div>
                 </div>
 
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                   <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">PCI-DSS 4.0 Standard</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">ENFORCED</span>
+                    <span style="font-size: 10px; background: ${pci.fail > 0 ? '#fee2e2' : '#dcfce7'}; color: ${pci.fail > 0 ? '#991b1b' : '#166534'}; font-weight: 800; padding: 2px 6px; border-radius: 3px;">${pci.total} CHECKED</span>
                   </div>
-                  <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">${isSnmpRemediated ? '100.0%' : '88.0%'}</div>
-                  <div style="font-size: 11px; color: ${isSnmpRemediated ? '#16a34a' : '#ea580c'}; margin-top: 4px; font-weight: 600;">
-                    ${isSnmpRemediated ? '✔ Requirement 2.1 Compliant' : '⚠ Default SNMP Community Violation'}
+                  <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">${pci.pct}</div>
+                  <div style="font-size: 11px; color: ${pci.fail === 0 && pci.total > 0 ? '#16a34a' : '#ea580c'}; margin-top: 4px; font-weight: 600;">
+                    ${pci.total === 0 ? 'Capture running-config to audit' : `${pci.pass} Passed • ${pci.fail} Violation(s)`}
                   </div>
                 </div>
 
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                   <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">HIPAA Security §164.312</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">PASS</span>
+                    <span style="font-size: 10px; background: ${hipaa.fail > 0 ? '#fef3c7' : '#dcfce7'}; color: ${hipaa.fail > 0 ? '#92400e' : '#166534'}; font-weight: 800; padding: 2px 6px; border-radius: 3px;">${hipaa.total} CHECKED</span>
                   </div>
-                  <div style="font-size: 26px; font-weight: 800; color: #166534; margin-top: 8px;">100.0%</div>
-                  <div style="font-size: 11px; color: #16a34a; margin-top: 4px; font-weight: 600;">✔ SSH v2 & Audit Logs Encrypted</div>
+                  <div style="font-size: 26px; font-weight: 800; color: ${hipaa.fail === 0 && hipaa.total > 0 ? '#166534' : '#0f172a'}; margin-top: 8px;">${hipaa.pct}</div>
+                  <div style="font-size: 11px; color: ${hipaa.fail === 0 && hipaa.total > 0 ? '#16a34a' : '#ea580c'}; margin-top: 4px; font-weight: 600;">
+                    ${hipaa.total === 0 ? 'Capture running-config to audit' : `${hipaa.pass} Passed • ${hipaa.fail} Violation(s)`}
+                  </div>
                 </div>
 
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                   <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">SOX Section 404</span>
-                    <span style="font-size: 10px; background: #dcfce7; color: #166534; font-weight: 800; padding: 2px 6px; border-radius: 3px;">VERIFIED</span>
+                    <span style="font-size: 10px; background: #e0f2fe; color: #0369a1; font-weight: 800; padding: 2px 6px; border-radius: 3px;">${backedDevs.length}/${state.devices.length} BACKUPS</span>
                   </div>
-                  <div style="font-size: 26px; font-weight: 800; color: #166534; margin-top: 8px;">94.1%</div>
-                  <div style="font-size: 11px; color: #16a34a; margin-top: 4px; font-weight: 600;">✔ Syslog Trail Forwarding Active</div>
+                  <div style="font-size: 26px; font-weight: 800; color: ${sox.fail === 0 && sox.total > 0 ? '#166534' : '#0f172a'}; margin-top: 8px;">${sox.pct}</div>
+                  <div style="font-size: 11px; color: ${sox.fail === 0 && sox.total > 0 ? '#16a34a' : '#d97706'}; margin-top: 4px; font-weight: 600;">
+                    ${sox.total === 0 ? 'Capture running-config to audit' : `${sox.pass} Passed • ${sox.fail} Violation(s)`}
+                  </div>
                 </div>
               </div>
 
-              <!-- Active Compliance Policy Violations Table -->
+              <!-- Real Compliance Policy Audits Table -->
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 20px;">
                 <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-                  <span>Active Compliance Policy Violations & Audits</span>
+                  <span>Live NCM Compliance Audit Results (${backedDevs.length} Backed-Up Device(s), ${allChecks.length} Policy Checks)</span>
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
                   </div>
@@ -144,87 +198,59 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Service Password Encryption Disabled (service password-encryption)</td>
-                      <td style="padding: 10px 14px; color: #64748b;">CIS Cisco IOS 1.2</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
-                      <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">CRITICAL</span></td>
-                      <td style="padding: 10px 14px;">
-                        ${isPwdRemediated ? '<span style="color: #16a34a; font-weight: 700;">● Compliant</span>' : '<span style="color: #dc2626; font-weight: 700;">● Non-Compliant</span>'}
-                      </td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        ${isPwdRemediated ? '<span style="color: #16a34a; font-weight: 700;">✔ Remediated</span>' : '<button class="opm-remediate-btn" data-rule="pwd" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Execute Fixlet</button>'}
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">SNMP Community String 'public' in use</td>
-                      <td style="padding: 10px 14px; color: #64748b;">PCI-DSS 4.0 (Req 2.1)</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
-                      <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">MAJOR</span></td>
-                      <td style="padding: 10px 14px;">
-                        ${isSnmpRemediated ? '<span style="color: #16a34a; font-weight: 700;">● Compliant</span>' : '<span style="color: #ea580c; font-weight: 700;">● Non-Compliant</span>'}
-                      </td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        ${isSnmpRemediated ? '<span style="color: #16a34a; font-weight: 700;">✔ Remediated</span>' : '<button class="opm-remediate-btn" data-rule="snmp" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Execute Fixlet</button>'}
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">SSH Protocol Version 2 Mandatory (ip ssh version 2)</td>
-                      <td style="padding: 10px 14px; color: #64748b;">HIPAA Security §164.312</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
-                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">LOW</span></td>
-                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 700;">● Compliant</td>
-                      <td style="padding: 10px 14px; text-align: right;"><span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Verified</span></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">Syslog Audit Trail Forwarding Enabled (logging host 192.168.30.65)</td>
-                      <td style="padding: 10px 14px; color: #64748b;">SOX Section 404</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name} (${primaryDev.ip})</td>
-                      <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">LOW</span></td>
-                      <td style="padding: 10px 14px; color: #16a34a; font-weight: 700;">● Compliant</td>
-                      <td style="padding: 10px 14px; text-align: right;"><span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Verified</span></td>
-                    </tr>
+                    ${allChecks.length === 0 ? `
+                      <tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">No device configurations backed up yet. Add SSH credentials under Settings &gt; Credentials and click <strong>Backup All Now</strong> to audit live running configs.</td></tr>
+                    ` : allChecks.map(c => `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">${escNcm(c.rule)}</td>
+                        <td style="padding: 10px 14px; color: #64748b;">${escNcm(c.standard)}</td>
+                        <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${c.dev.id})">${escNcm(c.dev.displayName || c.dev.name)} (${escNcm(c.dev.ip)})</td>
+                        <td style="padding: 10px 14px;"><span style="background: ${c.severity === 'CRITICAL' ? '#fee2e2' : (c.severity === 'MAJOR' || c.severity === 'HIGH' ? '#ffedd5' : '#dcfce7')}; color: ${c.severity === 'CRITICAL' ? '#991b1b' : (c.severity === 'MAJOR' || c.severity === 'HIGH' ? '#9a3412' : '#166534')}; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">${c.severity}</span></td>
+                        <td style="padding: 10px 14px; font-weight: 700; color: ${c.passed ? '#16a34a' : '#dc2626'};">${c.passed ? '● Compliant' : '● Non-Compliant'}</td>
+                        <td style="padding: 10px 14px; text-align: right;">
+                          ${c.passed
+                            ? '<span style="font-size: 11px; color: #16a34a; font-weight: 700;">✓ Passed</span>'
+                            : `<button class="opm-remediate-btn" data-id="${c.dev.id}" data-rule="${escNcm(c.rule)}" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Inspect / Fix via SSH</button>`
+                          }
+                        </td>
+                      </tr>
+                    `).join('')}
                   </tbody>
                 </table>
               </div>
 
-              <!-- Live NCM Config Drift Diff Section -->
+              <!-- Real Stored NCM Config Drift Diff Section -->
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
                   <div>
-                    <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Live NCM Config Drift Diff: ${primaryDev.name} (${primaryDev.ip})</div>
-                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Startup-Config (NVRAM Baseline) vs Running-Config (Live Active RAM)</div>
+                    <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Live NCM Config Drift Diff: ${escNcm(selDiffDev.displayName || selDiffDev.name)} (${escNcm(selDiffDev.ip)})</div>
+                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Real SQLite Startup-Config (${(selDiffDev.startupConfig || '').length} B) vs Running-Config (${(selDiffDev.runningConfig || '').length} B)${selDiffDev.lastBackup ? ` • Last Backup: ${new Date(selDiffDev.lastBackup).toLocaleString()}` : ''}</div>
                   </div>
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; ${isDriftFixed ? 'background: #dcfce7; color: #166534;' : 'background: #fef3c7; color: #92400e;'}">
-                      ${isDriftFixed ? '● 0 Unsaved Drifts (Synchronized)' : '● 1 Unsaved Drift in RAM'}
+                  <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <select id="opm-ncm-diff-dev-select" style="padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; font-weight: 600; background: #fff;">
+                      ${[...backedDevs, ...state.devices.filter(d => !d.hasConfig && !d.runningConfig && !d.startupConfig)].slice(0, 30).map(d => `
+                        <option value="${d.id}" ${String(d.id) === String(selDiffDev.id) ? 'selected' : ''}>${escNcm(d.displayName || d.name)} (${escNcm(d.ip)})${(d.hasConfig || d.runningConfig) ? ' ✓' : ''}</option>
+                      `).join('')}
+                    </select>
+                    <span style="font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; ${!selHasBoth ? 'background: #f1f5f9; color: #475569;' : (selDiff.diffLines > 0 ? 'background: #fef3c7; color: #92400e;' : 'background: #dcfce7; color: #166534;')}">
+                      ${!selHasBoth ? '● Baseline Pending' : (selDiff.diffLines > 0 ? `● ${selDiff.diffLines} Line Diff(s) Found` : '● Running == Startup (In Sync)')}
                     </span>
-                    <button id="opm-open-diff-comparator-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Compare Revisions ↗</button>
-                    ${!isDriftFixed ? '<button id="opm-save-running-startup-btn" style="background: #16a34a; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Save to Startup (NVRAM)</button>' : '<button id="opm-recheck-drift-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Recheck Drift</button>'}
+                    <button id="opm-open-diff-comparator-btn" data-id="${selDiffDev.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Side-by-Side Diff ↗</button>
+                    <button id="opm-cfg-refresh-single-btn" data-id="${selDiffDev.id}" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Re-Pull via SSH</button>
                   </div>
                 </div>
 
-                <div style="background: #0f172a; border-radius: 6px; padding: 14px; font-family: monospace; font-size: 11px; line-height: 1.6; color: #e2e8f0; overflow-x: auto;">
-                  <div style="color: #64748b;">! Cisco IOS-XE Dynamic Configuration Drift Telemetry</div>
-                  <div style="color: #64748b;">! Target: ${primaryDev.name} &bull; Probe: ${primaryDev.probe || 'Central-Probe-01'}</div>
-                  <div>hostname ${primaryDev.name}</div>
-                  <div>!</div>
-                  ${isDriftFixed ? `
-                    <div style="color: #34d399;">+ service password-encryption  ! [Persisted to NVRAM]</div>
-                    <div style="color: #34d399;">+ interface Vlan100  ! [Committed to Startup]</div>
-                    <div style="color: #34d399;">+  description Management VLAN (Committed)</div>
+                <div style="background: #0f172a; border-radius: 6px; padding: 14px; font-family: monospace; font-size: 11px; line-height: 1.6; color: #e2e8f0; overflow-x: auto; max-height: 280px;">
+                  ${!selDiffDev.runningConfig && !selDiffDev.startupConfig ? `
+                    <div style="color: #94a3b8;">! No configuration backup stored in SQLite yet for ${escNcm(selDiffDev.displayName || selDiffDev.name)} (${escNcm(selDiffDev.ip)}).<br>! Ensure SSH credentials are added under Settings &gt; Credentials, then click "Re-Pull via SSH".</div>
+                  ` : selDiff.diffLines > 0 ? `
+                    <div style="color: #64748b;">! Real SQLite Config Diff (${selDiff.removed.length} line(s) only in Startup, ${selDiff.added.length} line(s) only in Running)</div>
+                    ${selDiff.removed.map(l => `<div style="color: #fca5a5;">- ${escNcm(l)}</div>`).join('')}
+                    ${selDiff.added.map(l => `<div style="color: #86efac;">+ ${escNcm(l)}</div>`).join('')}
                   ` : `
-                    <div style="color: #f87171;">- service password-encryption  [NVRAM Baseline]</div>
-                    <div style="color: #fbbf24;">+ no service password-encryption  [Drift in RAM]</div>
-                    <div>!</div>
-                    <div style="color: #38bdf8;">+ interface Vlan100  ! [Uncommitted dynamic change]</div>
-                    <div style="color: #38bdf8;">+  description Management VLAN (Unsaved)</div>
+                    <div style="color: #4ade80;">! Startup-Config and Running-Config are identical (${(selDiffDev.runningConfig || '').split(/\r?\n/).length} lines). Showing header preview:</div>
+                    ${(selDiffDev.runningConfig || selDiffDev.startupConfig).split(/\r?\n/).slice(0, 14).map(l => `<div style="color: #cbd5e1;">  ${escNcm(l)}</div>`).join('')}
                   `}
-                  <div>interface GigabitEthernet0/1</div>
-                  <div> switchport mode trunk</div>
-                  <div> switchport trunk allowed vlan 10,20,30</div>
-                  <div>!</div>
-                  <div>end</div>
                 </div>
               </div>
             `;
@@ -241,33 +267,39 @@
             return `
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-                  <span>Automated Configuration Change Audit Trail (${state.devices.length} Managed Nodes)</span>
+                  <span>NCM Configuration Change &amp; Drift Audit (${backedDevs.length} Backed-Up Node(s) / ${state.devices.length} Total)</span>
                   <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
                 </div>
                 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                   <thead>
                     <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                      <th style="padding: 10px 14px;">Timestamp</th>
+                      <th style="padding: 10px 14px;">Captured Timestamp</th>
                       <th style="padding: 10px 14px;">Device</th>
                       <th style="padding: 10px 14px;">Probe</th>
-                      <th style="padding: 10px 14px;">Author / Terminal</th>
-                      <th style="padding: 10px 14px;">Change Description</th>
-                      <th style="padding: 10px 14px;">Drift Type</th>
+                      <th style="padding: 10px 14px;">Running / Startup Size</th>
+                      <th style="padding: 10px 14px;">Drift Status</th>
                       <th style="padding: 10px 14px; text-align: right;">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; color: #64748b; font-family: monospace;">Just now</td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
-                      <td style="padding: 10px 14px; color: #64748b;">${primaryDev.probe || 'Central-Probe-01'}</td>
-                      <td style="padding: 10px 14px; font-weight: 600; color: #0f172a;">admin via SSH (vty0)</td>
-                      <td style="padding: 10px 14px; color: #334155;">Modified interface GigabitEthernet0/1 VLAN encapsulation</td>
-                      <td style="padding: 10px 14px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">RUNNING != STARTUP</span></td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-open-diff-comparator-btn" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">View Diff</button>
-                      </td>
-                    </tr>
+                    ${backedDevs.length === 0 ? `
+                      <tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">No config revisions captured in SQLite yet. Run <strong>Backup All Now</strong> once SSH credentials are configured.</td></tr>
+                    ` : backedDevs.map(d => {
+                      const df = (d.startupConfig && d.runningConfig) ? computeConfigDiff(d.startupConfig, d.runningConfig) : { diffLines: 0 };
+                      const hasDiff = df.diffLines > 0;
+                      return `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 10px 14px; color: #64748b; font-family: monospace;">${d.lastBackup ? new Date(d.lastBackup).toLocaleString() : 'Stored'}</td>
+                        <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${d.id})">${escNcm(d.displayName || d.name)} (${escNcm(d.ip)})</td>
+                        <td style="padding: 10px 14px; color: #64748b;">${escNcm(d.probe || 'Central Site Probe')}</td>
+                        <td style="padding: 10px 14px; font-family: monospace; color: #0f172a;">Run: ${(d.runningConfig || '').length} B &bull; Start: ${(d.startupConfig || '').length} B</td>
+                        <td style="padding: 10px 14px;"><span style="background: ${hasDiff ? '#fef3c7' : '#dcfce7'}; color: ${hasDiff ? '#92400e' : '#166534'}; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">${hasDiff ? `${df.diffLines} LINE(S) DIFFER` : 'IN SYNC'}</span></td>
+                        <td style="padding: 10px 14px; text-align: right;">
+                          <button class="opm-open-diff-comparator-btn" data-id="${d.id}" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">View Diff</button>
+                        </td>
+                      </tr>
+                    `;
+                    }).join('')}
                   </tbody>
                 </table>
               </div>
@@ -278,48 +310,47 @@
             if (!hasDevices) {
               return renderCleanEmptyState(
                 'Zero Firmware CVE Vulnerabilities',
-                'NIST NVD database feed synchronized. All running firmware builds across monitored nodes are secure and patched.'
+                'Once network devices are discovered and backed up via NCM, firmware versions and OS headers appear here.'
               );
             }
 
+            const fingerprinted = networkDevs.map(d => ({ dev: d, fw: extractFirmware(d) })).filter(x => x.fw);
             return `
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-                  <span>NIST NVD Live Security Advisory Feed (Managed Network Nodes)</span>
-                  <span style="background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">● 2 CVE Advisories Active</span>
+                  <span>Verified Device OS / Firmware Inventory (${fingerprinted.length} Fingerprinted of ${networkDevs.length} Network Nodes)</span>
+                  <span style="background: #e0f2fe; color: #0369a1; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">Parsed from Live NCM Config Headers</span>
                 </div>
                 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                   <thead>
                     <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                      <th style="padding: 10px 14px;">CVE ID</th>
-                      <th style="padding: 10px 14px;">CVSS Score</th>
-                      <th style="padding: 10px 14px;">Target Device</th>
-                      <th style="padding: 10px 14px;">Running Firmware</th>
-                      <th style="padding: 10px 14px;">Advisory Summary</th>
+                      <th style="padding: 10px 14px;">Device</th>
+                      <th style="padding: 10px 14px;">IP Address</th>
+                      <th style="padding: 10px 14px;">Vendor / Category</th>
+                      <th style="padding: 10px 14px;">Captured Firmware / OS</th>
+                      <th style="padding: 10px 14px;">Status</th>
                       <th style="padding: 10px 14px; text-align: right;">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 700; font-family: monospace; color: #dc2626;">CVE-2023-20198</td>
-                      <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; font-weight: 800; font-size: 10px; padding: 2px 6px; border-radius: 3px;">10.0 CRITICAL</span></td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
-                      <td style="padding: 10px 14px; font-family: monospace;">Cisco IOS-XE 17.3.4a</td>
-                      <td style="padding: 10px 14px; color: #334155;">Cisco IOS XE Software Web UI Privilege Escalation</td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-cve-remed-btn" data-cve="CVE-2023-20198" style="background: #dc2626; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Apply Mitigation Fixlet</button>
-                      </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 10px 14px; font-weight: 700; font-family: monospace; color: #ea580c;">CVE-2023-20273</td>
-                      <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 800; font-size: 10px; padding: 2px 6px; border-radius: 3px;">7.2 HIGH</span></td>
-                      <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${primaryDev.name}</td>
-                      <td style="padding: 10px 14px; font-family: monospace;">Cisco IOS-XE 17.3.4a</td>
-                      <td style="padding: 10px 14px; color: #334155;">Cisco IOS XE Software Web UI Command Injection</td>
-                      <td style="padding: 10px 14px; text-align: right;">
-                        <button class="opm-cve-remed-btn" data-cve="CVE-2023-20273" style="background: #ea580c; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Advisory Details</button>
-                      </td>
-                    </tr>
+                    ${networkDevs.map(d => {
+                      const fw = extractFirmware(d);
+                      return `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${d.id})">${escNcm(d.displayName || d.name)}</td>
+                        <td style="padding: 10px 14px; font-family: monospace;">${escNcm(d.ip)}</td>
+                        <td style="padding: 10px 14px; color: #64748b;">${escNcm(d.vendor || d.category || 'Node')}</td>
+                        <td style="padding: 10px 14px; font-family: monospace; color: ${fw ? '#0f172a' : '#94a3b8'}; font-weight: ${fw ? '700' : '400'};">${fw ? escNcm(fw) : 'Pending SSH Config / sysDescr'}</td>
+                        <td style="padding: 10px 14px;"><span style="background: ${fw ? '#dcfce7' : '#f1f5f9'}; color: ${fw ? '#166534' : '#64748b'}; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 3px;">${fw ? 'VERIFIED' : 'NOT SCANNED'}</span></td>
+                        <td style="padding: 10px 14px; text-align: right;">
+                          ${fw
+                            ? `<button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">View Config</button>`
+                            : `<button class="opm-cfg-backup-single-btn" data-id="${d.id}" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Scan via SSH</button>`
+                          }
+                        </td>
+                      </tr>
+                    `;
+                    }).join('')}
                   </tbody>
                 </table>
               </div>
@@ -330,16 +361,17 @@
             if (!hasDevices) {
               return renderCleanEmptyState(
                 'No Configuration Backups Found',
-                'No configuration backups found. Devices enrolled in NCM will have daily automated backups listed here.'
+                'No configuration backups found. Devices enrolled in NCM will have backups listed here.'
               );
             }
 
+            const sortedBackups = [...state.devices].sort((a, b) => ((b.hasConfig || b.runningConfig) ? 1 : 0) - ((a.hasConfig || a.runningConfig) ? 1 : 0));
             return `
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                  <span style="font-size: 14px; font-weight: 700; color: #0f172a;">Automated Daily Configuration Backups</span>
+                  <span style="font-size: 14px; font-weight: 700; color: #0f172a;">SQLite Configuration Backup Archive</span>
                   <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 11px; color: #16a34a; font-weight: 700;">● ${state.devices.length}/${state.devices.length} Successful Today</span>
+                    <span style="font-size: 11px; color: ${backedDevs.length > 0 ? '#16a34a' : '#64748b'}; font-weight: 700;">● ${backedDevs.length}/${state.devices.length} Backups Stored</span>
                     <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
                   </div>
                 </div>
@@ -355,23 +387,27 @@
                     </tr>
                   </thead>
                   <tbody>
-                    ${state.devices.map(d => `
+                    ${sortedBackups.map(d => {
+                      const hasBkp = Boolean(d.hasConfig || d.runningConfig || d.startupConfig);
+                      const bytes = (d.runningConfig || d.startupConfig || '').length;
+                      return `
                       <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 10px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;">
+                        <td style="padding: 10px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px; cursor: pointer;" onclick="showDeviceSnapshotModal(${d.id})">
                           ${typeof getDeviceTypeIcon === 'function' ? getDeviceTypeIcon(d.type, d.category, 16) : '🖧'}
-                          <span>${d.name}</span>
+                          <span>${escNcm(d.displayName || d.name)}</span>
                         </td>
-                        <td style="padding: 10px 12px; color: #64748b;">${d.probe || 'Central-Probe-01'}</td>
-                        <td style="padding: 10px 12px; color: #475569;">${d.lastBackup || 'Just now'}</td>
-                        <td style="padding: 10px 12px; font-family: monospace;">42.8 KB</td>
-                        <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">SUCCESS</span></td>
+                        <td style="padding: 10px 12px; color: #64748b;">${escNcm(d.probe || 'Central Site Probe')}</td>
+                        <td style="padding: 10px 12px; color: ${d.lastBackup ? '#0f172a' : '#94a3b8'}; font-family: monospace;">${d.lastBackup ? new Date(d.lastBackup).toLocaleString() : 'Never backed up'}</td>
+                        <td style="padding: 10px 12px; font-family: monospace;">${hasBkp ? (bytes / 1024).toFixed(1) + ' KB' : '—'}</td>
+                        <td style="padding: 10px 12px;"><span style="background: ${hasBkp ? '#dcfce7' : '#f1f5f9'}; color: ${hasBkp ? '#166534' : '#64748b'}; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">${hasBkp ? 'CAPTURED' : 'NO BACKUP'}</span></td>
                         <td style="padding: 10px 12px; text-align: right; white-space: nowrap;">
                           <button class="opm-cfg-backup-single-btn" data-id="${d.id}" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">Backup Now</button>
-                          <button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">View Config</button>
-                          <button class="opm-cfg-download-config-btn" data-id="${d.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Download</button>
+                          <button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px; ${hasBkp ? '' : 'opacity:0.5;'}">${hasBkp ? 'View Config' : 'No Config'}</button>
+                          <button class="opm-cfg-download-config-btn" data-id="${d.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; ${hasBkp ? '' : 'opacity:0.5;'}">Download</button>
                         </td>
                       </tr>
-                    `).join('')}
+                    `;
+                    }).join('')}
                   </tbody>
                 </table>
               </div>
@@ -564,62 +600,66 @@
       };
     }
 
+    const ncmSel = container.querySelector('#opm-ncm-diff-dev-select');
+    if (ncmSel) {
+      ncmSel.onchange = (e) => {
+        state.selectedNcmDeviceId = e.target.value;
+        renderConfigurationView();
+      };
+    }
+
     // Open Diff Comparator buttons
     container.querySelectorAll('#opm-open-diff-comparator-btn, .opm-open-diff-comparator-btn').forEach(btn => {
       btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        const dev = id
+          ? (state.devices || []).find(d => String(d.id) === String(id))
+          : ((state.devices || []).find(d => String(d.id) === String(state.selectedNcmDeviceId)) || (state.devices || []).find(d => d.hasConfig || d.runningConfig) || (state.devices && state.devices[0]));
         if (typeof showNcmVersionCompareModal === 'function') {
-          showNcmVersionCompareModal(state.devices ? state.devices[0] : null);
+          showNcmVersionCompareModal(dev);
         }
       };
     });
 
-    // Save running to startup button
-    const saveBtn = container.querySelector('#opm-save-running-startup-btn');
-    if (saveBtn) {
-      saveBtn.onclick = () => {
-        state.configDriftFixed = true;
-        showToast('Running configuration saved to startup NVRAM. Drift resolved.');
+    // Re-pull single device via SSH
+    const refreshSingleBtn = container.querySelector('#opm-cfg-refresh-single-btn');
+    if (refreshSingleBtn) {
+      refreshSingleBtn.onclick = async () => {
+        const id = refreshSingleBtn.getAttribute('data-id');
+        const dev = (state.devices || []).find(d => String(d.id) === String(id));
+        if (!dev) return;
+        refreshSingleBtn.disabled = true;
+        refreshSingleBtn.textContent = 'Pulling SSH...';
+        try {
+          const resp = await fetch('/api/ccm/backup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ deviceId: dev.id })
+          });
+          const data = await resp.json();
+          if (resp.ok) {
+            if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+            showToast(data.message || `SSH config backup updated for ${dev.name}.`);
+          } else {
+            showToast(data.message || `SSH backup failed (${resp.status}).`, 'warning');
+          }
+        } catch (err) {
+          showToast(`SSH backup error: ${err.message}`, 'error');
+        }
         renderConfigurationView();
       };
     }
 
-    // Recheck drift button
-    const recheckBtn = container.querySelector('#opm-recheck-drift-btn');
-    if (recheckBtn) {
-      recheckBtn.onclick = () => {
-        state.configDriftFixed = false;
-        showToast('Config drift simulation scan completed.');
-        renderConfigurationView();
-      };
-    }
-
-    // Remediate button: opens ManageEngine NCM Policy Remediation Fixlet
+    // Remediate button: opens real NCM Inspection / SSH modal (never claims fake pass)
     container.querySelectorAll('.opm-remediate-btn').forEach(btn => {
       btn.onclick = () => {
-        const ruleType = btn.getAttribute('data-rule') || 'pwd';
-        const targetDev = (state.devices && state.devices[0]) || { name: 'SW-CORE-01', ip: '192.168.30.1', probe: 'Central-Probe-01' };
-        
-        if (!state.remediatedRules) state.remediatedRules = {};
-        state.remediatedRules[ruleType] = true;
-
+        const id = btn.getAttribute('data-id');
+        const ruleName = btn.getAttribute('data-rule') || 'NCM Policy Compliance Check';
+        const targetDev = (id && (state.devices || []).find(d => String(d.id) === String(id))) || (state.devices && state.devices[0]);
         if (typeof showNcmRemediationModal === 'function') {
-          showNcmRemediationModal(ruleType === 'snmp' ? 'PCI-DSS 4.0 (Req 2.1) Default Community String' : 'CIS Cisco IOS 1.2 Service Password Encryption', targetDev);
-        } else {
-          showToast(`Compliance remediation fixlet executed via SSH on ${targetDev.name}.`);
-        }
-        renderConfigurationView();
-      };
-    });
-
-    // CVE Remediation button
-    container.querySelectorAll('.opm-cve-remed-btn').forEach(btn => {
-      btn.onclick = () => {
-        const cve = btn.getAttribute('data-cve') || 'CVE-2023-20198';
-        const targetDev = (state.devices && state.devices[0]) || { name: 'SW-CORE-01', ip: '192.168.30.1', probe: 'Central-Probe-01' };
-        if (typeof showNcmRemediationModal === 'function') {
-          showNcmRemediationModal(`${cve} NIST Security Patch & ACL Mitigation`, targetDev);
-        } else {
-          showToast(`Applied mitigation ACL fixlet for ${cve} on ${targetDev.name}.`);
+          showNcmRemediationModal(ruleName, targetDev);
+        } else if (typeof showNetworkToolsModal === 'function' && targetDev) {
+          showNetworkToolsModal(targetDev.ip, 'terminal');
         }
       };
     });
@@ -630,6 +670,7 @@
         const id = btn.getAttribute('data-id');
         const dev = (state.devices || []).find(d => String(d.id) === String(id));
         if (!dev) return;
+        const origText = btn.textContent;
         btn.disabled = true;
         btn.textContent = 'Backing up...';
         try {
@@ -640,8 +681,8 @@
           });
           const data = await resp.json();
           if (resp.ok) {
-            dev.lastBackup = 'Just now';
-            showToast(`SSH configuration backup completed for ${dev.name}.`);
+            if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+            showToast(data.message || `SSH configuration backup completed for ${dev.name}.`);
           } else {
             showToast(data.message || `SSH backup failed on ${dev.name} (${resp.status}).`, 'warning');
           }
@@ -649,7 +690,7 @@
           showToast(`Backup error on ${dev.name}: ${err.message}`, 'error');
         }
         btn.disabled = false;
-        btn.textContent = 'Backup Now';
+        btn.textContent = origText;
         renderConfigurationView();
       };
     });
@@ -665,21 +706,25 @@
       };
     });
 
-    // Download config button
+    // Download config button (only real stored config)
     container.querySelectorAll('.opm-cfg-download-config-btn').forEach(btn => {
       btn.onclick = () => {
         const id = btn.getAttribute('data-id');
-        const dev = (state.devices || []).find(d => String(d.id) === String(id)) || (state.devices && state.devices[0]) || { name: 'device' };
-        const text = dev.runningConfig || dev.startupConfig || `! Cisco IOS Software\nversion 17.3.4a\nhostname ${dev.name}\nend`;
+        const dev = (state.devices || []).find(d => String(d.id) === String(id));
+        const text = dev && (dev.runningConfig || dev.startupConfig);
+        if (!text) {
+          showToast(`No backed-up configuration stored yet for ${(dev && (dev.displayName || dev.name)) || 'device'}. Run Backup Now first.`, 'warning');
+          return;
+        }
         const blob = new Blob([text], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${dev.name}_running_config_${new Date().toISOString().slice(0, 10)}.cfg`;
+        a.download = `${(dev.displayName || dev.name || dev.ip).replace(/[^a-z0-9_.-]/gi, '_')}_running_config_${new Date().toISOString().slice(0, 10)}.cfg`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        showToast(`Downloaded running configuration archive for ${dev.name}`);
+        showToast(`Downloaded running configuration archive for ${dev.displayName || dev.name}`);
       };
     });
 

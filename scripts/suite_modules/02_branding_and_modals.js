@@ -29,73 +29,28 @@
       return;
     }
 
-    const startupLines = [
-      { num: '01', text: '! Last configuration change at 06:14:02 UTC' },
-      { num: '02', text: 'version 17.09.04a' },
-      { num: '03', text: 'service timestamps debug datetime msec' },
-      { num: '04', text: 'service timestamps log datetime msec' },
-      { num: '05', text: `hostname ${dev.name}` },
-      { num: '06', text: '!' },
-      { num: '07', text: 'boot-start-marker' },
-      { num: '08', text: 'boot-end-marker' },
-      { num: '09', text: '!' },
-      { num: '10', text: 'no aaa new-model' },
-      { num: '11', text: '!' },
-      { num: '12', text: 'interface GigabitEthernet0/1', highlight: 'del' },
-      { num: '13', text: ` description Uplink to Gateway`, highlight: 'del' },
-      { num: '14', text: ' switchport mode trunk', highlight: 'del' },
-      { num: '15', text: ' switchport trunk allowed vlan 10,20,30,40', highlight: 'del' },
-      { num: '16', text: ' no shutdown  <-- BASELINE IN STARTUP', highlight: 'del' },
-      { num: '17', text: '!' },
-      { num: '18', text: 'interface GigabitEthernet0/2' },
-      { num: '19', text: ' description Distribution Trunk' },
-      { num: '20', text: ' switchport mode trunk' },
-      { num: '21', text: '!' },
-      { num: '22', text: `ip default-gateway ${dev.ip || '192.168.1.1'}` },
-      { num: '23', text: 'ip forward-protocol nd' },
-      { num: '24', text: '!' },
-      { num: '25', text: 'snmp-server community ******* RO' },
-      { num: '26', text: 'snmp-server host 127.0.0.1 version 2c *******' },
-      { num: '27', text: 'line con 0' },
-      { num: '28', text: 'line vty 0 4' },
-      { num: '29', text: ' login' },
-      { num: '30', text: 'end' }
-    ];
+    const escCfg = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const rawStartup = dev.startupConfig || '';
+    const rawRunning = dev.runningConfig || '';
+    const sLinesRaw = rawStartup ? rawStartup.split(/\r?\n/) : [];
+    const rLinesRaw = rawRunning ? rawRunning.split(/\r?\n/) : [];
+    const rSet = new Set(rLinesRaw.map(x => x.trim()).filter(Boolean));
+    const sSet = new Set(sLinesRaw.map(x => x.trim()).filter(Boolean));
 
-    const runningLines = [
-      { num: '01', text: '! Last configuration change at 08:30:14 UTC' },
-      { num: '02', text: 'version 17.09.04a' },
-      { num: '03', text: 'service timestamps debug datetime msec' },
-      { num: '04', text: 'service timestamps log datetime msec' },
-      { num: '05', text: `hostname ${dev.name}` },
-      { num: '06', text: '!' },
-      { num: '07', text: 'boot-start-marker' },
-      { num: '08', text: 'boot-end-marker' },
-      { num: '09', text: '!' },
-      { num: '10', text: 'no aaa new-model' },
-      { num: '11', text: '!' },
-      { num: '12', text: 'interface GigabitEthernet0/1', highlight: 'add' },
-      { num: '13', text: ` description Uplink to Gateway`, highlight: 'add' },
-      { num: '14', text: ' switchport mode trunk', highlight: 'add' },
-      { num: '15', text: ' switchport trunk allowed vlan 10,20,30,40', highlight: 'add' },
-      { num: '16', text: ' shutdown  <-- REASON FOR PORT CRITICAL DOWN', highlight: 'add' },
-      { num: '17', text: '!' },
-      { num: '18', text: 'interface GigabitEthernet0/2' },
-      { num: '19', text: ' description Distribution Trunk' },
-      { num: '20', text: ' switchport mode trunk' },
-      { num: '21', text: '!' },
-      { num: '22', text: `ip default-gateway ${dev.ip || '192.168.1.1'}` },
-      { num: '23', text: 'ip forward-protocol nd' },
-      { num: '24', text: 'ip access-list standard 101', highlight: 'add' },
-      { num: '25', text: ' permit 192.168.0.0 0.0.255.255', highlight: 'add' },
-      { num: '26', text: '!' },
-      { num: '27', text: 'snmp-server community ******* RO' },
-      { num: '28', text: 'snmp-server host 127.0.0.1 version 2c *******' },
-      { num: '29', text: 'line con 0' },
-      { num: '30', text: 'line vty 0 4' },
-      { num: '31', text: ' login' },
-      { num: '32', text: 'end' }
-    ];
+    const startupLines = sLinesRaw.map((txt, idx) => ({
+      num: String(idx + 1).padStart(2, '0'),
+      text: txt,
+      highlight: (rawRunning && txt.trim() && !rSet.has(txt.trim())) ? 'del' : null
+    }));
+    const runningLines = rLinesRaw.map((txt, idx) => ({
+      num: String(idx + 1).padStart(2, '0'),
+      text: txt,
+      highlight: (rawStartup && txt.trim() && !sSet.has(txt.trim())) ? 'add' : null
+    }));
+
+    const diffCount = startupLines.filter(l => l.highlight).length + runningLines.filter(l => l.highlight).length;
+    const hasAnyCfg = Boolean(rawStartup || rawRunning);
+    const capturedLabel = dev.lastBackup ? `Captured: ${new Date(dev.lastBackup).toLocaleString()}` : 'Not backed up yet';
 
     modal.innerHTML = `
       <div style="background: #ffffff; border-radius: 8px; width: 1080px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35); border: 1px solid #cbd5e1;">
@@ -104,12 +59,14 @@
           <div style="display: flex; align-items: center; gap: 12px;">
             <div style="width: 32px; height: 32px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">NCM</div>
             <div>
-              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">ManageEngine NCM Dual-Pane Side-by-Side Configuration Comparator</div>
-              <div style="font-size: 11px; color: #64748b;">Target Device: <strong style="color: #0070e0;">${dev.name} (${dev.ip})</strong> &bull; Probe: ${dev.probeName || dev.probe || 'Central Site Probe'}</div>
+              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">ManageEngine NCM Real Configuration Comparator</div>
+              <div style="font-size: 11px; color: #64748b;">Target Device: <strong style="color: #0070e0;">${escCfg(dev.displayName || dev.name)} (${escCfg(dev.ip)})</strong> &bull; Probe: ${escCfg(dev.probeName || dev.probe || 'Central Site Probe')} &bull; ${escCfg(capturedLabel)}</div>
             </div>
           </div>
           <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px;">3 Differences Detected</span>
+            <span style="background: ${!hasAnyCfg ? '#fef3c7' : (diffCount > 0 ? '#fee2e2' : '#dcfce7')}; color: ${!hasAnyCfg ? '#92400e' : (diffCount > 0 ? '#991b1b' : '#166534')}; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px;">
+              ${!hasAnyCfg ? 'No Backup Captured Yet' : (diffCount > 0 ? `${diffCount} Line Differences` : 'Startup & Running In Sync')}
+            </span>
             <button id="close-ncm-diff-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;" title="Close">✕</button>
           </div>
         </div>
@@ -118,35 +75,35 @@
         <div style="padding: 10px 24px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
           <div style="display: flex; align-items: center; gap: 14px;">
             <span style="color: #334155; font-weight: 700;">Diff Legend:</span>
-            <span style="display: inline-flex; align-items: center; gap: 4px; color: #dc2626;"><span style="width: 10px; height: 10px; background: rgba(220, 38, 38, 0.2); border: 1px solid #dc2626; display: inline-block;"></span> Startup Only (Deleted)</span>
-            <span style="display: inline-flex; align-items: center; gap: 4px; color: #16a34a;"><span style="width: 10px; height: 10px; background: rgba(22, 163, 74, 0.2); border: 1px solid #16a34a; display: inline-block;"></span> Running Only (Inserted)</span>
+            <span style="display: inline-flex; align-items: center; gap: 4px; color: #dc2626;"><span style="width: 10px; height: 10px; background: rgba(220, 38, 38, 0.2); border: 1px solid #dc2626; display: inline-block;"></span> Startup Only</span>
+            <span style="display: inline-flex; align-items: center; gap: 4px; color: #16a34a;"><span style="width: 10px; height: 10px; background: rgba(22, 163, 74, 0.2); border: 1px solid #16a34a; display: inline-block;"></span> Running Only</span>
           </div>
           <div style="display: flex; gap: 8px;">
-            <button id="opm-ncm-sync-nvram-btn" style="background: #16a34a; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
-              Sync Running to Startup (wr mem)
+            <button id="opm-ncm-refetch-ssh-btn" style="background: #16a34a; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
+              ⚡ Re-Backup via SSH
             </button>
-            <button id="opm-ncm-rollback-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-              Rollback Running to Baseline
+            <button id="opm-ncm-open-cli-btn" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
+              Open SSH CLI (wr mem / edit)
             </button>
             <button id="opm-ncm-export-pdf-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-              Export Diff PDF
+              Download Running (.cfg)
             </button>
           </div>
         </div>
 
         <!-- Dual Pane Body -->
-        <div style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: #0f172a; font-family: monospace; font-size: 11px; line-height: 1.6;">
+        <div style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: #0f172a; font-family: monospace; font-size: 11px; line-height: 1.6; min-height: 320px;">
           <!-- Left Pane: Startup Baseline -->
           <div style="border-right: 1px solid #334155; padding: 14px; overflow-x: auto;">
             <div style="color: #94a3b8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 8px; display: flex; justify-content: space-between;">
-              <span>STARTUP-CONFIG (NVRAM) &bull; Version 13.0</span>
-              <span style="color: #cbd5e1;">Baseline Captured 06:14 UTC</span>
+              <span>STARTUP-CONFIG (SQLite Store)</span>
+              <span style="color: #cbd5e1;">${sLinesRaw.length} Lines &bull; ${rawStartup.length} B</span>
             </div>
             <div>
-              ${startupLines.map(l => `
+              ${sLinesRaw.length === 0 ? '<div style="color:#64748b;padding:24px 8px;">No startup-config stored yet for this node.</div>' : startupLines.map(l => `
                 <div style="display: flex; gap: 8px; padding: 1px 4px; ${l.highlight === 'del' ? 'background: rgba(220, 38, 38, 0.25); color: #fca5a5; border-left: 3px solid #dc2626;' : 'color: #cbd5e1;'}">
-                  <span style="color: #64748b; width: 22px; text-align: right; user-select: none;">${l.num}</span>
-                  <span>${l.text}</span>
+                  <span style="color: #64748b; width: 26px; text-align: right; user-select: none;">${l.num}</span>
+                  <span>${escCfg(l.text)}</span>
                 </div>
               `).join('')}
             </div>
@@ -155,14 +112,14 @@
           <!-- Right Pane: Running Config -->
           <div style="padding: 14px; overflow-x: auto;">
             <div style="color: #94a3b8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 8px; display: flex; justify-content: space-between;">
-              <span>RUNNING-CONFIG (RAM) &bull; Version 14.2</span>
-              <span style="color: #4ade80;">Live Synchronized 08:30 UTC</span>
+              <span>RUNNING-CONFIG (SQLite Store)</span>
+              <span style="color: #4ade80;">${rLinesRaw.length} Lines &bull; ${rawRunning.length} B</span>
             </div>
             <div>
-              ${runningLines.map(l => `
+              ${rLinesRaw.length === 0 ? '<div style="color:#64748b;padding:24px 8px;">No running-config stored yet. Configure SSH credentials under Settings &gt; Credentials and click Re-Backup via SSH.</div>' : runningLines.map(l => `
                 <div style="display: flex; gap: 8px; padding: 1px 4px; ${l.highlight === 'add' ? 'background: rgba(22, 163, 74, 0.25); color: #86efac; border-left: 3px solid #16a34a;' : 'color: #cbd5e1;'}">
-                  <span style="color: #64748b; width: 22px; text-align: right; user-select: none;">${l.num}</span>
-                  <span>${l.text}</span>
+                  <span style="color: #64748b; width: 26px; text-align: right; user-select: none;">${l.num}</span>
+                  <span>${escCfg(l.text)}</span>
                 </div>
               `).join('')}
             </div>
@@ -171,7 +128,7 @@
 
         <!-- Footer -->
         <div style="padding: 12px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>ManageEngine Network Configuration Manager v12.9.203 &bull; SHA256 Verification: <code>a8f23...e41</code></span>
+          <span>ManageEngine Network Configuration Manager v12.9.203 &bull; Live SQLite Config Revision Archive</span>
           <button id="opm-ncm-diff-close-btn" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 5px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close Comparator</button>
         </div>
       </div>
@@ -181,26 +138,55 @@
     modal.querySelector('#close-ncm-diff-btn').onclick = () => { modal.style.display = 'none'; };
     modal.querySelector('#opm-ncm-diff-close-btn').onclick = () => { modal.style.display = 'none'; };
 
-    const syncBtn = modal.querySelector('#opm-ncm-sync-nvram-btn');
-    if (syncBtn) {
-      syncBtn.onclick = () => {
-        state.configDriftFixed = true;
-        showToast('Running configuration written to NVRAM. Baseline synchronized.');
-        modal.style.display = 'none';
-        if (typeof renderConfigurationView === 'function') renderConfigurationView();
+    const refetchBtn = modal.querySelector('#opm-ncm-refetch-ssh-btn');
+    if (refetchBtn) {
+      refetchBtn.onclick = async () => {
+        refetchBtn.disabled = true;
+        refetchBtn.textContent = 'Backing up...';
+        try {
+          const resp = await fetch('/api/ccm/backup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ deviceId: dev.id })
+          });
+          const data = await resp.json();
+          if (resp.ok) {
+            if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+            showToast(data.message || `Backup completed for ${dev.name}.`);
+            const refreshed = (state.devices || []).find(x => String(x.id) === String(dev.id)) || dev;
+            showNcmVersionCompareModal(refreshed);
+          } else {
+            showToast(data.message || `SSH backup failed (${resp.status}).`, 'warning');
+            refetchBtn.disabled = false;
+            refetchBtn.textContent = '⚡ Re-Backup via SSH';
+          }
+        } catch (err) {
+          showToast(`Backup error: ${err.message}`, 'error');
+          refetchBtn.disabled = false;
+          refetchBtn.textContent = '⚡ Re-Backup via SSH';
+        }
       };
     }
-    const rollbackBtn = modal.querySelector('#opm-ncm-rollback-btn');
-    if (rollbackBtn) {
-      rollbackBtn.onclick = () => {
-        showToast('Rollback script executed via Probe SSH: Running config restored to Startup baseline.');
+    const openCliBtn = modal.querySelector('#opm-ncm-open-cli-btn');
+    if (openCliBtn) {
+      openCliBtn.onclick = () => {
         modal.style.display = 'none';
+        if (typeof showNetworkToolsModal === 'function') showNetworkToolsModal(dev.ip, 'terminal');
       };
     }
     const exportBtn = modal.querySelector('#opm-ncm-export-pdf-btn');
     if (exportBtn) {
       exportBtn.onclick = () => {
-        window.print();
+        const text = rawRunning || rawStartup;
+        if (!text) { showToast('No saved running/startup config to download yet.', 'warning'); return; }
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${(dev.name || dev.ip || 'device').replace(/[^a-z0-9_.-]/gi, '_')}_running.cfg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
       };
     }
   }
@@ -1283,29 +1269,29 @@
     const execBtn = modal.querySelector('#ncm-execute-script-btn');
     const term = modal.querySelector('#ncm-exec-terminal');
 
-    execBtn.onclick = () => {
+    execBtn.onclick = async () => {
       execBtn.disabled = true;
-      execBtn.innerText = 'Pushing Config...';
+      execBtn.innerText = 'Verifying via SSH...';
       term.style.display = 'block';
-      const targetDevName = dev.name || 'Managed-Device';
       const targetDevIp = dev.ip || '127.0.0.1';
-      term.innerHTML = `<div style="color: #94a3b8;">[1/4] Establishing SSHv2 session to ${targetDevIp}:22 via ${dev.probe || 'Central Probe'}...</div>`;
-      
-      setTimeout(() => {
-        term.innerHTML += '<div style="color: #38bdf8;">[2/4] Probe authenticated. Session encryption: aes256-gcm. Pushing configuration commands...</div>';
-      }, 400);
-
-      setTimeout(() => {
-        term.innerHTML += `<div style="color: #38bdf8;">[3/4] ${targetDevName}(config)# service password-encryption<br>${targetDevName}(config)# ip ssh version 2<br>${targetDevName}# write memory [OK]</div>`;
-      }, 900);
-
-      setTimeout(() => {
-        term.innerHTML += '<div style="color: #4ade80; font-weight: 700;">[4/4] Commit SUCCESS: 0 errors. Compliance rule verified as 100% COMPLIANT.</div>';
-        execBtn.style.background = '#475569';
-        execBtn.innerText = '✓ Remediation Applied';
-        state.configDriftFixed = true;
-        showToast('NCM Remediation Fixlet successfully executed on ' + dev.name + '.');
-      }, 1400);
+      term.innerHTML = `<div style="color: #94a3b8;">[1/2] Sending read-only SSH verification ("show running-config") to ${targetDevIp}:22...</div>`;
+      try {
+        const resp = await fetch('/api/tools/terminal-exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ hostname: targetDevIp, command: 'show running-config' })
+        });
+        const data = await resp.json();
+        if (!resp.ok || data.status === 'error') {
+          term.innerHTML += `<div style="color: #f87171;">[SSH Error ${resp.status}] ${String(data.message || data.stderr || 'Failed').replace(/</g, '&lt;')}</div><div style="color: #cbd5e1; margin-top: 6px;">Tip: Configure SSH credentials under Settings &gt; Credentials or use OpUtils Web CLI Terminal to apply changes interactively.</div>`;
+        } else {
+          term.innerHTML += `<div style="color: #4ade80;">[2/2] Live SSH output received (${(data.output || '').length} bytes):</div><pre style="white-space:pre-wrap;color:#e2e8f0;margin-top:4px;">${String(data.output || '').slice(0, 800).replace(/</g, '&lt;')}</pre>`;
+        }
+      } catch (e) {
+        term.innerHTML += `<div style="color: #f87171;">Network error: ${e.message}</div>`;
+      }
+      execBtn.disabled = false;
+      execBtn.innerText = '▶ Run Live SSH Check';
     };
   }
 
