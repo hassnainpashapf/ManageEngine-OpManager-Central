@@ -662,18 +662,23 @@ router.post('/api/tools/terminal-exec', async (req, res) => {
     return res.status(422).json({ status: 'error', message: `Could not resolve target '${requested}' to an IPv4 address.` });
   }
 
-  const cred = sshCredentialOrError(res);
+  const inlineUser = req.body?.username;
+  const inlinePass = req.body?.password;
+  const inlinePort = Number(req.body?.port) || 22;
+  const cred = (inlineUser && inlinePass)
+    ? { username: String(inlineUser), password: String(inlinePass), port: inlinePort }
+    : sshCredentialOrError(res);
   if (!cred) return;
 
   try {
-    const result = await sshclient.execCommand(address, cred, command);
+    let result = await sshclient.execCommand(address, { ...cred, port: inlinePort || cred.port || 22 }, command);
     res.json({
       status: 'success',
       hostname: requested,
       resolvedIp: address,
       command,
       exitCode: result.exitCode,
-      output: result.stdout,
+      output: result.stdout || '',
       stderr: result.stderr || null,
       timestamp: new Date().toISOString()
     });

@@ -21,7 +21,7 @@ function findSshCredential(store) {
 
 // Runs a shell session, disables paging, sends the command, and collects
 // output until the prompt reappears (or a timeout elapses).
-function runShowCommand(host, { username, password }, command, timeoutMs = 10000) {
+function runShowCommand(host, { username, password, port = 22 }, command, timeoutMs = 10000) {
   if (!Client) {
     return Promise.reject(new Error('ssh2 module is not installed on this host'));
   }
@@ -64,9 +64,13 @@ function runShowCommand(host, { username, password }, command, timeoutMs = 10000
       });
     });
 
+    conn.on('keyboard-interactive', (name, instr, lang, prompts, finishCb) => {
+      finishCb(prompts.map(() => password || ''));
+    });
+
     conn.on('error', (err) => { clearTimeout(timer); finish(err); });
 
-    conn.connect({ host, port: 22, username, password, readyTimeout: 8000, tryKeyboard: true });
+    conn.connect({ host, port: Number(port) || 22, username, password, readyTimeout: 8000, tryKeyboard: true });
   });
 }
 
@@ -83,7 +87,7 @@ function cleanConfigOutput(raw, command) {
 // Used by the admin-facing CLI/terminal tools: it runs exactly and only the
 // command the logged-in operator typed - the same thing their own SSH client
 // would do, not an automated action taken on their behalf.
-function execCommand(host, { username, password }, command, timeoutMs = 10000) {
+function execCommand(host, { username, password, port = 22 }, command, timeoutMs = 10000) {
   return new Promise((resolve, reject) => {
     const conn = new Client();
     let stdout = '';
@@ -111,9 +115,13 @@ function execCommand(host, { username, password }, command, timeoutMs = 10000) {
       });
     });
 
+    conn.on('keyboard-interactive', (name, instr, lang, prompts, finishCb) => {
+      finishCb(prompts.map(() => password || ''));
+    });
+
     conn.on('error', (err) => { clearTimeout(timer); finish(err); });
 
-    conn.connect({ host, port: 22, username, password, readyTimeout: 8000, tryKeyboard: true });
+    conn.connect({ host, port: Number(port) || 22, username, password, readyTimeout: 8000, tryKeyboard: true });
   });
 }
 

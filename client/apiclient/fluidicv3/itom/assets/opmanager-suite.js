@@ -6358,17 +6358,28 @@
           try {
             const res = await fetch('/api/tools/switch-ports?ip=' + encodeURIComponent(ip));
             const d = await res.json();
-            if (d.ports) {
+            if (!res.ok) throw new Error(d.message || `HTTP ${res.status}`);
+            if (d.ports && d.ports.length > 0) {
+              const fmtSpeed = (sp) => {
+                if (!sp && sp !== 0) return '—';
+                const n = Number(sp);
+                if (isNaN(n)) return String(sp);
+                if (n >= 1000000000) return `${(n / 1000000000).toFixed(0)} Gbps`;
+                if (n >= 1000000) return `${(n / 1000000).toFixed(0)} Mbps`;
+                return `${n} bps`;
+              };
               tbody.innerHTML = d.ports.map(p => `
                 <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 6px 10px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/${p.operStatus === 'Up' ? 'port_up.gif' : 'port_down.gif'}" style="width:13px;height:13px;"> ${p.port}</td>
-                  <td style="padding: 6px 10px; color: #334155;">${p.alias}</td>
+                  <td style="padding: 6px 10px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/${p.operStatus === 'Up' ? 'port_up.gif' : 'port_down.gif'}" style="width:13px;height:13px;"> ${p.port || '—'}</td>
+                  <td style="padding: 6px 10px; color: #334155;">${p.alias || '—'}</td>
                   <td style="padding: 6px 10px;"><span style="color: ${p.operStatus === 'Up' ? '#16a34a' : '#dc2626'}; font-weight: 700;"><img src="/apiclient/fluidicv2/img/${p.operStatus === 'Up' ? 'port_up.gif' : 'port_down.gif'}" style="width:10px;height:10px;vertical-align:middle;"> ${p.operStatus}</span></td>
-                  <td style="padding: 6px 10px; color: #64748b;">${p.speed}</td>
-                  <td style="padding: 6px 10px; font-weight: 600;">VLAN ${p.vlan}</td>
-                  <td style="padding: 6px 10px; font-family: monospace;">${p.mac} (${p.ip})</td>
+                  <td style="padding: 6px 10px; color: #64748b;">${fmtSpeed(p.speed)}</td>
+                  <td style="padding: 6px 10px; font-weight: 600;">${p.vlan != null ? 'VLAN ' + p.vlan : '—'}</td>
+                  <td style="padding: 6px 10px; font-family: monospace;">${p.mac ? p.mac + ' (' + (p.ip || '—') + ')' : (p.ip || '—')}</td>
                 </tr>
               `).join('');
+            } else {
+              tbody.innerHTML = `<tr><td colspan="6" style="padding: 20px; text-align: center; color: #64748b;">No switch ports cached yet for ${ip}. Run an SNMP poll or use Dashboard &gt; OpUtils Switch Port Mapper for live IF-MIB walk.</td></tr>`;
             }
           } catch (e) {
             tbody.innerHTML = `<tr><td colspan="6" style="padding: 20px; text-align: center; color: #f87171;">Port scan error: ${e.message}</td></tr>`;
@@ -6377,10 +6388,18 @@
         btn.onclick = loadPorts;
         loadPorts();
       } else if (activeTool === 'terminal') {
+        const escHtml = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         container.innerHTML = `
-          <div style="background: #0f172a; color: #f8fafc; font-family: monospace; font-size: 11px; padding: 14px; border-radius: 4px; height: 180px; overflow-y: auto; line-height: 1.5;" id="tool-term-screen">
+          <div style="display: flex; gap: 6px; margin-bottom: 8px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="tool-cli-user" placeholder="SSH User (optional if saved)" style="flex: 1; min-width: 140px; border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 8px; font-size: 11px;">
+            <input type="password" id="tool-cli-pass" placeholder="SSH Password" style="flex: 1; min-width: 130px; border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 8px; font-size: 11px;">
+            <input type="number" id="tool-cli-port" value="22" style="width: 62px; border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 8px; font-size: 11px;" title="SSH Port">
+            <button id="tool-cli-snmp-btn" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; border-radius: 4px; padding: 5px 10px; font-size: 11px; font-weight: 700; cursor: pointer;" title="Fetch live SNMP Interfaces &amp; System Info without SSH">⚡ Live SNMP Info</button>
+            <button id="tool-cli-creds-btn" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; border-radius: 4px; padding: 5px 10px; font-size: 11px; font-weight: 600; cursor: pointer;">Settings &gt; Creds</button>
+          </div>
+          <div style="background: #0f172a; color: #f8fafc; font-family: monospace; font-size: 11px; padding: 14px; border-radius: 4px; height: 185px; overflow-y: auto; line-height: 1.5;" id="tool-term-screen">
             <span style="color: #4ade80;">ManageEngine OpManager Central Web CLI Terminal v12.9.203</span><br>
-            <span style="color: #94a3b8;">Connected to ${ip} via Secure Shell (SSHv2). Type commands below (e.g. 'show ip int br', 'show version', 'show running-config', 'ping 10.0.0.1').</span><br><br>
+            <span style="color: #94a3b8;">Target: ${escHtml(ip)} (SSHv2). Enter SSH credentials above (or save under Settings &gt; Credentials), then run any command (e.g. 'show ip int br', 'show version', 'uname -a'). Or click '⚡ Live SNMP Info' for read-only interface/system status.</span><br><br>
           </div>
           <div style="display: flex; gap: 8px; margin-top: 10px;">
             <input type="text" id="tool-cli-input" value="show ip int br" style="flex: 1; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace;">
@@ -6390,22 +6409,81 @@
         const scr = container.querySelector('#tool-term-screen');
         const inp = container.querySelector('#tool-cli-input');
         const sendBtn = container.querySelector('#tool-cli-send-btn');
+        const snmpBtn = container.querySelector('#tool-cli-snmp-btn');
+        const credsBtn = container.querySelector('#tool-cli-creds-btn');
+
+        if (credsBtn) {
+          credsBtn.onclick = () => {
+            modal.style.display = 'none';
+            if (state && state.subTabs) state.subTabs.settings = 'credentials';
+            window.location.hash = '#/settings';
+          };
+        }
+
+        if (snmpBtn) {
+          snmpBtn.onclick = async () => {
+            snmpBtn.disabled = true;
+            scr.innerHTML += `<span style="color: #38bdf8;">${escHtml(ip)}# [SNMP IF-MIB + System Query]</span><br>`;
+            try {
+              const [sysRes, portRes] = await Promise.all([
+                fetch('/api/tools/snmp-walk?ip=' + encodeURIComponent(ip) + '&oid=.1.3.6.1.2.1.1'),
+                fetch('/api/tools/switch-ports?ip=' + encodeURIComponent(ip))
+              ]);
+              const sysData = await sysRes.json();
+              const portData = await portRes.json();
+              if (sysData && Array.isArray(sysData.results) && sysData.results.length > 0) {
+                scr.innerHTML += sysData.results.slice(0, 6).map(r =>
+                  `<span style="color: #93c5fd;">${escHtml(r.name)}:</span> <span style="color: #f1f5f9;">${escHtml(r.value)}</span>`
+                ).join('<br>') + '<br>';
+              }
+              const ports = (portData && Array.isArray(portData.ports)) ? portData.ports : [];
+              if (ports.length > 0) {
+                scr.innerHTML += `<span style="color: #4ade80;">Interfaces (${ports.length} total, ${ports.filter(p => p.operStatus === 'Up').length} Up):</span><br>`;
+                scr.innerHTML += ports.slice(0, 20).map(p =>
+                  `<span style="color: #cbd5e1;">${escHtml((p.port || '').padEnd(18, ' '))} ${escHtml((p.operStatus || 'Down').padEnd(6, ' '))} ${escHtml(p.alias || '')}</span>`
+                ).join('<br>') + (ports.length > 20 ? `<br><span style="color: #94a3b8;">... +${ports.length - 20} more interfaces</span>` : '') + '<br><br>';
+              } else {
+                scr.innerHTML += `<span style="color: #fbbf24;">No cached SNMP interfaces returned for ${escHtml(ip)}.</span><br><br>`;
+              }
+            } catch (e) {
+              scr.innerHTML += `<span style="color: #f87171;">SNMP query error: ${escHtml(e.message)}</span><br><br>`;
+            }
+            snmpBtn.disabled = false;
+            scr.scrollTop = scr.scrollHeight;
+          };
+        }
 
         const execCmd = async () => {
           const cmd = inp.value.trim();
           if (!cmd) return;
-          scr.innerHTML += `<span style="color: #38bdf8;">CORE# ${cmd}</span><br>`;
+          const u = (container.querySelector('#tool-cli-user')?.value || '').trim();
+          const p = container.querySelector('#tool-cli-pass')?.value || '';
+          const portVal = Number(container.querySelector('#tool-cli-port')?.value) || 22;
+          scr.innerHTML += `<span style="color: #38bdf8;">${escHtml(ip)}# ${escHtml(cmd)}</span><br>`;
+          sendBtn.disabled = true;
+          sendBtn.textContent = 'Running...';
           try {
+            const payload = { command: cmd, hostname: ip, port: portVal };
+            if (u && p) { payload.username = u; payload.password = p; }
             const res = await fetch('/api/tools/terminal-exec', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ command: cmd, hostname: 'CORE-RTR-01' })
+              body: JSON.stringify(payload)
             });
             const d = await res.json();
-            scr.innerHTML += `<span style="color: #f1f5f9;">${(d.output || '').replace(/\n/g, '<br>')}</span><br><br>`;
+            if (!res.ok || d.status === 'error') {
+              scr.innerHTML += `<span style="color: #f87171;">[SSH Error ${res.status}] ${escHtml(d.message || d.stderr || 'Execution failed')}</span><br><br>`;
+            } else {
+              const outTxt = d.output ? escHtml(d.output).replace(/\n/g, '<br>') : '';
+              const errTxt = d.stderr ? `<br><span style="color: #fbbf24;">${escHtml(d.stderr).replace(/\n/g, '<br>')}</span>` : '';
+              const exitLine = (!outTxt && !errTxt) ? `<span style="color: #94a3b8;">(Command exited with code ${d.exitCode ?? 0}, no stdout returned)</span>` : '';
+              scr.innerHTML += `<span style="color: #f1f5f9;">${outTxt}${errTxt}${exitLine}</span><br><br>`;
+            }
           } catch (e) {
-            scr.innerHTML += `<span style="color: #f87171;">Terminal exec error: ${e.message}</span><br>`;
+            scr.innerHTML += `<span style="color: #f87171;">Terminal exec error: ${escHtml(e.message)}</span><br><br>`;
           }
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Execute';
           scr.scrollTop = scr.scrollHeight;
           inp.value = '';
         };
