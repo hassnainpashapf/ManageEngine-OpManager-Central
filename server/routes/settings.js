@@ -407,19 +407,55 @@ router.post(['/dashboard/hideNotifications', '/api/dashboard/hideNotifications']
 // SHA-256 fingerprint of the submitted material and marks it Unvalidated —
 // it never claims the key was validated.
 
+function getHostMac() {
+  try {
+    const nets = os.networkInterfaces();
+    for (const addrs of Object.values(nets)) {
+      for (const a of addrs || []) {
+        if (!a.internal && a.mac && a.mac !== '00:00:00:00:00:00') return a.mac.toUpperCase();
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
+function liveUsageCounts() {
+  const devs = store.listDevices() || [];
+  const probes = store.listProbes() || [];
+  let interfacesUsed = 0;
+  try {
+    interfacesUsed = typeof store.listTopInterfaces === 'function'
+      ? store.listTopInterfaces(2000).length
+      : devs.reduce((s, d) => s + (store.listInterfaces(d.id) || []).length, 0);
+  } catch (e) {}
+  const ncmNodes = devs.filter((d) => /router|switch|firewall|wireless/i.test(d.category || '')).length;
+  const subnetSet = new Set();
+  devs.forEach((d) => {
+    if (d.ip && /^\d+\.\d+\.\d+\.\d+$/.test(d.ip)) subnetSet.add(d.ip.split('.').slice(0, 3).join('.') + '.0/24');
+  });
+  return {
+    devicesUsed: devs.length,
+    probesUsed: probes.length,
+    interfacesUsed,
+    ncmNodes,
+    subnetsCount: subnetSet.size,
+    hostMac: getHostMac(),
+    hostname: os.hostname(),
+  };
+}
+
 function licenceRecord() {
   const stored = getStored('license');
   if (!stored || typeof stored !== 'object') return null;
   return {
     ...stored,
-    devicesUsed: store.listDevices().length,
-    probesUsed: store.listProbes().length,
-    interfacesUsed: null,
+    ...liveUsageCounts(),
   };
 }
 
 router.get(['/admin/getBasicLicenseDetails', '/api/admin/getBasicLicenseDetails'], (req, res) => {
   const lic = getStored('license');
+  const counts = liveUsageCounts();
   res.json({
     productName: 'ManageEngine OpManager Central',
     licenseType: (lic && lic.licenseType) || null,
@@ -430,9 +466,11 @@ router.get(['/admin/getBasicLicenseDetails', '/api/admin/getBasicLicenseDetails'
     patchStatus: null,
     deviceLimit: null,
     probeLimit: null,
-    probesInstalled: store.listProbes().length,
-    devicesUsed: store.listDevices().length,
-    probesUsed: store.listProbes().length,
+    probesInstalled: counts.probesUsed,
+    devicesUsed: counts.devicesUsed,
+    probesUsed: counts.probesUsed,
+    interfacesUsed: counts.interfacesUsed,
+    hostMac: counts.hostMac,
     expiryDate: null,
     addons: [],
     status: (lic && lic.status) || 'Unlicensed',
@@ -442,8 +480,6 @@ router.get(['/admin/getBasicLicenseDetails', '/api/admin/getBasicLicenseDetails'
 router.get('/api/settings/license', (req, res) => {
   const lic = licenceRecord();
   if (lic) return res.json({ status: 'success', license: lic });
-  // No licence stored: report the honest unlicensed state with LIVE counts
-  // from the store (never the old fake 16 devices / 4 probes).
   res.json({
     status: 'success',
     license: {
@@ -453,9 +489,7 @@ router.get('/api/settings/license', (req, res) => {
       deviceLimit: null,
       probeLimit: null,
       expiryDate: null,
-      devicesUsed: store.listDevices().length,
-      probesUsed: store.listProbes().length,
-      interfacesUsed: null,
+      ...liveUsageCounts(),
     },
   });
 });

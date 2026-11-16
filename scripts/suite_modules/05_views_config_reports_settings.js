@@ -1932,22 +1932,22 @@
     let subtabNavHtml = '';
     subtabs.forEach(st => {
       const isAct = st.id === activeSub;
-      const border = isAct ? 'border-bottom: 3px solid #49bd80; color: #212121; font-weight: 700;' : 'color: #475569; font-weight: 500;';
+      const border = isAct ? 'border-bottom: 2px solid #49bd80; color: #0f172a; font-weight: 700; background: #f0fdf4;' : 'color: #475569; font-weight: 500;';
       subtabNavHtml += `
-        <button class="opm-set-subtab-btn" data-sub="${st.id}" style="background: none; border: none; padding: 10px 16px; font-size: 13px; cursor: pointer; transition: all 0.2s; ${border}">
+        <button class="opm-set-subtab-btn" data-sub="${st.id}" style="background: none; border: none; border-radius: 3px 3px 0 0; padding: 7px 11px; font-size: 12px; cursor: pointer; transition: all 0.15s; white-space: nowrap; flex-shrink: 0; ${border}">
           ${st.name}
         </button>
       `;
     });
 
     container.innerHTML = `
-      <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 24px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 4px;">
+      <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 6px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap; flex: 1; min-width: 0;">
           ${subtabNavHtml}
         </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-size: 12px; color: #64748b; font-weight: 600;">Enterprise Admin Console</span>
-          <button id="opm-set-save-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+        <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; white-space: nowrap; padding-top: 2px;">
+          <span style="font-size: 11px; color: #64748b; font-weight: 600;">Admin Console</span>
+          <button id="opm-set-save-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
             Save Settings
           </button>
         </div>
@@ -3363,147 +3363,157 @@
             </div>
 
           </div>
-        ` : activeSub === 'license' ? `
-          <!-- License Management & Usage Subtab (BasicSettings.xml -> /Settings/Basic/LicenseMgmt/UsageInfo) -->
+        ` : activeSub === 'license' ? (() => {
+          if (!state._licLoading && !state._liveLicense) {
+            state._licLoading = true;
+            fetch('/api/settings/license')
+              .then(r => r.json())
+              .then(d => {
+                state._liveLicense = d.license || {};
+                state._licLoading = false;
+                if (state.currentTab === 'settings' && state.subTabs && state.subTabs.settings === 'license') renderSettingsView();
+              })
+              .catch(() => { state._licLoading = false; });
+          }
+          const escL = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          const lic = state._liveLicense || {};
+          const devUsed = lic.devicesUsed != null ? lic.devicesUsed : (state.devices || []).length;
+          const probeUsed = lic.probesUsed != null ? lic.probesUsed : (state.probes || []).length;
+          const ifaceUsed = lic.interfacesUsed != null ? lic.interfacesUsed : 0;
+          const ncmUsed = lic.ncmNodes != null ? lic.ncmNodes : (state.devices || []).filter(d => /router|switch|firewall|wireless/i.test(d.category || '')).length;
+          const subnetUsed = lic.subnetsCount != null ? lic.subnetsCount : 0;
+          const licStatus = lic.status || 'Checking...';
+          const isStored = lic.fingerprint || (licStatus && licStatus !== 'Unlicensed');
+          const statusBg = licStatus === 'Active' ? '#dcfce7' : (isStored ? '#fef3c7' : '#f1f5f9');
+          const statusFg = licStatus === 'Active' ? '#166534' : (isStored ? '#92400e' : '#475569');
+
+          return `
+          <!-- License Management & Usage Subtab (Real /api/settings/license) -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
-            
-            <!-- License Header Card -->
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid #f1f5f9; padding-bottom: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid #f1f5f9; padding-bottom: 14px; flex-wrap: wrap; gap: 10px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <img src="/images/logo.png" style="height: 32px; object-fit: contain;" />
                   <div>
-                    <div style="font-size: 16px; font-weight: 800; color: #0f172a;">ManageEngine OpManager Central (Perpetual Enterprise Edition)</div>
-                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Registered Perpetual License for Global Enterprise Corp. | Build 129203 (64-bit)</div>
+                    <div style="font-size: 16px; font-weight: 800; color: #0f172a;">ManageEngine OpManager Central — License &amp; Capacity Usage</div>
+                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Host: <code>${escL(lic.hostname || window.location.hostname || 'opmanager-central')}</code> &bull; Live SQLite inventory counts</div>
                   </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
-                  <span style="font-size: 11px; background: #dcfce7; color: #166534; font-weight: 700; padding: 4px 10px; border-radius: 12px;">● ACTIVE (VALIDATED)</span>
+                  <span style="font-size: 11px; background: ${statusBg}; color: ${statusFg}; font-weight: 700; padding: 4px 10px; border-radius: 12px;">● ${escL(licStatus).toUpperCase()}</span>
                   <button id="opm-apply-lic-key-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
                     + Apply License Key (.xml)
                   </button>
                 </div>
               </div>
 
+              ${state._showLicUploadBox ? `
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; margin-bottom: 18px; display: flex; flex-direction: column; gap: 10px;">
+                  <div style="font-size: 12px; font-weight: 700; color: #0f172a;">Apply License Key or XML Material (Stored via <code>POST /api/settings/license/apply</code>)</div>
+                  <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <input id="opm-lic-file-input" type="file" accept=".xml,.txt,.key" style="font-size: 11px;">
+                    <input id="opm-lic-key-input" type="text" placeholder="Or paste License XML / Key String..." style="flex: 1; min-width: 240px; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
+                    <button id="opm-lic-submit-btn" style="background: #16a34a; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Apply License</button>
+                  </div>
+                </div>
+              ` : ''}
+
+              ${lic.note ? `<div style="background: #fffbeb; border: 1px solid #fde68a; color: #92400e; padding: 10px 14px; border-radius: 4px; font-size: 12px; margin-bottom: 16px;">${escL(lic.note)}${lic.fingerprint ? ` &bull; SHA-256: <code>${escL(lic.fingerprint.slice(0, 20))}...</code>` : ''}</div>` : ''}
+
               <!-- License Properties Grid -->
               <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 22px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
-                  <div style="font-size: 11px; color: #64748b; font-weight: 600;">License Type</div>
-                  <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px;">GA Perpetual License</div>
+                  <div style="font-size: 11px; color: #64748b; font-weight: 600;">License Status / Type</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px;">${escL(lic.licenseType || licStatus)}</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
-                  <div style="font-size: 11px; color: #64748b; font-weight: 600;">Server Host ID (MAC)</div>
-                  <div style="font-size: 13px; font-weight: 700; color: #0070e0; font-family: monospace; margin-top: 2px;">00:50:56:B2:91:A4</div>
+                  <div style="font-size: 11px; color: #64748b; font-weight: 600;">Server Host MAC</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #0070e0; font-family: monospace; margin-top: 2px;">${escL(lic.hostMac || 'Detecting...')}</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
-                  <div style="font-size: 11px; color: #64748b; font-weight: 600;">License Expiry</div>
-                  <div style="font-size: 13px; font-weight: 700; color: #16a34a; margin-top: 2px;">Never (Perpetual GA)</div>
+                  <div style="font-size: 11px; color: #64748b; font-weight: 600;">Expiry / Applied Date</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #334155; margin-top: 2px;">${escL(lic.expiryDate || (lic.appliedAt ? new Date(lic.appliedAt).toLocaleDateString() : 'Not Applied'))}</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
-                  <div style="font-size: 11px; color: #64748b; font-weight: 600;">Annual Support (AMS)</div>
-                  <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px;">Valid till Nov 30, 2027</div>
+                  <div style="font-size: 11px; color: #64748b; font-weight: 600;">Registered Organization</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px;">${escL(lic.registeredTo || 'None (Unlicensed)')}</div>
                 </div>
               </div>
 
-              <!-- Usage Quota Gauges -->
-              <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Enterprise Quota &amp; Capacity Utilization</div>
+              <!-- Usage Quota Gauges (Real SQLite Inventory Counts) -->
+              <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Live Inventory Usage Counters (From SQLite Store)</div>
               <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-                
-                <!-- Devices Gauge -->
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 12px; font-weight: 700; color: #334155;">Monitored Devices</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #0070e0;">16 / 5,000 (0.3%)</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #0070e0;">${devUsed} Active</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #0070e0; width: 0.32%; height: 100%;"></div>
+                    <div style="background: #0070e0; width: ${Math.min(100, Math.max(4, Math.round((devUsed / (lic.deviceLimit || 500)) * 100)))}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Consumed: 16</span>
-                    <span>Remaining: 4,984</span>
+                    <span>Consumed: ${devUsed}</span>
+                    <span>Limit: ${lic.deviceLimit || 'Unenforced'}</span>
                   </div>
                 </div>
 
-                <!-- Interfaces Gauge -->
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 12px; font-weight: 700; color: #334155;">Monitored Interfaces</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #16a34a;">48 / 20,000 (0.2%)</span>
+                    <span style="font-size: 12px; font-weight: 700; color: #334155;">SNMP Interfaces</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #16a34a;">${ifaceUsed} Active</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #16a34a; width: 0.24%; height: 100%;"></div>
+                    <div style="background: #16a34a; width: ${Math.min(100, Math.max(4, Math.round((ifaceUsed / 2000) * 100)))}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Consumed: 48</span>
-                    <span>Remaining: 19,952</span>
+                    <span>Polled via IF-MIB: ${ifaceUsed}</span>
+                    <span>All Active Ports</span>
                   </div>
                 </div>
 
-                <!-- NCM Nodes Gauge -->
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 12px; font-weight: 700; color: #334155;">NCM Monitored Nodes</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #7c3aed;">8 / 1,000 (0.8%)</span>
+                    <span style="font-size: 12px; font-weight: 700; color: #334155;">NCM Managed Nodes</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #7c3aed;">${ncmUsed} Nodes</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #7c3aed; width: 0.8%; height: 100%;"></div>
+                    <div style="background: #7c3aed; width: ${Math.min(100, Math.max(4, ncmUsed * 3))}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Consumed: 8</span>
-                    <span>Remaining: 992</span>
+                    <span>Switches / Routers / FW / APs: ${ncmUsed}</span>
                   </div>
                 </div>
 
-                <!-- NetFlow Interfaces Gauge -->
-                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 12px; font-weight: 700; color: #334155;">NetFlow Flow Interfaces</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #ea580c;">12 / 500 (2.4%)</span>
-                  </div>
-                  <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #ea580c; width: 2.4%; height: 100%;"></div>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Consumed: 12</span>
-                    <span>Remaining: 488</span>
-                  </div>
-                </div>
-
-                <!-- Distributed Probes Gauge -->
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 12px; font-weight: 700; color: #334155;">Distributed Probes</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #0284c7;">4 / Unlimited</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #0284c7;">${probeUsed} Connected</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #0284c7; width: 100%; height: 100%;"></div>
+                    <div style="background: #0284c7; width: ${probeUsed > 0 ? 100 : 0}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>Connected Probes: 4</span>
-                    <span>Capacity: Unlimited Probes</span>
+                    <span>Registered Probes: ${probeUsed}</span>
+                    <span>Limit: ${lic.probeLimit || 'Unenforced'}</span>
                   </div>
                 </div>
 
-                <!-- IPAM & SPM Module Gauge -->
                 <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; background: #ffffff;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 12px; font-weight: 700; color: #334155;">OpUtils IPAM &amp; SPM</span>
-                    <span style="font-size: 12px; font-weight: 800; color: #059669;">Unlimited Bundle</span>
+                    <span style="font-size: 12px; font-weight: 700; color: #334155;">OpUtils IPAM Subnets</span>
+                    <span style="font-size: 12px; font-weight: 800; color: #059669;">${subnetUsed} Subnet${subnetUsed === 1 ? '' : 's'}</span>
                   </div>
                   <div style="background: #f1f5f9; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 6px;">
-                    <div style="background: #059669; width: 100%; height: 100%;"></div>
+                    <div style="background: #059669; width: ${subnetUsed > 0 ? 35 : 0}%; height: 100%;"></div>
                   </div>
                   <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                    <span>IPAM Subnets: 24 active</span>
-                    <span>Switch Ports: 48 active</span>
+                    <span>Discovered /24 Subnets: ${subnetUsed}</span>
                   </div>
                 </div>
-
               </div>
             </div>
-
-          </div>
-        ` : activeSub === 'dbbackup' ? `
+          </div>`;
+        })() : activeSub === 'dbbackup' ? `
           <!-- Database Backup & Maintenance Subtab (BasicSettings.xml -> /Settings/Basic/DBbackup) -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
             
@@ -3995,6 +4005,51 @@
         }
       };
     });
+
+    // License Apply handlers (real POST /api/settings/license/apply)
+    const licToggleBtn = container.querySelector('#opm-apply-lic-key-btn');
+    if (licToggleBtn) {
+      licToggleBtn.onclick = () => {
+        state._showLicUploadBox = !state._showLicUploadBox;
+        renderSettingsView();
+      };
+    }
+    const licFileInput = container.querySelector('#opm-lic-file-input');
+    const licKeyInput = container.querySelector('#opm-lic-key-input');
+    if (licFileInput && licKeyInput) {
+      licFileInput.onchange = async (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (f) licKeyInput.value = await f.text();
+      };
+    }
+    const licSubmitBtn = container.querySelector('#opm-lic-submit-btn');
+    if (licSubmitBtn) {
+      licSubmitBtn.onclick = async () => {
+        const val = (licKeyInput && licKeyInput.value ? licKeyInput.value : '').trim();
+        if (!val) return showToast('Select a license XML file or paste a license key.', 'warning');
+        licSubmitBtn.disabled = true;
+        try {
+          const payload = val.startsWith('<') ? { licenseXml: val } : { keyString: val };
+          const r = await fetch('/api/settings/license/apply', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const d = await r.json();
+          if (r.ok && d.license) {
+            state._liveLicense = d.license;
+            state._showLicUploadBox = false;
+            showToast(d.message || 'License material stored.', 'info');
+            renderSettingsView();
+          } else {
+            showToast(d.message || 'Failed to store license.', 'error');
+          }
+        } catch (err) {
+          showToast('License error: ' + err.message, 'error');
+        }
+        licSubmitBtn.disabled = false;
+      };
+    }
 
     // Save button
     const saveBtn = container.querySelector('#opm-set-save-btn');
