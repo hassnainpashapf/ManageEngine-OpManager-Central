@@ -13628,7 +13628,7 @@
           };
           const auditDevice = (d) => {
             const cfg = `${d.runningConfig || ''}\n${d.startupConfig || ''}`;
-            const isForti = /forti|#config-version=FG/i.test(cfg) || /forti/i.test(d.vendor || '');
+            const isForti = /#config-version=FG/i.test(cfg) || /forti/i.test(d.vendor || '') || /^config system global/m.test(cfg);
             const pwdOk = isForti ? /password-policy|set private-key|set admin-https/i.test(cfg) : /service password-encryption|enable secret/i.test(cfg);
             const snmpOk = !(/snmp-server community\s+["']?public\b|set name\s+"public"/i.test(cfg));
             const sshOk = isForti ? /allowaccess.*ssh|allowaccess.*https|set strong-crypto enable/i.test(cfg) : /ip ssh version 2|transport input ssh|transport input.*ssh/i.test(cfg);
