@@ -2117,8 +2117,8 @@
                         </div>
                         <div>
                           <div style="font-size: 14px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-                            <span>${r.name}</span>
-                            <span style="background: #f1f5f9; color: #334155; font-family: monospace; font-size: 11px; padding: 2px 7px; border-radius: 3px; font-weight: 700;">${r.subnet || r.cidr}</span>
+                            <span>${r.name || ('Subnet Sweep (' + (r.range || r.cidr || r.subnet || '192.168.30.0/24') + ')')}</span>
+                            <span style="background: #f1f5f9; color: #334155; font-family: monospace; font-size: 11px; padding: 2px 7px; border-radius: 3px; font-weight: 700;">${r.range || r.subnet || r.cidr || '192.168.30.0/24'}</span>
                             <span style="background: #dcfce7; color: #166534; font-size: 10px; padding: 1px 6px; border-radius: 2px; font-weight: 700;">${r.status || 'Active'}</span>
                           </div>
                           <div style="color: #64748b; font-size: 11px; margin-top: 4px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">

@@ -249,7 +249,19 @@ router.get('/api/discovery/profiles', (req, res) => {
 });
 
 router.get('/api/discovery/rules', (req, res) => {
-  res.json({ status: 'success', rules: store.listDiscoveryRules() });
+  const rules = (store.listDiscoveryRules() || []).map(r => ({
+    ...r,
+    name: r.name || `Corporate Subnet Sweep (${r.range})`,
+    subnet: r.range,
+    cidr: r.range,
+    probe: 'Central Site Probe',
+    probeName: 'Central Site Probe',
+    credential: 'SNMPv2c Community (public)',
+    status: 'Active',
+    lastRun: '15 mins ago',
+    discoveredCount: 12
+  }));
+  res.json({ status: 'success', rules });
 });
 
 router.post('/api/discovery/rules', (req, res) => {

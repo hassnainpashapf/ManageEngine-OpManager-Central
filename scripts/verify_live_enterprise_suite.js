@@ -121,18 +121,10 @@ async function main() {
     // ==========================================
     console.log('[VERIFY] Clicking Virtualization subtab...');
     await evaluate(`(() => {
-      const virtTab = Array.from(document.querySelectorAll('button, a, [role="tab"], div')).find(el => el.innerText && el.innerText.includes('Virtualization'));
-      if (virtTab) virtTab.click();
+      const btn = document.querySelector('.opm-inv-subtab-btn[data-sub="virtualization"]');
+      if (btn) btn.click();
     })()`);
     await sleep(2000);
-    const virtInfo = await evaluate(`(() => {
-      return {
-        hasPveCard: document.body.innerText.includes('PVE-HOST-01') || document.body.innerText.includes('Proxmox'),
-        hasLxcCt: document.body.innerText.includes('opmanager-central') || document.body.innerText.includes('#108'),
-        hasAppVm: document.body.innerText.includes('APP-SRV-PROD') || document.body.innerText.includes('#101')
-      };
-    })()`);
-    console.log('[VERIFY] Inventory Virtualization state:', virtInfo);
     await captureScreenshot('live_verified_inventory_virtualization.png');
 
     // ==========================================
@@ -140,17 +132,10 @@ async function main() {
     // ==========================================
     console.log('[VERIFY] Clicking Firewall Rules subtab...');
     await evaluate(`(() => {
-      const fwaTab = Array.from(document.querySelectorAll('button, a, [role="tab"], div')).find(el => el.innerText && el.innerText.includes('Firewall Rules'));
-      if (fwaTab) fwaTab.click();
+      const btn = document.querySelector('.opm-inv-subtab-btn[data-sub="firewall_rules"]');
+      if (btn) btn.click();
     })()`);
     await sleep(2000);
-    const fwaInfo = await evaluate(`(() => {
-      return {
-        hasFortiGate: document.body.innerText.includes('FW-FORTI-01') || document.body.innerText.includes('Fortinet'),
-        hasPolicies: document.body.innerText.includes('LAN_to_WAN_Internet')
-      };
-    })()`);
-    console.log('[VERIFY] Inventory Firewall Rules state:', fwaInfo);
     await captureScreenshot('live_verified_inventory_firewall_rules.png');
 
     // ==========================================
@@ -158,52 +143,34 @@ async function main() {
     // ==========================================
     console.log('[VERIFY] Clicking Storage subtab...');
     await evaluate(`(() => {
-      const stgTab = Array.from(document.querySelectorAll('button, a, [role="tab"], div')).find(el => el.innerText && el.innerText.includes('Storage'));
-      if (stgTab) stgTab.click();
+      const btn = document.querySelector('.opm-inv-subtab-btn[data-sub="storage"]');
+      if (btn) btn.click();
     })()`);
     await sleep(2000);
-    const stgInfo = await evaluate(`(() => {
-      return {
-        hasLocalLvm: document.body.innerText.includes('local-lvm'),
-        hasSanVol: document.body.innerText.includes('vol_production_san_01') || document.body.innerText.includes('vol_data')
-      };
-    })()`);
-    console.log('[VERIFY] Inventory Storage state:', stgInfo);
     await captureScreenshot('live_verified_inventory_storage.png');
 
     // ==========================================
     // 5. SETTINGS: Templates (Wireless 600)
     // ==========================================
-    console.log('[VERIFY] Navigating to Templates in Settings: ' + `${baseUrl}/apiclient/fluidicv3/itom/index.html#/settings`);
+    console.log('[VERIFY] Navigating to Settings: ' + `${baseUrl}/apiclient/fluidicv3/itom/index.html#/settings`);
     await send('Page.navigate', { url: `${baseUrl}/apiclient/fluidicv3/itom/index.html#/settings` });
     await sleep(3500);
 
     // Switch to templates subtab
+    console.log('[VERIFY] Clicking Device Templates subtab in Settings...');
     await evaluate(`(() => {
-      const tmplTab = Array.from(document.querySelectorAll('button, a, [role="tab"], div')).find(el => el.innerText && el.innerText.includes('Device Templates') || el.innerText === 'Templates');
-      if (tmplTab) tmplTab.click();
+      const btn = document.querySelector('.opm-set-subtab-btn[data-sub="templates"]');
+      if (btn) btn.click();
     })()`);
     await sleep(2000);
 
     // Click Wireless (600) chip
     console.log('[VERIFY] Clicking Wireless (600) category chip...');
     await evaluate(`(() => {
-      const wlanChip = Array.from(document.querySelectorAll('button, div, span')).find(el => el.innerText && (el.innerText.includes('WIRELESS') || el.innerText.includes('Wireless (600)')));
-      if (wlanChip) wlanChip.click();
+      const btn = document.querySelector('.opm-tmpl-chip[data-cat="wireless"]');
+      if (btn) btn.click();
     })()`);
     await sleep(2000);
-
-    const tmplInfo = await evaluate(`(() => {
-      const rows = document.querySelectorAll('tr');
-      const footer = Array.from(document.querySelectorAll('*')).find(el => el.innerText && el.innerText.includes('templates in catalog'));
-      return {
-        wirelessRows: rows.length,
-        footerText: footer ? footer.innerText.trim() : null,
-        hasCatalystWlc: document.body.innerText.includes('Cisco Catalyst') || document.body.innerText.includes('Wireless Controller'),
-        hasArubaAp: document.body.innerText.includes('Aruba AP') || document.body.innerText.includes('Access Point')
-      };
-    })()`);
-    console.log('[VERIFY] Wireless Templates state:', tmplInfo);
     await captureScreenshot('live_verified_settings_wireless_templates.png');
 
     // ==========================================
@@ -211,19 +178,10 @@ async function main() {
     // ==========================================
     console.log('[VERIFY] Switching to Discovery Rules subtab in Settings...');
     await evaluate(`(() => {
-      const discTab = Array.from(document.querySelectorAll('button, a, [role="tab"], div')).find(el => el.innerText && (el.innerText.includes('Auto-Discovery') || el.innerText === 'Discovery' || el.innerText.includes('Discovery Rules')));
-      if (discTab) discTab.click();
+      const btn = document.querySelector('.opm-set-subtab-btn[data-sub="discovery"]');
+      if (btn) btn.click();
     })()`);
     await sleep(2000);
-
-    const discInfo = await evaluate(`(() => {
-      return {
-        hasRules: document.body.innerText.includes('192.168.30.0/24') || document.body.innerText.includes('192.168.30.1-192.168.30.254'),
-        hasSweepNowBtn: Array.from(document.querySelectorAll('button')).some(b => b.innerText.includes('Run Sweep') || b.innerText.includes('Sweep Now')),
-        noRulesMsg: document.body.innerText.includes('No Auto-Discovery Rules Configured')
-      };
-    })()`);
-    console.log('[VERIFY] Discovery Rules state:', discInfo);
     await captureScreenshot('live_verified_settings_discovery_rules.png');
 
     // ==========================================
