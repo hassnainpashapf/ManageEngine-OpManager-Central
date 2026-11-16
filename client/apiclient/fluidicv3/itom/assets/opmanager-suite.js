@@ -8141,12 +8141,19 @@
         `).join('');
 
         if (data.interfaces && data.interfaces.length > 0) {
-          ifBody.innerHTML = `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px;">${data.interfaces.map(i => `
-            <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px 10px; background: #f8fafc;">
-              <div style="font-weight: 700; color: #0f172a;">${i.name || i.descr || 'Interface'}</div>
-              <div style="font-size: 11px; color: #64748b;">Status: <strong>${i.oper_status === 1 || i.operStatus === 'UP' ? 'UP' : 'DOWN'}</strong></div>
+          ifBody.innerHTML = `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px;">${data.interfaces.map(i => {
+            const isUp = i.operStatus === 1 || i.oper_status === 1 || String(i.operStatus || '').toUpperCase() === 'UP';
+            const inMb = i.inOctets != null ? (i.inOctets / 1048576).toFixed(1) + ' MB' : '—';
+            const outMb = i.outOctets != null ? (i.outOctets / 1048576).toFixed(1) + ' MB' : '—';
+            return `
+            <div style="border: 1px solid ${isUp ? '#bbf7d0' : '#e2e8f0'}; border-radius: 4px; padding: 8px 10px; background: ${isUp ? '#f0fdf4' : '#f8fafc'};">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 700; color: #0f172a;">${i.name || i.descr || 'Interface'}</span>
+                <span style="font-size: 10px; font-weight: 800; color: ${isUp ? '#166534' : '#64748b'}; background: ${isUp ? '#dcfce7' : '#e2e8f0'}; padding: 1px 6px; border-radius: 3px;">${isUp ? 'UP' : 'DOWN'}</span>
+              </div>
+              <div style="font-size: 10px; color: #475569; margin-top: 4px; font-family: monospace;">In: ${inMb} &bull; Out: ${outMb}</div>
             </div>
-          `).join('')}</div>`;
+          `; }).join('')}</div>`;
         } else {
           ifBody.innerHTML = `<span style="color: #64748b;">${data.snmpIfMessage || 'No SNMP interfaces available on this host.'}</span>`;
         }

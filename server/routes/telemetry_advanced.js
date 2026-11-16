@@ -48,27 +48,28 @@ async function handleBgpPoll(req, res) {
     return res.json({ status: 'success', device: null, devices: [], peers: [], icmpRttMs: null, tcp179Ms: null, message: 'No devices in inventory.' });
   }
 
-  const [icmpRttMs, tcp179Ms] = await Promise.all([
+  const [icmpRes, tcpRes, asnRes, walkRes] = await Promise.allSettled([
     ping.pingMs(targetIp),
     ping.tcpConnectMs(targetIp, 179),
+    snmp.snmpGet(targetIp, community, ['1.3.6.1.2.1.15.2.0'], { timeout: 1000, retries: 0 }),
+    snmp.snmpWalk(targetIp, community, '1.3.6.1.2.1.15.3.1', { timeout: 1000, retries: 0 }),
   ]);
+
+  const icmpRttMs = icmpRes.status === 'fulfilled' ? icmpRes.value : null;
+  const tcp179Ms = tcpRes.status === 'fulfilled' ? tcpRes.value : null;
 
   let localAsn = null;
   const peersMap = new Map();
   let snmpError = null;
 
-  try {
-    const asnBinds = await snmp.snmpGet(targetIp, community, ['1.3.6.1.2.1.15.2.0'], { timeout: 1200, retries: 0 });
-    if (asnBinds && asnBinds[0] && asnBinds[0].value !== null && asnBinds[0].value !== undefined) {
-      localAsn = Number(asnBinds[0].value) || null;
-    }
-  } catch (e) {
-    snmpError = e && e.message ? e.message : 'SNMP BGP4-MIB no response';
+  if (asnRes.status === 'fulfilled' && asnRes.value && asnRes.value[0] && asnRes.value[0].value != null) {
+    localAsn = Number(asnRes.value[0].value) || null;
+  } else if (asnRes.status === 'rejected') {
+    snmpError = asnRes.reason && asnRes.reason.message ? asnRes.reason.message : 'SNMP BGP4-MIB no response';
   }
 
-  try {
-    const walkBinds = await snmp.snmpWalk(targetIp, community, '1.3.6.1.2.1.15.3.1', { timeout: 1500, retries: 0 });
-    for (const vb of walkBinds || []) {
+  if (walkRes.status === 'fulfilled') {
+    for (const vb of walkRes.value || []) {
       const m = String(vb.oid).match(/^1\.3\.6\.1\.2\.1\.15\.3\.1\.(\d+)\.(.+)$/);
       if (!m) continue;
       const col = Number(m[1]);
@@ -87,8 +88,8 @@ async function handleBgpPoll(req, res) {
     if (!snmpError && peersMap.size === 0) {
       snmpError = 'Device answered SNMPv2c but returned 0 rows in BGP4-MIB::bgpPeerTable (1.3.6.1.2.1.15.3.1).';
     }
-  } catch (e) {
-    if (!snmpError) snmpError = e && e.message ? e.message : 'SNMP walk failed';
+  } else if (walkRes.status === 'rejected' && !snmpError) {
+    snmpError = walkRes.reason && walkRes.reason.message ? walkRes.reason.message : 'SNMP walk failed';
   }
 
   const alarms = (store.listAlarms() || []).filter((a) => String(a.device_id) === String(device && device.id)).slice(0, 10);
