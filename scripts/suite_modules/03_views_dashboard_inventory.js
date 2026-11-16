@@ -55,8 +55,10 @@
     const switchCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('switch')).length;
     const serverCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('server')).length;
     const firewallCount = filteredDevices.filter(d => (d.category || '').toLowerCase().includes('firewall')).length;
+    const wirelessCount = filteredDevices.filter(d => ['wireless', 'ap', 'wifi', 'wlan'].some(c => (d.category || '').toLowerCase().includes(c))).length;
     const storageCount = filteredDevices.filter(d => ['storage', 'san', 'nas'].some(c => (d.category || '').toLowerCase().includes(c))).length;
     const networkCount = routerCount + switchCount;
+    const otherCount = Math.max(0, totalDevices - networkCount - serverCount - firewallCount - wirelessCount - storageCount);
     const networkAlarms = filteredAlarms.filter(a => ['Switch','Router','Network'].includes(a.category)).length;
 
     // --- Dynamic Topband SVGs & Counters ---
@@ -357,7 +359,7 @@
       const isAct = st.id === activeSub;
       const border = isAct ? 'border-bottom: 3px solid #49bd80; color: #212121; font-weight: 700;' : 'color: #475569; font-weight: 500;';
       subtabNavHtml += `
-        <button class="opm-dash-subtab-btn" data-sub="${st.id}" style="background: none; border: none; padding: 10px 16px; font-size: 13px; cursor: pointer; transition: all 0.2s; ${border}">
+        <button class="opm-dash-subtab-btn" data-sub="${st.id}" style="background: none; border: none; padding: 9px 11px; font-size: 12.5px; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; ${border}">
           ${st.name}
         </button>
       `;
@@ -365,32 +367,32 @@
 
     // Pagination computation removed from renderDashboardView
     container.innerHTML = `
-      <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 0 0 24px; display: flex; align-items: center; justify-content: space-between; overflow-x: auto; height: 40px;">
-        <div style="display: flex; align-items: center; gap: 4px; height: 100%;">
+      <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 0 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; height: 40px; min-height: 40px; white-space: nowrap;">
+        <div style="display: flex; align-items: center; gap: 2px; height: 100%; flex-shrink: 0; white-space: nowrap;">
           ${subtabNavHtml}
         </div>
-        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; height: 100%;">
-          <button id="opm-dash-bgp-btn" title="RFC 4271 BGP-4 Routing & Autonomous System Peering" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+        <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0; height: 100%; padding-left: 8px; white-space: nowrap;">
+          <button id="opm-dash-bgp-btn" title="RFC 4271 BGP-4 Routing & Autonomous System Peering" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; height: 26px; white-space: nowrap; flex-shrink: 0;">
             <span>📡</span> BGP-4
           </button>
-          <button id="opm-dash-sdwan-btn" title="Cisco Catalyst & Multi-Vendor SD-WAN BFD Tunnels" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+          <button id="opm-dash-sdwan-btn" title="Cisco Catalyst & Multi-Vendor SD-WAN BFD Tunnels" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; height: 26px; white-space: nowrap; flex-shrink: 0;">
             <span>🚀</span> SD-WAN
           </button>
-          <button id="opm-dash-dpi-btn" title="Deep Packet Inspection & NBAR2 Application Traffic" style="background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+          <button id="opm-dash-dpi-btn" title="Deep Packet Inspection & NBAR2 Application Traffic" style="background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; height: 26px; white-space: nowrap; flex-shrink: 0;">
             <span>📊</span> DPI
           </button>
-          <button id="opm-dash-ndr-btn" title="Network Detection & Response (NDR) Threat Forensics" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 26px;">
+          <button id="opm-dash-ndr-btn" title="Network Detection & Response (NDR) Threat Forensics" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; height: 26px; white-space: nowrap; flex-shrink: 0;">
             <span>🛡️</span> NDR
           </button>
-          <span id="opm-refresh-countdown-span" style="font-size: 11px; color: #64748b; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 3px; height: 26px; box-sizing: border-box;">
-            <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #49bd80;"></span>
+          <span id="opm-refresh-countdown-span" style="font-size: 11px; color: #64748b; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 3px; height: 26px; box-sizing: border-box; white-space: nowrap; flex-shrink: 0;">
+            <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #49bd80; flex-shrink: 0;"></span>
             Auto Refresh: ${state.autoRefreshCountdown}s
           </span>
-          <button id="opm-dash-refresh-all-btn" title="Refresh Dashboard" style="background: none; border: none; color: #64748b; padding: 4px 8px; font-size: 15px; cursor: pointer;">
+          <button id="opm-dash-refresh-all-btn" title="Refresh Dashboard" style="background: none; border: none; color: #64748b; padding: 4px 6px; font-size: 15px; cursor: pointer; flex-shrink: 0;">
             ⟳
           </button>
-          <span title="Favorite Dashboard View" style="color: #94a3b8; font-size: 16px; cursor: pointer; padding: 0 4px;">★</span>
-          <button id="opm-dash-add-widget-btn" title="Add Widget / Customize Dashboard" style="background: #49bd80; color: #ffffff; border: none; width: 42px; height: 40px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; position: relative;">
+          <span title="Favorite Dashboard View" style="color: #94a3b8; font-size: 16px; cursor: pointer; padding: 0 3px; flex-shrink: 0;">★</span>
+          <button id="opm-dash-add-widget-btn" title="Add Widget / Customize Dashboard" style="background: #49bd80; color: #ffffff; border: none; width: 40px; height: 40px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="15" y2="6"/><line x1="3" y1="12" x2="13" y2="12"/><line x1="3" y1="18" x2="11" y2="18"/><circle cx="17" cy="16" r="4" fill="#ffffff" stroke="#49bd80" stroke-width="1.5"/><line x1="17" y1="14" x2="17" y2="18" stroke="#49bd80" stroke-width="2"/><line x1="15" y1="16" x2="19" y2="16" stroke="#49bd80" stroke-width="2"/></svg>
           </button>
         </div>
@@ -810,26 +812,31 @@
         ` : `
           <!-- Enterprise Rollup Summary Subtab -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;">
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Routers & Switches</div>
-                <div style="font-size: 24px; font-weight: 800; color: #0070e0; margin: 4px 0;">${networkCount} Devices</div>
-                <div style="font-size: 11px; color: ${networkCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${networkCount} Active Network Nodes</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0070e0; margin: 4px 0;">${networkCount} ${networkCount === 1 ? 'Device' : 'Devices'}</div>
+                <div style="font-size: 11px; color: ${networkCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${networkCount} Active Network ${networkCount === 1 ? 'Node' : 'Nodes'}</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Servers & Compute</div>
-                <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">${serverCount} Servers</div>
-                <div style="font-size: 11px; color: #64748b;">${serverCount} Monitored Endpoints</div>
+                <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 4px 0;">${serverCount} ${serverCount === 1 ? 'Server' : 'Servers'}</div>
+                <div style="font-size: 11px; color: #64748b;">${serverCount} Monitored ${serverCount === 1 ? 'Endpoint' : 'Endpoints'}</div>
+              </div>
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Wireless & APs</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0284c7; margin: 4px 0;">${wirelessCount} ${wirelessCount === 1 ? 'AP' : 'APs'}</div>
+                <div style="font-size: 11px; color: ${wirelessCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${wirelessCount} Wireless ${wirelessCount === 1 ? 'Node' : 'Nodes'}</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Security Gateways</div>
-                <div style="font-size: 24px; font-weight: 800; color: #ea580c; margin: 4px 0;">${firewallCount} Firewalls</div>
-                <div style="font-size: 11px; color: #ea580c; font-weight: 600;">${firewallCount} Security Appliances</div>
+                <div style="font-size: 24px; font-weight: 800; color: #ea580c; margin: 4px 0;">${firewallCount} ${firewallCount === 1 ? 'Firewall' : 'Firewalls'}</div>
+                <div style="font-size: 11px; color: #ea580c; font-weight: 600;">${firewallCount} Security ${firewallCount === 1 ? 'Appliance' : 'Appliances'}</div>
               </div>
               <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
                 <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Storage & Power</div>
-                <div style="font-size: 24px; font-weight: 800; color: #6366f1; margin: 4px 0;">${storageCount} Arrays</div>
-                <div style="font-size: 11px; color: ${storageCount > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${storageCount} Storage Devices</div>
+                <div style="font-size: 24px; font-weight: 800; color: #6366f1; margin: 4px 0;">${storageCount + otherCount} ${(storageCount + otherCount) === 1 ? 'Array' : 'Arrays'}</div>
+                <div style="font-size: 11px; color: ${(storageCount + otherCount) > 0 ? '#16a34a' : '#94a3b8'}; font-weight: 600;">${storageCount + otherCount} Storage ${(storageCount + otherCount) === 1 ? 'Device' : 'Devices'}</div>
               </div>
             </div>
 
@@ -851,17 +858,22 @@
                   </tr>
                 </thead>
                 <tbody>
-                  ${state.probes.map(pr => `
+                  ${state.probes.map(pr => {
+                    const prDevCount = typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || state.devices.filter(d => String(d.probeId || 1) === String(pr.id)).length);
+                    const prAlarmsLive = (state.alarms || []).filter(a => (a.probeId != null ? String(a.probeId) === String(pr.id) : pr.id == 1) && String(a.status || 'active').toLowerCase() !== 'cleared').length;
+                    const prAlarmCount = Math.max(Number(pr.alarmsCount || pr.alarms || 0), prAlarmsLive);
+                    return `
                     <tr style="border-bottom: 1px solid #f1f5f9;">
                       <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
                       <td style="padding: 10px 14px; font-family: monospace;">${pr.ip || '127.0.0.1'}</td>
                       <td style="padding: 10px 14px; color: #64748b;">${pr.location || pr.region || 'Local Site'}</td>
-                      <td style="padding: 10px 14px; font-weight: 700;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
-                      <td style="padding: 10px 14px;"><span style="font-weight: 700; color: ${(pr.alarmsCount || pr.alarms || 0) > 0 ? '#dc2626' : '#16a34a'};">${pr.alarmsCount || pr.alarms || 0}</span></td>
-                      <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency != null ? pr.latency : 1} ms</td>
+                      <td style="padding: 10px 14px; font-weight: 700;">${prDevCount}</td>
+                      <td style="padding: 10px 14px;"><span style="font-weight: 700; color: ${prAlarmCount > 0 ? '#dc2626' : '#16a34a'};">${prAlarmCount}</span></td>
+                      <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency != null ? pr.latency : (pr.latency_ms != null ? pr.latency_ms : 1)} ms</td>
                       <td style="padding: 10px 14px; text-align: right;"><span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 10px;">CONNECTED</span></td>
                     </tr>
-                  `).join('')}
+                  `;
+                  }).join('')}
                 </tbody>
               </table>
             </div>
@@ -1517,6 +1529,7 @@
       btn.onclick = () => {
         const sub = btn.getAttribute('data-sub');
         state.subTabs.dashboard = sub;
+        try { history.replaceState(null, '', sub === 'overview' ? '#/dashboard' : '#/dashboard/' + sub); } catch (e) {}
         renderDashboardView();
       };
     });
@@ -1526,6 +1539,7 @@
       card.onclick = () => {
         const sub = card.getAttribute('data-sub');
         state.subTabs.dashboard = sub;
+        try { history.replaceState(null, '', sub === 'overview' ? '#/dashboard' : '#/dashboard/' + sub); } catch (e) {}
         renderDashboardView();
       };
     });

@@ -299,8 +299,10 @@
           max-height: 50px !important;
           min-height: 50px !important;
           line-height: 50px !important;
-          padding: 0 16px !important;
+          padding: 0 12px !important;
           margin: 0 !important;
+          white-space: nowrap !important;
+          flex-shrink: 0 !important;
           font-size: 13px !important;
           font-weight: 500 !important;
           color: #e2e8f0 !important;
@@ -339,8 +341,10 @@
           height: 50px !important;
           max-height: 50px !important;
           line-height: 50px !important;
-          padding: 0 16px !important;
+          padding: 0 12px !important;
           margin: 0 !important;
+          white-space: nowrap !important;
+          flex-shrink: 0 !important;
           border: none !important;
           outline: none !important;
           box-shadow: none !important;
@@ -359,6 +363,24 @@
           padding: 0 !important;
           border: none !important;
           outline: none !important;
+          white-space: nowrap !important;
+        }
+        .opm-dash-subtab-btn,
+        .opm-inv-subtab-btn,
+        .opm-alarms-subtab-btn,
+        .opm-maps-subtab-btn,
+        .opm-cfg-subtab-btn,
+        .opm-rpt-subtab-btn,
+        .opm-set-subtab-btn {
+          white-space: nowrap !important;
+          flex-shrink: 0 !important;
+        }
+        #itom-probe-selector-btn,
+        #opm-bottom-status-bar,
+        #opm-bottom-status-bar span,
+        #opm-bottom-status-bar a,
+        #opm-bottom-status-bar div {
+          white-space: nowrap !important;
         }
         .opm-widget-card {
           border-radius: 3px !important;
@@ -469,7 +491,7 @@
         const isAct = t.id === currentTab;
         tabsHtml += `
           <li class="${isAct ? 'active-menu' : ''}" style="list-style: none; display: inline-flex; align-items: center; justify-content: center; height: 50px; max-height: 50px; overflow: hidden; margin: 0; padding: 0; border: none; outline: none;">
-            <a href="#/${t.id}" class="nav-link opm-main-nav-tab ${isAct ? 'active' : ''}" data-tab="${t.id}" style="color: ${isAct ? '#ffffff' : '#e2e8f0'}; text-decoration: none; font-size: 13px; font-weight: ${isAct ? '600' : '500'}; padding: 0 16px; height: 50px; max-height: 50px; line-height: 50px; display: inline-flex; align-items: center; justify-content: center; background: ${isAct ? '#49bd80' : 'transparent'}; border: none; outline: none; box-shadow: none; border-radius: 0; transition: all 0.15s; letter-spacing: 0.2px;">
+            <a href="#/${t.id}" class="nav-link opm-main-nav-tab ${isAct ? 'active' : ''}" data-tab="${t.id}" style="color: ${isAct ? '#ffffff' : '#e2e8f0'}; text-decoration: none; font-size: 13px; font-weight: ${isAct ? '600' : '500'}; padding: 0 12px; height: 50px; max-height: 50px; line-height: 50px; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; flex-shrink: 0; background: ${isAct ? '#49bd80' : 'transparent'}; border: none; outline: none; box-shadow: none; border-radius: 0; transition: all 0.15s; letter-spacing: 0.2px;">
               <span class="menu-name" style="color: ${isAct ? '#ffffff' : '#e2e8f0'}; font-size: 13px; line-height: 50px; height: 50px; display: inline-flex; align-items: center;">${t.name}</span>
             </a>
           </li>
@@ -481,9 +503,9 @@
 
       header.innerHTML = `
         <!-- Left: Logo -->
-        <div class="logo-section" style="display: flex; align-items: center;">
+        <div class="logo-section" style="display: flex; align-items: center; flex-shrink: 0; white-space: nowrap;">
           <div class="logo">
-            <a href="#/dashboard" style="display: flex; align-items: center; text-decoration: none; gap: 8px;">
+            <a href="#/dashboard" style="display: flex; align-items: center; text-decoration: none; gap: 8px; white-space: nowrap;">
               <img src="/apiclient/fluidicv2/img/opmNewLogo.png" alt="ManageEngine OpManager" style="height: 26px; width: auto; vertical-align: middle;">
               <span style="font-size: 16px; font-weight: 600; color: #ffffff; letter-spacing: -0.2px; font-family: Lato, sans-serif;">Central</span>
               <span style="background: #49bd80; color: #ffffff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 2px; letter-spacing: 0.8px;">ENTERPRISE</span>
@@ -492,26 +514,26 @@
         </div>
 
         <!-- Center: Primary Navigation Tabs -->
-        <nav id="main-nav" style="display: flex; align-items: center; height: 100%;">
-          <ul class="main-nav" style="display: flex; align-items: center; margin: 0; padding: 0; height: 100%;">
+        <nav id="main-nav" style="display: flex; align-items: center; height: 100%; flex-shrink: 0;">
+          <ul class="main-nav" style="display: flex; align-items: center; margin: 0; padding: 0; height: 100%; white-space: nowrap;">
             ${tabsHtml}
           </ul>
         </nav>
 
         <!-- Right: Search, Probe Selector, Quick Actions & Profile -->
-        <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; white-space: nowrap;">
           <!-- Quick Omnibox Search -->
           <div id="opm-header-search-box" style="position: relative; display: flex; align-items: center;">
-            <input type="text" id="opm-header-search-input" placeholder="Search devices, alarms, IPs... (Ctrl+K)" style="background: #111827; border: 1px solid #374151; color: #f8fafc; font-size: 11px; border-radius: 4px; padding: 6px 28px 6px 10px; width: 220px; outline: none; transition: width 0.2s;" onfocus="this.style.width='270px'; this.style.borderColor='#0070e0';" onblur="this.style.width='220px'; this.style.borderColor='#374151';">
+            <input type="text" id="opm-header-search-input" placeholder="Search devices, alarms, IPs... (Ctrl+K)" style="background: #111827; border: 1px solid #374151; color: #f8fafc; font-size: 11px; border-radius: 4px; padding: 6px 26px 6px 10px; width: 195px; outline: none; transition: width 0.2s;" onfocus="this.style.width='235px'; this.style.borderColor='#0070e0';" onblur="this.style.width='195px'; this.style.borderColor='#374151';">
             <span style="position: absolute; right: 8px; color: #64748b; font-size: 12px; pointer-events: none;">🔍</span>
           </div>
 
           <!-- Probe Switcher Dropdown Button -->
-          <div id="itom-probe-selector-container" style="position: relative;">
-            <button id="itom-probe-selector-btn" style="background: #111827; border: 1px solid #374151; color: #ffffff; font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-              <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 5px #22c55e;"></span>
-              <span class="zselectbox__selected" id="opm-probe-name-display">${probeName}</span>
-              <span style="font-size: 9px; color: #94a3b8;">▼</span>
+          <div id="itom-probe-selector-container" style="position: relative; flex-shrink: 0;">
+            <button id="itom-probe-selector-btn" style="background: #111827; border: 1px solid #374151; color: #ffffff; font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 5px #22c55e; flex-shrink: 0;"></span>
+              <span class="zselectbox__selected" id="opm-probe-name-display" style="white-space: nowrap;">${probeName}</span>
+              <span style="font-size: 9px; color: #94a3b8; flex-shrink: 0;">▼</span>
             </button>
           </div>
 
@@ -600,38 +622,39 @@
     if (!container) {
       container = document.createElement('div');
       container.id = 'opm-custom-suite-container';
-      container.style.cssText = 'width: 100%; min-height: calc(100vh - 50px); padding-bottom: 28px; background: #f4f6f9; display: block; overflow-x: hidden;';
+      container.style.cssText = 'width: 100%; min-height: calc(100vh - 50px); padding-bottom: 36px; background: #f4f6f9; display: block; overflow-x: hidden;';
     }
 
-    // Ensure Authentic ManageEngine Fixed Bottom Status Bar (24px Footer)
+    // Ensure Authentic ManageEngine Fixed Bottom Status Bar (28px Single-Line Footer)
     let statusBar = document.getElementById('opm-bottom-status-bar');
     if (!statusBar && document.body) {
       statusBar = document.createElement('div');
       statusBar.id = 'opm-bottom-status-bar';
-      statusBar.style.cssText = 'position: fixed; bottom: 0; left: 0; width: 100%; height: 24px; background: #212121; border-top: 1px solid #334155; color: #cbd5e1; z-index: 9990; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-family: Lato, Roboto, sans-serif; font-size: 11px;';
+      statusBar.style.cssText = 'position: fixed; bottom: 0; left: 0; width: 100%; height: 28px; background: #212121; border-top: 1px solid #334155; color: #cbd5e1; z-index: 9990; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 14px; box-sizing: border-box; font-family: Lato, Roboto, sans-serif; font-size: 10.5px; white-space: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-width: none;';
+      const totalIfaceCount = (state.devices || []).reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : (Number(d.interfacesCount) || 0)), 0);
       statusBar.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="display: inline-flex; align-items: center; gap: 5px; color: #ffffff; font-weight: 700;">
-            <span style="width: 7px; height: 7px; border-radius: 50%; background: #49bd80; display: inline-block;"></span>
-            ManageEngine OpManager Central v12.9.203 (Build 129203 • 64-Bit)
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; white-space: nowrap;">
+          <span style="display: inline-flex; align-items: center; gap: 5px; color: #ffffff; font-weight: 700; white-space: nowrap;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: #49bd80; display: inline-block; flex-shrink: 0;"></span>
+            ManageEngine OpManager Central v12.9.203 (Build 129203)
           </span>
           <span style="color: #475569;">|</span>
-          <span>Central Server: <strong style="color: #49bd80;">Primary Active (${window.location.host || '192.168.30.65:8060'})</strong></span>
+          <span style="white-space: nowrap;">Server: <strong style="color: #49bd80;">Primary Active (${window.location.host || '192.168.30.65:8060'})</strong></span>
           <span style="color: #475569;">|</span>
-          <span>Remote Probes: <strong style="color: #38bdf8;">${state.probes.length} / ${state.probes.length || 1} Online</strong></span>
+          <span style="white-space: nowrap;">Probes: <strong style="color: #38bdf8;">${state.probes.length} / ${state.probes.length || 1} Online</strong></span>
           <span style="color: #475569;">|</span>
-          <span id="opm-footer-monitored-assets">Monitored Assets: <strong>${state.devices.length} Devices • ${state.devices.reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : 0), 0)} Interfaces</strong></span>
+          <span id="opm-footer-monitored-assets" style="white-space: nowrap;">Assets: <strong>${state.devices.length} Devices • ${totalIfaceCount} Interfaces</strong></span>
         </div>
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <span id="opm-footer-mib-btn" style="cursor: pointer; color: #cbd5e1;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">SNMP MIB Browser</span>
+        <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; white-space: nowrap;">
+          <span id="opm-footer-mib-btn" style="cursor: pointer; color: #cbd5e1; white-space: nowrap;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">SNMP MIB Browser</span>
           <span style="color: #475569;">•</span>
-          <a href="/noc" target="_blank" style="color: #cbd5e1; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">NOC Wallboard ↗</a>
+          <a href="/noc" target="_blank" style="color: #cbd5e1; text-decoration: none; white-space: nowrap;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">NOC Wallboard ↗</a>
           <span style="color: #475569;">•</span>
-          <a href="/apiclient/fluidicv3/itom/pages/log-viewer.html?file=opmanager_server.log" target="_blank" style="color: #cbd5e1; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">Log Viewer ↗</a>
+          <a href="/apiclient/fluidicv3/itom/pages/log-viewer.html?file=opmanager_server.log" target="_blank" style="color: #cbd5e1; text-decoration: none; white-space: nowrap;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">Log Viewer ↗</a>
           <span style="color: #475569;">•</span>
-          <span id="opm-footer-logs-btn" style="cursor: pointer; color: #cbd5e1;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">Support &amp; Logs</span>
+          <span id="opm-footer-logs-btn" style="cursor: pointer; color: #cbd5e1; white-space: nowrap;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cbd5e1'">Support &amp; Logs</span>
           <span style="color: #475569;">|</span>
-          <span style="color: #49bd80; font-weight: 600;">● Live Telemetry Socket</span>
+          <span style="color: #49bd80; font-weight: 600; white-space: nowrap;">● Live Telemetry</span>
         </div>
       `;
       document.body.appendChild(statusBar);
@@ -827,7 +850,9 @@
         el.style.setProperty('font-size', '13px', 'important');
         el.style.setProperty('font-weight', '500', 'important');
         el.style.setProperty('color', '#e2e8f0', 'important');
-        el.style.setProperty('padding', '0 16px', 'important');
+        el.style.setProperty('padding', '0 12px', 'important');
+        el.style.setProperty('white-space', 'nowrap', 'important');
+        el.style.setProperty('flex-shrink', '0', 'important');
         const span = el.querySelector('.menu-name');
         if (span) {
           span.style.setProperty('color', '#e2e8f0', 'important');
@@ -861,7 +886,9 @@
         link.style.setProperty('height', '50px', 'important');
         link.style.setProperty('max-height', '50px', 'important');
         link.style.setProperty('line-height', '50px', 'important');
-        link.style.setProperty('padding', '0 16px', 'important');
+        link.style.setProperty('padding', '0 12px', 'important');
+        link.style.setProperty('white-space', 'nowrap', 'important');
+        link.style.setProperty('flex-shrink', '0', 'important');
         link.style.setProperty('margin', '0', 'important');
         if (nameSpan && nameSpan !== link) {
           nameSpan.style.setProperty('color', '#ffffff', 'important');

@@ -512,7 +512,8 @@ wss.on('connection', async (ws, req) => {
           lastBackup,
           hasConfig: Boolean(runningConfig || startupConfig),
           runningConfig,
-          startupConfig
+          startupConfig,
+          interfacesCount: store.listInterfaces ? store.listInterfaces(d.id).length : 0
         };
       });
     } catch (e) { initialDevices = []; }

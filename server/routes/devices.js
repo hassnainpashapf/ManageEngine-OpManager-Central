@@ -143,7 +143,8 @@ router.get(['/device/listDevices', '/device/list', '/api/json/device/list', '/ap
       lastBackup,
       hasConfig: Boolean(runningConfig || startupConfig),
       runningConfig,
-      startupConfig
+      startupConfig,
+      interfacesCount: store.listInterfaces ? store.listInterfaces(d.id).length : 0
     };
   });
 

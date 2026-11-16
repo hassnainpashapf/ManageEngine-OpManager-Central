@@ -168,7 +168,7 @@
         } else if (text.includes('noc')) {
           target = 'dashboard'; state.subTabs.dashboard = 'noc';
         } else if (text.includes('dashboard') || href.includes('dashboard') || fsoqa.includes('dashboard')) {
-          target = 'dashboard';
+          target = 'dashboard'; state.subTabs.dashboard = 'overview';
         }
 
         window.location.hash = '#/' + target;
@@ -490,8 +490,8 @@
     const assetsEl = document.getElementById('opm-footer-monitored-assets');
     if (assetsEl) {
       const devCount = (state.devices && state.devices.length) || 0;
-      const ifaceCount = (state.devices || []).reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : 0), 0);
-      assetsEl.innerHTML = `Monitored Assets: <strong>${devCount} Devices • ${ifaceCount} Interfaces</strong>`;
+      const ifaceCount = (state.devices || []).reduce((acc, d) => acc + (d.interfaces ? d.interfaces.length : (Number(d.interfacesCount) || 0)), 0);
+      assetsEl.innerHTML = `Assets: <strong>${devCount} Devices • ${ifaceCount} Interfaces</strong>`;
     }
   }
 
@@ -527,6 +527,8 @@
           updateStatusCounters();
           if (changed && state.currentTab === 'alarms' && typeof renderAlarmsView === 'function') {
             renderAlarmsView();
+          } else if (changed && state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') {
+            renderDashboardView();
           }
         }
       }).catch(() => {});
@@ -561,11 +563,13 @@
       .then(res => {
         const list = res && (res.probes || res.result);
         if (Array.isArray(list)) {
-          const changed = state.probes.length !== list.length;
+          const changed = JSON.stringify(state.probes) !== JSON.stringify(list);
           state.probes = list;
           updateStatusCounters();
           if (changed && state.currentTab === 'settings' && typeof renderSettingsView === 'function') {
             renderSettingsView();
+          } else if (changed && state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') {
+            renderDashboardView();
           }
         }
       }).catch(() => {});
