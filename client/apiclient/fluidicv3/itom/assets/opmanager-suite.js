@@ -2811,24 +2811,34 @@
       pduConsole.innerHTML = '<span style="color: #64748b;">// Console cleared.</span><br>';
     };
 
-    modal.querySelector('#mib-btn-get').onclick = () => {
-      const targetOid = oidInput.value.trim();
-      const node = mibNodes.find(n => n.oid === targetOid) || { name: 'leafNode', type: 'OCTET STRING' };
-      const dev = (state.devices || []).find(d => d.ip === host) || (state.devices && state.devices[0]) || { name: 'Central-Managed-Node', vendor: 'Enterprise OS' };
-      
-      let val = dev.name;
-      if (node.name === 'sysDescr') val = `${dev.vendor || 'Enterprise'} ${dev.type || 'Managed Node'} Software, Version 15.2, OpManager Monitored Node`;
-      else if (node.name === 'sysObjectID') val = '.1.3.6.1.4.1.9.1.516';
-      else if (node.name === 'sysUpTime') val = '148 days, 12:44:19.82 (1283305982 timeticks)';
-      else if (node.name === 'sysContact') val = 'noc-support@manageengine.internal';
-      else if (node.name === 'sysLocation') val = 'Central Enterprise Core, Rack U12';
-      else if (node.name === 'ifNumber') val = '52 interfaces';
-      else if (node.name === 'ciscoEnvMonTemperatureStatusValue') val = '34 Celsius (Normal)';
+    const escMibLog = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const getMibQueryParams = () => ({
+      ip: (modal.querySelector('#mib-host-input')?.value || host || '').trim(),
+      community: (modal.querySelector('#mib-comm-input')?.value || 'public').trim(),
+      version: (modal.querySelector('#mib-ver-select')?.value || 'v2c').trim(),
+      oid: (oidInput?.value || '.1.3.6.1.2.1.1.1.0').trim()
+    });
 
-      logPdu(`Sent GetRequest-PDU (reqId ${Math.floor(Math.random()*90000+10000)}) to ${host}:161 for ${targetOid}`, '#94a3b8');
-      setTimeout(() => {
-        logPdu(`Received Response-PDU from ${host} (errStatus=0, errIndex=0):\n   ${targetOid} (${node.name}) = ${node.type}: "${val}"`, '#4ade80');
-      }, 250);
+    modal.querySelector('#mib-btn-get').onclick = async () => {
+      const q = getMibQueryParams();
+      if (!q.ip || !q.oid) return logPdu('Target Host and OID are required.', '#f87171');
+      logPdu(`Sending real SNMP GET (${escMibLog(q.version)}) to ${escMibLog(q.ip)} for ${escMibLog(q.oid)}...`, '#94a3b8');
+      try {
+        const res = await fetch('/api/tools/snmp-query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(q)
+        });
+        const data = await res.json();
+        if (!res.ok || data.status !== 'success') {
+          logPdu(`SNMP GET error (${res.status}): ${escMibLog(data.message || data.error || 'Failed')}`, '#f87171');
+          return;
+        }
+        const label = data.name ? ` (${escMibLog(data.name)})` : '';
+        logPdu(`Response from ${escMibLog(data.resolvedIp || q.ip)}:\n   .${escMibLog(data.oid)}${label} [${escMibLog(data.type || 'OCTET STRING')}] = "${escMibLog(data.value)}"`, '#4ade80');
+      } catch (err) {
+        logPdu(`Network error: ${escMibLog(err.message)}`, '#f87171');
+      }
     };
 
     modal.querySelector('#mib-btn-getnext').onclick = () => {
@@ -2840,17 +2850,37 @@
       metaType.textContent = nextNode.type;
       metaAccess.textContent = nextNode.access;
       metaDesc.textContent = nextNode.desc;
-      logPdu(`GetNextRequest-PDU on ${targetOid} resolved next OID: ${nextNode.oid} (${nextNode.name})`, '#fbbf24');
+      logPdu(`Selected next catalog OID: ${nextNode.oid} (${nextNode.name})`, '#fbbf24');
     };
 
-    modal.querySelector('#mib-btn-walk').onclick = () => {
-      logPdu(`Executing SNMP Walk tree on ${host} starting at .1.3.6.1.2.1.1...`, '#38bdf8');
-      mibNodes.slice(0, 6).forEach((n, i) => {
-        setTimeout(() => {
-          let val = n.name === 'sysDescr' ? 'Cisco IOS Software C2960' : (n.name === 'sysUpTime' ? '148 days' : 'Equinix DC4');
-          logPdu(`${n.oid} = ${n.type}: "${val}"`, '#4ade80');
-        }, (i + 1) * 150);
-      });
+    modal.querySelector('#mib-btn-walk').onclick = async () => {
+      const q = getMibQueryParams();
+      if (!q.ip || !q.oid) return logPdu('Target Host and Root OID are required.', '#f87171');
+      logPdu(`Executing real SNMP Walk (${escMibLog(q.version)}) on ${escMibLog(q.ip)} starting at ${escMibLog(q.oid)}...`, '#38bdf8');
+      try {
+        const res = await fetch('/api/tools/snmp-walk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ip: q.ip, rootOid: q.oid, community: q.community, version: q.version })
+        });
+        const data = await res.json();
+        if (!res.ok || data.status !== 'success') {
+          logPdu(`SNMP Walk error (${res.status}): ${escMibLog(data.message || data.error || 'Failed')}`, '#f87171');
+          return;
+        }
+        const rows = data.results || [];
+        if (rows.length === 0) {
+          logPdu(`SNMP Walk returned 0 varbinds under ${escMibLog(q.oid)} on ${escMibLog(q.ip)}.`, '#fbbf24');
+          return;
+        }
+        rows.forEach(vb => {
+          const nm = vb.name ? ` (${escMibLog(vb.name)})` : '';
+          logPdu(`.${escMibLog(vb.oid)}${nm} [${escMibLog(vb.type || 'STRING')}] = "${escMibLog(vb.value)}"`, '#4ade80');
+        });
+        logPdu(`Walk complete: ${rows.length} varbind(s) retrieved from ${escMibLog(data.resolvedIp || q.ip)}.`, '#38bdf8');
+      } catch (err) {
+        logPdu(`Network error: ${escMibLog(err.message)}`, '#f87171');
+      }
     };
   }
 
@@ -7546,7 +7576,15 @@
     }
 
     const escHw = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    let srv = targetServer || (state.devices.find(d => /server|switch|router|firewall/i.test(d.category || '')) || state.devices[0]);
+    let srv = null;
+    if (typeof targetServer === 'string') {
+      srv = (state.devices || []).find(d => d.ip === targetServer || d.name === targetServer || d.displayName === targetServer || String(d.id) === targetServer)
+        || { id: '', ip: targetServer, displayName: targetServer, name: targetServer };
+    } else if (targetServer && typeof targetServer === 'object') {
+      srv = targetServer;
+    } else {
+      srv = (state.devices || []).find(d => /server|switch|router|firewall/i.test(d.category || '')) || (state.devices || [])[0];
+    }
     if (!srv) {
       showToast('No monitored devices in inventory.', 'warning');
       return;
