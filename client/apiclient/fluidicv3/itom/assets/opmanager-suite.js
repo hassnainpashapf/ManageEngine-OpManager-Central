@@ -9300,7 +9300,7 @@
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                   <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
                     <div>
-                      <div style="font-weight: 700; font-size: 13px; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${srv.id})">${srv.name}</div>
+                      <div style="font-weight: 700; font-size: 13px; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${srv.id})">${srv.displayName || srv.name || srv.ip}</div>
                       <div style="font-size: 11px; color: #64748b; font-family: monospace;">${srv.ip} • ${srv.probe}</div>
                     </div>
                     ${getStatusBadge(srv.status)}
@@ -9320,101 +9320,198 @@
               `).join('')}
             </div>
           </div>
-        `) : activeSub === 'virtualization' ? `
-          <!-- Virtualization Clean Empty State -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Virtual Machines or Hypervisors Discovered</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
-              Connect your VMware vCenter/ESXi, Proxmox VE, Hyper-V, or Nutanix AHV nodes to discover and monitor virtual machines, datastores, and resource pools.
-            </div>
-            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Add Virtualization Host
-            </button>
-          </div>
-        ` : activeSub === 'storage' ? `
-          <!-- Storage Clean Empty State -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Storage Arrays or Partitions Discovered</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
-              Connect NetApp, Dell EMC, HPE Nimble, or server host drive partitions via SNMP/WMI to monitor volume capacity, IOPS, and drive health.
-            </div>
-            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Add Storage Device
-            </button>
-          </div>
-        ` : activeSub === 'network' ? (networkCount === 0 ? `
+        `) : activeSub === 'virtualization' ? (() => {
+          const virtDevs = filteredDevices.filter(d => /server|hypervisor|pve|proxmox|esxi|vm|lxc/i.test(`${d.category || ''} ${d.type || ''} ${d.displayName || d.name || ''}`));
+          if (virtDevs.length === 0) {
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Virtualization / Compute Hosts Discovered</div>
+                <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">Connect VMware ESXi, Proxmox VE, or Linux/Windows servers via SNMP/Agent to monitor compute telemetry.</div>
+                <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">+ Add Virtualization Host</button>
+              </div>`;
+          }
+          const upVirt = virtDevs.filter(d => ['up', 'clear', 'online'].includes((d.status || '').toLowerCase())).length;
+          return `
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;"><div style="font-size: 11px; color: #64748b; font-weight: 700;">COMPUTE / VM HOSTS</div><div style="font-size: 22px; font-weight: 800; color: #0f172a;">${virtDevs.length}</div></div>
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;"><div style="font-size: 11px; color: #64748b; font-weight: 700;">ONLINE / REACHABLE</div><div style="font-size: 22px; font-weight: 800; color: #16a34a;">${upVirt}</div></div>
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;"><div style="font-size: 11px; color: #64748b; font-weight: 700;">SNMP / AGENT ALERTS</div><div style="font-size: 22px; font-weight: 800; color: #dc2626;">${virtDevs.length - upVirt}</div></div>
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                  <button onclick="window.location.hash='#/inventory/virtualization'" style="background: #0070e0; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Open VM Inventory &rarr;</button>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                ${virtDevs.slice(0, 12).map(v => `
+                  <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                      <strong style="color: #0070e0; cursor: pointer; font-size: 13px;" onclick="showDeviceSnapshotModal(${v.id})">${v.displayName || v.name || v.ip}</strong>
+                      ${getStatusBadge(v.status)}
+                    </div>
+                    <div style="font-size: 11px; font-family: monospace; color: #64748b; margin-bottom: 8px;">${v.ip} &bull; ${v.type || v.category || 'Host'}</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: #334155; margin-bottom: 10px;">
+                      <span>CPU: <strong>${v.cpu ?? 0}%</strong></span>
+                      <span>Mem: <strong>${v.memory ?? 0}%</strong></span>
+                      <span>RTT: <strong>${v.responseTime != null ? v.responseTime + 'ms' : '—'}</strong></span>
+                    </div>
+                    <div style="display: flex; gap: 6px;">
+                      <button onclick="showDeviceSnapshotModal(${v.id})" style="flex:1;background:#f8fafc;border:1px solid #cbd5e1;padding:4px 8px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Snapshot</button>
+                      <button onclick="showNetworkToolsModal('${v.ip}','ping')" style="flex:1;background:#eff6ff;border:1px solid #bae6fd;color:#0284c7;padding:4px 8px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Ping</button>
+                      <button class="opm-dash-poll-btn" data-id="${v.id}" style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:4px 8px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Poll</button>
+                    </div>
+                  </div>`).join('')}
+              </div>
+            </div>`;
+        })() : activeSub === 'storage' ? (() => {
+          const stgDevs = filteredDevices.filter(d => /storage|san|nas|server/i.test(`${d.category || ''} ${d.type || ''} ${d.displayName || d.name || ''}`));
+          if (stgDevs.length === 0) {
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Storage Arrays or Disk Hosts Discovered</div>
+                <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">+ Add Storage Device</button>
+              </div>`;
+          }
+          return `
+            <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <div>
+                  <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Storage &amp; Disk Capacity Monitor (${stgDevs.length} Nodes)</div>
+                  <div style="font-size: 11px; color: #64748b;">Real SAN arrays, hypervisor thin pools &amp; managed disk hosts from inventory.</div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button onclick="window.location.hash='#/inventory/storage'" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Open Storage Tab</button>
+                  <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">+ Add Storage</button>
+                </div>
+              </div>
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead><tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569;"><th style="padding: 9px 12px;">Storage / Host Node</th><th style="padding: 9px 12px;">IP Address</th><th style="padding: 9px 12px;">Type</th><th style="padding: 9px 12px;">Status</th><th style="padding: 9px 12px;">RTT</th><th style="padding: 9px 12px; text-align: right;">Actions</th></tr></thead>
+                <tbody>
+                  ${stgDevs.map(d => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 9px 12px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${d.id})">${d.displayName || d.name || d.ip}</td>
+                      <td style="padding: 9px 12px; font-family: monospace;">${d.ip}</td>
+                      <td style="padding: 9px 12px; color: #64748b;">${d.type || d.category}</td>
+                      <td style="padding: 9px 12px;">${getStatusBadge(d.status)}</td>
+                      <td style="padding: 9px 12px; font-family: monospace;">${d.responseTime != null ? d.responseTime + ' ms' : '—'}</td>
+                      <td style="padding: 9px 12px; text-align: right;">
+                        <button class="opm-dash-hw-btn" data-id="${d.id}" style="background:#fff;border:1px solid #cbd5e1;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;margin-right:4px;">HW Sensors</button>
+                        <button class="opm-dash-poll-btn" data-id="${d.id}" style="background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:4px 8px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Poll Now</button>
+                      </td>
+                    </tr>`).join('')}
+                </tbody>
+              </table>
+            </div>`;
+        })() : activeSub === 'network' ? (networkCount === 0 ? `
           <!-- Network Clean Empty State -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
             <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Network Routers or Switches Monitored</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
-              Add your Cisco, Juniper, Arista, or Huawei network switches and routers via SNMP (v1/v2c/v3) to monitor port interfaces, traffic volume, and link latency.
-            </div>
-            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Add Network Switch / Router
-            </button>
+            <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">+ Add Network Switch / Router</button>
           </div>
         ` : `
           <!-- Network Subtab -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-              ${filteredDevices.filter(d => ['Routers','Switches'].includes(d.category)).map(dev => `
+              ${filteredDevices.filter(d => /router|switch/i.test(d.category || '')).map(dev => `
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
-                  <div style="font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${dev.id})">${dev.name}</div>
-                  <div style="font-size: 11px; color: #64748b;">${dev.ip}</div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${dev.id})">${dev.displayName || dev.name || dev.ip}</div>
+                    ${getStatusBadge(dev.status)}
+                  </div>
+                  <div style="font-size: 11px; font-family: monospace; color: #64748b; margin: 4px 0 10px 0;">${dev.ip} &bull; RTT: ${dev.responseTime != null ? dev.responseTime + ' ms' : '—'}</div>
+                  <div style="display: flex; gap: 6px;">
+                    <button onclick="showDeviceSnapshotModal(${dev.id})" style="flex:1;background:#f8fafc;border:1px solid #cbd5e1;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;">Inspect</button>
+                    <button onclick="showNetworkToolsModal('${dev.ip}','ping')" style="flex:1;background:#eff6ff;border:1px solid #bae6fd;color:#0284c7;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;">Ping</button>
+                    <button class="opm-dash-poll-btn" data-id="${dev.id}" style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;">Poll</button>
+                  </div>
                 </div>
               `).join('')}
             </div>
           </div>
-        `) : activeSub === 'netflow' ? `
-          <!-- NetFlow Clean Empty State -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Flow Records Ingested (UDP 2055 / 9996)</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 500px; margin: 0 auto 16px auto;">
-              Export NetFlow v5/v9, IPFIX, or sFlow streams from your core routers to UDP port 2055 to analyze application traffic breakdown and top talkers.
-            </div>
-            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Configure NetFlow Exporter
-            </button>
-          </div>
-        ` : activeSub === 'ncm' ? `
-          <!-- NCM Clean Empty State -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Network Configurations Managed (NCM)</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
-              Enroll Cisco, Juniper, HP, or Fortinet devices via SSH/Telnet to automate running vs startup configuration backups and compliance audits.
-            </div>
-            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Add NCM Device
-            </button>
-          </div>
-        ` : activeSub === 'firewall' ? (firewallCount === 0 ? `
+        `) : activeSub === 'netflow' ? (() => {
+          const flowDevs = filteredDevices.filter(d => /router|switch|firewall/i.test(d.category || ''));
+          return `
+            <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div>
+                  <div style="font-size: 15px; font-weight: 800; color: #0f172a;">NetFlow &amp; Interface Bandwidth Telemetry (${flowDevs.length} Routing / Switching Exporters)</div>
+                  <div style="font-size: 12px; color: #64748b;">Inspect live SNMP IF-MIB octet counters &amp; active TCP application ports on your edge routers, firewalls &amp; switches.</div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button id="opm-dash-nf-dpi-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">📊 Open Live DPI &amp; IF-MIB Probe</button>
+                  <button onclick="showAddDeviceModal()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 7px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">+ Add Exporter</button>
+                </div>
+              </div>
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead><tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569;"><th style="padding: 9px 12px;">Flow / SNMP Source Node</th><th style="padding: 9px 12px;">IP Address</th><th style="padding: 9px 12px;">Category</th><th style="padding: 9px 12px;">Status</th><th style="padding: 9px 12px;">Latency</th><th style="padding: 9px 12px; text-align: right;">Actions</th></tr></thead>
+                <tbody>
+                  ${flowDevs.length === 0 ? '<tr><td colspan="6" style="padding:30px;text-align:center;color:#94a3b8;">No routers, switches, or firewalls discovered yet.</td></tr>' : flowDevs.map(d => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 9px 12px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${d.id})">${d.displayName || d.name || d.ip}</td>
+                      <td style="padding: 9px 12px; font-family: monospace;">${d.ip}</td>
+                      <td style="padding: 9px 12px;">${d.category}</td>
+                      <td style="padding: 9px 12px;">${getStatusBadge(d.status)}</td>
+                      <td style="padding: 9px 12px; font-family: monospace;">${d.responseTime != null ? d.responseTime + ' ms' : '—'}</td>
+                      <td style="padding: 9px 12px; text-align: right;">
+                        <button class="opm-dash-nf-inspect-btn" data-id="${d.id}" style="background:#eff6ff;border:1px solid #bae6fd;color:#0369a1;padding:4px 10px;border-radius:3px;font-size:11px;font-weight:700;cursor:pointer;">Live Interface &amp; Port Probe</button>
+                      </td>
+                    </tr>`).join('')}
+                </tbody>
+              </table>
+            </div>`;
+        })() : activeSub === 'ncm' ? (() => {
+          const ncmDevs = filteredDevices.filter(d => /router|switch|firewall|wireless/i.test(d.category || ''));
+          if (ncmDevs.length === 0) {
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Network Configurations Managed (NCM)</div>
+                <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">Enroll Cisco, Juniper, HP, or Fortinet devices via SSH to automate running vs startup backups.</div>
+                <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">+ Add NCM Device</button>
+              </div>`;
+          }
+          const backedCount = ncmDevs.filter(d => d.lastBackup && d.lastBackup !== 'Never').length;
+          return `
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;"><div style="font-size: 11px; color: #64748b; font-weight: 700;">NCM MANAGED NODES</div><div style="font-size: 22px; font-weight: 800; color: #0f172a;">${ncmDevs.length}</div></div>
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;"><div style="font-size: 11px; color: #64748b; font-weight: 700;">BACKUPS CAPTURED</div><div style="font-size: 22px; font-weight: 800; color: #16a34a;">${backedCount}</div></div>
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;"><div style="font-size: 11px; color: #64748b; font-weight: 700;">ONLINE / REACHABLE</div><div style="font-size: 22px; font-weight: 800; color: #0284c7;">${ncmDevs.filter(d => ['up','clear','online'].includes((d.status||'').toLowerCase())).length}</div></div>
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; display: flex; align-items: center; gap: 8px; justify-content: flex-end;">
+                  <button onclick="window.location.hash='#/configuration'" style="background: #0070e0; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Open Full NCM Console &rarr;</button>
+                </div>
+              </div>
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="font-size: 14px; color: #0f172a;">Network Configuration Manager (NCM) — Real Managed Network Devices (${ncmDevs.length})</strong>
+                  <div style="display: flex; gap: 8px;">
+                    <button id="opm-dash-ncm-backup-all-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">⚡ Backup All Now (${ncmDevs.length})</button>
+                    <button onclick="showAddDeviceModal()" style="background: #49bd80; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">+ Add NCM Device</button>
+                  </div>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                  <thead><tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569;"><th style="padding: 9px 12px;">Device Name</th><th style="padding: 9px 12px;">IP Address</th><th style="padding: 9px 12px;">Category</th><th style="padding: 9px 12px;">Status</th><th style="padding: 9px 12px;">Last Backup</th><th style="padding: 9px 12px; text-align: right;">SSH / Diff Actions</th></tr></thead>
+                  <tbody>
+                    ${ncmDevs.map(d => `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 9px 12px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${d.id})">${d.displayName || d.name || d.ip}</td>
+                        <td style="padding: 9px 12px; font-family: monospace;">${d.ip}</td>
+                        <td style="padding: 9px 12px;">${d.category}</td>
+                        <td style="padding: 9px 12px;">${getStatusBadge(d.status)}</td>
+                        <td style="padding: 9px 12px; color: #64748b; font-size: 11px;">${d.lastBackup || 'Not backed up yet'}</td>
+                        <td style="padding: 9px 12px; text-align: right; white-space: nowrap;">
+                          <button class="opm-dash-ncm-backup-btn" data-id="${d.id}" style="background:#0070e0;color:#fff;border:none;padding:4px 9px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;margin-right:4px;">Backup SSH</button>
+                          <button class="opm-dash-ncm-diff-single-btn" data-id="${d.id}" style="background:#f8fafc;border:1px solid #cbd5e1;color:#334155;padding:4px 9px;border-radius:3px;font-size:11px;cursor:pointer;margin-right:4px;">Diff</button>
+                          <button onclick="showNetworkToolsModal('${d.ip}','terminal')" style="background:#0f172a;color:#fff;border:none;padding:4px 9px;border-radius:3px;font-size:11px;cursor:pointer;">CLI</button>
+                        </td>
+                      </tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>`;
+        })() : activeSub === 'firewall' ? (firewallCount === 0 ? `
           <!-- Firewall Clean Empty State -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
             <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Firewall Security Appliances Connected</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
-              Forward Syslog streams (UDP 514) from Palo Alto, FortiGate, Cisco ASA, or pfSense to analyze security policies, blocked attacks, and VPN tunnels.
-            </div>
-            <button onclick="showAddDeviceModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Add Firewall Appliance
-            </button>
+            <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">+ Add Firewall Appliance</button>
           </div>
         ` : `
           <!-- Firewall Subtab -->
@@ -9422,27 +9519,65 @@
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
               ${filteredDevices.filter(d => (d.category || '').toLowerCase().includes('firewall')).map(dev => `
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
-                  <div style="font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${dev.id})">${dev.name}</div>
-                  <div style="font-size: 11px; color: #64748b;">${dev.ip}</div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${dev.id})">${dev.displayName || dev.name || dev.ip}</div>
+                    ${getStatusBadge(dev.status)}
+                  </div>
+                  <div style="font-size: 11px; color: #64748b; font-family: monospace; margin: 4px 0 10px 0;">${dev.ip} &bull; RTT: ${dev.responseTime != null ? dev.responseTime + ' ms' : '—'}</div>
+                  <div style="display: flex; gap: 6px;">
+                    <button onclick="showDeviceSnapshotModal(${dev.id})" style="flex:1;background:#f8fafc;border:1px solid #cbd5e1;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;">Inspect</button>
+                    <button onclick="showNetworkToolsModal('${dev.ip}','terminal')" style="flex:1;background:#0f172a;color:#fff;border:none;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;">CLI</button>
+                  </div>
                 </div>
               `).join('')}
             </div>
           </div>
-        `) : activeSub === 'oputils' ? `
-          <!-- OpUtils Clean Empty State -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No IP Subnets or Switch Port Mappings Configured</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto 16px auto;">
-              Scan IPv4/IPv6 subnets, detect rogue MAC addresses, and map switch port interfaces using integrated OpUtils diagnostic tools.
-            </div>
-            <button onclick="showSubnetDiscoveryModal()" style="display: inline-flex; align-items: center; gap: 6px; background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">
-              + Add IP Subnet to Monitor
-            </button>
-          </div>
-        ` : `
+        `) : activeSub === 'oputils' ? (() => {
+          const subnetMap = {};
+          filteredDevices.forEach(d => {
+            if (!d.ip || !/^\d+\.\d+\.\d+\.\d+$/.test(d.ip)) return;
+            const cidr = d.ip.split('.').slice(0, 3).join('.') + '.0/24';
+            if (!subnetMap[cidr]) subnetMap[cidr] = { cidr, total: 0, up: 0, down: 0 };
+            subnetMap[cidr].total++;
+            if (['up','clear','online'].includes((d.status||'').toLowerCase())) subnetMap[cidr].up++;
+            else subnetMap[cidr].down++;
+          });
+          const subnets = Object.values(subnetMap);
+          return `
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                  <div>
+                    <div style="font-size: 15px; font-weight: 800; color: #0f172a;">OpUtils IPAM Subnets, ARP/MAC Resolver &amp; Switch Port Mapper</div>
+                    <div style="font-size: 12px; color: #64748b;">Discovered IPv4 subnets from live monitored inventory (${subnets.length} active subnet${subnets.length === 1 ? '' : 's'}).</div>
+                  </div>
+                  <div style="display: flex; gap: 8px;">
+                    <button id="opm-dash-spm-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; padding: 7px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">🔌 Switch Port Mapper</button>
+                    <button onclick="showSubnetDiscoveryModal()" style="background: #0070e0; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Scan New Subnet</button>
+                  </div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;">
+                  <strong style="font-size: 12px; color: #0f172a;">Live ARP / MAC Resolver:</strong>
+                  <input id="opm-dash-mac-ip" type="text" value="${(filteredDevices[0] && filteredDevices[0].ip) || '192.168.30.1'}" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 12px; width: 180px;" />
+                  <button id="opm-dash-mac-btn" style="background: #0f172a; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Resolve MAC (ARP / SNMP)</button>
+                  <span id="opm-dash-mac-result" style="font-size: 12px; font-family: monospace; color: #0284c7;"></span>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                  <thead><tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569;"><th style="padding: 9px 12px;">Subnet CIDR</th><th style="padding: 9px 12px;">Monitored Hosts</th><th style="padding: 9px 12px;">Reachable (Up)</th><th style="padding: 9px 12px;">SNMP Error / Down</th><th style="padding: 9px 12px; text-align: right;">Action</th></tr></thead>
+                  <tbody>
+                    ${subnets.length === 0 ? '<tr><td colspan="5" style="padding:24px;text-align:center;color:#94a3b8;">No IPv4 subnets in inventory yet.</td></tr>' : subnets.map(s => `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 9px 12px; font-family: monospace; font-weight: 700; color: #0070e0;">${s.cidr}</td>
+                        <td style="padding: 9px 12px; font-weight: 700;">${s.total} IPs</td>
+                        <td style="padding: 9px 12px; color: #16a34a; font-weight: 700;">${s.up} Up</td>
+                        <td style="padding: 9px 12px; color: #dc2626; font-weight: 700;">${s.down} Alerts</td>
+                        <td style="padding: 9px 12px; text-align: right;"><button onclick="showSubnetDiscoveryModal()" style="background:#eff6ff;border:1px solid #bae6fd;color:#0284c7;padding:4px 10px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Rescan Subnet</button></td>
+                      </tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>`;
+        })() : `
           <!-- Multi-Slide Fullscreen NOC Wallboard View (noc) -->
           <div style="background: #0f172a; border-radius: 8px; padding: 24px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
             <!-- NOC Header -->
@@ -9799,6 +9934,98 @@
       toggleTopBandBtn.onclick = () => {
         state.topBandCollapsed = !state.topBandCollapsed;
         renderDashboardView();
+      };
+    }
+
+    // Dashboard Virtualization / Storage / Network / NetFlow / NCM / OpUtils interactive handlers
+    container.querySelectorAll('.opm-dash-poll-btn').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        btn.disabled = true; btn.textContent = 'Polling...';
+        try {
+          const r = await fetch(`/api/devices/${id}/poll-now`, { method: 'POST' });
+          const d = await r.json();
+          if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+          showToast(`Polled node #${id}: ${d.device?.status || (r.ok ? 'OK' : 'Failed')}${d.device?.responseTime != null ? ' (' + d.device.responseTime + 'ms)' : ''}`);
+        } catch (e) { showToast('Poll failed: ' + e.message, 'error'); }
+        renderDashboardView();
+      };
+    });
+    container.querySelectorAll('.opm-dash-hw-btn').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        const dev = (state.devices || []).find(d => String(d.id) === String(id));
+        if (typeof showHardwareSensorsModal === 'function') showHardwareSensorsModal(dev || id);
+      };
+    });
+    const nfDpiBtn = container.querySelector('#opm-dash-nf-dpi-btn');
+    if (nfDpiBtn) nfDpiBtn.onclick = () => { if (typeof showDpiTrafficModal === 'function') showDpiTrafficModal(); };
+    container.querySelectorAll('.opm-dash-nf-inspect-btn').forEach(btn => {
+      btn.onclick = () => {
+        const dev = (state.devices || []).find(d => String(d.id) === String(btn.getAttribute('data-id')));
+        if (typeof showDpiTrafficModal === 'function') showDpiTrafficModal(dev);
+      };
+    });
+    container.querySelectorAll('.opm-dash-ncm-backup-btn').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        const dev = (state.devices || []).find(d => String(d.id) === String(id));
+        btn.disabled = true; btn.textContent = 'Backing up...';
+        try {
+          const r = await fetch('/api/ccm/backup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: id }) });
+          const d = await r.json();
+          if (r.ok && dev) dev.lastBackup = 'Just now';
+          showToast(r.ok ? `SSH config backup saved for ${dev ? (dev.displayName || dev.name || dev.ip) : id}.` : (d.message || 'SSH backup failed (check SSH credentials).'), r.ok ? 'success' : 'warning');
+        } catch (e) { showToast('Backup error: ' + e.message, 'error'); }
+        btn.disabled = false; btn.textContent = 'Backup SSH';
+        renderDashboardView();
+      };
+    });
+    const ncmBkpAll = container.querySelector('#opm-dash-ncm-backup-all-btn');
+    if (ncmBkpAll) {
+      ncmBkpAll.onclick = async () => {
+        const btns = Array.from(container.querySelectorAll('.opm-dash-ncm-backup-btn'));
+        ncmBkpAll.disabled = true; ncmBkpAll.textContent = 'Backing up...';
+        let ok = 0, fail = 0;
+        await Promise.all(btns.map(async b => {
+          const id = b.getAttribute('data-id');
+          try {
+            const r = await fetch('/api/ccm/backup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: id }) });
+            if (r.ok) { ok++; const dev = (state.devices||[]).find(d => String(d.id) === String(id)); if (dev) dev.lastBackup = 'Just now'; }
+            else fail++;
+          } catch (e) { fail++; }
+        }));
+        ncmBkpAll.disabled = false; ncmBkpAll.textContent = `⚡ Backup All Now (${btns.length})`;
+        showToast(`NCM Backup complete: ${ok} succeeded, ${fail} failed/no-SSH.`, ok > 0 ? 'success' : 'warning');
+        renderDashboardView();
+      };
+    }
+    container.querySelectorAll('.opm-dash-ncm-diff-single-btn').forEach(btn => {
+      btn.onclick = () => {
+        const dev = (state.devices || []).find(d => String(d.id) === String(btn.getAttribute('data-id')));
+        if (typeof showNcmVersionCompareModal === 'function') showNcmVersionCompareModal(dev);
+      };
+    });
+    const spmDashBtn = container.querySelector('#opm-dash-spm-btn');
+    if (spmDashBtn) spmDashBtn.onclick = () => { if (typeof showSwitchPortMapperModal === 'function') showSwitchPortMapperModal(); };
+    const macBtn = container.querySelector('#opm-dash-mac-btn');
+    if (macBtn) {
+      macBtn.onclick = async () => {
+        const ip = (container.querySelector('#opm-dash-mac-ip')?.value || '').trim();
+        const outEl = container.querySelector('#opm-dash-mac-result');
+        if (!ip) return;
+        if (outEl) outEl.textContent = 'Resolving...';
+        try {
+          const r = await fetch('/api/tools/mac-resolve', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ target: ip }) });
+          const d = await r.json();
+          if (r.ok && d.macAddress) {
+            if (outEl) { outEl.style.color = '#16a34a'; outEl.textContent = `MAC: ${d.macAddress} (${d.interface}, via ${d.source})`; }
+          } else {
+            if (outEl) { outEl.style.color = '#dc2626'; outEl.textContent = d.message || 'Not found in ARP/SNMP table'; }
+          }
+        } catch (e) {
+          if (outEl) { outEl.style.color = '#dc2626'; outEl.textContent = e.message; }
+        }
       };
     }
 
