@@ -760,12 +760,8 @@ function formatSnmpMac(val) {
   return s;
 }
 
-router.post('/api/tools/mac-resolve', async (req, res) => {
-  const { target = '127.0.0.1', gateway } = req.body || {};
-  const { requested, address } = await resolveSnmpTarget(String(target).trim());
-  const ipToMatch = address || requested;
+async function collectArpEntries(gateway) {
   const entries = [];
-
   // 1. OS Neighbor / ARP table lookup
   try {
     const arpBin = process.platform === 'linux'
@@ -776,12 +772,12 @@ router.post('/api/tools/mac-resolve', async (req, res) => {
     for (const line of String(stdout || '').split('\n')) {
       const mLinux = line.match(/^(\d+\.\d+\.\d+\.\d+)\s+dev\s+(\S+)\s+lladdr\s+([0-9a-f:]+)/i);
       const mMac = line.match(/\((\d+\.\d+\.\d+\.\d+)\)\s+at\s+([0-9a-f:]+)\s+on\s+(\S+)/i);
-      if (mLinux) entries.push({ ip: mLinux[1], mac: mLinux[3].toLowerCase(), iface: mLinux[2], source: 'host-arp' });
-      else if (mMac) entries.push({ ip: mMac[1], mac: mMac[2].toLowerCase(), iface: mMac[3], source: 'host-arp' });
+      if (mLinux) entries.push({ ip: mLinux[1], mac: mLinux[3].toLowerCase(), iface: mLinux[2], ifIndex: null, source: 'host-arp' });
+      else if (mMac) entries.push({ ip: mMac[1], mac: mMac[2].toLowerCase(), iface: mMac[3], ifIndex: null, source: 'host-arp' });
     }
   } catch (e) {}
 
-  // 2. SNMP ipNetToMediaPhysAddress walk on gateway or first SNMP-capable router/switch
+  // 2. SNMP ipNetToMediaPhysAddress walk on gateway or SNMP-capable router/switch
   const svc = loadSnmpService();
   if (svc) {
     const snmpTargets = [];
@@ -801,17 +797,36 @@ router.post('/api/tools/mac-resolve', async (req, res) => {
         for (const row of rows || []) {
           const oidParts = String(row.oid || '').split('.');
           if (oidParts.length >= 5) {
-            const ifIdx = oidParts[oidParts.length - 5];
+            const ifIdx = parseInt(oidParts[oidParts.length - 5], 10);
             const entryIp = oidParts.slice(-4).join('.');
             const mac = formatSnmpMac(row.value);
             if (mac && !entries.some((e) => e.ip === entryIp && e.mac === mac)) {
-              entries.push({ ip: entryIp, mac, iface: `ifIndex:${ifIdx}`, source: `snmp:${gIp}` });
+              entries.push({ ip: entryIp, mac, iface: `ifIndex:${ifIdx}`, ifIndex: Number.isFinite(ifIdx) ? ifIdx : null, source: `snmp:${gIp}` });
             }
           }
         }
       } catch (e) {}
     }
   }
+  return entries;
+}
+
+router.get('/api/tools/arp-table', async (req, res) => {
+  const gateway = req.query.gateway ? String(req.query.gateway).trim() : undefined;
+  const entries = await collectArpEntries(gateway);
+  res.json({
+    status: 'success',
+    total: entries.length,
+    entries,
+    timestamp: new Date().toISOString()
+  });
+});
+
+router.post('/api/tools/mac-resolve', async (req, res) => {
+  const { target = '127.0.0.1', gateway } = req.body || {};
+  const { requested, address } = await resolveSnmpTarget(String(target).trim());
+  const ipToMatch = address || requested;
+  const entries = await collectArpEntries(gateway);
 
   const matched = entries.find((e) => e.ip === ipToMatch || e.mac === String(target).toLowerCase());
   if (!matched) {

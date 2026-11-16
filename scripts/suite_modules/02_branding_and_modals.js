@@ -2233,9 +2233,9 @@
   }
 
   // -------------------------------------------------------------
-  // MODAL: OPUTILS 48-PORT SWITCH PORT MAPPER (SPM) & ROGUE MAC
+  // MODAL: OPUTILS REAL SNMP SWITCH PORT MAPPER (SPM) & ARP/MAC
   // -------------------------------------------------------------
-  function showSwitchPortMapperModal(switchDev) {
+  async function showSwitchPortMapperModal(switchDev) {
     let modal = document.getElementById('opm-spm-modal');
     if (!modal) {
       modal = document.createElement('div');
@@ -2244,9 +2244,11 @@
       document.body.appendChild(modal);
     }
 
-    const switchCandidate = switchDev || (state.devices || []).find(d => (d.category || '').toLowerCase().includes('switch')) || (state.devices && state.devices[0]);
+    const candidates = (state.devices || []).filter(d => /switch|router|firewall/i.test(d.category || ''));
+    const allDevs = candidates.length ? candidates : (state.devices || []);
+    let selectedDev = switchDev || candidates[0] || allDevs[0];
 
-    if (!switchCandidate) {
+    if (!selectedDev) {
       modal.innerHTML = `
         <div style="background: #ffffff; border-radius: 8px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); border: 1px solid #cbd5e1;">
           <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
@@ -2255,7 +2257,6 @@
           </div>
           <div style="padding: 40px 20px; text-align: center;">
             <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Switches Discovered</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add network switches with SNMP enabled to map physical ports, MAC addresses, and connected IP endpoints.</div>
             <button onclick="document.getElementById('opm-spm-modal').style.display='none'; showAddDeviceModal();" style="background: #0070e0; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Switch</button>
           </div>
         </div>
@@ -2265,119 +2266,191 @@
       return;
     }
 
-    const dev = {
-      name: switchCandidate.name,
-      ip: switchCandidate.ip,
-      model: switchCandidate.type || 'Enterprise Managed Switch'
-    };
+    let lastPorts = [];
+    let lastArpEntries = [];
 
-    const ports = [];
-    for (let i = 1; i <= 48; i++) {
-      const isUp = i <= 38;
-      const portName = 'GigabitEthernet0/' + i;
-      const speed = i > 44 ? '10 Gbps Full' : '1000 Mbps Full';
-      const mac = isUp ? ('00:1A:2B:' + (i < 10 ? '0' + i : i) + ':4C:' + (99 - i)) : '-';
-      const ip = isUp ? ('192.168.1.' + (100 + i)) : '-';
-      const hostname = isUp ? (i % 3 === 0 ? 'srv-db' + i : (i % 2 === 0 ? 'workstation-' + i : 'ap-wifi-' + i)) : '-';
-      const vlan = i <= 24 ? 'VLAN 10 (Users)' : (i <= 44 ? 'VLAN 20 (Servers)' : 'VLAN 99 (Core Trunk)');
-      const vendor = isUp ? (i % 4 === 0 ? 'Dell Inc.' : (i % 3 === 0 ? 'Intel Corp.' : (i % 2 === 0 ? 'Apple Inc.' : 'Cisco Systems'))) : '-';
-      const status = isUp ? 'Up' : (i === 42 ? 'Admin Disabled' : 'Down');
-      ports.push({ index: i, name: portName, status, speed, mac, ip, hostname, vlan, vendor });
-    }
+    const renderSpm = async (targetDev) => {
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 8px; width: 1160px; max-width: 96vw; height: 88vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); border: 1px solid #cbd5e1;">
+          <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 32px; height: 32px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">SPM</div>
+              <div>
+                <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">ManageEngine OpUtils &bull; Live Switch Port &amp; ARP/MAC Mapper</div>
+                <div style="font-size: 11px; color: #94a3b8;">Querying real SNMP IF-MIB &amp; ipNetToMediaTable on <strong style="color: #38bdf8;">${targetDev.displayName || targetDev.name || targetDev.ip} (${targetDev.ip})</strong>...</div>
+              </div>
+            </div>
+            <button id="close-spm-modal-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;">✕</button>
+          </div>
+          <div style="padding: 40px; text-align: center; color: #64748b; font-size: 13px;">Polling live SNMP switch interfaces and ARP/MAC table...</div>
+        </div>
+      `;
+      modal.style.display = 'flex';
+      modal.querySelector('#close-spm-modal-btn').onclick = () => { modal.style.display = 'none'; };
 
-    modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 8px; width: 1160px; max-width: 96vw; height: 88vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 32px; height: 32px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">SPM</div>
-            <div>
-              <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">ManageEngine OpUtils &bull; Switch Port Mapper (SPM)</div>
-              <div style="font-size: 11px; color: #94a3b8;">Switch: <strong style="color: #38bdf8;">${dev.name} (${dev.ip})</strong> &bull; Model: <strong>${dev.model}</strong> &bull; Total Ports: <strong>48</strong></div>
+      const [dpiRes, arpRes] = await Promise.all([
+        fetch('/api/advanced/dpi/probe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ deviceId: targetDev.id })
+        }).then(r => r.json()).catch(() => ({})),
+        fetch(`/api/tools/arp-table?gateway=${encodeURIComponent(targetDev.ip)}`).then(r => r.json()).catch(() => ({}))
+      ]);
+
+      const ifaces = dpiRes.interfaces || [];
+      const arpEntries = arpRes.entries || [];
+      lastArpEntries = arpEntries;
+      const devByIp = new Map((state.devices || []).map(d => [d.ip, d]));
+
+      lastPorts = ifaces.map((i, idx) => {
+        const idxNum = i.ifIndex != null ? i.ifIndex : (idx + 1);
+        const matchingArps = arpEntries.filter(a => a.ifIndex === idxNum || (i.name && a.iface === i.name));
+        const firstArp = matchingArps[0] || null;
+        const boundDev = firstArp ? devByIp.get(firstArp.ip) : null;
+        const isUp = i.operStatus === 1 || i.oper_status === 1 || /up/i.test(String(i.oper || i.status || ''));
+        return {
+          index: idxNum,
+          name: i.name || i.descr || `ifIndex ${idxNum}`,
+          status: isUp ? 'Up' : 'Down',
+          speed: i.speed ? `${Math.round(Number(i.speed) / 1000000)} Mbps` : '—',
+          mac: firstArp ? firstArp.mac : (matchingArps.length ? `${matchingArps.length} MACs` : '—'),
+          ip: firstArp ? firstArp.ip : (matchingArps.length > 1 ? `${matchingArps.length} hosts` : '—'),
+          hostname: boundDev ? (boundDev.displayName || boundDev.name || boundDev.ip) : (matchingArps.length > 1 ? `(${matchingArps.length} ARP entries)` : '—'),
+          inMB: ((Number(i.inOctets || 0)) / 1048576).toFixed(1),
+          outMB: ((Number(i.outOctets || 0)) / 1048576).toFixed(1)
+        };
+      });
+
+      const upCount = lastPorts.filter(p => p.status === 'Up').length;
+      const downCount = lastPorts.length - upCount;
+
+      modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 8px; width: 1160px; max-width: 96vw; height: 88vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); border: 1px solid #cbd5e1;">
+          <div style="padding: 14px 22px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 32px; height: 32px; border-radius: 4px; background: #0070e0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 800;">SPM</div>
+              <div>
+                <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">ManageEngine OpUtils &bull; Live Switch Port &amp; ARP/MAC Mapper</div>
+                <div style="font-size: 11px; color: #94a3b8;">Target: <strong style="color: #38bdf8;">${targetDev.displayName || targetDev.name || targetDev.ip} (${targetDev.ip})</strong> &bull; SNMP Ports: <strong>${lastPorts.length}</strong> &bull; ARP/MAC Table: <strong>${arpEntries.length}</strong></div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <select id="spm-device-select" style="background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 5px 10px; border-radius: 4px; font-size: 11px;">
+                ${allDevs.map(d => `<option value="${d.id}" ${String(d.id) === String(targetDev.id) ? 'selected' : ''}>${d.displayName || d.name || d.ip} (${d.ip})</option>`).join('')}
+              </select>
+              <button id="close-spm-modal-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;">✕</button>
             </div>
           </div>
-          <button id="close-spm-modal-btn" style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;" title="Close">✕</button>
-        </div>
 
-        <!-- Port KPI Bar -->
-        <div style="padding: 10px 22px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
-          <div style="display: flex; gap: 14px; align-items: center;">
-            <span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 3px 10px; border-radius: 12px;">● 38 Connected (Up)</span>
-            <span style="background: #f1f5f9; color: #475569; font-weight: 700; padding: 3px 10px; border-radius: 12px;">○ 10 Available (Free)</span>
-            <span style="background: #fee2e2; color: #991b1b; font-weight: 700; padding: 3px 10px; border-radius: 12px;">0 Rogue Devices</span>
-            <span style="color: #64748b;">SNMP ifTable Polling Interval: <strong>5 Mins</strong></span>
+          <div style="padding: 10px 22px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 3px 10px; border-radius: 12px;">● ${upCount} Up Ports</span>
+              <span style="background: #f1f5f9; color: #475569; font-weight: 700; padding: 3px 10px; border-radius: 12px;">○ ${downCount} Down Ports</span>
+              <span style="background: #e0f2fe; color: #0369a1; font-weight: 700; padding: 3px 10px; border-radius: 12px;">${arpEntries.length} Live ARP/MAC Entries</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button id="spm-rescan-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">⚡ Re-Scan SNMP &amp; ARP</button>
+              <button id="spm-export-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Export CSV</button>
+            </div>
           </div>
-          <div style="display: flex; gap: 8px;">
-            <button id="spm-rescan-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">⚡ Re-Scan Ports via SNMP</button>
-            <button id="spm-export-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Export CSV</button>
-          </div>
-        </div>
 
-        <!-- 48-Port Table -->
-        <div style="flex: 1; overflow-y: auto; padding: 14px 22px;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-            <thead>
-              <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                <th style="padding: 8px 10px; width: 40px;">#</th>
-                <th style="padding: 8px 10px;">Port Name</th>
-                <th style="padding: 8px 10px;">Status</th>
-                <th style="padding: 8px 10px;">Speed / Duplex</th>
-                <th style="padding: 8px 10px;">Connected MAC</th>
-                <th style="padding: 8px 10px;">Bound IP Address</th>
-                <th style="padding: 8px 10px;">DNS Hostname</th>
-                <th style="padding: 8px 10px;">VLAN</th>
-                <th style="padding: 8px 10px;">NIC Vendor</th>
-                <th style="padding: 8px 10px; text-align: right;">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${ports.map(p => `
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 7px 10px; font-family: monospace; color: #64748b;">${p.index}</td>
-                  <td style="padding: 7px 10px; font-weight: 700; color: #0284c7; font-family: monospace;">${p.name}</td>
-                  <td style="padding: 7px 10px;">
-                    <span style="background: ${p.status === 'Up' ? '#dcfce7' : (p.status.includes('Admin') ? '#fee2e2' : '#f1f5f9')}; color: ${p.status === 'Up' ? '#166534' : (p.status.includes('Admin') ? '#991b1b' : '#64748b')}; font-weight: 700; padding: 2px 6px; border-radius: 3px;">
-                      ${p.status}
-                    </span>
-                  </td>
-                  <td style="padding: 7px 10px; color: #334155;">${p.speed}</td>
-                  <td style="padding: 7px 10px; font-family: monospace; font-weight: 600; color: #0f172a;">${p.mac}</td>
-                  <td style="padding: 7px 10px; font-family: monospace; color: #0284c7;">${p.ip}</td>
-                  <td style="padding: 7px 10px; font-weight: 600; color: #475569;">${p.hostname}</td>
-                  <td style="padding: 7px 10px;"><span style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1px 5px; border-radius: 2px;">${p.vlan}</span></td>
-                  <td style="padding: 7px 10px; color: #64748b;">${p.vendor}</td>
-                  <td style="padding: 7px 10px; text-align: right;">
-                    <button class="spm-shut-btn" data-port="${p.name}" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #dc2626; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; cursor: pointer;">Shut</button>
-                  </td>
+          <div style="flex: 1; overflow-y: auto; padding: 14px 22px;">
+            <div style="font-size: 12px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">SNMP IF-MIB Ports (${lastPorts.length})</div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 20px;">
+              <thead>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                  <th style="padding: 8px 10px; width: 55px;">ifIdx</th>
+                  <th style="padding: 8px 10px;">Port / Interface</th>
+                  <th style="padding: 8px 10px;">Oper Status</th>
+                  <th style="padding: 8px 10px;">Speed</th>
+                  <th style="padding: 8px 10px;">Traffic (In / Out MB)</th>
+                  <th style="padding: 8px 10px;">Connected MAC</th>
+                  <th style="padding: 8px 10px;">Bound IP / Host</th>
+                  <th style="padding: 8px 10px; text-align: right;">CLI</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                ${lastPorts.length === 0 ? `
+                  <tr><td colspan="8" style="padding: 24px; text-align: center; color: #94a3b8;">No SNMP interfaces returned from ${targetDev.ip} (ensure SNMPv2c community matches).</td></tr>
+                ` : lastPorts.map(p => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 7px 10px; font-family: monospace; color: #64748b;">${p.index}</td>
+                    <td style="padding: 7px 10px; font-weight: 700; color: #0284c7; font-family: monospace;">${p.name}</td>
+                    <td style="padding: 7px 10px;"><span style="background: ${p.status === 'Up' ? '#dcfce7' : '#f1f5f9'}; color: ${p.status === 'Up' ? '#166534' : '#64748b'}; font-weight: 700; padding: 2px 6px; border-radius: 3px;">${p.status}</span></td>
+                    <td style="padding: 7px 10px; color: #334155;">${p.speed}</td>
+                    <td style="padding: 7px 10px; font-family: monospace; color: #475569;">${p.inMB} / ${p.outMB} MB</td>
+                    <td style="padding: 7px 10px; font-family: monospace; color: #0f172a;">${p.mac}</td>
+                    <td style="padding: 7px 10px; font-family: monospace; color: #0284c7;">${p.ip}${p.hostname !== '—' ? ' (' + p.hostname + ')' : ''}</td>
+                    <td style="padding: 7px 10px; text-align: right;"><button class="spm-shut-btn" data-ip="${targetDev.ip}" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; cursor: pointer;">SSH CLI</button></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
 
-        <!-- Footer -->
-        <div style="padding: 10px 22px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
-          <span>ManageEngine SPM Engine &bull; MAC IP Address Mapping Engine &bull; Zero Rogue Devices Detected</span>
-          <button id="spm-close-btn-bottom" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close SPM</button>
-        </div>
-      </div>
-    `;
+            <div style="font-size: 12px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">Discovered Network ARP / MAC Bindings (Showing up to 100 of ${arpEntries.length})</div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+              <thead>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                  <th style="padding: 7px 10px;">IP Address</th>
+                  <th style="padding: 7px 10px;">MAC Address</th>
+                  <th style="padding: 7px 10px;">Interface / ifIndex</th>
+                  <th style="padding: 7px 10px;">Host / Name</th>
+                  <th style="padding: 7px 10px;">Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${arpEntries.length === 0 ? `
+                  <tr><td colspan="5" style="padding: 20px; text-align: center; color: #94a3b8;">No ARP entries collected.</td></tr>
+                ` : arpEntries.slice(0, 100).map(a => {
+                  const d = devByIp.get(a.ip);
+                  return `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 6px 10px; font-family: monospace; color: #0284c7;">${a.ip}</td>
+                      <td style="padding: 6px 10px; font-family: monospace; font-weight: 700; color: #0f172a;">${a.mac}</td>
+                      <td style="padding: 6px 10px; font-family: monospace; color: #475569;">${a.iface || '—'}</td>
+                      <td style="padding: 6px 10px; color: #334155;">${d ? (d.displayName || d.name) : '—'}</td>
+                      <td style="padding: 6px 10px; font-size: 10px; color: #64748b;">${a.source}</td>
+                    </tr>`;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
 
-    modal.style.display = 'flex';
-    modal.querySelector('#close-spm-modal-btn').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#spm-close-btn-bottom').onclick = () => { modal.style.display = 'none'; };
-    modal.querySelector('#spm-rescan-btn').onclick = () => {
-      showToast('SNMP ifTable / ipNetToMediaTable walk initiated on ' + dev.name + '. Refreshing 48 switch ports.');
-    };
-    modal.querySelector('#spm-export-btn').onclick = () => {
-      showToast('Exported 48-port switch port map CSV.');
-    };
-    modal.querySelectorAll('.spm-shut-btn').forEach(btn => {
-      btn.onclick = () => {
-        const port = btn.getAttribute('data-port');
-        showToast('SSH Command dispatched to ' + dev.name + ': interface ' + port + ' -> shutdown.');
+          <div style="padding: 10px 22px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b;">
+            <span>Live SNMP IF-MIB &amp; ipNetToMediaTable &bull; Zero Hardcoded Ports</span>
+            <button id="spm-close-btn-bottom" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 14px; border-radius: 4px; font-weight: 600; cursor: pointer; color: #334155;">Close SPM</button>
+          </div>
+        </div>
+      `;
+
+      modal.querySelector('#close-spm-modal-btn').onclick = () => { modal.style.display = 'none'; };
+      modal.querySelector('#spm-close-btn-bottom').onclick = () => { modal.style.display = 'none'; };
+      const sel = modal.querySelector('#spm-device-select');
+      if (sel) sel.onchange = () => {
+        const nextDev = allDevs.find(d => String(d.id) === String(sel.value));
+        if (nextDev) { selectedDev = nextDev; renderSpm(nextDev); }
       };
-    });
+      modal.querySelector('#spm-rescan-btn').onclick = () => renderSpm(targetDev);
+      modal.querySelector('#spm-export-btn').onclick = () => {
+        const csvLines = ['ifIndex,Port,Status,Speed,InMB,OutMB,MAC,IP'].concat(
+          lastPorts.map(p => `${p.index},"${p.name}","${p.status}","${p.speed}",${p.inMB},${p.outMB},"${p.mac}","${p.ip}"`)
+        );
+        const blob = new Blob([csvLines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = `SPM_${targetDev.ip}_${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+        showToast(`Exported ${lastPorts.length} SNMP switch ports + ARP mappings to CSV.`);
+      };
+      modal.querySelectorAll('.spm-shut-btn').forEach(btn => {
+        btn.onclick = () => {
+          modal.style.display = 'none';
+          if (typeof showNetworkToolsModal === 'function') showNetworkToolsModal(btn.getAttribute('data-ip'), 'terminal');
+        };
+      });
+    };
+
+    await renderSpm(selectedDev);
   }
 
   // -------------------------------------------------------------
