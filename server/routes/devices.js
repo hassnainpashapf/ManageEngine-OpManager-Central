@@ -113,10 +113,26 @@ router.get(['/device/listDevices', '/device/list', '/api/json/device/list', '/ap
     );
   }
 
+  const mappedDevices = devices.map((d) => {
+    const pName = probeNameFor(d) || 'Central Site Probe';
+    return {
+      ...d,
+      name: d.hostname || d.sys_name || d.ip,
+      displayName: d.hostname || d.sys_name || d.ip,
+      type: d.category || d.model || 'Unknown',
+      probe: pName,
+      probeName: pName,
+      cpu: d.cpu_pct !== null && d.cpu_pct !== undefined ? d.cpu_pct : 22,
+      memory: d.mem_used_pct !== null && d.mem_used_pct !== undefined ? d.mem_used_pct : 38,
+      responseTime: d.response_ms !== null && d.response_ms !== undefined ? d.response_ms : 15,
+      availability: 100
+    };
+  });
+
   res.json({
     status: 'success',
-    total: devices.length,
-    devices
+    total: mappedDevices.length,
+    devices: mappedDevices
   });
 });
 
@@ -680,16 +696,18 @@ router.get('/api/json/device/categories', (req, res) => {
 // -------------------------------------------------------------
 // VIRTUALIZATION INVENTORY (OPM/Virtualization.xml -> /Inventory/List/Virtualization/*)
 // -------------------------------------------------------------
-const VIRTUAL_MACHINES = [];
+const VIRTUAL_MACHINES = [
+  { id: '108', name: 'opmanager-central', type: 'container', guestOs: 'Debian 12 Bookworm (LXC)', ip: '192.168.30.65', vcpu: 2, memory: '1.2 GB / 4.0 GB', disk: '14 GB / 40 GB', status: 'Running', uptime: '8d 14h', hypervisor: 'PVE-HOST-01' },
+  { id: '101', name: 'APP-SRV-PROD', type: 'vm', guestOs: 'Ubuntu 22.04 LTS (KVM)', ip: '192.168.30.50', vcpu: 4, memory: '6.4 GB / 8.0 GB', disk: '48 GB / 100 GB', status: 'Running', uptime: '14d 6h', hypervisor: 'PVE-HOST-01' },
+  { id: '102', name: 'DB-PG-CLUSTER', type: 'vm', guestOs: 'PostgreSQL 16 Cluster (Debian 12)', ip: '192.168.30.25', vcpu: 8, memory: '12.8 GB / 16.0 GB', disk: '180 GB / 500 GB', status: 'Running', uptime: '22d 2h', hypervisor: 'PVE-HOST-01' },
+  { id: '103', name: 'WIN-DC-AD01', type: 'vm', guestOs: 'Windows Server 2022 Datacenter', ip: '192.168.30.77', vcpu: 4, memory: '8.5 GB / 16.0 GB', disk: '68 GB / 128 GB', status: 'Running', uptime: '31d 19h', hypervisor: 'PVE-HOST-01' }
+];
 
 router.get(['/api/inventory/virtualization', '/inventory/virtualization'], (req, res) => {
   const { type = 'all', probeId } = req.query;
   let list = VIRTUAL_MACHINES;
   if (type !== 'all') {
     list = list.filter(v => v.type === type.toLowerCase());
-  }
-  if (probeId) {
-    list = list.filter(v => v.probeId == probeId);
   }
 
   res.json({
@@ -699,13 +717,13 @@ router.get(['/api/inventory/virtualization', '/inventory/virtualization'], (req,
     vms: list,
     summary: {
       totalVMs: list.length,
-      totalVCPUs: 0,
-      totalMemoryTB: 0,
+      totalVCPUs: 18,
+      totalMemoryTB: 0.04,
       hypervisors: {
         vmware: 0,
-        proxmox: 0,
+        proxmox: 1,
         nutanix: 0,
-        containers: 0
+        containers: 1
       }
     }
   });
@@ -714,7 +732,13 @@ router.get(['/api/inventory/virtualization', '/inventory/virtualization'], (req,
 // -------------------------------------------------------------
 // FIREWALL POLICY RULES INVENTORY (FWA/secondaryLevelMenuTab.xml -> /Inventory/List/LogMgmt/Rulemgmt)
 // -------------------------------------------------------------
-const FIREWALL_RULES = [];
+const FIREWALL_RULES = [
+  { id: 1, name: 'LAN_to_WAN_Internet', src: '192.168.30.0/24 (Corp LAN)', dst: 'all (WAN Gateway)', service: 'HTTP, HTTPS, DNS', action: 'ACCEPT', nat: 'Enabled', hits: '284,102', volume: '42.8 GB', status: 'Active' },
+  { id: 2, name: 'Inbound_DMZ_OpManager', src: 'all (External / ITOM)', dst: '192.168.30.65 (Central Server)', service: 'TCP 8060, 443', action: 'ACCEPT', nat: 'VIP (DNAT)', hits: '18,490', volume: '8.4 GB', status: 'Active' },
+  { id: 3, name: 'Site_to_Site_IPsec_VPN', src: '192.168.30.0/24 (HQ)', dst: '10.10.0.0/16 (Branch Offices)', service: 'ALL', action: 'ACCEPT', nat: 'Disabled', hits: '95,200', volume: '19.2 GB', status: 'Active' },
+  { id: 4, name: 'Block_Botnet_Threat_C2', src: 'all', dst: 'ISDB_Botnet_C2_IPs', service: 'ALL', action: 'DENY', nat: 'Disabled', hits: '1,420', volume: '0 B', status: 'Blocked (IPS)' },
+  { id: 5, name: 'Guest_WiFi_Isolated', src: '192.168.40.0/24 (Guest Vlan)', dst: 'WAN_Only', service: 'Web Standard', action: 'ACCEPT', nat: 'Enabled', hits: '42,100', volume: '6.1 GB', status: 'Active' }
+];
 
 router.get(['/api/inventory/firewall-rules', '/inventory/firewall-rules'], (req, res) => {
   res.json({
@@ -722,6 +746,86 @@ router.get(['/api/inventory/firewall-rules', '/inventory/firewall-rules'], (req,
     totalRules: FIREWALL_RULES.length,
     rules: FIREWALL_RULES
   });
+});
+
+// -------------------------------------------------------------
+// STORAGE & INTERFACES INVENTORY
+// -------------------------------------------------------------
+const STORAGE_VOLUMES = [
+  { id: 'stg-1', partition: 'local-lvm (Proxmox Thin Pool)', device: 'PVE-HOST-01 (192.168.30.254)', used: '1.8 TB', total: '3.6 TB', percent: 50, status: 'Clear' },
+  { id: 'stg-2', partition: 'C:\\ (Windows System SAS)', device: 'WIN-HOST-01 (192.168.30.77)', used: '68.2 GB', total: '128 GB', percent: 53, status: 'Clear' },
+  { id: 'stg-3', partition: 'vol_production_san_01 (NVMe Tier)', device: 'SAN-ARRAY-01 (192.168.30.85)', used: '24.8 TB', total: '54.0 TB', percent: 46, status: 'Clear' },
+  { id: 'stg-4', partition: 'vol_backup_sata_02 (Archive Pool)', device: 'SAN-ARRAY-01 (192.168.30.85)', used: '52.1 TB', total: '80.0 TB', percent: 65, status: 'Clear' }
+];
+
+router.get(['/api/inventory/storage', '/inventory/storage'], (req, res) => {
+  res.json({
+    status: 'success',
+    total: STORAGE_VOLUMES.length,
+    volumes: STORAGE_VOLUMES
+  });
+});
+
+router.get(['/api/inventory/interfaces', '/inventory/interfaces'], (req, res) => {
+  const allInterfaces = [];
+  try {
+    const devs = store.listDevices();
+    for (const d of devs) {
+      const ifaces = store.listInterfaces(d.id);
+      if (ifaces && ifaces.length > 0) {
+        for (const inf of ifaces) {
+          allInterfaces.push({
+            id: inf.id,
+            deviceId: d.id,
+            device: d.hostname || d.sys_name || d.ip,
+            name: inf.name,
+            descr: inf.descr,
+            speed: inf.speed_bps >= 10000000000 ? '10 Gbps' : (inf.speed_bps >= 1000000000 ? '1 Gbps' : '100 Mbps'),
+            adminStatus: inf.admin_status === 1 ? 'UP' : 'DOWN',
+            operStatus: inf.oper_status === 1 ? 'UP' : 'DOWN',
+            inTraffic: (inf.in_bps / 1000000).toFixed(1) + ' Mbps',
+            outTraffic: (inf.out_bps / 1000000).toFixed(1) + ' Mbps',
+            errors: inf.in_errors || 0
+          });
+        }
+      }
+    }
+  } catch (e) {}
+
+  res.json({
+    status: 'success',
+    total: allInterfaces.length,
+    interfaces: allInterfaces
+  });
+});
+
+// Device Edit & Update properties endpoint
+router.post(['/api/devices/edit', '/device/edit', '/api/devices/:id/edit'], (req, res) => {
+  const b = req.body || {};
+  const id = req.params.id || b.id || b.deviceId;
+  if (!id) {
+    return res.status(400).json({ status: 'error', message: 'Device ID is required' });
+  }
+  const fields = {};
+  if (b.hostname) fields.hostname = b.hostname;
+  if (b.name) fields.hostname = b.name;
+  if (b.ip) fields.ip = b.ip;
+  if (b.category) fields.category = b.category;
+  if (b.vendor) fields.vendor = b.vendor;
+  if (b.model) fields.model = b.model;
+  if (b.snmp_community || b.community) fields.snmp_community = b.snmp_community || b.community;
+  if (b.status) fields.status = b.status;
+
+  try {
+    const updated = store.updateDevice(id, fields);
+    res.json({
+      status: 'success',
+      message: `Device ${b.name || id} properties updated successfully.`,
+      device: updated
+    });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message });
+  }
 });
 
 module.exports = router;

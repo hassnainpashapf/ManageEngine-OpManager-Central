@@ -7,7 +7,12 @@
  * expose a generic "push arbitrary config" path - writing to live production
  * network gear needs an explicit, reviewed action, not an automated one.
  */
-const { Client } = require('ssh2');
+let Client = null;
+try {
+  Client = require('ssh2').Client;
+} catch (e) {
+  // ssh2 optional dependency fallback
+}
 
 function findSshCredential(store) {
   const creds = (store.credentials ? store.credentials.listCredentials() : store.listCredentials()) || [];
@@ -17,6 +22,9 @@ function findSshCredential(store) {
 // Runs a shell session, disables paging, sends the command, and collects
 // output until the prompt reappears (or a timeout elapses).
 function runShowCommand(host, { username, password }, command, timeoutMs = 10000) {
+  if (!Client) {
+    return Promise.reject(new Error('ssh2 module is not installed on this host'));
+  }
   return new Promise((resolve, reject) => {
     const conn = new Client();
     let buffer = '';
