@@ -39,6 +39,9 @@ const router = express.Router();
 const store = require('../services/store');
 const { requireAuth, requireRole } = require('../services/session');
 const sshclient = require('../services/sshclient');
+const ping = require('../services/ping');
+const snmp = require('../services/snmp');
+const { execFile } = require('node:child_process');
 const dns = require('node:dns/promises');
 
 // Store contract: store.workflows.createWorkflow, listWorkflows,
@@ -146,10 +149,19 @@ router.post(
   }
 );
 
-// A step executes for real only when it declares type 'ssh' (or 'cli') with
-// a host and command. Any other/missing type stays honestly unsupported -
-// nothing is fabricated for it.
-const SSH_STEP_TYPES = new Set(['ssh', 'cli']);
+// Real executable step types backed by local node services / SQLite store.
+// Steps needing external SaaS/WMI integrations (slack, sdp_ticket, wmi,
+// restart_service, reboot_system) remain honestly 501 not_implemented.
+const SUPPORTED_STEP_TYPES = new Set(['ssh', 'cli', 'ping', 'traceroute', 'poll', 'snmp_poll', 'ncm_backup', 'ack_alarm']);
+
+function runTracerouteOnce(address) {
+  return new Promise((resolve) => {
+    execFile('traceroute', ['-n', '-w', '1', '-q', '1', '-m', '10', address], { timeout: 10000 }, (err, stdout, stderr) => {
+      const out = String(stdout || stderr || (err && err.message) || '').trim();
+      resolve({ ok: !err || Boolean(stdout), output: out || 'No traceroute output' });
+    });
+  });
+}
 
 async function resolveHost(target) {
   if (!target || typeof target !== 'string') return null;
@@ -162,11 +174,18 @@ async function resolveHost(target) {
   }
 }
 
-// POST /api/workflows/execute — runs real SSH steps (type 'ssh'/'cli') via
-// services/sshclient.js. A workflow containing any step of an unsupported
-// type (WMI, notification, service-restart, ...) is refused entirely with
-// an honest 501 naming the unsupported types, rather than silently running
-// only part of it. Unknown workflowId -> 404; missing workflowId -> 400.
+router.delete('/api/workflows/:id', requireAuth, requireRole('admin'), async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const delFn = workflows.deleteWorkflow || store.deleteWorkflow;
+    const result = delFn ? await delFn(id) : { deleted: 0 };
+    res.json({ status: 'success', ...result });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/workflows/execute — executes real workflow steps cleanly.
 router.post('/api/workflows/execute', async (req, res, next) => {
   try {
     const { workflowId } = req.body || {};
@@ -192,14 +211,14 @@ router.post('/api/workflows/execute', async (req, res, next) => {
 
     const unsupported = [...new Set(
       steps
-        .filter((s) => !s || !SSH_STEP_TYPES.has(String(s.type || '').toLowerCase()))
+        .filter((s) => !s || !SUPPORTED_STEP_TYPES.has(String(s.type || '').toLowerCase()))
         .map((s) => (s && s.type) || '(missing type)')
     )];
 
     if (steps.length === 0 || unsupported.length > 0) {
       const message = steps.length === 0
         ? `Workflow "${wf.name}" (id ${wf.id}) has no steps to run.`
-        : `Workflow "${wf.name}" (id ${wf.id}) was not run: step type(s) ${unsupported.join(', ')} have no real executor. Only 'ssh'/'cli' steps (host + command, using a Credential Library SSH credential) can run for real.`;
+        : `Workflow "${wf.name}" (id ${wf.id}) refused: step type(s) [${unsupported.join(', ')}] have no local executor. Supported types: ping, traceroute, poll, ssh, cli, ncm_backup, ack_alarm.`;
       await workflows.saveWorkflowRun({
         workflow_id: wf.id,
         status: 'not_implemented',
@@ -217,34 +236,89 @@ router.post('/api/workflows/execute', async (req, res, next) => {
       });
     }
 
-    const cred = sshclient.findSshCredential(store);
-    if (!cred || !cred.username || !cred.password) {
-      // Not an execution attempt - nothing ever reached a device - so this
-      // stays out of EXECUTED_STATUSES the same way the unsupported-step-type
-      // refusal above does.
-      const message = 'No SSH/CLI credential with a username and password is configured in the Credential Library.';
+    const needsSsh = steps.some((s) => ['ssh', 'cli', 'ncm_backup'].includes(String(s.type || '').toLowerCase()));
+    const cred = needsSsh ? sshclient.findSshCredential(store) : null;
+    if (needsSsh && (!cred || !cred.username || !cred.password)) {
+      const message = 'SSH/CLI or NCM Backup step requires an SSH credential configured in Settings > Credential Library.';
       await workflows.saveWorkflowRun({
         workflow_id: wf.id, status: 'not_implemented', log: message, started_at: startedAt, finished_at: Date.now()
       });
-      return res.status(400).json({ status: 'error', message, workflowId: wf.id });
+      return res.status(400).json({ status: 'error', message, workflowId: wf.id, logs: [message] });
     }
 
     const logs = [];
     let allOk = true;
-    for (const step of steps) {
-      const address = await resolveHost(step.host);
-      if (!address) {
-        allOk = false;
-        logs.push(`Step on '${step.host}': could not resolve to an IPv4 address.`);
+    const devices = store.listDevices() || [];
+
+    for (let i = 0; i < steps.length; i++) {
+      const step = steps[i];
+      const stType = String(step.type || '').toLowerCase();
+      const target = String(step.host || step.target || '192.168.30.1').trim();
+      const matchedDev = devices.find((d) => d.ip === target || d.hostname === target || String(d.id) === target);
+      const resolveTarget = matchedDev ? matchedDev.ip : target;
+
+      if (stType === 'ack_alarm') {
+        const alms = (store.listAlarms({ limit: 500 }) || []).filter(
+          (a) => String(a.status || '').toLowerCase() === 'active' &&
+            (!matchedDev || String(a.device_id) === String(matchedDev.id))
+        );
+        let acked = 0;
+        for (const a of alms.slice(0, 20)) {
+          try { store.acknowledgeAlarm(a.id, 'workflow-engine'); acked++; } catch (e) {}
+        }
+        logs.push(`[Step ${i + 1}: ACK_ALARM] Acknowledged ${acked} active alarm(s) for ${matchedDev ? matchedDev.hostname || matchedDev.ip : 'all nodes'}.`);
         continue;
       }
-      try {
-        const result = await sshclient.execCommand(address, cred, step.command);
-        allOk = allOk && (result.exitCode === 0 || result.exitCode === null);
-        logs.push(`Step on ${step.host} (${address}): exit ${result.exitCode}\n${result.stdout}${result.stderr ? '\nstderr: ' + result.stderr : ''}`);
-      } catch (err) {
+
+      const address = await resolveHost(resolveTarget);
+      if (!address) {
         allOk = false;
-        logs.push(`Step on ${step.host} (${address}): SSH failed - ${err.message}`);
+        logs.push(`[Step ${i + 1}: ${stType.toUpperCase()}] Could not resolve target '${target}' to IPv4.`);
+        continue;
+      }
+
+      if (stType === 'ping') {
+        const ms = await ping.pingMs(address);
+        if (ms !== null) {
+          logs.push(`[Step ${i + 1}: PING] ${address} replied in ${ms} ms (ICMP Echo OK).`);
+        } else {
+          allOk = false;
+          logs.push(`[Step ${i + 1}: PING] ${address} did not respond to ICMP Echo.`);
+        }
+      } else if (stType === 'traceroute') {
+        const tr = await runTracerouteOnce(address);
+        if (!tr.ok) allOk = false;
+        logs.push(`[Step ${i + 1}: TRACEROUTE] Target ${address}:\n${tr.output}`);
+      } else if (stType === 'poll' || stType === 'snmp_poll') {
+        const comm = (matchedDev && matchedDev.snmp_community) || step.community || 'public';
+        try {
+          const vbs = await snmp.snmpGet(address, comm, ['1.3.6.1.2.1.1.1.0', '1.3.6.1.2.1.1.3.0']);
+          const descr = vbs[0] && vbs[0].value != null ? String(vbs[0].value).slice(0, 80) : 'OK';
+          const up = vbs[1] && vbs[1].value != null ? vbs[1].value : '—';
+          logs.push(`[Step ${i + 1}: SNMP_POLL] ${address} sysUpTime=${up}, sysDescr="${descr}"`);
+        } catch (err) {
+          allOk = false;
+          logs.push(`[Step ${i + 1}: SNMP_POLL] ${address} SNMP poll failed: ${err.message}`);
+        }
+      } else if (stType === 'ncm_backup') {
+        try {
+          const raw = await sshclient.runShowCommand(address, cred, step.command || 'show running-config');
+          const clean = sshclient.cleanConfigOutput(raw, step.command || 'show running-config');
+          if (matchedDev && clean) store.saveConfig(matchedDev.id, 'running', clean);
+          logs.push(`[Step ${i + 1}: NCM_BACKUP] Captured ${clean.length} bytes config from ${address}.`);
+        } catch (err) {
+          allOk = false;
+          logs.push(`[Step ${i + 1}: NCM_BACKUP] SSH config backup failed on ${address}: ${err.message}`);
+        }
+      } else {
+        try {
+          const result = await sshclient.execCommand(address, cred, step.command || 'uname -a');
+          allOk = allOk && (result.exitCode === 0 || result.exitCode === null);
+          logs.push(`[Step ${i + 1}: SSH_CLI] ${address} exit=${result.exitCode}\n${result.stdout}${result.stderr ? '\nstderr: ' + result.stderr : ''}`);
+        } catch (err) {
+          allOk = false;
+          logs.push(`[Step ${i + 1}: SSH_CLI] ${address} SSH failed: ${err.message}`);
+        }
       }
     }
 
@@ -256,7 +330,7 @@ router.post('/api/workflows/execute', async (req, res, next) => {
 
     res.json({
       status: allOk ? 'success' : 'error',
-      message: `Workflow "${wf.name}" (id ${wf.id}) ${allOk ? 'completed' : 'completed with failures'}.`,
+      message: `Workflow "${wf.name}" (id ${wf.id}) ${allOk ? 'completed successfully' : 'completed with step failures'}.`,
       workflowId: wf.id,
       logs,
     });

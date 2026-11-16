@@ -13872,108 +13872,144 @@
           return '';
         })()}
 
-        ${activeSub === 'workflows' ? `
-          <!-- IT Automation Workflows Subtab (with Official ManageEngine Workflow Action Palette Icons) -->
+        ${activeSub === 'workflows' ? (() => {
+          if (!state._wfLoading && !state._liveWorkflows) {
+            state._wfLoading = true;
+            fetch('/api/workflows/list')
+              .then(r => r.json())
+              .then(d => {
+                state._liveWorkflows = d.workflows || [];
+                state._wfLoading = false;
+                if (state.currentTab === 'configuration' && state.subTabs && state.subTabs.configuration === 'workflows') renderConfigurationView();
+              })
+              .catch(() => { state._wfLoading = false; });
+          }
+          const escW = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          const wfList = state._liveWorkflows || [];
+          const draftSteps = state._wfDraftSteps || [
+            { type: 'ping', host: ((state.devices && state.devices[0] && state.devices[0].ip) || '192.168.30.1') },
+            { type: 'poll', host: ((state.devices && state.devices[0] && state.devices[0].ip) || '192.168.30.1') }
+          ];
+          const stepIcon = (t) => ({
+            ping: '/apiclient/fluidicv2/img/workflow/ping_device.png',
+            traceroute: '/apiclient/fluidicv2/img/workflow/trace_route.png',
+            poll: '/apiclient/fluidicv2/img/workflow/poll_now.png',
+            snmp_poll: '/apiclient/fluidicv2/img/workflow/poll_now.png',
+            ncm_backup: '/apiclient/fluidicv2/img/workflow/ncm_trigger_backup.png',
+            ssh: '/apiclient/fluidicv2/img/workflow/ncm_execute_command.png',
+            cli: '/apiclient/fluidicv2/img/workflow/ncm_execute_command.png',
+            ack_alarm: '/apiclient/fluidicv2/img/workflow/acknowledge_alarm.png'
+          }[String(t || '').toLowerCase()] || '/apiclient/fluidicv2/img/workflow/poll_now.png');
+
+          return `
+          <!-- IT Automation Workflows Subtab (Real SQLite /api/workflows/* + Local Executors) -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Enterprise IT Automation Workflows</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Multi-step automated remediation playbooks executed across Distributed Probes.</div>
+                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Enterprise IT Automation Workflows (${wfList.length} Saved Playbooks)</div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Create &amp; execute real multi-step playbooks (ICMP Ping, Traceroute, SNMP Poll, SSH CLI, NCM Backup, Alarm Ack) persisted in SQLite.</div>
               </div>
-              <button id="opm-new-wf-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+              <button id="opm-new-wf-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
                 + New Workflow Playbook
               </button>
             </div>
 
-            <!-- Official ManageEngine Workflow Drag & Drop Action Palette Bar -->
+            <!-- Interactive Workflow Action Palette -->
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 10px; overflow-x: auto;">
-              <span style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; white-space: nowrap;">Workflow Action Library:</span>
-              <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; white-space: nowrap;">Click to Add Step:</span>
+              <div style="display: flex; align-items: center; gap: 10px;">
                 ${[
-                  { label: 'Ping Device', ico: '/apiclient/fluidicv2/img/workflow/ping_device.png' },
-                  { label: 'Traceroute', ico: '/apiclient/fluidicv2/img/workflow/trace_route.png' },
-                  { label: 'Poll Now', ico: '/apiclient/fluidicv2/img/workflow/poll_now.png' },
-                  { label: 'Restart Service', ico: '/apiclient/fluidicv2/img/workflow/restart_service.png' },
-                  { label: 'Reboot System', ico: '/apiclient/fluidicv2/img/workflow/reboot_system.png' },
-                  { label: 'NCM Backup', ico: '/apiclient/fluidicv2/img/workflow/ncm_trigger_backup.png' },
-                  { label: 'Execute CLI', ico: '/apiclient/fluidicv2/img/workflow/ncm_execute_command.png' },
-                  { label: 'Config Diff', ico: '/apiclient/fluidicv2/img/workflow/ncm_get_config_diff.png' },
-                  { label: 'Ack Alarm', ico: '/apiclient/fluidicv2/img/workflow/acknowledge_alarm.png' },
-                  { label: 'SDP Ticket', ico: '/apiclient/fluidicv2/img/workflow/log_a_ticket_sdp.png' },
-                  { label: 'Slack Alert', ico: '/apiclient/fluidicv2/img/workflow/slack_chat.png' }
+                  { type: 'ping', label: 'Ping Device', ico: '/apiclient/fluidicv2/img/workflow/ping_device.png', supported: true },
+                  { type: 'traceroute', label: 'Traceroute', ico: '/apiclient/fluidicv2/img/workflow/trace_route.png', supported: true },
+                  { type: 'poll', label: 'SNMP Poll Now', ico: '/apiclient/fluidicv2/img/workflow/poll_now.png', supported: true },
+                  { type: 'ssh', label: 'Execute SSH CLI', ico: '/apiclient/fluidicv2/img/workflow/ncm_execute_command.png', supported: true },
+                  { type: 'ncm_backup', label: 'NCM Backup', ico: '/apiclient/fluidicv2/img/workflow/ncm_trigger_backup.png', supported: true },
+                  { type: 'ack_alarm', label: 'Ack Alarm', ico: '/apiclient/fluidicv2/img/workflow/acknowledge_alarm.png', supported: true }
                 ].map(act => `
-                  <div style="display: flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 8px; font-size: 11px; font-weight: 600; color: #1e293b; white-space: nowrap; cursor: grab;">
-                    <img src="${act.ico}" style="width: 15px; height: 15px; object-fit: contain;" />
-                    <span>${act.label}</span>
-                  </div>
+                  <button class="opm-wf-palette-btn" data-type="${act.type}" title="Add ${act.label} step to Playbook Builder" style="display: flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: #1e293b; white-space: nowrap; cursor: pointer;">
+                    <img src="${act.ico}" style="width: 14px; height: 14px; object-fit: contain;" />
+                    <span>+ ${act.label}</span>
+                  </button>
                 `).join('')}
               </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
-              ${[
-                {
-                  id: 'WF-001',
-                  name: 'Auto-Remediate High CPU on Critical Server',
-                  trigger: 'Alarm: CPU Utilization > 90% for 5 mins',
-                  scope: `${state.devices.filter(d => (d.category || '').toLowerCase().includes('server')).length} Monitored Servers`,
-                  execCount: 0,
-                  steps: [
-                    { txt: 'Check Top Process via WMI/SSH', ico: '/apiclient/fluidicv2/img/workflow/poll_now.png' },
-                    { txt: 'Restart Dependent Service (spoolsv / httpd)', ico: '/apiclient/fluidicv2/img/workflow/restart_service.png' },
-                    { txt: 'Log SDP Ticket & Alert NOC', ico: '/apiclient/fluidicv2/img/workflow/log_a_ticket_sdp.png' }
-                  ]
-                },
-                {
-                  id: 'WF-002',
-                  name: 'Central Probe Failover & Re-sync',
-                  trigger: 'Probe Status: Heartbeat Missed > 60 seconds',
-                  scope: `${state.probes.map(p => p.name).join(', ') || 'All Enterprise Probes'}`,
-                  execCount: 0,
-                  steps: [
-                    { txt: 'Probe Diagnostic ICMP Reachability', ico: '/apiclient/fluidicv2/img/workflow/ping_device.png' },
-                    { txt: 'Trigger Immediate Poll & Standby Sync', ico: '/apiclient/fluidicv2/img/workflow/poll_now.png' },
-                    { txt: 'Notify Slack #noc-critical-alerts', ico: '/apiclient/fluidicv2/img/workflow/slack_chat.png' }
-                  ]
-                },
-                {
-                  id: 'WF-003',
-                  name: 'Switch Port Security Auto-Lockout',
-                  trigger: 'SNMP Trap: Port Security MAC Flap',
-                  scope: `${state.devices.filter(d => (d.category || '').toLowerCase().includes('switch')).length} Access & Core Switches`,
-                  execCount: 0,
-                  steps: [
-                    { txt: 'Execute CLI: shutdown interface', ico: '/apiclient/fluidicv2/img/workflow/ncm_execute_command.png' },
-                    { txt: 'Trigger NCM Configuration Snapshot', ico: '/apiclient/fluidicv2/img/workflow/ncm_trigger_backup.png' },
-                    { txt: 'Acknowledge Alarm & Email SecOps', ico: '/apiclient/fluidicv2/img/workflow/send_email.png' }
-                  ]
-                }
-              ].map(wf => `
-                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #fafbfc; transition: all 0.15s;" onmouseover="this.style.borderColor='#0070e0'" onmouseout="this.style.borderColor='#e2e8f0'">
-                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+            ${state._showNewWfBuilder ? `
+              <div style="background: #f0f9ff; border: 1px solid #7dd3fc; border-radius: 6px; padding: 16px; margin-bottom: 18px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <strong style="font-size: 13px; color: #0369a1;">Playbook Builder (Saved to SQLite)</strong>
+                  <button id="opm-wf-clear-draft" style="background: #fff; border: 1px solid #cbd5e1; color: #475569; padding: 3px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Clear Steps</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1.5fr 1.2fr 1.5fr auto; gap: 10px; align-items: end; margin-bottom: 12px;">
+                  <div>
+                    <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">PLAYBOOK NAME</div>
+                    <input id="opm-wf-new-name" type="text" value="${escW(state._wfDraftName || 'Core Gateway Health & Remediation')}" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                  </div>
+                  <div>
+                    <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">TARGET DEVICE / IP</div>
+                    <select id="opm-wf-target-select" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                      ${(state.devices || []).map(d => `<option value="${escW(d.ip)}" ${d.ip === (state._wfDraftTarget || '192.168.30.1') ? 'selected' : ''}>${escW(d.displayName || d.name)} (${escW(d.ip)})</option>`).join('')}
+                    </select>
+                  </div>
+                  <div>
+                    <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">SSH CLI COMMAND (FOR SSH STEPS)</div>
+                    <input id="opm-wf-ssh-cmd" type="text" value="${escW(state._wfDraftCmd || 'show version')}" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
+                  </div>
+                  <button id="opm-wf-save-btn" style="background: #16a34a; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Save Playbook</button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 11px;">
+                  <span style="font-weight: 700; color: #475569;">Steps (${draftSteps.length}):</span>
+                  ${draftSteps.map((st, idx) => `
+                    <span style="background: #fff; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;">
+                      <img src="${stepIcon(st.type)}" style="width: 13px; height: 13px;">
+                      <strong>${idx + 1}. ${escW(st.type).toUpperCase()}</strong> (${escW(st.host)}${st.command ? ': ' + escW(st.command) : ''})
+                    </span>
+                  `).join(' ➔ ')}
+                </div>
+              </div>
+            ` : ''}
+
+            <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+              ${wfList.length === 0 ? `
+                <div style="border: 1px dashed #cbd5e1; border-radius: 6px; padding: 34px 20px; text-align: center; background: #fafbfc;">
+                  <div style="font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Automation Playbooks Created Yet</div>
+                  <div style="font-size: 12px; color: #64748b; max-width: 520px; margin: 0 auto 14px auto;">Click any action in the Workflow Action Library above, open the custom Playbook Builder, or bootstrap a real ICMP Ping + Traceroute + SNMP Poll diagnostic playbook in SQLite.</div>
+                  <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                    <button id="opm-wf-quick-diag-btn" style="background: #16a34a; color: #fff; border: none; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ Create Real Diagnostic Playbook (192.168.30.1)</button>
+                    <button id="opm-wf-open-builder-empty" style="background: #0070e0; color: #fff; border: none; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Open Playbook Builder</button>
+                  </div>
+                </div>
+              ` : wfList.map(wf => `
+                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #fafbfc;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px;">
                     <div>
-                      <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-family: monospace; font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 6px; border-radius: 3px; font-weight: 700;">${wf.id}</span>
-                        <span style="font-size: 14px; font-weight: 700; color: #0f172a;">${wf.name}</span>
-                        <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 2px; font-weight: 800;">ACTIVE</span>
+                      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span style="font-family: monospace; font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 6px; border-radius: 3px; font-weight: 700;">WF-${escW(wf.id)}</span>
+                        <span style="font-size: 14px; font-weight: 700; color: #0f172a;">${escW(wf.name)}</span>
+                        <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 2px; font-weight: 800;">SQLITE PERSISTED</span>
                       </div>
                       <div style="font-size: 11px; color: #64748b; margin-top: 4px;">
-                        Trigger: <strong style="color: #475569;">${wf.trigger}</strong> | Scope: <strong style="color: #475569;">${wf.scope}</strong> | Executions: <strong>${wf.execCount}</strong>
+                        Steps: <strong>${(wf.steps || []).length}</strong> &bull;
+                        Executions: <strong>${wf.executionCount || 0}</strong> &bull;
+                        Last Run: <strong>${wf.lastExecuted ? new Date(wf.lastExecuted).toLocaleString() : 'Never'}</strong>
                       </div>
                     </div>
-                    <button class="opm-wf-execute-btn" data-id="${wf.id}" data-name="${wf.name}" style="background: #16a34a; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                      ▶ Execute Playbook
-                    </button>
+                    <div style="display: flex; gap: 6px; flex-shrink: 0;">
+                      <button class="opm-wf-execute-btn" data-id="${escW(wf.id)}" data-name="${escW(wf.name)}" style="background: #16a34a; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
+                        ▶ Execute Playbook
+                      </button>
+                      <button class="opm-wf-delete-btn" data-id="${escW(wf.id)}" style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                        Delete
+                      </button>
+                    </div>
                   </div>
-
-                  <!-- Visual Workflow Steps Flow with Official Icons -->
-                  <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; overflow-x: auto; padding: 6px 0;">
-                    ${wf.steps.map((st, i) => `
+                  <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; overflow-x: auto; padding: 4px 0;">
+                    ${(wf.steps || []).map((st, i) => `
                       <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 12px; display: flex; align-items: center; gap: 7px; flex-shrink: 0;">
-                        <img src="${st.ico}" style="width: 16px; height: 16px; object-fit: contain;" />
-                        <span style="color: #1e293b; font-weight: 600;">${st.txt}</span>
+                        <img src="${stepIcon(st.type)}" style="width: 15px; height: 15px; object-fit: contain;" />
+                        <span style="color: #1e293b; font-weight: 600;">${escW(st.type).toUpperCase()}: ${escW(st.host || st.target || 'target')}${st.command ? ' → ' + escW(st.command) : ''}</span>
                       </div>
-                      ${i < wf.steps.length - 1 ? `<span style="color: #94a3b8; font-weight: bold;">➔</span>` : ''}
+                      ${i < wf.steps.length - 1 ? '<span style="color: #94a3b8; font-weight: bold;">➔</span>' : ''}
                     `).join('')}
                   </div>
                 </div>
@@ -13984,14 +14020,12 @@
             <div style="border: 1px solid #334155; border-radius: 6px; background: #0f172a; padding: 14px 18px; font-family: monospace; font-size: 12px; color: #38bdf8;">
               <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 10px;">
                 <span style="font-weight: 700; color: #94a3b8;">PLAYBOOK EXECUTION ENGINE CONSOLE</span>
-                <span style="color: #16a34a; font-size: 11px;">● Poller Worker Orchestrator Ready</span>
+                <span style="color: #16a34a; font-size: 11px;">● Real Step Executor Ready (Ping / Traceroute / SNMP / SSH / NCM / Ack)</span>
               </div>
-              <div id="opm-wf-logs-terminal" style="max-height: 160px; overflow-y: auto; line-height: 1.6; color: #94a3b8; font-style: italic;">
-                Select a playbook above and click "▶ Execute Playbook" to test multi-probe remediation.
-              </div>
+              <div id="opm-wf-logs-terminal" style="max-height: 220px; overflow-y: auto; line-height: 1.6; color: #cbd5e1; white-space: pre-wrap;">${state._lastWfLogsHtml || '<span style="color:#94a3b8;font-style:italic;">Select a playbook above and click "▶ Execute Playbook" to run live remediation steps.</span>'}</div>
             </div>
-          </div>
-        ` : ''}
+          </div>`;
+        })() : ''}
       </div>
     `;
 
@@ -14218,13 +14252,14 @@
     }
 
     // Execute Workflow Playbook
+    const escLog = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     container.querySelectorAll('.opm-wf-execute-btn').forEach(btn => {
       btn.onclick = async () => {
         const id = btn.getAttribute('data-id');
         const name = btn.getAttribute('data-name');
         const term = container.querySelector('#opm-wf-logs-terminal');
         if (term) {
-          term.innerHTML = `<div style="color: #fbbf24;">Executing playbook [${id}] "${name}" across Central Probes...</div>`;
+          term.innerHTML = `<div style="color: #fbbf24;">Executing playbook [WF-${escLog(id)}] "${escLog(name)}"...</div>`;
         }
         btn.disabled = true;
         btn.innerText = '⏳ Executing...';
@@ -14235,12 +14270,23 @@
             body: JSON.stringify({ workflowId: id })
           });
           const data = await resp.json();
-          if (term && data.logs) {
-            term.innerHTML = data.logs.map(l => `<div style="color: #34d399; margin-bottom: 2px;">${l}</div>`).join('');
-          }
-          showToast(`Playbook "${name}" executed successfully.`);
+          const lines = (Array.isArray(data.logs) && data.logs.length > 0)
+            ? data.logs
+            : [data.message || data.error || `HTTP ${resp.status}`];
+          const color = resp.ok && data.status === 'success' ? '#34d399' : '#f87171';
+          state._lastWfLogsHtml = lines.map(l => `<div style="color: ${color}; margin-bottom: 4px;">${escLog(l)}</div>`).join('');
+          if (term) term.innerHTML = state._lastWfLogsHtml;
+          showToast(data.message || (resp.ok ? `Playbook "${name}" executed.` : `Execution failed (${resp.status})`), resp.ok && data.status === 'success' ? 'success' : 'warning');
+          try {
+            const listRes = await fetch('/api/workflows/list');
+            const listData = await listRes.json();
+            if (listRes.ok) state._liveWorkflows = listData.workflows || [];
+          } catch (e) {}
+          renderConfigurationView();
         } catch (e) {
-          if (term) term.innerHTML = `<div style="color: #f87171;">Execution error: ${e.message}</div>`;
+          state._lastWfLogsHtml = `<div style="color: #f87171;">Execution error: ${escLog(e.message)}</div>`;
+          if (term) term.innerHTML = state._lastWfLogsHtml;
+          showToast('Workflow execution error: ' + e.message, 'error');
         } finally {
           btn.disabled = false;
           btn.innerText = '▶ Execute Playbook';
@@ -14248,17 +14294,103 @@
       };
     });
 
-    // New Workflow Button
-    const newWfBtn = container.querySelector('#opm-new-wf-btn');
-    if (newWfBtn) {
-      newWfBtn.onclick = () => {
-        if (typeof showNewWorkflowModal === 'function') {
-          showNewWorkflowModal();
-        } else {
-          showToast('Enterprise Workflow Designer: Drag & Drop actions (Ping, SSH CLI, WMI, Service Restart).');
+    container.querySelectorAll('.opm-wf-delete-btn').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        try {
+          const r = await fetch(`/api/workflows/${encodeURIComponent(id)}`, { method: 'DELETE' });
+          if (r.ok) {
+            state._liveWorkflows = (state._liveWorkflows || []).filter(w => String(w.id) !== String(id));
+            showToast(`Deleted workflow WF-${id}.`);
+            renderConfigurationView();
+          }
+        } catch (e) { showToast('Delete error: ' + e.message, 'error'); }
+      };
+    });
+
+    const createWorkflowHelper = async (name, steps) => {
+      const r = await fetch('/api/workflows/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, steps })
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.message || `HTTP ${r.status}`);
+      state._liveWorkflows = [...(state._liveWorkflows || []), d.workflow];
+      state._showNewWfBuilder = false;
+      state._wfDraftSteps = null;
+      showToast(`Created workflow playbook "${name}".`);
+      renderConfigurationView();
+    };
+
+    const quickDiagBtn = container.querySelector('#opm-wf-quick-diag-btn');
+    if (quickDiagBtn) {
+      quickDiagBtn.onclick = async () => {
+        quickDiagBtn.disabled = true;
+        const primaryIp = ((state.devices && state.devices[0] && state.devices[0].ip) || '192.168.30.1');
+        try {
+          await createWorkflowHelper(`Network Reachability & SNMP Health Check (${primaryIp})`, [
+            { type: 'ping', host: primaryIp },
+            { type: 'traceroute', host: primaryIp },
+            { type: 'poll', host: primaryIp }
+          ]);
+        } catch (e) {
+          showToast('Failed creating playbook: ' + e.message, 'error');
+          quickDiagBtn.disabled = false;
         }
       };
     }
+
+    container.querySelectorAll('.opm-wf-palette-btn').forEach(btn => {
+      btn.onclick = () => {
+        const stType = btn.getAttribute('data-type');
+        const targetEl = container.querySelector('#opm-wf-target-select');
+        const cmdEl = container.querySelector('#opm-wf-ssh-cmd');
+        const host = (targetEl && targetEl.value) || state._wfDraftTarget || ((state.devices && state.devices[0] && state.devices[0].ip) || '192.168.30.1');
+        const cmd = (cmdEl && cmdEl.value) || state._wfDraftCmd || 'show version';
+        state._showNewWfBuilder = true;
+        if (!state._wfDraftSteps) state._wfDraftSteps = [];
+        const step = (stType === 'ssh' || stType === 'cli') ? { type: stType, host, command: cmd } : { type: stType, host };
+        state._wfDraftSteps = [...state._wfDraftSteps, step];
+        renderConfigurationView();
+      };
+    });
+
+    const clearDraftBtn = container.querySelector('#opm-wf-clear-draft');
+    if (clearDraftBtn) {
+      clearDraftBtn.onclick = () => { state._wfDraftSteps = []; renderConfigurationView(); };
+    }
+
+    const targetSel = container.querySelector('#opm-wf-target-select');
+    if (targetSel) targetSel.onchange = () => { state._wfDraftTarget = targetSel.value; };
+    const nameInp = container.querySelector('#opm-wf-new-name');
+    if (nameInp) nameInp.oninput = () => { state._wfDraftName = nameInp.value; };
+    const cmdInp = container.querySelector('#opm-wf-ssh-cmd');
+    if (cmdInp) cmdInp.oninput = () => { state._wfDraftCmd = cmdInp.value; };
+
+    const saveWfBtn = container.querySelector('#opm-wf-save-btn');
+    if (saveWfBtn) {
+      saveWfBtn.onclick = async () => {
+        const nm = (container.querySelector('#opm-wf-new-name')?.value || '').trim();
+        const steps = state._wfDraftSteps && state._wfDraftSteps.length ? state._wfDraftSteps : [{ type: 'ping', host: state._wfDraftTarget || '192.168.30.1' }];
+        if (!nm) return showToast('Enter a playbook name.', 'warning');
+        saveWfBtn.disabled = true;
+        try {
+          await createWorkflowHelper(nm, steps);
+        } catch (e) {
+          showToast('Save workflow failed: ' + e.message, 'error');
+          saveWfBtn.disabled = false;
+        }
+      };
+    }
+
+    // New Workflow Buttons
+    [container.querySelector('#opm-new-wf-btn'), container.querySelector('#opm-wf-open-builder-empty')].forEach(b => {
+      if (b) b.onclick = () => {
+        state._showNewWfBuilder = !state._showNewWfBuilder;
+        renderConfigurationView();
+      };
+    });
   }
 
   // -------------------------------------------------------------

@@ -844,6 +844,11 @@ function listWorkflows() {
   return toRows(db.prepare('SELECT * FROM workflows ORDER BY id ASC').all());
 }
 
+function deleteWorkflow(id) {
+  const info = db.prepare('DELETE FROM workflows WHERE id = ?').run(id);
+  return { deleted: info.changes };
+}
+
 function saveWorkflowRun(run) {
   const r = run || {};
   const info = db
@@ -1145,6 +1150,7 @@ module.exports = {
   // workflows
   createWorkflow,
   listWorkflows,
+  deleteWorkflow,
   saveWorkflowRun,
   listWorkflowRuns,
   // settings
@@ -1218,7 +1224,7 @@ module.exports = {
   },
   configs: { saveConfig, getConfigs, getLatestConfig },
   racks: { createRack, listRacks, getRack },
-  workflows: { createWorkflow, listWorkflows, saveWorkflowRun, listWorkflowRuns },
+  workflows: { createWorkflow, listWorkflows, deleteWorkflow, saveWorkflowRun, listWorkflowRuns },
   settings: { getSetting, setSetting },
   audit: { log, listAudit },
   apiKeys: { createApiKey, listApiKeys, getApiKeyByHash, deleteApiKey, rotateApiKey },
