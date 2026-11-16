@@ -61,12 +61,12 @@ function tcpPing(address, port = 80, timeoutMs = 2000) {
       const end = process.hrtime.bigint();
       const rtt = Number(end - start) / 1e6;
       socket.destroy();
-      resolve({ success: true, rtt: Number(rtt.toFixed(2)) });
+      resolve({ success: true, connected: true, rtt: Number(rtt.toFixed(2)), reason: 'OPEN' });
     });
 
     socket.on('timeout', () => {
       socket.destroy();
-      resolve({ success: false, rtt: null, reason: 'Timeout' });
+      resolve({ success: false, connected: false, rtt: null, reason: 'Timeout' });
     });
 
     socket.on('error', (err) => {
@@ -75,9 +75,9 @@ function tcpPing(address, port = 80, timeoutMs = 2000) {
       const rtt = Number(end - start) / 1e6;
       socket.destroy();
       if (err.code === 'ECONNREFUSED' || err.code === 'ENETUNREACH') {
-        resolve({ success: err.code === 'ECONNREFUSED', rtt: err.code === 'ECONNREFUSED' ? Number(rtt.toFixed(2)) : null, reason: err.code });
+        resolve({ success: err.code === 'ECONNREFUSED', connected: false, rtt: err.code === 'ECONNREFUSED' ? Number(rtt.toFixed(2)) : null, reason: err.code });
       } else {
-        resolve({ success: false, rtt: null, reason: err.message });
+        resolve({ success: false, connected: false, rtt: null, reason: err.message });
       }
     });
 
@@ -86,7 +86,8 @@ function tcpPing(address, port = 80, timeoutMs = 2000) {
 }
 
 async function diagnose(req, res, operation) {
-  const target = typeof req.body?.ip === 'string' ? req.body.ip.trim() : (typeof req.query?.ip === 'string' ? req.query.ip.trim() : '');
+  const rawTarget = req.body?.ip ?? req.body?.host ?? req.body?.target ?? req.query?.ip ?? req.query?.host ?? req.query?.target ?? '';
+  const target = typeof rawTarget === 'string' ? rawTarget.trim() : '';
   if (!target || !/^[a-z\d][a-z\d.-]{0,252}$/i.test(target)) {
     return res.status(400).json({ status: 'error', message: 'Enter a valid IPv4 address or hostname.' });
   }
@@ -262,7 +263,10 @@ router.post(['/api/tools/traceroute', '/tools/traceroute'], (req, res) => {
 
 // POST /api/tools/port-check - Real TCP Port Connectivity Tester
 router.post(['/api/tools/port-check', '/tools/port-check'], async (req, res) => {
-  const { host = '127.0.0.1', port = 80, timeout = 2500 } = req.body;
+  const rawHost = req.body?.host || req.body?.ip || req.body?.target || req.query?.host || req.query?.ip || '127.0.0.1';
+  const host = String(rawHost).trim() || '127.0.0.1';
+  const port = req.body?.port ?? req.query?.port ?? 80;
+  const timeout = req.body?.timeout ?? req.query?.timeout ?? 2500;
   const numPort = Number(port);
 
   if (!numPort || numPort < 1 || numPort > 65535) {
@@ -270,12 +274,14 @@ router.post(['/api/tools/port-check', '/tools/port-check'], async (req, res) => 
   }
 
   const result = await tcpPing(host, numPort, Number(timeout));
+  const portOpen = Boolean(result.connected);
   res.json({
     status: 'success',
     host,
     port: numPort,
-    isOpen: result.success,
-    state: result.success ? 'OPEN' : 'CLOSED_OR_FILTERED',
+    isOpen: portOpen,
+    hostReachable: Boolean(result.success),
+    state: portOpen ? 'OPEN' : (result.reason === 'ECONNREFUSED' ? 'CLOSED' : 'CLOSED_OR_FILTERED'),
     latencyMs: result.rtt,
     reason: result.reason || 'OK',
     timestamp: new Date().toISOString()
@@ -474,7 +480,7 @@ function snmpServiceUnavailable(res) {
 // GET/POST /api/tools/snmp-query - Real SNMP GET operation
 router.all('/api/tools/snmp-query', async (req, res) => {
   const p = { ...(req.query || {}), ...(req.body || {}) };
-  const ip = p.ip;
+  const ip = p.ip || p.host || p.target;
   const oid = p.oid || '.1.3.6.1.2.1.1.1.0';
   const community = resolveSnmpCommunity(ip, p.community);
   const version = p.version || 'v2c';
@@ -534,7 +540,7 @@ router.all('/api/tools/snmp-query', async (req, res) => {
 // GET/POST /api/tools/snmp-walk - Real SNMP WALK operation (subtree traversal)
 router.all('/api/tools/snmp-walk', async (req, res) => {
   const p = { ...(req.query || {}), ...(req.body || {}) };
-  const ip = p.ip;
+  const ip = p.ip || p.host || p.target;
   const rootOid = p.rootOid || p.oid || '.1.3.6.1.2.1.1';
   const community = resolveSnmpCommunity(ip, p.community);
   const version = p.version || 'v2c';

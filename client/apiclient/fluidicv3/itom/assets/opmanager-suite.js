@@ -17301,7 +17301,7 @@
             const resp = await fetch('/api/tools/snmp-query', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ target: targetIp, version: 'v3', oid: '1.3.6.1.2.1.1.1.0' })
+              body: JSON.stringify({ ip: targetIp, version: 'v3', oid: '1.3.6.1.2.1.1.1.0' })
             });
             const data = await resp.json().catch(() => ({}));
             showToast(resp.ok ? `SNMPv3 verified against ${targetIp}` : (data.message || `SNMPv3 check (${resp.status}): community v1/v2c only`));
@@ -17309,11 +17309,11 @@
             const resp = await fetch('/api/tools/snmp-query', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ target: targetIp, oid: '1.3.6.1.2.1.1.1.0', community: 'public' })
+              body: JSON.stringify({ ip: targetIp, oid: '1.3.6.1.2.1.1.1.0', community: 'public' })
             });
             const data = await resp.json().catch(() => ({}));
             if (resp.ok && data.status === 'success') {
-              const firstVal = data.results && data.results[0] ? String(data.results[0].value || '').slice(0, 48) : 'OK';
+              const firstVal = data.value != null ? String(data.value).slice(0, 48) : 'OK';
               showToast(`SNMPv2c verified on ${targetIp}: ${firstVal}`);
             } else {
               showToast(`SNMPv2c probe failed on ${targetIp}: ${data.message || data.error || resp.status}`);
@@ -17322,7 +17322,7 @@
             const resp = await fetch('/api/tools/wmi-query', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ target: targetIp, query: 'SELECT Caption FROM Win32_OperatingSystem' })
+              body: JSON.stringify({ host: targetIp, query: 'SELECT Caption FROM Win32_OperatingSystem' })
             });
             const data = await resp.json().catch(() => ({}));
             showToast(resp.ok ? `WMI verified on ${targetIp}` : (data.message || `WMI/WinRM unavailable (${resp.status})`));
@@ -17330,7 +17330,7 @@
             const resp = await fetch('/api/tools/cli-query', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ target: targetIp, protocol: 'SSH', command: 'show version' })
+              body: JSON.stringify({ host: targetIp, protocol: 'SSH', command: 'show version' })
             });
             const data = await resp.json().catch(() => ({}));
             showToast(resp.ok ? `SSH probe succeeded on ${targetIp}` : `SSH probe on ${targetIp}: ${data.message || data.error || resp.status}`);
