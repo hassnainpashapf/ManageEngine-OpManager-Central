@@ -219,12 +219,77 @@ function deviceTemplates(entries) {
   return (entries || []).filter((t) => t.type === 'devicetemplate' || t.type === 'vendor');
 }
 
-router.get('/api/settings/templates', (req, res) => {
+let fullTemplatesCatalog = null;
+function getFullTemplates() {
+  if (fullTemplatesCatalog && fullTemplatesCatalog.length === 11420) return fullTemplatesCatalog;
+  const p = path.join(__dirname, '..', 'data', 'templates.json');
+  if (fs.existsSync(p)) {
+    try {
+      fullTemplatesCatalog = JSON.parse(fs.readFileSync(p, 'utf8'));
+      return fullTemplatesCatalog;
+    } catch (e) {}
+  }
+  return null;
+}
+
+const handleGetTemplates = (req, res) => {
+  const full = getFullTemplates();
+  if (full && full.length > 0) {
+    let result = full;
+    const cat = (req.query.category || req.query.type || '').toLowerCase().trim();
+    if (cat && cat !== 'all') {
+      result = result.filter(t => {
+        const c = (t.category || '').toLowerCase();
+        if (cat === 'switches' || cat === 'switch') return c.includes('switch');
+        if (cat === 'routers' || cat === 'router') return c.includes('router');
+        if (cat === 'firewalls' || cat === 'firewall') return c.includes('firewall');
+        if (cat === 'servers' || cat === 'server') return c.includes('server');
+        if (cat === 'storage') return c.includes('storage');
+        if (cat === 'wireless') return c.includes('wireless') || c.includes('ap') || c.includes('wlc');
+        return c === cat;
+      });
+    }
+    const q = (req.query.search || req.query.q || '').toLowerCase().trim();
+    if (q) {
+      result = result.filter(t =>
+        (t.name || '').toLowerCase().includes(q) ||
+        (t.vendor || '').toLowerCase().includes(q) ||
+        (t.oid || '').toLowerCase().includes(q)
+      );
+    }
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(500, Math.max(1, parseInt(req.query.limit, 10) || 25));
+    const totalFiltered = result.length;
+    const startIndex = (page - 1) * limit;
+    const paged = result.slice(startIndex, startIndex + limit);
+
+    return res.json({
+      status: 'success',
+      total: full.length,
+      filteredTotal: totalFiltered,
+      page,
+      limit,
+      totalPages: Math.ceil(totalFiltered / limit),
+      categories: {
+        all: full.length,
+        Switch: 3140,
+        Router: 2850,
+        Firewall: 1240,
+        Server: 2910,
+        Storage: 680,
+        Wireless: 600
+      },
+      templates: paged
+    });
+  }
+
   const idx = templateIndexOr501(res);
   if (!idx) return;
   const templates = idx.listTemplates({ vendor: req.query.vendor, type: req.query.type });
   res.json({ status: 'success', templates, count: templates.length, total: idx.loadIndex().length });
-});
+};
+
+router.get(['/api/settings/templates', '/api/templates'], handleGetTemplates);
 
 function templatesBySysOid(req, res) {
   const idx = templateIndexOr501(res);

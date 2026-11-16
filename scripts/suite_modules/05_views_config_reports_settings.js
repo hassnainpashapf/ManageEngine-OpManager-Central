@@ -2110,7 +2110,7 @@
 
                 <div style="display: flex; flex-direction: column; gap: 12px; font-size: 12px;">
                   ${rules.length > 0 ? rules.map(r => `
-                    <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.02); flex-wrap: wrap; gap: 12px;">
+                    <div class="opm-discovery-rule-card" style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.02); flex-wrap: wrap; gap: 12px;">
                       <div style="display: flex; align-items: center; gap: 12px;">
                         <div style="width: 38px; height: 38px; border-radius: 6px; background: #eff6ff; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 18px;">
                           🌐

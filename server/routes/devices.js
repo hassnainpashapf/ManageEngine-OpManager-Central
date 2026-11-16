@@ -455,7 +455,7 @@ router.post(['/api/json/device/add', '/api/devices'], (req, res) => {
 });
 
 // Delete Device
-router.post(['/api/json/device/delete', '/api/devices/:id/delete'], (req, res) => {
+const handleDeviceDelete = (req, res) => {
   const deviceId = (req.body && req.body.deviceId) || req.params.id;
   if (deviceId === undefined || deviceId === null || deviceId === '') {
     return res.status(400).json({ status: 'error', message: 'deviceId is required' });
@@ -470,7 +470,10 @@ router.post(['/api/json/device/delete', '/api/devices/:id/delete'], (req, res) =
     message: `Device ${device.hostname || device.ip} removed from inventory`,
     deleted: device
   });
-});
+};
+
+router.delete(['/api/devices/:id', '/api/devices/:id/delete'], handleDeviceDelete);
+router.post(['/api/json/device/delete', '/api/devices/:id/delete'], handleDeviceDelete);
 
 // Poll Device Immediately (Manual / Live SNMP Trigger)
 // D5 fixed: delegates to the real poller (poller.pollDeviceNow) and returns
@@ -800,7 +803,7 @@ router.get(['/api/inventory/interfaces', '/inventory/interfaces'], (req, res) =>
 });
 
 // Device Edit & Update properties endpoint
-router.post(['/api/devices/edit', '/device/edit', '/api/devices/:id/edit'], (req, res) => {
+const handleDeviceEdit = (req, res) => {
   const b = req.body || {};
   const id = req.params.id || b.id || b.deviceId;
   if (!id) {
@@ -809,23 +812,30 @@ router.post(['/api/devices/edit', '/device/edit', '/api/devices/:id/edit'], (req
   const fields = {};
   if (b.hostname) fields.hostname = b.hostname;
   if (b.name) fields.hostname = b.name;
+  if (b.displayName) fields.hostname = b.displayName;
   if (b.ip) fields.ip = b.ip;
   if (b.category) fields.category = b.category;
   if (b.vendor) fields.vendor = b.vendor;
   if (b.model) fields.model = b.model;
-  if (b.snmp_community || b.community) fields.snmp_community = b.snmp_community || b.community;
+  if (b.snmp_community || b.community || b.snmpCommunity) fields.snmp_community = b.snmp_community || b.community || b.snmpCommunity;
+  if (b.snmpVersion || b.snmp_version) fields.snmp_version = b.snmpVersion || b.snmp_version;
+  if (b.probeId !== undefined || b.probe !== undefined) fields.probe_id = b.probeId !== undefined ? b.probeId : b.probe;
   if (b.status) fields.status = b.status;
 
   try {
     const updated = store.updateDevice(id, fields);
+    const d = store.getDevice(id);
     res.json({
       status: 'success',
       message: `Device ${b.name || id} properties updated successfully.`,
-      device: updated
+      device: d || updated
     });
   } catch (err) {
     res.status(500).json({ status: 'error', message: err.message });
   }
-});
+};
+
+router.post(['/api/devices/edit', '/device/edit', '/api/devices/:id/edit'], handleDeviceEdit);
+router.put(['/api/devices/:id', '/api/devices/:id/edit'], handleDeviceEdit);
 
 module.exports = router;
