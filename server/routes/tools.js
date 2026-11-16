@@ -409,9 +409,13 @@ function normalizeVarbinds(raw) {
   return list.map((vb) => {
     if (!vb || typeof vb !== 'object') return { oid: null, type: null, value: vb ?? null, error: null };
     let value = vb.value !== undefined ? vb.value : (vb.val !== undefined ? vb.val : null);
-    if (Buffer.isBuffer(value)) value = value.toString('utf8');
-    // The SNMP service already returns a typeName string; fall back to
-    // mapping the numeric net-snmp ObjectType code.
+    if (vb.rawHex && /^[0-9a-f]{12}$/i.test(vb.rawHex) && (typeof value !== 'string' || /[^\x20-\x7e]/.test(value))) {
+      value = vb.rawHex.toLowerCase().match(/.{2}/g).join(':');
+    } else if (Buffer.isBuffer(value)) {
+      const hex = value.toString('hex');
+      const utf8 = value.toString('utf8');
+      value = (value.length === 6 && /[^\x20-\x7e]/.test(utf8)) ? hex.match(/.{2}/g).join(':') : utf8;
+    }
     let type = null;
     if (typeof vb.typeName === 'string' && vb.typeName) type = vb.typeName;
     else if (typeof vb.type === 'number') type = SNMP_TYPE_NAMES[vb.type] || `TYPE_${vb.type}`;
@@ -420,6 +424,19 @@ function normalizeVarbinds(raw) {
       (typeof type === 'string' && (type === 'NoSuchObject' || type === 'NoSuchInstance' || type === 'EndOfMibView') ? type : null);
     return { oid: vb.oid ? String(vb.oid) : null, type, value, error: err || null };
   });
+}
+
+function resolveSnmpCommunity(target, explicit) {
+  if (explicit && typeof explicit === 'string' && explicit.trim()) return explicit.trim();
+  const reqTarget = String(target || '').trim();
+  const dev = safeListDevices().find(d => d.ip === reqTarget || d.hostname === reqTarget || d.sys_name === reqTarget);
+  if (dev && (dev.community || dev.snmp_community)) return dev.community || dev.snmp_community;
+  try {
+    const creds = (store.credentials ? store.credentials.listCredentials() : store.listCredentials()) || [];
+    const snmpCred = creds.find(c => /snmp/i.test(c.type || '') && (c.community || c.password || c.username));
+    if (snmpCred) return snmpCred.community || snmpCred.password || snmpCred.username;
+  } catch (e) {}
+  return 'public';
 }
 
 // Resolve the requested target: a managed-device hostname/sys_name from
@@ -454,9 +471,13 @@ function snmpServiceUnavailable(res) {
   });
 }
 
-// POST /api/tools/snmp-query - Real SNMP GET operation
-router.post('/api/tools/snmp-query', async (req, res) => {
-  const { ip, oid = '.1.3.6.1.2.1.1.1.0', community = 'public_monitor_ro', version = 'v2c' } = req.body || {};
+// GET/POST /api/tools/snmp-query - Real SNMP GET operation
+router.all('/api/tools/snmp-query', async (req, res) => {
+  const p = { ...(req.query || {}), ...(req.body || {}) };
+  const ip = p.ip;
+  const oid = p.oid || '.1.3.6.1.2.1.1.1.0';
+  const community = resolveSnmpCommunity(ip, p.community);
+  const version = p.version || 'v2c';
   if (!ip || typeof ip !== 'string' || !ip.trim()) {
     return res.status(400).json({ status: 'error', message: 'A target ip (or managed device name) is required.' });
   }
@@ -510,9 +531,13 @@ router.post('/api/tools/snmp-query', async (req, res) => {
   });
 });
 
-// POST /api/tools/snmp-walk - Real SNMP WALK operation (subtree traversal)
-router.post('/api/tools/snmp-walk', async (req, res) => {
-  const { ip, rootOid = '.1.3.6.1.2.1.1', community = 'public_monitor_ro', version = 'v2c' } = req.body || {};
+// GET/POST /api/tools/snmp-walk - Real SNMP WALK operation (subtree traversal)
+router.all('/api/tools/snmp-walk', async (req, res) => {
+  const p = { ...(req.query || {}), ...(req.body || {}) };
+  const ip = p.ip;
+  const rootOid = p.rootOid || p.oid || '.1.3.6.1.2.1.1';
+  const community = resolveSnmpCommunity(ip, p.community);
+  const version = p.version || 'v2c';
   if (!ip || typeof ip !== 'string' || !ip.trim()) {
     return res.status(400).json({ status: 'error', message: 'A target ip (or managed device name) is required.' });
   }

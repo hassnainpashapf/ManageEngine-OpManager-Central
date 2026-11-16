@@ -2573,54 +2573,48 @@
               </div>
             </div>
 
-            <!-- Authentic MIB Tree Catalog Preview Table -->
+            <!-- Real MIB Tree Catalog (loaded from /api/tools/mib-tree) -->
             <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-              <div style="padding: 10px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-size: 12px; font-weight: 700; color: #1e293b; display: flex; justify-content: space-between; align-items: center;">
-                <span>Installed Enterprise MIB Modules (AdventNet / ManageEngine Catalog)</span>
-                <div style="display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 600; color: #475569;">
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_directory.gif" style="width:14px;height:14px;"> Directory</span>
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_table.gif" style="width:14px;height:14px;"> Table</span>
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_entry.gif" style="width:14px;height:14px;"> Entry</span>
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_key.gif" style="width:14px;height:14px;"> Key</span>
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_node.gif" style="width:14px;height:14px;"> Leaf</span>
-                  <span style="display:inline-flex;align-items:center;gap:4px;"><img src="/apiclient/fluidicv2/img/mib_trap.gif" style="width:14px;height:14px;"> Trap</span>
-                  <span style="color: #16a34a; font-weight: 700;">118 MIBs Loaded</span>
+              <div style="padding: 10px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-size: 12px; font-weight: 700; color: #1e293b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <span>Installed Enterprise MIB Modules (Real /api/tools/mib-tree Catalog)</span>
+                <div style="display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; color: #475569;">
+                  <input id="opm-mib-catalog-filter" type="text" value="${(state._mibFilter || '').replace(/"/g, '&quot;')}" placeholder="Filter MIB modules..." style="padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; width: 170px;" />
+                  <span style="color: #16a34a; font-weight: 700;">${state._mibCatalog ? `${state._mibCatalog.filesParsed || state._mibCatalog.modules.length} MIBs (${state._mibCatalog.totalOids || 0} OIDs)` : 'Loading MIB index...'}</span>
                 </div>
               </div>
-              <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                <thead style="background: #f1f5f9; color: #475569; text-transform: uppercase;">
-                  <tr>
-                    <th style="padding: 8px 12px; text-align: left;">Module Name</th>
-                    <th style="padding: 8px 12px; text-align: left;">Root OID</th>
-                    <th style="padding: 8px 12px; text-align: left;">Standard</th>
-                    <th style="padding: 8px 12px; text-align: left;">Objects Indexed</th>
-                    <th style="padding: 8px 12px; text-align: right;">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/mib_directory.gif" style="width:14px;height:14px;"> RFC1213-MIB (MIB-II)</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">.1.3.6.1.2.1</td>
-                    <td style="padding: 8px 12px;">IETF RFC-1213</td>
-                    <td style="padding: 8px 12px; font-weight: 600;">172 Objects</td>
-                    <td style="padding: 8px 12px; text-align: right;"><button class="opm-tool-card" data-tool="mib" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; cursor: pointer;">Walk Tree</button></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/mib_table.gif" style="width:14px;height:14px;"> CISCO-STACK-MIB</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">.1.3.6.1.4.1.9.9</td>
-                    <td style="padding: 8px 12px;">Cisco Private Enterprise</td>
-                    <td style="padding: 8px 12px; font-weight: 600;">430 Objects</td>
-                    <td style="padding: 8px 12px; text-align: right;"><button class="opm-tool-card" data-tool="mib" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; cursor: pointer;">Walk Tree</button></td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/mib_entry.gif" style="width:14px;height:14px;"> HOST-RESOURCES-MIB</td>
-                    <td style="padding: 8px 12px; font-family: monospace;">.1.3.6.1.2.1.25</td>
-                    <td style="padding: 8px 12px;">IETF RFC-2790</td>
-                    <td style="padding: 8px 12px; font-weight: 600;">215 Objects</td>
-                    <td style="padding: 8px 12px; text-align: right;"><button class="opm-tool-card" data-tool="mib" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; cursor: pointer;">Walk Tree</button></td>
-                  </tr>
-                </tbody>
-              </table>
+              <div style="max-height: 240px; overflow-y: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                  <thead style="background: #f1f5f9; color: #475569; text-transform: uppercase; position: sticky; top: 0;">
+                    <tr>
+                      <th style="padding: 8px 12px; text-align: left;">Module Name</th>
+                      <th style="padding: 8px 12px; text-align: left;">Root OID</th>
+                      <th style="padding: 8px 12px; text-align: left;">Source File</th>
+                      <th style="padding: 8px 12px; text-align: left;">Objects Indexed</th>
+                      <th style="padding: 8px 12px; text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${(() => {
+                      const mods = (state._mibCatalog && Array.isArray(state._mibCatalog.modules)) ? state._mibCatalog.modules : [];
+                      const q = (state._mibFilter || '').trim().toLowerCase();
+                      const filtered = mods.filter(m => !q || `${m.name} ${m.file || ''} ${(m.oids[0]?.oid) || ''}`.toLowerCase().includes(q));
+                      if (mods.length === 0) return '<tr><td colspan="5" style="padding:18px;text-align:center;color:#64748b;">Loading indexed MIB modules from server/data/mibs/index.json...</td></tr>';
+                      if (filtered.length === 0) return '<tr><td colspan="5" style="padding:18px;text-align:center;color:#64748b;">No MIB modules match filter.</td></tr>';
+                      return filtered.slice(0, 40).map(m => {
+                        const rootOid = (m.oids && m.oids[0] && m.oids[0].oid) ? m.oids[0].oid : '.1.3.6.1.2.1.1';
+                        return `
+                        <tr style="border-bottom: 1px solid #f8fafc;">
+                          <td style="padding: 7px 12px; font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;"><img src="/apiclient/fluidicv2/img/mib_directory.gif" style="width:14px;height:14px;"> ${m.name}</td>
+                          <td style="padding: 7px 12px; font-family: monospace;">${rootOid}</td>
+                          <td style="padding: 7px 12px; color: #64748b;">${m.file || 'index.json'}</td>
+                          <td style="padding: 7px 12px; font-weight: 600;">${(m.oids || []).length} Objects</td>
+                          <td style="padding: 7px 12px; text-align: right;"><button class="opm-walk-mib-mod-btn" data-oid="${rootOid}" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; cursor: pointer; font-size: 11px;">Walk Tree</button></td>
+                        </tr>`;
+                      }).join('');
+                    })()}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <!-- Interactive Diagnostic Query Console (WMI & CLI ToolsTab.xml) -->
@@ -3828,6 +3822,37 @@
       };
     }
 
+    if (activeSub === 'tools' && !state._mibCatalog && !state._mibLoading) {
+      state._mibLoading = true;
+      fetch('/api/tools/mib-tree').then(r => r.json()).then(d => {
+        state._mibLoading = false;
+        if (d && Array.isArray(d.modules)) {
+          state._mibCatalog = d;
+          if (state.currentTab === 'settings' && state.subTabs.settings === 'tools') renderSettingsView();
+        }
+      }).catch(() => { state._mibLoading = false; });
+    }
+    const mibFilterInp = container.querySelector('#opm-mib-catalog-filter');
+    if (mibFilterInp) {
+      mibFilterInp.oninput = (e) => {
+        state._mibFilter = e.target.value;
+        const pos = e.target.selectionStart;
+        renderSettingsView();
+        const fresh = document.getElementById('opm-mib-catalog-filter');
+        if (fresh) { fresh.focus(); try { fresh.setSelectionRange(pos, pos); } catch (err) {} }
+      };
+    }
+    container.querySelectorAll('.opm-walk-mib-mod-btn').forEach(btn => {
+      btn.onclick = () => {
+        const oid = btn.getAttribute('data-oid') || '.1.3.6.1.2.1.1';
+        showNetworkToolsModal(null, 'mib');
+        setTimeout(() => {
+          const oidInput = document.getElementById('tool-mib-oid');
+          if (oidInput) oidInput.value = oid;
+        }, 50);
+      };
+    });
+
     // Diagnostics & MIB Browser tool card buttons
     container.querySelectorAll('.opm-tool-card').forEach(card => {
       card.onclick = () => {
@@ -3871,18 +3896,76 @@
       };
     });
 
-    // Test credential button
+    // Test credential button — runs real probe against target nodes
     container.querySelectorAll('.opm-cred-test-btn').forEach(btn => {
-      btn.onclick = () => {
-        showToast('Credential validated successfully against target nodes.');
+      btn.onclick = async () => {
+        const row = btn.closest('tr');
+        const protoText = (row && row.children[1] ? row.children[1].innerText : '').toUpperCase();
+        const targetIp = (state.devices && state.devices.find(d => d.ip || d.ipAddress) || {}).ip || '192.168.30.1';
+        const origText = btn.textContent;
+        btn.textContent = 'Testing...';
+        btn.disabled = true;
+        try {
+          if (protoText.includes('SNMP V3')) {
+            const resp = await fetch('/api/tools/snmp-query', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ target: targetIp, version: 'v3', oid: '1.3.6.1.2.1.1.1.0' })
+            });
+            const data = await resp.json().catch(() => ({}));
+            showToast(resp.ok ? `SNMPv3 verified against ${targetIp}` : (data.message || `SNMPv3 check (${resp.status}): community v1/v2c only`));
+          } else if (protoText.includes('SNMP')) {
+            const resp = await fetch('/api/tools/snmp-query', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ target: targetIp, oid: '1.3.6.1.2.1.1.1.0', community: 'public' })
+            });
+            const data = await resp.json().catch(() => ({}));
+            if (resp.ok && data.status === 'success') {
+              const firstVal = data.results && data.results[0] ? String(data.results[0].value || '').slice(0, 48) : 'OK';
+              showToast(`SNMPv2c verified on ${targetIp}: ${firstVal}`);
+            } else {
+              showToast(`SNMPv2c probe failed on ${targetIp}: ${data.message || data.error || resp.status}`);
+            }
+          } else if (protoText.includes('WMI')) {
+            const resp = await fetch('/api/tools/wmi-query', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ target: targetIp, query: 'SELECT Caption FROM Win32_OperatingSystem' })
+            });
+            const data = await resp.json().catch(() => ({}));
+            showToast(resp.ok ? `WMI verified on ${targetIp}` : (data.message || `WMI/WinRM unavailable (${resp.status})`));
+          } else {
+            const resp = await fetch('/api/tools/cli-query', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ target: targetIp, protocol: 'SSH', command: 'show version' })
+            });
+            const data = await resp.json().catch(() => ({}));
+            showToast(resp.ok ? `SSH probe succeeded on ${targetIp}` : `SSH probe on ${targetIp}: ${data.message || data.error || resp.status}`);
+          }
+        } catch (err) {
+          showToast(`Credential test error: ${err.message}`);
+        } finally {
+          btn.textContent = origText;
+          btn.disabled = false;
+        }
       };
     });
 
     // DB Maintenance button
     const dbBtn = container.querySelector('#opm-db-maint-btn');
     if (dbBtn) {
-      dbBtn.onclick = () => {
-        showToast('PostgreSQL VACUUM, ANALYZE & Reindex completed in 1.4s.');
+      dbBtn.onclick = async () => {
+        showToast('Running SQLite VACUUM & ANALYZE...');
+        try {
+          const resp = await fetch('/api/settings/db/vacuum', { method: 'POST' });
+          const data = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(data.error || `HTTP ${resp.status}`);
+          showToast(`SQLite VACUUM & ANALYZE completed in ${data.durationMs || 0}ms.`);
+        } catch (err) {
+          showToast(`DB maintenance failed: ${err.message}`);
+        }
       };
     }
 
