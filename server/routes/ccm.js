@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const store = require('../services/store');
 const sshclient = require('../services/sshclient');
+const snmp = require('../services/snmp');
 
 // NOTE: server/services/store.js currently exports its functions flat
 // (getDevice, listDevices, getConfigs, getProbe, listProbes). The
@@ -128,7 +129,8 @@ router.post(['/api/json/enterprise/pushCentralConfig', '/api/ccm/push'], (req, r
 // failure returns an honest error — never a success for data that wasn't
 // actually fetched.
 router.post(['/api/ccm/backup-device', '/api/ccm/backup'], async (req, res) => {
-  const deviceId = (req.body || {}).deviceId;
+  const body = req.body || {};
+  const deviceId = body.deviceId;
   if (deviceId === undefined || deviceId === null || deviceId === '') {
     return res.status(400).json({ status: 'error', message: 'deviceId is required' });
   }
@@ -151,37 +153,101 @@ router.post(['/api/ccm/backup-device', '/api/ccm/backup'], async (req, res) => {
     return res.status(400).json({ status: 'error', message: `Device ${deviceLabel(dev)} has no IP address on file` });
   }
 
-  const cred = sshclient.findSshCredential(store);
+  // Mode B: Real SNMP MIB Device & Interface Configuration Snapshot
+  if (String(body.mode || '').toLowerCase() === 'snmp') {
+    const creds = (store.credentials ? store.credentials.listCredentials() : store.listCredentials()) || [];
+    const snmpCred = creds.find((c) => /snmp/i.test(c.type || '') && c.community);
+    const community = body.community || dev.snmp_community || (snmpCred && snmpCred.community) || 'public';
+    try {
+      const sysVbs = await snmp.snmpWalk(dev.ip, community, '1.3.6.1.2.1.1');
+      if (!sysVbs || sysVbs.length === 0) {
+        return res.status(502).json({
+          status: 'error',
+          message: `SNMP snapshot failed on ${deviceLabel(dev)} (${dev.ip}): device returned no RFC1213 system OIDs.`
+        });
+      }
+      const ifVbs = await snmp.snmpWalk(dev.ip, community, '1.3.6.1.2.1.2.2.1.2').catch(() => []);
+      const ipVbs = await snmp.snmpWalk(dev.ip, community, '1.3.6.1.2.1.4.20.1.1').catch(() => []);
+      const lines = [
+        `! OpManager Central — Live SNMP MIB Configuration Snapshot`,
+        `! Device: ${deviceLabel(dev)} (${dev.ip})`,
+        `! Captured: ${new Date().toISOString()}`,
+        `! Category: ${dev.category || 'Unknown'} | Vendor: ${dev.vendor || 'Unknown'}`,
+        `!`,
+        `! --- RFC1213-MIB System ---`,
+        ...sysVbs.map((v) => `${v.oid} = ${String(v.value ?? '').replace(/\r?\n/g, ' ')}`),
+        `!`,
+        `! --- IPv4 Interfaces (${ipVbs.length}) ---`,
+        ...ipVbs.map((v) => `ip address ${String(v.value ?? '')}`),
+        `!`,
+        `! --- IF-MIB Interfaces (${ifVbs.length}) ---`,
+        ...ifVbs.slice(0, 64).map((v) => `interface ${String(v.value ?? '')}`)
+      ];
+      const snapshotText = lines.join('\n');
+      const row = saveConfig(dev.id, 'running', snapshotText);
+      const byteSize = Buffer.byteLength(snapshotText, 'utf8');
+      return res.json({
+        status: 'success',
+        mode: 'snmp',
+        message: `Live SNMP MIB configuration snapshot saved for ${deviceLabel(dev)} (${dev.ip})`,
+        deviceId: dev.id,
+        deviceName: deviceLabel(dev),
+        ip: dev.ip,
+        configId: row.id,
+        backupTime: toIso(row.fetched_at),
+        linesCount: lines.length,
+        fileSize: `${(byteSize / 1024).toFixed(1)} KB`,
+        startupCaptured: false
+      });
+    } catch (err) {
+      return res.status(502).json({
+        status: 'error',
+        message: `SNMP snapshot failed for ${deviceLabel(dev)} (${dev.ip}): ${err.message}`
+      });
+    }
+  }
+
+  const storedCred = sshclient.findSshCredential(store);
+  const cred = (body.username && body.password)
+    ? { username: String(body.username), password: String(body.password), port: Number(body.port) || 22 }
+    : storedCred;
   if (!cred || !cred.username || !cred.password) {
     return res.status(400).json({
       status: 'error',
-      message: 'No SSH/CLI credential with a username and password is configured in the Credential Library. Add one under Settings > Credentials before running a backup.'
+      message: 'No SSH/CLI credential configured. Enter SSH Username/Password above (or under Settings > Credential Library), or use SNMP Snapshot.'
     });
   }
 
   try {
-    const [runningRaw, startupRaw] = await Promise.all([
-      sshclient.runShowCommand(dev.ip, cred, 'show running-config'),
-      sshclient.runShowCommand(dev.ip, cred, 'show startup-config').catch(() => null)
-    ]);
+    const showCmd = String(body.command || 'show running-config').trim();
+    let runningRaw = await sshclient.runShowCommand(dev.ip, cred, showCmd).catch(() => null);
+    let runningConfig = runningRaw ? sshclient.cleanConfigOutput(runningRaw, showCmd) : '';
+    let startupRow = null;
 
-    const runningConfig = sshclient.cleanConfigOutput(runningRaw, 'show running-config');
     if (!runningConfig) {
-      throw new Error('Device returned an empty response to "show running-config"');
+      // Fallback for Linux / Proxmox / BSD / generic SSH hosts via exec channel
+      const execCmd = body.command || 'hostname; uname -a; ip -br addr 2>/dev/null || ifconfig';
+      const execRes = await sshclient.execCommand(dev.ip, cred, execCmd);
+      runningConfig = String(execRes.stdout || '').trim();
+    } else {
+      const startupRaw = await sshclient.runShowCommand(dev.ip, cred, 'show startup-config').catch(() => null);
+      if (startupRaw) {
+        const startupConfig = sshclient.cleanConfigOutput(startupRaw, 'show startup-config');
+        if (startupConfig) startupRow = saveConfig(dev.id, 'startup', startupConfig);
+      }
+    }
+
+    if (!runningConfig) {
+      throw new Error(`Device returned empty output for "${showCmd}"`);
     }
     const runningRow = saveConfig(dev.id, 'running', runningConfig);
-
-    let startupRow = null;
-    if (startupRaw) {
-      const startupConfig = sshclient.cleanConfigOutput(startupRaw, 'show startup-config');
-      if (startupConfig) startupRow = saveConfig(dev.id, 'startup', startupConfig);
-    }
 
     const lineCount = runningConfig.split(/\r?\n/).length;
     const byteSize = Buffer.byteLength(runningConfig, 'utf8');
 
     res.json({
       status: 'success',
+      mode: 'ssh',
       message: `Running configuration${startupRow ? ' and startup configuration' : ''} successfully backed up for ${deviceLabel(dev)} (${dev.ip}) via SSH`,
       deviceId: dev.id,
       deviceName: deviceLabel(dev),

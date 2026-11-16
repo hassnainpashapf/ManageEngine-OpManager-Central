@@ -366,24 +366,40 @@
             }
 
             const sortedBackups = [...state.devices].sort((a, b) => ((b.hasConfig || b.runningConfig) ? 1 : 0) - ((a.hasConfig || a.runningConfig) ? 1 : 0));
+            const inlineCred = state._ncmInlineCred || { username: '', password: '', port: 22 };
             return `
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                  <span style="font-size: 14px; font-weight: 700; color: #0f172a;">SQLite Configuration Backup Archive</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                  <div>
+                    <span style="font-size: 14px; font-weight: 700; color: #0f172a;">SQLite Configuration Backup Archive</span>
+                    <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Capture live configurations via SSH CLI (with Credential Library or inline login) OR SNMP MIB Configuration Snapshot.</div>
+                  </div>
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <span style="font-size: 11px; color: ${backedDevs.length > 0 ? '#16a34a' : '#64748b'}; font-weight: 700;">● ${backedDevs.length}/${state.devices.length} Backups Stored</span>
-                    <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
+                    <button id="opm-cfg-snmp-snap-all-btn" style="background: #16a34a; color: #ffffff; border: none; padding: 5px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer;">⚡ Capture SNMP Snapshots (All Reachable)</button>
+                    <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; border: none; padding: 5px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">+ Add Device</button>
                   </div>
                 </div>
+
+                <!-- Inline SSH Credentials Bar for NCM Backups -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 11px;">
+                  <strong style="color: #334155;">SSH Credentials:</strong>
+                  <input id="opm-cfg-ssh-user" type="text" placeholder="SSH Username (e.g. admin / root)" value="${escNcm(inlineCred.username || '')}" style="padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; width: 170px;">
+                  <input id="opm-cfg-ssh-pass" type="password" placeholder="SSH Password" value="${escNcm(inlineCred.password || '')}" style="padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; width: 150px;">
+                  <input id="opm-cfg-ssh-port" type="number" placeholder="22" value="${escNcm(inlineCred.port || 22)}" style="padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; width: 58px;">
+                  <button id="opm-cfg-save-ssh-btn" style="background: #0f172a; color: #ffffff; border: none; padding: 5px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">Save SSH Cred to Vault</button>
+                  <span style="color: #64748b; margin-left: auto;">Or use per-row <strong>SNMP Snap</strong> on SNMP devices</span>
+                </div>
+
                 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                   <thead>
                     <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
                       <th style="padding: 10px 12px;">Device</th>
-                      <th style="padding: 10px 12px;">Probe</th>
+                      <th style="padding: 10px 12px;">IP Address</th>
                       <th style="padding: 10px 12px;">Last Backup</th>
                       <th style="padding: 10px 12px;">Config Size</th>
                       <th style="padding: 10px 12px;">Status</th>
-                      <th style="padding: 10px 12px; text-align: right;">Action</th>
+                      <th style="padding: 10px 12px; text-align: right;">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -396,14 +412,15 @@
                           ${typeof getDeviceTypeIcon === 'function' ? getDeviceTypeIcon(d.type, d.category, 16) : '🖧'}
                           <span>${escNcm(d.displayName || d.name)}</span>
                         </td>
-                        <td style="padding: 10px 12px; color: #64748b;">${escNcm(d.probe || 'Central Site Probe')}</td>
+                        <td style="padding: 10px 12px; font-family: monospace; color: #475569;">${escNcm(d.ip)}</td>
                         <td style="padding: 10px 12px; color: ${d.lastBackup ? '#0f172a' : '#94a3b8'}; font-family: monospace;">${d.lastBackup ? new Date(d.lastBackup).toLocaleString() : 'Never backed up'}</td>
                         <td style="padding: 10px 12px; font-family: monospace;">${hasBkp ? (bytes / 1024).toFixed(1) + ' KB' : '—'}</td>
                         <td style="padding: 10px 12px;"><span style="background: ${hasBkp ? '#dcfce7' : '#f1f5f9'}; color: ${hasBkp ? '#166534' : '#64748b'}; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">${hasBkp ? 'CAPTURED' : 'NO BACKUP'}</span></td>
                         <td style="padding: 10px 12px; text-align: right; white-space: nowrap;">
-                          <button class="opm-cfg-backup-single-btn" data-id="${d.id}" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px;">Backup Now</button>
-                          <button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 6px; ${hasBkp ? '' : 'opacity:0.5;'}">${hasBkp ? 'View Config' : 'No Config'}</button>
-                          <button class="opm-cfg-download-config-btn" data-id="${d.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; ${hasBkp ? '' : 'opacity:0.5;'}">Download</button>
+                          <button class="opm-cfg-backup-single-btn" data-id="${d.id}" style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 4px;">SSH Backup</button>
+                          <button class="opm-cfg-snmp-single-btn" data-id="${d.id}" style="background: #ecfeff; border: 1px solid #a5f3fc; color: #0e7490; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 4px;">SNMP Snap</button>
+                          <button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 4px; ${hasBkp ? '' : 'opacity:0.55;'}">${hasBkp ? 'View Config' : 'No Config'}</button>
+                          <button class="opm-cfg-download-config-btn" data-id="${d.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; ${hasBkp ? '' : 'opacity:0.55;'}">Download</button>
                         </td>
                       </tr>
                     `;
@@ -698,12 +715,47 @@
       };
     });
 
-    // Backup single device button (real POST /api/ccm/backup)
+    const readInlineSshCred = () => {
+      const u = (container.querySelector('#opm-cfg-ssh-user')?.value || '').trim();
+      const p = container.querySelector('#opm-cfg-ssh-pass')?.value || '';
+      const port = Number(container.querySelector('#opm-cfg-ssh-port')?.value) || 22;
+      if (u && p) {
+        state._ncmInlineCred = { username: u, password: p, port };
+        return state._ncmInlineCred;
+      }
+      return null;
+    };
+
+    const saveSshVaultBtn = container.querySelector('#opm-cfg-save-ssh-btn');
+    if (saveSshVaultBtn) {
+      saveSshVaultBtn.onclick = async () => {
+        const ic = readInlineSshCred();
+        if (!ic) return showToast('Enter both SSH Username and Password first.', 'warning');
+        saveSshVaultBtn.disabled = true;
+        try {
+          const r = await fetch('/api/settings/credentials', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: `NCM SSH (${ic.username})`, type: 'SSH', username: ic.username, password: ic.password })
+          });
+          if (r.ok) {
+            state._liveCredentials = null;
+            showToast(`SSH credential (${ic.username}) saved to Credential Library.`);
+          } else {
+            showToast('Failed to save SSH credential.', 'error');
+          }
+        } catch (e) { showToast('Error: ' + e.message, 'error'); }
+        saveSshVaultBtn.disabled = false;
+      };
+    }
+
+    // Backup single device button (real POST /api/ccm/backup SSH)
     container.querySelectorAll('.opm-cfg-backup-single-btn').forEach(btn => {
       btn.onclick = async () => {
         const id = btn.getAttribute('data-id');
         const dev = (state.devices || []).find(d => String(d.id) === String(id));
         if (!dev) return;
+        const ic = readInlineSshCred();
         const origText = btn.textContent;
         btn.disabled = true;
         btn.textContent = 'Backing up...';
@@ -711,7 +763,7 @@
           const resp = await fetch('/api/ccm/backup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ deviceId: dev.id })
+            body: JSON.stringify(ic ? { deviceId: dev.id, ...ic } : { deviceId: dev.id })
           });
           const data = await resp.json();
           if (resp.ok) {
@@ -728,6 +780,65 @@
         renderConfigurationView();
       };
     });
+
+    // Single device SNMP Snapshot button
+    container.querySelectorAll('.opm-cfg-snmp-single-btn').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        const dev = (state.devices || []).find(d => String(d.id) === String(id));
+        if (!dev) return;
+        const origText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Polling SNMP...';
+        try {
+          const resp = await fetch('/api/ccm/backup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ deviceId: dev.id, mode: 'snmp' })
+          });
+          const data = await resp.json();
+          if (resp.ok) {
+            if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+            showToast(data.message || `SNMP snapshot stored for ${dev.name}.`);
+          } else {
+            showToast(data.message || `SNMP snapshot failed on ${dev.name}.`, 'warning');
+          }
+        } catch (err) {
+          showToast(`SNMP snapshot error: ${err.message}`, 'error');
+        }
+        btn.disabled = false;
+        btn.textContent = origText;
+        renderConfigurationView();
+      };
+    });
+
+    // Capture SNMP Snapshots across all reachable devices
+    const snmpSnapAllBtn = container.querySelector('#opm-cfg-snmp-snap-all-btn');
+    if (snmpSnapAllBtn) {
+      snmpSnapAllBtn.onclick = async () => {
+        const devs = (state.devices || []).filter(d => ['up', 'clear', 'online'].includes(String(d.status || '').toLowerCase()) || !d.status);
+        snmpSnapAllBtn.disabled = true;
+        snmpSnapAllBtn.textContent = 'Polling SNMP...';
+        let ok = 0, fail = 0;
+        for (let i = 0; i < devs.length; i += 6) {
+          await Promise.all(devs.slice(i, i + 6).map(async d => {
+            try {
+              const r = await fetch('/api/ccm/backup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ deviceId: d.id, mode: 'snmp' })
+              });
+              if (r.ok) ok++; else fail++;
+            } catch (e) { fail++; }
+          }));
+        }
+        if (ok > 0 && typeof fetchInventoryData === 'function') await fetchInventoryData();
+        snmpSnapAllBtn.disabled = false;
+        snmpSnapAllBtn.textContent = '⚡ Capture SNMP Snapshots (All Reachable)';
+        showToast(`SNMP Snapshots captured: ${ok} stored, ${fail} non-SNMP/unreachable.`, ok > 0 ? 'success' : 'warning');
+        renderConfigurationView();
+      };
+    }
 
     // View config button
     container.querySelectorAll('.opm-cfg-view-config-btn').forEach(btn => {
@@ -773,6 +884,7 @@
         }
         bkpAllBtn.disabled = true;
         bkpAllBtn.textContent = 'Backing up...';
+        const ic = readInlineSshCred();
         let okCount = 0;
         let failCount = 0;
         await Promise.all(devs.map(async d => {
@@ -780,7 +892,7 @@
             const resp = await fetch('/api/ccm/backup', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ deviceId: d.id })
+              body: JSON.stringify(ic ? { deviceId: d.id, ...ic } : { deviceId: d.id })
             });
             if (resp.ok) {
               d.lastBackup = 'Just now';
@@ -790,9 +902,15 @@
             }
           } catch (e) { failCount++; }
         }));
+        if (okCount > 0 && typeof fetchInventoryData === 'function') await fetchInventoryData();
         bkpAllBtn.disabled = false;
         bkpAllBtn.textContent = `Backup All Now (${devs.length})`;
-        showToast(`NCM Backup finished: ${okCount} succeeded, ${failCount} failed/no-SSH.`, okCount > 0 ? 'success' : 'warning');
+        showToast(
+          okCount > 0
+            ? `NCM Backup finished: ${okCount} succeeded, ${failCount} failed.`
+            : `SSH Backup failed on ${failCount} nodes (no SSH cred in Credential Library — enter SSH creds above or click Capture SNMP Snapshots).`,
+          okCount > 0 ? 'success' : 'warning'
+        );
         renderConfigurationView();
       };
     }
@@ -2557,56 +2675,83 @@
                     </tr>
                   `).join('')}            </div>
           </div>
-        ` : activeSub === 'credentials' ? `
-          <!-- Credential Library Subtab -->
+        ` : activeSub === 'credentials' ? (() => {
+          if (!state._credsLoading && !state._liveCredentials) {
+            state._credsLoading = true;
+            fetch('/api/settings/credentials')
+              .then(r => r.json())
+              .then(d => {
+                state._liveCredentials = d.credentials || [];
+                state._credsLoading = false;
+                if (state.currentTab === 'settings' && state.subTabs && state.subTabs.settings === 'credentials') renderSettingsView();
+              })
+              .catch(() => { state._credsLoading = false; });
+          }
+          const escC = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          const creds = state._liveCredentials || [];
+          return `
+          <!-- Credential Library Subtab (Real SQLite /api/settings/credentials) -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
-              <span>Enterprise Credential Vault</span>
-              <button id="opm-add-cred-btn" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">+ Add Credential</button>
+              <span>Enterprise Credential Vault (${creds.length} Stored in SQLite)</span>
+              <button id="opm-add-cred-btn" style="background: #0070e0; color: #fff; border: none; padding: 5px 12px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer;">+ Add Credential</button>
             </div>
+
+            ${state._showAddCredForm ? `
+              <div style="padding: 14px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: grid; grid-template-columns: 1.2fr 1fr 1.2fr 1.2fr auto; gap: 8px; align-items: end; font-size: 12px;">
+                <div>
+                  <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 3px;">PROFILE NAME</div>
+                  <input id="opm-cred-form-name" type="text" placeholder="e.g. Campus SSH Admin" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                </div>
+                <div>
+                  <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 3px;">PROTOCOL</div>
+                  <select id="opm-cred-form-type" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                    <option value="SSH">SSH / CLI</option>
+                    <option value="SNMPv2c">SNMP v2c</option>
+                    <option value="SNMPv1">SNMP v1</option>
+                  </select>
+                </div>
+                <div>
+                  <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 3px;">USERNAME OR COMMUNITY</div>
+                  <input id="opm-cred-form-user" type="text" placeholder="admin or public" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                </div>
+                <div>
+                  <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 3px;">PASSWORD (SSH)</div>
+                  <input id="opm-cred-form-pass" type="password" placeholder="Optional for SNMP" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                </div>
+                <button id="opm-cred-form-save" style="background: #16a34a; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Save</button>
+              </div>
+            ` : ''}
+
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
               <thead>
                 <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
                   <th style="padding: 10px 14px;">Credential Name</th>
                   <th style="padding: 10px 14px;">Protocol Type</th>
-                  <th style="padding: 10px 14px;">Details</th>
-                  <th style="padding: 10px 14px;">Associated Nodes</th>
-                  <th style="padding: 10px 14px; text-align: right;">Action</th>
+                  <th style="padding: 10px 14px;">Username / Secret</th>
+                  <th style="padding: 10px 14px;">Created</th>
+                  <th style="padding: 10px 14px; text-align: right;">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Enterprise SNMPv2c Community</td>
-                  <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SNMP v2c</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">Community: ********** (RO)</td>
-                  <td style="padding: 10px 14px;">${state.devices.length} Devices</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Secure Campus SNMPv3 USM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SNMP v3</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">User: opm_admin | SHA-256 / AES-256</td>
-                  <td style="padding: 10px 14px;">${state.devices.filter(d => (d.category || "").toLowerCase().includes("router")).length} Routers</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Windows Domain WMI/WinRM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #f3e8ff; color: #6b21a8; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">WMI / WinRM</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">CORP\svc-opmanager-wmi</td>
-                  <td style="padding: 10px 14px;">${state.devices.filter(d => (d.category || "").toLowerCase().includes("server")).length} Nodes</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">Linux SSH Key Vault</td>
-                  <td style="padding: 10px 14px;"><span style="background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SSH (Key)</span></td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">User: opm_linux_admin | RSA 4096-bit</td>
-                  <td style="padding: 10px 14px;">6 Linux Nodes</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Test</button></td>
-                </tr>
+                ${creds.length === 0 ? `
+                  <tr><td colspan="5" style="padding: 34px; text-align: center; color: #64748b;">No credentials stored in SQLite vault yet. Click <strong>+ Add Credential</strong> above to add SNMPv2c or SSH login profiles (default fallback SNMP community is <code>public</code>).</td></tr>
+                ` : creds.map(c => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">${escC(c.name)}</td>
+                    <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">${escC(c.type)}</span></td>
+                    <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">${c.username ? 'User: ' + escC(c.username) + ' | ••••••' : 'Community: ••••••'}</td>
+                    <td style="padding: 10px 14px; font-size: 11px; color: #64748b;">${c.created_at ? new Date(c.created_at).toLocaleString() : '—'}</td>
+                    <td style="padding: 10px 14px; text-align: right; white-space: nowrap;">
+                      <button class="opm-cred-test-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; margin-right: 4px;">Test</button>
+                      <button class="opm-cred-del-btn" data-id="${escC(c.id)}" style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Delete</button>
+                    </td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
-          </div>
-        ` : activeSub === 'discovery' ? (() => {
+          </div>`;
+        })() : activeSub === 'discovery' ? (() => {
             if (!state._discoveryRulesLoading && (!state.discoveryRules || state.discoveryRules.length === 0)) {
               state._discoveryRulesLoading = true;
               fetch('/api/discovery/rules')
@@ -5000,21 +5145,58 @@
 
     const addCredBtn = container.querySelector('#opm-add-cred-btn');
     if (addCredBtn) {
-      addCredBtn.onclick = async () => {
-        const name = prompt('Credential Profile Name:', 'Campus SNMPv2c');
-        if (!name || !name.trim()) return;
-        const community = prompt('SNMP Community (or leave blank for SSH):', 'public');
+      addCredBtn.onclick = () => {
+        state._showAddCredForm = !state._showAddCredForm;
+        renderSettingsView();
+      };
+    }
+
+    const saveCredBtn = container.querySelector('#opm-cred-form-save');
+    if (saveCredBtn) {
+      saveCredBtn.onclick = async () => {
+        const name = (container.querySelector('#opm-cred-form-name')?.value || '').trim();
+        const type = container.querySelector('#opm-cred-form-type')?.value || 'SSH';
+        const userOrComm = (container.querySelector('#opm-cred-form-user')?.value || '').trim();
+        const password = container.querySelector('#opm-cred-form-pass')?.value || '';
+        if (!name || !userOrComm) return showToast('Enter Credential Name and Username/Community.', 'warning');
+        saveCredBtn.disabled = true;
         try {
+          const payload = /snmp/i.test(type)
+            ? { name, type, community: userOrComm }
+            : { name, type, username: userOrComm, password };
           const r = await fetch('/api/settings/credentials', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: name.trim(), type: 'SNMPv2c', community: community || 'public' })
+            body: JSON.stringify(payload)
           });
-          if (r.ok) showToast(`Credential "${name.trim()}" saved in Enterprise Vault.`);
-          else showToast('Failed to save credential.', 'warning');
-        } catch (e) {}
+          if (r.ok) {
+            state._showAddCredForm = false;
+            const listRes = await fetch('/api/settings/credentials');
+            const listData = await listRes.json();
+            state._liveCredentials = listData.credentials || [];
+            showToast(`Credential "${name}" saved to SQLite vault.`);
+            renderSettingsView();
+          } else {
+            showToast('Failed to save credential.', 'error');
+          }
+        } catch (e) { showToast('Save error: ' + e.message, 'error'); }
+        saveCredBtn.disabled = false;
       };
     }
+
+    container.querySelectorAll('.opm-cred-del-btn').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        try {
+          const r = await fetch(`/api/settings/credentials/${encodeURIComponent(id)}`, { method: 'DELETE' });
+          if (r.ok) {
+            state._liveCredentials = (state._liveCredentials || []).filter(c => String(c.id) !== String(id));
+            showToast('Credential removed.');
+            renderSettingsView();
+          }
+        } catch (e) { showToast('Delete error: ' + e.message, 'error'); }
+      };
+    });
 
     const addNotifyBtn = container.querySelector('#opm-add-notify-profile-btn');
     if (addNotifyBtn) {
