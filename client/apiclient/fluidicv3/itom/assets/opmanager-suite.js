@@ -4949,11 +4949,11 @@
           <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px 16px; background: #ffffff; margin-bottom: 14px;">
             <div style="font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">System Specifications &amp; Inventory Data</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px; color: #334155;">
-              <div><strong>System Uptime:</strong> 184 Days 14 Hours</div>
-              <div><strong>Serial Number:</strong> <span style="font-family: monospace;">${dev.serial}</span></div>
-              <div><strong>Operating System:</strong> ${dev.osVersion}</div>
-              <div><strong>Last Config Backup:</strong> ${dev.lastBackup}</div>
-              <div><strong>SNMP Response Time:</strong> ${dev.responseTime} ms (0% Packet Loss)</div>
+              <div><strong>System Uptime:</strong> ${dev.uptime || (dev.uptime_ticks ? Math.floor(dev.uptime_ticks / 8640000) + ' Days' : 'Active (Live Poller)')}</div>
+              <div><strong>Serial Number:</strong> <span style="font-family: monospace;">${dev.serial || '—'}</span></div>
+              <div><strong>Operating System:</strong> ${dev.osVersion || dev.sys_descr || (dev.vendor ? dev.vendor + ' Firmware' : '—')}</div>
+              <div><strong>Last Config Backup:</strong> ${dev.lastBackup || 'Not Backed Up Yet'}</div>
+              <div><strong>SNMP Response Time:</strong> ${dev.responseTime != null ? dev.responseTime : '—'} ms</div>
               <div><strong>Remote Probe:</strong> ${dev.probeName || dev.probe || 'Central Site Probe'}</div>
             </div>
           </div>

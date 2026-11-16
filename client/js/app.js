@@ -1165,7 +1165,7 @@
                     </div>
                     <div class="donut-legend-item">
                       <span class="legend-color-dot" style="background-color: var(--severity-clear);"></span>
-                      <span>Normal: <strong>${devices.length - criticalAlarms.length - troubleAlarms.length}</strong></span>
+                      <span>Normal: <strong>${devices.filter(d => ['up', 'clear', 'online'].includes((d.status || '').toLowerCase())).length}</strong></span>
                     </div>
                   </div>
                 </div>
@@ -1293,7 +1293,7 @@
                     return `
                       <tr>
                         <td><span class="badge-me ${a.severity.toLowerCase()}">${a.severity}</span></td>
-                        <td><strong>${a.deviceName}</strong></td>
+                        <td><strong>${a.deviceName || a.hostname || a.ip || 'Node'}</strong></td>
                         <td><code>${a.ip}</code></td>
                         <td>📍 ${probe.displayName}</td>
                         <td>${a.message}</td>
