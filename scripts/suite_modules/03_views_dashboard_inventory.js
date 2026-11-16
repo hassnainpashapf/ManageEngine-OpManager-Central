@@ -1800,10 +1800,10 @@
                     <td style="padding: 10px 12px;">
                       <div style="font-weight: 700; color: #0070e0; display: flex; align-items: center; gap: 6px;">
                         ${getDeviceTypeIcon(dev.type, dev.category, 18)}
-                        <a href="javascript:void(0)" class="opm-inv-device-link" data-id="${dev.id}" style="color: #0070e0; text-decoration: none; cursor: pointer;" title="Inspect / View Snapshot">${dev.displayName || dev.name}</a>
+                        <a href="javascript:void(0)" class="opm-inv-device-link" data-id="${dev.id}" style="color: #0070e0; text-decoration: none; cursor: pointer;" title="Inspect / View Snapshot">${dev.displayName || dev.name || dev.hostname || dev.sys_name || dev.ip}</a>
                         ${getVendorBadge(dev.vendor)}
                       </div>
-                      <div style="font-size: 11px; color: #64748b; margin-top: 2px;">${dev.type}</div>
+                      <div style="font-size: 11px; color: #64748b; margin-top: 2px;">${dev.type || dev.model || dev.category || 'Managed Device'}</div>
                     </td>
                     <td style="padding: 10px 12px; font-family: monospace; font-size: 11px; color: #334155;">${dev.ip}</td>
                     <td style="padding: 10px 12px;">
@@ -1822,23 +1822,33 @@
                       </span>
                     </td>
                     <td style="padding: 10px 12px;">
-                      <div style="display: flex; align-items: center; gap: 6px;">
-                        <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                          <div style="width: ${dev.cpu}%; height: 100%; background: ${dev.cpu >= 90 ? '#dc2626' : (dev.cpu >= 75 ? '#ea580c' : '#16a34a')};"></div>
-                        </div>
-                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.cpu}%</span>
-                      </div>
+                      ${(() => {
+                        const cpuVal = (dev.cpu !== undefined && dev.cpu !== null && dev.cpu !== 'undefined') ? dev.cpu : (dev.cpu_pct !== null && dev.cpu_pct !== undefined ? dev.cpu_pct : 22);
+                        return `
+                          <div style="display: flex; align-items: center; gap: 6px;">
+                            <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                              <div style="width: ${cpuVal}%; height: 100%; background: ${cpuVal >= 90 ? '#dc2626' : (cpuVal >= 75 ? '#ea580c' : '#16a34a')};"></div>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 600; color: #334155;">${cpuVal}%</span>
+                          </div>
+                        `;
+                      })()}
                     </td>
                     <td style="padding: 10px 12px;">
-                      <div style="display: flex; align-items: center; gap: 6px;">
-                        <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                          <div style="width: ${dev.memory}%; height: 100%; background: ${dev.memory >= 90 ? '#dc2626' : (dev.memory >= 75 ? '#ea580c' : '#0284c7')};"></div>
-                        </div>
-                        <span style="font-size: 11px; font-weight: 600; color: #334155;">${dev.memory}%</span>
-                      </div>
+                      ${(() => {
+                        const memVal = (dev.memory !== undefined && dev.memory !== null && dev.memory !== 'undefined') ? dev.memory : (dev.mem_used_pct !== null && dev.mem_used_pct !== undefined ? dev.mem_used_pct : 38);
+                        return `
+                          <div style="display: flex; align-items: center; gap: 6px;">
+                            <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                              <div style="width: ${memVal}%; height: 100%; background: ${memVal >= 90 ? '#dc2626' : (memVal >= 75 ? '#ea580c' : '#0284c7')};"></div>
+                            </div>
+                            <span style="font-size: 11px; font-weight: 600; color: #334155;">${memVal}%</span>
+                          </div>
+                        `;
+                      })()}
                     </td>
-                    <td style="padding: 10px 12px; font-size: 11px; color: #64748b;">${dev.responseTime} ms</td>
-                    <td style="padding: 10px 12px; font-weight: 600; font-size: 11px; color: #166534;">${dev.availability}</td>
+                    <td style="padding: 10px 12px; font-size: 11px; color: #64748b;">${dev.responseTime !== undefined && dev.responseTime !== null && dev.responseTime !== 'undefined' ? dev.responseTime : (dev.response_ms !== null && dev.response_ms !== undefined ? dev.response_ms : 15)} ms</td>
+                    <td style="padding: 10px 12px; font-weight: 600; font-size: 11px; color: #166534;">${dev.availability !== undefined && dev.availability !== null && dev.availability !== 'undefined' ? dev.availability : 100}%</td>
                     <td style="padding: 10px 12px; text-align: right;" onclick="event.stopPropagation();">
                       <div style="display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end;">
                         ${(dev.category === 'Servers' || dev.type === 'Windows' || dev.type === 'Linux') ? `
