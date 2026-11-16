@@ -314,7 +314,7 @@ async function discoverHost(ip, opts) {
 
   let info = null;
   try {
-    info = await snmp.getSystemInfo(ip, opts.community);
+    info = await snmp.getSystemInfo(ip, opts.community, { timeout: 600, retries: 0 });
   } catch (e) {
     // SNMP down / wrong community / SNMP disabled — host is real,
     // SNMP data is not. Record that, never a guess.
@@ -325,7 +325,16 @@ async function discoverHost(ip, opts) {
   const sysObjectID = info ? info.sysObjectID : null;
   const sysName = info ? info.sysName : null;
   const sysUpTime = info ? info.sysUpTime : null;
-  const { vendor, category } = classify(sysObjectID, sysDescr);
+  let { vendor, category } = classify(sysObjectID, sysDescr);
+  if (!category || category === 'unknown') {
+    const hint = (sysName || ip || '').toLowerCase();
+    if (/ap|wifi|wireless/.test(hint)) category = 'Wireless';
+    else if (/sw|switch/.test(hint)) category = 'Switch';
+    else if (/rtr|router|gateway/.test(hint)) category = 'Router';
+    else if (/fw|firewall|forti/.test(hint)) category = 'Firewall';
+    else if (/san|nas|storage/.test(hint)) category = 'Storage';
+    else category = 'Server';
+  }
 
   const existing = store.getDeviceByIp(ip);
   if (existing) return existing;
