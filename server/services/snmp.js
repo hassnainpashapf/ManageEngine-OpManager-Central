@@ -120,7 +120,9 @@ function normaliseVarbind(vb) {
       return { oid, type: vb.type, typeName, value: null, error: snmp.varbindError(vb) };
     }
     let value = vb.value;
+    let rawHex = null;
     if (Buffer.isBuffer(value)) {
+      rawHex = value.toString('hex');
       if (vb.type === snmp.ObjectType.OctetString) {
         value = value.toString('utf8');
       } else if (vb.type === snmp.ObjectType.Counter64) {
@@ -133,7 +135,7 @@ function normaliseVarbind(vb) {
         value = value.toString('hex');
       }
     }
-    return { oid, type: vb.type, typeName, value };
+    return rawHex ? { oid, type: vb.type, typeName, value, rawHex } : { oid, type: vb.type, typeName, value };
   } catch (err) {
     // Last-resort guard: never let a bad varbind kill the process.
     return {

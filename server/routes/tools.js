@@ -749,11 +749,14 @@ router.post('/api/tools/cli-query', async (req, res) => {
 });
 
 // ADDRESS RESOLVER & MAC TOOL (Real OS ARP/Neighbor table + SNMP ipNetToMediaTable walk)
-function formatSnmpMac(val) {
-  if (Buffer.isBuffer(val)) {
-    return Array.from(val).map((b) => b.toString(16).padStart(2, '0')).join(':');
+function formatSnmpMac(rowVal, rawHex) {
+  if (rawHex && /^[0-9a-f]{12}$/i.test(rawHex)) {
+    return rawHex.toLowerCase().match(/.{2}/g).join(':');
   }
-  const s = String(val || '').trim();
+  if (Buffer.isBuffer(rowVal)) {
+    return Array.from(rowVal).map((b) => b.toString(16).padStart(2, '0')).join(':');
+  }
+  const s = String(rowVal || '').trim();
   if (/^([0-9a-f]{2}[:-\s]?){5}[0-9a-f]{2}$/i.test(s)) {
     return s.replace(/[-\s]/g, ':').toLowerCase();
   }
@@ -799,7 +802,7 @@ async function collectArpEntries(gateway) {
           if (oidParts.length >= 5) {
             const ifIdx = parseInt(oidParts[oidParts.length - 5], 10);
             const entryIp = oidParts.slice(-4).join('.');
-            const mac = formatSnmpMac(row.value);
+            const mac = formatSnmpMac(row.value, row.rawHex);
             if (mac && !entries.some((e) => e.ip === entryIp && e.mac === mac)) {
               entries.push({ ip: entryIp, mac, iface: `ifIndex:${ifIdx}`, ifIndex: Number.isFinite(ifIdx) ? ifIdx : null, source: `snmp:${gIp}` });
             }
