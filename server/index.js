@@ -22,6 +22,7 @@ const workflowsRoute = require('./routes/workflows');
 const trapsRoute = require('./routes/traps');
 const hardwareRoute = require('./routes/hardware');
 const diffRoute = require('./routes/diff');
+const telemetryAdvancedRoute = require('./routes/telemetry_advanced');
 const poller = require('./services/poller');
 // NOTE: the old JSON store (server/services/db.js) was deleted by the store
 // track and replaced by server/services/store.js (SQLite). index.js reads
@@ -403,6 +404,7 @@ app.use(workflowsRoute);
 app.use(trapsRoute);
 app.use(hardwareRoute);
 app.use(diffRoute);
+app.use(telemetryAdvancedRoute);
 
 // Catch-all handler for unmapped API endpoints to prevent hanging or sending HTML
 app.use((req, res, next) => {

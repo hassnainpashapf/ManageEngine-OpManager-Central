@@ -7748,984 +7748,584 @@
      BATCH 4 ENTERPRISE FEATURES: BGP, SD-WAN, DPI NBAR2, NDR THREAT FORENSICS
      ========================================================================== */
 
-  // 1. ManageEngine BGP-4 Routing & Autonomous System (AS) Topology Modal
+  // Helper to build device selector options from live state.devices
+  function _advDeviceOptions(selectedIdOrIp, preferPattern) {
+    const devs = (state.devices || []).slice();
+    if (!devs.length) return '<option value="">No devices in inventory</option>';
+    let defId = selectedIdOrIp;
+    if (!defId && preferPattern) {
+      const m = devs.find(d => preferPattern.test(`${d.category || ''} ${d.displayName || d.name || ''}`));
+      if (m) defId = m.id;
+    }
+    if (!defId) defId = devs[0].id;
+    return devs.map(d => {
+      const sel = (String(d.id) === String(defId) || String(d.ip) === String(defId)) ? 'selected' : '';
+      return `<option value="${d.id}" ${sel}>${d.displayName || d.name || d.ip} (${d.ip} - ${d.category || 'Node'})</option>`;
+    }).join('');
+  }
+
+  // 1. Real BGP-4 Live Polling Modal (BGP4-MIB 1.3.6.1.2.1.15.3.1 + TCP/179 + ICMP)
   function showBgpMonitoringModal(router) {
     let modal = document.getElementById('opm-bgp-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-bgp-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10007; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.72); z-index: 10007; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
       document.body.appendChild(modal);
     }
 
-    if (!router && (!state.devices || state.devices.length === 0)) {
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #8b5cf6;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>📡</span>
-              <span style="font-weight: 800; font-size: 14px;">ManageEngine OpManager Central &bull; BGP-4 Routing</span>
-            </div>
-            <button id="close-bgp-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No BGP Routers Discovered</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Add edge routers with BGP MIB (RFC 4273) enabled to monitor Autonomous System topology, peering states, and prefix exchanges.</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-              <button onclick="document.getElementById('opm-bgp-modal').style.display='none'; showAddDeviceModal();" style="background: #6d28d9; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Router</button>
-              <button id="opm-bgp-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
-            </div>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-bgp-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      const demoBtn = modal.querySelector('#opm-bgp-live-demo-btn');
-      if (demoBtn) demoBtn.onclick = () => showBgpMonitoringModal({ name: 'Cisco-ASR-9006-Core', ip: '192.168.30.1' });
-      return;
-    }
-
-    const rtrName = router ? router.name : ((state.devices && state.devices[0]?.name) || 'Edge-WAN-RTR');
-    const rtrIp = router ? router.ip : ((state.devices && state.devices[0]?.ip) || '192.168.1.1');
-
+    const initialDevId = router && router.id ? router.id : (router && router.ip ? router.ip : '');
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
+      <div style="background: #ffffff; border-radius: 6px; width: 1060px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
         <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #8b5cf6;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 20px;">📡</span>
             <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine OpManager Central &bull; BGP-4 Routing & Autonomous System (AS) Topology</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">RFC 4271 BGP-4 &bull; RFC 4893 4-Octet AS &bull; Router: ${rtrName} (${rtrIp}) &bull; Local ASN: <strong>AS65001</strong></div>
+              <div style="font-size: 14px; font-weight: 800;">ManageEngine OpManager Central &bull; BGP-4 Live MIB &amp; Port 179 Monitor</div>
+              <div id="opm-bgp-subtitle" style="font-size: 11px; color: #94a3b8;">Querying real BGP4-MIB (1.3.6.1.2.1.15.3.1) &amp; TCP Port 179 from Central Poller...</div>
             </div>
           </div>
-          <button id="close-bgp-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <button id="close-bgp-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;">&times;</button>
         </div>
 
-        <!-- Metric Badges Bar -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 22px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">Local Autonomous System</div>
-            <div style="font-size: 16px; font-weight: 800; color: #6d28d9; margin-top: 2px;">AS65001 (Private DC)</div>
-            <div style="font-size: 11px; color: #16a34a; font-weight: 600; margin-top: 2px;">BGP Daemon: RUNNING 🟢</div>
+        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <label style="font-size: 12px; font-weight: 700; color: #334155;">Target Router / Firewall:</label>
+            <select id="opm-bgp-dev-select" style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px; font-size: 12px; min-width: 280px; background: #fff;">
+              ${_advDeviceOptions(initialDevId, /router|firewall|core/i)}
+            </select>
+            <button id="opm-bgp-refresh-btn" style="background: #6d28d9; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+              ↻ Poll BGP4-MIB &amp; TCP/179 Now
+            </button>
           </div>
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">BGP Neighbors (Peers)</div>
-            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px;">4 Configured / 3 Up</div>
-            <div style="font-size: 11px; color: #0284c7; font-weight: 600; margin-top: 2px;">3 Established &bull; 1 Active (Syncing)</div>
-          </div>
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">Global RIB Routing Table</div>
-            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px;">845,190 Prefixes</div>
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; margin-top: 2px;">FIB HW Memory: 64% used</div>
-          </div>
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase;">BGP Updates (Rx / Tx)</div>
-            <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px;">14,290 / 8,940 msgs</div>
-            <div style="font-size: 11px; color: #16a34a; font-weight: 600; margin-top: 2px;">Flap Damping: Normal (0 damp)</div>
-          </div>
+          <button id="opm-bgp-cli-btn" style="background: #1e293b; color: #fff; border: none; padding: 7px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
+            💻 Open SSH / CLI Console
+          </button>
         </div>
 
-        <!-- Main Body -->
-        <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <!-- SVG Autonomous System Topology Map -->
-          <div style="background: #0f172a; border-radius: 6px; padding: 16px; border: 1px solid #334155; position: relative;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span style="font-size: 12px; font-weight: 700; color: #f8fafc; text-transform: uppercase; letter-spacing: 0.5px;">BGP Autonomous System Interconnect Graph</span>
-              <span style="font-size: 11px; color: #94a3b8;">Real-Time Peering Paths &bull; RFC 1771</span>
-            </div>
-            <svg viewBox="0 0 1000 180" style="width: 100%; height: 180px; display: block;">
-              <!-- Connecting Lines -->
-              <line x1="500" y1="90" x2="160" y2="45" stroke="#10b981" stroke-width="2.5" stroke-dasharray="4 2" />
-              <line x1="500" y1="90" x2="160" y2="135" stroke="#38bdf8" stroke-width="2.5" />
-              <line x1="500" y1="90" x2="840" y2="45" stroke="#06b6d4" stroke-width="2.5" />
-              <line x1="500" y1="90" x2="840" y2="135" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 5" />
-
-              <!-- Central Node (AS65001) -->
-              <circle cx="500" cy="90" r="38" fill="#6d28d9" stroke="#c4b5fd" stroke-width="3" />
-              <text x="500" y="86" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800">AS65001</text>
-              <text x="500" y="102" text-anchor="middle" fill="#ddd6fe" font-size="10">Local Edge RTR</text>
-
-              <!-- Node 1: AS3356 Lumen -->
-              <circle cx="160" cy="45" r="30" fill="#065f46" stroke="#34d399" stroke-width="2.5" />
-              <text x="160" y="42" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">AS3356</text>
-              <text x="160" y="55" text-anchor="middle" fill="#a7f3d0" font-size="9">Lumen Transit</text>
-              <rect x="250" y="50" width="85" height="18" rx="3" fill="#1e293b" />
-              <text x="292" y="63" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">845k pfx | 12ms</text>
-
-              <!-- Node 2: AS13335 Cloudflare -->
-              <circle cx="160" cy="135" r="30" fill="#075985" stroke="#38bdf8" stroke-width="2.5" />
-              <text x="160" y="132" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">AS13335</text>
-              <text x="160" y="145" text-anchor="middle" fill="#bae6fd" font-size="9">Cloudflare IXP</text>
-              <rect x="250" y="105" width="85" height="18" rx="3" fill="#1e293b" />
-              <text x="292" y="118" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="600">42k pfx | 4.1ms</text>
-
-              <!-- Node 3: AS15169 Google Peering -->
-              <circle cx="840" cy="45" r="30" fill="#155e75" stroke="#22d3ee" stroke-width="2.5" />
-              <text x="840" y="42" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">AS15169</text>
-              <text x="840" y="55" text-anchor="middle" fill="#a5f3fc" font-size="9">Google Direct</text>
-              <rect x="660" y="50" width="85" height="18" rx="3" fill="#1e293b" />
-              <text x="702" y="63" text-anchor="middle" fill="#22d3ee" font-size="10" font-weight="600">12k pfx | 8.6ms</text>
-
-              <!-- Node 4: AS64512 Backup MPLS -->
-              <circle cx="840" cy="135" r="30" fill="#78350f" stroke="#fbbf24" stroke-width="2.5" />
-              <text x="840" y="132" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">AS64512</text>
-              <text x="840" y="145" text-anchor="middle" fill="#fef08a" font-size="9">Backup MPLS</text>
-              <rect x="660" y="105" width="85" height="18" rx="3" fill="#1e293b" />
-              <text x="702" y="118" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">Active (Sync)</text>
-            </svg>
+        <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px;">
+          <div id="opm-bgp-kpi-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px;"><div style="font-size: 11px; color: #64748b;">ICMP Reachability</div><div id="bgp-kpi-icmp" style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 4px;">Checking...</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px;"><div style="font-size: 11px; color: #64748b;">BGP TCP Port 179</div><div id="bgp-kpi-179" style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 4px;">Checking...</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px;"><div style="font-size: 11px; color: #64748b;">Local ASN (bgpLocalAs)</div><div id="bgp-kpi-asn" style="font-size: 16px; font-weight: 800; color: #6d28d9; margin-top: 4px;">—</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px;"><div style="font-size: 11px; color: #64748b;">BGP4-MIB Peers</div><div id="bgp-kpi-peers" style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 4px;">0</div></div>
           </div>
 
-          <!-- BGP Neighbors Table -->
           <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">BGP Neighbor Peer Summary (Cisco &bull; Juniper BGP MIB)</span>
-              <button id="opm-bgp-refresh-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #475569; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                ↻ Poll Peers Now
-              </button>
+            <div style="background: #f1f5f9; padding: 10px 16px; font-size: 12px; font-weight: 700; color: #1e293b; border-bottom: 1px solid #e2e8f0;">
+              Live BGP4-MIB::bgpPeerTable (1.3.6.1.2.1.15.3.1)
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
               <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 700; font-size: 11px;">
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 11px;">
                   <th style="padding: 10px 12px;">Neighbor IP</th>
                   <th style="padding: 10px 12px;">Remote AS</th>
                   <th style="padding: 10px 12px;">Peer State</th>
                   <th style="padding: 10px 12px;">Admin</th>
-                  <th style="padding: 10px 12px;">Flaps</th>
-                  <th style="padding: 10px 12px;">Established Uptime</th>
-                  <th style="padding: 10px 12px;">Prefixes (Rx / Tx)</th>
-                  <th style="padding: 10px 12px; text-align: right;">Action</th>
+                  <th style="padding: 10px 12px;">Updates (Rx / Tx)</th>
+                  <th style="padding: 10px 12px; text-align: right;">Established Uptime</th>
                 </tr>
               </thead>
               <tbody id="opm-bgp-table-body">
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">198.51.100.1</td>
-                  <td style="padding: 10px 12px;"><strong>AS3356</strong> <span style="color: #64748b;">(Lumen Tier-1 Transit)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">Established</span></td>
-                  <td style="padding: 10px 12px; color: #16a34a; font-weight: 600;">Up</td>
-                  <td style="padding: 10px 12px; color: #1e293b;">0</td>
-                  <td style="padding: 10px 12px; color: #475569;">48d 14h 22m</td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 600;">845,190 / 24</td>
-                  <td style="padding: 10px 12px; text-align: right;">
-                    <button class="opm-bgp-softclear-btn" data-peer="198.51.100.1" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      ↻ Soft Clear
-                    </button>
-                  </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">203.0.113.5</td>
-                  <td style="padding: 10px 12px;"><strong>AS13335</strong> <span style="color: #64748b;">(Cloudflare CDN IXP)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">Established</span></td>
-                  <td style="padding: 10px 12px; color: #16a34a; font-weight: 600;">Up</td>
-                  <td style="padding: 10px 12px; color: #1e293b;">1</td>
-                  <td style="padding: 10px 12px; color: #475569;">14d 06h 11m</td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 600;">42,800 / 24</td>
-                  <td style="padding: 10px 12px; text-align: right;">
-                    <button class="opm-bgp-softclear-btn" data-peer="203.0.113.5" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      ↻ Soft Clear
-                    </button>
-                  </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">198.18.0.22</td>
-                  <td style="padding: 10px 12px;"><strong>AS15169</strong> <span style="color: #64748b;">(Google Peering Direct)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">Established</span></td>
-                  <td style="padding: 10px 12px; color: #16a34a; font-weight: 600;">Up</td>
-                  <td style="padding: 10px 12px; color: #1e293b;">0</td>
-                  <td style="padding: 10px 12px; color: #475569;">92d 18h 45m</td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 600;">12,400 / 24</td>
-                  <td style="padding: 10px 12px; text-align: right;">
-                    <button class="opm-bgp-softclear-btn" data-peer="198.18.0.22" style="background: #f5f3ff; border: 1px solid #ddd6fe; color: #6d28d9; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      ↻ Soft Clear
-                    </button>
-                  </td>
-                </tr>
-                <tr style="background: #fffbeb;">
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">192.0.2.78</td>
-                  <td style="padding: 10px 12px;"><strong>AS64512</strong> <span style="color: #64748b;">(Backup Telco MPLS)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">Active (Sync)</span></td>
-                  <td style="padding: 10px 12px; color: #ea580c; font-weight: 600;">Connecting</td>
-                  <td style="padding: 10px 12px; color: #dc2626; font-weight: 700;">5</td>
-                  <td style="padding: 10px 12px; color: #475569;">0m 42s</td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 600; color: #64748b;">0 / 0</td>
-                  <td style="padding: 10px 12px; text-align: right;">
-                    <button id="opm-bgp-force-reset-btn" style="background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                      ⚡ Reset Peer
-                    </button>
-                  </td>
-                </tr>
+                <tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">Polling target device...</td></tr>
               </tbody>
             </table>
           </div>
 
-          <!-- CLI Console Simulation -->
-          <div id="opm-bgp-terminal" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 120px; overflow-y: auto;">
-            <div style="color: #64748b;">// ManageEngine OpManager Central BGP Diagnostic Terminal</div>
-            <div>[BGP] Router ${rtrName} BGP process ID 100 initialized.</div>
-            <div>[BGP] RFC 2918 Route Refresh capability negotiated on all 3 established peers.</div>
-            <div id="opm-bgp-live-log" style="color: #34d399;">✔ System steady state: Autonomous System AS65001 fully converged.</div>
+          <div id="opm-bgp-live-log" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 120px; overflow-y: auto;">
+            [BGP-4] Initializing live SNMP + TCP/179 check...
           </div>
         </div>
 
-        <!-- Footer -->
         <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; BGP Peer Monitoring Engine (RFC 4271)</span>
-          <button id="close-bgp-modal-btn-footer" style="background: #6d28d9; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close BGP View
-          </button>
+          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; Live RFC 4271 / BGP4-MIB Probe</span>
+          <button id="close-bgp-modal-btn-footer" style="background: #6d28d9; color: #fff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close BGP View</button>
         </div>
       </div>
     `;
-
     modal.style.display = 'flex';
     document.getElementById('close-bgp-modal-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('close-bgp-modal-btn-footer').onclick = () => { modal.style.display = 'none'; };
 
-    const liveLog = document.getElementById('opm-bgp-live-log');
-    modal.querySelectorAll('.opm-bgp-softclear-btn').forEach(btn => {
-      btn.onclick = () => {
-        const peer = btn.getAttribute('data-peer');
-        btn.disabled = true;
-        btn.innerHTML = 'Executing...';
-        if (liveLog) {
-          liveLog.innerHTML = `<span style="color: #fbbf24;">[CMD] clear ip bgp ${peer} soft in</span><br><span style="color: #38bdf8;">[BGP] Sent ROUTE-REFRESH request to neighbor ${peer}...</span>`;
-        }
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.innerHTML = '✔ Done';
-          if (liveLog) {
-            liveLog.innerHTML += `<br><span style="color: #34d399;">✔ Neighbor ${peer} acknowledged refresh; 845,190 prefixes re-evaluated with 0 packet drop.</span>`;
-          }
-          showToast(`BGP Soft Inbound Refresh completed for neighbor ${peer}.`);
-        }, 1000);
-      };
-    });
+    async function runBgpPoll() {
+      const sel = document.getElementById('opm-bgp-dev-select');
+      const btn = document.getElementById('opm-bgp-refresh-btn');
+      const log = document.getElementById('opm-bgp-live-log');
+      const tbody = document.getElementById('opm-bgp-table-body');
+      const devId = sel ? sel.value : '';
+      if (btn) { btn.disabled = true; btn.innerText = 'Polling SNMP & TCP/179...'; }
+      if (log) log.innerHTML = `<span style="color:#38bdf8;">[POLL] Querying BGP4-MIB &amp; TCP:179 on selected node...</span>`;
+      try {
+        const res = await fetch('/api/advanced/bgp/poll', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ deviceId: devId })
+        });
+        const data = await res.json();
+        const devLabel = data.device ? `${data.device.name} (${data.device.ip})` : 'None';
+        document.getElementById('opm-bgp-subtitle').innerText = `Target: ${devLabel} • Polled at ${new Date().toLocaleTimeString()}`;
+        document.getElementById('bgp-kpi-icmp').innerHTML = data.icmpRttMs !== null ? `<span style="color:#16a34a;">${data.icmpRttMs} ms (Up)</span>` : `<span style="color:#dc2626;">Timeout / Down</span>`;
+        document.getElementById('bgp-kpi-179').innerHTML = data.bgpPort179Open ? `<span style="color:#16a34a;">OPEN (${data.tcp179Ms} ms)</span>` : `<span style="color:#d97706;">Closed / Filtered</span>`;
+        document.getElementById('bgp-kpi-asn').innerText = data.localAsn ? `AS${data.localAsn}` : 'Not Exposed';
+        document.getElementById('bgp-kpi-peers').innerText = String((data.peers || []).length);
 
-    const resetBtn = document.getElementById('opm-bgp-force-reset-btn');
-    if (resetBtn) {
-      resetBtn.onclick = () => {
-        resetBtn.disabled = true;
-        resetBtn.innerHTML = 'Resetting TCP...';
-        if (liveLog) {
-          liveLog.innerHTML = `<span style="color: #f87171;">[CMD] clear ip bgp 192.0.2.78 hard</span><br><span style="color: #fbbf24;">[BGP] Terminated TCP port 179 session with AS64512; sending SYN handshakes...</span>`;
+        if (data.peers && data.peers.length > 0) {
+          tbody.innerHTML = data.peers.map(p => `
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 9px 12px; font-family: monospace; font-weight: 700;">${p.peerIp}</td>
+              <td style="padding: 9px 12px;"><strong>AS${p.remoteAs || '—'}</strong></td>
+              <td style="padding: 9px 12px;"><span style="background: ${p.state === 'established' ? '#dcfce7' : '#fef3c7'}; color: ${p.state === 'established' ? '#166534' : '#92400e'}; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">${p.state}</span></td>
+              <td style="padding: 9px 12px;">${p.adminStatus}</td>
+              <td style="padding: 9px 12px; font-family: monospace;">${p.inUpdates} / ${p.outUpdates}</td>
+              <td style="padding: 9px 12px; text-align: right; font-family: monospace;">${p.establishedSeconds}s</td>
+            </tr>
+          `).join('');
+          if (log) log.innerHTML = `<span style="color:#4ade80;">✔ Received ${data.peers.length} real BGP peer(s) from ${devLabel} via BGP4-MIB.</span>`;
+        } else {
+          tbody.innerHTML = `<tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">No BGP4-MIB peers reported by <strong>${devLabel}</strong>.<br><span style="font-size: 11px;">${data.snmpError || 'TCP/179 is not listening or BGP4-MIB is not enabled on this host.'}</span></td></tr>`;
+          if (log) log.innerHTML = `<span style="color:#fbbf24;">[INFO] ${devLabel}: ICMP=${data.icmpRttMs !== null ? data.icmpRttMs + 'ms' : 'Down'}, TCP/179=${data.bgpPort179Open ? 'Open' : 'Closed'} — ${data.snmpError || '0 BGP peers'}</span>`;
         }
-        setTimeout(() => {
-          resetBtn.innerHTML = '✔ Connected';
-          resetBtn.style.background = '#dcfce7';
-          resetBtn.style.color = '#15803d';
-          if (liveLog) {
-            liveLog.innerHTML += `<br><span style="color: #34d399;">✔ TCP socket established. Received BGP OPEN message from AS64512. State: Established.</span>`;
-          }
-          showToast('BGP session with AS64512 successfully restored to Established state.');
-        }, 1200);
-      };
+      } catch (err) {
+        if (tbody) tbody.innerHTML = `<tr><td colspan="6" style="padding: 20px; text-align: center; color: #dc2626;">Error polling BGP: ${err.message}</td></tr>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '↻ Poll BGP4-MIB & TCP/179 Now'; }
+      }
     }
+
+    document.getElementById('opm-bgp-refresh-btn').onclick = runBgpPoll;
+    document.getElementById('opm-bgp-dev-select').onchange = runBgpPoll;
+    document.getElementById('opm-bgp-cli-btn').onclick = () => {
+      const selId = document.getElementById('opm-bgp-dev-select').value;
+      const dev = (state.devices || []).find(d => String(d.id) === String(selId));
+      modal.style.display = 'none';
+      if (typeof showNetworkToolsModal === 'function') showNetworkToolsModal(dev ? dev.ip : '192.168.30.1', 'terminal');
+    };
+    runBgpPoll();
   }
 
-
-  // 2. Cisco & Multi-Vendor SD-WAN Performance Controller Modal
+  // 2. Real WAN & SD-WAN Path SLA Probe Modal (Real Multi-Ping RTT / Jitter / Loss)
   function showSdwanPerformanceModal(sdwanDevice) {
     let modal = document.getElementById('opm-sdwan-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-sdwan-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10008; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.72); z-index: 10008; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
       document.body.appendChild(modal);
     }
 
-    if (!sdwanDevice && (!state.devices || state.devices.length === 0)) {
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #10b981;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>🚀</span>
-              <span style="font-weight: 800; font-size: 14px;">ManageEngine OpManager Central &bull; SD-WAN Fabric</span>
-            </div>
-            <button id="close-sdwan-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No SD-WAN Gateways Configured</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Connect Cisco vManage, Fortinet Secure SD-WAN, or Silver Peak appliances to track BFD tunnels, jitter, and application steering policies.</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-              <button onclick="document.getElementById('opm-sdwan-modal').style.display='none'; showAddDeviceModal();" style="background: #047857; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add SD-WAN Edge</button>
-              <button id="opm-sdwan-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
-            </div>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-sdwan-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      const sdwanDemoBtn = modal.querySelector('#opm-sdwan-live-demo-btn');
-      if (sdwanDemoBtn) sdwanDemoBtn.onclick = () => showSdwanPerformanceModal({ name: 'Cisco-vEdge-2000-Core', ip: '192.168.30.2' });
-      return;
-    }
-
-    const devName = sdwanDevice ? sdwanDevice.name : ((state.devices && state.devices[0]?.name) || 'SDWAN-EDGE-01');
-
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
+      <div style="background: #ffffff; border-radius: 6px; width: 1060px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
         <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #10b981;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 20px;">🚀</span>
             <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine OpManager Central &bull; SD-WAN Fabric & BFD Tunnel Performance</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">Cisco Catalyst SD-WAN (vManage 20.9.3) &bull; Edge Gateway: ${devName} &bull; BFD Polling Interval: 100ms</div>
+              <div style="font-size: 14px; font-weight: 800;">ManageEngine OpManager Central &bull; SD-WAN &amp; Multi-Path WAN SLA Probe</div>
+              <div id="opm-sdwan-subtitle" style="font-size: 11px; color: #94a3b8;">Measuring real ICMP multi-ping latency, jitter, and packet loss across Gateways &amp; Internet uplinks...</div>
             </div>
           </div>
-          <button id="close-sdwan-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <button id="close-sdwan-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;">&times;</button>
         </div>
 
-        <!-- 3 Transport Overlay Underlay Cards -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 22px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
-          <!-- Transport 1: Biz-Internet -->
-          <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 6px; padding: 12px 16px; border-left: 4px solid #16a34a;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 13px; font-weight: 800; color: #0f172a;">Biz-Internet (DIA Lumen)</span>
-              <span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">ACTIVE 🟢</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; text-align: center;">
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Latency</div>
-                <div style="font-size: 14px; font-weight: 800; color: #16a34a;">12.4 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Jitter</div>
-                <div style="font-size: 14px; font-weight: 800; color: #16a34a;">1.2 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Loss</div>
-                <div style="font-size: 14px; font-weight: 800; color: #16a34a;">0.00%</div>
-              </div>
-            </div>
-            <div style="margin-top: 8px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Capacity: 1 Gbps Symmetric</span>
-              <strong style="color: #0f172a;">Utilization: 48%</strong>
-            </div>
-          </div>
-
-          <!-- Transport 2: Private MPLS -->
-          <div style="background: #ffffff; border: 1px solid #bae6fd; border-radius: 6px; padding: 12px 16px; border-left: 4px solid #0284c7;">
-            <div style="display: space-between; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 13px; font-weight: 800; color: #0f172a;">Private MPLS (AT&T AVPN)</span>
-              <span style="background: #e0f2fe; color: #0369a1; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">ACTIVE 🟢</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; text-align: center;">
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Latency</div>
-                <div style="font-size: 14px; font-weight: 800; color: #0284c7;">28.6 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Jitter</div>
-                <div style="font-size: 14px; font-weight: 800; color: #0284c7;">3.1 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Loss</div>
-                <div style="font-size: 14px; font-weight: 800; color: #0284c7;">0.05%</div>
-              </div>
-            </div>
-            <div style="margin-top: 8px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Capacity: 500 Mbps CIR</span>
-              <strong style="color: #0f172a;">Utilization: 31%</strong>
-            </div>
-          </div>
-
-          <!-- Transport 3: LTE 5G -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; border-left: 4px solid #64748b;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 13px; font-weight: 800; color: #0f172a;">Cellular LTE (Verizon 5G)</span>
-              <span style="background: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">STANDBY 🔵</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; text-align: center;">
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Latency</div>
-                <div style="font-size: 14px; font-weight: 800; color: #64748b;">64.2 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Jitter</div>
-                <div style="font-size: 14px; font-weight: 800; color: #64748b;">8.7 ms</div>
-              </div>
-              <div style="background: #f8fafc; padding: 6px; border-radius: 4px;">
-                <div style="font-size: 10px; color: #64748b;">Loss</div>
-                <div style="font-size: 14px; font-weight: 800; color: #64748b;">0.80%</div>
-              </div>
-            </div>
-            <div style="margin-top: 8px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Capacity: 100 Mbps Metered</span>
-              <strong style="color: #0f172a;">Utilization: 1% (Heartbeat)</strong>
-            </div>
-          </div>
-        </div>
-
-        <!-- Main Body: SLA Policies & Dynamic Application Steering -->
         <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-          <!-- SLA Matrix Table -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Live Gateway &amp; WAN Uplink SLA Telemetry (3-Sample ICMP Echo)</span>
+            <button id="opm-sdwan-simulate-brownout-btn" style="background: #047857; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+              ⚡ Run Live WAN SLA Probe Now
+            </button>
+          </div>
+
+          <div id="opm-sdwan-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+            <div style="padding: 24px; text-align: center; color: #64748b; grid-column: 1 / -1;">Running live ICMP multi-ping probes...</div>
+          </div>
+
           <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Application SLA Classes & Dynamic Path Steering</span>
-              <button id="opm-sdwan-simulate-brownout-btn" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
-                ⚡ Run Dynamic SLA Failover Test
-              </button>
-            </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
               <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 700; font-size: 11px;">
-                  <th style="padding: 10px 12px;">SLA Profile</th>
-                  <th style="padding: 10px 12px;">Target Thresholds</th>
-                  <th style="padding: 10px 12px;">Current Transport</th>
-                  <th style="padding: 10px 12px;">Live Metric</th>
-                  <th style="padding: 10px 12px;">SLA Health</th>
-                  <th style="padding: 10px 12px; text-align: right;">Policy Status</th>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 11px;">
+                  <th style="padding: 10px 12px;">Path / Gateway</th>
+                  <th style="padding: 10px 12px;">Target IP</th>
+                  <th style="padding: 10px 12px;">Role</th>
+                  <th style="padding: 10px 12px;">Avg Latency</th>
+                  <th style="padding: 10px 12px;">Jitter</th>
+                  <th style="padding: 10px 12px;">Packet Loss</th>
+                  <th style="padding: 10px 12px; text-align: right;">SLA Status</th>
                 </tr>
               </thead>
               <tbody id="opm-sdwan-sla-body">
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Voice SLA (G.711 / SIP)</td>
-                  <td style="padding: 10px 12px; color: #475569;">Jitter &lt; 10ms, Loss &lt; 1%, Latency &lt; 150ms</td>
-                  <td style="padding: 10px 12px;"><span id="sla-path-voice" style="background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Biz-Internet (Primary)</span></td>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #16a34a;">MOS 4.41 (Excellent)</td>
-                  <td style="padding: 10px 12px;"><span style="color: #16a34a; font-weight: 700;">100% Compliant</span></td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="color: #0284c7; font-weight: 600;">Steered by Policy</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Microsoft 365 & SaaS</td>
-                  <td style="padding: 10px 12px; color: #475569;">Latency &lt; 30ms, Zero Loss</td>
-                  <td style="padding: 10px 12px;"><span id="sla-path-m365" style="background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Biz-Internet DIA</span></td>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #16a34a;">14.2 ms RTT</td>
-                  <td style="padding: 10px 12px;"><span style="color: #16a34a; font-weight: 700;">100% Compliant</span></td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="color: #0284c7; font-weight: 600;">Direct Cloud Breakout</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">ERP SAP S/4HANA Core</td>
-                  <td style="padding: 10px 12px; color: #475569;">Latency &lt; 40ms, Jitter &lt; 5ms</td>
-                  <td style="padding: 10px 12px;"><span style="background: #e0f2fe; color: #0369a1; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Private MPLS (AVPN)</span></td>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0284c7;">28.6 ms RTT</td>
-                  <td style="padding: 10px 12px;"><span style="color: #16a34a; font-weight: 700;">100% Compliant</span></td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="color: #0284c7; font-weight: 600;">QoS EF Priority</span></td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Zoom & Teams HD Video</td>
-                  <td style="padding: 10px 12px; color: #475569;">Jitter &lt; 15ms, Loss &lt; 2%</td>
-                  <td style="padding: 10px 12px;"><span id="sla-path-video" style="background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Biz-Internet (Primary)</span></td>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #16a34a;">1.8 ms Jitter</td>
-                  <td style="padding: 10px 12px;"><span style="color: #16a34a; font-weight: 700;">100% Compliant</span></td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="color: #0284c7; font-weight: 600;">Steered by Policy</span></td>
-                </tr>
+                <tr><td colspan="7" style="padding: 20px; text-align: center; color: #64748b;">Measuring WAN paths...</td></tr>
               </tbody>
             </table>
           </div>
 
-          <!-- BFD Echo & Dynamic Switch Log -->
-          <div id="opm-sdwan-log-console" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 120px; overflow-y: auto;">
-            <div style="color: #64748b;">// Cisco Catalyst SD-WAN BFD (Bidirectional Forwarding Detection) Daemon</div>
-            <div>[BFD] Session 1042 (Biz-Internet): Echo interval 100ms, multiplier 3 &bull; State: UP</div>
-            <div>[BFD] Session 1043 (MPLS AVPN): Echo interval 100ms, multiplier 3 &bull; State: UP</div>
-            <div id="opm-sdwan-dynamic-msg" style="color: #34d399;">✔ Zero SLA violations in last 24 hours. Optimal application steering across all 3 WAN transports.</div>
+          <div id="opm-sdwan-dynamic-msg" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #34d399; border: 1px solid #1e293b;">
+            [SD-WAN] Executing live multi-hop ICMP SLA probes from Central...
           </div>
         </div>
 
-        <!-- Footer -->
         <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; SD-WAN Fabric Orchestration Engine</span>
-          <button id="close-sdwan-modal-btn-footer" style="background: #10b981; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close SD-WAN Console
-          </button>
+          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; Real WAN Path Latency &amp; Jitter Monitor</span>
+          <button id="close-sdwan-modal-btn-footer" style="background: #10b981; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close SD-WAN Console</button>
         </div>
       </div>
     `;
-
     modal.style.display = 'flex';
     document.getElementById('close-sdwan-modal-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('close-sdwan-modal-btn-footer').onclick = () => { modal.style.display = 'none'; };
 
-    const failoverBtn = document.getElementById('opm-sdwan-simulate-brownout-btn');
-    const logConsole = document.getElementById('opm-sdwan-log-console');
-    const dynamicMsg = document.getElementById('opm-sdwan-dynamic-msg');
+    async function runSdwanProbe() {
+      const btn = document.getElementById('opm-sdwan-simulate-brownout-btn');
+      const cards = document.getElementById('opm-sdwan-cards-grid');
+      const tbody = document.getElementById('opm-sdwan-sla-body');
+      const msg = document.getElementById('opm-sdwan-dynamic-msg');
+      if (btn) { btn.disabled = true; btn.innerText = 'Probing WAN Paths...'; }
+      try {
+        const res = await fetch('/api/advanced/sdwan/probe', { method: 'POST' });
+        const data = await res.json();
+        const list = data.transports || [];
+        document.getElementById('opm-sdwan-subtitle').innerText = `Measured ${list.length} real paths at ${new Date().toLocaleTimeString()}`;
 
-    if (failoverBtn) {
-      failoverBtn.onclick = () => {
-        failoverBtn.disabled = true;
-        failoverBtn.innerHTML = 'Testing Brownout...';
-        if (dynamicMsg) {
-          dynamicMsg.innerHTML = `<span style="color: #f87171;">[SLA-ALERT] Injected simulated 85ms latency spike & 4% packet drop on Biz-Internet (DIA)...</span>`;
-        }
-        setTimeout(() => {
-          document.getElementById('sla-path-voice').innerHTML = 'Private MPLS (Failover ⚡)';
-          document.getElementById('sla-path-voice').style.background = '#fef3c7';
-          document.getElementById('sla-path-voice').style.color = '#b45309';
+        cards.innerHTML = list.slice(0, 4).map(t => {
+          const ok = t.status === 'Active';
+          return `
+            <div style="background: #ffffff; border: 1px solid ${ok ? '#bbf7d0' : '#fecaca'}; border-left: 4px solid ${ok ? '#16a34a' : '#dc2626'}; border-radius: 6px; padding: 12px 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
+                <span style="font-size: 12px; font-weight: 800; color: #0f172a;">${t.label}</span>
+                <span style="background: ${ok ? '#dcfce7' : '#fee2e2'}; color: ${ok ? '#15803d' : '#991b1b'}; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">${t.status.toUpperCase()}</span>
+              </div>
+              <div style="font-size: 11px; font-family: monospace; color: #64748b; margin-top: 2px;">${t.ip}</div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; text-align: center;">
+                <div style="background: #f8fafc; padding: 6px; border-radius: 4px;"><div style="font-size: 10px; color: #64748b;">Latency</div><div style="font-size: 13px; font-weight: 800; color: ${ok ? '#16a34a' : '#dc2626'};">${t.latencyMs !== null ? t.latencyMs + ' ms' : 'Timeout'}</div></div>
+                <div style="background: #f8fafc; padding: 6px; border-radius: 4px;"><div style="font-size: 10px; color: #64748b;">Jitter</div><div style="font-size: 13px; font-weight: 800; color: #0284c7;">${t.jitterMs !== null ? t.jitterMs + ' ms' : '—'}</div></div>
+                <div style="background: #f8fafc; padding: 6px; border-radius: 4px;"><div style="font-size: 10px; color: #64748b;">Loss</div><div style="font-size: 13px; font-weight: 800; color: ${t.lossPct > 0 ? '#dc2626' : '#16a34a'};">${t.lossPct}%</div></div>
+              </div>
+            </div>
+          `;
+        }).join('');
 
-          document.getElementById('sla-path-video').innerHTML = 'Private MPLS (Failover ⚡)';
-          document.getElementById('sla-path-video').style.background = '#fef3c7';
-          document.getElementById('sla-path-video').style.color = '#b45309';
+        tbody.innerHTML = list.map(t => {
+          const slaOk = t.status === 'Active' && (t.latencyMs === null || t.latencyMs < 150) && t.lossPct === 0;
+          return `
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 9px 12px; font-weight: 700; color: #0f172a;">${t.label}</td>
+              <td style="padding: 9px 12px; font-family: monospace;">${t.ip}</td>
+              <td style="padding: 9px 12px; color: #475569;">${t.role}</td>
+              <td style="padding: 9px 12px; font-family: monospace; font-weight: 700;">${t.latencyMs !== null ? t.latencyMs + ' ms' : 'Timeout'}</td>
+              <td style="padding: 9px 12px; font-family: monospace;">${t.jitterMs !== null ? t.jitterMs + ' ms' : '—'}</td>
+              <td style="padding: 9px 12px; font-family: monospace; color: ${t.lossPct > 0 ? '#dc2626' : '#16a34a'};">${t.lossPct}%</td>
+              <td style="padding: 9px 12px; text-align: right;"><span style="color: ${slaOk ? '#16a34a' : '#dc2626'}; font-weight: 700;">${slaOk ? '✔ SLA Compliant' : '⚠ Degraded / Timeout'}</span></td>
+            </tr>
+          `;
+        }).join('');
 
-          if (dynamicMsg) {
-            dynamicMsg.innerHTML += `<br><span style="color: #38bdf8;">[vManage Dynamic Steering] Voice & HD Video re-routed from DIA to MPLS in 38ms!</span><br><span style="color: #34d399;">✔ Zero dropped VoIP calls. SLA Compliance restored to 100%.</span>`;
-          }
-          failoverBtn.innerHTML = '✔ Re-Route Verified';
-          showToast('SD-WAN Dynamic Application Steering test passed: Voice & Video shifted to MPLS in 38ms.');
-        }, 1100);
-      };
+        const activeCnt = list.filter(x => x.status === 'Active').length;
+        if (msg) msg.innerHTML = `✔ Live WAN SLA probe complete: ${activeCnt}/${list.length} paths active. Samples: ${list.map(x => x.ip + '=' + (x.latencyMs !== null ? x.latencyMs + 'ms' : 'timeout')).join(' | ')}`;
+      } catch (err) {
+        if (msg) msg.innerHTML = `<span style="color:#f87171;">Probe error: ${err.message}</span>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '⚡ Run Live WAN SLA Probe Now'; }
+      }
     }
+
+    document.getElementById('opm-sdwan-simulate-brownout-btn').onclick = runSdwanProbe;
+    runSdwanProbe();
   }
 
-
-  // 3. Deep Packet Inspection (DPI) & Cisco NBAR2 Application Classification Modal
+  // 3. Real Deep Packet / Service & Interface Telemetry Modal (TCP L7 Port Probe + SNMP IF-MIB)
   function showDpiTrafficModal(iface) {
     let modal = document.getElementById('opm-dpi-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-dpi-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10009; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.72); z-index: 10009; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
       document.body.appendChild(modal);
     }
 
-    if (!iface && (!state.devices || state.devices.length === 0)) {
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>📊</span>
-              <span style="font-weight: 800; font-size: 14px;">Deep Packet Inspection (DPI) & Cisco NBAR2</span>
-            </div>
-            <button id="close-dpi-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No DPI Interfaces Monitored</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Deploy NetFlow / IPFIX packet sampling or configure Cisco NBAR2 on router interfaces to inspect Layer-7 applications.</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-              <button onclick="document.getElementById('opm-dpi-modal').style.display='none'; showAddDeviceModal();" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">+ Add Device</button>
-              <button id="opm-dpi-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Live Enterprise Telemetry</button>
-            </div>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-dpi-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      const dpiDemoBtn = modal.querySelector('#opm-dpi-live-demo-btn');
-      if (dpiDemoBtn) dpiDemoBtn.onclick = () => showDpiTrafficModal({ name: 'GigabitEthernet0/0/1 - WAN Gateway' });
-      return;
-    }
-
-    const ifName = iface ? (iface.name || iface) : 'GigabitEthernet0/0/1 - WAN Gateway (10 Gbps)';
-
+    const initialDevId = iface && iface.id ? iface.id : (iface && iface.ip ? iface.ip : '');
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
+      <div style="background: #ffffff; border-radius: 6px; width: 1060px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
         <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 20px;">📊</span>
             <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine OpManager Central &bull; Deep Packet Inspection (DPI) & Cisco NBAR2</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">Layer 7 Deep Packet Flow Classification &bull; Interface: ${ifName} &bull; Sampling: Full Wire Rate</div>
+              <div style="font-size: 14px; font-weight: 800;">ManageEngine OpManager Central &bull; DPI Service Analyzer &amp; IF-MIB Counters</div>
+              <div id="opm-dpi-subtitle" style="font-size: 11px; color: #94a3b8;">Scanning live TCP/L7 application ports &amp; SNMP interface counters...</div>
             </div>
           </div>
-          <button id="close-dpi-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <button id="close-dpi-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;">&times;</button>
         </div>
 
-        <!-- Top Rate Gauges & Split Response Time Bar -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <!-- Bandwidth Throughput Card -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase;">Aggregate Interface Throughput</span>
-              <span style="font-size: 11px; color: #16a34a; font-weight: 700;">Capacity: 10 Gbps</span>
-            </div>
-            <div style="display: flex; gap: 16px; margin-top: 10px;">
-              <div style="flex: 1;">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-bottom: 4px;">
-                  <span>Inbound Traffic</span>
-                  <strong style="color: #0f172a;">4.82 Gbps (48.2%)</strong>
-                </div>
-                <div style="width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 48.2%; height: 100%; background: #0284c7;"></div>
-                </div>
-              </div>
-              <div style="flex: 1;">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-bottom: 4px;">
-                  <span>Outbound Traffic</span>
-                  <strong style="color: #0f172a;">1.94 Gbps (19.4%)</strong>
-                </div>
-                <div style="width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
-                  <div style="width: 19.4%; height: 100%; background: #10b981;"></div>
-                </div>
-              </div>
-            </div>
+        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <label style="font-size: 12px; font-weight: 700; color: #334155;">Inspect Target Host:</label>
+            <select id="opm-dpi-dev-select" style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px; font-size: 12px; min-width: 280px; background: #fff;">
+              ${_advDeviceOptions(initialDevId, /firewall|switch|server/i)}
+            </select>
+            <button id="opm-dpi-scan-btn" style="background: #0284c7; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+              🔍 Scan Live Ports &amp; IF-MIB
+            </button>
           </div>
-
-          <!-- Split Response Time: NRT vs ART -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase;">Network Response Time (NRT) vs App Response Time (ART)</span>
-              <span style="font-size: 11px; color: #64748b;">TCP Handshake Analyzer</span>
-            </div>
-            <div style="display: flex; gap: 16px; margin-top: 10px;">
-              <div style="flex: 1; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; padding: 6px 10px; text-align: center;">
-                <div style="font-size: 10px; color: #166534; font-weight: 600;">NRT (Network Latency)</div>
-                <div style="font-size: 16px; font-weight: 800; color: #15803d; margin-top: 2px;">14.2 ms</div>
-                <div style="font-size: 9px; color: #166534;">Optimal WAN propagation</div>
-              </div>
-              <div style="flex: 1; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 4px; padding: 6px 10px; text-align: center;">
-                <div style="font-size: 10px; color: #075985; font-weight: 600;">ART (Server Processing)</div>
-                <div style="font-size: 16px; font-weight: 800; color: #0284c7; margin-top: 2px;">38.5 ms</div>
-                <div style="font-size: 9px; color: #075985;">Fast HTTP execution</div>
-              </div>
-            </div>
-          </div>
+          <span id="opm-dpi-rtt-pill" style="font-size: 11px; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 4px;">Measuring RTT...</span>
         </div>
 
-        <!-- Main Body: NBAR2 Table & Actions -->
         <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
           <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Cisco NBAR2 Layer 7 Applications & DSCP Markings</span>
-              <button id="opm-dpi-enforce-scavenger-btn" style="background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">
-                🛡️ Enforce DSCP Scavenger Policy on P2P
-              </button>
+            <div style="background: #f1f5f9; padding: 10px 16px; font-size: 12px; font-weight: 700; color: #1e293b; border-bottom: 1px solid #e2e8f0;">
+              Discovered Layer-4/7 Services &amp; TCP Handshake Response Time (ART)
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
               <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 700; font-size: 11px;">
-                  <th style="padding: 10px 12px;">Layer 7 Application</th>
-                  <th style="padding: 10px 12px;">Protocol / Port</th>
-                  <th style="padding: 10px 12px;">Bandwidth & Share</th>
-                  <th style="padding: 10px 12px;">DSCP Tagging</th>
-                  <th style="padding: 10px 12px;">QoS Classification</th>
-                  <th style="padding: 10px 12px; text-align: right;">Risk Profile</th>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 11px;">
+                  <th style="padding: 9px 12px;">Application / Service</th>
+                  <th style="padding: 9px 12px;">Protocol / Port</th>
+                  <th style="padding: 9px 12px;">Live State</th>
+                  <th style="padding: 9px 12px;">TCP Handshake RTT</th>
+                  <th style="padding: 9px 12px;">QoS Class</th>
+                  <th style="padding: 9px 12px; text-align: right;">Exposure</th>
                 </tr>
               </thead>
               <tbody id="opm-dpi-table-body">
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Microsoft Teams / Zoom Audio-Video</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">UDP / RTP (3478-3481)</td>
-                  <td style="padding: 10px 12px;"><strong>1.84 Gbps</strong> <span style="color: #64748b;">(38.2%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dbeafe; color: #1e40af; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">EF (46)</span></td>
-                  <td style="padding: 10px 12px; color: #16a34a; font-weight: 600;">Expedited Forwarding</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Low Risk</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">Salesforce CRM / Workday SaaS</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">TCP / HTTPS (443)</td>
-                  <td style="padding: 10px 12px;"><strong>1.12 Gbps</strong> <span style="color: #64748b;">(23.2%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dbeafe; color: #1e40af; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">AF31 (26)</span></td>
-                  <td style="padding: 10px 12px; color: #0284c7; font-weight: 600;">Assured Forwarding 3</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Low Risk</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">AWS S3 / Azure Blob Storage</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">TCP / TLS (443)</td>
-                  <td style="padding: 10px 12px;"><strong>780 Mbps</strong> <span style="color: #64748b;">(16.2%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dbeafe; color: #1e40af; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">AF21 (18)</span></td>
-                  <td style="padding: 10px 12px; color: #0284c7; font-weight: 600;">Bulk Data Forwarding</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Low Risk</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">YouTube / Social Media Streaming</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">UDP / QUIC (443)</td>
-                  <td style="padding: 10px 12px;"><strong>540 Mbps</strong> <span style="color: #64748b;">(11.2%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">CS1 (8)</span></td>
-                  <td style="padding: 10px 12px; color: #64748b; font-weight: 600;">Non-Critical Traffic</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #fef3c7; color: #b45309; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Medium</span></td>
-                </tr>
-                <tr id="dpi-row-p2p" style="background: #fff1f2;">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #9f1239;">Unsanctioned BitTorrent / P2P Swarm</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #9f1239;">TCP / UDP (6881-6889)</td>
-                  <td style="padding: 10px 12px;"><strong id="dpi-p2p-bw" style="color: #9f1239;">320 Mbps</strong> <span style="color: #9f1239;">(6.6%)</span></td>
-                  <td style="padding: 10px 12px;"><span id="dpi-p2p-dscp" style="background: #fee2e2; color: #991b1b; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">Best Effort (0)</span></td>
-                  <td style="padding: 10px 12px; color: #9f1239; font-weight: 600;" id="dpi-p2p-qos">Unthrottled Bandwidth Hog</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #fee2e2; color: #b91c1c; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">High Risk ⚠️</span></td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px 12px; font-weight: 700; color: #0f172a;">SSH / HTTPS Device Management</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #475569;">TCP / SSH (22)</td>
-                  <td style="padding: 10px 12px;"><strong>220 Mbps</strong> <span style="color: #64748b;">(4.6%)</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dbeafe; color: #1e40af; font-family: monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px;">CS2 (16)</span></td>
-                  <td style="padding: 10px 12px; color: #0284c7; font-weight: 600;">Network Management</td>
-                  <td style="padding: 10px 12px; text-align: right;"><span style="background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Low Risk</span></td>
-                </tr>
+                <tr><td colspan="6" style="padding: 20px; text-align: center; color: #64748b;">Probing application ports...</td></tr>
               </tbody>
             </table>
           </div>
 
-          <!-- Policy Feed & QoS Terminal -->
-          <div id="opm-dpi-policy-log" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 100px; overflow-y: auto;">
-            <div style="color: #64748b;">// ManageEngine OpManager Central DPI Engine &bull; QoS Shaper</div>
-            <div>[DPI] Deep packet state engine actively tracking 14,890 simultaneous L7 sessions.</div>
-            <div id="opm-dpi-dynamic-msg" style="color: #34d399;">✔ Wire-speed classification active. Zero packet loss on EF (46) realtime queue.</div>
+          <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+            <div id="opm-dpi-if-header" style="background: #f1f5f9; padding: 10px 16px; font-size: 12px; font-weight: 700; color: #1e293b; border-bottom: 1px solid #e2e8f0;">
+              SNMP IF-MIB Interfaces
+            </div>
+            <div id="opm-dpi-if-body" style="padding: 12px 16px; font-size: 12px; color: #475569;">Checking SNMP IF-MIB...</div>
+          </div>
+
+          <div id="opm-dpi-dynamic-msg" style="background: #090d16; border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b;">
+            [DPI] Ready.
           </div>
         </div>
 
-        <!-- Footer -->
         <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; Cisco NBAR2 Deep Packet Flow Engine</span>
-          <button id="close-dpi-modal-btn-footer" style="background: #0284c7; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close DPI View
-          </button>
+          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; Live Port &amp; Interface Telemetry</span>
+          <button id="close-dpi-modal-btn-footer" style="background: #0284c7; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close DPI View</button>
         </div>
       </div>
     `;
-
     modal.style.display = 'flex';
     document.getElementById('close-dpi-modal-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('close-dpi-modal-btn-footer').onclick = () => { modal.style.display = 'none'; };
 
-    const enforceBtn = document.getElementById('opm-dpi-enforce-scavenger-btn');
-    const dynamicMsg = document.getElementById('opm-dpi-dynamic-msg');
+    async function runDpiProbe() {
+      const sel = document.getElementById('opm-dpi-dev-select');
+      const btn = document.getElementById('opm-dpi-scan-btn');
+      const tbody = document.getElementById('opm-dpi-table-body');
+      const ifBody = document.getElementById('opm-dpi-if-body');
+      const msg = document.getElementById('opm-dpi-dynamic-msg');
+      if (btn) { btn.disabled = true; btn.innerText = 'Scanning...'; }
+      try {
+        const res = await fetch('/api/advanced/dpi/probe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ deviceId: sel ? sel.value : '' })
+        });
+        const data = await res.json();
+        const devLabel = data.device ? `${data.device.name} (${data.device.ip})` : 'None';
+        document.getElementById('opm-dpi-subtitle').innerText = `Target: ${devLabel} • ${data.openServicesCount || 0} open services detected`;
+        document.getElementById('opm-dpi-rtt-pill').innerText = `ICMP RTT: ${data.icmpRttMs !== null ? data.icmpRttMs + ' ms' : 'Timeout'}`;
 
-    if (enforceBtn) {
-      enforceBtn.onclick = () => {
-        enforceBtn.disabled = true;
-        enforceBtn.innerHTML = 'Applying DSCP Scavenger...';
-        if (dynamicMsg) {
-          dynamicMsg.innerHTML = `<span style="color: #fbbf24;">[QOS-CLI] class-map match-all P2P-TRAFFIC -> police cir 10000000 pir 15000000 conform-action set-dscp-transmit cs1 exceed-action drop...</span>`;
+        tbody.innerHTML = (data.services || []).map(s => `
+          <tr style="border-bottom: 1px solid #f1f5f9; background: ${s.open ? '#f0fdf4' : '#ffffff'};">
+            <td style="padding: 8px 12px; font-weight: 700; color: #0f172a;">${s.app}</td>
+            <td style="padding: 8px 12px; font-family: monospace;">${s.proto}</td>
+            <td style="padding: 8px 12px;"><span style="background: ${s.open ? '#dcfce7' : '#f1f5f9'}; color: ${s.open ? '#166534' : '#64748b'}; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 11px;">${s.open ? 'OPEN' : 'Closed'}</span></td>
+            <td style="padding: 8px 12px; font-family: monospace;">${s.tcpMs !== null ? s.tcpMs + ' ms' : '—'}</td>
+            <td style="padding: 8px 12px; font-family: monospace;">${s.dscp}</td>
+            <td style="padding: 8px 12px; text-align: right;">${s.risk}</td>
+          </tr>
+        `).join('');
+
+        if (data.interfaces && data.interfaces.length > 0) {
+          ifBody.innerHTML = `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px;">${data.interfaces.map(i => `
+            <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px 10px; background: #f8fafc;">
+              <div style="font-weight: 700; color: #0f172a;">${i.name || i.descr || 'Interface'}</div>
+              <div style="font-size: 11px; color: #64748b;">Status: <strong>${i.oper_status === 1 || i.operStatus === 'UP' ? 'UP' : 'DOWN'}</strong></div>
+            </div>
+          `).join('')}</div>`;
+        } else {
+          ifBody.innerHTML = `<span style="color: #64748b;">${data.snmpIfMessage || 'No SNMP interfaces available on this host.'}</span>`;
         }
-        setTimeout(() => {
-          document.getElementById('dpi-p2p-bw').innerHTML = '10 Mbps';
-          document.getElementById('dpi-p2p-dscp').innerHTML = 'CS1 (Scavenger 8)';
-          document.getElementById('dpi-p2p-dscp').style.background = '#e2e8f0';
-          document.getElementById('dpi-p2p-dscp').style.color = '#475569';
-          document.getElementById('dpi-p2p-qos').innerHTML = 'Policed to 10 Mbps (Scavenger)';
-          document.getElementById('dpi-p2p-qos').style.color = '#15803d';
-
-          if (dynamicMsg) {
-            dynamicMsg.innerHTML += `<br><span style="color: #34d399;">✔ DSCP Scavenger applied. Unsanctioned P2P bandwidth clamped from 320 Mbps down to 10 Mbps!</span>`;
-          }
-          enforceBtn.innerHTML = '✔ Scavenger Policy Active';
-          enforceBtn.style.background = '#dcfce7';
-          enforceBtn.style.color = '#15803d';
-          showToast('DSCP Scavenger Policy enforced: P2P throttled to 10 Mbps on WAN uplink.');
-        }, 1100);
-      };
+        if (msg) msg.innerText = `[DPI] ${data.nbarNote || 'Scan complete.'}`;
+      } catch (err) {
+        if (tbody) tbody.innerHTML = `<tr><td colspan="6" style="padding: 16px; color: #dc2626;">Error: ${err.message}</td></tr>`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = '🔍 Scan Live Ports & IF-MIB'; }
+      }
     }
+
+    document.getElementById('opm-dpi-scan-btn').onclick = runDpiProbe;
+    document.getElementById('opm-dpi-dev-select').onchange = runDpiProbe;
+    runDpiProbe();
   }
 
-
-  // 4. Network Detection & Response (NDR) & Security Threat Forensics Modal
+  // 4. Real NDR & Security Audit Modal (SQLite Alarms + Traps/Syslog + Live TCP Port Audit + STIX JSON Export)
   function showNdrForensicsModal(threatSource) {
     let modal = document.getElementById('opm-ndr-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'opm-ndr-modal';
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); z-index: 10010; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.72); z-index: 10010; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;';
       document.body.appendChild(modal);
     }
 
-    if (!threatSource && (!state.devices || state.devices.length === 0)) {
-      modal.innerHTML = `
-        <div style="background: #ffffff; border-radius: 6px; width: 620px; max-width: 95vw; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-          <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc2626;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>🛡️</span>
-              <span style="font-weight: 800; font-size: 14px;">Network Detection & Response (NDR)</span>
-            </div>
-            <button id="close-ndr-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer;">&times;</button>
-          </div>
-          <div style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Security Threats Detected</div>
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Central Network Detection & Response engine is continuously monitoring flow traffic across probes. No anomalous lateral movement or botnet telemetry identified.</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-              <button onclick="document.getElementById('opm-ndr-modal').style.display='none';" style="background: #dc2626; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Dismiss</button>
-              <button id="opm-ndr-live-demo-btn" style="background: #1e293b; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">⚡ View Threat Forensics Console</button>
-            </div>
-          </div>
-        </div>
-      `;
-      modal.style.display = 'flex';
-      modal.querySelector('#close-ndr-modal-btn').onclick = () => { modal.style.display = 'none'; };
-      const ndrDemoBtn = modal.querySelector('#opm-ndr-live-demo-btn');
-      if (ndrDemoBtn) ndrDemoBtn.onclick = () => showNdrForensicsModal({ name: 'Central NDR Threat Intelligence Engine' });
-      return;
-    }
+    const initialDevId = threatSource && threatSource.id ? threatSource.id : (threatSource && threatSource.ip ? threatSource.ip : '');
+    let latestNdrData = null;
 
     modal.innerHTML = `
-      <div style="background: #ffffff; border-radius: 6px; width: 1100px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
-        <!-- Header -->
+      <div style="background: #ffffff; border-radius: 6px; width: 1080px; max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid #cbd5e1;">
         <div style="background: #0f172a; color: #ffffff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc2626;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 20px;">🛡️</span>
             <div>
-              <div style="font-size: 14px; font-weight: 800; letter-spacing: 0.3px;">ManageEngine OpManager Central &bull; Network Detection & Response (NDR) & Threat Forensics</div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 1px;">TAXII 2.1 Threat Intel Server (ndr.threatintel.default.server) &bull; STIX Feed: Active (1.8M Indicators)</div>
+              <div style="font-size: 14px; font-weight: 800;">ManageEngine OpManager Central &bull; NDR Security &amp; Port Exposure Audit</div>
+              <div id="opm-ndr-subtitle" style="font-size: 11px; color: #94a3b8;">Aggregating real SQLite alarms, UDP 162 Traps, UDP 514 Syslog, and live TCP security scans...</div>
             </div>
           </div>
-          <button id="close-ndr-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+          <button id="close-ndr-modal-btn" style="background: transparent; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;">&times;</button>
         </div>
 
-        <!-- Threat Score & Threat Summary Bar -->
-        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 22px; display: grid; grid-template-columns: 280px 1fr; gap: 16px; align-items: center;">
-          <!-- Threat Score Gauge Card -->
-          <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 12px 16px; display: flex; align-items: center; gap: 14px;">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #dc2626; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);">
-              89
-              <span style="font-size: 8px; font-weight: 600; text-transform: uppercase;">SCORE</span>
-            </div>
-            <div>
-              <div style="font-size: 12px; font-weight: 800; color: #991b1b; text-transform: uppercase;">High Risk Incident Active</div>
-              <div style="font-size: 11px; color: #b91c1c; margin-top: 2px;">4 Critical Anomalies detected in last 30 minutes</div>
-            </div>
-          </div>
-
-          <!-- Quick Action Buttons -->
-          <div style="display: flex; gap: 10px; justify-content: flex-end;">
-            <button id="opm-ndr-push-acl-btn" style="background: #dc2626; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);">
-              🔒 Push Immediate Firewall ACL Blacklist
-            </button>
-            <button id="opm-ndr-quarantine-btn" style="background: #ea580c; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-              🛑 Quarantine Host via 802.1X NAC
-            </button>
-            <button id="opm-ndr-export-stix-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-              📥 Export STIX 2.1 PCAP
+        <div style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <label style="font-size: 12px; font-weight: 700; color: #334155;">Scan Node Ports:</label>
+            <select id="opm-ndr-dev-select" style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px; font-size: 12px; min-width: 260px; background: #fff;">
+              ${_advDeviceOptions(initialDevId, null)}
+            </select>
+            <button id="opm-ndr-scan-btn" style="background: #dc2626; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+              🔍 Run Live Security Port Scan
             </button>
           </div>
+          <button id="opm-ndr-export-stix-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+            📥 Export STIX 2.1 JSON
+          </button>
         </div>
 
-        <!-- Main Body: Threat Matrix Table -->
-        <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;">
+        <div style="padding: 16px 22px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+            <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 10px 14px;"><div style="font-size: 11px; color: #991b1b; font-weight: 700;">DOWN / UNREACHABLE</div><div id="ndr-kpi-down" style="font-size: 20px; font-weight: 800; color: #dc2626;">—</div></div>
+            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 10px 14px;"><div style="font-size: 11px; color: #92400e; font-weight: 700;">SNMP AUTH / TIMEOUTS</div><div id="ndr-kpi-snmp" style="font-size: 20px; font-weight: 800; color: #d97706;">—</div></div>
+            <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 10px 14px;"><div style="font-size: 11px; color: #075985; font-weight: 700;">UDP TRAPS / SYSLOG</div><div id="ndr-kpi-traps" style="font-size: 20px; font-weight: 800; color: #0284c7;">—</div></div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px;"><div style="font-size: 11px; color: #475569; font-weight: 700;">OPEN PORTS (SCAN)</div><div id="ndr-kpi-ports" style="font-size: 20px; font-weight: 800; color: #0f172a;">Click Scan</div></div>
+          </div>
+
+          <div id="opm-ndr-port-results" style="display: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; background: #f8fafc; font-size: 12px;"></div>
+
           <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;">
-              <span style="font-size: 13px; font-weight: 700; color: #1e293b;">Active Behavioral Anomaly Detections & STIX Indicators</span>
-              <span style="font-size: 11px; color: #64748b;">Feed: TAXII 2.1 Threat Intel Server &bull; Updated 8 mins ago</span>
+            <div style="background: #f1f5f9; padding: 10px 16px; font-size: 12px; font-weight: 700; color: #1e293b; border-bottom: 1px solid #e2e8f0;">
+              Real Operational &amp; Security Findings (Live SQLite Store)
             </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
               <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 700; font-size: 11px;">
-                  <th style="padding: 10px 12px;">Threat Classification</th>
-                  <th style="padding: 10px 12px;">Attacker Source IP</th>
-                  <th style="padding: 10px 12px;">Target Host / Asset</th>
-                  <th style="padding: 10px 12px;">MITRE ATT&CK ID</th>
-                  <th style="padding: 10px 12px;">Severity Score</th>
-                  <th style="padding: 10px 12px; text-align: right;">Mitigation State</th>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 11px;">
+                  <th style="padding: 9px 12px;">Classification</th>
+                  <th style="padding: 9px 12px;">Host IP</th>
+                  <th style="padding: 9px 12px;">Target</th>
+                  <th style="padding: 9px 12px;">Source</th>
+                  <th style="padding: 9px 12px;">Severity</th>
+                  <th style="padding: 9px 12px; text-align: right;">State</th>
                 </tr>
               </thead>
               <tbody id="opm-ndr-threat-table-body">
-                <tr id="ndr-row-1" style="border-bottom: 1px solid #f1f5f9; background: #fff5f5;">
-                  <td style="padding: 10px 12px;">
-                    <div style="font-weight: 700; color: #991b1b;">Horizontal TCP SYN Port Scan</div>
-                    <div style="font-size: 10px; color: #64748b;">Probed 1,024 TCP ports across /24 subnet</div>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    198.51.100.89 <span style="font-size: 10px; color: #dc2626; font-weight: 600;">(Tor Exit Node NL)</span>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">10.0.1.0/24 (DMZ)</td>
-                  <td style="padding: 10px 12px;"><span style="background: #fee2e2; color: #991b1b; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1046 Discovery</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #dc2626; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 94</span></td>
-                  <td id="ndr-status-1" style="padding: 10px 12px; text-align: right; color: #dc2626; font-weight: 700;">Block Recommended</td>
-                </tr>
-                <tr id="ndr-row-2" style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px;">
-                    <div style="font-weight: 700; color: #9a3412;">DNS Data Exfiltration via TXT Tunneling</div>
-                    <div style="font-size: 10px; color: #64748b;">High-entropy Base64 queries (48.2 MB exfiltrated)</div>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    10.0.1.44 <span style="font-size: 10px; color: #ea580c; font-weight: 600;">(Internal-Host-04)</span>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">ns1.tunnel-c2.top</td>
-                  <td style="padding: 10px 12px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1071.004 C2</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #ea580c; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 86</span></td>
-                  <td id="ndr-status-2" style="padding: 10px 12px; text-align: right; color: #ea580c; font-weight: 700;">Host Active</td>
-                </tr>
-                <tr id="ndr-row-3" style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 12px;">
-                    <div style="font-weight: 700; color: #9a3412;">Automated SSH Dictionary Brute Force</div>
-                    <div style="font-size: 10px; color: #64748b;">540 failed authentications in 60 seconds</div>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    203.0.113.190 <span style="font-size: 10px; color: #dc2626; font-weight: 600;">(Mirai C2 Botnet)</span>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">10.0.1.15 (Local-DB-Node)</td>
-                  <td style="padding: 10px 12px;"><span style="background: #ffedd5; color: #9a3412; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1110 Brute Force</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #ea580c; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 82</span></td>
-                  <td id="ndr-status-3" style="padding: 10px 12px; text-align: right; color: #dc2626; font-weight: 700;">Block Recommended</td>
-                </tr>
-                <tr id="ndr-row-4">
-                  <td style="padding: 10px 12px;">
-                    <div style="font-weight: 700; color: #475569;">Suspicious Outbound SMB Lateral Connection</div>
-                    <div style="font-size: 10px; color: #64748b;">TCP port 445 direct packet to untrusted public IP</div>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; font-weight: 700; color: #0f172a;">
-                    10.0.1.108 <span style="font-size: 10px; color: #64748b; font-weight: 600;">(Test-Node-02)</span>
-                  </td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #334155;">198.18.44.12:445</td>
-                  <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; font-weight: 700; padding: 2px 6px; border-radius: 3px; font-size: 11px;">T1021.002 SMB</span></td>
-                  <td style="padding: 10px 12px;"><span style="background: #94a3b8; color: #ffffff; font-weight: 800; padding: 2px 8px; border-radius: 10px; font-size: 11px;">Score 65</span></td>
-                  <td id="ndr-status-4" style="padding: 10px 12px; text-align: right; color: #64748b; font-weight: 600;">Monitored</td>
-                </tr>
+                <tr><td colspan="6" style="padding: 20px; text-align: center; color: #64748b;">Loading real findings...</td></tr>
               </tbody>
             </table>
           </div>
-
-          <!-- Forensic Security Console -->
-          <div id="opm-ndr-console" style="background: #090d16; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 11px; color: #a5f3fc; border: 1px solid #1e293b; max-height: 100px; overflow-y: auto;">
-            <div style="color: #64748b;">// ManageEngine OpManager Central NDR Threat Intelligence Engine</div>
-            <div>[TAXII] Synced 1,840,290 reputation signatures from global TAXII 2.1 intelligence feeds.</div>
-            <div id="opm-ndr-dynamic-msg" style="color: #f87171;">⚠️ Alert: 2 C2 botnet communication attempts flagged. Automated perimeter ACL push ready.</div>
-          </div>
         </div>
 
-        <!-- Footer -->
         <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; Network Detection & Response (NDR) Engine</span>
-          <button id="close-ndr-modal-btn-footer" style="background: #dc2626; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-            Close NDR View
-          </button>
+          <span style="font-size: 11px; color: #64748b;">ManageEngine OpManager Central &bull; Real Host Exposure &amp; Fault Forensics</span>
+          <button id="close-ndr-modal-btn-footer" style="background: #dc2626; color: #ffffff; border: none; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Close NDR View</button>
         </div>
       </div>
     `;
-
     modal.style.display = 'flex';
     document.getElementById('close-ndr-modal-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('close-ndr-modal-btn-footer').onclick = () => { modal.style.display = 'none'; };
 
-    const pushAclBtn = document.getElementById('opm-ndr-push-acl-btn');
-    const quarantineBtn = document.getElementById('opm-ndr-quarantine-btn');
-    const exportStixBtn = document.getElementById('opm-ndr-export-stix-btn');
-    const dynamicMsg = document.getElementById('opm-ndr-dynamic-msg');
+    function renderNdrData(data) {
+      latestNdrData = data;
+      document.getElementById('ndr-kpi-down').innerText = String(data.downCount || 0);
+      document.getElementById('ndr-kpi-snmp').innerText = String(data.snmpErrorCount || 0);
+      document.getElementById('ndr-kpi-traps').innerText = `${data.trapCount || 0} / ${data.syslogCount || 0}`;
+      if (data.openPorts) {
+        document.getElementById('ndr-kpi-ports').innerText = String(data.openPorts.length);
+        const box = document.getElementById('opm-ndr-port-results');
+        box.style.display = 'block';
+        box.innerHTML = `<div style="font-weight:700; color:#0f172a; margin-bottom:6px;">TCP Security Exposure Scan on ${data.targetName} (${data.targetIp}) &bull; ICMP: ${data.icmpRttMs !== null ? data.icmpRttMs + ' ms' : 'Timeout'}</div>` +
+          (data.openPorts.length === 0
+            ? '<span style="color:#64748b;">0 scanned sensitive ports responded open on this host.</span>'
+            : `<div style="display:flex; gap:8px; flex-wrap:wrap;">${data.openPorts.map(p => `<span style="background:${p.severity === 'Critical' || p.severity === 'High' ? '#fee2e2' : '#e0f2fe'}; color:${p.severity === 'Critical' || p.severity === 'High' ? '#991b1b' : '#0369a1'}; padding:3px 9px; border-radius:4px; font-family:monospace; font-weight:700;">TCP/${p.port} ${p.label} (${p.tcpMs}ms) [${p.severity}]</span>`).join('')}</div>`);
+      }
 
-    if (pushAclBtn) {
-      pushAclBtn.onclick = () => {
-        pushAclBtn.disabled = true;
-        pushAclBtn.innerHTML = 'Pushing ACL Rules...';
-        if (dynamicMsg) {
-          dynamicMsg.innerHTML = `<span style="color: #fbbf24;">[FW-CLI] access-list 101 deny ip host 198.51.100.89 any -> applied to Perimeter Firewall...</span><br><span style="color: #fbbf24;">[FW-CLI] access-list 101 deny ip host 203.0.113.190 any -> applied...</span>`;
-        }
-        setTimeout(() => {
-          document.getElementById('ndr-status-1').innerHTML = '✔ Blocked (ACL 101)';
-          document.getElementById('ndr-status-1').style.color = '#15803d';
-          document.getElementById('ndr-status-3').innerHTML = '✔ Blocked (ACL 101)';
-          document.getElementById('ndr-status-3').style.color = '#15803d';
-
-          if (dynamicMsg) {
-            dynamicMsg.innerHTML += `<br><span style="color: #34d399;">✔ Firewall Perimeter ACL successfully deployed. 2 malicious IPs dropped at edge.</span>`;
-          }
-          pushAclBtn.innerHTML = '✔ Firewall ACL Enforced';
-          pushAclBtn.style.background = '#15803d';
-          showToast('Automated Perimeter Firewall ACL pushed: Tor node & Mirai C2 blocked.');
-        }, 1100);
-      };
+      const tbody = document.getElementById('opm-ndr-threat-table-body');
+      const findings = data.findings || [];
+      tbody.innerHTML = findings.length === 0
+        ? '<tr><td colspan="6" style="padding: 20px; text-align: center; color: #16a34a; font-weight: 600;">No security or fault anomalies in store.</td></tr>'
+        : findings.map(f => `
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 9px 12px;"><div style="font-weight: 700; color: #0f172a;">${f.classification}</div><div style="font-size: 10px; color: #64748b;">${f.detail}</div></td>
+            <td style="padding: 9px 12px; font-family: monospace;">${f.sourceIp}</td>
+            <td style="padding: 9px 12px; font-weight: 600;">${f.target}</td>
+            <td style="padding: 9px 12px;">${f.tag}</td>
+            <td style="padding: 9px 12px;"><span style="background: ${f.severity === 'High' ? '#fee2e2' : (f.severity === 'Medium' ? '#fef3c7' : '#e0f2fe')}; color: ${f.severity === 'High' ? '#991b1b' : (f.severity === 'Medium' ? '#92400e' : '#0369a1')}; padding: 2px 7px; border-radius: 3px; font-weight: 700; font-size: 11px;">${f.severity}</span></td>
+            <td style="padding: 9px 12px; text-align: right; color: #475569; font-weight: 600;">${f.state}</td>
+          </tr>
+        `).join('');
     }
 
-    if (quarantineBtn) {
-      quarantineBtn.onclick = () => {
-        quarantineBtn.disabled = true;
-        quarantineBtn.innerHTML = 'Quarantining 802.1X...';
-        setTimeout(() => {
-          document.getElementById('ndr-status-2').innerHTML = '✔ Isolated (VLAN 999)';
-          document.getElementById('ndr-status-2').style.color = '#ea580c';
-          if (dynamicMsg) {
-            dynamicMsg.innerHTML += `<br><span style="color: #38bdf8;">[802.1X NAC] Switch port FastEthernet0/24 changed to Remediation Quarantine VLAN 999.</span>`;
-          }
-          quarantineBtn.innerHTML = '✔ Host Quarantined';
-          showToast('Host 10.0.1.44 (Internal-Host-04) quarantined via 802.1X NAC isolation VLAN 999.');
-        }, 1000);
-      };
-    }
+    fetch('/api/advanced/ndr').then(r => r.json()).then(renderNdrData).catch(() => {});
 
-    if (exportStixBtn) {
-      exportStixBtn.onclick = () => {
-        showToast('Exported forensic STIX 2.1 JSON bundle & PCAP trace for SIEM ingest.');
+    document.getElementById('opm-ndr-scan-btn').onclick = async () => {
+      const btn = document.getElementById('opm-ndr-scan-btn');
+      const devId = document.getElementById('opm-ndr-dev-select').value;
+      btn.disabled = true; btn.innerText = 'Scanning Ports...';
+      try {
+        const res = await fetch('/api/advanced/ndr/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ deviceId: devId })
+        });
+        const data = await res.json();
+        renderNdrData(data);
+        showToast(`Security port scan finished on ${data.targetIp}: ${(data.openPorts || []).length} open ports found.`);
+      } catch (e) {
+        showToast('Scan failed: ' + e.message);
+      } finally {
+        btn.disabled = false; btn.innerText = '🔍 Run Live Security Port Scan';
+      }
+    };
+
+    document.getElementById('opm-ndr-export-stix-btn').onclick = () => {
+      const bundle = {
+        type: 'bundle',
+        id: `bundle--opmanager-${Date.now()}`,
+        spec_version: '2.1',
+        created: new Date().toISOString(),
+        objects: (latestNdrData && latestNdrData.findings ? latestNdrData.findings : []).map((f, i) => ({
+          type: 'indicator',
+          id: `indicator--${i}-${Date.now()}`,
+          name: f.classification,
+          description: `${f.detail} (Host: ${f.sourceIp})`,
+          pattern_type: 'stix',
+          valid_from: new Date().toISOString()
+        }))
       };
-    }
+      const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `opmanager-ndr-stix21-${Date.now()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('Downloaded live STIX 2.1 JSON security report.');
+    };
   }
-
 
 
   // -------------------------------------------------------------
