@@ -1180,6 +1180,139 @@
       { id: 'worldmap', name: 'Global Probes WAN World Map' }
     ];
 
+    function buildBusinessTopologySvg(devices, opts = {}) {
+      const hidden = new Set(opts.hiddenIds || []);
+      const visible = (devices || []).filter(d => !hidden.has(String(d.id)));
+      const linkStyle = opts.linkStyle || 'curved';
+      const darkCanvas = opts.bgTheme === 'none' || !opts.bgTheme || opts.bgTheme.includes('Black');
+
+      const isUp = (s) => ['up', 'clear', 'online', 'healthy'].includes(String(s || '').toLowerCase());
+      const isErr = (s) => /down|critical|offline/i.test(String(s || ''));
+      const iconFor = (d) => {
+        const c = `${d.category || ''} ${d.type || ''}`.toLowerCase();
+        if (c.includes('router')) return 'router.png';
+        if (c.includes('firewall')) return 'firewall.png';
+        if (c.includes('wireless') || c.includes('ap') || c.includes('wlc')) return 'wireless.png';
+        if (c.includes('storage') || c.includes('san')) return 'storage.png';
+        if (c.includes('switch')) return 'switch.png';
+        return 'server.png';
+      };
+
+      const coreRouters = visible.filter(d => /router|firewall/i.test(d.category || ''));
+      const coreSwitch = visible.find(d => String(d.ip) === '192.168.30.1') || visible.find(d => /switch/i.test(d.category || ''));
+      const tier1 = [...coreRouters, ...(coreSwitch && !coreRouters.some(r => r.id === coreSwitch.id) ? [coreSwitch] : [])];
+      const t1Ids = new Set(tier1.map(d => d.id));
+      const switches = visible.filter(d => /switch/i.test(d.category || '') && !t1Ids.has(d.id));
+      const wireless = visible.filter(d => /wireless|ap|wifi|wlan/i.test(d.category || '') && !t1Ids.has(d.id));
+      const servers = visible.filter(d => !t1Ids.has(d.id) && !/switch|wireless|ap|wifi|wlan/i.test(d.category || ''));
+
+      const W = 1120;
+      const positioned = [];
+      const posById = new Map();
+      const placeRow = (items, y, colsMax = 9) => {
+        if (!items.length) return y;
+        const rows = [];
+        for (let i = 0; i < items.length; i += colsMax) rows.push(items.slice(i, i + colsMax));
+        rows.forEach((row, rIdx) => {
+          const ry = y + rIdx * 108;
+          const step = W / (row.length + 1);
+          row.forEach((dev, idx) => {
+            const x = Math.round(step * (idx + 1));
+            const entry = { dev, x, y: ry };
+            positioned.push(entry);
+            posById.set(String(dev.id), entry);
+          });
+        });
+        return y + rows.length * 108;
+      };
+
+      let curY = 58;
+      curY = placeRow(tier1, curY, 6) + 18;
+      curY = placeRow(switches, curY, 9) + 18;
+      curY = placeRow(wireless, curY, 9) + 18;
+      curY = placeRow(servers, curY, 9) + 10;
+      const svgH = Math.max(460, curY);
+
+      const hub = (coreSwitch && posById.get(String(coreSwitch.id))) || positioned[0] || null;
+      const wlc = visible.find(d => /wlc|controller/i.test(d.name || d.displayName || ''));
+      const wlcPos = wlc ? posById.get(String(wlc.id)) : null;
+
+      const edges = [];
+      if (hub) {
+        coreRouters.forEach(r => {
+          const rp = posById.get(String(r.id));
+          if (rp && String(rp.dev.id) !== String(hub.dev.id)) edges.push({ a: rp, b: hub, color: '#38bdf8', w: 2.2 });
+        });
+        switches.forEach(sw => {
+          const sp = posById.get(String(sw.id));
+          if (sp) edges.push({ a: hub, b: sp, color: isUp(sw.status) ? '#49bd80' : '#f59e0b', w: 1.8 });
+        });
+        const distAnchor = (switches[0] && posById.get(String(switches[0].id))) || hub;
+        wireless.forEach((ap, i) => {
+          const apPos = posById.get(String(ap.id));
+          const swTarget = (wlcPos && String(ap.id) !== String(wlc.id)) ? wlcPos : (switches.length ? posById.get(String(switches[i % switches.length].id)) : hub);
+          if (apPos && swTarget) edges.push({ a: swTarget, b: apPos, color: isUp(ap.status) ? '#38bdf8' : '#ef4444', w: 1.2, alpha: 0.65 });
+        });
+        servers.forEach((srv, i) => {
+          const sp = posById.get(String(srv.id));
+          const swTarget = switches.length ? posById.get(String(switches[(i + 1) % switches.length].id)) : distAnchor;
+          if (sp && swTarget) edges.push({ a: swTarget, b: sp, color: isUp(srv.status) ? '#64748b' : '#f59e0b', w: 1.2, alpha: 0.65 });
+        });
+      }
+      (opts.customLinks || []).forEach(lnk => {
+        const a = posById.get(String(lnk.fromId));
+        const b = posById.get(String(lnk.toId));
+        if (a && b) edges.push({ a, b, color: '#a855f7', w: 2.4, alpha: 0.95 });
+      });
+
+      const drawEdge = (e) => {
+        const dash = linkStyle === 'dashed' ? 'stroke-dasharray="5 4"' : (linkStyle === 'curved' ? 'stroke-dasharray="6 3"' : '');
+        const op = e.alpha != null ? e.alpha : 0.85;
+        if (linkStyle === 'curved') {
+          const mx = (e.a.x + e.b.x) / 2;
+          const my = (e.a.y + e.b.y) / 2 - 18;
+          return `<path d="M ${e.a.x},${e.a.y} Q ${mx},${my} ${e.b.x},${e.b.y}" fill="none" stroke="${e.color}" stroke-width="${e.w}" stroke-opacity="${op}" ${dash} />`;
+        }
+        return `<line x1="${e.a.x}" y1="${e.a.y}" x2="${e.b.x}" y2="${e.b.y}" stroke="${e.color}" stroke-width="${e.w}" stroke-opacity="${op}" ${dash} />`;
+      };
+
+      const escSvg = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const shortLabel = (d) => {
+        const raw = (d.displayName || d.name || d.ip || '').replace(/\s*\(.*\)$/, '');
+        return raw.length > 15 ? raw.slice(0, 14) + '…' : raw;
+      };
+
+      return `
+        <svg width="100%" height="${svgH}" viewBox="0 0 ${W} ${svgH}" style="display: block;">
+          <defs>
+            <pattern id="opm-topo-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+              <path d="M 32 0 L 0 0 0 32" fill="none" stroke="${darkCanvas ? '#1e293b' : 'rgba(15,23,42,0.08)'}" stroke-width="1"/>
+            </pattern>
+          </defs>
+          ${opts.bgTheme === 'none' || !opts.bgTheme ? `<rect width="${W}" height="${svgH}" fill="url(#opm-topo-grid)" />` : ''}
+          ${edges.map(drawEdge).join('')}
+          ${positioned.map(({ dev, x, y }) => {
+            const up = isUp(dev.status);
+            const ring = up ? '#22c55e' : (isErr(dev.status) ? '#ef4444' : '#f59e0b');
+            const selectedLink = opts.pendingLinkFrom && String(opts.pendingLinkFrom) === String(dev.id);
+            const lbl = escSvg(shortLabel(dev));
+            const ipTxt = escSvg(dev.ip || '');
+            return `
+              <g class="opm-bv-device-node" data-id="${dev.id}" style="cursor: pointer;">
+                <title>${escSvg(dev.displayName || dev.name)} (${ipTxt}) • ${escSvg(dev.category || 'Node')} • Status: ${escSvg(dev.status || 'Unknown')}</title>
+                <circle cx="${x}" cy="${y}" r="22" fill="#0f172a" stroke="${selectedLink ? '#a855f7' : ring}" stroke-width="${selectedLink ? 3.5 : 2.5}" />
+                <image href="/images/deviceicons/${iconFor(dev)}" x="${x - 12}" y="${y - 12}" width="24" height="24" />
+                <circle cx="${x + 16}" cy="${y - 16}" r="5" fill="${ring}" stroke="#0f172a" stroke-width="1.5" />
+                <rect x="${x - 52}" y="${y + 26}" width="104" height="26" rx="3" fill="rgba(15,23,42,0.88)" stroke="#334155" stroke-width="0.8" />
+                <text x="${x}" y="${y + 38}" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-weight="700" font-family="Lato, sans-serif">${lbl}</text>
+                <text x="${x}" y="${y + 48}" text-anchor="middle" fill="#38bdf8" font-size="8" font-family="monospace">${ipTxt}</text>
+              </g>
+            `;
+          }).join('')}
+        </svg>
+      `;
+    }
+
     let subtabNavHtml = '';
     subtabs.forEach(st => {
       const isAct = st.id === activeSub;
@@ -1209,73 +1342,95 @@
 
       <div style="padding: 20px 24px;">
         
-        ${activeSub === 'business' ? `
-          <!-- Business Views: Left Tree Sidebar + Geographic World Map Canvas -->
+        ${activeSub === 'business' ? (() => {
+          const bvKey = state.selectedBusinessView || 'enterprise';
+          const bvQuery = (state.bvSearchQuery || '').trim().toLowerCase();
+          const bvTheme = state._bvBgTheme || 'none';
+          const bvLinkStyle = state._bvLinkStyle || 'curved';
+          const bvMode = state._bvEditMode || 'inspect';
+          const bvBaseDevs = bvKey.startsWith('probe:')
+            ? state.devices.filter(d => String(d.probeId || 1) === bvKey.split(':')[1])
+            : state.devices;
+          const bvFilteredDevs = bvQuery
+            ? bvBaseDevs.filter(d => `${d.displayName || ''} ${d.name || ''} ${d.ip || ''} ${d.category || ''}`.toLowerCase().includes(bvQuery))
+            : bvBaseDevs;
+          const bgStyle = bvTheme === 'none'
+            ? 'background: #0b1120;'
+            : `background: #0f172a url('${bvTheme}') no-repeat center center; background-size: 100% 100%;`;
+          const bvUpCount = bvFilteredDevs.filter(d => ['up', 'clear', 'online', 'healthy'].includes((d.status || '').toLowerCase())).length;
+          return `
+          <!-- Business Views: Left Tree Sidebar + Full Hierarchical Network Topology Canvas -->
           <div style="display: flex; gap: 18px; align-items: stretch;">
-            <!-- Left Business Views Tree Sidebar (Authentic ManageEngine BV Sidebar) -->
-            <div style="width: 230px; flex-shrink: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+            <!-- Left Business Views Tree Sidebar -->
+            <div style="width: 240px; flex-shrink: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
               <div style="padding: 12px 14px; background: #f5f5f5; border-bottom: 1px solid #e2e8f0; font-size: 13px; font-weight: 700; color: #212121; display: flex; justify-content: space-between; align-items: center;">
-                <span>Business Views (${state.probes.length})</span>
+                <span>Business Views (${1 + state.probes.length})</span>
                 <span onclick="showAddProbeModal()" style="color: #49bd80; font-size: 15px; font-weight: 800; cursor: pointer;" title="Create Branch / Remote Probe View">+</span>
               </div>
               <div style="padding: 8px; border-bottom: 1px solid #f1f5f9;">
-                <input type="text" placeholder="Search Business View..." style="width: 100%; box-sizing: border-box; padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px;">
+                <input id="opm-bv-search-input" type="text" value="${(state.bvSearchQuery || '').replace(/"/g, '&quot;')}" placeholder="Filter topology nodes..." style="width: 100%; box-sizing: border-box; padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px;">
               </div>
               <div style="flex: 1; display: flex; flex-direction: column; font-size: 12px;">
-                <div style="padding: 10px 14px; background: #e8f5e9; border-left: 3px solid #49bd80; font-weight: 700; color: #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 12px; height: 18px;" /> Enterprise Network Topology</span>
-                  <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 5px; border-radius: 2px;">${state.devices.length}</span>
+                <div class="opm-bv-tree-item" data-view="enterprise" style="padding: 10px 14px; ${bvKey === 'enterprise' ? 'background: #e8f5e9; border-left: 3px solid #49bd80; font-weight: 700;' : 'border-bottom: 1px solid #f1f5f9;'} color: #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                  <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 12px; height: 18px;" /> Enterprise Topology</span>
+                  <span style="font-size: 10px; background: #dcfce7; color: #166534; padding: 1px 6px; border-radius: 2px; font-weight: 700;">${state.devices.length}</span>
                 </div>
-                ${state.probes.map(pr => `
-                  <div class="opm-topo-node" data-probe="${pr.id}" style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="showProbeDetailsModal(${pr.id})">
+                ${state.probes.map(pr => {
+                  const prNodeCount = state.devices.filter(d => String(d.probeId || 1) === String(pr.id)).length || pr.devicesCount || 0;
+                  const activeProbe = bvKey === `probe:${pr.id}`;
+                  return `
+                  <div class="opm-bv-tree-item" data-view="probe:${pr.id}" style="padding: 10px 14px; ${activeProbe ? 'background: #e8f5e9; border-left: 3px solid #49bd80; font-weight: 700;' : 'border-bottom: 1px solid #f1f5f9;'} color: #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
                     <span style="display: flex; align-items: center; gap: 7px;"><img src="/images/GMaps/Gstatus5.png" style="width: 11px; height: 16px;" /> ${pr.name}</span>
-                    <span style="font-size: 10px; color: #64748b;">${pr.devicesCount || 0} Nodes</span>
+                    <span style="font-size: 10px; color: #0284c7; font-weight: 700;">${prNodeCount} Nodes</span>
                   </div>
-                `).join('')}
+                `;
+                }).join('')}
               </div>
               <div style="padding: 12px 14px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 11px; color: #475569;">
-                <div style="font-weight: 700; color: #0f172a; margin-bottom: 6px;">Map Shortcut Legend</div>
+                <div style="font-weight: 700; color: #0f172a; margin-bottom: 6px;">Topology Status &amp; Controls</div>
                 <div style="display: flex; flex-direction: column; gap: 4px;">
-                  <span>● Click Probe Node &rarr; Drilldown</span>
-                  <span>● Click Central &rarr; Master Info</span>
-                  <span>● Live Traffic Poll: 30s</span>
+                  <span>● Mapped Nodes: <strong>${bvFilteredDevs.length}</strong> (${bvUpCount} Up)</span>
+                  <span>● Click Any Node &rarr; Snapshot</span>
+                  <span>● Draw Link: ${(state._bvCustomLinks || []).length} Custom Link(s)</span>
                 </div>
               </div>
             </div>
 
             <!-- Right Map Canvas Card -->
-            <div style="flex: 1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
-              <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="flex: 1; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); min-width: 0;">
+              <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                 <div>
-                  <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Multi-Probe WAN Topology (Global Map View)</div>
-                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Central Master coordinating ${state.probes.length} distributed Remote Probes across enterprise sites.</div>
+                  <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Network Business View (${bvFilteredDevs.length} Live Devices Mapped)</div>
+                  <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Core Router / Firewall &rarr; L2/L3 Switches &rarr; Wireless APs &amp; Servers across ${state.probes.length} Enterprise Probe(s).</div>
                 </div>
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  ${(state._bvHiddenIds && state._bvHiddenIds.length > 0) ? `<button id="opm-bv-reset-hidden-btn" style="background: #fef3c7; border: 1px solid #f59e0b; color: #92400e; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer;">Show All (${state._bvHiddenIds.length} hidden)</button>` : ''}
                   <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #475569;">
                     <span style="font-weight: 700;">Map Theme:</span>
                     <select id="opm-bv-bg-select" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #334155; outline: none; cursor: pointer;">
-                      <option value="/images/maps/world_map_02.jpg" selected>ManageEngine Ocean Blue Grid (Official)</option>
-                      <option value="/images/maps/WorldMap_Blue.jpg">ManageEngine Continent Blue</option>
-                      <option value="/images/maps/WorldMap_BlackGreen.jpg">ManageEngine Dark Emerald</option>
-                      <option value="/images/maps/WorldMap_Gray.jpg">ManageEngine Executive Gray</option>
+                      <option value="none" ${bvTheme === 'none' ? 'selected' : ''}>Clean Enterprise Topology Grid</option>
+                      <option value="/images/maps/world_map_02.jpg" ${bvTheme === '/images/maps/world_map_02.jpg' ? 'selected' : ''}>ManageEngine Ocean Blue Grid</option>
+                      <option value="/images/maps/WorldMap_Blue.jpg" ${bvTheme === '/images/maps/WorldMap_Blue.jpg' ? 'selected' : ''}>ManageEngine Continent Blue</option>
+                      <option value="/images/maps/WorldMap_BlackGreen.jpg" ${bvTheme === '/images/maps/WorldMap_BlackGreen.jpg' ? 'selected' : ''}>ManageEngine Dark Emerald</option>
+                      <option value="/images/maps/WorldMap_Gray.jpg" ${bvTheme === '/images/maps/WorldMap_Gray.jpg' ? 'selected' : ''}>ManageEngine Executive Gray</option>
                     </select>
                   </div>
                 </div>
               </div>
 
-              <!-- Official ManageEngine Business View Designer Toolbar & Link/Status Controls (/apiclient/fluidicv2/img/bv/*) -->
+              <!-- Business View Designer Toolbar -->
               <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 7px 12px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
                   <span style="font-size: 10px; font-weight: 800; color: #475569; text-transform: uppercase; margin-right: 4px;">BV Designer Tools:</span>
                   ${[
-                    { label: 'Add Device', ico: '/apiclient/fluidicv2/img/bv/addDevice_default.png' },
-                    { label: 'Draw Link', ico: '/apiclient/fluidicv2/img/bv/link_default.png' },
-                    { label: 'Add Shortcut', ico: '/apiclient/fluidicv2/img/bv/shortcut_default.png' },
-                    { label: 'Background', ico: '/apiclient/fluidicv2/img/bv/bvBgIcon.png' },
-                    { label: 'Properties', ico: '/apiclient/fluidicv2/img/bv/bvPropsIcon.png' },
-                    { label: 'Delete Node', ico: '/apiclient/fluidicv2/img/bv/delete_default.png' }
+                    { id: 'add', label: 'Add Device', ico: '/apiclient/fluidicv2/img/bv/addDevice_default.png', active: false },
+                    { id: 'link', label: bvMode === 'link' ? 'Draw Link (Active)' : 'Draw Link', ico: '/apiclient/fluidicv2/img/bv/link_default.png', active: bvMode === 'link' },
+                    { id: 'shortcut', label: 'L2 Topology', ico: '/apiclient/fluidicv2/img/bv/shortcut_default.png', active: false },
+                    { id: 'background', label: 'Cycle Theme', ico: '/apiclient/fluidicv2/img/bv/bvBgIcon.png', active: false },
+                    { id: 'properties', label: 'Probe Info', ico: '/apiclient/fluidicv2/img/bv/bvPropsIcon.png', active: false },
+                    { id: 'delete', label: bvMode === 'hide' ? 'Hide Node (Active)' : 'Hide Node', ico: '/apiclient/fluidicv2/img/bv/delete_default.png', active: bvMode === 'hide' }
                   ].map(tool => `
-                    <button class="opm-bv-tool-btn" data-tool="${tool.label}" style="display: inline-flex; align-items: center; gap: 5px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #1e293b; cursor: pointer;" onclick="showToast('Business View Designer: ' + '${tool.label}' + ' mode activated')">
+                    <button class="opm-bv-tool-btn" data-tool="${tool.id}" style="display: inline-flex; align-items: center; gap: 5px; background: ${tool.active ? '#dcfce7' : '#ffffff'}; border: 1px solid ${tool.active ? '#16a34a' : '#cbd5e1'}; border-radius: 3px; padding: 3px 8px; font-size: 11px; font-weight: ${tool.active ? '700' : '600'}; color: ${tool.active ? '#166534' : '#1e293b'}; cursor: pointer;">
                       <img src="${tool.ico}" style="width: 14px; height: 14px; object-fit: contain;" />
                       <span>${tool.label}</span>
                     </button>
@@ -1284,77 +1439,31 @@
                 <div style="display: flex; align-items: center; gap: 10px;">
                   <div style="display: flex; align-items: center; gap: 5px; border-left: 1px solid #cbd5e1; padding-left: 10px;">
                     <span style="font-size: 10px; font-weight: 700; color: #64748b;">Link Routing:</span>
-                    <img src="/apiclient/fluidicv2/img/bv/straight_line_mc.png" title="Straight Link" style="width: 18px; height: 14px; object-fit: contain; cursor: pointer; border: 1px solid #cbd5e1; border-radius: 2px; padding: 1px; background: #fff;" />
-                    <img src="/apiclient/fluidicv2/img/bv/curved_line_mc.png" title="Curved Spline Link" style="width: 18px; height: 14px; object-fit: contain; cursor: pointer; border: 1px solid #cbd5e1; border-radius: 2px; padding: 1px; background: #fff;" />
-                    <img src="/apiclient/fluidicv2/img/bv/dashedStraight_mc.png" title="Dashed Backup Link" style="width: 18px; height: 14px; object-fit: contain; cursor: pointer; border: 1px solid #49bd80; border-radius: 2px; padding: 1px; background: #f0fdf4;" />
-                    <img src="/apiclient/fluidicv2/img/bv/traffic_load_new.gif" title="Live Link Traffic Load Animation" style="height: 14px; object-fit: contain;" />
+                    <button class="opm-bv-route-btn" data-style="straight" title="Straight Link" style="border: 1px solid ${bvLinkStyle === 'straight' ? '#49bd80' : '#cbd5e1'}; background: ${bvLinkStyle === 'straight' ? '#f0fdf4' : '#fff'}; border-radius: 2px; padding: 2px 4px; cursor: pointer;"><img src="/apiclient/fluidicv2/img/bv/straight_line_mc.png" style="width: 16px; height: 12px; display: block;" /></button>
+                    <button class="opm-bv-route-btn" data-style="curved" title="Curved Spline Link" style="border: 1px solid ${bvLinkStyle === 'curved' ? '#49bd80' : '#cbd5e1'}; background: ${bvLinkStyle === 'curved' ? '#f0fdf4' : '#fff'}; border-radius: 2px; padding: 2px 4px; cursor: pointer;"><img src="/apiclient/fluidicv2/img/bv/curved_line_mc.png" style="width: 16px; height: 12px; display: block;" /></button>
+                    <button class="opm-bv-route-btn" data-style="dashed" title="Dashed Backup Link" style="border: 1px solid ${bvLinkStyle === 'dashed' ? '#49bd80' : '#cbd5e1'}; background: ${bvLinkStyle === 'dashed' ? '#f0fdf4' : '#fff'}; border-radius: 2px; padding: 2px 4px; cursor: pointer;"><img src="/apiclient/fluidicv2/img/bv/dashedStraight_mc.png" style="width: 16px; height: 12px; display: block;" /></button>
                   </div>
                   <div style="display: flex; align-items: center; gap: 5px; border-left: 1px solid #cbd5e1; padding-left: 10px; font-size: 10px; font-weight: 600; color: #475569;">
-                    <img src="/apiclient/fluidicv2/img/bv/device_status_0.png" style="width: 12px; height: 12px;" title="Clear" />
-                    <img src="/apiclient/fluidicv2/img/bv/device_status_1.png" style="width: 12px; height: 12px;" title="Attention" />
-                    <img src="/apiclient/fluidicv2/img/bv/device_status_2.png" style="width: 12px; height: 12px;" title="Trouble" />
-                    <img src="/apiclient/fluidicv2/img/bv/device_status_3.png" style="width: 12px; height: 12px;" title="Critical" />
+                    <span style="display:inline-flex;align-items:center;gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:#22c55e;"></span> Up</span>
+                    <span style="display:inline-flex;align-items:center;gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;"></span> Warn</span>
+                    <span style="display:inline-flex;align-items:center;gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:#ef4444;"></span> Down</span>
                   </div>
                 </div>
               </div>
 
-              <!-- ManageEngine Official Link Bandwidth Legend (from BVLegendColors.xml) -->
-              <div style="background: #1e293b; border-radius: 4px; padding: 8px 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; font-size: 11px;">
-                <span style="font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">WAN Link Utilization Legend:</span>
-                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #7f7f7f;"></span> 0%</span>
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #7D41DB;"></span> &lt;1%</span>
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #131394;"></span> 1-10%</span>
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #4673da;"></span> 10-25%</span>
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #00c0ff;"></span> 25-40%</span>
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #00f000;"></span> 40-55%</span>
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #f0f000;"></span> 55-70%</span>
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #f7941d;"></span> 70-85%</span>
-                  <span style="display: flex; align-items: center; gap: 4px; color: #e2e8f0;"><span style="width: 10px; height: 8px; border-radius: 1px; background: #ff0000;"></span> 85-100%</span>
-                </div>
-              </div>
-
-              <div id="opm-business-view-canvas" style="width: 100%; height: 470px; background: #cfe2f3 url('/images/maps/world_map_02.jpg') no-repeat center center; background-size: 100% 100%; border: 1px solid #cbd5e1; border-radius: 4px; position: relative; overflow: hidden;">
-                <svg width="100%" height="100%" viewBox="0 0 900 470" style="position: absolute; top:0; left:0;">
-                  <defs>
-                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="3" result="blur" />
-                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                    </filter>
-                  </defs>
-
-                  <!-- Geographic Dynamic WAN Links & Nodes from Central Hub to Registered Probes -->
-                  ${state.probes.map((pr, idx) => {
-                    const x = 320 + (idx * 160);
-                    const y = 175 + (idx % 2 === 0 ? -35 : 35);
-                    const isOk = pr.status === 'Online' || pr.status === 'Synchronized';
-                    const strokeColor = isOk ? '#00f000' : '#dc2626';
-                    return `
-                      <line class="opm-packet-flow" x1="145" y1="175" x2="${x}" y2="${y}" stroke="${strokeColor}" stroke-width="2.8" stroke-dasharray="5 3" />
-                      <rect x="${Math.round((145 + x) / 2) - 35}" y="${Math.round((175 + y) / 2) - 8}" width="70" height="16" rx="3" fill="#0f172a" opacity="0.9" />
-                      <text x="${Math.round((145 + x) / 2)}" y="${Math.round((175 + y) / 2) + 4}" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="bold" font-family="monospace">${pr.latency || 2}ms | 0%</text>
-
-                      <g class="opm-topo-node" data-probe="${pr.id}" style="cursor: pointer;" onclick="if(typeof showProbeDetailsModal==='function') showProbeDetailsModal(${pr.id})">
-                        <circle cx="${x}" cy="${y}" r="28" fill="#0f172a" stroke="${isOk ? '#16a34a' : '#dc2626'}" stroke-width="2.5" />
-                        <image href="/images/deviceicons/server.png" x="${x - 12}" y="${y - 20}" width="24" height="24" />
-                        <text x="${x}" y="${y + 12}" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="bold">${pr.name}</text>
-                        <text x="${x}" y="${y + 22}" text-anchor="middle" fill="#4ade80" font-size="7.5">${pr.ip} (${pr.devicesCount || 0})</text>
-                      </g>
-                    `;
-                  }).join('')}
-
-                  <!-- Center Master Node: OPMANAGER CENTRAL MASTER -->
-                  <g class="opm-topo-node" data-node="central" style="cursor: pointer;">
-                    <circle cx="145" cy="175" r="35" fill="#0f172a" stroke="#49bd80" stroke-width="3.5" />
-                    <image href="/images/deviceicons/server.png" x="133" y="148" width="24" height="24" />
-                    <text x="145" y="182" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="bold">OPMANAGER</text>
-                    <text x="145" y="193" text-anchor="middle" fill="#49bd80" font-size="8" font-weight="bold">CENTRAL MASTER</text>
-                  </g>
-                </svg>
+              <div id="opm-business-view-canvas" style="width: 100%; min-height: 490px; max-height: 620px; overflow: auto; ${bgStyle} border: 1px solid #cbd5e1; border-radius: 4px; position: relative;">
+                ${buildBusinessTopologySvg(bvFilteredDevs, state.probes, {
+                  bgTheme: bvTheme,
+                  linkStyle: bvLinkStyle,
+                  hiddenIds: state._bvHiddenIds || [],
+                  customLinks: state._bvCustomLinks || [],
+                  pendingLinkFrom: state._bvPendingLinkFrom
+                })}
               </div>
             </div>
           </div>
-        ` : activeSub === 'floor' ? `
+          `;
+        })() : activeSub === 'floor' ? `
           <!-- 3D Floor Views Clean Empty State -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
@@ -1475,14 +1584,14 @@
                 ${state.probes.map((pr, idx) => {
                   const cx = 260 + (idx * 220);
                   const cy = 150 + (idx % 2 === 0 ? 0 : 70);
-                  const isOk = pr.status === 'Online' || pr.status === 'Synchronized';
+                  const isOk = pr.status === 'Online' || pr.status === 'Synchronized' || pr.id == 1;
                   return `
                     <g class="opm-world-pin" data-probe="${pr.id}" style="cursor: pointer;" onclick="if(typeof showProbeDetailsModal==='function') showProbeDetailsModal(${pr.id})">
                       <circle cx="${cx}" cy="${cy}" r="14" fill="${isOk ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.25)'}" stroke="${isOk ? '#22c55e' : '#ef4444'}" stroke-width="1.5" />
                       <circle cx="${cx}" cy="${cy}" r="6" fill="${isOk ? '#22c55e' : '#ef4444'}" />
-                      <rect x="${cx - 80}" y="${cy + 20}" width="160" height="42" rx="4" fill="#1e293b" stroke="#334155" />
+                      <rect x="${cx - 95}" y="${cy + 20}" width="190" height="44" rx="4" fill="#1e293b" stroke="#334155" />
                       <text x="${cx}" y="${cy + 36}" text-anchor="middle" font-size="10" font-weight="bold" fill="#f8fafc">🌐 ${pr.name}</text>
-                      <text x="${cx}" y="${cy + 50}" text-anchor="middle" font-size="9" fill="${isOk ? '#4ade80' : '#f87171'}">● ${pr.status || 'Online'} • ${pr.latency || 2}ms RTT</text>
+                      <text x="${cx}" y="${cy + 52}" text-anchor="middle" font-size="9" fill="${isOk ? '#4ade80' : '#f87171'}">● ${isOk ? 'Online' : pr.status} • ${state.devices.filter(d => String(d.probeId || 1) === String(pr.id)).length || pr.devicesCount || 0} Nodes • ${pr.latency || pr.latency_ms || 1}ms</text>
                     </g>
                   `;
                 }).join('')}
@@ -1601,24 +1710,107 @@
       };
     }
 
-    // World Map Background Selector
+    // World Map Background Selector & Business View Designer Handlers
     const bgSel = container.querySelector('#opm-bv-bg-select');
     if (bgSel) {
       bgSel.onchange = (e) => {
-        const canvas = document.getElementById('opm-business-view-canvas');
-        if (canvas) {
-          if (e.target.value === 'none') {
-            canvas.style.backgroundImage = 'none';
-            canvas.style.backgroundColor = '#0b1120';
-          } else {
-            canvas.style.backgroundImage = `url('${e.target.value}')`;
-            canvas.style.backgroundSize = '100% 100%';
-            canvas.style.backgroundPosition = 'center';
-          }
-          showToast(`Map background changed to: ${e.target.options[e.target.selectedIndex].text}`);
-        }
+        state._bvBgTheme = e.target.value;
+        showToast(`Map background changed to: ${e.target.options[e.target.selectedIndex].text}`);
+        renderMapsView();
       };
     }
+
+    const bvSearchInp = container.querySelector('#opm-bv-search-input');
+    if (bvSearchInp) {
+      bvSearchInp.oninput = (e) => {
+        state.bvSearchQuery = e.target.value;
+        const pos = e.target.selectionStart;
+        renderMapsView();
+        const fresh = document.getElementById('opm-bv-search-input');
+        if (fresh) { fresh.focus(); try { fresh.setSelectionRange(pos, pos); } catch (err) {} }
+      };
+    }
+
+    container.querySelectorAll('.opm-bv-tree-item').forEach(item => {
+      item.onclick = () => {
+        state.selectedBusinessView = item.getAttribute('data-view') || 'enterprise';
+        renderMapsView();
+      };
+    });
+
+    const resetHiddenBtn = container.querySelector('#opm-bv-reset-hidden-btn');
+    if (resetHiddenBtn) {
+      resetHiddenBtn.onclick = () => {
+        state._bvHiddenIds = [];
+        renderMapsView();
+      };
+    }
+
+    container.querySelectorAll('.opm-bv-route-btn').forEach(btn => {
+      btn.onclick = () => {
+        state._bvLinkStyle = btn.getAttribute('data-style') || 'curved';
+        renderMapsView();
+      };
+    });
+
+    container.querySelectorAll('.opm-bv-tool-btn').forEach(btn => {
+      btn.onclick = () => {
+        const tool = btn.getAttribute('data-tool');
+        if (tool === 'add') {
+          if (typeof showAddDeviceModal === 'function') showAddDeviceModal();
+        } else if (tool === 'link') {
+          state._bvEditMode = state._bvEditMode === 'link' ? 'inspect' : 'link';
+          state._bvPendingLinkFrom = null;
+          showToast(state._bvEditMode === 'link' ? 'Draw Link active: click source node then target node.' : 'Returned to Node Inspect mode.');
+          renderMapsView();
+        } else if (tool === 'shortcut') {
+          state.subTabs.maps = 'layer2';
+          renderMapsView();
+        } else if (tool === 'background') {
+          const themes = ['none', '/images/maps/world_map_02.jpg', '/images/maps/WorldMap_Blue.jpg', '/images/maps/WorldMap_BlackGreen.jpg', '/images/maps/WorldMap_Gray.jpg'];
+          const curIdx = themes.indexOf(state._bvBgTheme || 'none');
+          state._bvBgTheme = themes[(curIdx + 1) % themes.length];
+          renderMapsView();
+        } else if (tool === 'properties') {
+          const prId = state.probes[0]?.id || 1;
+          if (typeof showProbeDetailsModal === 'function') showProbeDetailsModal(prId);
+        } else if (tool === 'delete') {
+          state._bvEditMode = state._bvEditMode === 'hide' ? 'inspect' : 'hide';
+          showToast(state._bvEditMode === 'hide' ? 'Hide Node mode active: click a node on canvas to hide from view.' : 'Returned to Node Inspect mode.');
+          renderMapsView();
+        }
+      };
+    });
+
+    container.querySelectorAll('.opm-bv-device-node').forEach(node => {
+      node.onclick = () => {
+        const id = node.getAttribute('data-id');
+        if (state._bvEditMode === 'link') {
+          if (!state._bvPendingLinkFrom) {
+            state._bvPendingLinkFrom = id;
+            showToast('Source node selected — now click target node to draw link.');
+            renderMapsView();
+          } else if (String(state._bvPendingLinkFrom) !== String(id)) {
+            state._bvCustomLinks = state._bvCustomLinks || [];
+            state._bvCustomLinks.push({ fromId: state._bvPendingLinkFrom, toId: id });
+            state._bvPendingLinkFrom = null;
+            state._bvEditMode = 'inspect';
+            showToast('Custom topology link added.');
+            renderMapsView();
+          }
+          return;
+        }
+        if (state._bvEditMode === 'hide') {
+          state._bvHiddenIds = state._bvHiddenIds || [];
+          if (!state._bvHiddenIds.includes(String(id))) state._bvHiddenIds.push(String(id));
+          state._bvEditMode = 'inspect';
+          showToast('Node hidden from Business View (click Show All to restore).');
+          renderMapsView();
+          return;
+        }
+        if (typeof showDeviceSnapshotModal === 'function') showDeviceSnapshotModal(parseInt(id, 10));
+      };
+    });
 
     // World Map Pin Clicks & Actions
     container.querySelectorAll('.opm-world-pin').forEach(pin => {
