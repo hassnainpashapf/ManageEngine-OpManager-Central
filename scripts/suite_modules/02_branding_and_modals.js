@@ -2244,7 +2244,7 @@
       document.body.appendChild(modal);
     }
 
-    const candidates = (state.devices || []).filter(d => /switch|router|firewall/i.test(d.category || ''));
+    const candidates = (state.devices || []).filter(d => /switch|router|firewall|wireless|ap|wlc/i.test(d.category || ''));
     const allDevs = candidates.length ? candidates : (state.devices || []);
     let selectedDev = switchDev || candidates[0] || allDevs[0];
 

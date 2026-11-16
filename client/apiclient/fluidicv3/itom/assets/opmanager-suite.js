@@ -3339,7 +3339,7 @@
       document.body.appendChild(modal);
     }
 
-    const candidates = (state.devices || []).filter(d => /switch|router|firewall/i.test(d.category || ''));
+    const candidates = (state.devices || []).filter(d => /switch|router|firewall|wireless|ap|wlc/i.test(d.category || ''));
     const allDevs = candidates.length ? candidates : (state.devices || []);
     let selectedDev = switchDev || candidates[0] || allDevs[0];
 
@@ -9488,33 +9488,111 @@
                 </tbody>
               </table>
             </div>`;
-        })() : activeSub === 'network' ? (networkCount === 0 ? `
-          <!-- Network Clean Empty State -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Network Routers or Switches Monitored</div>
-            <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">+ Add Network Switch / Router</button>
-          </div>
-        ` : `
-          <!-- Network Subtab -->
-          <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-              ${filteredDevices.filter(d => /router|switch/i.test(d.category || '')).map(dev => `
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${dev.id})">${dev.displayName || dev.name || dev.ip}</div>
-                    ${getStatusBadge(dev.status)}
-                  </div>
-                  <div style="font-size: 11px; font-family: monospace; color: #64748b; margin: 4px 0 10px 0;">${dev.ip} &bull; RTT: ${dev.responseTime != null ? dev.responseTime + ' ms' : '—'}</div>
-                  <div style="display: flex; gap: 6px;">
-                    <button onclick="showDeviceSnapshotModal(${dev.id})" style="flex:1;background:#f8fafc;border:1px solid #cbd5e1;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;">Inspect</button>
-                    <button onclick="showNetworkToolsModal('${dev.ip}','ping')" style="flex:1;background:#eff6ff;border:1px solid #bae6fd;color:#0284c7;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;">Ping</button>
-                    <button class="opm-dash-poll-btn" data-id="${dev.id}" style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:4px 8px;border-radius:3px;font-size:11px;cursor:pointer;">Poll</button>
-                  </div>
+        })() : activeSub === 'network' ? (() => {
+          const isNetNode = d => /router|switch|firewall|wireless|ap|wifi|wlan/i.test(`${d.category || ''} ${d.type || ''}`);
+          const allNetDevs = filteredDevices.filter(isNetNode);
+          if (allNetDevs.length === 0 && totalDevices === 0) {
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 6px;">No Network Infrastructure Monitored</div>
+                <button onclick="showAddDeviceModal()" style="background: #0070e0; color: #ffffff; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; border: none;">+ Add Network Switch / Router</button>
+              </div>`;
+          }
+          const netFilter = state.networkSubFilter || 'all-network';
+          const netQuery = (state.networkSearchQuery || '').trim().toLowerCase();
+          let shownNet = netFilter === 'all-assets' ? filteredDevices
+            : netFilter === 'switches' ? filteredDevices.filter(d => /switch/i.test(d.category || ''))
+            : netFilter === 'routers' ? filteredDevices.filter(d => /router/i.test(d.category || ''))
+            : netFilter === 'firewalls' ? filteredDevices.filter(d => /firewall/i.test(d.category || ''))
+            : netFilter === 'wireless' ? filteredDevices.filter(d => /wireless|ap|wifi|wlan/i.test(d.category || ''))
+            : allNetDevs;
+          if (netQuery) {
+            shownNet = shownNet.filter(d =>
+              `${d.displayName || ''} ${d.name || ''} ${d.ip || ''} ${d.vendor || ''} ${d.model || ''} ${d.category || ''}`.toLowerCase().includes(netQuery)
+            );
+          }
+          const upNetCount = allNetDevs.filter(d => ['up', 'clear', 'online'].includes((d.status || '').toLowerCase())).length;
+          const totalNetIfaces = (netFilter === 'all-assets' ? filteredDevices : allNetDevs).reduce((s, d) => s + (d.interfaces ? d.interfaces.length : (Number(d.interfacesCount) || 0)), 0);
+          const filterTabs = [
+            { id: 'all-network', label: `All Network (${allNetDevs.length})` },
+            { id: 'switches', label: `Switches (${switchCount})` },
+            { id: 'routers', label: `Routers (${routerCount})` },
+            { id: 'firewalls', label: `Firewalls (${firewallCount})` },
+            { id: 'wireless', label: `Wireless & APs (${wirelessCount})` },
+            { id: 'all-assets', label: `All Monitored Assets (${totalDevices})` }
+          ];
+          return `
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <!-- Network KPI Ribbon -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px;">
+                  <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Full Network Nodes</div>
+                  <div style="font-size: 24px; font-weight: 800; color: #0f172a; margin: 3px 0;">${allNetDevs.length} <span style="font-size: 12px; font-weight: 600; color: #16a34a;">(${upNetCount} Up)</span></div>
+                  <div style="font-size: 11px; color: #64748b;">${switchCount} SW • ${routerCount} RTR • ${firewallCount} FW • ${wirelessCount} APs</div>
                 </div>
-              `).join('')}
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px;">
+                  <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">SNMP Ports &amp; Interfaces</div>
+                  <div style="font-size: 24px; font-weight: 800; color: #0070e0; margin: 3px 0;">${totalNetIfaces}</div>
+                  <div style="font-size: 11px; color: #64748b;">Live IF-MIB Discovered Interfaces</div>
+                </div>
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px;">
+                  <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">SNMP Alerts / Unreachable</div>
+                  <div style="font-size: 24px; font-weight: 800; color: ${(allNetDevs.length - upNetCount) > 0 ? '#dc2626' : '#16a34a'}; margin: 3px 0;">${allNetDevs.length - upNetCount}</div>
+                  <div style="font-size: 11px; color: #64748b;">Total Monitored Inventory: ${totalDevices} Nodes</div>
+                </div>
+                <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
+                  <div style="display: flex; gap: 6px;">
+                    <button onclick="window.location.hash='#/maps/layer2'" style="flex:1; background: #0f172a; color: #fff; border: none; padding: 6px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">🗺️ L2 Topology</button>
+                    <button onclick="showSwitchPortMapperModal()" style="flex:1; background: #eff6ff; color: #0070e0; border: 1px solid #bae6fd; padding: 6px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">🔌 Port Mapper</button>
+                  </div>
+                  <button onclick="showNetworkDiscoveryModal()" style="width: 100%; background: #0070e0; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">🔍 Discover New Subnet / VLAN</button>
+                </div>
+              </div>
+
+              <!-- Filter Pills & Search -->
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  ${filterTabs.map(t => `
+                    <button class="opm-net-filter-btn" data-filter="${t.id}" style="padding: 5px 11px; border-radius: 4px; font-size: 11.5px; font-weight: ${netFilter === t.id ? '700' : '600'}; cursor: pointer; border: 1px solid ${netFilter === t.id ? '#49bd80' : '#cbd5e1'}; background: ${netFilter === t.id ? '#49bd80' : '#f8fafc'}; color: ${netFilter === t.id ? '#ffffff' : '#334155'};">${t.label}</button>
+                  `).join('')}
+                </div>
+                <input id="opm-net-search-input" type="text" value="${(state.networkSearchQuery || '').replace(/"/g, '&quot;')}" placeholder="Filter network nodes by name, IP, vendor..." style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; width: 250px;" />
+              </div>
+
+              <!-- Network Devices Grid -->
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                ${shownNet.length === 0 ? `
+                  <div style="grid-column: 1 / -1; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 36px; text-align: center; color: #64748b; font-size: 13px;">No matching network devices found.</div>
+                ` : shownNet.map(dev => `
+                  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px;">
+                    <div>
+                      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                          ${getDeviceTypeIcon(dev.type, dev.category, 16)}
+                          <div style="font-weight: 700; color: #0070e0; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${dev.displayName || dev.name || dev.ip}" onclick="showDeviceSnapshotModal(${dev.id})">${dev.displayName || dev.name || dev.ip}</div>
+                        </div>
+                        ${getStatusBadge(dev.status)}
+                      </div>
+                      <div style="font-size: 11px; font-family: monospace; color: #475569; margin-top: 5px;">${dev.ip} &bull; ${dev.category || 'Node'}${dev.vendor ? ' &bull; ' + dev.vendor : ''}</div>
+                      <div style="font-size: 11px; color: #64748b; margin-top: 3px; display: flex; justify-content: space-between;">
+                        <span>Ports: <strong style="color: #0f172a;">${dev.interfaces ? dev.interfaces.length : (Number(dev.interfacesCount) || 0)}</strong></span>
+                        <span>CPU: <strong>${dev.cpu ?? 0}%</strong></span>
+                        <span>Mem: <strong>${dev.memory ?? 0}%</strong></span>
+                        <span>RTT: <strong style="color: #0284c7;">${dev.responseTime != null ? dev.responseTime + ' ms' : '—'}</strong></span>
+                      </div>
+                    </div>
+                    <div style="display: flex; gap: 6px; margin-top: 2px;">
+                      <button onclick="showDeviceSnapshotModal(${dev.id})" style="flex:1;background:#f8fafc;border:1px solid #cbd5e1;padding:4px 6px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Inspect</button>
+                      <button class="opm-dash-spm-dev-btn" data-id="${dev.id}" style="flex:1;background:#eff6ff;border:1px solid #bae6fd;color:#0369a1;padding:4px 6px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Ports</button>
+                      <button onclick="showNetworkToolsModal('${dev.ip}','ping')" style="flex:1;background:#f8fafc;border:1px solid #cbd5e1;color:#0284c7;padding:4px 6px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Ping</button>
+                      <button class="opm-dash-poll-btn" data-id="${dev.id}" style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:4px 6px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;">Poll</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
             </div>
-          </div>
-        `) : activeSub === 'netflow' ? (() => {
+          `;
+        })() : activeSub === 'netflow' ? (() => {
           const flowDevs = filteredDevices.filter(d => /router|switch|firewall/i.test(d.category || ''));
           return `
             <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
@@ -10097,6 +10175,28 @@
     });
     const spmDashBtn = container.querySelector('#opm-dash-spm-btn');
     if (spmDashBtn) spmDashBtn.onclick = () => { if (typeof showSwitchPortMapperModal === 'function') showSwitchPortMapperModal(); };
+    container.querySelectorAll('.opm-dash-spm-dev-btn').forEach(btn => {
+      btn.onclick = () => {
+        const dev = (state.devices || []).find(d => String(d.id) === String(btn.getAttribute('data-id')));
+        if (typeof showSwitchPortMapperModal === 'function') showSwitchPortMapperModal(dev);
+      };
+    });
+    container.querySelectorAll('.opm-net-filter-btn').forEach(btn => {
+      btn.onclick = () => {
+        state.networkSubFilter = btn.getAttribute('data-filter') || 'all-network';
+        renderDashboardView();
+      };
+    });
+    const netSearchInp = container.querySelector('#opm-net-search-input');
+    if (netSearchInp) {
+      netSearchInp.oninput = (e) => {
+        state.networkSearchQuery = e.target.value;
+        const pos = e.target.selectionStart;
+        renderDashboardView();
+        const fresh = document.getElementById('opm-net-search-input');
+        if (fresh) { fresh.focus(); try { fresh.setSelectionRange(pos, pos); } catch (err) {} }
+      };
+    }
     const macBtn = container.querySelector('#opm-dash-mac-btn');
     if (macBtn) {
       macBtn.onclick = async () => {
