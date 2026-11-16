@@ -5,6 +5,7 @@ const router = express.Router();
 const store = require('../services/store');
 const ping = require('../services/ping');
 const snmp = require('../services/snmp');
+const netflowCollector = require('../services/netflowCollector');
 
 const BGP_STATE_NAMES = {
   1: 'idle',
@@ -331,6 +332,84 @@ router.post('/api/advanced/ndr/scan', async (req, res) => {
     openPorts: ports.filter((p) => p.open),
     allPorts: ports,
     ...buildNdrSummary(),
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 5. Real NetFlow v5/v9/IPFIX Collector (UDP 2055) + SNMP IF-MIB Performance
+// ---------------------------------------------------------------------------
+router.get(['/api/netflow/status', '/api/netflow/collector'], (req, res) => {
+  res.json({
+    status: 'success',
+    collector: netflowCollector.getStatus(),
+  });
+});
+
+router.get('/api/netflow/telemetry', (req, res) => {
+  const windowHours = Math.min(Math.max(Number(req.query.hours) || 24, 1), 720);
+  const since = Date.now() - windowHours * 3600 * 1000;
+
+  const collector = netflowCollector.getStatus();
+  const flowSummary = typeof store.summarizeFlowTelemetry === 'function'
+    ? store.summarizeFlowTelemetry(since)
+    : { totals: { flow_count: 0, total_bytes: 0, total_packets: 0, exporter_count: 0 }, topApps: [], topConversations: [], exporters: [] };
+  const recentFlows = typeof store.listFlowRecords === 'function'
+    ? store.listFlowRecords({ limit: 50, since })
+    : [];
+
+  const devices = store.listDevices() || [];
+  const allInterfaces = typeof store.listTopInterfaces === 'function'
+    ? store.listTopInterfaces(1500)
+    : [];
+
+  let totalInOctets = 0;
+  let totalOutOctets = 0;
+  let upInterfaces = 0;
+  for (const iface of allInterfaces) {
+    totalInOctets += Number(iface.in_octets) || 0;
+    totalOutOctets += Number(iface.out_octets) || 0;
+    if (String(iface.oper_status || '').startsWith('1')) upInterfaces++;
+  }
+
+  const cpuVals = devices.map((d) => d.cpu_pct).filter((v) => typeof v === 'number' && !Number.isNaN(v));
+  const memVals = devices.map((d) => d.mem_used_pct).filter((v) => typeof v === 'number' && !Number.isNaN(v));
+  const rttVals = devices.map((d) => d.response_ms).filter((v) => typeof v === 'number' && !Number.isNaN(v));
+  const avg = (arr) => (arr.length ? Number((arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(2)) : null);
+
+  res.json({
+    status: 'success',
+    generatedAt: new Date().toISOString(),
+    windowHours,
+    collector,
+    flowSummary,
+    recentFlows,
+    performance: {
+      deviceCount: devices.length,
+      upDeviceCount: devices.filter((d) => ['up', 'clear', 'online'].includes(String(d.status || '').toLowerCase())).length,
+      interfaceCount: allInterfaces.length,
+      upInterfaceCount: upInterfaces,
+      totalInOctets,
+      totalOutOctets,
+      totalOctets: totalInOctets + totalOutOctets,
+      avgCpuPct: avg(cpuVals),
+      avgMemPct: avg(memVals),
+      avgRttMs: avg(rttVals),
+      topInterfaces: allInterfaces.slice(0, 40),
+      topDevicesByLatency: [...devices]
+        .filter((d) => d.response_ms != null)
+        .sort((a, b) => (b.response_ms || 0) - (a.response_ms || 0))
+        .slice(0, 15)
+        .map((d) => ({
+          id: d.id,
+          name: deviceName(d),
+          ip: d.ip,
+          category: d.category,
+          status: d.status,
+          cpuPct: d.cpu_pct,
+          memPct: d.mem_used_pct,
+          responseMs: d.response_ms,
+        })),
+    },
   });
 });
 

@@ -50,6 +50,7 @@ const hardwareRoute = require('./routes/hardware');
 const diffRoute = require('./routes/diff');
 const telemetryAdvancedRoute = require('./routes/telemetry_advanced');
 const poller = require('./services/poller');
+const netflowCollector = require('./services/netflowCollector');
 // NOTE: the old JSON store (server/services/db.js) was deleted by the store
 // track and replaced by server/services/store.js (SQLite). index.js reads
 // live data through the store API (listProbes/listDevices/listAlarms).
@@ -625,5 +626,12 @@ server.listen(PORT, () => {
     }
   } catch (e) {
     console.error('[Poller] startPoller FAILED (startup continues; polling is off):', e && e.message ? e.message : e);
+  }
+  try {
+    if (netflowCollector && typeof netflowCollector.start === 'function') {
+      netflowCollector.start();
+    }
+  } catch (e) {
+    console.error('[NetFlow] netflowCollector.start FAILED:', e && e.message ? e.message : e);
   }
 });

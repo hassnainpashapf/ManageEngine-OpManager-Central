@@ -1111,18 +1111,215 @@
               </tbody>
             </table>
           </div>
-        `) : activeSub === 'performance' ? `
-          <!-- Performance Reports Clean Empty State -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        `) : activeSub === 'performance' ? (() => {
+          if (!state._nfTelemetryLoading && !state.netflowTelemetry) {
+            state._nfTelemetryLoading = true;
+            fetch('/api/netflow/telemetry')
+              .then(r => r.json())
+              .then(d => {
+                state.netflowTelemetry = d;
+                state._nfTelemetryLoading = false;
+                if (state.currentView === 'reports' && state.activeSubTab === 'performance') renderReportsView();
+              })
+              .catch(() => { state._nfTelemetryLoading = false; });
+          }
+          const escNf = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          const fmtBytes = (b) => {
+            const n = Number(b) || 0;
+            if (n >= 1024 ** 4) return (n / 1024 ** 4).toFixed(2) + ' TB';
+            if (n >= 1024 ** 3) return (n / 1024 ** 3).toFixed(2) + ' GB';
+            if (n >= 1024 ** 2) return (n / 1024 ** 2).toFixed(2) + ' MB';
+            if (n >= 1024) return (n / 1024).toFixed(1) + ' KB';
+            return n + ' B';
+          };
+          const nf = state.netflowTelemetry || {};
+          const col = nf.collector || {};
+          const fs = nf.flowSummary || {};
+          const totals = fs.totals || {};
+          const apps = fs.topApps || [];
+          const convs = fs.topConversations || [];
+          const perf = nf.performance || {};
+          const topIfaces = perf.topInterfaces || [];
+          const topDevs = perf.topDevicesByLatency || [];
+          const hostIp = window.location.hostname || '192.168.30.65';
+          const filterVal = (state._nfIfaceFilter || '').trim().toLowerCase();
+          const visIfaces = filterVal
+            ? topIfaces.filter(i => `${i.hostname || ''} ${i.device_ip || ''} ${i.name || ''} ${i.descr || ''}`.toLowerCase().includes(filterVal))
+            : topIfaces;
+
+          return `
+          <div style="display: flex; flex-direction: column; gap: 18px;">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; border-top: 3px solid ${col.bound ? '#16a34a' : '#d97706'};">
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">NetFlow Collector (UDP ${col.port || 2055})</div>
+                <div style="font-size: 20px; font-weight: 800; color: ${col.bound ? '#16a34a' : '#d97706'}; margin: 6px 0;">
+                  ${nf.collector ? (col.bound ? '● LISTENING' : (col.error || 'DISABLED')) : 'Checking...'}
+                </div>
+                <div style="font-size: 11px; color: #64748b;">${totals.flow_count || col.flowsIngested || 0} flows (${col.packetsReceived || 0} UDP pkts)</div>
+              </div>
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; border-top: 3px solid #0070e0;">
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">SNMP IF-MIB Interfaces</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0f172a; margin: 4px 0;">${perf.interfaceCount != null ? perf.interfaceCount : '—'}</div>
+                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">${perf.upInterfaceCount != null ? perf.upInterfaceCount + ' Oper UP' : 'Polling SQLite store'}</div>
+              </div>
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; border-top: 3px solid #0284c7;">
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Aggregate IF-MIB Volume</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0284c7; margin: 4px 0;">${perf.totalOctets != null ? fmtBytes(perf.totalOctets) : '—'}</div>
+                <div style="font-size: 11px; color: #64748b;">In: ${fmtBytes(perf.totalInOctets)} &bull; Out: ${fmtBytes(perf.totalOutOctets)}</div>
+              </div>
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; border-top: 3px solid #7c3aed;">
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Fleet Latency &amp; CPU</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0f172a; margin: 4px 0;">${perf.avgRttMs != null ? perf.avgRttMs + ' ms' : '—'}</div>
+                <div style="font-size: 11px; color: #64748b;">Avg CPU: ${perf.avgCpuPct != null ? perf.avgCpuPct + '%' : '—'} &bull; Mem: ${perf.avgMemPct != null ? perf.avgMemPct + '%' : '—'}</div>
+              </div>
             </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Flow Records or Application Telemetry Ingested</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 500px; margin: 0 auto;">
-              Configure your routers and switches to export NetFlow v5/v9, sFlow, or IPFIX to UDP port 2055 to view conversation distribution and application bandwidth breakdown.
+
+            <!-- Section A: NetFlow v5 / v9 / IPFIX Collector (UDP 2055) -->
+            <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+              <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <span style="font-size: 14px; font-weight: 800; color: #0f172a;">NetFlow v5 / v9 &amp; IPFIX Collector Telemetry (UDP/${col.port || 2055})</span>
+                  <div style="font-size: 11px; color: #64748b;">Real UDP socket ingestion on <code>0.0.0.0:${col.port || 2055}</code> persisted to SQLite <code>flow_records</code>.</div>
+                </div>
+                <button id="opm-nf-refresh-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">↻ Refresh Telemetry</button>
+              </div>
+              ${convs.length === 0 ? `
+                <div style="padding: 20px 22px; display: flex; flex-direction: column; gap: 10px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="background: ${col.bound ? '#dcfce7' : '#fef3c7'}; color: ${col.bound ? '#166534' : '#92400e'}; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px;">
+                      ${col.bound ? `COLLECTOR ACTIVE ON ${escNf(hostIp)}:${col.port || 2055}` : `COLLECTOR NOT BOUND (${escNf(col.error || 'pending')})`}
+                    </span>
+                    <span style="font-size: 12px; color: #475569;">${col.packetsReceived || 0} UDP packets received in current uptime &bull; 0 external flow exporters configured yet.</span>
+                  </div>
+                  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; font-size: 11px; color: #334155;">
+                    <div style="font-weight: 700; margin-bottom: 6px;">Enable real L4/L7 flow export from your router/firewall to <code>${escNf(hostIp)}:2055</code>:</div>
+                    <div style="font-family: monospace; line-height: 1.7; color: #0f172a;">
+                      • <strong>pfSense (softflowd)</strong>: Services → softflowd → Host: <code>${escNf(hostIp)}</code> Port: <code>2055</code> Version: <code>9</code><br>
+                      • <strong>Cisco IOS</strong>: <code>ip flow-export destination ${escNf(hostIp)} 2055</code> &amp; <code>ip flow-export version 9</code><br>
+                      • <strong>MikroTik RouterOS</strong>: <code>/ip traffic-flow target add dst-address=${escNf(hostIp)} port=2055 version=9</code>
+                    </div>
+                  </div>
+                </div>
+              ` : `
+                <div style="padding: 16px 18px; display: grid; grid-template-columns: 1fr 2fr; gap: 16px;">
+                  <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc;">
+                    <div style="font-size: 12px; font-weight: 800; color: #0f172a; margin-bottom: 10px;">Top Applications (NetFlow)</div>
+                    ${apps.map(a => {
+                      const maxB = apps[0]?.total_bytes || 1;
+                      const pct = Math.max(4, Math.round(((a.total_bytes || 0) / maxB) * 100));
+                      return `
+                        <div style="margin-bottom: 8px; font-size: 11px;">
+                          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                            <span style="font-weight: 700; color: #1e293b;">${escNf(a.app_name)}</span>
+                            <span style="font-family: monospace; color: #475569;">${fmtBytes(a.total_bytes)} (${a.flow_count} flows)</span>
+                          </div>
+                          <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                            <div style="width: ${pct}%; height: 100%; background: #0070e0;"></div>
+                          </div>
+                        </div>`;
+                    }).join('')}
+                  </div>
+                  <div style="border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                      <thead>
+                        <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569;">
+                          <th style="padding: 7px 10px;">Source IP</th>
+                          <th style="padding: 7px 10px;">Destination IP</th>
+                          <th style="padding: 7px 10px;">Application</th>
+                          <th style="padding: 7px 10px;">Flows</th>
+                          <th style="padding: 7px 10px;">Packets</th>
+                          <th style="padding: 7px 10px; text-align: right;">Volume</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        ${convs.slice(0, 15).map(c => `
+                          <tr style="border-bottom: 1px solid #f1f5f9;">
+                            <td style="padding: 6px 10px; font-family: monospace; font-weight: 600;">${escNf(c.src_ip)}</td>
+                            <td style="padding: 6px 10px; font-family: monospace;">${escNf(c.dst_ip)}${c.dst_port ? ':' + c.dst_port : ''}</td>
+                            <td style="padding: 6px 10px; color: #0369a1; font-weight: 700;">${escNf(c.app_name)}</td>
+                            <td style="padding: 6px 10px; font-family: monospace;">${c.flow_count}</td>
+                            <td style="padding: 6px 10px; font-family: monospace;">${c.total_packets}</td>
+                            <td style="padding: 6px 10px; font-family: monospace; text-align: right; font-weight: 700;">${fmtBytes(c.total_bytes)}</td>
+                          </tr>`).join('')}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              `}
             </div>
-          </div>
-        ` : activeSub === 'mttr' ? `
+
+            <!-- Section B: Live SNMP IF-MIB Interface Bandwidth Ranking -->
+            <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+              <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 13px; font-weight: 800; color: #0f172a;">Top Monitored Interfaces by SNMP IF-MIB Octets (${visIfaces.length} shown of ${perf.interfaceCount || 0})</span>
+                <input id="opm-nf-iface-filter" type="text" placeholder="Filter host or interface..." value="${escNf(state._nfIfaceFilter || '')}" style="padding: 5px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; width: 220px;">
+              </div>
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                    <th style="padding: 8px 12px;">Host Device</th>
+                    <th style="padding: 8px 12px;">Interface</th>
+                    <th style="padding: 8px 12px;">Status</th>
+                    <th style="padding: 8px 12px;">Link Speed</th>
+                    <th style="padding: 8px 12px;">Inbound (IF-MIB)</th>
+                    <th style="padding: 8px 12px;">Outbound (IF-MIB)</th>
+                    <th style="padding: 8px 12px; text-align: right;">Total Octets</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${visIfaces.length === 0 ? '<tr><td colspan="7" style="padding:24px;text-align:center;color:#94a3b8;">Loading real interface telemetry...</td></tr>' : visIfaces.slice(0, 25).map(i => {
+                    const isUp = String(i.oper_status || '').startsWith('1');
+                    const spdMbps = Number(i.speed) ? Math.round(Number(i.speed) / 1e6) + ' Mbps' : '—';
+                    return `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 8px 12px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showDeviceSnapshotModal(${i.device_id})">${escNf(i.hostname || i.sys_name || i.device_ip)}</td>
+                        <td style="padding: 8px 12px; font-family: monospace; color: #0f172a;">${escNf(i.name || i.descr || ('if-' + i.if_index))}</td>
+                        <td style="padding: 8px 12px;"><span style="background: ${isUp ? '#dcfce7' : '#f1f5f9'}; color: ${isUp ? '#166534' : '#64748b'}; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 700;">${isUp ? 'UP' : 'DOWN'}</span></td>
+                        <td style="padding: 8px 12px; font-family: monospace;">${spdMbps}</td>
+                        <td style="padding: 8px 12px; font-family: monospace; color: #16a34a;">${fmtBytes(i.in_octets)}</td>
+                        <td style="padding: 8px 12px; font-family: monospace; color: #0284c7;">${fmtBytes(i.out_octets)}</td>
+                        <td style="padding: 8px 12px; font-family: monospace; font-weight: 700; text-align: right;">${fmtBytes((Number(i.in_octets) || 0) + (Number(i.out_octets) || 0))}</td>
+                      </tr>`;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Section C: Real Device Compute & Latency Matrix -->
+            <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+              <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 800; color: #0f172a;">
+                Device Compute &amp; RTT Latency Leaderboard (Real Polled Telemetry)
+              </div>
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                  <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
+                    <th style="padding: 8px 12px;">Device</th>
+                    <th style="padding: 8px 12px;">IP Address</th>
+                    <th style="padding: 8px 12px;">Category</th>
+                    <th style="padding: 8px 12px;">RTT Latency</th>
+                    <th style="padding: 8px 12px;">CPU %</th>
+                    <th style="padding: 8px 12px;">Memory %</th>
+                    <th style="padding: 8px 12px; text-align: right;">Snapshot</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${topDevs.map(d => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 8px 12px; font-weight: 700; color: #0f172a;">${escNf(d.name)}</td>
+                      <td style="padding: 8px 12px; font-family: monospace;">${escNf(d.ip)}</td>
+                      <td style="padding: 8px 12px;">${escNf(d.category || '—')}</td>
+                      <td style="padding: 8px 12px; font-family: monospace; font-weight: 700; color: #0284c7;">${d.responseMs != null ? d.responseMs + ' ms' : '—'}</td>
+                      <td style="padding: 8px 12px; font-family: monospace;">${d.cpuPct != null ? d.cpuPct + '%' : '—'}</td>
+                      <td style="padding: 8px 12px; font-family: monospace;">${d.memPct != null ? d.memPct + '%' : '—'}</td>
+                      <td style="padding: 8px 12px; text-align: right;">
+                        <button onclick="showDeviceSnapshotModal(${d.id})" style="background: #eff6ff; border: 1px solid #bae6fd; color: #0369a1; padding: 3px 9px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer;">Inspect</button>
+                      </td>
+                    </tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>`;
+        })() : activeSub === 'mttr' ? `
           <!-- SUBTAB: ALARMS & MTTR ANALYTICS -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
             
@@ -1427,6 +1624,29 @@
         if (typeof showDeviceSnapshotModal === 'function') showDeviceSnapshotModal(id);
       };
     });
+
+    const nfRefreshBtn = container.querySelector('#opm-nf-refresh-btn');
+    if (nfRefreshBtn) {
+      nfRefreshBtn.onclick = async () => {
+        nfRefreshBtn.disabled = true;
+        nfRefreshBtn.textContent = 'Refreshing...';
+        try {
+          const r = await fetch('/api/netflow/telemetry');
+          state.netflowTelemetry = await r.json();
+        } catch (e) {}
+        renderReportsView();
+      };
+    }
+
+    const nfFilterInput = container.querySelector('#opm-nf-iface-filter');
+    if (nfFilterInput) {
+      nfFilterInput.oninput = (e) => {
+        state._nfIfaceFilter = e.target.value || '';
+        renderReportsView();
+        const inp = container.querySelector('#opm-nf-iface-filter');
+        if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+      };
+    }
 
     // PDF button - opens authentic ManageEngine Executive Summary Preview
     const pdfBtn = container.querySelector('#opm-rpt-pdf-btn');

@@ -228,6 +228,23 @@ CREATE TABLE IF NOT EXISTS api_keys (
   key_hash TEXT NOT NULL,
   created_at INTEGER NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS flow_records (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  exporter_ip TEXT NOT NULL,
+  version TEXT NOT NULL,
+  src_ip TEXT,
+  dst_ip TEXT,
+  src_port INTEGER,
+  dst_port INTEGER,
+  protocol INTEGER,
+  app_name TEXT,
+  bytes INTEGER NOT NULL DEFAULT 0,
+  packets INTEGER NOT NULL DEFAULT 0,
+  received_at INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_flow_records_ts ON flow_records(received_at DESC);
+CREATE INDEX IF NOT EXISTS idx_flow_records_exporter ON flow_records(exporter_ip, received_at DESC);
 `);
 
 // Migration: alarms.rca_status was added after the initial schema, so
@@ -927,6 +944,131 @@ function listTraps(limit) {
   return toRows(db.prepare('SELECT * FROM traps ORDER BY received_at DESC, id DESC LIMIT ?').all(n));
 }
 
+// ---------------------------------------------------------------- flows ---
+
+function saveFlowBatch(records) {
+  if (!Array.isArray(records) || records.length === 0) return 0;
+  const insert = db.prepare(
+    `INSERT INTO flow_records
+      (exporter_ip, version, src_ip, dst_ip, src_port, dst_port, protocol, app_name, bytes, packets, received_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  );
+  const ts = now();
+  let count = 0;
+  db.exec('BEGIN');
+  try {
+    for (const r of records) {
+      insert.run(
+        String(r.exporter_ip || '0.0.0.0'),
+        String(r.version || 'v5'),
+        r.src_ip ?? null,
+        r.dst_ip ?? null,
+        r.src_port != null ? Number(r.src_port) : null,
+        r.dst_port != null ? Number(r.dst_port) : null,
+        r.protocol != null ? Number(r.protocol) : null,
+        r.app_name ?? null,
+        Math.max(0, Number(r.bytes) || 0),
+        Math.max(0, Number(r.packets) || 0),
+        Number(r.received_at) || ts
+      );
+      count++;
+    }
+    db.exec('COMMIT');
+  } catch (err) {
+    try { db.exec('ROLLBACK'); } catch (e) {}
+    throw err;
+  }
+  // Keep latest 10,000 flow records bounded so SQLite stays fast
+  try {
+    db.prepare(
+      'DELETE FROM flow_records WHERE id NOT IN (SELECT id FROM flow_records ORDER BY id DESC LIMIT 10000)'
+    ).run();
+  } catch (e) {}
+  return count;
+}
+
+function listFlowRecords(opts) {
+  const o = opts || {};
+  const limit = Math.min(Math.max(Number(o.limit) || 200, 1), 1000);
+  const since = Number(o.since) || 0;
+  if (o.exporterIp) {
+    return toRows(
+      db.prepare('SELECT * FROM flow_records WHERE exporter_ip = ? AND received_at >= ? ORDER BY received_at DESC, id DESC LIMIT ?')
+        .all(String(o.exporterIp), since, limit)
+    );
+  }
+  return toRows(
+    db.prepare('SELECT * FROM flow_records WHERE received_at >= ? ORDER BY received_at DESC, id DESC LIMIT ?')
+      .all(since, limit)
+  );
+}
+
+function summarizeFlowTelemetry(sinceMs) {
+  const since = Number(sinceMs) || 0;
+  const totals = toRow(
+    db.prepare(
+      `SELECT COUNT(*) AS flow_count,
+              COALESCE(SUM(bytes), 0) AS total_bytes,
+              COALESCE(SUM(packets), 0) AS total_packets,
+              COUNT(DISTINCT exporter_ip) AS exporter_count,
+              MAX(received_at) AS last_received_at
+       FROM flow_records WHERE received_at >= ?`
+    ).get(since)
+  );
+  const topApps = toRows(
+    db.prepare(
+      `SELECT COALESCE(app_name, 'Other') AS app_name,
+              COUNT(*) AS flow_count,
+              COALESCE(SUM(bytes), 0) AS total_bytes,
+              COALESCE(SUM(packets), 0) AS total_packets
+       FROM flow_records WHERE received_at >= ?
+       GROUP BY COALESCE(app_name, 'Other')
+       ORDER BY total_bytes DESC LIMIT 15`
+    ).all(since)
+  );
+  const topConversations = toRows(
+    db.prepare(
+      `SELECT src_ip, dst_ip, dst_port, protocol, COALESCE(app_name, 'Other') AS app_name,
+              COUNT(*) AS flow_count,
+              COALESCE(SUM(bytes), 0) AS total_bytes,
+              COALESCE(SUM(packets), 0) AS total_packets
+       FROM flow_records WHERE received_at >= ?
+       GROUP BY src_ip, dst_ip, dst_port, protocol, COALESCE(app_name, 'Other')
+       ORDER BY total_bytes DESC LIMIT 25`
+    ).all(since)
+  );
+  const exporters = toRows(
+    db.prepare(
+      `SELECT exporter_ip, version,
+              COUNT(*) AS flow_count,
+              COALESCE(SUM(bytes), 0) AS total_bytes,
+              COALESCE(SUM(packets), 0) AS total_packets,
+              MAX(received_at) AS last_seen_at
+       FROM flow_records WHERE received_at >= ?
+       GROUP BY exporter_ip, version
+       ORDER BY total_bytes DESC`
+    ).all(since)
+  );
+  return { totals, topApps, topConversations, exporters };
+}
+
+function listTopInterfaces(limit) {
+  const n = Math.min(Math.max(Number(limit) || 100, 1), 1500);
+  return toRows(
+    db.prepare(
+      `SELECT i.device_id, i.if_index, i.name, i.descr, i.oper_status,
+              COALESCE(i.in_octets, 0) AS in_octets,
+              COALESCE(i.out_octets, 0) AS out_octets,
+              COALESCE(i.speed, 0) AS speed,
+              d.hostname, d.sys_name, d.ip AS device_ip, d.category, d.status AS device_status
+       FROM interfaces i
+       JOIN devices d ON d.id = i.device_id
+       ORDER BY (COALESCE(i.in_octets, 0) + COALESCE(i.out_octets, 0)) DESC, i.device_id ASC, i.if_index ASC
+       LIMIT ?`
+    ).all(n)
+  );
+}
+
 // --------------------------------------------------------------- exports ---
 
 module.exports = {
@@ -1020,6 +1162,11 @@ module.exports = {
   // traps
   saveTrap,
   listTraps,
+  // flows & interfaces summary
+  saveFlowBatch,
+  listFlowRecords,
+  summarizeFlowTelemetry,
+  listTopInterfaces,
 
   // Namespaced aliases — same functions, grouped for route code that
   // uses store.devices.getDevice / store.configs.getLatestConfig / etc.
@@ -1076,4 +1223,5 @@ module.exports = {
   audit: { log, listAudit },
   apiKeys: { createApiKey, listApiKeys, getApiKeyByHash, deleteApiKey, rotateApiKey },
   traps: { saveTrap, listTraps },
+  flows: { saveFlowBatch, listFlowRecords, summarizeFlowTelemetry, listTopInterfaces },
 };

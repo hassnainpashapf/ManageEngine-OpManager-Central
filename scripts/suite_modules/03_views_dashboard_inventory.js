@@ -1119,9 +1119,33 @@
             </div>
           `;
         })() : activeSub === 'netflow' ? (() => {
+          if (!state._dashNfLoading && !state.netflowTelemetry) {
+            state._dashNfLoading = true;
+            fetch('/api/netflow/telemetry')
+              .then(r => r.json())
+              .then(d => {
+                state.netflowTelemetry = d;
+                state._dashNfLoading = false;
+                if (state.currentView === 'dashboard' && state.activeSubTab === 'netflow') renderDashboardView();
+              })
+              .catch(() => { state._dashNfLoading = false; });
+          }
+          const nf = state.netflowTelemetry || {};
+          const col = nf.collector || {};
+          const totals = (nf.flowSummary && nf.flowSummary.totals) || {};
           const flowDevs = filteredDevices.filter(d => /router|switch|firewall/i.test(d.category || ''));
           return `
-            <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px; font-size: 12px;">
+                  <span style="background: ${col.bound ? '#dcfce7' : '#fef3c7'}; color: ${col.bound ? '#166534' : '#92400e'}; font-weight: 800; padding: 3px 8px; border-radius: 4px; font-size: 11px;">
+                    UDP/${col.port || 2055}: ${nf.collector ? (col.bound ? 'LISTENING' : (col.error || 'OFFLINE')) : 'Checking...'}
+                  </span>
+                  <span style="color: #334155;">Ingested Flows: <strong>${totals.flow_count || col.flowsIngested || 0}</strong> &bull; UDP Packets: <strong>${col.packetsReceived || 0}</strong> &bull; IF-MIB Interfaces: <strong>${nf.performance?.interfaceCount || 0}</strong></span>
+                </div>
+                <button onclick="window.location.hash='#/reports/performance'" style="background: #eff6ff; border: 1px solid #bae6fd; color: #0369a1; padding: 5px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Open Full Flow &amp; Bandwidth Report &rarr;</button>
+              </div>
+              <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                 <div>
                   <div style="font-size: 15px; font-weight: 800; color: #0f172a;">NetFlow &amp; Interface Bandwidth Telemetry (${flowDevs.length} Routing / Switching Exporters)</div>
@@ -1148,6 +1172,7 @@
                     </tr>`).join('')}
                 </tbody>
               </table>
+              </div>
             </div>`;
         })() : activeSub === 'ncm' ? (() => {
           const ncmDevs = filteredDevices.filter(d => /router|switch|firewall|wireless/i.test(d.category || ''));
