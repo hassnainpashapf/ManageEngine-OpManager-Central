@@ -4030,34 +4030,46 @@
             <button id="close-add-dev-btn" style="background: none; border: none; font-size: 18px; color: #64748b; cursor: pointer;">✕</button>
           </div>
           <div style="padding: 22px; font-size: 12px; color: #334155;">
-            <div style="margin-bottom: 14px;">
-              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Device IP Address / Hostname *</label>
-              <input type="text" id="new-dev-ip" placeholder="10.x.x.x or switch.corp" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+            <div style="margin-bottom: 12px;">
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">Device IP Address *</label>
+              <input type="text" id="new-dev-ip" placeholder="e.g. 192.168.30.10" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
             </div>
-            <div style="margin-bottom: 14px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+              <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 4px;">Device Name (optional)</label>
+                <input type="text" id="new-dev-name" placeholder="Auto-detected via SNMP" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box;">
+              </div>
+              <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 4px;">Category</label>
+                <select id="new-dev-category" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box; background: #ffffff;">
+                  <option value="Switches">Switches (NCM)</option>
+                  <option value="Routers">Routers (NCM)</option>
+                  <option value="Firewalls">Firewalls (NCM)</option>
+                  <option value="Wireless">Wireless / APs</option>
+                  <option value="Servers">Servers / Hypervisors</option>
+                  <option value="Storage">Storage / SAN</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-bottom: 12px;">
               <label style="display: block; font-weight: 600; margin-bottom: 4px;">Assign to Remote Probe *</label>
               <select id="new-dev-probe" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box; background: #ffffff;">
-                ${state.probes.map(p => `<option value="${p.id}">${p.name} (${p.location})</option>`).join('')}
+                ${state.probes.map(p => `<option value="${p.id}">${p.name} (${p.location || p.ip})</option>`).join('')}
               </select>
             </div>
-            <div style="margin-bottom: 14px;">
-              <label style="display: block; font-weight: 600; margin-bottom: 4px;">SNMP Credentials Profile</label>
-              <select id="new-dev-snmp" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; outline: none; box-sizing: border-box; background: #ffffff;">
-                <option>Enterprise SNMP v2c (dxb-ro / pub-ro)</option>
-                <option>Enterprise SNMP v3 (SHA-256 / AES-256)</option>
-                <option>WMI / Windows Admin Credentials</option>
-              </select>
+            <div style="margin-bottom: 8px;">
+              <label style="display: block; font-weight: 600; margin-bottom: 4px;">SNMP Community String</label>
+              <input type="text" id="new-dev-snmp" value="public" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 7px 10px; font-size: 12px; font-family: monospace; outline: none; box-sizing: border-box;">
             </div>
           </div>
           <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 22px; display: flex; justify-content: flex-end; gap: 8px;">
             <button id="cancel-add-dev-btn" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer;">Cancel</button>
-            <button id="save-add-dev-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Discover & Add</button>
+            <button id="save-add-dev-btn" style="background: #0070e0; color: #ffffff; border: none; border-radius: 4px; padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;">Discover &amp; Add</button>
           </div>
         </div>
       `;
       document.body.appendChild(modal);
     }
-    // Ensure probe select is up-to-date with current probes
     const probeSelect = modal.querySelector('#new-dev-probe');
     if (probeSelect && state.probes && state.probes.length > 0) {
       probeSelect.innerHTML = state.probes.map(p => `<option value="${p.id}">${p.name} (${p.location || p.ip})</option>`).join('');
@@ -4068,85 +4080,48 @@
     document.getElementById('cancel-add-dev-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('save-add-dev-btn').onclick = async () => {
       const saveBtn = document.getElementById('save-add-dev-btn');
-      saveBtn.disabled = true;
-      saveBtn.textContent = 'Discovering...';
-
       const ipInput = document.getElementById('new-dev-ip');
-      const ip = (ipInput ? ipInput.value.trim() : '') || '192.168.30.' + Math.floor(Math.random() * 150 + 20);
-      const probeId = parseInt(document.getElementById('new-dev-probe')?.value, 10) || 101;
-      const targetProbe = (state.probes || []).find(p => p.id === probeId || String(p.id) === String(probeId)) || (state.probes && state.probes[0]) || { id: 101, name: 'Central-Probe-01' };
-      const snmpProfile = document.getElementById('new-dev-snmp')?.value || 'Enterprise SNMP v2c';
-
-      const newId = (state.devices ? state.devices.length : 0) + 1;
-      const devName = 'SW-CORE-' + ip.split('.').slice(2).join('-');
-      const startupCfg = `! Cisco IOS Software, Catalyst L3 Switch Software (CAT9K_IOSXE), Version 17.3.4a\n!\nhostname ${devName}\n!\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nservice password-encryption\n!\nboot-start-marker\nboot-end-marker\n!\naaa new-model\n!\nip domain name corp.internal\nip name-server 192.168.30.254\n!\nspanning-tree mode rapid-pvst\n!\ninterface GigabitEthernet0/1\n description Primary Core Trunk to Datacenter\n switchport mode trunk\n switchport trunk allowed vlan 10,20,30\n!\ninterface Vlan1\n ip address ${ip} 255.255.255.0\n no shutdown\n!\nline con 0\nline vty 0 4\n transport input ssh\n!\nend`;
-      const runningCfg = startupCfg + `\ninterface GigabitEthernet0/2\n description Access Port (Vlan 20)\n switchport access vlan 20\n switchport mode access\n! [Unsaved drift detected in RAM]`;
-
-      const newDev = {
-        id: newId,
-        name: devName,
-        ip: ip,
-        category: 'Switches',
-        type: 'Managed Cisco Catalyst L3 Switch (' + (snmpProfile.includes('v3') ? 'v3' : 'v2c') + ')',
-        vendor: 'Cisco Systems',
-        probe: targetProbe.name,
-        probeName: targetProbe.name,
-        probeId: targetProbe.id,
-        status: 'Clear',
-        cpu: Math.floor(Math.random() * 25 + 15),
-        memory: Math.floor(Math.random() * 30 + 25),
-        disk: 28.0,
-        temp: 31,
-        responseTime: Math.floor(Math.random() * 15 + 4),
-        availability: '100.0%',
-        serial: 'CAT9K-' + Math.floor(Math.random() * 899999 + 100000),
-        osVersion: 'Cisco IOS-XE 17.3.4a',
-        lastBackup: 'Just now',
-        startupConfig: startupCfg,
-        runningConfig: runningCfg,
-        ncmConfigured: true,
-        interfaces: [
-          { name: 'GigabitEthernet0/1', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 140.2, outTraffic: 120.5, errors: 0 },
-          { name: 'GigabitEthernet0/2', admin: 'UP', oper: 'UP', speed: '1 Gbps', inTraffic: 42.1, outTraffic: 31.8, errors: 0 }
-        ]
-      };
-
-      if (!state.devices) state.devices = [];
-      state.devices.unshift(newDev);
-
-      if (targetProbe) {
-        targetProbe.devices = (targetProbe.devices || 0) + 1;
-        targetProbe.devicesCount = (targetProbe.devicesCount || 0) + 1;
+      const ip = ipInput ? ipInput.value.trim() : '';
+      if (!ip) {
+        showToast('Please enter a valid Device IP Address.', 'warning');
+        return;
       }
+      const nameVal = (document.getElementById('new-dev-name')?.value || '').trim();
+      const category = document.getElementById('new-dev-category')?.value || 'Switches';
+      const probeId = parseInt(document.getElementById('new-dev-probe')?.value, 10) || (state.probes && state.probes[0]?.id) || 1;
+      const community = (document.getElementById('new-dev-snmp')?.value || 'public').trim();
 
-      // Send to server
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Adding & Polling...';
       try {
-        await fetch('/api/devices', {
+        const resp = await fetch('/api/devices', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newDev)
+          body: JSON.stringify({
+            ip,
+            name: nameVal || undefined,
+            category,
+            probeId,
+            community
+          })
         });
-      } catch (e) {}
-
-      saveBtn.disabled = false;
-      saveBtn.textContent = 'Discover & Add';
-      modal.style.display = 'none';
-      if (ipInput) ipInput.value = '';
-
-      if (typeof updateStatusCounters === 'function') {
-        updateStatusCounters();
-      }
-
-      showToast(`Device ${newDev.name} (${ip}) successfully discovered and enrolled into NCM!`);
-
-      if (typeof fetchInventoryData === 'function') {
-        fetchInventoryData();
-      } else if (state.currentTab === 'inventory' && typeof renderInventoryView === 'function') {
-        renderInventoryView();
-      } else if (state.currentTab === 'configuration' && typeof renderConfigurationView === 'function') {
-        renderConfigurationView();
-      } else if (state.currentTab === 'dashboard' && typeof renderDashboardView === 'function') {
-        renderDashboardView();
+        const data = await resp.json();
+        if (!resp.ok) {
+          throw new Error(data.message || `Server returned ${resp.status}`);
+        }
+        const createdId = data.device && data.device.id;
+        if (createdId) {
+          await fetch(`/api/devices/${createdId}/poll-now`, { method: 'POST' }).catch(() => {});
+        }
+        modal.style.display = 'none';
+        if (ipInput) ipInput.value = '';
+        if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+        showToast(`Device ${data.device?.hostname || ip} (${ip}) added and polled live!`);
+      } catch (e) {
+        showToast(`Failed to add device: ${e.message}`, 'warning');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Discover & Add';
       }
     };
   }

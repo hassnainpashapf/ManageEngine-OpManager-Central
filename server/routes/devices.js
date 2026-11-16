@@ -115,6 +115,20 @@ router.get(['/device/listDevices', '/device/list', '/api/json/device/list', '/ap
 
   const mappedDevices = devices.map((d) => {
     const pName = probeNameFor(d) || 'Central Site Probe';
+    let lastBackup = null;
+    let runningConfig = null;
+    let startupConfig = null;
+    try {
+      const cfgs = store.getConfigs ? store.getConfigs(d.id) : [];
+      if (cfgs && cfgs.length > 0) {
+        const sorted = [...cfgs].sort((a, b) => (Number(b.fetched_at) || 0) - (Number(a.fetched_at) || 0));
+        lastBackup = sorted[0] && sorted[0].fetched_at ? toIso(sorted[0].fetched_at) : null;
+        const rRow = sorted.find((c) => c.config_type === 'running');
+        const sRow = sorted.find((c) => c.config_type === 'startup');
+        if (rRow) runningConfig = rRow.content || null;
+        if (sRow) startupConfig = sRow.content || null;
+      }
+    } catch (e) {}
     return {
       ...d,
       name: d.hostname || d.sys_name || d.ip,
@@ -125,7 +139,11 @@ router.get(['/device/listDevices', '/device/list', '/api/json/device/list', '/ap
       cpu: d.cpu_pct !== null && d.cpu_pct !== undefined ? d.cpu_pct : 22,
       memory: d.mem_used_pct !== null && d.mem_used_pct !== undefined ? d.mem_used_pct : 38,
       responseTime: d.response_ms !== null && d.response_ms !== undefined ? d.response_ms : 15,
-      availability: 100
+      availability: 100,
+      lastBackup,
+      hasConfig: Boolean(runningConfig || startupConfig),
+      runningConfig,
+      startupConfig
     };
   });
 
