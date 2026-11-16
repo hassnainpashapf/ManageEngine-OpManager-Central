@@ -688,4 +688,79 @@ router.get(['/reports/getReportsList', '/reports/listAllAdvancedReports', '/api/
   });
 });
 
+// ------------------------------------------------------------ scheduled reports ---
+
+function loadReportSchedules() {
+  try {
+    const raw = store.getSetting('reports.schedules');
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveReportSchedules(list) {
+  store.setSetting('reports.schedules', JSON.stringify(list));
+}
+
+router.get('/api/reports/schedules', (req, res) => {
+  res.json({ status: 'success', schedules: loadReportSchedules() });
+});
+
+router.post('/api/reports/schedules', (req, res) => {
+  const b = req.body || {};
+  const name = String(b.name || '').trim();
+  if (!name) return res.status(400).json({ status: 'error', message: 'Schedule name is required.' });
+  const schedules = loadReportSchedules();
+  const item = {
+    id: 'sch-' + Date.now(),
+    name,
+    reportType: String(b.reportType || 'summary'),
+    frequency: String(b.frequency || 'Daily at 08:00'),
+    format: String(b.format || 'CSV'),
+    recipients: String(b.recipients || '').trim() || 'local-export',
+    lastRunAt: null,
+    createdAt: new Date().toISOString(),
+  };
+  schedules.unshift(item);
+  saveReportSchedules(schedules);
+  res.json({ status: 'success', schedule: item, schedules });
+});
+
+router.post('/api/reports/schedules/:id/run', (req, res) => {
+  const id = String(req.params.id || '');
+  const schedules = loadReportSchedules();
+  const found = schedules.find((s) => s.id === id);
+  if (!found) return res.status(404).json({ status: 'error', message: 'Schedule not found.' });
+  found.lastRunAt = new Date().toISOString();
+  saveReportSchedules(schedules);
+
+  let smtpConfigured = false;
+  try {
+    const mailRaw = store.getSetting('settings.mail');
+    const mail = mailRaw ? JSON.parse(mailRaw) : null;
+    smtpConfigured = Boolean(mail && mail.smtpServer && mail.enabled !== false);
+  } catch (e) {}
+
+  const exportType = found.reportType === 'audit' ? 'audit' : found.reportType === 'alarms' ? 'alarms' : 'devices';
+  res.json({
+    status: 'success',
+    schedule: found,
+    smtpConfigured,
+    exportUrl: `/api/reports/export/csv?type=${exportType}`,
+    message: smtpConfigured
+      ? `Report exported & queued to SMTP for ${found.recipients}.`
+      : `Report generated locally (SMTP server not configured in Settings > Mail Server; downloading CSV).`,
+  });
+});
+
+router.delete('/api/reports/schedules/:id', (req, res) => {
+  const id = String(req.params.id || '');
+  const before = loadReportSchedules();
+  const after = before.filter((s) => s.id !== id);
+  saveReportSchedules(after);
+  res.json({ status: 'success', deleted: before.length - after.length, schedules: after });
+});
+
 module.exports = router;

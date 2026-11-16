@@ -840,10 +840,10 @@
 
     const subtabs = [
       { id: 'sla', name: 'Availability & SLA' },
-      { id: 'performance', name: 'Performance Reports' },
+      { id: 'performance', name: 'Performance' },
       { id: 'mttr', name: 'Alarms & MTTR' },
-      { id: 'lifecycle', name: 'Hardware Lifecycle & Warranty' },
-      { id: 'audit', name: 'Operator Action & Audit Logs' },
+      { id: 'lifecycle', name: 'Hardware Lifecycle' },
+      { id: 'audit', name: 'Audit Logs' },
       { id: 'schedule', name: 'Scheduled Reports' }
     ];
 
@@ -852,33 +852,36 @@
       const isAct = st.id === activeSub;
       const border = isAct ? 'border-bottom: 3px solid #49bd80; color: #212121; font-weight: 700;' : 'color: #475569; font-weight: 500;';
       subtabNavHtml += `
-        <button class="opm-rpt-subtab-btn" data-sub="${st.id}" style="background: none; border: none; padding: 10px 16px; font-size: 13px; cursor: pointer; transition: all 0.2s; ${border}">
+        <button class="opm-rpt-subtab-btn" data-sub="${st.id}" style="background: none; border: none; padding: 10px 11px; font-size: 12px; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; ${border}">
           ${st.name}
         </button>
       `;
     });
 
+    const dnsResolved = Boolean(state._rptResolveDns);
     container.innerHTML = `
-      <!-- Authentic ManageEngine Top Product-Module Reports Bar (matching firewall_addon_reports.png & netflow_addon_reports.png) -->
-      <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 24px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 4px;">
+      <!-- Authentic ManageEngine Top Product-Module Reports Bar -->
+      <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 2px; overflow-x: auto; min-width: 0;">
           ${subtabNavHtml}
         </div>
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <span style="font-size: 11px; color: #64748b;">Resolve DNS</span>
-          <span style="display: inline-block; width: 28px; height: 15px; background: #cbd5e1; border-radius: 10px; position: relative; vertical-align: middle;"><span style="position: absolute; left: 2px; top: 2px; width: 11px; height: 11px; background: #fff; border-radius: 50%;"></span></span>
-          <select id="opm-rpt-timerange" style="padding: 5px 10px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 12px; background: #fff;">
-            <option>Last 30 Days (Standard SLA)</option>
-            <option>Last 7 Days</option>
-            <option>Today</option>
-            <option>Custom Date Range</option>
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; white-space: nowrap; padding: 4px 0;">
+          <label id="opm-rpt-dns-toggle" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px; color: #475569; white-space: nowrap;">
+            <span>Resolve DNS</span>
+            <span style="display: inline-block; width: 28px; height: 15px; background: ${dnsResolved ? '#49bd80' : '#cbd5e1'}; border-radius: 10px; position: relative; transition: background 0.15s;"><span style="position: absolute; left: ${dnsResolved ? '15px' : '2px'}; top: 2px; width: 11px; height: 11px; background: #fff; border-radius: 50%; transition: left 0.15s;"></span></span>
+          </label>
+          <select id="opm-rpt-timerange" style="padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 11px; background: #fff; max-width: 145px;">
+            <option value="30d" ${state._rptRange === '30d' || !state._rptRange ? 'selected' : ''}>Last 30 Days</option>
+            <option value="7d" ${state._rptRange === '7d' ? 'selected' : ''}>Last 7 Days</option>
+            <option value="24h" ${state._rptRange === '24h' ? 'selected' : ''}>Last 24 Hours</option>
+            <option value="1h" ${state._rptRange === '1h' ? 'selected' : ''}>Last 1 Hour</option>
           </select>
-          <button id="opm-rpt-pdf-btn" style="background: #49bd80; color: #ffffff; border: none; padding: 6px 14px; border-radius: 3px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <button id="opm-rpt-pdf-btn" style="background: #49bd80; color: #ffffff; border: none; padding: 6px 11px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             Generate PDF
           </button>
-          <button id="opm-rpt-csv-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 3px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <button id="opm-rpt-csv-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Export CSV
           </button>
         </div>
@@ -1319,116 +1322,103 @@
               </table>
             </div>
           </div>`;
-        })() : activeSub === 'mttr' ? `
-          <!-- SUBTAB: ALARMS & MTTR ANALYTICS -->
+        })() : activeSub === 'mttr' ? (() => {
+          if (!state._advReportLoading && !state._advReport) {
+            state._advReportLoading = true;
+            fetch('/api/reports/getAdvancedReportData')
+              .then(r => r.json())
+              .then(d => {
+                state._advReport = d;
+                state._advReportLoading = false;
+                if (state.currentTab === 'reports' && state.subTabs && state.subTabs.reports === 'mttr') renderReportsView();
+              })
+              .catch(() => { state._advReportLoading = false; });
+          }
+          const adv = state._advReport || {};
+          const alms = state.alarms || [];
+          const clearedList = alms.filter(a => String(a.status || '').toLowerCase() === 'cleared');
+          const activeList = alms.filter(a => String(a.status || '').toLowerCase() !== 'cleared');
+          const critCount = activeList.filter(a => /crit/i.test(a.severity || '')).length;
+          const troubleCount = activeList.filter(a => /trouble|maj|warn/i.test(a.severity || '')).length;
+          const attnCount = activeList.filter(a => /attn|min/i.test(a.severity || '')).length;
+          const ackedList = alms.filter(a => a.ack_by || a.ackBy);
+          const mttrStr = adv.meanTimeToResolveMinutes != null ? `${adv.meanTimeToResolveMinutes} min` : (clearedList.length ? 'Calculating...' : 'No cleared alarms');
+          const pct = (c) => alms.length ? Math.round((c / alms.length) * 100) : 0;
+
+          return `
+          <!-- SUBTAB: ALARMS & MTTR ANALYTICS (Real SQLite Alarms + /api/reports/getAdvancedReportData) -->
           <div style="display: flex; flex-direction: column; gap: 20px;">
-            
-            <!-- MTTR KPI Cards -->
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Average MTTR</div>
-                <div style="font-size: 26px; font-weight: 800; color: #0284c7; margin: 6px 0;">18m 42s</div>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">▼ 12% faster than 20m target</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Average MTTR (30D)</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0284c7; margin: 6px 0;">${mttrStr}</div>
+                <div style="font-size: 11px; color: #64748b;">Computed from real alarm clear times</div>
               </div>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Incidents (30D)</div>
-                <div style="font-size: 26px; font-weight: 800; color: #0f172a; margin: 6px 0;">${state.alarms.length}</div>
-                <div style="font-size: 11px; color: #64748b;">${state.alarms.filter(a => a.status === "Cleared").length} Cleared | ${state.alarms.filter(a => a.status !== "Cleared").length} Active</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Incidents (SQLite)</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0f172a; margin: 6px 0;">${alms.length}</div>
+                <div style="font-size: 11px; color: #64748b;">${clearedList.length} Cleared | ${activeList.length} Active</div>
               </div>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Self-Healing Automated</div>
-                <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">48 (33.8%)</div>
-                <div style="font-size: 11px; color: #16a34a; font-weight: 600;">Resolved by OpManager Engine</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Resolved &le; 30 Min</div>
+                <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin: 6px 0;">${adv.outagesResolvedUnder30Min != null ? adv.outagesResolvedUnder30Min : 0}</div>
+                <div style="font-size: 11px; color: #64748b;">Target SLA: ${adv.targetSLA || 99.9}%</div>
               </div>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">First-Contact Resolution</div>
-                <div style="font-size: 26px; font-weight: 800; color: #16a34a; margin: 6px 0;">84.6%</div>
-                <div style="font-size: 11px; color: #64748b;">Resolved in &lt; 15 mins</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Operator Acknowledged</div>
+                <div style="font-size: 24px; font-weight: 800; color: #7c3aed; margin: 6px 0;">${ackedList.length}</div>
+                <div style="font-size: 11px; color: #64748b;">Achieved SLA: ${adv.achievedSLA != null ? adv.achievedSLA + '%' : 'Pending samples'}</div>
               </div>
             </div>
 
-            <!-- MTTR Details & Technician Scoreboard -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Resolution Time Histogram</div>
+                <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Active Alarm Severity Distribution (Real SQLite Counts)</div>
                 <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12px;">
                   <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                      <span>&lt; 15 Minutes (Rapid Remediation)</span>
-                      <span style="font-weight: 700;">68% (96 Incidents)</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 68%; height: 100%; background: #16a34a;"></div>
-                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Critical / Service Down</span><span style="font-weight: 700;">${pct(critCount)}% (${critCount})</span></div>
+                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;"><div style="width: ${pct(critCount)}%; height: 100%; background: #dc2626;"></div></div>
                   </div>
                   <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                      <span>15 - 60 Minutes (Standard Triaging)</span>
-                      <span style="font-weight: 700;">24% (34 Incidents)</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 24%; height: 100%; background: #0284c7;"></div>
-                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Trouble / Major Threshold</span><span style="font-weight: 700;">${pct(troubleCount)}% (${troubleCount})</span></div>
+                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;"><div style="width: ${pct(troubleCount)}%; height: 100%; background: #ea580c;"></div></div>
                   </div>
                   <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                      <span>1 - 4 Hours (Escalated Root Cause)</span>
-                      <span style="font-weight: 700;">6% (9 Incidents)</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 6%; height: 100%; background: #ea580c;"></div>
-                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Attention / Minor Warning</span><span style="font-weight: 700;">${pct(attnCount)}% (${attnCount})</span></div>
+                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;"><div style="width: ${pct(attnCount)}%; height: 100%; background: #0284c7;"></div></div>
                   </div>
                   <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                      <span>&gt; 4 Hours (Hardware Replacement)</span>
-                      <span style="font-weight: 700;">2% (3 Incidents)</span>
-                    </div>
-                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
-                      <div style="width: 2%; height: 100%; background: #dc2626;"></div>
-                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Cleared Incidents</span><span style="font-weight: 700;">${pct(clearedList.length)}% (${clearedList.length})</span></div>
+                    <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;"><div style="width: ${pct(clearedList.length)}%; height: 100%; background: #16a34a;"></div></div>
                   </div>
                 </div>
               </div>
 
-              <!-- Technician Scoreboard -->
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Technician Resolution Scoreboard</div>
+                <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Latest Active &amp; Remediated Alarms</div>
                 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                   <thead>
                     <tr style="border-bottom: 1px solid #e2e8f0; text-align: left; color: #64748b;">
-                      <th style="padding: 6px 8px;">Technician</th>
-                      <th style="padding: 6px 8px;">Resolved</th>
-                      <th style="padding: 6px 8px;">Avg MTTR</th>
-                      <th style="padding: 6px 8px;">SLA %</th>
+                      <th style="padding: 6px 8px;">Source</th>
+                      <th style="padding: 6px 8px;">Severity</th>
+                      <th style="padding: 6px 8px;">Status</th>
+                      <th style="padding: 6px 8px;">Message</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px; font-weight: 700; color: #0070e0;">admin@opmanager</td>
-                      <td style="padding: 8px; font-weight: 600;">54 Incidents</td>
-                      <td style="padding: 8px; font-family: monospace;">14m 10s</td>
-                      <td style="padding: 8px; font-weight: 700; color: #16a34a;">98.2%</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px; font-weight: 700; color: #0070e0;">johndoe</td>
-                      <td style="padding: 8px; font-weight: 600;">42 Incidents</td>
-                      <td style="padding: 8px; font-family: monospace;">19m 22s</td>
-                      <td style="padding: 8px; font-weight: 700; color: #16a34a;">95.4%</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                      <td style="padding: 8px; font-weight: 700; color: #0070e0;">noc_lead</td>
-                      <td style="padding: 8px; font-weight: 600;">39 Incidents</td>
-                      <td style="padding: 8px; font-family: monospace;">22m 45s</td>
-                      <td style="padding: 8px; font-weight: 700; color: #16a34a;">94.0%</td>
-                    </tr>
+                    ${alms.slice(0, 6).map(a => `
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 7px 8px; font-weight: 700; color: #0070e0;">${a.deviceName || a.source || 'Node'}</td>
+                        <td style="padding: 7px 8px; font-weight: 600;">${a.severity || '—'}</td>
+                        <td style="padding: 7px 8px;">${a.status || 'active'}</td>
+                        <td style="padding: 7px 8px; color: #475569;">${String(a.message || '').slice(0, 52)}</td>
+                      </tr>`).join('')}
                   </tbody>
                 </table>
               </div>
             </div>
-
-          </div>
-        ` : activeSub === 'lifecycle' ? `
+          </div>`;
+        })() : activeSub === 'lifecycle' ? `
           <!-- SUBTAB: HARDWARE LIFECYCLE & WARRANTY (EOL / EOS) -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -1538,59 +1528,94 @@
               </tbody>
             </table>
           </div>
-        ` : `
-          <!-- SUBTAB: SCHEDULED REPORTS & EMAIL DISTRIBUTION -->
+        ` : (() => {
+          if (!state._schedReportsLoading && !state._schedReports) {
+            state._schedReportsLoading = true;
+            fetch('/api/reports/schedules')
+              .then(r => r.json())
+              .then(d => {
+                state._schedReports = d.schedules || [];
+                state._schedReportsLoading = false;
+                if (state.currentTab === 'reports' && state.subTabs && state.subTabs.reports === 'schedule') renderReportsView();
+              })
+              .catch(() => { state._schedReportsLoading = false; });
+          }
+          const escS = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          const schedules = state._schedReports || [];
+          return `
+          <!-- SUBTAB: SCHEDULED REPORTS (Real SQLite /api/reports/schedules) -->
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Scheduled Reports & Automated Email Distribution</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Configure automated report exports delivered directly to NOC, NetOps, and leadership inboxes.</div>
+                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Scheduled Reports &amp; Automated Distribution (${schedules.length})</div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Create recurring report exports stored in SQLite and dispatch on-demand CSV/audit bundles.</div>
               </div>
-              <button id="opm-new-schedule-btn" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+              <button id="opm-new-schedule-btn" style="background: #0070e0; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
                 + Add Scheduled Report
               </button>
             </div>
+
+            ${state._showNewScheduleForm ? `
+              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; margin-bottom: 16px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr auto; gap: 8px; align-items: end; font-size: 12px;">
+                <div>
+                  <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">SCHEDULE NAME</div>
+                  <input id="opm-sch-name" type="text" placeholder="Daily SLA Summary" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                </div>
+                <div>
+                  <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">REPORT TYPE</div>
+                  <select id="opm-sch-type" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                    <option value="devices">Devices &amp; SLA (CSV)</option>
+                    <option value="alarms">Alarms &amp; MTTR (CSV)</option>
+                    <option value="audit">Security Audit Log (CSV)</option>
+                  </select>
+                </div>
+                <div>
+                  <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">FREQUENCY</div>
+                  <select id="opm-sch-freq" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                    <option>Daily at 08:00</option>
+                    <option>Weekly (Monday 06:00)</option>
+                    <option>Monthly (1st 01:00)</option>
+                  </select>
+                </div>
+                <div>
+                  <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">RECIPIENT EMAIL</div>
+                  <input id="opm-sch-recips" type="text" placeholder="noc@domain.local" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                </div>
+                <button id="opm-sch-save-btn" style="background: #16a34a; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">Save</button>
+              </div>
+            ` : ''}
 
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
               <thead>
                 <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
                   <th style="padding: 10px 14px;">Report Schedule Name</th>
+                  <th style="padding: 10px 14px;">Dataset</th>
                   <th style="padding: 10px 14px;">Frequency</th>
-                  <th style="padding: 10px 14px;">Export Format</th>
                   <th style="padding: 10px 14px;">Target Recipients</th>
-                  <th style="padding: 10px 14px;">Last Dispatched</th>
-                  <th style="padding: 10px 14px; text-align: right;">Action</th>
+                  <th style="padding: 10px 14px;">Last Run</th>
+                  <th style="padding: 10px 14px; text-align: right;">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">Daily Executive Health Digest</td>
-                  <td style="padding: 10px 14px;">Daily at 08:00 AM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">PDF</span></td>
-                  <td style="padding: 10px 14px; color: #475569;">noc-leadership@enterprise.corp</td>
-                  <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Today, 08:00 AM</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-send-now-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Email Now</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">Weekly Multi-Probe SLA Compliance Audit</td>
-                  <td style="padding: 10px 14px;">Every Monday at 06:00 AM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">PDF & CSV</span></td>
-                  <td style="padding: 10px 14px; color: #475569;">it-directors@enterprise.corp</td>
-                  <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Mon Nov 03, 06:00 AM</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-send-now-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Email Now</button></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">Monthly Bandwidth 95th Percentile NetFlow</td>
-                  <td style="padding: 10px 14px;">1st of Month at 01:00 AM</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">EXCEL (XLSX)</span></td>
-                  <td style="padding: 10px 14px; color: #475569;">network-planning@enterprise.corp</td>
-                  <td style="padding: 10px 14px; color: #16a34a; font-weight: 600;">Nov 01, 01:00 AM</td>
-                  <td style="padding: 10px 14px; text-align: right;"><button class="opm-send-now-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Email Now</button></td>
-                </tr>
+                ${schedules.length === 0 ? `
+                  <tr><td colspan="6" style="padding: 36px; text-align: center; color: #64748b;">No report schedules configured yet. Click <strong>+ Add Scheduled Report</strong> above to create a real persistent schedule.</td></tr>
+                ` : schedules.map(s => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 10px 14px; font-weight: 700; color: #0070e0;">${escS(s.name)}</td>
+                    <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">${escS(s.reportType).toUpperCase()} (${escS(s.format)})</span></td>
+                    <td style="padding: 10px 14px;">${escS(s.frequency)}</td>
+                    <td style="padding: 10px 14px; color: #475569;">${escS(s.recipients)}</td>
+                    <td style="padding: 10px 14px; font-family: monospace; font-size: 11px; color: ${s.lastRunAt ? '#16a34a' : '#94a3b8'};">${s.lastRunAt ? new Date(s.lastRunAt).toLocaleString() : 'Never run'}</td>
+                    <td style="padding: 10px 14px; text-align: right; white-space: nowrap;">
+                      <button class="opm-send-now-btn" data-id="${escS(s.id)}" style="background: #eff6ff; border: 1px solid #bae6fd; color: #0369a1; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; cursor: pointer; margin-right: 4px;">Run &amp; Export</button>
+                      <button class="opm-del-sched-btn" data-id="${escS(s.id)}" style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Delete</button>
+                    </td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
-          </div>
-        `}
+          </div>`;
+        })()}
 
         </div>
       </div>
@@ -1683,17 +1708,101 @@
       };
     }
 
-    // Scheduled reports buttons
+    const dnsToggle = container.querySelector('#opm-rpt-dns-toggle');
+    if (dnsToggle) {
+      dnsToggle.onclick = () => {
+        state._rptResolveDns = !state._rptResolveDns;
+        renderReportsView();
+      };
+    }
+
+    const timeSel = container.querySelector('#opm-rpt-timerange');
+    if (timeSel) {
+      timeSel.onchange = async () => {
+        state._rptRange = timeSel.value;
+        try {
+          const hrs = state._rptRange === '1h' ? 1 : state._rptRange === '24h' ? 24 : state._rptRange === '7d' ? 168 : 720;
+          const r = await fetch(`/api/netflow/telemetry?hours=${hrs}`);
+          if (r.ok) state.netflowTelemetry = await r.json();
+        } catch (e) {}
+        renderReportsView();
+      };
+    }
+
+    // Scheduled reports real SQLite handlers
     container.querySelectorAll('.opm-send-now-btn').forEach(btn => {
-      btn.onclick = () => {
-        showToast('Scheduled report dispatched via SMTP to recipient mailboxes.');
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        btn.disabled = true;
+        try {
+          const r = await fetch(`/api/reports/schedules/${encodeURIComponent(id)}/run`, { method: 'POST' });
+          const d = await r.json();
+          if (r.ok && d.schedule) {
+            state._schedReports = (state._schedReports || []).map(x => x.id === id ? d.schedule : x);
+            if (d.exportUrl) window.open(d.exportUrl, '_blank');
+            showToast(d.message || 'Scheduled report exported.', d.smtpConfigured ? 'success' : 'info');
+            renderReportsView();
+          } else {
+            showToast(d.message || 'Failed to run report schedule', 'error');
+          }
+        } catch (e) {
+          showToast('Report run error: ' + e.message, 'error');
+        }
+        btn.disabled = false;
+      };
+    });
+
+    container.querySelectorAll('.opm-del-sched-btn').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        try {
+          const r = await fetch(`/api/reports/schedules/${encodeURIComponent(id)}`, { method: 'DELETE' });
+          const d = await r.json();
+          if (r.ok) {
+            state._schedReports = d.schedules || [];
+            showToast('Deleted scheduled report.');
+            renderReportsView();
+          }
+        } catch (e) { showToast('Delete error: ' + e.message, 'error'); }
       };
     });
 
     const newSchedBtn = container.querySelector('#opm-new-schedule-btn');
     if (newSchedBtn) {
       newSchedBtn.onclick = () => {
-        showToast('ManageEngine Report Scheduler: Configure Cron expression & SMTP recipients.');
+        state._showNewScheduleForm = !state._showNewScheduleForm;
+        renderReportsView();
+      };
+    }
+
+    const saveSchedBtn = container.querySelector('#opm-sch-save-btn');
+    if (saveSchedBtn) {
+      saveSchedBtn.onclick = async () => {
+        const name = (container.querySelector('#opm-sch-name')?.value || '').trim();
+        const reportType = container.querySelector('#opm-sch-type')?.value || 'devices';
+        const frequency = container.querySelector('#opm-sch-freq')?.value || 'Daily at 08:00';
+        const recipients = (container.querySelector('#opm-sch-recips')?.value || '').trim();
+        if (!name) return showToast('Enter a schedule name.', 'warning');
+        saveSchedBtn.disabled = true;
+        try {
+          const r = await fetch('/api/reports/schedules', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, reportType, frequency, format: 'CSV', recipients })
+          });
+          const d = await r.json();
+          if (r.ok) {
+            state._schedReports = d.schedules || [];
+            state._showNewScheduleForm = false;
+            showToast(`Saved schedule "${name}".`);
+            renderReportsView();
+          } else {
+            showToast(d.message || 'Save failed', 'error');
+          }
+        } catch (e) {
+          showToast('Save error: ' + e.message, 'error');
+        }
+        saveSchedBtn.disabled = false;
       };
     }
   }
