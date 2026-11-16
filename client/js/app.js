@@ -572,7 +572,10 @@
     state.probes.forEach(probe => {
       const opt = document.createElement('option');
       opt.value = probe.id;
-      opt.textContent = `📍 ${probe.displayName} (${probe.location || 'Remote'} • ${probe.devicesCount} dev)`;
+      const pName = probe.displayName || probe.name || `Probe ${probe.id}`;
+      const pLoc = probe.location || probe.ip || 'Central';
+      const pCount = probe.devicesCount !== undefined ? probe.devicesCount : state.devices.filter(d => String(d.probeId || d.probe_id || 1) === String(probe.id)).length;
+      opt.textContent = `📍 ${pName} (${pLoc} • ${pCount} dev)`;
       DOM.globalProbeSelect.appendChild(opt);
     });
     DOM.globalProbeSelect.value = state.selectedProbeId;

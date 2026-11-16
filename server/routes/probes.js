@@ -212,10 +212,15 @@ function isOnline(probe) {
  */
 function publicProbe(probe) {
   if (!probe) return null;
+  let devicesCount = 0;
+  try { devicesCount = (store.listDevices({ probe_id: probe.id }) || []).length; } catch (e) {}
   return {
     id: probe.id,
     name: probe.name ?? null,
+    displayName: probe.name || `Probe-${probe.id}`,
     ip: probe.ip,
+    location: probe.ip || 'Central Site',
+    devicesCount,
     status: deriveStatus(probe),
     cpu_pct: probe.cpu_pct ?? null,
     mem_pct: probe.mem_pct ?? null,

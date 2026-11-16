@@ -113,6 +113,8 @@
       ];
       dIfaces.forEach(inf => {
         ifaces.push({
+          deviceId: d.id,
+          ip: d.ip,
           name: inf.name,
           device: d.displayName || d.name,
           probe: d.probe || d.probeName || 'Central Site Probe',

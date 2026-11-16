@@ -113,6 +113,8 @@
       ];
       dIfaces.forEach(inf => {
         ifaces.push({
+          deviceId: d.id,
+          ip: d.ip,
           name: inf.name,
           device: d.displayName || d.name,
           probe: d.probe || d.probeName || 'Central Site Probe',
@@ -8733,6 +8735,18 @@
     state.currentTab = 'dashboard';
     const container = ensureOverlayContainer();
     const activeSub = state.subTabs.dashboard || 'overview';
+    if (typeof syncStateDerivedMetrics === 'function' && (!state.topInterfaces || state.topInterfaces.length === 0)) {
+      syncStateDerivedMetrics();
+    }
+    if (activeSub === 'noc' && (!state._nocHealthFetchedAt || Date.now() - state._nocHealthFetchedAt > 15000)) {
+      state._nocHealthFetchedAt = Date.now();
+      fetch('/api/reports/getServerHealthReport').then(r => r.json()).then(h => {
+        if (h && h.status === 'success') {
+          state._nocServerHealth = h;
+          if (state.currentTab === 'dashboard' && state.subTabs.dashboard === 'noc') renderDashboardView();
+        }
+      }).catch(() => {});
+    }
 
     // Subtab definitions (matches ManageEngine OpManager Plus / Central ITOM bar)
     const subtabs = [
@@ -9795,175 +9809,297 @@
               </div>
             </div>
 
-            <!-- Dynamic Slide Content -->
-            ${(state.nocSlide || 0) === 0 ? `
-              <!-- SLIDE 0: PROBES HEALTH & LATENCIES -->
-              <div>
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
-                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">NEW YORK PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
-                    </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>12ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
-                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">LONDON PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
-                    </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>28ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
-                  <div style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">SINGAPORE PROBE</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 1px 6px; border-radius: 2px;">ONLINE</span>
-                    </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">100% HEALTHY</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">4 Managed Nodes &bull; Latency: <strong>45ms</strong> &bull; Sync: Synchronized</div>
-                  </div>
-                  <div style="background: #0f172a; padding: 18px; border-radius: 6px; border: 1px solid #334155;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">ENTERPRISE PROBES</span>
-                      <span style="font-size: 10px; background: #064e3b; color: #6ee7b7; padding: 1px 6px; border-radius: 2px;">${totalDevices > 0 ? 'HEALTHY' : 'STANDBY'}</span>
-                    </div>
-                    <div style="font-size: 26px; font-weight: 800; color: #4ade80; margin: 8px 0;">${filteredAlarms.length} ACTIVE ALARMS</div>
-                    <div style="font-size: 11px; color: #cbd5e1;">All registered probe nodes synchronized</div>
-                  </div>
-                </div>
+            <!-- Dynamic Slide Content (100% Real Store + Clickable Cards) -->
+            ${(() => {
+              const probesList = (state.probes && state.probes.length > 0)
+                ? state.probes
+                : [{ id: 1, name: 'Central Site Probe', ip: '192.168.30.65', status: 'Online' }];
+              const upCount = filteredDevices.filter(d => {
+                const s = (d.status || '').toLowerCase();
+                return s === 'up' || s === 'clear' || s === 'online';
+              }).length;
+              const downCount = filteredDevices.filter(d => (d.status || '').toLowerCase() === 'down').length;
+              const snmpErrCount = filteredDevices.filter(d => {
+                const s = (d.status || '').toLowerCase();
+                return s.includes('snmp') || s.includes('fail') || s === 'trouble' || s === 'attention';
+              }).length;
+              const healthPct = totalDevices > 0 ? Math.round((upCount / totalDevices) * 100) : 100;
+              const rttVals = filteredDevices.map(d => Number(d.responseTime)).filter(n => Number.isFinite(n) && n > 0);
+              const avgRtt = rttVals.length > 0 ? (rttVals.reduce((a, b) => a + b, 0) / rttVals.length).toFixed(1) + 'ms' : '—';
+              const wirelessCount = filteredDevices.filter(d => {
+                const c = (d.category || '').toLowerCase();
+                const n = (d.displayName || d.name || '').toLowerCase();
+                return c.includes('wireless') || c === 'ap' || c === 'wlc' || /\bap[-_]|\buap\b/i.test(n);
+              }).length;
+              const critAlarmsCount = filteredAlarms.filter(a => (a.severity || '').toLowerCase() === 'critical').length;
+              const downAlarmsCount = filteredAlarms.filter(a => (a.severity || '').toLowerCase() === 'down').length;
+              const onlineProbesCount = probesList.filter(p => (p.status || 'Online').toLowerCase() === 'online').length;
+              const srvHealth = state._nocServerHealth && state._nocServerHealth.metrics ? state._nocServerHealth.metrics : null;
+              let uptimeText = 'Measuring...';
+              if (srvHealth && srvHealth.uptimeSeconds != null) {
+                const secs = srvHealth.uptimeSeconds;
+                const d = Math.floor(secs / 86400);
+                const h = Math.floor((secs % 86400) / 3600);
+                const m = Math.floor((secs % 3600) / 60);
+                uptimeText = d > 0 ? (d + 'd ' + h + 'h ' + m + 'm') : (h + 'h ' + m + 'm');
+              }
+              const hostMemText = srvHealth && srvHealth.avgMemoryLoad != null ? (srvHealth.avgMemoryLoad + '%') : '—';
+              const hostLoadText = srvHealth && srvHealth.avgCpuLoad != null ? String(srvHealth.avgCpuLoad) : '—';
 
-                <!-- Central Telemetry Status Bar -->
-                <div style="background: #1e293b; border-radius: 6px; padding: 14px 18px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
-                  <div style="display: flex; gap: 24px;">
-                    <span>PostgreSQL Database: <strong style="color: #4ade80;">Active (Cluster Primary)</strong></span>
-                    <span>Active Probe Sync: <strong style="color: #38bdf8;">4 / 4 Live Heartbeats</strong></span>
-                    <span>Central Engine Uptime: <strong style="color: #cbd5e1;">184 Days 14 Hours</strong></span>
-                  </div>
-                  <div style="color: #94a3b8; font-family: monospace;">OpManager Central v12.9.203 GA Build 129203</div>
-                </div>
-              </div>
-            ` : state.nocSlide === 1 ? `
-              <!-- SLIDE 1: ACTIVE CORRELATED ALARMS & RCA TICKER -->
-              <div>
-                <div style="background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 16px;">✨</span>
-                    <div>
-                      <div style="font-weight: 800; font-size: 13px; color: #4ade80;">All Systems Operational &bull; 0 Correlated Incidents</div>
-                      <div style="font-size: 11px; color: #94a3b8;">Central Master telemetry engine active &bull; Baseline healthy</div>
-                    </div>
-                  </div>
-                  <button onclick="window.location.hash='#/alarms'" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Open Alarms Studio &rarr;</button>
-                </div>
-
-                <div style="background: #1e293b; border-radius: 6px; padding: 16px; font-size: 12px; border: 1px solid #334155;">
-                  <div style="font-weight: 700; color: #38bdf8; margin-bottom: 12px; font-size: 13px;">ACTIVE CENTRAL ALARMS TICKER</div>
-                  ${state.alarms.length === 0 ? `
-                    <div style="padding: 30px; text-align: center; color: #94a3b8;">
-                      No active alarms detected across monitored infrastructure.
-                    </div>
-                  ` : `
-                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                      <thead>
-                        <tr style="border-bottom: 1px solid #334155; color: #94a3b8; text-align: left;">
-                          <th style="padding: 6px 8px;">Severity</th>
-                          <th style="padding: 6px 8px;">Device Node</th>
-                          <th style="padding: 6px 8px;">Entity / Monitor</th>
-                          <th style="padding: 6px 8px;">Message</th>
-                          <th style="padding: 6px 8px;">Probe</th>
-                          <th style="padding: 6px 8px;">Technician</th>
-                          <th style="padding: 6px 8px; text-align: right;">Time</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        ${state.alarms.map(a => `
-                          <tr style="border-bottom: 1px solid #283347;">
-                            <td style="padding: 8px 8px;">${getStatusBadge(a.severity)}</td>
-                            <td style="padding: 8px 8px; font-weight: 700; color: #38bdf8; cursor: pointer;" onclick="showDeviceSnapshotModal('${a.device}')">${a.device}</td>
-                            <td style="padding: 8px 8px; color: #cbd5e1;">${a.entity}</td>
-                            <td style="padding: 8px 8px; color: #f8fafc;">${a.message}</td>
-                            <td style="padding: 8px 8px; color: #94a3b8;">${a.probe}</td>
-                            <td style="padding: 8px 8px; color: #a5b4fc; font-weight: 600;">${a.technician}</td>
-                            <td style="padding: 8px 8px; text-align: right; color: #94a3b8; font-family: monospace;">${a.time}</td>
-                          </tr>
-                        `).join('')}
-                      </tbody>
-                    </table>
-                  `}
-                </div>
-              </div>
-            ` : state.nocSlide === 2 ? `
-              <!-- SLIDE 2: TOP BANDWIDTH CONSUMING LINKS -->
-              <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
-                <div style="font-weight: 800; font-size: 14px; color: #38bdf8; margin-bottom: 14px;">ENTERPRISE INTERFACES BANDWIDTH CONSUMPTION MATRIX</div>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
-                  ${(state.topInterfaces || []).slice(0, 6).map(inf => `
-                    <div style="background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 14px;">
-                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <div>
-                          <div style="font-weight: 700; font-size: 12px; color: #f8fafc;">${inf.device} - ${inf.name}</div>
-                          <div style="font-size: 10px; color: #94a3b8;">Probe: ${inf.probe} &bull; Capacity: ${inf.speed}</div>
+              const slideIdx = state.nocSlide || 0;
+              if (slideIdx === 0) {
+                const primaryProbe = probesList[0];
+                const pStatus = (primaryProbe.status || 'Online').toUpperCase();
+                return `
+                  <!-- SLIDE 0: REAL PROBES, INFRASTRUCTURE KPIS & CLICKABLE NODE TILES -->
+                  <div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 18px;">
+                      <div class="opm-noc-nav-card" data-target="probes" title="Click to manage Enterprise Probes" style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155; cursor: pointer; transition: border-color 0.15s;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <span style="font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">${primaryProbe.name || 'CENTRAL SITE PROBE'}</span>
+                          <span style="font-size: 10px; background: ${pStatus === 'ONLINE' ? '#064e3b' : '#7c2d12'}; color: ${pStatus === 'ONLINE' ? '#34d399' : '#fdba74'}; padding: 1px 6px; border-radius: 2px;">${pStatus}</span>
                         </div>
-                        <span style="font-size: 10px; font-weight: 800; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 2px;">UP</span>
+                        <div style="font-size: 26px; font-weight: 800; color: #34d399; margin: 8px 0;">${onlineProbesCount} / ${probesList.length} ONLINE</div>
+                        <div style="font-size: 11px; color: #cbd5e1;">${totalDevices} Managed Nodes &bull; Avg RTT: <strong>${avgRtt}</strong> &bull; ${primaryProbe.ip || '192.168.30.65'} &rarr;</div>
                       </div>
-                      <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
-                        <div>
-                          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-                            <span style="color: #4ade80;">IN Rate: ${inf.inTraffic} Mbps (${inf.inPercent || 0}%)</span>
-                          </div>
-                          <div style="height: 6px; background: #334155; border-radius: 3px; overflow: hidden;">
-                            <div style="width: ${inf.inPercent || 0}%; height: 100%; background: #22c55e;"></div>
-                          </div>
+
+                      <div class="opm-noc-nav-card" data-target="inventory" title="Click to view all monitored devices" style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155; cursor: pointer; transition: border-color 0.15s;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">MONITORED NODES</span>
+                          <span style="font-size: 10px; background: #0c4a6e; color: #38bdf8; padding: 1px 6px; border-radius: 2px;">${healthPct}% UP</span>
                         </div>
-                        <div>
-                          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-                            <span style="color: #38bdf8;">OUT Rate: ${inf.outTraffic} Mbps (${inf.outPercent || 0}%)</span>
-                          </div>
-                          <div style="height: 6px; background: #334155; border-radius: 3px; overflow: hidden;">
-                            <div style="width: ${inf.outPercent || 0}%; height: 100%; background: #0284c7;"></div>
-                          </div>
+                        <div style="font-size: 26px; font-weight: 800; color: #38bdf8; margin: 8px 0;">${upCount} / ${totalDevices} UP</div>
+                        <div style="font-size: 11px; color: #cbd5e1;">${downCount} Down &bull; ${snmpErrCount} SNMP Pending &bull; Open Inventory &rarr;</div>
+                      </div>
+
+                      <div class="opm-noc-nav-card" data-target="inventory" title="Click to inspect Switches, Wireless APs & Servers" style="background: #1e293b; padding: 18px; border-radius: 6px; border: 1px solid #334155; cursor: pointer; transition: border-color 0.15s;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">NETWORK &amp; WIRELESS</span>
+                          <span style="font-size: 10px; background: #1e3a8a; color: #93c5fd; padding: 1px 6px; border-radius: 2px;">LIVE LAN</span>
                         </div>
+                        <div style="font-size: 26px; font-weight: 800; color: #a5b4fc; margin: 8px 0;">${switchCount} SW / ${wirelessCount} AP</div>
+                        <div style="font-size: 11px; color: #cbd5e1;">${serverCount} Servers &bull; ${firewallCount} FW &bull; ${routerCount} Routers &rarr;</div>
+                      </div>
+
+                      <div class="opm-noc-nav-card" data-target="alarms" title="Click to open Active Alarms console" style="background: #0f172a; padding: 18px; border-radius: 6px; border: 1px solid ${filteredAlarms.length > 0 ? '#7f1d1d' : '#334155'}; cursor: pointer; transition: border-color 0.15s;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">ACTIVE ALARMS</span>
+                          <span style="font-size: 10px; background: ${filteredAlarms.length > 0 ? '#7f1d1d' : '#064e3b'}; color: ${filteredAlarms.length > 0 ? '#fca5a5' : '#6ee7b7'}; padding: 1px 6px; border-radius: 2px;">${filteredAlarms.length > 0 ? 'ATTENTION' : 'CLEAR'}</span>
+                        </div>
+                        <div style="font-size: 26px; font-weight: 800; color: ${filteredAlarms.length > 0 ? '#f87171' : '#4ade80'}; margin: 8px 0;">${filteredAlarms.length} ACTIVE ALARMS</div>
+                        <div style="font-size: 11px; color: #cbd5e1;">${critAlarmsCount} Critical &bull; ${downAlarmsCount} Down &bull; View Alarms &rarr;</div>
                       </div>
                     </div>
-                  `).join('')}
-                </div>
-              </div>
-            ` : `
-              <!-- SLIDE 3: POWER & THERMAL SENSORS -->
-              <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
-                <div style="font-weight: 800; font-size: 14px; color: #38bdf8; margin-bottom: 14px;">FACILITY POWER, UPS RUNTIME &amp; THERMAL METRICS</div>
-                ${state.devices.length === 0 ? `
-                  <div style="padding: 30px; text-align: center; color: #94a3b8;">
-                    No hardware sensor telemetry available. Connect SNMP-enabled UPS, PDUs, or chassis thermal sensors to monitor facility power.
+
+                    <!-- Live Clickable Device Wallboard Tiles -->
+                    <div style="background: #1e293b; border-radius: 6px; padding: 14px 16px; border: 1px solid #334155; margin-bottom: 16px;">
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <div style="font-size: 12px; font-weight: 800; color: #38bdf8; letter-spacing: 0.4px;">LIVE INFRASTRUCTURE WALLBOARD (${totalDevices} MONITORED NODES &mdash; CLICK ANY NODE TO INSPECT)</div>
+                        <div style="display: flex; gap: 12px; font-size: 11px; color: #94a3b8;">
+                          <span><span style="color: #22c55e;">●</span> Up (${upCount})</span>
+                          <span><span style="color: #f59e0b;">●</span> SNMP Err (${snmpErrCount})</span>
+                          <span><span style="color: #ef4444;">●</span> Down (${downCount})</span>
+                        </div>
+                      </div>
+                      ${totalDevices === 0 ? `
+                        <div style="padding: 24px; text-align: center; color: #94a3b8; font-size: 12px;">
+                          No devices discovered yet. Click <strong>Discovery</strong> in Settings to sweep your subnet.
+                        </div>
+                      ` : `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; max-height: 360px; overflow-y: auto; padding-right: 4px;">
+                          ${filteredDevices.map(d => {
+                            const st = (d.status || 'Unknown').toLowerCase();
+                            const isUp = st === 'up' || st === 'clear' || st === 'online';
+                            const isDown = st === 'down' || st === 'critical';
+                            const dotColor = isUp ? '#22c55e' : (isDown ? '#ef4444' : '#f59e0b');
+                            const rttStr = d.responseTime != null && d.responseTime !== '' ? (Number(d.responseTime).toFixed(1) + ' ms') : '—';
+                            const dName = d.displayName || d.name || d.ip;
+                            return `
+                              <div class="opm-noc-device-tile" data-id="${d.id}" title="Click to inspect ${dName} (${d.ip})" style="background: #0f172a; border: 1px solid #334155; border-left: 3px solid ${dotColor}; border-radius: 4px; padding: 8px 10px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; transition: background 0.15s;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
+                                  <span style="font-size: 11px; font-weight: 700; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${dName}</span>
+                                  <span style="width: 7px; height: 7px; border-radius: 50%; background: ${dotColor}; flex-shrink: 0;"></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; font-family: monospace;">
+                                  <span>${d.ip}</span>
+                                  <span style="color: ${isUp ? '#4ade80' : '#fca5a5'};">${rttStr}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
+                                  <span>${d.category || 'Node'}</span>
+                                  <span>${d.status || 'Pending'}</span>
+                                </div>
+                              </div>
+                            `;
+                          }).join('')}
+                        </div>
+                      `}
+                    </div>
+
+                    <!-- Central Real Telemetry Status Bar -->
+                    <div style="background: #1e293b; border-radius: 6px; padding: 12px 18px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; font-size: 12px; flex-wrap: wrap; gap: 10px;">
+                      <div style="display: flex; gap: 22px; flex-wrap: wrap;">
+                        <span>SQLite WAL Store: <strong style="color: #4ade80;">Active (${totalDevices} Devices)</strong></span>
+                        <span>Active Probes: <strong style="color: #38bdf8;">${onlineProbesCount} / ${probesList.length} Online</strong></span>
+                        <span>Host Uptime: <strong style="color: #cbd5e1;">${uptimeText}</strong> (RAM: <strong>${hostMemText}</strong>, Load: <strong>${hostLoadText}</strong>)</span>
+                      </div>
+                      <div style="color: #94a3b8; font-family: monospace;">OpManager Central v12.9.204-GA (Build 20261116)</div>
+                    </div>
                   </div>
-                ` : `
-                  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px;">
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">FACILITY UPS METRIC</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">0.0% LOAD</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Normal Operation</div>
+                `;
+              } else if (slideIdx === 1) {
+                return `
+                  <!-- SLIDE 1: REAL ACTIVE ALARMS & CORRELATION TICKER -->
+                  <div>
+                    <div style="background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                      <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 16px;">${filteredAlarms.length > 0 ? '🚨' : '✨'}</span>
+                        <div>
+                          <div style="font-weight: 800; font-size: 13px; color: ${filteredAlarms.length > 0 ? '#f87171' : '#4ade80'};">
+                            ${filteredAlarms.length > 0 ? `${filteredAlarms.length} Active Alarms &bull; ${critAlarmsCount} Critical &bull; ${downAlarmsCount} Down` : 'All Systems Operational &bull; 0 Active Alarms'}
+                          </div>
+                          <div style="font-size: 11px; color: #94a3b8;">Real SQLite alarm stream from ICMP + SNMPv2c poller &bull; Click any alarm row to inspect node</div>
+                        </div>
+                      </div>
+                      <button onclick="window.location.hash='#/alarms'" style="background: #0070e0; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">Open Alarms Studio &rarr;</button>
                     </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">CHASSIS TEMPERATURE</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">24 °C</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Thermal Baseline Optimal</div>
-                    </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">POWER CONSUMPTION</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #38bdf8; margin: 6px 0;">0.00 kW</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Across ${state.devices.length} Assets</div>
-                    </div>
-                    <div style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center;">
-                      <div style="font-size: 11px; color: #94a3b8;">PSU REDUNDANCY</div>
-                      <div style="font-size: 24px; font-weight: 800; color: #34d399; margin: 6px 0;">HEALTHY</div>
-                      <div style="font-size: 10px; color: #cbd5e1;">Zero Faults Reported</div>
+
+                    <div style="background: #1e293b; border-radius: 6px; padding: 16px; font-size: 12px; border: 1px solid #334155; max-height: 430px; overflow-y: auto;">
+                      <div style="font-weight: 700; color: #38bdf8; margin-bottom: 12px; font-size: 13px;">ACTIVE CENTRAL ALARMS TICKER (LIVE)</div>
+                      ${filteredAlarms.length === 0 ? `
+                        <div style="padding: 30px; text-align: center; color: #94a3b8;">
+                          No active alarms detected across monitored infrastructure.
+                        </div>
+                      ` : `
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                          <thead>
+                            <tr style="border-bottom: 1px solid #334155; color: #94a3b8; text-align: left;">
+                              <th style="padding: 6px 8px;">Severity</th>
+                              <th style="padding: 6px 8px;">Device Node</th>
+                              <th style="padding: 6px 8px;">Entity / Monitor</th>
+                              <th style="padding: 6px 8px;">Message</th>
+                              <th style="padding: 6px 8px;">Probe</th>
+                              <th style="padding: 6px 8px; text-align: right;">Time</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            ${filteredAlarms.slice(0, 30).map(a => `
+                              <tr class="opm-noc-alarm-row" data-device="${a.device}" data-device-id="${a.deviceId || ''}" style="border-bottom: 1px solid #283347; cursor: pointer;">
+                                <td style="padding: 8px 8px;">${getStatusBadge(a.severity)}</td>
+                                <td style="padding: 8px 8px; font-weight: 700; color: #38bdf8;">${a.device}</td>
+                                <td style="padding: 8px 8px; color: #cbd5e1;">${a.entity || 'Poller'}</td>
+                                <td style="padding: 8px 8px; color: #f8fafc;">${a.message}</td>
+                                <td style="padding: 8px 8px; color: #94a3b8;">${a.probe || 'Central Site Probe'}</td>
+                                <td style="padding: 8px 8px; text-align: right; color: #94a3b8; font-family: monospace;">${a.time || ''}</td>
+                              </tr>
+                            `).join('')}
+                          </tbody>
+                        </table>
+                      `}
                     </div>
                   </div>
-                `}
-              </div>
-            `}
+                `;
+              } else if (slideIdx === 2) {
+                const topNodes = [...filteredDevices].sort((a, b) => (Number(b.responseTime) || 0) - (Number(a.responseTime) || 0)).slice(0, 8);
+                return `
+                  <!-- SLIDE 2: LIVE LATENCY & INTERFACE MATRIX (CLICKABLE) -->
+                  <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                      <div style="font-weight: 800; font-size: 14px; color: #38bdf8;">LIVE NODE LATENCY &amp; INTERFACE TELEMETRY MATRIX</div>
+                      <span style="font-size: 11px; color: #94a3b8;">Click any node card to view Snapshot, Ping &amp; Interfaces</span>
+                    </div>
+                    ${topNodes.length === 0 ? `
+                      <div style="padding: 30px; text-align: center; color: #94a3b8;">No monitored nodes available.</div>
+                    ` : `
+                      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        ${topNodes.map(d => {
+                          const dName = d.displayName || d.name || d.ip;
+                          const rtt = Number(d.responseTime) || 0;
+                          const rttPct = Math.min(100, Math.max(4, Math.round(rtt * 4)));
+                          const cpuVal = Number(d.cpu) || 0;
+                          const isUp = ['up', 'clear', 'online'].includes((d.status || '').toLowerCase());
+                          return `
+                            <div class="opm-noc-device-tile" data-id="${d.id}" style="background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 14px; cursor: pointer;">
+                              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div>
+                                  <div style="font-weight: 700; font-size: 12px; color: #f8fafc;">${dName} <span style="color: #64748b; font-family: monospace;">(${d.ip})</span></div>
+                                  <div style="font-size: 10px; color: #94a3b8;">Category: ${d.category || 'Node'} &bull; Probe: ${d.probeName || 'Central Site Probe'}</div>
+                                </div>
+                                <span style="font-size: 10px; font-weight: 800; background: ${isUp ? '#064e3b' : '#7f1d1d'}; color: ${isUp ? '#34d399' : '#fca5a5'}; padding: 2px 6px; border-radius: 2px;">${(d.status || 'UNKNOWN').toUpperCase()}</span>
+                              </div>
+                              <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+                                <div>
+                                  <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                                    <span style="color: #4ade80;">ICMP Ping RTT: ${rtt > 0 ? rtt.toFixed(2) + ' ms' : 'N/A'}</span>
+                                  </div>
+                                  <div style="height: 6px; background: #334155; border-radius: 3px; overflow: hidden;">
+                                    <div style="width: ${rttPct}%; height: 100%; background: #22c55e;"></div>
+                                  </div>
+                                </div>
+                                <div>
+                                  <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                                    <span style="color: #38bdf8;">CPU Utilization: ${cpuVal}%</span>
+                                  </div>
+                                  <div style="height: 6px; background: #334155; border-radius: 3px; overflow: hidden;">
+                                    <div style="width: ${Math.min(100, cpuVal)}%; height: 100%; background: #0284c7;"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          `;
+                        }).join('')}
+                      </div>
+                    `}
+                  </div>
+                `;
+              } else {
+                const topLoadNodes = filteredDevices.slice(0, 6);
+                return `
+                  <!-- SLIDE 3: REAL SERVER HOST HEALTH & NODE RESOURCES -->
+                  <div style="background: #1e293b; border-radius: 6px; padding: 18px; border: 1px solid #334155;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                      <div style="font-weight: 800; font-size: 14px; color: #38bdf8;">CENTRAL ENGINE &amp; NODE RESOURCE TELEMETRY</div>
+                      <span style="font-size: 11px; color: #94a3b8;">Live OS stats from Central host &amp; monitored assets</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px;">
+                      <div class="opm-noc-nav-card" data-target="reports" style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center; cursor: pointer;">
+                        <div style="font-size: 11px; color: #94a3b8;">CENTRAL HOST LOAD (1M)</div>
+                        <div style="font-size: 24px; font-weight: 800; color: #4ade80; margin: 6px 0;">${hostLoadText}</div>
+                        <div style="font-size: 10px; color: #cbd5e1;">Host: ${srvHealth ? srvHealth.hostname : 'opmanager-central'}</div>
+                      </div>
+                      <div class="opm-noc-nav-card" data-target="reports" style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center; cursor: pointer;">
+                        <div style="font-size: 11px; color: #94a3b8;">CENTRAL OS MEMORY</div>
+                        <div style="font-size: 24px; font-weight: 800; color: #38bdf8; margin: 6px 0;">${hostMemText}</div>
+                        <div style="font-size: 10px; color: #cbd5e1;">OS: ${srvHealth ? srvHealth.platform : 'linux'}</div>
+                      </div>
+                      <div class="opm-noc-nav-card" data-target="reports" style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center; cursor: pointer;">
+                        <div style="font-size: 11px; color: #94a3b8;">ENGINE UPTIME</div>
+                        <div style="font-size: 24px; font-weight: 800; color: #a5b4fc; margin: 6px 0;">${uptimeText}</div>
+                        <div style="font-size: 10px; color: #cbd5e1;">Poller Interval: 60s</div>
+                      </div>
+                      <div class="opm-noc-nav-card" data-target="inventory" style="background: #0f172a; padding: 14px; border-radius: 6px; border: 1px solid #334155; text-align: center; cursor: pointer;">
+                        <div style="font-size: 11px; color: #94a3b8;">MONITORED ASSETS</div>
+                        <div style="font-size: 24px; font-weight: 800; color: #34d399; margin: 6px 0;">${totalDevices}</div>
+                        <div style="font-size: 10px; color: #cbd5e1;">Click to inspect Inventory &rarr;</div>
+                      </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                      ${topLoadNodes.map(d => `
+                        <div class="opm-noc-device-tile" data-id="${d.id}" style="background: #0f172a; padding: 10px 12px; border-radius: 4px; border: 1px solid #334155; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                          <div>
+                            <div style="font-size: 11px; font-weight: 700; color: #f8fafc;">${d.displayName || d.name}</div>
+                            <div style="font-size: 10px; color: #94a3b8;">${d.ip} &bull; ${d.category || 'Node'}</div>
+                          </div>
+                          <div style="text-align: right; font-size: 10px; font-family: monospace;">
+                            <div style="color: #4ade80;">CPU: ${d.cpu != null ? d.cpu + '%' : '—'}</div>
+                            <div style="color: #38bdf8;">MEM: ${d.memory != null ? d.memory + '%' : '—'}</div>
+                          </div>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                `;
+              }
+            })()}
           </div>
         `}
 
@@ -10004,6 +10140,44 @@
       };
     });
 
+    // NOC Clickable Navigation KPI Cards (Probes, Inventory, Alarms, Reports)
+    container.querySelectorAll('.opm-noc-nav-card').forEach(card => {
+      card.onclick = () => {
+        const target = card.getAttribute('data-target');
+        if (target === 'probes') {
+          state.subTabs.settings = 'probes';
+          window.location.hash = '#/settings';
+        } else if (target === 'inventory') {
+          window.location.hash = '#/inventory';
+        } else if (target === 'alarms') {
+          window.location.hash = '#/alarms';
+        } else if (target === 'reports') {
+          window.location.hash = '#/reports';
+        }
+      };
+    });
+
+    // NOC Clickable Live Device Tiles -> Open Device Snapshot Modal
+    container.querySelectorAll('.opm-noc-device-tile').forEach(tile => {
+      tile.onclick = () => {
+        const devId = tile.getAttribute('data-id');
+        if (devId && typeof showDeviceSnapshotModal === 'function') {
+          showDeviceSnapshotModal(devId);
+        }
+      };
+    });
+
+    // NOC Clickable Alarm Rows -> Open Device Snapshot Modal
+    container.querySelectorAll('.opm-noc-alarm-row').forEach(row => {
+      row.onclick = () => {
+        const devId = row.getAttribute('data-device-id');
+        const devName = row.getAttribute('data-device');
+        if (typeof showDeviceSnapshotModal === 'function') {
+          showDeviceSnapshotModal(devId || devName);
+        }
+      };
+    });
+
     const autoPlayBtn = container.querySelector('#opm-noc-autoplay-toggle');
     if (autoPlayBtn) {
       autoPlayBtn.onclick = () => {
@@ -10011,6 +10185,23 @@
         showToast(state.nocAutoPlay ? 'NOC Wallboard auto-rotation enabled (15s).' : 'NOC Wallboard auto-rotation paused.');
         renderDashboardView();
       };
+    }
+
+    // Active 15s NOC Carousel Rotation Timer
+    if (window.__opmNocCarouselTimer) {
+      clearInterval(window.__opmNocCarouselTimer);
+      window.__opmNocCarouselTimer = null;
+    }
+    if (activeSub === 'noc' && state.nocAutoPlay !== false) {
+      window.__opmNocCarouselTimer = setInterval(() => {
+        if (state.currentTab === 'dashboard' && state.subTabs.dashboard === 'noc' && state.nocAutoPlay !== false) {
+          state.nocSlide = ((state.nocSlide || 0) + 1) % 4;
+          renderDashboardView();
+        } else {
+          clearInterval(window.__opmNocCarouselTimer);
+          window.__opmNocCarouselTimer = null;
+        }
+      }, 15000);
     }
 
     // NOC Wallboard Fullscreen Toggle
