@@ -17931,18 +17931,26 @@
           const data = JSON.parse(event.data);
           if (data.type === 'INITIAL_STATE') {
             if (Array.isArray(data.devices)) {
-              state.devices = data.devices.map(d => ({
-                ...d,
-                name: d.name || d.displayName || d.hostname || d.sys_name || d.ip,
-                displayName: d.displayName || d.name || d.hostname || d.sys_name || d.ip,
-                type: d.type || d.category || d.model || 'Unknown',
-                probe: d.probe || d.probeName || 'Central Site Probe',
-                probeName: d.probeName || d.probe || 'Central Site Probe',
-                cpu: d.cpu !== undefined ? d.cpu : (d.cpu_pct !== null && d.cpu_pct !== undefined ? d.cpu_pct : 22),
-                memory: d.memory !== undefined ? d.memory : (d.mem_used_pct !== null && d.mem_used_pct !== undefined ? d.mem_used_pct : 38),
-                responseTime: d.responseTime !== undefined ? d.responseTime : (d.response_ms !== null && d.response_ms !== undefined ? d.response_ms : 15),
-                availability: d.availability !== undefined ? d.availability : 100
-              }));
+              const prevById = new Map((state.devices || []).map(x => [String(x.id), x]));
+              state.devices = data.devices.map(d => {
+                const prev = prevById.get(String(d.id));
+                return {
+                  ...d,
+                  name: d.name || d.displayName || d.hostname || d.sys_name || d.ip,
+                  displayName: d.displayName || d.name || d.hostname || d.sys_name || d.ip,
+                  type: d.type || d.category || d.model || 'Unknown',
+                  probe: d.probe || d.probeName || 'Central Site Probe',
+                  probeName: d.probeName || d.probe || 'Central Site Probe',
+                  cpu: d.cpu !== undefined ? d.cpu : (d.cpu_pct !== null && d.cpu_pct !== undefined ? d.cpu_pct : 22),
+                  memory: d.memory !== undefined ? d.memory : (d.mem_used_pct !== null && d.mem_used_pct !== undefined ? d.mem_used_pct : 38),
+                  responseTime: d.responseTime !== undefined ? d.responseTime : (d.response_ms !== null && d.response_ms !== undefined ? d.response_ms : 15),
+                  availability: d.availability !== undefined ? d.availability : 100,
+                  lastBackup: d.lastBackup || (prev && prev.lastBackup) || null,
+                  hasConfig: d.hasConfig || (prev && prev.hasConfig) || false,
+                  runningConfig: d.runningConfig || (prev && prev.runningConfig) || null,
+                  startupConfig: d.startupConfig || (prev && prev.startupConfig) || null
+                };
+              });
             }
             if (Array.isArray(data.alarms)) state.alarms = data.alarms;
             if (Array.isArray(data.probes)) state.probes = data.probes;
