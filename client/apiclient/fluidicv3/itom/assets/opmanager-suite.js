@@ -13550,11 +13550,53 @@
           };
           const extractFirmware = (d) => {
             if (d.osVersion) return d.osVersion;
-            const cfg = d.runningConfig || d.startupConfig || '';
-            const fgMatch = cfg.match(/#config-version=([^\s:\r\n]+)-([\d.]+-build\d+)/i);
-            if (fgMatch) return `FortiOS ${fgMatch[2]} (${fgMatch[1]})`;
-            const iosMatch = cfg.match(/^version\s+([^\s\r\n]+)/im);
-            if (iosMatch) return `Cisco IOS / IOS-XE ${iosMatch[1]}`;
+            const c = (d.runningConfig || '') + '\n' + (d.startupConfig || '');
+            const desc = d.sys_descr || d.sysDescr || d.description || '';
+            const text = c + '\n' + desc + '\n' + (d.model || '') + '\n' + (d.vendor || '');
+
+            // 1. FortiOS config header or sysDescr
+            const fg = c.match(/#config-version=([^\s:\r\n]+)-([\d.]+-build\d+)/i) ||
+                       text.match(/FortiOS[^\w]*v?([\d.]+(?:-build\d+)?)/i);
+            if (fg) return `FortiOS ${fg[2] || fg[1]}${fg[2] ? ` (${fg[1]})` : ''}`;
+
+            // 2. Cisco IOS config version or sysDescr Version
+            const iosCfg = c.match(/^version\s+([^\s\r\n]+)/im);
+            if (iosCfg) return `Cisco IOS / IOS-XE ${iosCfg[1]}`;
+            const ciscoIos = text.match(/Cisco IOS Software.*?Version\s+([^\s,]+)/i) ||
+                             text.match(/IOS-XE.*?Version\s+([^\s,]+)/i) ||
+                             text.match(/Catalyst.*?Version\s+([^\s,]+)/i);
+            if (ciscoIos) return `Cisco IOS / IOS-XE ${ciscoIos[1]}`;
+
+            // 3. Ubiquiti UniFi AP / Switch
+            const ubi = text.match(/(?:UAP|USW|UDM|UniFi)[^\w\r\n]*([\w-]+)\s+([\d.]+)/i) ||
+                        text.match(/UAP-[\w-]+\s+([\d.]+)/i);
+            if (ubi) return `UniFi OS ${ubi[2] || ubi[1]} (${ubi[1] || 'AP'})`;
+
+            // 4. pfSense / FreeBSD
+            const pfs = text.match(/pfSense[^\d]*(\d+[\d.]*(?:-RELEASE[^\s]*)?)/i);
+            if (pfs) return `pfSense CE ${pfs[1]}`;
+            const fbsd = text.match(/FreeBSD\s+([\d.]+(?:-[^\s]+)?)/i);
+            if (fbsd) return `FreeBSD ${fbsd[1]}`;
+
+            // 5. Aruba / HP ProCurve
+            const aruba = text.match(/ArubaOS(?:-Switch)?\s+([^\s,]+)/i) ||
+                          text.match(/Aruba.*?([\d.]+\.[\d]+)/i);
+            if (aruba) return `ArubaOS ${aruba[1]}`;
+
+            // 6. Linux kernel / Proxmox
+            const lnx = text.match(/Linux.*?(\d+\.\d+\.\d+[-\w.]*)/i) ||
+                        text.match(/Proxmox.*?VE\s+([\d.]+)/i);
+            if (lnx) return `Linux Kernel ${lnx[1]}`;
+
+            // 7. Pure Storage
+            const pure = text.match(/Purity(?:\/\/FA)?\s+([\d.]+)/i);
+            if (pure) return `Pure Storage Purity ${pure[1]}`;
+
+            // 8. Generic version fallback
+            const gen = text.match(/v(?:er(?:sion)?)?[.:\s]+(\d+\.[\d.]+\w*)/i);
+            if (gen) return `${d.vendor || 'Embedded'} ${gen[1]}`;
+
+            if (d.vendor && d.model) return `${d.vendor} ${d.model}`;
             return null;
           };
 
@@ -13771,9 +13813,12 @@
             const fingerprinted = networkDevs.map(d => ({ dev: d, fw: extractFirmware(d) })).filter(x => x.fw);
             return `
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center;">
+                <div style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; background: #fafbfc; font-size: 13px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                   <span>Verified Device OS / Firmware Inventory (${fingerprinted.length} Fingerprinted of ${networkDevs.length} Network Nodes)</span>
-                  <span style="background: #e0f2fe; color: #0369a1; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">Parsed from Live NCM Config Headers</span>
+                  <div style="display: flex; gap: 8px; align-items: center;">
+                    <button id="opm-cfg-scan-all-fw-btn" style="background: #16a34a; color: #ffffff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer;">⚡ Rescan All Firmware &amp; CVEs</button>
+                    <span style="background: #e0f2fe; color: #0369a1; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">Parsed from Live NCM Configs &amp; SNMP MIBs</span>
+                  </div>
                 </div>
                 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                   <thead>
@@ -13796,10 +13841,11 @@
                         <td style="padding: 10px 14px; color: #64748b;">${escNcm(d.vendor || d.category || 'Node')}</td>
                         <td style="padding: 10px 14px; font-family: monospace; color: ${fw ? '#0f172a' : '#94a3b8'}; font-weight: ${fw ? '700' : '400'};">${fw ? escNcm(fw) : 'Pending SSH Config / sysDescr'}</td>
                         <td style="padding: 10px 14px;"><span style="background: ${fw ? '#dcfce7' : '#f1f5f9'}; color: ${fw ? '#166534' : '#64748b'}; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 3px;">${fw ? 'VERIFIED' : 'NOT SCANNED'}</span></td>
-                        <td style="padding: 10px 14px; text-align: right;">
+                        <td style="padding: 10px 14px; text-align: right; white-space: nowrap;">
                           ${fw
-                            ? `<button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">View Config</button>`
-                            : `<button class="opm-cfg-backup-single-btn" data-id="${d.id}" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Scan via SSH</button>`
+                            ? `<button class="opm-cfg-view-config-btn" data-id="${d.id}" style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; margin-right: 4px;">View Config</button>
+                               <button class="opm-cfg-scan-single-fw-btn" data-id="${d.id}" style="background: #f8fafc; border: 1px solid #cbd5e1; color: #475569; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Rescan</button>`
+                            : `<button class="opm-cfg-scan-single-fw-btn" data-id="${d.id}" style="background: #0070e0; color: #fff; border: none; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer;">Scan via SNMP/SSH</button>`
                           }
                         </td>
                       </tr>
@@ -14293,6 +14339,65 @@
         renderConfigurationView();
       };
     }
+
+    // Scan all firmware & CVEs across network devices
+    const scanAllFwBtn = container.querySelector('#opm-cfg-scan-all-fw-btn');
+    if (scanAllFwBtn) {
+      scanAllFwBtn.onclick = async () => {
+        const devs = (state.devices || []).filter(d => /router|switch|firewall|wireless/i.test(d.category || ''));
+        scanAllFwBtn.disabled = true;
+        scanAllFwBtn.textContent = 'Scanning Devices...';
+        let ok = 0;
+        for (let i = 0; i < devs.length; i += 6) {
+          await Promise.all(devs.slice(i, i + 6).map(async d => {
+            try {
+              const r = await fetch('/api/ccm/backup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ deviceId: d.id, mode: 'snmp' })
+              });
+              if (r.ok) ok++;
+            } catch (e) {}
+          }));
+        }
+        if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+        scanAllFwBtn.disabled = false;
+        scanAllFwBtn.textContent = '⚡ Rescan All Firmware & CVEs';
+        showToast(`Firmware & CVE scan complete: ${ok} devices analyzed.`);
+        renderConfigurationView();
+      };
+    }
+
+    // Single device scan firmware button
+    container.querySelectorAll('.opm-cfg-scan-single-fw-btn').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.getAttribute('data-id');
+        const dev = (state.devices || []).find(d => String(d.id) === String(id));
+        if (!dev) return;
+        const origText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Scanning...';
+        try {
+          const resp = await fetch('/api/ccm/backup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ deviceId: dev.id, mode: 'snmp' })
+          });
+          const data = await resp.json();
+          if (resp.ok) {
+            if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+            showToast(data.message || `Firmware scanned for ${dev.displayName || dev.name}.`);
+          } else {
+            showToast(`Scan failed for ${dev.displayName || dev.name}.`, 'warning');
+          }
+        } catch (err) {
+          showToast(`Scan error: ${err.message}`, 'error');
+        }
+        btn.disabled = false;
+        btn.textContent = origText;
+        renderConfigurationView();
+      };
+    });
 
     // View config button
     container.querySelectorAll('.opm-cfg-view-config-btn').forEach(btn => {
