@@ -363,6 +363,7 @@
       `;
     });
 
+    // Pagination computation removed from renderDashboardView
     container.innerHTML = `
       <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 0 0 24px; display: flex; align-items: center; justify-content: space-between; overflow-x: auto; height: 40px;">
         <div style="display: flex; align-items: center; gap: 4px; height: 100%;">
@@ -562,9 +563,9 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #64748b;">
                   <button title="Refresh" class="opm-widget-btn-refresh" style="background: none; border: none; cursor: pointer; color: #64748b;">↻</button>
-                  <button title="Configure" style="background: none; border: none; cursor: pointer; color: #64748b;">✎</button>
+                  <button title="Configure" class="opm-widget-btn-cfg" data-target="notifications" style="background: none; border: none; cursor: pointer; color: #64748b;">✎</button>
                   <button title="Maximize" class="opm-widget-btn-max" data-title="Alarms by Severity" style="background: none; border: none; cursor: pointer; color: #64748b;">⤢</button>
-                  <button title="More" style="background: none; border: none; cursor: pointer; color: #64748b;">⋮</button>
+                  <button title="Open Alarms View" class="opm-widget-btn-more" data-hash="#/alarms" style="background: none; border: none; cursor: pointer; color: #64748b;">⋮</button>
                 </div>
               </div>
               <div style="padding: 16px; display: flex; align-items: center; justify-content: space-around; gap: 16px;">
@@ -608,9 +609,9 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #64748b;">
                   <button title="Refresh" class="opm-widget-btn-refresh" style="background: none; border: none; cursor: pointer; color: #64748b;">↻</button>
-                  <button title="Configure" style="background: none; border: none; cursor: pointer; color: #64748b;">✎</button>
+                  <button title="Configure" class="opm-widget-btn-cfg" data-target="templates" style="background: none; border: none; cursor: pointer; color: #64748b;">✎</button>
                   <button title="Maximize" class="opm-widget-btn-max" data-title="Top CPU Utilization" style="background: none; border: none; cursor: pointer; color: #64748b;">⤢</button>
-                  <button title="More" style="background: none; border: none; cursor: pointer; color: #64748b;">⋮</button>
+                  <button title="Open Inventory" class="opm-widget-btn-more" data-hash="#/inventory" style="background: none; border: none; cursor: pointer; color: #64748b;">⋮</button>
                 </div>
               </div>
               <div style="padding: 12px 14px;">
@@ -628,9 +629,9 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #64748b;">
                   <button title="Refresh" class="opm-widget-btn-refresh" style="background: none; border: none; cursor: pointer; color: #64748b;">↻</button>
-                  <button title="Configure" style="background: none; border: none; cursor: pointer; color: #64748b;">✎</button>
+                  <button title="Configure" class="opm-widget-btn-cfg" data-target="templates" style="background: none; border: none; cursor: pointer; color: #64748b;">✎</button>
                   <button title="Maximize" class="opm-widget-btn-max" data-title="Top Memory Utilization" style="background: none; border: none; cursor: pointer; color: #64748b;">⤢</button>
-                  <button title="More" style="background: none; border: none; cursor: pointer; color: #64748b;">⋮</button>
+                  <button title="Open Inventory" class="opm-widget-btn-more" data-hash="#/inventory" style="background: none; border: none; cursor: pointer; color: #64748b;">⋮</button>
                 </div>
               </div>
               <div style="padding: 12px 14px;">
@@ -648,9 +649,9 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #64748b;">
                   <button title="Refresh" class="opm-widget-btn-refresh" style="background: none; border: none; cursor: pointer; color: #64748b;">↻</button>
-                  <button title="Configure" style="background: none; border: none; cursor: pointer; color: #64748b;">✎</button>
+                  <button title="Configure" class="opm-widget-btn-cfg" data-target="discovery" style="background: none; border: none; cursor: pointer; color: #64748b;">✎</button>
                   <button title="Maximize" class="opm-widget-btn-max" data-title="Top Interfaces by Bandwidth Traffic" style="background: none; border: none; cursor: pointer; color: #64748b;">⤢</button>
-                  <button title="More" style="background: none; border: none; cursor: pointer; color: #64748b;">⋮</button>
+                  <button title="Open Interfaces" class="opm-widget-btn-more" data-hash="#/inventory/interfaces" style="background: none; border: none; cursor: pointer; color: #64748b;">⋮</button>
                 </div>
               </div>
               <div style="padding: 12px 16px;">
@@ -853,11 +854,11 @@
                   ${state.probes.map(pr => `
                     <tr style="border-bottom: 1px solid #f1f5f9;">
                       <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" onclick="showProbeDetailsModal(${pr.id})">${pr.name}</td>
-                      <td style="padding: 10px 14px; font-family: monospace;">${pr.ip}</td>
-                      <td style="padding: 10px 14px; color: #64748b;">${pr.location}</td>
+                      <td style="padding: 10px 14px; font-family: monospace;">${pr.ip || '127.0.0.1'}</td>
+                      <td style="padding: 10px 14px; color: #64748b;">${pr.location || pr.region || 'Local Site'}</td>
                       <td style="padding: 10px 14px; font-weight: 700;">${typeof pr.devicesCount !== "undefined" ? pr.devicesCount : (pr.devices || 0)}</td>
                       <td style="padding: 10px 14px;"><span style="font-weight: 700; color: ${(pr.alarmsCount || pr.alarms || 0) > 0 ? '#dc2626' : '#16a34a'};">${pr.alarmsCount || pr.alarms || 0}</span></td>
-                      <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency} ms</td>
+                      <td style="padding: 10px 14px; font-family: monospace; color: #0284c7; font-weight: 600;">${pr.latency != null ? pr.latency : 1} ms</td>
                       <td style="padding: 10px 14px; text-align: right;"><span style="background: #dcfce7; color: #166534; font-weight: 700; padding: 2px 8px; border-radius: 3px; font-size: 10px;">CONNECTED</span></td>
                     </tr>
                   `).join('')}
@@ -1568,18 +1569,67 @@
       };
     });
 
-    // Widget Maximize buttons
+    // Widget Maximize buttons -> open live enlarged telemetry modal
     container.querySelectorAll('.opm-widget-btn-max').forEach(btn => {
       btn.onclick = () => {
-        const title = btn.getAttribute('data-title') || 'Widget Maximize View';
-        showToast(`Maximizing ${title}...`);
+        const title = btn.getAttribute('data-title') || 'Widget Telemetry View';
+        let modal = document.getElementById('opm-widget-max-modal');
+        if (!modal) {
+          modal = document.createElement('div');
+          modal.id = 'opm-widget-max-modal';
+          modal.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.65);z-index:100000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);';
+          document.body.appendChild(modal);
+        }
+        const rowsHtml = (state.devices || []).map(d => `
+          <tr style="border-bottom:1px solid #f1f5f9;">
+            <td style="padding:8px 12px;font-weight:700;color:#0070e0;cursor:pointer;" onclick="document.getElementById('opm-widget-max-modal').style.display='none';showDeviceSnapshotModal(${d.id})">${d.displayName || d.name}</td>
+            <td style="padding:8px 12px;font-family:monospace;">${d.ip}</td>
+            <td style="padding:8px 12px;">${d.status || 'Clear'}</td>
+            <td style="padding:8px 12px;font-weight:700;">${d.cpu ?? 0}%</td>
+            <td style="padding:8px 12px;font-weight:700;">${d.memory ?? 0}%</td>
+            <td style="padding:8px 12px;font-family:monospace;">${d.responseTime != null ? d.responseTime + ' ms' : '—'}</td>
+          </tr>`).join('');
+        modal.innerHTML = `
+          <div style="background:#fff;border-radius:6px;width:820px;max-width:94vw;max-height:86vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 25px -5px rgba(0,0,0,0.25);">
+            <div style="background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;">
+              <strong style="font-size:15px;color:#0f172a;">${title} — Expanded Live View (${(state.devices || []).length} Nodes, ${(state.alarms || []).length} Alarms)</strong>
+              <button id="opm-wmax-close" style="background:none;border:none;font-size:18px;cursor:pointer;color:#64748b;">✕</button>
+            </div>
+            <div style="padding:16px;overflow-y:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:12px;">
+                <thead><tr style="background:#f8fafc;border-bottom:1px solid #e2e8f0;text-align:left;color:#475569;"><th style="padding:8px 12px;">Device</th><th style="padding:8px 12px;">IP</th><th style="padding:8px 12px;">Status</th><th style="padding:8px 12px;">CPU</th><th style="padding:8px 12px;">Memory</th><th style="padding:8px 12px;">Latency</th></tr></thead>
+                <tbody>${rowsHtml || '<tr><td colspan="6" style="padding:24px;text-align:center;color:#94a3b8;">No monitored devices yet.</td></tr>'}</tbody>
+              </table>
+            </div>
+          </div>`;
+        modal.style.display = 'flex';
+        modal.querySelector('#opm-wmax-close').onclick = () => { modal.style.display = 'none'; };
       };
     });
 
-    // Widget Refresh buttons
+    // Widget Refresh buttons -> fetch live telemetry
     container.querySelectorAll('.opm-widget-btn-refresh').forEach(btn => {
+      btn.onclick = async () => {
+        showToast('Refreshing live telemetry from Central store...');
+        if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+        renderDashboardView();
+      };
+    });
+
+    // Widget Configure (✎) buttons
+    container.querySelectorAll('.opm-widget-btn-cfg').forEach(btn => {
       btn.onclick = () => {
-        showToast('Telemetry updated.');
+        const target = btn.getAttribute('data-target') || 'notifications';
+        state.subTabs.settings = target;
+        window.location.hash = '#/settings/' + target;
+      };
+    });
+
+    // Widget More (⋮) buttons
+    container.querySelectorAll('.opm-widget-btn-more').forEach(btn => {
+      btn.onclick = () => {
+        const targetHash = btn.getAttribute('data-hash') || '#/inventory';
+        window.location.hash = targetHash;
       };
     });
   }
@@ -1866,6 +1916,13 @@
       );
     }
 
+    // Pagination computation
+    const pageSize = state.invPageSize || 25;
+    const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
+    state.invPage = Math.min(Math.max(1, state.invPage || 1), totalPages);
+    const pageStart = (state.invPage - 1) * pageSize;
+    const pagedList = list.slice(pageStart, pageStart + pageSize);
+
     container.innerHTML = `
       <div style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 24px; display: flex; align-items: center; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 4px;">
@@ -1980,7 +2037,7 @@
                       No devices found matching filter "${state.inventoryFilter}" and query "${state.searchQuery}".
                     </td>
                   </tr>
-                ` : list.map(dev => `
+                ` : pagedList.map(dev => `
                   <tr class="opm-inv-row" data-id="${dev.id}" style="border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: background 0.1s;">
                     <td style="padding: 10px 12px;" onclick="event.stopPropagation();">
                       <input type="checkbox" class="opm-inv-row-cb" data-id="${dev.id}" style="cursor: pointer;">
@@ -2096,15 +2153,22 @@
 
             <!-- Pagination Footer -->
             <div style="padding: 10px 16px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #64748b;">
-              <div>Showing 1-${list.length} of ${list.length} devices</div>
+              <div>Showing ${list.length === 0 ? 0 : pageStart + 1}-${Math.min(pageStart + pageSize, list.length)} of ${list.length} devices</div>
               <div style="display: flex; align-items: center; gap: 12px;">
-                <span>Rows per page: <strong>25</strong></span>
+                <span>Rows per page:
+                  <select id="opm-inv-pagesize-sel" style="border: 1px solid #cbd5e1; border-radius: 3px; padding: 2px 6px; font-size: 11px; background: #fff;">
+                    <option value="10" ${pageSize === 10 ? 'selected' : ''}>10</option>
+                    <option value="25" ${pageSize === 25 ? 'selected' : ''}>25</option>
+                    <option value="50" ${pageSize === 50 ? 'selected' : ''}>50</option>
+                    <option value="100" ${pageSize === 100 ? 'selected' : ''}>100</option>
+                  </select>
+                </span>
                 <div style="display: flex; gap: 4px;">
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>⏮</button>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>◀</button>
-                  <span style="padding: 3px 8px; font-weight: 600; color: #0f172a;">Page 1 of 1</span>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>▶</button>
-                  <button style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: #94a3b8;" disabled>⏭</button>
+                  <button id="opm-inv-page-first" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: ${state.invPage <= 1 ? '#94a3b8' : '#0f172a'};" ${state.invPage <= 1 ? 'disabled' : ''}>⏮</button>
+                  <button id="opm-inv-page-prev" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: ${state.invPage <= 1 ? '#94a3b8' : '#0f172a'};" ${state.invPage <= 1 ? 'disabled' : ''}>◀</button>
+                  <span style="padding: 3px 8px; font-weight: 600; color: #0f172a;">Page ${state.invPage} of ${totalPages}</span>
+                  <button id="opm-inv-page-next" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: ${state.invPage >= totalPages ? '#94a3b8' : '#0f172a'};" ${state.invPage >= totalPages ? 'disabled' : ''}>▶</button>
+                  <button id="opm-inv-page-last" style="background: #ffffff; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 3px; cursor: pointer; color: ${state.invPage >= totalPages ? '#94a3b8' : '#0f172a'};" ${state.invPage >= totalPages ? 'disabled' : ''}>⏭</button>
                 </div>
               </div>
             </div>
@@ -2677,60 +2741,17 @@
       };
     }
 
-    // Bulk actions buttons
-    container.querySelectorAll('.opm-bulk-action-btn').forEach(btn => {
-      btn.onclick = () => {
-        const act = btn.getAttribute('data-action');
-        const selectedCbs = Array.from(container.querySelectorAll('.opm-inv-row-cb:checked'));
-        const ids = selectedCbs.map(c => parseInt(c.getAttribute('data-id'), 10));
-
-                if (act === 'clear') {
-          container.querySelectorAll('.opm-inv-row-cb').forEach(cb => cb.checked = false);
-          const selectAll = container.querySelector('#opm-inv-select-all');
-          if (selectAll) selectAll.checked = false;
-          state.selectedDeviceCheckboxCount = 0;
-          const bulkBar = document.getElementById('opm-bulk-bar');
-          if (bulkBar) bulkBar.style.display = 'none';
-        } else if (act === 'poll') {
-          state.devices.forEach(d => {
-            if (ids.includes(d.id)) {
-              d.lastBackup = 'Just now';
-              d.responseTime = Math.max(8, d.responseTime + Math.floor(Math.random() * 4 - 2));
-            }
-          });
-          showToast(`Initiated live parallel SNMP poll across ${ids.length} selected devices. Telemetry synchronized.`);
-          renderInventoryView();
-        } else if (act === 'interval') {
-          showToast(`Updated polling frequency to 1-minute high-frequency interval for ${ids.length} devices.`);
-        } else if (act === 'maintenance') {
-          showToast(`Configured 2-hour Maintenance Window. Alarms suppressed for ${ids.length} devices.`);
-        } else if (act === 'delete') {
-          if (confirm(`Are you sure you want to remove ${ids.length} device(s) from OpManager Central Inventory?`)) {
-            state.devices = state.devices.filter(d => !ids.includes(d.id));
-            state.selectedDeviceCheckboxCount = 0;
-            showToast(`Successfully removed ${ids.length} device(s) from Central Inventory.`);
-            renderInventoryView();
-          }
-        } else if (act === 'rediscover') {
-          state.devices.forEach(d => {
-            if (ids.includes(d.id)) {
-              d.lastBackup = 'Just now';
-              d.responseTime = Math.floor(Math.random() * 15 + 8);
-            }
-          });
-          showToast(`Triggered background rediscovery for ${ids.length} devices.`);
-          renderInventoryView();
-        } else if (act === 'testcred') {
-          showToast(`SNMP Credential Test completed: ${ids.length} / ${ids.length} PASSED (SNMPv2c & SNMPv3).`);
-        } else if (act === 'manage') {
-          showToast(`Management status toggled for ${ids.length} monitored nodes.`);
-        } else if (act === 'template') {
-          showToast(`Applied Enterprise Device Template across ${ids.length} selected nodes.`);
-        } else {
-          showToast(`Executed bulk action "${act}" across ${state.selectedDeviceCheckboxCount} devices.`);
-        }
-      };
-    });
+    // Inventory pagination controls
+    const pageSizeSel = container.querySelector('#opm-inv-pagesize-sel');
+    if (pageSizeSel) pageSizeSel.onchange = (e) => { state.invPageSize = parseInt(e.target.value, 10) || 25; state.invPage = 1; renderInventoryView(); };
+    const pFirst = container.querySelector('#opm-inv-page-first');
+    const pPrev = container.querySelector('#opm-inv-page-prev');
+    const pNext = container.querySelector('#opm-inv-page-next');
+    const pLast = container.querySelector('#opm-inv-page-last');
+    if (pFirst) pFirst.onclick = () => { state.invPage = 1; renderInventoryView(); };
+    if (pPrev) pPrev.onclick = () => { state.invPage = Math.max(1, (state.invPage || 1) - 1); renderInventoryView(); };
+    if (pNext) pNext.onclick = () => { state.invPage = Math.min(totalPages, (state.invPage || 1) + 1); renderInventoryView(); };
+    if (pLast) pLast.onclick = () => { state.invPage = totalPages; renderInventoryView(); };
 
     // Probe Diagnostics buttons inside Probes subtab
     container.querySelectorAll('.opm-open-probe-modal-btn').forEach(btn => {

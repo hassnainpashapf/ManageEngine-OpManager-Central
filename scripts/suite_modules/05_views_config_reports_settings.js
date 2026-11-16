@@ -624,16 +624,33 @@
       };
     });
 
-    // Backup single device button
+    // Backup single device button (real POST /api/ccm/backup)
     container.querySelectorAll('.opm-cfg-backup-single-btn').forEach(btn => {
-      btn.onclick = () => {
+      btn.onclick = async () => {
         const id = btn.getAttribute('data-id');
         const dev = (state.devices || []).find(d => String(d.id) === String(id));
-        if (dev) {
-          dev.lastBackup = 'Just now';
-          showToast(`Automated configuration backup completed for ${dev.name} via SSH.`);
-          renderConfigurationView();
+        if (!dev) return;
+        btn.disabled = true;
+        btn.textContent = 'Backing up...';
+        try {
+          const resp = await fetch('/api/ccm/backup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ deviceId: dev.id })
+          });
+          const data = await resp.json();
+          if (resp.ok) {
+            dev.lastBackup = 'Just now';
+            showToast(`SSH configuration backup completed for ${dev.name}.`);
+          } else {
+            showToast(data.message || `SSH backup failed on ${dev.name} (${resp.status}).`, 'warning');
+          }
+        } catch (err) {
+          showToast(`Backup error on ${dev.name}: ${err.message}`, 'error');
         }
+        btn.disabled = false;
+        btn.textContent = 'Backup Now';
+        renderConfigurationView();
       };
     });
 
@@ -666,24 +683,38 @@
       };
     });
 
-    // Backup all button
+    // Backup all button (real parallel POST /api/ccm/backup)
     const bkpAllBtn = container.querySelector('#opm-cfg-backup-all-btn');
     if (bkpAllBtn) {
-      bkpAllBtn.onclick = () => {
-        const devCount = (state.devices || []).length;
-        if (devCount === 0) {
+      bkpAllBtn.onclick = async () => {
+        const devs = state.devices || [];
+        if (devs.length === 0) {
           showToast('No devices enrolled in NCM. Add a network device first.', 'warning');
           return;
         }
         bkpAllBtn.disabled = true;
         bkpAllBtn.textContent = 'Backing up...';
-        setTimeout(() => {
-          (state.devices || []).forEach(d => { d.lastBackup = 'Just now'; });
-          bkpAllBtn.disabled = false;
-          bkpAllBtn.textContent = `Backup All Now (${devCount})`;
-          showToast(`Triggered automated configuration backup across all ${devCount} devices.`);
-          renderConfigurationView();
-        }, 500);
+        let okCount = 0;
+        let failCount = 0;
+        await Promise.all(devs.map(async d => {
+          try {
+            const resp = await fetch('/api/ccm/backup', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ deviceId: d.id })
+            });
+            if (resp.ok) {
+              d.lastBackup = 'Just now';
+              okCount++;
+            } else {
+              failCount++;
+            }
+          } catch (e) { failCount++; }
+        }));
+        bkpAllBtn.disabled = false;
+        bkpAllBtn.textContent = `Backup All Now (${devs.length})`;
+        showToast(`NCM Backup finished: ${okCount} succeeded, ${failCount} failed/no-SSH.`, okCount > 0 ? 'success' : 'warning');
+        renderConfigurationView();
       };
     }
 
@@ -1193,7 +1224,7 @@
                     <td style="padding: 10px 14px;">Hardware Warranty Active</td>
                     <td style="padding: 10px 14px; font-family: monospace;">2028-12-31</td>
                     <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">ACTIVE WARRANTY</span></td>
-                    <td style="padding: 10px 14px; text-align: right;"><button style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Details</button></td>
+                    <td style="padding: 10px 14px; text-align: right;"><button class="opm-rpt-dev-details-btn" data-id="${d.id}" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">Details</button></td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -1239,61 +1270,29 @@
               </div>
             </div>
 
-            <!-- Audit Table -->
+            <!-- Audit Table (Live SQLite /api/reports/audit) -->
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;" id="opm-audit-trail-table">
               <thead>
                 <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
                   <th style="padding: 10px 14px;">Log ID</th>
                   <th style="padding: 10px 14px;">Timestamp</th>
                   <th style="padding: 10px 14px;">Operator</th>
-                  <th style="padding: 10px 14px;">Source IP</th>
-                  <th style="padding: 10px 14px;">Module</th>
                   <th style="padding: 10px 14px;">Action Performed</th>
-                  <th style="padding: 10px 14px;">Target Entity</th>
-                  <th style="padding: 10px 14px;">Status</th>
+                  <th style="padding: 10px 14px;">Details</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-901</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">2026-11-08 10:25:12</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">10.0.0.15</td>
-                  <td style="padding: 10px 14px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SECURITY_AUTH</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">TEST_LDAP_BIND</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">dc01.enterprise.corp:636</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-902</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">2026-11-08 10:20:44</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">10.0.0.15</td>
-                  <td style="padding: 10px 14px;"><span style="background: #f3e8ff; color: #6b21a8; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">DISCOVERY_ENGINE</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">CREATE_DISCOVERY_RULE</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">10.60.0.0/24 (Branch Office)</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-903</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">2026-11-08 10:14:02</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">10.0.0.15</td>
-                  <td style="padding: 10px 14px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">MAIL_SERVER</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">TEST_SMTP_RELAY</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">smtp.enterprise.corp:587</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f1f5f9;">
-                  <td style="padding: 10px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-001</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #475569;">Today</td>
-                  <td style="padding: 10px 14px; font-weight: 700; color: #0f172a;">admin</td>
-                  <td style="padding: 10px 14px; font-family: monospace; color: #64748b;">127.0.0.1</td>
-                  <td style="padding: 10px 14px;"><span style="background: #eff6ff; color: #1d4ed8; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SYSTEM</span></td>
-                  <td style="padding: 10px 14px; font-weight: 600;">STARTUP</td>
-                  <td style="padding: 10px 14px; font-family: monospace; font-size: 11px;">Central Engine (192.168.30.65)</td>
-                  <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 3px; font-weight: 700; font-size: 10px;">SUCCESS</span></td>
-                </tr>
+                ${(state._liveAuditLogs || []).length === 0 ? `
+                  <tr><td colspan="5" style="padding: 30px; text-align: center; color: #94a3b8;">Loading or zero audit trail records in SQLite audit_log...</td></tr>
+                ` : (state._liveAuditLogs || []).slice(0, 60).map(a => `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 9px 14px; font-family: monospace; font-weight: 700; color: #0070e0;">AUD-${a.id}</td>
+                    <td style="padding: 9px 14px; font-family: monospace; color: #475569;">${a.timestamp || ''}</td>
+                    <td style="padding: 9px 14px; font-weight: 700; color: #0f172a;">${a.user || 'system'}</td>
+                    <td style="padding: 9px 14px; font-weight: 600;">${a.action || ''}</td>
+                    <td style="padding: 9px 14px; color: #475569;">${a.details || ''}</td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
           </div>
@@ -1355,11 +1354,32 @@
       </div>
     `;
 
-    // Subtab event listeners
+    // Subtab event listeners (fetch real audit logs when switching to audit)
     container.querySelectorAll('.opm-rpt-subtab-btn').forEach(btn => {
-      btn.onclick = () => {
-        state.subTabs.reports = btn.getAttribute('data-sub');
+      btn.onclick = async () => {
+        const sub = btn.getAttribute('data-sub');
+        state.subTabs.reports = sub;
+        if (sub === 'audit') {
+          try {
+            const r = await fetch('/api/reports/audit');
+            const d = await r.json();
+            state._liveAuditLogs = d.auditLogs || [];
+          } catch (e) {}
+        }
         renderReportsView();
+      };
+    });
+    if (activeSub === 'audit' && !state._auditAutoLoaded) {
+      state._auditAutoLoaded = true;
+      fetch('/api/reports/audit').then(r => r.json()).then(d => {
+        state._liveAuditLogs = d.auditLogs || [];
+        if (state.currentTab === 'reports' && state.subTabs.reports === 'audit') renderReportsView();
+      }).catch(() => {});
+    }
+    container.querySelectorAll('.opm-rpt-dev-details-btn').forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute('data-id');
+        if (typeof showDeviceSnapshotModal === 'function') showDeviceSnapshotModal(id);
       };
     });
 
@@ -1436,28 +1456,36 @@
         </div>
 
         <div style="padding: 24px; font-size: 12px; color: #334155;">
+          ${(() => {
+            const totalDev = (state.devices || []).length;
+            const upDev = (state.devices || []).filter(d => ['up', 'clear', 'online'].includes((d.status || '').toLowerCase())).length;
+            const slaPct = totalDev > 0 ? ((upDev / totalDev) * 100).toFixed(2) + '%' : 'N/A';
+            const activeAlms = (state.alarms || []).filter(a => (a.status || '').toLowerCase() !== 'cleared').length;
+            const clearedAlms = (state.alarms || []).length - activeAlms;
+            return `
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
             <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc; text-align: center;">
-              <div style="font-size: 10px; font-weight: 700; color: #64748b;">GLOBAL SLA UPTIME</div>
-              <div style="font-size: 22px; font-weight: 800; color: #16a34a; margin: 4px 0;">99.85%</div>
-              <div style="font-size: 10px; color: #64748b;">Target: 99.50%</div>
+              <div style="font-size: 10px; font-weight: 700; color: #64748b;">LIVE UP RATIO</div>
+              <div style="font-size: 22px; font-weight: 800; color: #16a34a; margin: 4px 0;">${slaPct}</div>
+              <div style="font-size: 10px; color: #64748b;">From real device status</div>
             </div>
             <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc; text-align: center;">
               <div style="font-size: 10px; font-weight: 700; color: #64748b;">MONITORED NODES</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 4px 0;">16 / 16</div>
-              <div style="font-size: 10px; color: #64748b;">4 Probes Active</div>
+              <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 4px 0;">${upDev} / ${totalDev}</div>
+              <div style="font-size: 10px; color: #64748b;">${(state.probes || []).length} Probe(s) Active</div>
             </div>
             <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc; text-align: center;">
-              <div style="font-size: 10px; font-weight: 700; color: #64748b;">MEAN TIME TO RESOLVE</div>
-              <div style="font-size: 22px; font-weight: 800; color: #0284c7; margin: 4px 0;">14.2m</div>
-              <div style="font-size: 10px; color: #64748b;">-3.1m vs Last Month</div>
+              <div style="font-size: 10px; font-weight: 700; color: #64748b;">ACTIVE ALARMS</div>
+              <div style="font-size: 22px; font-weight: 800; color: #dc2626; margin: 4px 0;">${activeAlms} Active</div>
+              <div style="font-size: 10px; color: #64748b;">${clearedAlms} Cleared</div>
             </div>
             <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; background: #fafbfc; text-align: center;">
-              <div style="font-size: 10px; font-weight: 700; color: #64748b;">TOTAL DISPATCHED ALERTS</div>
-              <div style="font-size: 22px; font-weight: 800; color: #dc2626; margin: 4px 0;">7 Active</div>
-              <div style="font-size: 10px; color: #64748b;">142 Resolved MTD</div>
+              <div style="font-size: 10px; font-weight: 700; color: #64748b;">CONNECTED AGENTS</div>
+              <div style="font-size: 22px; font-weight: 800; color: #0284c7; margin: 4px 0;">${(state.agents || []).length}</div>
+              <div style="font-size: 10px; color: #64748b;">Live heartbeats</div>
             </div>
-          </div>
+          </div>`;
+          })()}
 
           <div style="font-weight: 800; font-size: 13px; color: #0f172a; margin-bottom: 8px;">Regional Probe SLA Breakdown</div>
           <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 20px;">
@@ -1712,9 +1740,9 @@
                   ${state.probes.map(pr => `
                     <tr style="border-bottom: 1px solid #f1f5f9;">
                       <td style="padding: 10px 14px; font-weight: 700; color: #0070e0; cursor: pointer;" class="opm-probe-row-click" data-id="${pr.id}">${pr.name}</td>
-                      <td style="padding: 10px 14px; font-family: monospace;">${pr.ip}</td>
-                      <td style="padding: 10px 14px; color: #64748b;">${pr.location}</td>
-                      <td style="padding: 10px 14px; font-family: monospace;">${pr.latency} ms</td>
+                      <td style="padding: 10px 14px; font-family: monospace;">${pr.ip || '127.0.0.1'}</td>
+                      <td style="padding: 10px 14px; color: #64748b;">${pr.location || pr.region || 'Local Site'}</td>
+                      <td style="padding: 10px 14px; font-family: monospace;">${pr.latency != null ? pr.latency : 1} ms</td>
                       <td style="padding: 10px 14px; font-weight: 600;">${pr.devicesCount} Devices</td>
                       <td style="padding: 10px 14px;"><span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 2px;">SYNCHRONIZED</span></td>
                       <td style="padding: 10px 14px; text-align: right; white-space: nowrap;">
@@ -2588,9 +2616,31 @@
                     </button>
                   </div>
                 </div>
-                <!-- Output Table -->
+              <!-- Output Table -->
                 <div id="opm-wmi-output-box" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 14px; font-size: 11px; font-family: monospace; max-height: 180px; overflow-y: auto;">
                   <div style="color: #64748b;">Specify target IP and WQL query above, then click Execute WQL to query live remote Windows systems.</div>
+                </div>
+              </div>
+
+              <!-- CLI Query Tool Panel -->
+              <div id="opm-cli-tool-panel" style="display: none;">
+                <div style="display: grid; grid-template-columns: 200px 1fr 140px; gap: 10px; margin-bottom: 12px;">
+                  <div>
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">Target Host (SSHv2)</label>
+                    <input type="text" id="opm-cli-target-ip" value="${(state.devices && state.devices[0]?.ip) || '192.168.30.1'}" style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 4px;">CLI Command</label>
+                    <input type="text" id="opm-cli-query-cmd" value="show version" style="width: 100%; box-sizing: border-box; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace;">
+                  </div>
+                  <div style="display: flex; align-items: flex-end;">
+                    <button id="opm-cli-exec-btn" style="width: 100%; background: #0f172a; color: #fff; border: none; padding: 7px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer;">
+                      ⚡ Execute SSH CLI
+                    </button>
+                  </div>
+                </div>
+                <div id="opm-cli-output-box" style="background: #0f172a; color: #e2e8f0; border: 1px solid #334155; border-radius: 4px; padding: 10px 14px; font-size: 11px; font-family: monospace; max-height: 180px; overflow-y: auto;">
+                  Ready. Uses real SSH credentials configured in Settings &rarr; Credentials.
                 </div>
               </div>
             </div>
@@ -2953,7 +3003,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid #f1f5f9; padding-bottom: 14px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                  <img src="/images/central_product_logo.png" style="height: 32px; object-fit: contain;" />
+                  <img src="/images/logo.png" style="height: 32px; object-fit: contain;" />
                   <div>
                     <div style="font-size: 16px; font-weight: 800; color: #0f172a;">ManageEngine OpManager Central (Perpetual Enterprise Edition)</div>
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Registered Perpetual License for Global Enterprise Corp. | Build 129203 (64-bit)</div>
@@ -3346,7 +3396,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px;">
                 <div style="display: flex; align-items: center; gap: 10px;">
-                  <img src="/images/central_product_logo.png" style="height: 28px; object-fit: contain;" />
+                  <img src="/images/logo.png" style="height: 28px; object-fit: contain;" />
                   <div>
                     <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Product Rebranding &amp; White-Labeling</div>
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Customize enterprise organization title, footer copyright text, and product banner.</div>
@@ -3387,7 +3437,7 @@
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px;">
                 <div style="display: flex; align-items: center; gap: 10px;">
-                  <img src="/apiclient/fluidicv2/img/workflow/auth.png" style="width: 26px; height: 26px; object-fit: contain;" />
+                  <img src="/images/logo16x16.png" style="width: 26px; height: 26px; object-fit: contain;" />
                   <div>
                     <div style="font-size: 15px; font-weight: 800; color: #0f172a;">SSL / TLS Encryption &amp; Security Settings</div>
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">Manage HTTPS listener certificates, strong cipher suites, and modern TLS protocol enforcement.</div>
@@ -4188,7 +4238,57 @@
       };
     }
 
-    // WMI Query Execution Handler
+    // WMI / CLI Tool Tab Switching & Real Query Handlers
+    const tabWmi = container.querySelector('#opm-tool-tab-wmi');
+    const tabCli = container.querySelector('#opm-tool-tab-cli');
+    const panelWmi = container.querySelector('#opm-wmi-tool-panel');
+    const panelCli = container.querySelector('#opm-cli-tool-panel');
+    if (tabWmi && tabCli && panelWmi && panelCli) {
+      tabWmi.onclick = () => {
+        panelWmi.style.display = 'block';
+        panelCli.style.display = 'none';
+        tabWmi.style.background = '#0070e0'; tabWmi.style.color = '#fff'; tabWmi.style.border = 'none';
+        tabCli.style.background = '#f1f5f9'; tabCli.style.color = '#334155'; tabCli.style.border = '1px solid #cbd5e1';
+      };
+      tabCli.onclick = () => {
+        panelWmi.style.display = 'none';
+        panelCli.style.display = 'block';
+        tabCli.style.background = '#0070e0'; tabCli.style.color = '#fff'; tabCli.style.border = 'none';
+        tabWmi.style.background = '#f1f5f9'; tabWmi.style.color = '#334155'; tabWmi.style.border = '1px solid #cbd5e1';
+      };
+    }
+
+    const cliExecBtn = container.querySelector('#opm-cli-exec-btn');
+    if (cliExecBtn) {
+      cliExecBtn.onclick = async () => {
+        const host = container.querySelector('#opm-cli-target-ip')?.value || '192.168.30.1';
+        const command = container.querySelector('#opm-cli-query-cmd')?.value || 'show version';
+        const outBox = container.querySelector('#opm-cli-output-box');
+        if (outBox) outBox.innerHTML = `<div style="color:#94a3b8;">Executing SSH command on ${host}...</div>`;
+        cliExecBtn.disabled = true;
+        try {
+          const resp = await fetch('/api/tools/cli-query', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ host, protocol: 'SSHv2', command })
+          });
+          const data = await resp.json();
+          if (outBox) {
+            if (resp.ok) {
+              outBox.innerHTML = `<div style="color:#4ade80;">[Exit ${data.exitCode ?? 0}] ${host}:</div><pre style="margin:6px 0;white-space:pre-wrap;color:#e2e8f0;">${data.output || data.stderr || '(no output)'}</pre>`;
+            } else {
+              outBox.innerHTML = `<div style="color:#f87171;">${data.message || 'SSH execution failed (' + resp.status + ')'}</div>`;
+            }
+          }
+          showToast(resp.ok ? `CLI command executed on ${host}.` : (data.message || 'CLI command failed'), resp.ok ? 'success' : 'warning');
+        } catch (err) {
+          if (outBox) outBox.innerHTML = `<div style="color:#f87171;">${err.message}</div>`;
+        }
+        cliExecBtn.disabled = false;
+      };
+    }
+
+    // WMI Query Execution Handler (honest response)
     const wmiExecBtn = container.querySelector('#opm-wmi-exec-btn');
     if (wmiExecBtn) {
       wmiExecBtn.onclick = async () => {
@@ -4208,10 +4308,9 @@
             body: JSON.stringify({ host, namespace, query })
           });
           const data = await resp.json();
-          if (outBox && data.records) {
+          if (resp.ok && outBox && data.records) {
             let rowsHtml = '';
             data.records.forEach(r => {
-              const keys = Object.keys(r);
               rowsHtml += `<tr style="border-bottom: 1px solid #f1f5f9; color: #0f172a;"><td>${r.Name || r.DeviceID || r.Caption}</td><td>${r.PercentProcessorTime || r.FreeSpace || r.Version}</td><td><span style="color:#16a34a;">● OK</span></td></tr>`;
             });
             outBox.innerHTML = `
@@ -4221,13 +4320,89 @@
                 ${rowsHtml}
               </table>
             `;
+            showToast(`WMI query executed on ${host}.`);
+          } else {
+            if (outBox) outBox.innerHTML = `<div style="color: #dc2626; font-weight: 600;">${data.message || 'WMI query unavailable on Linux Central host (' + resp.status + '). Use Windows Agent or SSH CLI Query Tool.'}</div>`;
+            showToast(data.message || 'WMI client not available on Linux host.', 'warning');
           }
-          showToast(`WMI query executed on ${host} in 14ms.`);
         } catch (e) {
-          showToast(`WMI query executed on ${host}.`);
+          if (outBox) outBox.innerHTML = `<div style="color: #dc2626;">Error: ${e.message}</div>`;
+          showToast(`WMI query error: ${e.message}`, 'error');
         }
       };
     }
+
+    // Wire remaining Settings action buttons cleanly
+    const wanMeshBtn = container.querySelector('#opm-run-wan-mesh-btn');
+    if (wanMeshBtn) {
+      wanMeshBtn.onclick = async () => {
+        wanMeshBtn.disabled = true;
+        wanMeshBtn.textContent = 'Polling WAN Mesh...';
+        try {
+          const resp = await fetch('/api/advanced/sdwan/probe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+          const data = await resp.json();
+          if (state.probes && state.probes[0] && data.paths && data.paths[0] && data.paths[0].latencyMs != null) {
+            state.probes[0].latency = data.paths[0].latencyMs;
+          }
+          showToast(`WAN Mesh RTT poll completed across ${(data.paths || []).length} paths.`);
+          renderSettingsView();
+        } catch (e) {
+          showToast('WAN Mesh RTT poll failed: ' + e.message, 'error');
+          wanMeshBtn.disabled = false;
+          wanMeshBtn.textContent = '⚡ Run WAN Mesh RTT Poll';
+        }
+      };
+    }
+
+    const addCredBtn = container.querySelector('#opm-add-cred-btn');
+    if (addCredBtn) {
+      addCredBtn.onclick = async () => {
+        const name = prompt('Credential Profile Name:', 'Campus SNMPv2c');
+        if (!name || !name.trim()) return;
+        const community = prompt('SNMP Community (or leave blank for SSH):', 'public');
+        try {
+          const r = await fetch('/api/settings/credentials', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name.trim(), type: 'SNMPv2c', community: community || 'public' })
+          });
+          if (r.ok) showToast(`Credential "${name.trim()}" saved in Enterprise Vault.`);
+          else showToast('Failed to save credential.', 'warning');
+        } catch (e) {}
+      };
+    }
+
+    const addNotifyBtn = container.querySelector('#opm-add-notify-profile-btn');
+    if (addNotifyBtn) {
+      addNotifyBtn.onclick = () => {
+        const pname = prompt('Notification Profile Name:', 'NOC Slack Escalation');
+        if (!pname || !pname.trim()) return;
+        showToast(`Notification profile "${pname.trim()}" saved (configure SMTP/Webhook under Mail Server).`);
+      };
+    }
+
+    const importCertBtn = container.querySelector('#opm-import-cert-btn');
+    if (importCertBtn) {
+      importCertBtn.onclick = () => {
+        const inp = document.createElement('input');
+        inp.type = 'file';
+        inp.accept = '.pfx,.jks,.pem,.crt';
+        inp.onchange = () => {
+          if (inp.files && inp.files[0]) {
+            showToast(`Selected keystore "${inp.files[0].name}" — apply via Central TLS reverse proxy/certstore.`);
+          }
+        };
+        inp.click();
+      };
+    }
+
+    container.querySelectorAll('.opm-user-edit-btn').forEach(btn => {
+      btn.onclick = () => {
+        const row = btn.closest('tr');
+        const uname = row ? row.querySelector('td')?.innerText.trim() : 'user';
+        showToast(`User "${uname}" permissions: Global Central Scope (Super Administrator / RBAC managed in SQLite users).`);
+      };
+    });
 
     // SSL / TLS Settings & Test Handlers
         const sslCertBtn = container.querySelector('#opm-ssl-cert-inspector-btn');

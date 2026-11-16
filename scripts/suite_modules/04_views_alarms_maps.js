@@ -279,31 +279,37 @@
         <!-- SUBTAB: ALL ALARMS (HISTORICAL ARCHIVE - 142 ALARMS) -->
         <div style="padding: 20px 24px;">
           <!-- Filter Toolbar -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option>Past 24 Hours</option>
-                <option selected>Past 7 Days (142 Alarms)</option>
-                <option>Past 30 Days</option>
-                <option>Custom Date Range</option>
+              <select id="opm-archive-sev-filter" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                <option value="all" ${(state.archiveSevFilter || 'all') === 'all' ? 'selected' : ''}>All Severities</option>
+                <option value="Critical" ${state.archiveSevFilter === 'Critical' ? 'selected' : ''}>Critical Only</option>
+                <option value="Trouble" ${state.archiveSevFilter === 'Trouble' ? 'selected' : ''}>Trouble Only</option>
+                <option value="Attention" ${state.archiveSevFilter === 'Attention' ? 'selected' : ''}>Attention Only</option>
+                <option value="Down" ${state.archiveSevFilter === 'Down' ? 'selected' : ''}>Down Only</option>
               </select>
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option value="all">All Severities</option>
-                <option value="Critical">Critical Only</option>
-                <option value="Trouble">Trouble Only</option>
-                <option value="Attention">Attention Only</option>
+              <select id="opm-archive-status-filter" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
+                <option value="all" ${(state.archiveStatusFilter || 'all') === 'all' ? 'selected' : ''}>All Statuses (${(state.alarms || []).length})</option>
+                <option value="acknowledged" ${state.archiveStatusFilter === 'acknowledged' ? 'selected' : ''}>Acknowledged Only</option>
+                <option value="cleared" ${state.archiveStatusFilter === 'cleared' ? 'selected' : ''}>Cleared Only</option>
               </select>
-              <select style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; background: #fff;">
-                <option value="all">All Statuses</option>
-                <option value="cleared" selected>Cleared Only (135)</option>
-                <option value="suppressed">Suppressed (116)</option>
-              </select>
-              <input type="text" placeholder="Search archive alarms..." style="padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; width: 220px;">
+              <input id="opm-archive-search-input" type="text" value="${state.archiveSearch || ''}" placeholder="Search archive alarms..." style="padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; width: 220px;">
             </div>
             <button id="opm-export-archive-btn" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">Export Archive CSV</button>
           </div>
 
           <!-- Archive Table -->
+          ${(() => {
+            const q = (state.archiveSearch || '').toLowerCase();
+            const sevF = state.archiveSevFilter || 'all';
+            const stF = state.archiveStatusFilter || 'all';
+            const archRows = (state.alarms || []).filter(a => {
+              if (sevF !== 'all' && a.severity !== sevF) return false;
+              if (stF !== 'all' && (a.status || '').toLowerCase() !== stF) return false;
+              if (q && !`${a.device} ${a.entity} ${a.message}`.toLowerCase().includes(q)) return false;
+              return true;
+            });
+            return `
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
               <thead>
@@ -312,35 +318,48 @@
                   <th style="padding: 10px 14px;">Device / Probe</th>
                   <th style="padding: 10px 14px;">Entity</th>
                   <th style="padding: 10px 14px;">Message</th>
-                  <th style="padding: 10px 14px;">Duration</th>
-                  <th style="padding: 10px 14px;">Resolved By</th>
+                  <th style="padding: 10px 14px;">Occurred</th>
+                  <th style="padding: 10px 14px;">Technician</th>
                   <th style="padding: 10px 14px;">Status</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td colspan="7" style="padding: 40px; text-align: center; color: #94a3b8;">
-                    No historical alarms recorded. All monitored systems are operating normally.
-                  </td>
-                </tr>
+                ${archRows.length === 0 ? `
+                  <tr>
+                    <td colspan="7" style="padding: 40px; text-align: center; color: #94a3b8;">
+                      No matching alarm records found.
+                    </td>
+                  </tr>
+                ` : archRows.slice(0, 100).map(a => `
+                  <tr class="opm-alarm-row" data-id="${a.id}" style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                    <td style="padding: 9px 14px;">${getStatusBadge(a.severity)}</td>
+                    <td style="padding: 9px 14px; font-weight: 700; color: #0070e0;">${a.device}<div style="font-size: 10px; color: #64748b; font-weight: 400;">${a.probe || 'Central Site Probe'}</div></td>
+                    <td style="padding: 9px 14px; color: #334155;">${a.entity || 'Poller'}</td>
+                    <td style="padding: 9px 14px; color: #0f172a;">${a.message}</td>
+                    <td style="padding: 9px 14px; font-size: 11px; color: #64748b; font-family: monospace;">${a.time || ''}</td>
+                    <td style="padding: 9px 14px; color: #475569;">${a.technician || 'Unacknowledged'}</td>
+                    <td style="padding: 9px 14px;"><span style="background: #f1f5f9; color: #334155; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">${(a.status || 'Active').toUpperCase()}</span></td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
             <div style="padding: 10px 16px; background: #fafbfc; border-top: 1px solid #e2e8f0; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-              <span>Showing 4 of 142 historical alarms</span>
-              <span>Page 1 of 36</span>
+              <span>Showing ${Math.min(archRows.length, 100)} of ${archRows.length} alarm records</span>
+              <span>Live SQLite Store</span>
             </div>
-          </div>
+          </div>`;
+          })()}
         </div>
       ` : activeSub === 'eventlog' ? `
-        <!-- SUBTAB: WINDOWS EVENT LOGS (WIN-HOST-01 192.168.30.77) -->
+        <!-- SUBTAB: LIVE EVENT & POLLER AUDIT STREAM -->
         <div style="padding: 20px 24px;">
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
               <div>
-                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Collected Windows Event Logs (Agent &amp; WMI Channel)</div>
-                <div style="font-size: 11px; color: #64748b;">Target Host: <strong style="color: #0284c7;">WIN-HOST-01 (192.168.30.77)</strong> &bull; Windows Server 2022 Datacenter</div>
+                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Live Poller &amp; Host Agent Event Viewer</div>
+                <div style="font-size: 11px; color: #64748b;">Real-time events from monitored nodes (${(state.devices || []).length} Devices) &amp; Connected Agents (${(state.agents || []).length} Online)</div>
               </div>
-              <button onclick="showToast('Polling latest Windows event log channels...')" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+              <button id="opm-refresh-events-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                 🔄 Refresh Event Viewer
               </button>
             </div>
@@ -348,87 +367,64 @@
               <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                 <thead>
                   <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
-                    <th style="padding: 9px 12px; width: 80px;">Event ID</th>
-                    <th style="padding: 9px 12px; width: 90px;">Log Level</th>
-                    <th style="padding: 9px 12px; width: 110px;">Log Channel</th>
-                    <th style="padding: 9px 12px; width: 120px;">Source Provider</th>
-                    <th style="padding: 9px 12px;">Event Description / Audit Details</th>
-                    <th style="padding: 9px 12px; width: 110px; text-align: right;">Time</th>
+                    <th style="padding: 9px 12px; width: 90px;">Event ID</th>
+                    <th style="padding: 9px 12px; width: 100px;">Severity</th>
+                    <th style="padding: 9px 12px; width: 130px;">Source Host</th>
+                    <th style="padding: 9px 12px; width: 130px;">Channel</th>
+                    <th style="padding: 9px 12px;">Event Description</th>
+                    <th style="padding: 9px 12px; width: 140px; text-align: right;">Time</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 9px 12px; font-weight: 700; font-family: monospace; color: #0070e0;">#4624</td>
-                    <td style="padding: 9px 12px;"><span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">Audit Success</span></td>
-                    <td style="padding: 9px 12px; font-weight: 600; color: #334155;">Security</td>
-                    <td style="padding: 9px 12px; color: #64748b;">Microsoft-Windows-Security-Auditing</td>
-                    <td style="padding: 9px 12px; color: #0f172a;">An account was successfully logged on: TargetUserName: <strong>Administrator</strong> (LogonType: 10 RDP, WorkstationName: NOC-CONSOLE)</td>
-                    <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px;">10 mins ago</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 9px 12px; font-weight: 700; font-family: monospace; color: #ea580c;">#7036</td>
-                    <td style="padding: 9px 12px;"><span style="background: #eff6ff; color: #0284c7; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">Information</span></td>
-                    <td style="padding: 9px 12px; font-weight: 600; color: #334155;">System</td>
-                    <td style="padding: 9px 12px; color: #64748b;">Service Control Manager</td>
-                    <td style="padding: 9px 12px; color: #0f172a;">The <strong>Print Spooler</strong> service entered the running state.</td>
-                    <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px;">24 mins ago</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 9px 12px; font-weight: 700; font-family: monospace; color: #dc2626;">#1001</td>
-                    <td style="padding: 9px 12px;"><span style="background: #fef2f2; color: #dc2626; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">Warning</span></td>
-                    <td style="padding: 9px 12px; font-weight: 600; color: #334155;">Application</td>
-                    <td style="padding: 9px 12px; color: #64748b;">Windows Error Reporting</td>
-                    <td style="padding: 9px 12px; color: #0f172a;">Fault bucket 14820194, type 5. EventName: MemoryPressureWarning. Process: <strong>sqlservr.exe</strong> (Commit: 88.4%)</td>
-                    <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px;">1 hr ago</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 9px 12px; font-weight: 700; font-family: monospace; color: #0070e0;">#4720</td>
-                    <td style="padding: 9px 12px;"><span style="background: #dcfce7; color: #166534; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">Audit Success</span></td>
-                    <td style="padding: 9px 12px; font-weight: 600; color: #334155;">Security</td>
-                    <td style="padding: 9px 12px; color: #64748b;">Microsoft-Windows-Security-Auditing</td>
-                    <td style="padding: 9px 12px; color: #0f172a;">A user account was created: TargetUserName: <strong>noc-operator</strong>, SamAccountName: noc-operator</td>
-                    <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px;">3 hrs ago</td>
-                  </tr>
+                  ${(state.alarms || []).length === 0 ? `
+                    <tr><td colspan="6" style="padding: 32px; text-align: center; color: #94a3b8;">No active poller or host agent events recorded yet.</td></tr>
+                  ` : (state.alarms || []).slice(0, 40).map(a => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 9px 12px; font-weight: 700; font-family: monospace; color: #0070e0;">#${a.id}</td>
+                      <td style="padding: 9px 12px;">${getStatusBadge(a.severity)}</td>
+                      <td style="padding: 9px 12px; font-weight: 600; color: #334155;">${a.device}</td>
+                      <td style="padding: 9px 12px; color: #64748b;">${a.entity || 'Poller'}</td>
+                      <td style="padding: 9px 12px; color: #0f172a;">${a.message}</td>
+                      <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px; font-family: monospace;">${a.time || ''}</td>
+                    </tr>
+                  `).join('')}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       ` : activeSub === 'syslog' ? `
-        <!-- SUBTAB: SYSLOG (REAL-TIME STREAM) -->
+        <!-- SUBTAB: SYSLOG (LIVE UDP 514 STREAM) -->
         <div style="padding: 20px 24px;">
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
               <div>
-                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Syslog Daemon Messages (RFC 5424 / UDP Port 514)</div>
-                <div style="font-size: 11px; color: #64748b;">Listening on 0.0.0.0:514 &bull; Ingested from Cisco Catalyst switches, FortiGate 100F, and Proxmox VE</div>
+                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">Enterprise Syslog Receiver (RFC 5424 / UDP Port 514)</div>
+                <div style="font-size: 11px; color: #64748b;">Live UDP/514 listener &bull; ${(state._liveSyslogs || []).length} real syslog message(s) captured</div>
               </div>
-              <button onclick="showToast('Streaming real-time syslog packets...')" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
-                🔄 Stream Live Logs
+              <button id="opm-refresh-syslog-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+                🔄 Fetch Live Syslog
               </button>
             </div>
-            <div style="border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; background: #0f172a; color: #e2e8f0; font-family: monospace; font-size: 11px; padding: 14px; line-height: 1.6;">
-              <div style="color: #ef4444;"><span style="color: #94a3b8;">[2026-11-16 09:28:12]</span> <strong>SW-CORE-01 (192.168.30.1)</strong>: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down</div>
-              <div style="color: #f97316;"><span style="color: #94a3b8;">[2026-11-16 09:28:13]</span> <strong>SW-CORE-01 (192.168.30.1)</strong>: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down</div>
-              <div style="color: #38bdf8;"><span style="color: #94a3b8;">[2026-11-16 09:25:40]</span> <strong>FW-FORTI-01 (192.168.30.15)</strong>: date=2026-11-16 time=09:25:40 devname="FW-FORTI-01" type="traffic" level="notice" action="accept" policyid=1 srcip=192.168.30.50 dstip=8.8.8.8 proto=17 sentbyte=84 rcvdbyte=128</div>
-              <div style="color: #eab308;"><span style="color: #94a3b8;">[2026-11-16 09:22:15]</span> <strong>FW-FORTI-01 (192.168.30.15)</strong>: date=2026-11-16 time=09:22:15 devname="FW-FORTI-01" type="event" subtype="vpn" level="warning" msg="SSL-VPN tunnel established for user admin from 192.168.30.110"</div>
-              <div style="color: #4ade80;"><span style="color: #94a3b8;">[2026-11-16 09:18:04]</span> <strong>PVE-HOST-01 (192.168.30.254)</strong>: pve-ha-crm[1048]: node 'pve-node-01': state changed from 'online' to 'online' (quorum ok)</div>
-              <div style="color: #38bdf8;"><span style="color: #94a3b8;">[2026-11-16 09:14:50]</span> <strong>RTR-EDGE-01 (192.168.30.10)</strong>: %BGP-5-ADJCHANGE: neighbor 203.0.113.1 Up (BGP peer established, ASN 65001)</div>
-              <div style="color: #ef4444;"><span style="color: #94a3b8;">[2026-11-16 09:05:33]</span> <strong>FW-FORTI-01 (192.168.30.15)</strong>: date=2026-11-16 time=09:05:33 devname="FW-FORTI-01" type="ips" level="alert" severity="critical" msg="Botnet.C2.Traffic.Detected dropped by Security Policy #4"</div>
-              <div style="color: #4ade80;"><span style="color: #94a3b8;">[2026-11-16 08:55:00]</span> <strong>WLC-CORP-01 (192.168.30.20)</strong>: %DOT11-6-ASSOC: Client 00:50:56:8a:11:bc associated on SSID Corp-Secure-5G</div>
+            <div style="border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; background: #0f172a; color: #e2e8f0; font-family: monospace; font-size: 11px; padding: 14px; line-height: 1.6; min-height: 120px;">
+              ${(state._liveSyslogs || []).length === 0 ? `
+                <div style="color: #94a3b8;">Listening on UDP port 514 — zero external syslog packets ingested yet. Point switches/firewalls to ${window.location.hostname || '192.168.30.65'}:514 to stream logs live.</div>
+              ` : (state._liveSyslogs || []).map(m => `
+                <div style="color: #38bdf8;"><span style="color: #94a3b8;">[${m.receivedAt || m.created_at || ''}]</span> <strong>${m.sourceIp || m.source_ip || 'unknown'}</strong>: ${m.message || m.raw || ''}</div>
+              `).join('')}
             </div>
           </div>
         </div>
       ` : activeSub === 'traps' ? `
-        <!-- SUBTAB: SNMP TRAPS -->
+        <!-- SUBTAB: SNMP TRAPS (LIVE UDP 162) -->
         <div style="padding: 20px 24px;">
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
               <div>
                 <div style="font-size: 14px; font-weight: 800; color: #0f172a;">SNMP Traps Receiver Engine (UDP Port 162)</div>
-                <div style="font-size: 11px; color: #64748b;">Pre-compiled AdventNet Enterprise MIB Traps &bull; 4 Trap Notifications Ingested</div>
+                <div style="font-size: 11px; color: #64748b;">Real UDP/162 trap listener &bull; ${(state._liveTraps || []).length} Trap Notification(s) Ingested</div>
               </div>
-              <button onclick="showToast('Listening for incoming SNMP traps...')" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
+              <button id="opm-refresh-traps-btn" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer;">
                 🔄 Refresh Traps
               </button>
             </div>
@@ -437,46 +433,24 @@
                 <thead>
                   <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left; color: #475569; font-weight: 700;">
                     <th style="padding: 9px 12px; width: 100px;">Severity</th>
-                    <th style="padding: 9px 12px; width: 140px;">Trap Name / Type</th>
-                    <th style="padding: 9px 12px; width: 180px;">Trap OID</th>
-                    <th style="padding: 9px 12px; width: 130px;">Sender IP</th>
-                    <th style="padding: 9px 12px;">Decoded Variable Bindings (Varbinds)</th>
-                    <th style="padding: 9px 12px; width: 110px; text-align: right;">Received</th>
+                    <th style="padding: 9px 12px; width: 140px;">Trap OID / Type</th>
+                    <th style="padding: 9px 12px; width: 140px;">Sender IP</th>
+                    <th style="padding: 9px 12px;">Decoded Message / Varbinds</th>
+                    <th style="padding: 9px 12px; width: 140px; text-align: right;">Received</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 9px 12px;"><span style="background: #fee2e2; color: #dc2626; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">Critical</span></td>
-                    <td style="padding: 9px 12px; font-weight: 700; color: #0f172a;">linkDown</td>
-                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #64748b;">.1.3.6.1.6.3.1.1.5.3</td>
-                    <td style="padding: 9px 12px; font-family: monospace; color: #0070e0;">192.168.30.1</td>
-                    <td style="padding: 9px 12px; color: #334155;">ifIndex=1, ifDescr="GigabitEthernet0/1", ifOperStatus=down(2)</td>
-                    <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px;">10 mins ago</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 9px 12px;"><span style="background: #eff6ff; color: #0284c7; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">Info</span></td>
-                    <td style="padding: 9px 12px; font-weight: 700; color: #0f172a;">coldStart</td>
-                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #64748b;">.1.3.6.1.6.3.1.1.5.1</td>
-                    <td style="padding: 9px 12px; font-family: monospace; color: #0070e0;">192.168.30.10</td>
-                    <td style="padding: 9px 12px; color: #334155;">sysUpTime=0, sysDescr="Cisco ISR4451-X Boot Completed"</td>
-                    <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px;">35 mins ago</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 9px 12px;"><span style="background: #fef3c7; color: #d97706; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">Attention</span></td>
-                    <td style="padding: 9px 12px; font-weight: 700; color: #0f172a;">authenticationFailure</td>
-                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #64748b;">.1.3.6.1.6.3.1.1.5.5</td>
-                    <td style="padding: 9px 12px; font-family: monospace; color: #0070e0;">192.168.30.2</td>
-                    <td style="padding: 9px 12px; color: #334155;">authCommunity="private", rejectedAttemptFrom=192.168.30.110</td>
-                    <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px;">1 hr ago</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 9px 12px;"><span style="background: #fff7ed; color: #ea580c; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px;">Trouble</span></td>
-                    <td style="padding: 9px 12px; font-weight: 700; color: #0f172a;">fgTrapSysCpuHigh</td>
-                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #64748b;">.1.3.6.1.4.1.12356.100.1.3.0.1</td>
-                    <td style="padding: 9px 12px; font-family: monospace; color: #0070e0;">192.168.30.15</td>
-                    <td style="padding: 9px 12px; color: #334155;">fnSysCpuUsage=82%, fnSysCpuThreshold=80% (SSL Decrypt Load)</td>
-                    <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px;">2 hrs ago</td>
-                  </tr>
+                  ${(state._liveTraps || []).length === 0 ? `
+                    <tr><td colspan="5" style="padding: 36px; text-align: center; color: #94a3b8;">No SNMP traps ingested yet on UDP/162.</td></tr>
+                  ` : (state._liveTraps || []).map(t => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                      <td style="padding: 9px 12px;">${getStatusBadge(t.severity || 'Info')}</td>
+                      <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #0f172a;">${t.oid || t.trapType || 'SNMPv2 Trap'}</td>
+                      <td style="padding: 9px 12px; font-family: monospace; color: #0070e0;">${t.sourceIp || t.source_ip || ''}</td>
+                      <td style="padding: 9px 12px; color: #334155;">${t.message || t.summary || ''}</td>
+                      <td style="padding: 9px 12px; text-align: right; color: #64748b; font-size: 11px; font-family: monospace;">${t.receivedAt || t.created_at || ''}</td>
+                    </tr>
+                  `).join('')}
                 </tbody>
               </table>
             </div>
@@ -661,14 +635,103 @@
       };
     }
 
-    // Subtab click listeners
+    // Subtab click listeners (with live fetches for traps & syslog)
     container.querySelectorAll('.opm-alarms-subtab-btn').forEach(btn => {
-      btn.onclick = () => {
+      btn.onclick = async () => {
         const sub = btn.getAttribute('data-sub');
         state.subTabs.alarms = sub;
+        if (sub === 'traps') {
+          try {
+            const r = await fetch('/api/traps/list');
+            const d = await r.json();
+            state._liveTraps = d.traps || [];
+          } catch (e) {}
+        } else if (sub === 'syslog') {
+          try {
+            const r = await fetch('/api/syslog/list');
+            const d = await r.json();
+            state._liveSyslogs = d.messages || [];
+          } catch (e) {}
+        }
         renderAlarmsView();
       };
     });
+
+    // Archive filters & Export Archive CSV
+    const archSev = container.querySelector('#opm-archive-sev-filter');
+    if (archSev) archSev.onchange = (e) => { state.archiveSevFilter = e.target.value; renderAlarmsView(); };
+    const archSt = container.querySelector('#opm-archive-status-filter');
+    if (archSt) archSt.onchange = (e) => { state.archiveStatusFilter = e.target.value; renderAlarmsView(); };
+    const archSearch = container.querySelector('#opm-archive-search-input');
+    if (archSearch) archSearch.oninput = (e) => {
+      state.archiveSearch = e.target.value;
+      renderAlarmsView();
+      const inp = document.getElementById('opm-archive-search-input');
+      if (inp) { inp.focus(); inp.selectionStart = inp.selectionEnd = inp.value.length; }
+    };
+    const expArchBtn = container.querySelector('#opm-export-archive-btn');
+    if (expArchBtn) {
+      expArchBtn.onclick = () => {
+        window.open('/api/reports/export/csv?type=alarms', '_blank');
+        showToast('Exporting archive alarms CSV...');
+      };
+    }
+
+    // Live Refresh buttons for Events, Syslog, Traps
+    const refEvBtn = container.querySelector('#opm-refresh-events-btn');
+    if (refEvBtn) {
+      refEvBtn.onclick = async () => {
+        if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+        renderAlarmsView();
+        showToast('Event stream refreshed.');
+      };
+    }
+    const refSysBtn = container.querySelector('#opm-refresh-syslog-btn');
+    if (refSysBtn) {
+      refSysBtn.onclick = async () => {
+        try {
+          const r = await fetch('/api/syslog/list');
+          const d = await r.json();
+          state._liveSyslogs = d.messages || [];
+        } catch (e) {}
+        renderAlarmsView();
+        showToast(`Fetched ${(state._liveSyslogs || []).length} live syslog entries.`);
+      };
+    }
+    const refTrapBtn = container.querySelector('#opm-refresh-traps-btn');
+    if (refTrapBtn) {
+      refTrapBtn.onclick = async () => {
+        try {
+          const r = await fetch('/api/traps/list');
+          const d = await r.json();
+          state._liveTraps = d.traps || [];
+        } catch (e) {}
+        renderAlarmsView();
+        showToast(`Fetched ${(state._liveTraps || []).length} SNMP traps from UDP/162 store.`);
+      };
+    }
+
+    // Custom Views handlers
+    container.querySelectorAll('.opm-run-custom-view-btn').forEach(btn => {
+      btn.onclick = () => {
+        const viewKey = btn.getAttribute('data-view');
+        if (viewKey === 'p1') state.alarmsSeverityFilter = 'Critical';
+        else if (viewKey === 'storage') state.alarmsSeverityFilter = 'Trouble';
+        else state.alarmsSeverityFilter = 'all';
+        state.subTabs.alarms = 'active';
+        renderAlarmsView();
+        showToast(`Applied custom view filter: ${viewKey.toUpperCase()}`);
+      };
+    });
+    const createViewBtn = container.querySelector('#opm-create-view-btn');
+    if (createViewBtn) {
+      createViewBtn.onclick = () => {
+        state.alarmsSeverityFilter = 'Critical';
+        state.subTabs.alarms = 'active';
+        renderAlarmsView();
+        showToast('Opened filtered Critical View (custom filters apply directly to Active Alarms).');
+      };
+    }
 
     // Authentic Toolbar Actions
     const ziaSummBtn = container.querySelector('#opm-alarms-zia-summarize-btn');
@@ -700,14 +763,18 @@
       };
     });
 
-    // Quick Ack
+    // Quick Ack (persists to SQLite /api/alarms/:id/acknowledge)
     container.querySelectorAll('.opm-alarm-quick-ack').forEach(btn => {
-      btn.onclick = (e) => {
+      btn.onclick = async (e) => {
         e.stopPropagation();
         const id = btn.getAttribute('data-id');
         const alm = state.alarms.find(a => a.id === id);
         if (alm) {
+          try {
+            await fetch(`/api/alarms/${encodeURIComponent(id)}/acknowledge`, { method: 'POST' });
+          } catch (err) {}
           alm.technician = alm.technician === 'Unacknowledged' ? 'admin' : 'Unacknowledged';
+          alm.status = alm.technician === 'admin' ? 'acknowledged' : 'active';
           showToast(`Alarm ${alm.id} marked as ${alm.technician}.`);
           renderAlarmsView();
         }
@@ -1302,32 +1369,68 @@
             </button>
           </div>
         ` : activeSub === 'rack' ? `
-          <!-- 3D Rack Views -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+          <!-- 3D Rack Views (Live SQLite /api/racks/list) -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">3D Datacenter Rack Elevations (${(state._racks || []).length} Configured)</div>
+                <div style="font-size: 12px; color: #64748b;">Physical EIA-310 42U rack allocations backed by SQLite store.</div>
+              </div>
+              <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                + Create New Rack
+              </button>
             </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No 3D Datacenter Racks Configured</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">
-              Create 3D datacenter racks and mount servers, switches, and UPS units to visualize rack space, thermal capacity, and front/rear port connectivity.
-            </div>
-            <button id="opm-create-rack-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-              + Create New Rack
-            </button>
+            ${(state._racks || []).length === 0 ? `
+              <div style="padding: 40px 20px; text-align: center; color: #64748b; background: #fafbfc; border: 1px dashed #cbd5e1; border-radius: 6px;">
+                No 3D Datacenter Racks configured yet. Click <strong>+ Create New Rack</strong> to provision a 42U rack cabinet.
+              </div>
+            ` : `
+              <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                ${(state._racks || []).map(rk => `
+                  <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #0f172a; color: #f8fafc;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #1e293b; padding-bottom: 8px;">
+                      <strong style="color: #38bdf8;">🗄️ ${rk.name}</strong>
+                      <span style="font-size: 10px; background: #1e293b; color: #4ade80; padding: 2px 6px; border-radius: 3px;">${rk.units}U EIA-310</span>
+                    </div>
+                    <div style="font-size: 11px; color: #94a3b8;">Mounted Devices: ${(rk.assignments || []).length}</div>
+                  </div>
+                `).join('')}
+              </div>
+            `}
           </div>
         ` : activeSub === 'layer2' ? `
-          <!-- Layer 2 Maps -->
-          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 60px 20px; text-align: center; margin: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #eff6ff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0070e0" stroke-width="2"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><circle cx="12" cy="6" r="3"/><line x1="12" y1="9" x2="6" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+          <!-- Layer 2 Maps (Live Managed Switches/Routers Topology) -->
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Layer 2 Network Topology &amp; Switch Connectivity (${(state.devices || []).length} Managed Nodes)</div>
+                <div style="font-size: 12px; color: #64748b;">Physical &amp; L2 device graph mapped from real SNMP inventory. Click any node to inspect Device Snapshot.</div>
+              </div>
+              <button id="opm-run-l2-discovery-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                Run Layer 2 Discovery
+              </button>
             </div>
-            <div style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">No Layer 2 Network Topology Discovered</div>
-            <div style="font-size: 12px; color: #64748b; max-width: 440px; margin: 0 auto 16px auto;">
-              Run Layer 2 Discovery or add network switches via SNMP to automatically map physical switch-to-port connections, VLAN trunks, and Spanning Tree topology.
-            </div>
-            <button id="opm-run-l2-discovery-btn" style="background: #0070e0; color: #ffffff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer;">
-              Run Layer 2 Discovery
-            </button>
+            ${(state.devices || []).length === 0 ? `
+              <div style="padding: 40px 20px; text-align: center; color: #64748b; background: #fafbfc; border: 1px dashed #cbd5e1; border-radius: 6px;">
+                No switches or routers discovered yet. Run discovery to map Layer 2 links.
+              </div>
+            ` : `
+              <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
+                ${(state.devices || []).map(d => {
+                  const isUp = ['up', 'clear', 'online'].includes((d.status || '').toLowerCase());
+                  return `
+                    <div class="opm-l2-node" data-id="${d.id}" style="border: 1px solid ${isUp ? '#bbf7d0' : '#fecaca'}; background: #fafbfc; border-radius: 6px; padding: 12px; cursor: pointer;">
+                      <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 700; color: #0070e0; font-size: 12px;">${d.displayName || d.name}</span>
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: ${isUp ? '#16a34a' : '#dc2626'};"></span>
+                      </div>
+                      <div style="font-size: 11px; font-family: monospace; color: #475569; margin-top: 4px;">${d.ip} &bull; ${d.category || 'Node'}</div>
+                      <div style="font-size: 10px; color: #64748b; margin-top: 4px;">RTT: ${d.responseTime != null ? d.responseTime + ' ms' : 'N/A'} &bull; ${d.status || 'Unknown'}</div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            `}
           </div>
         ` : `
           <!-- Global Probes WAN World Map (ManageEngine Central Flagship View) -->
@@ -1411,11 +1514,56 @@
 
     // Subtab event listeners
     container.querySelectorAll('.opm-maps-subtab-btn').forEach(btn => {
-      btn.onclick = () => {
-        state.subTabs.maps = btn.getAttribute('data-sub');
+      btn.onclick = async () => {
+        const sub = btn.getAttribute('data-sub');
+        state.subTabs.maps = sub;
+        if (sub === 'rack') {
+          try {
+            const r = await fetch('/api/racks/list');
+            const d = await r.json();
+            state._racks = d.racks || [];
+          } catch (e) {}
+        }
         renderMapsView();
       };
     });
+
+    // Create Rack button
+    const createRackBtn = container.querySelector('#opm-create-rack-btn');
+    if (createRackBtn) {
+      createRackBtn.onclick = async () => {
+        const name = prompt('Enter new Datacenter Rack Name:', `DC-RACK-0${(state._racks || []).length + 1}`);
+        if (!name || !name.trim()) return;
+        try {
+          const resp = await fetch('/api/racks/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name.trim(), units: 42 })
+          });
+          const data = await resp.json();
+          if (!resp.ok) throw new Error(data.message || 'Rack creation failed');
+          const rList = await fetch('/api/racks/list').then(r => r.json());
+          state._racks = rList.racks || [];
+          showToast(`Created rack "${name.trim()}" (42U).`);
+          renderMapsView();
+        } catch (err) {
+          showToast(`Rack creation failed: ${err.message}`, 'error');
+        }
+      };
+    }
+
+    // Run L2 Discovery button
+    const l2DiscBtn = container.querySelector('#opm-run-l2-discovery-btn');
+    if (l2DiscBtn) {
+      l2DiscBtn.onclick = async () => {
+        if (typeof showSubnetDiscoveryModal === 'function') {
+          showSubnetDiscoveryModal();
+        } else if (typeof fetchInventoryData === 'function') {
+          await fetchInventoryData();
+          renderMapsView();
+        }
+      };
+    }
 
     // NetPath button in Maps
     const mapsBgpBtn = container.querySelector('#opm-maps-bgp-btn');
@@ -1444,7 +1592,12 @@
     const fullBtn = container.querySelector('#opm-maps-fullscreen-btn');
     if (fullBtn) {
       fullBtn.onclick = () => {
-        showToast('Entering Fullscreen Topology Canvas...');
+        if (!document.fullscreenElement) {
+          container.requestFullscreen?.().catch(() => {});
+          showToast('Entered fullscreen Topology Canvas.');
+        } else {
+          document.exitFullscreen?.().catch(() => {});
+        }
       };
     }
 
@@ -1486,13 +1639,23 @@
     const worldDiagBtn = container.querySelector('#opm-world-diag-probe-btn');
     if (worldDiagBtn) {
       worldDiagBtn.onclick = () => {
-        showProbeDetailsModal(4);
+        const pid = parseInt(worldDiagBtn.getAttribute('data-probe'), 10) || (state.probes[0] && state.probes[0].id);
+        showProbeDetailsModal(pid);
       };
     }
     const worldSyncBtn = container.querySelector('#opm-worldmap-sync-all-btn');
     if (worldSyncBtn) {
-      worldSyncBtn.onclick = () => {
-        showToast('Initiated global multi-probe synchronization across all enterprise probes.');
+      worldSyncBtn.onclick = async () => {
+        worldSyncBtn.disabled = true;
+        worldSyncBtn.textContent = 'Syncing...';
+        try {
+          await Promise.all((state.probes || []).map(pr => fetch(`/api/probes/${pr.id}/sync`, { method: 'POST' }).catch(() => {})));
+          if (typeof fetchInventoryData === 'function') await fetchInventoryData();
+          showToast(`Synchronized ${(state.probes || []).length} enterprise probe(s) with Central.`);
+        } catch (e) {}
+        worldSyncBtn.disabled = false;
+        worldSyncBtn.textContent = 'Initiate Global Sync';
+        renderMapsView();
       };
     }
 

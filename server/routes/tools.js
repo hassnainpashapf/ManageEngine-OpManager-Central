@@ -748,14 +748,91 @@ router.post('/api/tools/cli-query', async (req, res) => {
   }
 });
 
-// ADDRESS RESOLVER & MAC TOOL
-router.post('/api/tools/mac-resolve', (req, res) => {
-  const { target = '127.0.0.1' } = req.body || {};
-  return res.status(501).json({
-    status: 'error',
-    error: 'not_implemented',
-    message: 'MAC resolution is not implemented: no ARP table or SNMP ipNetToMediaTable source is wired to this endpoint, so no MAC/vendor/port is returned.',
-    target,
+// ADDRESS RESOLVER & MAC TOOL (Real OS ARP/Neighbor table + SNMP ipNetToMediaTable walk)
+function formatSnmpMac(val) {
+  if (Buffer.isBuffer(val)) {
+    return Array.from(val).map((b) => b.toString(16).padStart(2, '0')).join(':');
+  }
+  const s = String(val || '').trim();
+  if (/^([0-9a-f]{2}[:-\s]?){5}[0-9a-f]{2}$/i.test(s)) {
+    return s.replace(/[-\s]/g, ':').toLowerCase();
+  }
+  return s;
+}
+
+router.post('/api/tools/mac-resolve', async (req, res) => {
+  const { target = '127.0.0.1', gateway } = req.body || {};
+  const { requested, address } = await resolveSnmpTarget(String(target).trim());
+  const ipToMatch = address || requested;
+  const entries = [];
+
+  // 1. OS Neighbor / ARP table lookup
+  try {
+    const arpBin = process.platform === 'linux'
+      ? resolveBinary(['/sbin/ip', '/usr/sbin/ip', 'ip'])
+      : resolveBinary(['/usr/sbin/arp', '/sbin/arp', 'arp']);
+    const args = process.platform === 'linux' ? ['neigh', 'show'] : ['-an'];
+    const { stdout } = await run(arpBin, args, { timeout: 3000 });
+    for (const line of String(stdout || '').split('\n')) {
+      const mLinux = line.match(/^(\d+\.\d+\.\d+\.\d+)\s+dev\s+(\S+)\s+lladdr\s+([0-9a-f:]+)/i);
+      const mMac = line.match(/\((\d+\.\d+\.\d+\.\d+)\)\s+at\s+([0-9a-f:]+)\s+on\s+(\S+)/i);
+      if (mLinux) entries.push({ ip: mLinux[1], mac: mLinux[3].toLowerCase(), iface: mLinux[2], source: 'host-arp' });
+      else if (mMac) entries.push({ ip: mMac[1], mac: mMac[2].toLowerCase(), iface: mMac[3], source: 'host-arp' });
+    }
+  } catch (e) {}
+
+  // 2. SNMP ipNetToMediaPhysAddress walk on gateway or first SNMP-capable router/switch
+  const svc = loadSnmpService();
+  if (svc) {
+    const snmpTargets = [];
+    if (gateway) snmpTargets.push(gateway);
+    const devs = store.listDevices ? store.listDevices() : [];
+    for (const d of devs) {
+      if (d && d.ip && (d.category === 'Routers' || d.category === 'Switches' || d.ip.endsWith('.1'))) {
+        if (!snmpTargets.includes(d.ip)) snmpTargets.push(d.ip);
+      }
+      if (snmpTargets.length >= 2) break;
+    }
+    const cred = (store.listCredentials ? store.listCredentials() : []).find((c) => /snmp/i.test(String(c.type || c.protocol || '')));
+    const community = (cred && cred.community) || 'public';
+    for (const gIp of snmpTargets) {
+      try {
+        const rows = await svc.snmpWalk(gIp, community, '1.3.6.1.2.1.4.22.1.2', { timeout: 1200, retries: 0 });
+        for (const row of rows || []) {
+          const oidParts = String(row.oid || '').split('.');
+          if (oidParts.length >= 5) {
+            const ifIdx = oidParts[oidParts.length - 5];
+            const entryIp = oidParts.slice(-4).join('.');
+            const mac = formatSnmpMac(row.value);
+            if (mac && !entries.some((e) => e.ip === entryIp && e.mac === mac)) {
+              entries.push({ ip: entryIp, mac, iface: `ifIndex:${ifIdx}`, source: `snmp:${gIp}` });
+            }
+          }
+        }
+      } catch (e) {}
+    }
+  }
+
+  const matched = entries.find((e) => e.ip === ipToMatch || e.mac === String(target).toLowerCase());
+  if (!matched) {
+    return res.status(404).json({
+      status: 'error',
+      error: 'not_found',
+      message: `No ARP/MAC entry found for ${requested} in host ARP cache or SNMP ipNetToMediaTable.`,
+      target: requested,
+      scannedEntries: entries.length,
+      sampleEntries: entries.slice(0, 15),
+      timestamp: new Date().toISOString()
+    });
+  }
+  res.json({
+    status: 'success',
+    target: requested,
+    ip: matched.ip,
+    macAddress: matched.mac,
+    interface: matched.iface,
+    source: matched.source,
+    totalArpEntries: entries.length,
     timestamp: new Date().toISOString()
   });
 });

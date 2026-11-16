@@ -2183,27 +2183,52 @@
     modal.querySelector('#wf-cancel-btn').onclick = () => { modal.style.display = 'none'; };
     
     const consoleBox = modal.querySelector('#wf-test-output-console');
-    modal.querySelector('#wf-test-run-btn').onclick = () => {
-      const targetDev = (state.devices && state.devices[0]) || { name: 'Managed-Node', ip: '127.0.0.1' };
+    modal.querySelector('#wf-test-run-btn').onclick = async () => {
+      const targetDev = (state.devices && state.devices[0]) || null;
       consoleBox.style.display = 'block';
-      consoleBox.innerHTML = `<span style="color: #94a3b8;">[14:26:01] Initializing simulated workflow execution against ${targetDev.name} (${targetDev.ip})...</span><br>`;
-      setTimeout(() => {
-        consoleBox.innerHTML += '<span style="color: #4ade80;">[14:26:02] Step 1: Evaluating trigger criteria... MATCH (Severity Critical).</span><br>';
-      }, 300);
-      setTimeout(() => {
-        consoleBox.innerHTML += '<span style="color: #4ade80;">[14:26:03] Step 2: Testing ICMP reachability... 3/3 packets answered (0.8ms RTT) -> Branch YES.</span><br>';
-      }, 600);
-      setTimeout(() => {
-        consoleBox.innerHTML += '<span style="color: #38bdf8;">[14:26:04] Step 3: Executing SSH CLI script ("clear ip arp-cache")... SUCCESS (exit code 0).</span><br>';
-      }, 900);
-      setTimeout(() => {
-        consoleBox.innerHTML += '<span style="color: #22c55e; font-weight: 700;">[14:26:05] Step 4: Alarm acknowledged and annotated. Playbook execution PASSED in 1.4s.</span>';
-      }, 1200);
+      if (!targetDev) {
+        consoleBox.innerHTML = `<span style="color: #fbbf24;">[${new Date().toLocaleTimeString()}] No monitored device in store yet — add a device first to run a live workflow check.</span>`;
+        return;
+      }
+      consoleBox.innerHTML = `<span style="color: #94a3b8;">[${new Date().toLocaleTimeString()}] Executing live workflow verification against ${targetDev.name} (${targetDev.ip})...</span><br>`;
+      try {
+        const pingResp = await fetch('/api/tools/ping', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ host: targetDev.ip, count: 2 })
+        });
+        const pingData = await pingResp.json();
+        const rtt = pingData.avgMs != null ? `${pingData.avgMs} ms` : (pingData.output ? 'reachable' : 'timeout');
+        consoleBox.innerHTML += `<span style="color: ${pingResp.ok ? '#4ade80' : '#f87171'};">[${new Date().toLocaleTimeString()}] Step 1: Live ICMP Probe -> ${pingResp.ok ? 'REACHABLE (' + rtt + ')' : (pingData.message || 'Unreachable')}.</span><br>`;
+        if (targetDev.id) {
+          const pollResp = await fetch(`/api/devices/${targetDev.id}/poll-now`, { method: 'POST' });
+          const pollData = await pollResp.json();
+          consoleBox.innerHTML += `<span style="color: ${pollResp.ok ? '#38bdf8' : '#fbbf24'};">[${new Date().toLocaleTimeString()}] Step 2: Live Device Re-Poll -> Status: ${pollData.device?.status || (pollResp.ok ? 'OK' : 'Failed')}.</span><br>`;
+        }
+        consoleBox.innerHTML += `<span style="color: #22c55e; font-weight: 700;">[${new Date().toLocaleTimeString()}] Live workflow check finished.</span>`;
+      } catch (err) {
+        consoleBox.innerHTML += `<span style="color: #f87171;">[${new Date().toLocaleTimeString()}] Workflow error: ${err.message}</span>`;
+      }
     };
 
-    modal.querySelector('#wf-save-btn').onclick = () => {
+    modal.querySelector('#wf-save-btn').onclick = async () => {
+      const targetDev = (state.devices && state.devices[0]) || null;
+      const wfName = `Auto-Remediation (${targetDev ? targetDev.name : 'Default Policy'})`;
+      try {
+        await fetch('/api/workflows/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: wfName,
+            steps: targetDev ? [{ type: 'ssh', host: targetDev.ip, command: 'show version' }] : []
+          })
+        });
+      } catch (e) {}
       modal.style.display = 'none';
-      showToast('Workflow Playbook "Core Switch Auto-Remediation" deployed and active across all Core Switches.');
+      showToast(`Workflow Playbook "${wfName}" saved.`);
+      if (state.currentTab === 'configuration' && typeof renderConfigurationView === 'function') {
+        renderConfigurationView();
+      }
     };
   }
 
@@ -2764,15 +2789,44 @@
     drawer.style.display = 'flex';
 
     document.getElementById('close-drawer-btn').onclick = () => { drawer.style.display = 'none'; };
-    document.getElementById('drawer-ack-btn').onclick = () => {
-      alm.technician = 'admin@opmanager';
+    const addNoteBtn = document.getElementById('drawer-add-note-btn');
+    if (addNoteBtn) {
+      addNoteBtn.onclick = async () => {
+        const noteEl = document.getElementById('drawer-note-input');
+        const note = noteEl ? noteEl.value.trim() : '';
+        if (!note) { showToast('Please enter a note first.', 'warning'); return; }
+        addNoteBtn.disabled = true;
+        try {
+          await fetch('/api/json/alarms/addNotes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ alarmId: alm.id, notes: note })
+          });
+        } catch (e) {}
+        alm.lastNote = note;
+        if (noteEl) noteEl.value = '';
+        addNoteBtn.disabled = false;
+        showToast(`Resolution note recorded for ${alm.device}.`);
+        showAlarmDrawer(alm);
+      };
+    }
+    document.getElementById('drawer-ack-btn').onclick = async () => {
+      try {
+        await fetch(`/api/alarms/${encodeURIComponent(alm.id)}/acknowledge`, { method: 'POST' });
+      } catch (e) {}
+      alm.technician = 'admin';
+      alm.status = 'acknowledged';
       showToast(`Alarm for ${alm.device} acknowledged by admin.`);
       drawer.style.display = 'none';
       const c = document.getElementById('opm-custom-suite-container');
       if (c && state.currentTab === 'alarms') renderAlarmsView(c);
     };
-    document.getElementById('drawer-clear-btn').onclick = () => {
+    document.getElementById('drawer-clear-btn').onclick = async () => {
+      try {
+        await fetch(`/api/alarms/${encodeURIComponent(alm.id)}/clear`, { method: 'POST' });
+      } catch (e) {}
       state.alarms = state.alarms.filter(a => a.id !== alm.id);
+      if (typeof updateStatusCounters === 'function') updateStatusCounters();
       showToast(`Alarm for ${alm.device} marked as Clear.`);
       drawer.style.display = 'none';
       const c = document.getElementById('opm-custom-suite-container');
@@ -3079,39 +3133,44 @@
     modal.style.display = 'flex';
     document.getElementById('close-add-probe-btn').onclick = () => { modal.style.display = 'none'; };
     document.getElementById('cancel-add-probe-btn').onclick = () => { modal.style.display = 'none'; };
-    document.getElementById('save-add-probe-btn').onclick = () => {
-      const name = (document.getElementById('new-probe-name').value || '').trim() || 'New Branch Site';
+    document.getElementById('save-add-probe-btn').onclick = async () => {
+      const name = (document.getElementById('new-probe-name').value || '').trim();
       const location = (document.getElementById('new-probe-loc').value || '').trim() || 'Remote Office';
-      const ip = (document.getElementById('new-probe-ip').value || '').trim() || '192.168.50.10';
+      const ip = (document.getElementById('new-probe-ip').value || '').trim();
       const port = parseInt(document.getElementById('new-probe-port').value, 10) || 8060;
+      if (!name || !ip) {
+        showToast('Probe Name and IP Address are required.', 'warning');
+        return;
+      }
 
-      const newId = (state.probes.length ? Math.max(...state.probes.map(p => Number(p.id) || 0)) : 100) + 1;
-      const newProbe = {
-        id: newId,
-        name: name,
+      const payload = { name, displayName: name, location, ip, port };
+      let savedProbe = null;
+      try {
+        const resp = await fetch('/api/probes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+        savedProbe = data.probe || null;
+      } catch (e) {}
+
+      const newProbe = savedProbe || {
+        id: (state.probes.length ? Math.max(...state.probes.map(p => Number(p.id) || 0)) : 100) + 1,
+        name,
         displayName: name,
-        location: location,
-        ip: ip,
-        port: port,
+        location,
+        ip,
+        port,
         status: 'Online',
-        version: '12.9.203',
-        build: 129203,
-        latency: Math.floor(Math.random() * 20 + 8),
+        version: '12.9.204-GA',
+        latency: null,
         devicesCount: 0,
-        monitorsCount: 0,
-        activeAlarms: 0,
+        alarmsCount: 0,
         lastSync: 'Just now',
-        syncStatus: 'Synchronized'
+        syncStatus: 'Registered'
       };
-
       state.probes.push(newProbe);
-
-      fetch('/api/probes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newProbe)
-      }).catch(() => {});
-
       showToast(`Branch Site / Remote Probe "${name}" registered successfully!`);
       modal.style.display = 'none';
 

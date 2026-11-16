@@ -764,7 +764,8 @@
     }
     if (mainSeg === 'alarms' || mainSeg.includes('alarm')) {
       if (subSeg && state.subTabs) {
-        state.subTabs.alarms = subSeg;
+        const aliasMap = { events: 'eventlog', history: 'all', archive: 'all' };
+        state.subTabs.alarms = aliasMap[subSeg] || subSeg;
       }
       return 'alarms';
     }
@@ -776,13 +777,15 @@
     }
     if (mainSeg === 'configuration' || mainSeg === 'config' || mainSeg.startsWith('config') || mainSeg.includes('ncm') || mainSeg.includes('compliance')) {
       if (subSeg && state.subTabs) {
-        state.subTabs.configuration = subSeg;
+        const cfgAlias = { vulnerabilities: 'vulnerability', vuln: 'vulnerability' };
+        state.subTabs.configuration = cfgAlias[subSeg] || subSeg;
       }
       return 'configuration';
     }
     if (mainSeg === 'reports' || mainSeg.includes('report')) {
       if (subSeg && state.subTabs) {
-        state.subTabs.reports = subSeg;
+        const rptAlias = { scheduled: 'schedule', capacity: 'sla', inventory: 'sla', custom: 'sla' };
+        state.subTabs.reports = rptAlias[subSeg] || subSeg;
       }
       return 'reports';
     }

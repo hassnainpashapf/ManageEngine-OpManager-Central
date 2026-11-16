@@ -5,6 +5,32 @@ const WebSocket = require('ws');
 const path = require('path');
 const fs = require('fs');
 
+// Write real timestamped server logs to server/logs/opmanager_server.log so
+// Support -> Diagnostic Logs and SIF bundle generation always read live output.
+const LOG_DIR = path.join(__dirname, 'logs');
+const SERVER_LOG_FILE = path.join(LOG_DIR, 'opmanager_server.log');
+try {
+  fs.mkdirSync(LOG_DIR, { recursive: true });
+  try {
+    if (fs.existsSync(SERVER_LOG_FILE) && fs.statSync(SERVER_LOG_FILE).size > 2 * 1024 * 1024) {
+      fs.renameSync(SERVER_LOG_FILE, SERVER_LOG_FILE + '.1');
+    }
+  } catch (e) {}
+  const origLog = console.log.bind(console);
+  const origWarn = console.warn.bind(console);
+  const origErr = console.error.bind(console);
+  const writeLogLine = (lvl, args) => {
+    try {
+      const msg = args.map((a) => (typeof a === 'string' ? a : JSON.stringify(a))).join(' ');
+      fs.appendFileSync(SERVER_LOG_FILE, `${new Date().toISOString()} [${lvl}] ${msg}\n`);
+    } catch (e) {}
+  };
+  console.log = (...args) => { writeLogLine('INFO', args); return origLog(...args); };
+  console.warn = (...args) => { writeLogLine('WARN', args); return origWarn(...args); };
+  console.error = (...args) => { writeLogLine('ERROR', args); return origErr(...args); };
+  console.log('[Central] OpManager Central logging stream initialized.');
+} catch (e) {}
+
 const probesRoute = require('./routes/probes');
 const devicesRoute = require('./routes/devices');
 const alarmsRoute = require('./routes/alarms');
