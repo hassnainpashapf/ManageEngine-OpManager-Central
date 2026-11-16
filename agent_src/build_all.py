@@ -3,6 +3,7 @@ import os
 import subprocess
 import shutil
 import zipfile
+import tarfile
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
@@ -50,7 +51,7 @@ print(f"[SUCCESS] Windows binary compiled: {win_exe_path} ({os.path.getsize(win_
 # Create Windows agent.conf (no shared default key: set the per-agent key
 # issued by OpManager Central for this host before deploying)
 win_conf = """# ManageEngine OpManager Central Agent Configuration File
-SERVER_URL=http://localhost:8060
+SERVER_URL=http://192.168.30.65:8060
 PROBE_ID=101
 AUTH_KEY=
 POLL_INTERVAL=5
@@ -159,7 +160,7 @@ plist_content = """<?xml version="1.0" encoding="UTF-8"?>
     <key>CFBundleShortVersionString</key>
     <string>12.9.204-GA</string>
     <key>CFBundleVersion</key>
-    <string>20261106</string>
+    <string>20261116</string>
     <key>LSMinimumSystemVersion</key>
     <string>10.15</string>
     <key>LSUIElement</key>
@@ -265,6 +266,47 @@ if res_dmg.returncode != 0:
     exit(1)
 
 print(f"[SUCCESS] macOS DMG created: {dmg_out_path} ({os.path.getsize(dmg_out_path)} bytes)")
+
+# Keep agent_src/OpManagerAgent synced with universal binary
+shutil.copy2(bin_universal, os.path.join(AGENT_SRC_DIR, "OpManagerAgent"))
+
+# -------------------------------------------------------------------------
+# 4. Build Linux x64 Binary & Archives + Repack OpManagerAgent.zip
+# -------------------------------------------------------------------------
+print("\n[4/4] Compiling Linux amd64 Binary & Repacking Archives...")
+linux_src_bin = os.path.join(AGENT_SRC_DIR, "OpManagerAgent-linux-amd64")
+linux_dl_bin = os.path.join(DOWNLOADS_DIR, "OpManagerAgent-linux-amd64")
+
+env_linux = env_base.copy()
+env_linux["GOOS"] = "linux"
+env_linux["GOARCH"] = "amd64"
+subprocess.run(["go", "build", "-ldflags", "-s -w", "-o", linux_src_bin, "main.go"], cwd=AGENT_SRC_DIR, env=env_linux, check=True)
+os.chmod(linux_src_bin, 0o755)
+shutil.copy2(linux_src_bin, linux_dl_bin)
+
+linux_tar_path = os.path.join(DOWNLOADS_DIR, "OpManagerAgent-linux.tar.gz")
+with tarfile.open(linux_tar_path, "w:gz") as tar:
+    tar.add(linux_dl_bin, arcname="OpManagerAgent-linux-amd64")
+
+# Repack full OpManagerAgent.zip bundle in client/downloads
+full_zip_path = os.path.join(DOWNLOADS_DIR, "OpManagerAgent.zip")
+bundle_items = [
+    "OpManagerAgent.exe",
+    "OpManagerAgent.msi",
+    "OPMAgentServerInfo.json",
+    "start_agent.bat",
+    "install_service.bat",
+    "README_INSTALL.txt",
+]
+with zipfile.ZipFile(full_zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    for item in bundle_items:
+        src = os.path.join(DOWNLOADS_DIR, item)
+        if os.path.exists(src):
+            z.write(src, arcname=item)
+            z.write(src, arcname=f"OpManagerAgent/{item}")
+
+print(f"[SUCCESS] Linux binary + tar.gz created: {linux_tar_path}")
+print(f"[SUCCESS] Full Windows bundle repacked: {full_zip_path}")
 
 print("\n==================================================================")
 print(" Build Complete! Artifacts ready in client/downloads/:")

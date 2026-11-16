@@ -24,7 +24,7 @@ import (
 
 const (
 	AgentVersion    = "12.9.204-GA"
-	AgentBuild      = "20261106"
+	AgentBuild      = "20261116"
 	DefaultServer   = "http://192.168.30.65:8060"
 	DefaultProbe    = "101"
 	DefaultInterval = 5
